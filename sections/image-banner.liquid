@@ -227,8 +227,11 @@
           {%- when 'heading' -%}
             {%- assign header_tag = block.settings.heading_tag | default: 'h2' -%}
 
+            {%- assign header_tag = block.settings.heading_tag | default: 'h2' -%}
+
             <{{ header_tag }}
-              class="{{ block.settings.class_heading }} banner__heading inline-richtext {{ block.settings.heading_size }}"
+              id="BannerHeading-{{ block.id }}"
+              class="{{ block.settings.class_heading }} banner__heading inline-richtext"
               {{ block.shopify_attributes }}
             >
               {%- if block.settings.heading_html != blank -%}
@@ -237,6 +240,25 @@
                 {{ block.settings.heading }}
               {%- endif -%}
             </{{ header_tag }}>
+
+            {%- if block.settings.font_size_desktop != blank or block.settings.font_size_mobile != blank -%}
+              <style>
+                {%- if block.settings.font_size_mobile != blank -%}
+                  #BannerHeading-{{ block.id }} {
+                    font-size: {{ block.settings.font_size_mobile | strip }}px !important;
+                  }
+                {%- endif -%}
+
+                {%- if block.settings.font_size_desktop != blank -%}
+                  @media screen and (min-width: 750px) {
+                    #BannerHeading-{{ block.id }} {
+                      font-size: {{ block.settings.font_size_desktop | strip }}px !important;
+                    }
+                  }
+                {%- endif -%}
+              </style>
+            {%- endif -%}
+
           {%- when 'text' -%}
             <div class="{{ block.settings.class_text }} banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
               {%- if block.settings.text_html != blank -%}
@@ -551,32 +573,16 @@
           ]
         },
         {
-          "type": "select",
-          "id": "heading_size",
-          "options": [
-            {
-              "value": "h2",
-              "label": "t:sections.all.heading_size.options__1.label"
-            },
-            {
-              "value": "h1",
-              "label": "t:sections.all.heading_size.options__2.label"
-            },
-            {
-              "value": "h0",
-              "label": "t:sections.all.heading_size.options__3.label"
-            },
-            {
-              "value": "hxl",
-              "label": "t:sections.all.heading_size.options__4.label"
-            },
-            {
-              "value": "hxxl",
-              "label": "t:sections.all.heading_size.options__5.label"
-            }
-          ],
-          "default": "h1",
-          "label": "t:sections.all.heading_size.label"
+          "type": "text",
+          "id": "font_size_desktop",
+          "label": "Desktop Font Size (px)",
+          "info": "E.g. 36 (Just enter number, px will automatically apply)"
+        },
+        {
+          "type": "text",
+          "id": "font_size_mobile",
+          "label": "Mobile Font Size (px)",
+          "info": "E.g. 16 (Just enter number, px will automatically apply)"
         }
       ]
     },
