@@ -149,7 +149,7 @@
             "subtitle": "Talk to an A-DIY Product Specialist",
             "description": "",
             "phone_text": "+1 (786) 358-2872",
-            "phone_link": "#chat",
+            "phone_link": "tel:+17863582872",
             "chat_text": "Chat with us",
             "chat_url": "#chat"
           }
