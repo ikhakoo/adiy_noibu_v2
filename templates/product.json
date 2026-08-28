@@ -48,18 +48,6 @@
           "type": "price",
           "settings": {}
         },
-        "affirm_pay_over_time_messaging_product_block_nTFQar": {
-          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "disabled": true,
-          "settings": {
-            "logo_align": "left",
-            "font_size": 16,
-            "logo_color": "blue",
-            "logo_type": "logo",
-            "public_api_key": "",
-            "price_selector": ""
-          }
-        },
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
           "settings": {
@@ -130,6 +118,18 @@
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
+          }
+        },
+        "affirm_pay_over_time_messaging_product_block_nTFQar": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "disabled": true,
+          "settings": {
+            "logo_align": "left",
+            "font_size": 16,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
           }
         },
         "affirm_promo_bar_dgqQry": {
@@ -219,7 +219,6 @@
         "title",
         "text_ifcgmB",
         "price",
-        "affirm_pay_over_time_messaging_product_block_nTFQar",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
         "material_switcher_EDGrz6",
@@ -228,6 +227,7 @@
         "custom_liquid_FnEVbe",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
+        "affirm_pay_over_time_messaging_product_block_nTFQar",
         "affirm_promo_bar_dgqQry",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
