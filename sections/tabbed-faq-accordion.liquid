@@ -1,0 +1,396 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .faq-section__heading {
+    font-size: 3.2rem;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: #111;
+  }
+
+  /* Tabs Styling */
+  .faq-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+  }
+
+  .faq-tab-btn {
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 0.8rem 3.8rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .faq-tab-btn:hover {
+    border-color: #1b4d3e;
+    color: #111;
+  }
+
+  .faq-tab-btn.is-active {
+    background: #ECE8E4;
+    border: 3px solid #194636;
+    color: #111;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  /* FAQ Accordion List */
+  .faq-content-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-tab-panel {
+    display: none;
+  }
+
+  .faq-tab-panel.is-active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .faq-item__header {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.8rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #111;
+    cursor: pointer;
+    gap: 1.5rem;
+  }
+
+  .faq-item__icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, background-color 0.2s ease;
+  }
+
+  .faq-item__icon svg {
+    width: 22px;
+    height: 22px;
+    fill: #333;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item.is-open .faq-item__icon {
+    background: #e5e5e5;
+  }
+
+  .faq-item.is-open .faq-item__icon svg {
+    transform: rotate(180deg);
+  }
+
+  .faq-item__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+  }
+
+  .faq-item__body {
+    padding-bottom: 1.8rem;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .faq-section__heading{
+      font-size:26px;
+    }
+    .faq-tab-btn{
+      padding: 0.8rem 2rem;
+      font-size: 14px;
+    }
+  }
+
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#ffffff' }};">
+  <div class="page-width">
+    
+    {%- if section.settings.heading != blank -%}
+      <h2 class="faq-section__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- comment -%} Parse Tab List from Section Setting {%- endcomment -%}
+    {%- assign raw_tabs = section.settings.tabs_list | split: "," -%}
+
+    {%- if raw_tabs.size > 0 -%}
+      <!-- Tabs Navigation -->
+      <div class="faq-tabs js-faq-tabs">
+        {%- for tab in raw_tabs -%}
+          {%- assign tab_name = tab | strip -%}
+          {%- if tab_name != blank -%}
+            <button 
+              class="faq-tab-btn {% if forloop.first %}is-active{% endif %}" 
+              data-tab-target="tab-{{ section.id }}-{{ forloop.index }}"
+            >
+              {{ tab_name }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <!-- FAQ Panels -->
+      <div class="faq-content-container">
+        {%- for tab in raw_tabs -%}
+          {%- assign current_tab_name = tab | strip | downcase -%}
+          {%- if current_tab_name != blank -%}
+            
+            <div 
+              class="faq-tab-panel js-faq-panel {% if forloop.first %}is-active{% endif %}" 
+              id="tab-{{ section.id }}-{{ forloop.index }}"
+            >
+              {%- assign faq_match_count = 0 -%}
+              
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'faq_item' -%}
+                  {%- assign target_tabs_raw = block.settings.assign_tabs | downcase | split: "," -%}
+                  
+                  {%- comment -%} Clean whitespace around assigned tabs {%- endcomment -%}
+                  {%- assign is_in_tab = false -%}
+                  {%- for target in target_tabs_raw -%}
+                    {%- assign clean_target = target | strip -%}
+                    {%- if clean_target == current_tab_name or clean_target == 'all' -%}
+                      {%- assign is_in_tab = true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- if is_in_tab -%}
+                    {%- assign faq_match_count = faq_match_count | plus: 1 -%}
+                    <div class="faq-item js-faq-item" {{ block.shopify_attributes }}>
+                      <button class="faq-item__header js-faq-toggle" aria-expanded="false">
+                        <span>{{ block.settings.question }}</span>
+                        <span class="faq-item__icon">
+                          <svg viewBox="0 0 24 24">
+                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/>
+                          </svg>
+                        </span>
+                      </button>
+                      <div class="faq-item__content js-faq-content">
+                        <div class="faq-item__body">
+                          {{ block.settings.answer }}
+                        </div>
+                      </div>
+                    </div>
+                  {%- endif -%}
+
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if faq_match_count == 0 -%}
+                <p style="text-align: center; color: #888; padding: 2rem 0;">No questions available for this category.</p>
+              {%- endif -%}
+
+            </div>
+
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.section-{{ section.id }}-padding');
+    if (!sectionContainer) return;
+
+    // Tab Switcher
+    const tabButtons = sectionContainer.querySelectorAll('.faq-tab-btn');
+    const tabPanels = sectionContainer.querySelectorAll('.js-faq-panel');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetId = button.getAttribute('data-tab-target');
+
+        tabButtons.forEach(btn => btn.classList.remove('is-active'));
+        tabPanels.forEach(panel => panel.classList.remove('is-active'));
+
+        button.classList.add('is-active');
+        const activePanel = document.getElementById(targetId);
+        if (activePanel) activePanel.classList.add('is-active');
+      });
+    });
+
+    // Accordions Toggle Logic
+    const faqItems = sectionContainer.querySelectorAll('.js-faq-item');
+
+    faqItems.forEach(item => {
+      const toggleBtn = item.querySelector('.js-faq-toggle');
+      const content = item.querySelector('.js-faq-content');
+
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+
+        const currentPanel = item.closest('.js-faq-panel');
+        currentPanel.querySelectorAll('.js-faq-item').forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('is-open');
+            otherItem.querySelector('.js-faq-content').style.maxHeight = null;
+            otherItem.querySelector('.js-faq-toggle').setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        if (!isOpen) {
+          item.classList.add('is-open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          toggleBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          item.classList.remove('is-open');
+          content.style.maxHeight = null;
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Tabbed FAQ Accordion",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "tabs_list",
+      "label": "Tabs (Comma Separated)",
+      "default": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+      "info": "List all your tabs separated by commas."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "assign_tabs",
+          "label": "Assign To Tabs (Comma Separated)",
+          "default": "About",
+          "info": "Type tab names separated by comma (e.g. 'About, General, Shipping'). Type 'All' to display in every tab."
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What makes A-DIY different from traditional deck building?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Every board, beam, and bracket is precision-cut and engineered before it ships. There's no cutting, no measuring, and no guesswork.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabbed FAQ Accordion",
+      "settings": {
+        "tabs_list": "About, General, Assembly, Permit, Finance, Shipping, Warranty"
+      },
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "About, General",
+            "question": "What makes A-DIY different from traditional deck building?",
+            "answer": "<p>Every board, beam, and bracket is precision-cut and engineered before it ships.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "All",
+            "question": "What's covered under warranty?",
+            "answer": "<p>Our full structural warranty details are available on request.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

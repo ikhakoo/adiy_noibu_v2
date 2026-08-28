@@ -1,0 +1,852 @@
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .template-page-free-design-consultation .custom-contact-sec.gradient {
+    background: #fff;
+  }
+
+  /* Main Section Layout */
+  .custom-contact__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .custom-contact__wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 60px;
+      align-items: start;
+    }
+  }
+
+  /* Left Side Styles */
+  .custom-contact__left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .custom-contact__heading {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  .custom-contact__description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #4a4a4a;
+  }
+
+  .custom-contact__info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    margin-top: 10px;
+  }
+
+  .custom-contact__info-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .custom-contact__info-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .custom-contact__info-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .custom-contact__info-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #755845;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 0;
+    line-height: normal;
+  }
+
+  .custom-contact__info-text {
+    font-size: 18px; 
+    font-weight: 600;
+    color: #000;
+    text-decoration: none;
+  }
+
+  /* Right Side Form Card */
+  .custom-contact__card {
+    background-color: #e5e5e5;
+    padding: 36px 30px;
+    border-radius: 12px;
+  }
+
+  .custom-contact__form-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+
+  .custom-contact__grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .custom-contact__field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  .custom-contact__label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    color: #755845;
+  }
+
+  .custom-contact__input,
+  .custom-contact__textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.2s, outline 0.2s;
+  }
+
+  /* Red Border & Error Message Styles */
+  .custom-contact__input.has-error {
+    border: 1px solid #d9534f !important;
+    outline: none !important;
+  }
+
+  .custom-contact__error-text {
+    color: #d9534f;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+    font-weight: 500;
+  }
+
+  /* Custom Flag Dropdown UI */
+  .custom-flag-select {
+    position: relative;
+    width: 100%;
+  }
+
+  .custom-flag-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .custom-flag-select__current {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .custom-flag-select__flag {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .custom-flag-select__options {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    max-height: 220px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 50;
+    display: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .custom-flag-select__options.is-open {
+    display: block;
+  }
+
+  .custom-flag-select__option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .custom-flag-select__option:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* Radio & Buttons */
+  .custom-contact__radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .custom-contact__radio-group--inline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .custom-contact__radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #000;
+    letter-spacing: 0;
+  }
+
+  .custom-contact__submit-btn {
+    width: 100%;
+    background-color: #1e4d3b;
+    color: #fff;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+  }
+
+  .custom-contact__submit-btn:hover {
+    background-color: #143528;
+  }
+
+  .custom-contact__disclaimer {
+    font-size: 10px;
+    color: #777;
+    line-height: 1.4;
+    margin-top: 14px;
+    text-align: center;
+  }
+  .custom-icon-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .custom-contact__image-item {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .custom-contact__img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    display: block;
+    object-fit: cover;
+  }
+
+
+  @media screen and (max-width: 628px){
+    .custom-contact__heading{
+      font-size:26px;
+      line-height:1.5
+    }
+    .custom-contact__info-text{
+      font-size: 16px;
+    }
+    .custom-contact__form-title{
+      font-size: 20px;
+      margin-top: 0;
+    }
+    .custom-contact__card{
+      padding: 3rem 2rem;
+    }
+    .custom-contact__radio-label{
+      font-size: 14px;
+    }
+    .custom-contact__input, .custom-contact__textarea{
+      font-size: 12px;
+    }
+  }
+
+{%- endstyle -%}
+
+<div class="custom-contact-sec color-{{ section.settings.color_scheme }} gradient" id="{{ section.settings.custom_id }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="custom-contact__wrapper">
+      
+      {%- comment -%} LEFT COLUMN {%- endcomment -%}
+      <div class="custom-contact__left">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="custom-contact__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <div class="custom-contact__description">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+
+        <div class="custom-contact__info-list">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'contact_info' -%}
+                <a href="{{ block.settings.link }}" class="custom-contact__info-text">
+                    <div class="custom-contact__info-item" {{ block.shopify_attributes }}>
+                    <div class="custom-contact__info-icon">
+                      {%- if block.settings.icon_image != blank -%}
+                        {{ block.settings.icon_image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'custom-icon-img', alt: block.settings.icon_image.alt | default: 'Icon' }}
+                      {%- else -%}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        </svg>
+                      {%- endif -%}
+                    </div>
+                    <div>
+                      <span class="custom-contact__info-label">{{ block.settings.label }}</span>
+                      {%- if block.settings.link != blank -%}
+                        <a href="{{ block.settings.link }}" class="custom-contact__info-text">{{ block.settings.value }}</a>
+                      {%- else -%}
+                        <span class="custom-contact__info-text">{{ block.settings.value }}</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </a>
+
+              {%- when 'image_block' -%}
+                {%- if block.settings.image != blank -%}
+                  <div class="custom-contact__image-item" {{ block.shopify_attributes }}>
+                    {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'custom-contact__img', alt: block.settings.image.alt | default: 'Contact section image' }}
+                  </div>
+                {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} RIGHT COLUMN (FORM CARD) {%- endcomment -%}
+      <div class="custom-contact__right">
+        <div class="custom-contact__card">
+          {%- if section.settings.form_heading != blank -%}
+            <h3 class="custom-contact__form-title">{{ section.settings.form_heading }}</h3>
+          {%- endif -%}
+
+          <div class="klaviyo-form-VFGEp4 design-consultation"></div>
+
+          {% comment %} {%- form 'contact', id: 'ContactFormCustom', class: 'js-custom-contact-form' -%}
+            {%- if form.posted_successfully? -%}
+              <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+                {{- 'icon-success.svg' | inline_asset_content -}}
+                {{ 'templates.contact.form.post_success' | t }}
+              </h2>
+            {%- endif -%}
+
+            {%- comment -%} First & Last Name {%- endcomment -%}
+            <div class="custom-contact__grid-2">
+              <div class="custom-contact__field-group">
+                <label class="custom-contact__label" for="ContactForm-FirstName">First Name</label>
+                <input class="custom-contact__input" type="text" id="ContactForm-FirstName" name="contact[First Name]" placeholder="John">
+              </div>
+              <div class="custom-contact__field-group">
+                <label class="custom-contact__label" for="ContactForm-LastName">Last Name</label>
+                <input class="custom-contact__input" type="text" id="ContactForm-LastName" name="contact[Last Name]" placeholder="Doe">
+              </div>
+            </div>
+
+            {%- comment -%} Country Dropdown With Flags {%- endcomment -%}
+            <div class="custom-contact__field-group">
+              <label class="custom-contact__label">Country</label>
+              
+              <div class="custom-flag-select" id="FlagSelect">
+                <div class="custom-flag-select__trigger">
+                  <div class="custom-flag-select__current">
+                    <img src="https://flagcdn.com/w40/us.png" class="custom-flag-select__flag" id="CurrentFlag" alt="US Flag">
+                    <span id="CurrentCountryText">United States</span>
+                  </div>
+                  <small>▼</small>
+                </div>
+
+                <ul class="custom-flag-select__options" id="FlagOptionsList"></ul>
+              </div>
+
+              <input type="hidden" name="contact[Country]" id="ContactForm-Country" value="United States">
+            </div>
+
+            {%- comment -%} Phone Input with Validation {%- endcomment -%}
+            <div class="custom-contact__field-group">
+              <label class="custom-contact__label" for="ContactForm-Phone">Phone</label>
+              <input class="custom-contact__input" type="tel" id="ContactForm-Phone" name="contact[Phone]" value="+1 " placeholder="+1 000 000 0000" autocomplete="off">
+              <small class="custom-contact__error-text" id="PhoneError">Invalid phone number</small>
+            </div>
+
+            {%- comment -%} Email Input with Validation {%- endcomment -%}
+            <div class="custom-contact__field-group">
+              <label class="custom-contact__label" for="ContactForm-Email">Email</label>
+              <input class="custom-contact__input" type="text" id="ContactForm-Email" name="contact[email]" placeholder="john@example.com" autocomplete="off">
+              <small class="custom-contact__error-text" id="EmailError">Please enter a valid email address</small>
+            </div>
+
+            {%- comment -%} Project Description {%- endcomment -%}
+            <div class="custom-contact__field-group">
+              <label class="custom-contact__label">Which best describes your project?</label>
+              <div class="custom-contact__radio-group">
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Project Description]" value="Just purchased a new home">
+                  Just purchased a new home
+                </label>
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Project Description]" value="Backyard remodel">
+                  Backyard remodel
+                </label>
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Project Description]" value="Replacing an existing deck">
+                  Replacing an existing deck
+                </label>
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Project Description]" value="Building a brand-new deck">
+                  Building a brand-new deck
+                </label>
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Project Description]" value="Not sure yet — I need expert guidance">
+                  Not sure yet — I need expert guidance
+                </label>
+              </div>
+            </div>
+
+            {%- comment -%} Timeline Options {%- endcomment -%}
+            <div class="custom-contact__field-group">
+              <label class="custom-contact__label">When are you planning to purchase your deck?</label>
+              <div class="custom-contact__radio-group custom-contact__radio-group--inline">
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Planning Purchase Time]" value="Within a week">
+                  Within a week
+                </label>
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Planning Purchase Time]" value="Within a month">
+                  Within a month
+                </label>
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Planning Purchase Time]" value="Within the next year">
+                  Within the next year
+                </label>
+                <label class="custom-contact__radio-label">
+                  <input type="radio" name="contact[Planning Purchase Time]" value="Within three months">
+                  Within three months
+                </label>
+              </div>
+            </div>
+
+            {%- comment -%} Details Textarea {%- endcomment -%}
+            <div class="custom-contact__field-group">
+              <label class="custom-contact__label" for="ContactForm-Body">Additional Project Details</label>
+              <textarea class="custom-contact__textarea" id="ContactForm-Body" rows="4" name="contact[body]" placeholder="Tell us about your space, dimensions, or any specific concerns..."></textarea>
+            </div>
+
+            {%- comment -%} Submit Button {%- endcomment -%}
+            <button type="submit" class="custom-contact__submit-btn" id="FormSubmitBtn">
+              {{ section.settings.button_label }}
+            </button>
+
+            {%- if section.settings.disclaimer != blank -%}
+              <p class="custom-contact__disclaimer">{{ section.settings.disclaimer }}</p>
+            {%- endif -%}
+
+          {%- endform -%} {% endcomment %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const countriesList = [
+      { name: "United States", code: "us", dial: "+1", digits: 10 },
+      { name: "Philippines", code: "ph", dial: "+63", digits: 10 },
+      { name: "Pakistan", code: "pk", dial: "+92", digits: 10 },
+      { name: "United Kingdom", code: "gb", dial: "+44", digits: 10 },
+      { name: "Canada", code: "ca", dial: "+1", digits: 10 },
+      { name: "Australia", code: "au", dial: "+61", digits: 9 },
+      { name: "United Arab Emirates", code: "ae", dial: "+971", digits: 9 },
+      { name: "Saudi Arabia", code: "sa", dial: "+966", digits: 9 },
+      { name: "India", code: "in", dial: "+91", digits: 10 },
+      { name: "Germany", code: "de", dial: "+49", digits: 10 },
+      { name: "France", code: "fr", dial: "+33", digits: 9 }
+    ];
+
+    let currentSelectedCountry = countriesList[0];
+
+    const flagSelect = document.getElementById('FlagSelect');
+    const trigger = flagSelect.querySelector('.custom-flag-select__trigger');
+    const optionsList = document.getElementById('FlagOptionsList');
+    const currentFlag = document.getElementById('CurrentFlag');
+    const currentCountryText = document.getElementById('CurrentCountryText');
+    const hiddenCountryInput = document.getElementById('ContactForm-Country');
+    
+    const phoneInput = document.getElementById('ContactForm-Phone');
+    const phoneError = document.getElementById('PhoneError');
+    
+    const emailInput = document.getElementById('ContactForm-Email');
+    const emailError = document.getElementById('EmailError');
+    
+    const formElement = document.getElementById('ContactFormCustom');
+
+    // Populate Custom Dropdown
+    countriesList.forEach(country => {
+      const li = document.createElement('li');
+      li.className = 'custom-flag-select__option';
+      li.innerHTML = `
+        <img src="https://flagcdn.com/w40/${country.code}.png" class="custom-flag-select__flag" alt="${country.name}">
+        <span>${country.name}</span>
+      `;
+
+      li.addEventListener('click', function(e) {
+        e.stopPropagation();
+        currentSelectedCountry = country;
+        
+        currentFlag.src = `https://flagcdn.com/w40/${country.code}.png`;
+        currentCountryText.textContent = country.name;
+        hiddenCountryInput.value = country.name;
+
+        phoneInput.value = `${country.dial} `;
+        phoneInput.placeholder = `${country.dial} 000 000 0000`;
+        clearError(phoneInput, phoneError);
+
+        optionsList.classList.remove('is-open');
+      });
+
+      optionsList.appendChild(li);
+    });
+
+    // Toggle Dropdown
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      optionsList.classList.toggle('is-open');
+    });
+
+    document.addEventListener('click', function() {
+      optionsList.classList.remove('is-open');
+    });
+
+    // Phone Formatting & Live Validation
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function() {
+        const dialCode = currentSelectedCountry.dial;
+        let rawVal = phoneInput.value;
+        let digitsOnly = rawVal.replace(dialCode, '').replace(/\D/g, '');
+
+        if (digitsOnly.startsWith('0')) {
+          digitsOnly = digitsOnly.substring(1);
+        }
+
+        if (digitsOnly.length > currentSelectedCountry.digits) {
+          digitsOnly = digitsOnly.substring(0, currentSelectedCountry.digits);
+        }
+
+        let formattedDigits = '';
+        if (digitsOnly.length > 0) {
+          if (digitsOnly.length <= 3) {
+            formattedDigits = digitsOnly;
+          } else if (digitsOnly.length <= 6) {
+            formattedDigits = `${digitsOnly.slice(0, 3)} ${digitsOnly.slice(3)}`;
+          } else {
+            formattedDigits = `${digitsOnly.slice(0, 3)} ${digitsOnly.slice(3, 6)} ${digitsOnly.slice(6)}`;
+          }
+        }
+
+        phoneInput.value = `${dialCode} ${formattedDigits}`.trim();
+        validatePhone();
+      });
+
+      phoneInput.addEventListener('blur', validatePhone);
+    }
+
+    // Email Validation Regex
+    function isValidEmail(email) {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email.trim());
+    }
+
+    function validateEmailField() {
+      const emailValue = emailInput.value.trim();
+      if (emailValue === "") {
+        showError(emailInput, emailError, "Please enter an email address");
+        return false;
+      } else if (!isValidEmail(emailValue)) {
+        showError(emailInput, emailError, "Please enter a valid email address");
+        return false;
+      } else {
+        clearError(emailInput, emailError);
+        return true;
+      }
+    }
+
+    function validatePhone() {
+      const dialCode = currentSelectedCountry.dial;
+      const digitsOnly = phoneInput.value.replace(dialCode, '').replace(/\D/g, '');
+      const requiredDigits = currentSelectedCountry.digits;
+
+      if (digitsOnly.length === 0) {
+        showError(phoneInput, phoneError, `Phone number is required`);
+        return false;
+      } else if (digitsOnly.length < requiredDigits) {
+        showError(phoneInput, phoneError, `Invalid phone number (${requiredDigits} digits required)`);
+        return false;
+      } else {
+        clearError(phoneInput, phoneError);
+        return true;
+      }
+    }
+
+    if (emailInput) {
+      emailInput.addEventListener('input', function() {
+        if (emailInput.classList.contains('has-error')) {
+          validateEmailField();
+        }
+      });
+      emailInput.addEventListener('blur', validateEmailField);
+    }
+
+    function showError(inputEl, errorEl, msg) {
+      inputEl.classList.add('has-error');
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
+    }
+
+    function clearError(inputEl, errorEl) {
+      inputEl.classList.remove('has-error');
+      errorEl.style.display = 'none';
+    }
+
+    // Strict Submission Prevention
+    if (formElement) {
+      formElement.addEventListener('submit', function(e) {
+        const isEmailValid = validateEmailField();
+        const isPhoneValid = validatePhone();
+
+        if (!isEmailValid || !isPhoneValid) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+
+          if (!isPhoneValid) {
+            phoneInput.focus();
+          } else if (!isEmailValid) {
+            emailInput.focus();
+          }
+          return false;
+        }
+      }, true);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Project Contact",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Section ID"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Let's Start Planning Your Backyard",
+      "label": "Left Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Left Description"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "default": "Tell Us About Your Project",
+      "label": "Form Card Heading"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "SCHEDULE MY FREE CONSULTATION",
+      "label": "Button Label"
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "default": "By submitting this form and signing up for text messages, you consent to receive recurring marketing messages...",
+      "label": "Form Disclaimer Text"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact_info",
+      "name": "Contact Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "EMAIL US"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Text / Value",
+          "default": "support@a-diy.com"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom Icon Image"
+        }
+      ]
+    },
+    {
+      "type": "image_block",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "image_corner_radius",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Corner Radius",
+          "default": 16
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Project Contact",
+      "blocks": [
+        {
+          "type": "contact_info",
+          "settings": {
+            "label": "EMAIL US",
+            "value": "support@a-diy.com",
+            "link": "mailto:support@a-diy.com"
+          }
+        },
+        {
+          "type": "contact_info",
+          "settings": {
+            "label": "CALL US",
+            "value": "1 (786) 358-2872",
+            "link": "tel:17863582872"
+          }
+        },
+        {
+          "type": "contact_info",
+          "settings": {
+            "label": "CHAT WITH US",
+            "value": "LIVE CHAT"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

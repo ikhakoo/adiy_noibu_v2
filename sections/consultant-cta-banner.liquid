@@ -1,0 +1,236 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .consultant-cta {
+    background-color: {{ section.settings.section_bg_color | default: '#1a1d1a' }};
+  }
+  /* .consultant-cta .page-width{
+    max-width: 100%;
+  } */
+
+  .consultant-cta__container {
+    border: 1px solid {{ section.settings.border_color | default: '#2e332e' }};
+    border-radius: 12px;
+    background-color: {{ section.settings.box_bg_color | default: '#232723' }};
+    padding: 3.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  @media screen and (min-width: 750px) {
+    .consultant-cta__container {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4rem 5rem;
+    }
+  }
+
+  .consultant-cta__text-group {
+    max-width: 600px;
+  }
+
+  .consultant-cta__heading {
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: {{ section.settings.heading_color | default: '#ffffff' }};
+    margin: 0 0 0.8rem 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  @media screen and (min-width: 750px) {
+    .consultant-cta__heading {
+      font-size: 2.6rem;
+    }
+  }
+
+  .consultant-cta__subheading {
+    font-size: 1.4rem;
+    color: {{ section.settings.subheading_color | default: '#a3a8a3' }};
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .consultant-cta__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ section.settings.button_bg_color | default: '#1b4d3e' }};
+    color: {{ section.settings.button_text_color | default: '#ffffff' }};
+    border-radius: 8px;
+    padding: 1.4rem 2.8rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+  }
+
+  .consultant-cta__button:hover {
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+  }
+
+  @media screen and (max-width: 628px){
+    .consultant-cta__container{
+      align-items: center;
+    }
+    .consultant-cta__heading,
+    .consultant-cta__subheading{
+      text-align: center;
+    }
+  }
+{%- endstyle -%}
+
+<div class="consultant-cta section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <div class="consultant-cta__container">
+      
+      <div class="consultant-cta__text-group">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="consultant-cta__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        
+        {%- if section.settings.subheading != blank -%}
+          <p class="consultant-cta__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.button_label != blank -%}
+        <a 
+          href="{{ section.settings.button_link | default: '#' }}" 
+          class="consultant-cta__button"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Consultant CTA Banner",
+  "class": "section footer-banner-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Have a unique site challenge?"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Our structural engineers are available for direct consultation."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Chat With Consultant"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Outer Section Background",
+      "default": "#1a1d1a"
+    },
+    {
+      "type": "color",
+      "id": "box_bg_color",
+      "label": "Box Inner Background",
+      "default": "#232723"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Box Border Color",
+      "default": "#2e332e"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#a3a8a3"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background",
+      "default": "#1b4d3e"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Consultant CTA Banner"
+    }
+  ]
+}
+{% endschema %}

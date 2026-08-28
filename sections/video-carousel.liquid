@@ -1,0 +1,586 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    position: relative;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Header Styles */
+  .pb-video-carousel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  .pb-video-carousel__subheading {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #555;
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+  }
+
+  .pb-video-carousel__heading {
+    font-size: 3.2rem;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.15;
+    color: #1c1b18;
+  }
+
+  .pb-video-carousel__description {
+    margin-top: 0.8rem;
+    font-size: 1.4rem;
+    color: #666;
+  }
+
+  /* Nav Buttons */
+  .pb-video-carousel__nav-btns {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .pb-video-carousel__nav-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #1c1b18;
+    padding: 0;
+  }
+
+  .pb-video-carousel__nav-btn:hover {
+    background: #1b4d3e;
+    color: #fff;
+    border-color: #3e261a;
+  }
+
+  .pb-video-carousel__nav-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  /* Slider Track */
+  .pb-video-carousel__track-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .pb-video-carousel__track-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pb-video-carousel__track {
+    display: flex;
+    gap: 2rem;
+  }
+
+  /* Card Container */
+  .pb-video-card {
+    position: relative;
+    flex: 0 0 270px;
+    height: 490px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  @media screen and (min-width: 750px) {
+    .pb-video-card {
+      flex: 0 0 310px;
+      height: 540px;
+    }
+  }
+
+  .pb-video-card__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Floating Overlay Controls (Poly & Bark Style) */
+  .pb-video-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+  }
+
+  .pb-control-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+    padding: 0;
+    transition: transform 0.15s ease;
+  }
+
+  .pb-control-btn:active {
+    transform: scale(0.92);
+  }
+
+  .pb-control-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #222;
+  }
+
+  /* Progress Bar Pill */
+  .pb-progress-wrapper {
+    flex-grow: 1;
+    height: 18px;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    backdrop-filter: blur(2px);
+    touch-action: none; /* Smooth touch dragging optimization */
+    user-select: none;
+  }
+
+  .pb-progress-track {
+    width: 100%;
+    height: 3px;
+    background: #1b4d3e6b;
+    border-radius: 2px;
+    position: relative;
+    pointer-events: none;
+  }
+
+  .pb-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: #1b4d3e;
+    border-radius: 2px;
+  }
+
+  .pb-progress-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 8px;
+    height: 8px;
+    background: #1b4d3e;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+  }
+
+  .pb-progress-wrapper.is-dragging .pb-progress-thumb {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+
+  @media screen and (max-width:628px){
+    .section-{{ section.id }}-padding .page-width{
+      margin-bottom: 20px;
+    }
+    .pb-video-carousel__nav-btns{
+      position: absolute;
+      bottom: 1rem;
+      left: 40%;
+    }
+
+    .section-{{ section.id }}-padding{
+      padding-bottom:60px;
+    }
+  }
+
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#faf8f5' }};">
+  <div class="page-width">
+    
+    <!-- Header with Left Text & Right Nav Arrows -->
+    <div class="pb-video-carousel__header">
+      <div class="pb-video-carousel__header-left">
+        {%- if section.settings.subheading != blank -%}
+          <p class="pb-video-carousel__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pb-video-carousel__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="pb-video-carousel__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="pb-video-carousel__nav-btns">
+        <button class="pb-video-carousel__nav-btn js-pb-prev" aria-label="Previous slide">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button class="pb-video-carousel__nav-btn js-pb-next" aria-label="Next slide">
+          <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Video Carousel Cards Track -->
+    <div class="pb-video-carousel__track-wrapper js-pb-track-wrapper">
+      <div class="pb-video-carousel__track">
+        {%- for block in section.blocks -%}
+          <div class="pb-video-card js-pb-card" {{ block.shopify_attributes }}>
+            
+            {%- assign custom_poster = '' -%}
+            {%- if block.settings.poster_image != blank -%}
+              {%- assign custom_poster = block.settings.poster_image | image_url: width: 800 -%}
+            {%- endif -%}
+
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: 
+                autoplay: false, 
+                loop: true, 
+                muted: true, 
+                playsinline: true, 
+                webkit-playsinline: true,
+                preload: 'metadata',
+                controls: false, 
+                poster: custom_poster,
+                class: 'pb-video-card__video js-pb-video' 
+              }}
+            {%- elsif block.settings.external_video_url != blank -%}
+              <video 
+                src="{{ block.settings.external_video_url }}" 
+                {% if custom_poster != blank %}poster="{{ custom_poster }}"{% endif %}
+                class="pb-video-card__video js-pb-video" 
+                loop 
+                muted 
+                playsinline
+                webkit-playsinline
+                preload="metadata"
+              ></video>
+            {%- endif -%}
+
+            <!-- Bottom Control Overlay Bar -->
+            <div class="pb-video-controls">
+              <!-- Play/Pause Toggle Button -->
+              <button class="pb-control-btn js-pb-play-toggle" aria-label="Play / Pause">
+                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+
+              <!-- Mute Toggle Button -->
+              <button class="pb-control-btn js-pb-mute-toggle" aria-label="Mute / Unmute">
+                <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                <svg class="icon-unmuted" viewBox="0 0 24 24" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              </button>
+
+              <!-- Custom Video Seek Bar -->
+              <div class="pb-progress-wrapper js-pb-progress-bar">
+                <div class="pb-progress-track">
+                  <div class="pb-progress-fill js-pb-fill" style="display:block"></div>
+                  <div class="pb-progress-thumb js-pb-thumb" style="display:block"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.section-{{ section.id }}-padding');
+    if (!sectionContainer) return;
+
+    const trackWrapper = sectionContainer.querySelector('.js-pb-track-wrapper');
+    const cards = sectionContainer.querySelectorAll('.js-pb-card');
+    const prevBtn = sectionContainer.querySelector('.js-pb-prev');
+    const nextBtn = sectionContainer.querySelector('.js-pb-next');
+
+    /* 1. Header Navigation Arrows */
+    if (prevBtn && nextBtn && trackWrapper) {
+      prevBtn.addEventListener('click', () => {
+        trackWrapper.scrollBy({ left: -330, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        trackWrapper.scrollBy({ left: 330, behavior: 'smooth' });
+      });
+    }
+
+    /* 2. Pause All Videos Helper */
+    function stopOtherVideos(currentVideo) {
+      cards.forEach(card => {
+        const v = card.querySelector('.js-pb-video');
+        if (v && v !== currentVideo) {
+          v.pause();
+        }
+      });
+    }
+
+    /* 3. Card level Media Controls */
+    cards.forEach(card => {
+      const video = card.querySelector('.js-pb-video');
+      const playBtn = card.querySelector('.js-pb-play-toggle');
+      const muteBtn = card.querySelector('.js-pb-mute-toggle');
+      const progressBar = card.querySelector('.js-pb-progress-bar');
+      const fill = card.querySelector('.js-pb-fill');
+      const thumb = card.querySelector('.js-pb-thumb');
+
+      if (!video) return;
+
+      const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
+      const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
+      const iconMuted = muteBtn ? muteBtn.querySelector('.icon-muted') : null;
+      const iconUnmuted = muteBtn ? muteBtn.querySelector('.icon-unmuted') : null;
+      
+      let isDragging = false;
+
+      // Play/Pause State Toggles
+      function updatePlayIcons() {
+        if (video.paused) {
+          if (iconPlay) iconPlay.style.display = 'block';
+          if (iconPause) iconPause.style.display = 'none';
+        } else {
+          if (iconPlay) iconPlay.style.display = 'none';
+          if (iconPause) iconPause.style.display = 'block';
+        }
+      }
+
+      // Mute State Toggles
+      function updateMuteIcons() {
+        if (video.muted) {
+          if (iconMuted) iconMuted.style.display = 'block';
+          if (iconUnmuted) iconUnmuted.style.display = 'none';
+        } else {
+          if (iconMuted) iconMuted.style.display = 'none';
+          if (iconUnmuted) iconUnmuted.style.display = 'block';
+        }
+      }
+
+      // Play/Pause Trigger
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (video.paused) {
+            stopOtherVideos(video);
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      }
+
+      // Mute/Unmute Trigger
+      if (muteBtn) {
+        muteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          updateMuteIcons();
+        });
+      }
+
+      // Update UI Progress Position
+      function updateProgress(pct) {
+        pct = Math.max(0, Math.min(100, pct));
+        if (fill) fill.style.width = pct + '%';
+        if (thumb) thumb.style.left = pct + '%';
+      }
+
+      // Sync Progress Bar with Video Time
+      video.addEventListener('timeupdate', () => {
+        if (!isDragging && video.duration) {
+          const pct = (video.currentTime / video.duration) * 100;
+          updateProgress(pct);
+        }
+      });
+
+      video.addEventListener('play', updatePlayIcons);
+      video.addEventListener('pause', updatePlayIcons);
+
+      // --- SMOOTH DRAGGING / SCRUBBING LOGIC ---
+      if (progressBar) {
+        function scrub(e) {
+          const rect = progressBar.getBoundingClientRect();
+          const offsetX = e.clientX - rect.left;
+          const pct = Math.max(0, Math.min(1, offsetX / rect.width));
+          
+          updateProgress(pct * 100);
+          if (video.duration) {
+            video.currentTime = pct * video.duration;
+          }
+        }
+
+        progressBar.addEventListener('pointerdown', (e) => {
+          e.stopPropagation();
+          isDragging = true;
+          progressBar.classList.add('is-dragging');
+          progressBar.setPointerCapture(e.pointerId);
+          scrub(e);
+        });
+
+        progressBar.addEventListener('pointermove', (e) => {
+          if (isDragging) {
+            e.stopPropagation();
+            scrub(e);
+          }
+        });
+
+        const stopDragging = (e) => {
+          if (isDragging) {
+            e.stopPropagation();
+            isDragging = false;
+            progressBar.classList.remove('is-dragging');
+            if (e.pointerId && progressBar.hasPointerCapture(e.pointerId)) {
+              progressBar.releasePointerCapture(e.pointerId);
+            }
+          }
+        };
+
+        progressBar.addEventListener('pointerup', stopDragging);
+        progressBar.addEventListener('pointercancel', stopDragging);
+      }
+
+      // Card Body Click Play/Pause Toggle
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.pb-video-controls')) return;
+        if (video.paused) {
+          stopOtherVideos(video);
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+
+      // Set Initial States
+      updatePlayIcons();
+      updateMuteIcons();
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Video Carousel",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real customer reviews"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sit back and press play"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "From the first piece coming together to your new favorite place, see the experience through the people who've built it."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#faf8f5"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify Hosted Video"
+        },
+        {
+          "type": "url",
+          "id": "external_video_url",
+          "label": "Direct MP4 URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_image",
+          "label": "Custom Video Thumbnail/Poster",
+          "info": "Optional: Leave empty to auto-extract thumbnail from video."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Carousel",
+      "blocks": [
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

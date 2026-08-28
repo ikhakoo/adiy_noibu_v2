@@ -1,0 +1,347 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .team-section-wrapper {
+    background-color: {{ section.settings.background_color }};
+    padding: 60px 24px;
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .team-section-wrapper {
+      padding: 80px 40px;
+    }
+  }
+
+  .team-header {
+    margin: 0 auto 48px auto;
+  }
+
+  .team-subheading {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: {{ section.settings.accent_color }};
+    margin: 0 0 12px 0;
+  }
+
+  .team-heading {
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 16px 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .team-heading {
+      font-size: 40px;
+    }
+  }
+
+  .team-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px;
+    text-align: left;
+  }
+
+  @media screen and (min-width: 600px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .team-grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    }
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .team-image-wrapper {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #E2E2E2;
+    margin-bottom: 20px;
+  }
+
+  .team-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .team-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #E2E2E2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .team-member-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 6px 0;
+  }
+
+  .team-member-subtitle {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: {{ section.settings.accent_color }};
+    margin: 0 0 12px 0;
+  }
+
+  .team-member-bio {
+    font-size: 14px;
+    line-height: 1.5;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+  }
+{%- endstyle -%}
+
+<div class="page-width section-{{ section.id }}-padding">
+  <div class="team-section-wrapper">
+    
+    <!-- Section Header -->
+    <div class="team-header">
+      {%- if section.settings.subheading != blank -%}
+        <p class="team-subheading">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="team-heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="team-description">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Team Members Grid -->
+    <div class="team-grid">
+      {%- for block in section.blocks -%}
+        <div class="team-card" {{ block.shopify_attributes }}>
+          <div class="team-image-wrapper">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.name | escape }}"
+                loading="lazy"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+              >
+            {%- else -%}
+              <div class="team-placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.name != blank -%}
+            <h3 class="team-member-name">{{ block.settings.name | escape }}</h3>
+          {%- endif -%}
+
+          {%- if block.settings.subtitle != blank -%}
+            <p class="team-member-subtitle">{{ block.settings.subtitle | escape }}</p>
+          {%- endif -%}
+
+          {%- if block.settings.bio != blank -%}
+            <p class="team-member-bio">{{ block.settings.bio }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Team",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "OUR FOUNDATION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built by Builders, Backed by Visionaries"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We've assembled a world-class team from the intersections of construction, technology, and luxury lifestyle."
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "label": "Desktop Columns"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Container Background",
+      "default": "#F7F6F2"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Subheadings Color",
+      "default": "#9C7C5D"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading / Name Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body Text Color",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "member",
+      "name": "Team Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Role / Name",
+          "default": "Master Builder"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Tagline / Expertise",
+          "default": "CORE EXPERTISE"
+        },
+        {
+          "type": "textarea",
+          "id": "bio",
+          "label": "Short Bio",
+          "default": "10+ years of professional deck building experience, ensuring every kit is contractor-approved."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Team",
+      "blocks": [
+        {
+          "type": "member",
+          "settings": {
+            "name": "Master Builder",
+            "subtitle": "CORE EXPERTISE",
+            "bio": "10+ years of professional deck building experience, ensuring every kit is contractor-approved."
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Operations Lead",
+            "subtitle": "EX-VENUS ET FLEUR",
+            "bio": "Bringing luxury standards and logistical excellence to the world of structural engineering."
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Product Architect",
+            "subtitle": "EX-SHOPIFY",
+            "bio": "Designing seamless digital-to-physical workflows for a friction-free customer journey."
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Brand Strategist",
+            "subtitle": "EX-KITH",
+            "bio": "Curating an aesthetic that merges industrial strength with contemporary lifestyle design."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,275 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .gallery__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .gallery__heading {
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    color: #111;
+  }
+
+  .gallery__subheading {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Grid Layout Base */
+  .gallery__grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  /* Item Styling */
+  .gallery__item {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 220px;
+    background-color: #f0f0f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gallery__item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  }
+
+  .gallery__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e0e0e0;
+  }
+
+  .gallery__placeholder svg {
+    width: 60px;
+    height: 60px;
+    opacity: 0.4;
+  }
+
+  /* MOBILE & TABLET LAYOUT (Full Fix) */
+  @media screen and (max-width: 989px) {
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery__item {
+      height: 200px;
+    }
+
+    /* Pattern: Every 3rd item spans 2 columns */
+    .gallery__item:nth-child(3n) {
+      grid-column: span 2;
+      height: 250px;
+    }
+
+    /* FIX: Force ANY last item that sits alone to span full width */
+    .gallery__item:last-child {
+      grid-column: span 2 !important;
+      height: 250px !important;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .gallery__item {
+      height: 160px;
+      border-radius: 5px;
+    }
+
+    .gallery__item:nth-child(3n),
+    .gallery__item:last-child {
+      height: 210px !important;
+    }
+  }
+
+  /* DESKTOP LAYOUT */
+  @media screen and (min-width: 990px) {
+    .gallery__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .gallery__item {
+      height: 320px;
+      border-radius: 5px;
+    }
+
+    .gallery__item--span-2 {
+      grid-column: span 2;
+    }
+
+    .gallery__item--span-3 {
+      grid-column: span 3;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    .gallery__heading {
+      font-size: 26px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#f7f7f7' }};">
+  <div class="page-width">
+    
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="gallery__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="gallery__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="gallery__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="gallery__grid">
+      {%- for block in section.blocks -%}
+        <div 
+          class="gallery__item gallery__item--span-{{ block.settings.column_span }} {{ block.settings.custom_class }}" 
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 1200 | image_tag: 
+              loading: 'lazy', 
+              class: 'gallery__image', 
+              alt: block.settings.image.alt | default: section.settings.heading 
+            }}
+          {%- else -%}
+            <div class="gallery__placeholder">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image Gallery Grid",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A-DIY, in real life"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "USE #builtitmyself AND TAG US @decks"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background Color",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Gallery Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select Image"
+        },
+        {
+          "type": "select",
+          "id": "column_span",
+          "label": "Desktop Width (Columns)",
+          "options": [
+            { "value": "1", "label": "1 Column (Standard)" },
+            { "value": "2", "label": "2 Columns (Wide)" },
+            { "value": "3", "label": "3 Columns (Full Row)" }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "custom_class",
+          "label": "Custom CSS Class"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Gallery Grid",
+      "blocks": [
+        { "type": "image_block", "settings": { "column_span": "1" } },
+        { "type": "image_block", "settings": { "column_span": "1" } },
+        { "type": "image_block", "settings": { "column_span": "1" } },
+        { "type": "image_block", "settings": { "column_span": "1" } },
+        { "type": "image_block", "settings": { "column_span": "2" } },
+        { "type": "image_block", "settings": { "column_span": "1" } },
+        { "type": "image_block", "settings": { "column_span": "1" } },
+        { "type": "image_block", "settings": { "column_span": "1" } },
+        { "type": "image_block", "settings": { "column_span": "2" } },
+        { "type": "image_block", "settings": { "column_span": "1" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1165 @@
+{% comment %} with slider for mobile {% endcomment %}
+{% comment %} <style>
+  .comp-section-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    background-color: {{ section.settings.bg_color }};
+    font-family: inherit;
+    color: #1a1a1a;
+  }
+
+  .comp-main-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 40px;
+    letter-spacing: 0;
+  }
+
+  .comp-grid-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    user-select: none;
+  }
+
+  .comp-grid-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .comp-grid-wrapper.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size }}, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .comp-card {
+    background-color: #ebebeb;
+    border-radius: 18px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .comp-card--highlight {
+    background-color: {{ section.settings.highlight_bg_color }};
+    color: #ffffff;
+  }
+
+  .comp-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .comp-card-title {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 0;
+    color: #000;
+  }
+  
+  .comp-card.comp-card--highlight .comp-card-title {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .comp-card-badge {
+    background-color: #ffffff;
+    color: #1b4332;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .comp-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .comp-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding-bottom: 16px;
+  }
+
+  .comp-card--highlight .comp-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .comp-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .comp-row-label {
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #194636;
+    margin-bottom: 6px;
+    letter-spacing: 0;
+  }
+
+  .comp-card--highlight .comp-row-label {
+    color: #F6F4F2;
+  }
+
+  .comp-row-value {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .comp-card-footer {
+    margin-top: 28px;
+  }
+
+  .comp-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 25px;
+    background-color: #ffffff;
+    color: #1b4332;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+  }
+
+  .comp-btn:hover {
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color: #fff;
+  }
+
+  /* Scrollbar Navigation Styling */
+  .scrollbar-navigation-{{ section.id }} {
+    margin-top: 2.5rem;
+    width: 100%;
+    display: none;
+    justify-content: center;
+  }
+
+  .scrollbar-track-wrapper {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 40px;
+    background-color: {{ section.settings.highlight_bg_color | default: '#1b4332' }};
+    border-radius: 9999px;
+    cursor: grab;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .scrollbar-thumb:active,
+  .scrollbar-thumb.is-dragging {
+    cursor: grabbing;
+    background-color: #0d2a22;
+  }
+
+  .scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+  }
+
+  /* Mobile/Tablet Responsive Slider */
+  @media (max-width: 991px) {
+    .comp-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 16px;
+    }
+
+    .comp-card {
+      flex: 0 0 82%;
+      max-width: 82%;
+    }
+
+    .comp-main-title {
+      font-size: 30px;
+    }
+
+    .scrollbar-navigation-{{ section.id }} {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .comp-card {
+      flex: 0 0 88%;
+      max-width: 88%;
+    }
+
+    .comp-main-title {
+      font-size: 25px;
+    }
+  }
+</style>
+
+<section class="comp-section-{{ section.id }}">
+  <div class="comp-container page-width">
+    {% if section.settings.title != blank %}
+      <h2 class="comp-main-title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="comp-grid-wrapper js-comp-grid-wrapper-{{ section.id }}">
+      <div class="comp-grid">
+        {% for block in section.blocks %}
+          <div class="comp-card {% if block.settings.is_highlight %}comp-card--highlight{% endif %}" {{ block.shopify_attributes }}>
+            <div>
+              <div class="comp-card-header">
+                <h3 class="comp-card-title">{{ block.settings.title }}</h3>
+                {% if block.settings.is_highlight and block.settings.badge_text != blank %}
+                  <span class="comp-card-badge">{{ block.settings.badge_text }}</span>
+                {% endif %}
+              </div>
+
+              <div class="comp-card-body">
+                {% if block.settings.label_1 != blank or block.settings.val_1 != blank %}
+                  <div class="comp-row">
+                    <div class="comp-row-label">{{ block.settings.label_1 }}</div>
+                    <div class="comp-row-value">{{ block.settings.val_1 }}</div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.label_2 != blank or block.settings.val_2 != blank %}
+                  <div class="comp-row">
+                    <div class="comp-row-label">{{ block.settings.label_2 }}</div>
+                    <div class="comp-row-value">{{ block.settings.val_2 }}</div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.label_3 != blank or block.settings.val_3 != blank %}
+                  <div class="comp-row">
+                    <div class="comp-row-label">{{ block.settings.label_3 }}</div>
+                    <div class="comp-row-value">{{ block.settings.val_3 }}</div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.label_4 != blank or block.settings.val_4 != blank %}
+                  <div class="comp-row">
+                    <div class="comp-row-label">{{ block.settings.label_4 }}</div>
+                    <div class="comp-row-value">{{ block.settings.val_4 }}</div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.label_5 != blank or block.settings.val_5 != blank %}
+                  <div class="comp-row">
+                    <div class="comp-row-label">{{ block.settings.label_5 }}</div>
+                    <div class="comp-row-value">{{ block.settings.val_5 }}</div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if block.settings.is_highlight and block.settings.btn_label != blank %}
+              <div class="comp-card-footer">
+                <a href="{{ block.settings.btn_link | default: '#' }}" class="comp-btn">
+                  {{ block.settings.btn_label }}
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Scrollbar Navigation -->
+    <div class="scrollbar-navigation-{{ section.id }}">
+      <div class="scrollbar-track-wrapper js-scroll-bar-{{ section.id }}">
+        <button type="button" class="scrollbar-thumb js-scroll-thumb-{{ section.id }}" aria-label="Scroll thumb">
+          <span class="scrollbar-thumb-hitbox"></span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.comp-section-{{ section.id }}');
+    if (!sectionContainer) return;
+
+    const trackWrapper = sectionContainer.querySelector('.js-comp-grid-wrapper-{{ section.id }}');
+    const scrollBarTrack = sectionContainer.querySelector('.js-scroll-bar-{{ section.id }}');
+    const scrollThumb = sectionContainer.querySelector('.js-scroll-thumb-{{ section.id }}');
+
+    if (!trackWrapper || !scrollBarTrack || !scrollThumb) return;
+
+    let isThumbDragging = false;
+    let dragStartX = 0;
+    let initialScrollLeft = 0;
+    let rAFId = null;
+
+    /* 1. Dynamic UI Sync */
+    function updateThumbUI() {
+      const scrollWidth = trackWrapper.scrollWidth;
+      const clientWidth = trackWrapper.clientWidth;
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (maxScrollLeft <= 0) {
+        scrollThumb.style.width = '100%';
+        scrollThumb.style.left = '0%';
+        return;
+      }
+
+      const thumbWidthRatio = clientWidth / scrollWidth;
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 10);
+      const maxThumbLeftPercent = 100 - thumbWidthPercent;
+      
+      const currentScrollRatio = trackWrapper.scrollLeft / maxScrollLeft;
+      const currentLeftPercent = currentScrollRatio * maxThumbLeftPercent;
+
+      scrollThumb.style.width = thumbWidthPercent + '%';
+      scrollThumb.style.left = currentLeftPercent + '%';
+    }
+
+    function onScroll() {
+      if (!isThumbDragging) {
+        requestAnimationFrame(updateThumbUI);
+      }
+    }
+
+    trackWrapper.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateThumbUI);
+    updateThumbUI();
+
+    /* 2. Pointer Capture Dragging */
+    scrollThumb.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      isThumbDragging = true;
+      dragStartX = e.clientX;
+      initialScrollLeft = trackWrapper.scrollLeft;
+
+      trackWrapper.style.scrollBehavior = 'auto';
+      scrollThumb.classList.add('is-dragging');
+      scrollThumb.setPointerCapture(e.pointerId);
+    });
+
+    scrollThumb.addEventListener('pointermove', (e) => {
+      if (!isThumbDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const trackWidth = scrollBarTrack.clientWidth;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      if (maxThumbMove > 0) {
+        const scrollDelta = (deltaX / maxThumbMove) * maxContainerScroll;
+        const targetScrollLeft = initialScrollLeft + scrollDelta;
+
+        if (rAFId) cancelAnimationFrame(rAFId);
+        rAFId = requestAnimationFrame(() => {
+          trackWrapper.scrollLeft = targetScrollLeft;
+          updateThumbUI();
+        });
+      }
+    });
+
+    const releasePointer = (e) => {
+      if (isThumbDragging) {
+        isThumbDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        scrollThumb.classList.remove('is-dragging');
+        
+        if (rAFId) cancelAnimationFrame(rAFId);
+
+        try {
+          scrollThumb.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+      }
+    };
+
+    scrollThumb.addEventListener('pointerup', releasePointer);
+    scrollThumb.addEventListener('pointercancel', releasePointer);
+
+    /* 3. Track Click Handler */
+    scrollBarTrack.addEventListener('click', (e) => {
+      if (e.target.closest('.js-scroll-thumb-{{ section.id }}')) return;
+
+      const trackRect = scrollBarTrack.getBoundingClientRect();
+      const clickX = e.clientX - trackRect.left;
+      const thumbWidth = scrollThumb.offsetWidth;
+      
+      let targetLeft = clickX - (thumbWidth / 2);
+      const maxThumbMove = trackRect.width - thumbWidth;
+
+      if (targetLeft < 0) targetLeft = 0;
+      if (targetLeft > maxThumbMove) targetLeft = maxThumbMove;
+
+      const clickRatio = targetLeft / maxThumbMove;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      trackWrapper.style.scrollBehavior = 'smooth';
+      trackWrapper.scrollTo({
+        left: clickRatio * maxContainerScroll,
+        behavior: 'smooth'
+      });
+    });
+
+    /* 4. Mouse Dragging on Content Container */
+    let isTrackDragging = false;
+    let startX, scrollLeftPos;
+
+    trackWrapper.addEventListener('mousedown', (e) => {
+      if (scrollBarTrack.contains(e.target)) return;
+      isTrackDragging = true;
+      trackWrapper.style.scrollBehavior = 'auto';
+      trackWrapper.classList.add('is-dragging');
+      startX = e.pageX - trackWrapper.offsetLeft;
+      scrollLeftPos = trackWrapper.scrollLeft;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isTrackDragging) {
+        isTrackDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        trackWrapper.classList.remove('is-dragging');
+      }
+    });
+
+    trackWrapper.addEventListener('mousemove', (e) => {
+      if (!isTrackDragging) return;
+      e.preventDefault();
+      const x = e.pageX - trackWrapper.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      trackWrapper.scrollLeft = scrollLeftPos - walk;
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Comparison Table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "Contractor vs. DIYer vs. A-DIY Comparison Table"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "highlight_bg_color",
+      "label": "Highlight Card Background",
+      "default": "#1b4332"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Comparison Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column Title",
+          "default": "Contractor"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_highlight",
+          "label": "Highlight this Column?",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text (If Highlighted)",
+          "default": "SUPERIOR CHOICE"
+        },
+        {
+          "type": "header",
+          "content": "Row 1"
+        },
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "Label 1",
+          "default": "PRICE"
+        },
+        {
+          "type": "text",
+          "id": "val_1",
+          "label": "Value 1",
+          "default": "High & unpredictable"
+        },
+        {
+          "type": "header",
+          "content": "Row 2"
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "Label 2",
+          "default": "TIME"
+        },
+        {
+          "type": "text",
+          "id": "val_2",
+          "label": "Value 2",
+          "default": "Weeks of delays"
+        },
+        {
+          "type": "header",
+          "content": "Row 3"
+        },
+        {
+          "type": "text",
+          "id": "label_3",
+          "label": "Label 3",
+          "default": "WHO BUILDS IT"
+        },
+        {
+          "type": "text",
+          "id": "val_3",
+          "label": "Value 3",
+          "default": "Unknown crew"
+        },
+        {
+          "type": "header",
+          "content": "Row 4"
+        },
+        {
+          "type": "text",
+          "id": "label_4",
+          "label": "Label 4",
+          "default": "HOW IT'S BUILT"
+        },
+        {
+          "type": "text",
+          "id": "val_4",
+          "label": "Value 4",
+          "default": "Built on-site with tools & labor"
+        },
+        {
+          "type": "header",
+          "content": "Row 5"
+        },
+        {
+          "type": "text",
+          "id": "label_5",
+          "label": "Label 5",
+          "default": "EXPERIENCE"
+        },
+        {
+          "type": "text",
+          "id": "val_5",
+          "label": "Value 5",
+          "default": "Stressful management"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label",
+          "default": "Chat With Design Consultant"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Table",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "title": "Contractor",
+            "is_highlight": false,
+            "label_1": "PRICE",
+            "val_1": "High & unpredictable",
+            "label_2": "TIME",
+            "val_2": "Weeks of delays",
+            "label_3": "WHO BUILDS IT",
+            "val_3": "Unknown crew",
+            "label_4": "HOW IT'S BUILT",
+            "val_4": "Built on-site with tools & labor",
+            "label_5": "EXPERIENCE",
+            "val_5": "Stressful management"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Traditional DIY",
+            "is_highlight": false,
+            "label_1": "PRICE",
+            "val_1": "Costs vary, hidden fees",
+            "label_2": "TIME",
+            "val_2": "Endless weekends",
+            "label_3": "WHO BUILDS IT",
+            "val_3": "You (must have skills)",
+            "label_4": "HOW IT'S BUILT",
+            "val_4": "You cut, measure, build everything",
+            "label_5": "EXPERIENCE",
+            "val_5": "Overwhelming effort"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "A-DIY",
+            "is_highlight": true,
+            "badge_text": "SUPERIOR CHOICE",
+            "label_1": "PRICE",
+            "val_1": "One simple price, 30–50% less",
+            "label_2": "TIME",
+            "val_2": "Hours",
+            "label_3": "WHO BUILDS IT",
+            "val_3": "You, zero experience needed",
+            "label_4": "HOW IT'S BUILT",
+            "val_4": "Pieces snap together",
+            "label_5": "EXPERIENCE",
+            "val_5": "Empowering & Simple",
+            "btn_label": "Chat With Design Consultant"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} {% endcomment %}
+
+
+<style>
+  .comp-section-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    background-color: {{ section.settings.bg_color }};
+    font-family: inherit;
+    color: #1a1a1a;
+  }
+
+  .comp-main-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 40px;
+    letter-spacing: 0;
+  }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size }}, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .comp-card {
+    background-color: #ebebeb;
+    border-radius: 18px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .comp-card--highlight {
+    background-color: {{ section.settings.highlight_bg_color }};
+    color: #ffffff;
+  }
+
+  .comp-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .comp-card-title {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 0;
+    color: #000;
+  }
+  .comp-card.comp-card--highlight .comp-card-title{
+    color:#fff;
+    font-weight: 600;
+
+  }
+
+  .comp-card-badge {
+    background-color: #ffffff;
+    color: #1b4332;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .comp-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .comp-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding-bottom: 16px;
+  }
+
+  .comp-card--highlight .comp-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .comp-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .comp-row-label {
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #194636;
+    margin-bottom: 6px;
+    letter-spacing: 0;
+  }
+
+  .comp-card--highlight .comp-row-label {
+    color: #F6F4F2;
+  }
+
+  .comp-row-value {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .comp-card-footer {
+    margin-top: 28px;
+  }
+
+  .comp-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 25px;
+    background-color: #ffffff;
+    color: #1b4332;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+
+  }
+
+  .comp-btn:hover {
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+  }
+
+  @media (max-width: 991px) {
+    .comp-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .comp-main-title{
+      font-size:30px
+    }
+  }
+
+  @media (max-width: 576px) {
+    .comp-grid {
+      grid-template-columns: 1fr;
+    }
+    .comp-main-title{
+      font-size:25px
+    }
+  }
+</style>
+
+<section class="comp-section-{{ section.id }}">
+  <div class="comp-container page-width">
+    {% if section.settings.title != blank %}
+      <h2 class="comp-main-title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="comp-grid">
+      {% for block in section.blocks %}
+        <div class="comp-card {% if block.settings.is_highlight %}comp-card--highlight{% endif %}" {{ block.shopify_attributes }}>
+          <div>
+            <div class="comp-card-header">
+              {% comment %} <h3 class="comp-card-title">{{ block.settings.title }}</h3> {% endcomment %}
+              <h3 class="comp-card-title">
+                {% if block.settings.title_image != blank %}
+                  {{ block.settings.title_image | image_url: width: 100 | image_tag: alt: block.settings.title_image.alt }}
+                {% else %}
+                  {{ block.settings.title }}
+                {% endif %}
+              </h3>
+              {% if block.settings.is_highlight and block.settings.badge_text != blank %}
+                <span class="comp-card-badge">{{ block.settings.badge_text }}</span>
+              {% endif %}
+            </div>
+
+            <div class="comp-card-body">
+              {% if block.settings.label_1 != blank or block.settings.val_1 != blank %}
+                <div class="comp-row">
+                  <div class="comp-row-label">{{ block.settings.label_1 }}</div>
+                  <div class="comp-row-value">{{ block.settings.val_1 }}</div>
+                </div>
+              {% endif %}
+
+              {% if block.settings.label_2 != blank or block.settings.val_2 != blank %}
+                <div class="comp-row">
+                  <div class="comp-row-label">{{ block.settings.label_2 }}</div>
+                  <div class="comp-row-value">{{ block.settings.val_2 }}</div>
+                </div>
+              {% endif %}
+
+              {% if block.settings.label_3 != blank or block.settings.val_3 != blank %}
+                <div class="comp-row">
+                  <div class="comp-row-label">{{ block.settings.label_3 }}</div>
+                  <div class="comp-row-value">{{ block.settings.val_3 }}</div>
+                </div>
+              {% endif %}
+
+              {% if block.settings.label_4 != blank or block.settings.val_4 != blank %}
+                <div class="comp-row">
+                  <div class="comp-row-label">{{ block.settings.label_4 }}</div>
+                  <div class="comp-row-value">{{ block.settings.val_4 }}</div>
+                </div>
+              {% endif %}
+
+              {% if block.settings.label_5 != blank or block.settings.val_5 != blank %}
+                <div class="comp-row">
+                  <div class="comp-row-label">{{ block.settings.label_5 }}</div>
+                  <div class="comp-row-value">{{ block.settings.val_5 }}</div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if block.settings.is_highlight and block.settings.btn_label != blank %}
+            <div class="comp-card-footer">
+              <a href="{{ block.settings.btn_link | default: '#' }}" class="comp-btn">
+                {{ block.settings.btn_label }}
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison Table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "Contractor vs. DIYer vs. A-DIY Comparison Table"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "highlight_bg_color",
+      "label": "Highlight Card Background",
+      "default": "#1b4332"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Comparison Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column Title",
+          "default": "Contractor"
+        },
+        {
+          "type": "image_picker",
+          "id": "title_image",
+          "label": "Column Title Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_highlight",
+          "label": "Highlight this Column?",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text (If Highlighted)",
+          "default": "SUPERIOR CHOICE"
+        },
+        {
+          "type": "header",
+          "content": "Row 1"
+        },
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "Label 1",
+          "default": "PRICE"
+        },
+        {
+          "type": "text",
+          "id": "val_1",
+          "label": "Value 1",
+          "default": "High & unpredictable"
+        },
+        {
+          "type": "header",
+          "content": "Row 2"
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "Label 2",
+          "default": "TIME"
+        },
+        {
+          "type": "text",
+          "id": "val_2",
+          "label": "Value 2",
+          "default": "Weeks of delays"
+        },
+        {
+          "type": "header",
+          "content": "Row 3"
+        },
+        {
+          "type": "text",
+          "id": "label_3",
+          "label": "Label 3",
+          "default": "WHO BUILDS IT"
+        },
+        {
+          "type": "text",
+          "id": "val_3",
+          "label": "Value 3",
+          "default": "Unknown crew"
+        },
+        {
+          "type": "header",
+          "content": "Row 4"
+        },
+        {
+          "type": "text",
+          "id": "label_4",
+          "label": "Label 4",
+          "default": "HOW IT'S BUILT"
+        },
+        {
+          "type": "text",
+          "id": "val_4",
+          "label": "Value 4",
+          "default": "Built on-site with tools & labor"
+        },
+        {
+          "type": "header",
+          "content": "Row 5"
+        },
+        {
+          "type": "text",
+          "id": "label_5",
+          "label": "Label 5",
+          "default": "EXPERIENCE"
+        },
+        {
+          "type": "text",
+          "id": "val_5",
+          "label": "Value 5",
+          "default": "Stressful management"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label",
+          "default": "Chat With Design Consultant"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Table",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "title": "Contractor",
+            "is_highlight": false,
+            "label_1": "PRICE",
+            "val_1": "High & unpredictable",
+            "label_2": "TIME",
+            "val_2": "Weeks of delays",
+            "label_3": "WHO BUILDS IT",
+            "val_3": "Unknown crew",
+            "label_4": "HOW IT'S BUILT",
+            "val_4": "Built on-site with tools & labor",
+            "label_5": "EXPERIENCE",
+            "val_5": "Stressful management"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Traditional DIY",
+            "is_highlight": false,
+            "label_1": "PRICE",
+            "val_1": "Costs vary, hidden fees",
+            "label_2": "TIME",
+            "val_2": "Endless weekends",
+            "label_3": "WHO BUILDS IT",
+            "val_3": "You (must have skills)",
+            "label_4": "HOW IT'S BUILT",
+            "val_4": "You cut, measure, build everything",
+            "label_5": "EXPERIENCE",
+            "val_5": "Overwhelming effort"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "A-DIY",
+            "is_highlight": true,
+            "badge_text": "SUPERIOR CHOICE",
+            "label_1": "PRICE",
+            "val_1": "One simple price, 30–50% less",
+            "label_2": "TIME",
+            "val_2": "Hours",
+            "label_3": "WHO BUILDS IT",
+            "val_3": "You, zero experience needed",
+            "label_4": "HOW IT'S BUILT",
+            "val_4": "Pieces snap together",
+            "label_5": "EXPERIENCE",
+            "val_5": "Empowering & Simple",
+            "btn_label": "Chat With Design Consultant"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

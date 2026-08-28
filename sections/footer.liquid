@@ -1,0 +1,739 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .footer-centered {
+    background-color: #000000;
+    color: #ffffff;
+    margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .footer-centered__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* --- TOP HERO SECTION --- */
+  .footer-centered__top {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-centered__logo-text {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin: 0 0 15px 0;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-style: italic;
+  }
+
+  .footer-centered__logo-img {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
+  .footer-centered__heading {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+  }
+
+  .footer-centered__subheading {
+    font-size: 13px;
+    color: #a0a0a0;
+    margin: 0 0 24px 0;
+    line-height: 1.4;
+  }
+
+  /* Pill-Shaped Newsletter Input */
+  .footer-centered__newsletter-form {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .footer-centered__input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #2b2b2b;
+    border-radius: 50px;
+    padding: 0 4px 0 20px;
+  }
+
+  .footer-centered__input-wrapper .field__input {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #ffffff;
+    font-size: 13px;
+    padding: 10px 0;
+    width: 100%;
+    outline: none;
+  }
+
+  .footer-centered__input-wrapper .field__input::placeholder {
+  color: #ffffff94;
+  opacity: 1;
+}
+
+  .footer-centered__input-wrapper .field__input::placeholder {
+    color: #8c8c8c;
+  }
+
+  .footer-centered__submit-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 40px;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+  }
+
+  .footer-centered__submit-btn:hover {
+    background-color: #e0e0e0;
+  }
+
+  /* Social Links Block with Handle & Custom Icons */
+  .footer-centered__social-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 25px;
+  }
+
+  .footer-centered__social-handle {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .footer-centered__social-list {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-centered__social-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: {{ section.settings.social_icon_height | plus: 10 }}px;
+    height: {{ section.settings.social_icon_height | plus: 10 }}px;
+    border-radius: 50%;
+    /* background-color: #ffffff; */
+    color: #000000;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    overflow: hidden;
+  }
+
+  .footer-centered__social-icon-btn:hover {
+    opacity: 0.8;
+  }
+
+  .footer-centered__social-icon-btn svg {
+    width: {{ section.settings.social_icon_height | times: 0.5 }}px;
+    height: {{ section.settings.social_icon_height | times: 0.5 }}px;
+    fill: currentColor;
+  }
+
+  .footer-centered__social-custom-img {
+    height: {{ section.settings.social_icon_height }}px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* --- MIDDLE DIVIDER & GRID MENU --- */
+  .footer-centered__divider {
+    border: none;
+    border-top: 1px solid #262626;
+    margin: 30px 0 40px 0;
+  }
+
+  .footer-centered__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+
+  .footer-centered__col-heading {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #ffffff;
+  }
+
+  .footer-centered__link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-centered__link-item {
+    margin-bottom: 10px;
+  }
+
+  .footer-centered__link-item a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s ease;
+    font-weight: 300;
+  }
+
+  .footer-centered__link-item a:hover {
+    color: #a0a0a0;
+  }
+
+  .footer-centered__info-text {
+    font-size: 13px;
+    color: #fff;
+    line-height: 1.6;
+    margin: 0 0 12px 0;
+    font-weight: 300;
+  }
+
+  .footer-centered__info-text a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  /* --- BOTTOM BAR --- */
+  .footer-centered__bottom {
+    border-top: 1px solid #262626;
+    margin-top: 40px;
+    padding-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .footer-centered__copyright-group {
+    font-size: 11px;
+    color: #737373;
+    line-height: 1.6;
+    flex: 1 1 500px;
+  }
+
+  .footer-centered__policy-inline {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+  }
+
+  .footer-centered__policy-inline a {
+    color: #b3923b;
+    text-decoration: none;
+  }
+
+  .footer-centered__policy-inline a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-centered__payments {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .footer-centered__payments-img {
+    max-height: 28px;
+    width: auto;
+  }
+
+  /* Responsive Queries */
+  @media screen and (min-width: 750px) {
+    .footer-centered {
+      margin-top: {{ section.settings.margin_top }}px;
+    }
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .footer-centered__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px 20px;
+    }
+  }
+
+  @media screen and (max-width: 580px) {
+    .footer-centered__grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .footer-centered__bottom {
+      /* flex-direction: column; */
+      text-align: center;
+    }
+    .footer-centered__policy-inline {
+      justify-content: center;
+    }
+  }
+{%- endstyle -%}
+
+<footer class="footer-centered color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="footer-centered__container">
+    
+    <!-- TOP SECTION: BRANDING & NEWSLETTER -->
+    <div class="footer-centered__top">
+      {%- if section.settings.logo_image != blank -%}
+        <img 
+          src="{{ section.settings.logo_image | image_url: width: 400 }}" 
+          alt="{{ shop.name }}" 
+          class="footer-centered__logo-img"
+          width="{{ section.settings.logo_image.width }}"
+          height="{{ section.settings.logo_image.height }}"
+          loading="lazy"
+        >
+      {%- elsif section.settings.logo_text != blank -%}
+        <h2 class="footer-centered__logo-text">{{ section.settings.logo_text }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.newsletter_heading != blank -%}
+        <h3 class="footer-centered__heading">{{ section.settings.newsletter_heading }}</h3>
+      {%- endif -%}
+
+      {%- if section.settings.newsletter_subheading != blank -%}
+        <p class="footer-centered__subheading">{{ section.settings.newsletter_subheading }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.newsletter_enable -%}
+        {%- form 'customer', class: 'footer-centered__newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="footer-centered__input-wrapper">
+            <input
+              id="NewsletterForm--{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              class="field__input"
+              value="{{ form.email }}"
+              aria-required="true"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              placeholder="{{ section.settings.input_placeholder }}"
+              required
+            >
+            <button type="submit" class="footer-centered__submit-btn" name="commit">
+              {{ section.settings.button_text }}
+            </button>
+          </div>
+        {%- endform -%}
+      {%- endif -%}
+
+      <!-- Social Icons with Custom Image Upload Support -->
+      {%- if section.settings.show_social -%}
+        <div class="footer-centered__social-wrapper">
+          {%- if section.settings.social_handle_text != blank -%}
+            <span class="footer-centered__social-handle">{{ section.settings.social_handle_text }}</span>
+          {%- endif -%}
+
+          <ul class="footer-centered__social-list">
+            {%- for i in (1..5) -%}
+              {%- assign icon_key = 'social_icon_' | append: i -%}
+              {%- assign link_key = 'social_link_' | append: i -%}
+              {%- assign icon_img = section.settings[icon_key] -%}
+              {%- assign icon_link = section.settings[link_key] -%}
+
+              {%- if icon_link != blank or icon_img != blank -%}
+                <li>
+                  <a href="{{ icon_link | default: '#' }}" class="footer-centered__social-icon-btn" target="_blank" aria-label="Social Link {{ i }}">
+                    {%- if icon_img != blank -%}
+                      <img 
+                        src="{{ icon_img | image_url: width: 100 }}" 
+                        alt="Social Icon {{ i }}" 
+                        class="footer-centered__social-custom-img"
+                        width="{{ icon_img.width }}" 
+                        height="{{ icon_img.height }}" 
+                        loading="lazy"
+                      >
+                    {%- else -%}
+                      {%- if i == 1 -%}
+                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                      {%- elsif i == 2 -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                      {%- elsif i == 3 -%}
+                        <svg viewBox="0 0 24 24"><path d="M16.6 5.82s.51.5 0 0A4.27 4.27 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 1 1-2.59-2.5c.34 0 .67.06.98.18v-3.3a5.86 5.86 0 1 0 4.7 5.72V9.31a7.43 7.43 0 0 0 4.26 1.32V7.45a4.34 4.34 0 0 1-3.2-1.63z"></path></svg>
+                      {%- elsif i == 4 -%}
+                        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#000"></polygon></svg>
+                      {%- else -%}
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"></path></svg>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <hr class="footer-centered__divider">
+
+    <!-- MIDDLE SECTION: 4 COLUMNS GRID -->
+    <div class="footer-centered__grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'link_list' -%}
+            <div class="footer-centered__col" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h4 class="footer-centered__col-heading">{{ block.settings.heading }}</h4>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="footer-centered__link-list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li class="footer-centered__link-item">
+                      <a href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+          {%- when 'custom_text_col' -%}
+            <div class="footer-centered__col" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h4 class="footer-centered__col-heading">{{ block.settings.heading }}</h4>
+              {%- endif -%}
+              {%- if block.settings.content != blank -%}
+                <div class="footer-centered__info-text">
+                  {{ block.settings.content }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.address != blank -%}
+                <div class="footer-centered__info-text">
+                  {{ block.settings.address }}
+                </div>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <!-- BOTTOM SECTION: COPYRIGHT, POLICY & PAYMENT -->
+    <div class="footer-centered__bottom">
+      <div class="footer-centered__copyright-group">
+        <div>
+          {%- if section.settings.copyright_text != blank -%}
+            {{ section.settings.copyright_text }}
+          {%- else -%}
+            &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.policy_menu != blank -%}
+          <ul class="footer-centered__policy-inline">
+            {%- for link in section.settings.policy_menu.links -%}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="footer-centered__payments">
+        {%- if section.settings.payment_image != blank -%}
+          <img 
+            src="{{ section.settings.payment_image | image_url: width: 600 }}" 
+            alt="Payment options" 
+            class="footer-centered__payments-img"
+            loading="lazy"
+          >
+        {%- elsif section.settings.show_default_payments -%}
+          <ul class="list list-payment" role="list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li class="list-payment__item">
+                {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Navigation Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Shop",
+          "label": "Column Heading"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Select Menu"
+        }
+      ]
+    },
+    {
+      "type": "custom_text_col",
+      "name": "Text / Contact Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Conditions",
+          "label": "Column Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Description Text",
+          "default": "<p>Send us an email at support@a-diy.com, give us a call 1 (786) 358-2872.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "address",
+          "label": "Address Info",
+          "default": "<p>53 Knightsbridge Rd Suite 204<br>Piscataway, NJ 08854</p>"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Top Branding"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "default": "A-DIY",
+      "label": "Text Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Image Logo (Overrides Text)"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "default": true,
+      "label": "Show Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "default": "Subscribe for store updates and discounts.",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subheading",
+      "default": "Be the first to know of our exclusive store updates, special offers, and discounts",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "default": "Enter email address",
+      "label": "Input Placeholder Text"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "default": "Subscribe",
+      "label": "Button Text"
+    },
+    {
+      "type": "header",
+      "content": "Custom Social Media Icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "default": true,
+      "label": "Show Social Block"
+    },
+    {
+      "type": "text",
+      "id": "social_handle_text",
+      "default": "@decks",
+      "label": "Social Handle Text"
+    },
+    {
+      "type": "range",
+      "id": "social_icon_height",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon Display Height",
+      "default": 24
+    },
+    {
+      "type": "image_picker",
+      "id": "social_icon_1",
+      "label": "Social Icon 1 (Image)"
+    },
+    {
+      "type": "url",
+      "id": "social_link_1",
+      "label": "Social Link 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "social_icon_2",
+      "label": "Social Icon 2 (Image)"
+    },
+    {
+      "type": "url",
+      "id": "social_link_2",
+      "label": "Social Link 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "social_icon_3",
+      "label": "Social Icon 3 (Image)"
+    },
+    {
+      "type": "url",
+      "id": "social_link_3",
+      "label": "Social Link 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "social_icon_4",
+      "label": "Social Icon 4 (Image)"
+    },
+    {
+      "type": "url",
+      "id": "social_link_4",
+      "label": "Social Link 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "social_icon_5",
+      "label": "Social Icon 5 (Image)"
+    },
+    {
+      "type": "url",
+      "id": "social_link_5",
+      "label": "Social Link 5"
+    },
+    {
+      "type": "header",
+      "content": "Copyright & Policies"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "default": "A-DIY is a registered trademark of Laccoo Outdoors, LLC. © 2026, Laccoo Outdoors, LLC All rights reserved.",
+      "label": "Copyright Paragraph"
+    },
+    {
+      "type": "link_list",
+      "id": "policy_menu",
+      "label": "Inline Policy Menu"
+    },
+    {
+      "type": "header",
+      "content": "Payment Icons"
+    },
+    {
+      "type": "image_picker",
+      "id": "payment_image",
+      "label": "Custom Single Payment Strip Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_default_payments",
+      "default": true,
+      "label": "Show Shopify Auto Payment Badges (If image is empty)"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

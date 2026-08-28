@@ -1,0 +1,839 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .comparison-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .comparison-section__heading {
+    margin: 0;
+    font-size: 2.6rem;
+    font-weight: 400;
+  }
+
+  .comparison-section__top-link {
+    font-size: 1.4rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: #194636;
+    font-weight: 400;
+  }
+
+  /* Grid Layout for Desktop */
+  .comparison-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .comparison-card {
+    flex: 1 1 320px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .comparison-card__content {
+    padding: 3rem 2rem 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1; 
+  }
+  .comparison-grid-wrapper .hide .comparison-card__badge{
+    opacity:0;
+    margin-bottom: 1.5rem;
+    min-height: 25px;
+  }
+
+  .comparison-card__badge {
+
+    margin-bottom: 1.5rem;
+    min-height: 25px;
+  }
+
+  .comparison-card__badge:not(:empty) {
+    background-color: #1b4d3e;
+    color: #ffffff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 400;
+    opacity: 1;
+  }
+
+  .comparison-card__title {
+    font-size: 2.6rem;
+    margin: 0 0 1rem;
+    font-weight: 400;
+  }
+
+  .comparison-card__pricing {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .comparison-card__price-from {
+    color: #666;
+  }
+
+  .comparison-card__price-main {
+    font-weight: bold;
+    color: #111;
+  }
+
+  .comparison-card__price-compare {
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .comparison-card__discount-badge {
+    background-color: #e2f4ea;
+    color: #1b4d3e;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .comparison-card__description {
+    font-size: 1.3rem;
+    color: #555;
+    margin: 0 0 2rem;
+    line-height: 1.4;
+  }
+
+  .comparison-card__btn {
+    background-color: #1b4d3e;
+    color: #ffffff;
+    padding: 1rem 2.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+    margin-bottom: 2.5rem;
+  }
+
+  .comparison-card__btn:hover {
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+  }
+
+  .comparison-card__features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    width: 80%;
+    margin-top: auto;
+  }
+
+  .comparison-card__feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .comparison-card__feature-item .comparison-card__feature-item-icon{
+    width: 40px; 
+    height: 40px;
+    margin-bottom: 10px;
+  }
+
+  .comparison-card__feature-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    margin-bottom: 1.5rem;
+  }
+
+  .comparison-card__feature-text {
+    font-size: 10px;
+    line-height: 1.2;
+    color: #333;
+    text-transform: capitalize;
+  }
+
+  .comparison-card__image-wrapper {
+    width: 100%;
+    /* margin-top: 2rem; */
+    line-height: 0;
+  }
+
+  .comparison-card__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0 0 16px 16px;
+  }
+
+  /* SCROLLBAR NAVIGATION */
+  .comparison-scrollbar-navigation {
+    margin-top: 2.5rem;
+    width: 100%;
+    display: none;
+  }
+
+  .scrollbar-track-wrapper {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 40px;
+    background-color: #1b4d3e;
+    border-radius: 9999px;
+    cursor: grab;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .scrollbar-thumb:active,
+  .scrollbar-thumb.is-dragging {
+    cursor: grabbing;
+    background-color: #0d2a22;
+  }
+
+  .scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+  }
+
+  /* MOBILE / TABLET RESPONSIVE FIXES */
+  @media screen and (max-width: 850px) {
+    .comparison-grid-wrapper {
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      margin: 0 -1.5rem;
+      padding: 0 1.5rem;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .comparison-grid-wrapper.is-dragging {
+      cursor: grabbing;
+      scroll-behavior: auto;
+    }
+
+    .comparison-grid-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .comparison-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 1.5rem;
+    }
+
+    /* FIX 1: End Spacer for Complete Right Scroll */
+    .comparison-grid::after {
+      content: '';
+      flex: 0 0 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .comparison-card {
+      flex: 0 0 85%;
+      max-width: 85%;
+    }
+
+    .comparison-scrollbar-navigation {
+      display: block;
+    }
+
+    .comparison-card__features {
+      width: 100%;
+    }
+
+    .comparison-card__description {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .comparison-card {
+      flex: 0 0 88%;
+      max-width: 88%;
+    }
+
+    .comparison-section__header {
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+    }
+    .comparison-card__description {
+      font-size: 10px;
+    }
+    .comparison-card__content{
+      padding: 2rem 5px 0;
+    }
+    .comparison-card__feature-text{
+      font-size: 7px;
+    }
+    .comparison-card__btn{
+      padding: 0.5rem 2.5rem;
+    }
+    .comparison-section__heading{
+      text-align:left;
+      font-size: 26px;
+    }
+    /* .comparison-section__top-link{
+      display: none;
+    } */
+    .comparison-section__header{
+      align-items: flex-start;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    
+    {%- if section.settings.heading != blank or section.settings.top_link_text != blank -%}
+      <div class="comparison-section__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="comparison-section__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        
+        {%- if section.settings.top_link_text != blank -%}
+          <a href="{{ section.settings.top_link_url }}" class="comparison-section__top-link">
+            {{ section.settings.top_link_text }} &rarr;
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Scrollable Outer Wrapper -->
+    <div class="comparison-grid-wrapper js-comparison-wrapper">
+      <div class="comparison-grid">
+        {%- for block in section.blocks -%}
+          {%- assign card_product = block.settings.product -%}
+
+          <div class="{{ block.settings.custom_class }} comparison-card" {{ block.shopify_attributes }} style="background-color: {{ block.settings.bg_color | default: '#f7f7f7' }};">
+            <div class="comparison-card__content">
+              
+              <span class="comparison-card__badge">
+                {%- if block.settings.badge_text != blank -%}
+                  {{ block.settings.badge_text }}
+                {%- endif -%}
+              </span>
+
+              <h3 class="comparison-card__title">
+                {%- if block.settings.title != blank -%}
+                  {{ block.settings.title }}
+                {%- elsif card_product != blank -%}
+                  {{ card_product.title }}
+                {%- else -%}
+                  Deck Title
+                {%- endif -%}
+              </h3>
+
+              <!-- Pricing -->
+              <div class="comparison-card__pricing">
+                {%- if card_product != blank -%}
+                  {%- assign price = card_product.price_min -%}
+                  {%- assign compare_at_price = card_product.compare_at_price_min -%}
+
+                  {%- if card_product.price_varies -%}
+                    <span class="comparison-card__price-from">From</span>
+                  {%- endif -%}
+
+                  <span class="comparison-card__price-main">{{ price | money }}</span>
+
+                  {%- if compare_at_price > price -%}
+                    <span class="comparison-card__price-compare">{{ compare_at_price | money }}</span>
+                    {%- assign discount = compare_at_price | minus: price | times: 100.0 | divided_by: compare_at_price | round -%}
+                    <span class="comparison-card__discount-badge">{{ discount }}% Off</span>
+                  {%- endif -%}
+
+                {%- else -%}
+                  {%- if block.settings.price != blank -%}
+                    <span class="comparison-card__price-from">From</span>
+                    <span class="comparison-card__price-main">{{ block.settings.price }}</span>
+                    {%- if block.settings.compare_at_price != blank -%}
+                      <span class="comparison-card__price-compare">{{ block.settings.compare_at_price }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.discount_tag != blank -%}
+                      <span class="comparison-card__discount-badge">{{ block.settings.discount_tag }}</span>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.description != blank -%}
+                <p class="comparison-card__description">{{ block.settings.description }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.button_label != blank -%}
+                {%- assign btn_url = block.settings.button_link -%}
+                {%- if btn_url == blank and card_product != blank -%}
+                  {%- assign btn_url = card_product.url -%}
+                {%- endif -%}
+
+                <a href="{{ btn_url }}" class="comparison-card__btn">
+                  {{ block.settings.button_label }} &rarr;
+                </a>
+              {%- endif -%}
+
+              <!-- Features -->
+              <div class="comparison-card__features">
+                {%- for i in (1..4) -%}
+                  {%- capture feature_icon_id -%}feature_{{ i }}_icon{%- endcapture -%}
+                  {%- capture feature_text_id -%}feature_{{ i }}_text{%- endcapture -%}
+                  {%- assign feature_icon = block.settings[feature_icon_id] -%}
+                  {%- assign feature_text = block.settings[feature_text_id] -%}
+
+                  {%- if feature_text != blank -%}
+                    <div class="comparison-card__feature-item">
+                      <div class="comparison-card__feature-item-icon">
+                        {%- if feature_icon != blank -%}
+                          <img src="{{ feature_icon | image_url: width: 500 }}" alt="icon" class="comparison-card__feature-icon" loading="lazy">
+                        {%- endif -%}
+                      </div>
+                      <span class="comparison-card__feature-text">{{ feature_text }}</span>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+            </div>
+
+            <!-- Bottom Image -->
+            {%- assign card_img = block.settings.card_image -%}
+            {%- if card_img == blank and card_product != blank -%}
+              {%- assign card_img = card_product.featured_image -%}
+            {%- endif -%}
+
+            {%- if card_img != blank -%}
+              <div class="comparison-card__image-wrapper">
+                <img
+                  src="{{ card_img | image_url: width: 800 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  class="comparison-card__image"
+                  loading="lazy"
+                  width="800"
+                  height="600"
+                >
+              </div>
+            {%- endif -%}
+
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Scrollbar HTML -->
+    <div class="comparison-scrollbar-navigation">
+      <div class="scrollbar-track-wrapper js-scroll-bar">
+        <button type="button" class="scrollbar-thumb js-scroll-thumb" aria-label="Scroll thumb" style="left: 0%; width: 25%;">
+          <span class="scrollbar-thumb-hitbox"></span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.section-{{ section.id }}-padding');
+    if (!sectionContainer) return;
+
+    const trackWrapper = sectionContainer.querySelector('.js-comparison-wrapper');
+    const scrollBarTrack = sectionContainer.querySelector('.js-scroll-bar');
+    const scrollThumb = sectionContainer.querySelector('.js-scroll-thumb');
+
+    if (!trackWrapper || !scrollBarTrack || !scrollThumb) return;
+
+    let isThumbDragging = false;
+    let dragStartX = 0;
+    let initialScrollLeft = 0;
+    let rAFId = null;
+
+    /* FIX 2: Precise Math Boundary for Smooth End-to-End Scroll */
+    function updateThumbUI() {
+      const scrollWidth = trackWrapper.scrollWidth;
+      const clientWidth = trackWrapper.clientWidth;
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (maxScrollLeft <= 0) {
+        scrollThumb.style.width = '100%';
+        scrollThumb.style.left = '0%';
+        return;
+      }
+
+      const thumbWidthRatio = clientWidth / scrollWidth;
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 20);
+      
+      // Calculate exact percentage
+      const currentScrollRatio = Math.min(Math.max(trackWrapper.scrollLeft / maxScrollLeft, 0), 1);
+      const maxLeftPercent = 100 - thumbWidthPercent;
+      const currentLeftPercent = currentScrollRatio * maxLeftPercent;
+
+      scrollThumb.style.width = thumbWidthPercent + '%';
+      scrollThumb.style.left = currentLeftPercent + '%';
+    }
+
+    function onScroll() {
+      if (!isThumbDragging) {
+        requestAnimationFrame(updateThumbUI);
+      }
+    }
+
+    trackWrapper.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateThumbUI);
+    updateThumbUI();
+
+    /* Drag Logic */
+    scrollThumb.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      isThumbDragging = true;
+      dragStartX = e.clientX;
+      initialScrollLeft = trackWrapper.scrollLeft;
+
+      trackWrapper.style.scrollBehavior = 'auto';
+      scrollThumb.classList.add('is-dragging');
+      scrollThumb.setPointerCapture(e.pointerId);
+    });
+
+    scrollThumb.addEventListener('pointermove', (e) => {
+      if (!isThumbDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const trackWidth = scrollBarTrack.clientWidth;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      if (maxThumbMove > 0) {
+        const scrollDelta = (deltaX / maxThumbMove) * maxContainerScroll;
+        const targetScrollLeft = initialScrollLeft + scrollDelta;
+
+        if (rAFId) cancelAnimationFrame(rAFId);
+        rAFId = requestAnimationFrame(() => {
+          trackWrapper.scrollLeft = targetScrollLeft;
+          updateThumbUI();
+        });
+      }
+    });
+
+    const releasePointer = (e) => {
+      if (isThumbDragging) {
+        isThumbDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        scrollThumb.classList.remove('is-dragging');
+        
+        if (rAFId) cancelAnimationFrame(rAFId);
+
+        try {
+          scrollThumb.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+      }
+    };
+
+    scrollThumb.addEventListener('pointerup', releasePointer);
+    scrollThumb.addEventListener('pointercancel', releasePointer);
+
+    /* Track Click Logic */
+    scrollBarTrack.addEventListener('click', (e) => {
+      if (e.target.closest('.js-scroll-thumb')) return;
+
+      const trackRect = scrollBarTrack.getBoundingClientRect();
+      const clickX = e.clientX - trackRect.left;
+      const thumbWidth = scrollThumb.offsetWidth;
+      
+      let targetLeft = clickX - (thumbWidth / 2);
+      const maxThumbMove = trackRect.width - thumbWidth;
+
+      if (targetLeft < 0) targetLeft = 0;
+      if (targetLeft > maxThumbMove) targetLeft = maxThumbMove;
+
+      const clickRatio = targetLeft / maxThumbMove;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      trackWrapper.style.scrollBehavior = 'smooth';
+      trackWrapper.scrollTo({
+        left: clickRatio * maxContainerScroll,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Comparison Cards",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "A real deck, engineered to come together."
+    },
+    {
+      "type": "text",
+      "id": "top_link_text",
+      "label": "Top Right Link Text",
+      "default": "In-Depth Deck Comparison"
+    },
+    {
+      "type": "url",
+      "id": "top_link_url",
+      "label": "Top Right Link URL"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Comparison Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "custom_class",
+          "label": "Add Class"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Card Background Color",
+          "default": "#f7f7f7"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product (Dynamic Price & Image)"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text",
+          "info": "Optional top badge e.g. LOW MAINTENANCE"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Wood Deck",
+          "info": "Leave empty to use Product Title"
+        },
+        {
+          "type": "header",
+          "content": "Manual Price (If Product is not selected)"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Custom Price",
+          "default": "$3,399"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price",
+          "label": "Custom Compare At Price",
+          "default": "$4,199"
+        },
+        {
+          "type": "text",
+          "id": "discount_tag",
+          "label": "Custom Discount Text",
+          "default": "19% Off"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description Subtitle",
+          "default": "Grade 1 Southern Yellow Pine. Pressure Treated and Kiln Dried."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link",
+          "info": "Defaults to Product URL if selected"
+        },
+        {
+          "type": "header",
+          "content": "Feature 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_1_icon",
+          "label": "Feature 1 Icon"
+        },
+        {
+          "type": "text",
+          "id": "feature_1_text",
+          "label": "Feature 1 Text",
+          "default": "Assemble Within a Few Hours"
+        },
+        {
+          "type": "header",
+          "content": "Feature 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_2_icon",
+          "label": "Feature 2 Icon"
+        },
+        {
+          "type": "text",
+          "id": "feature_2_text",
+          "label": "Feature 2 Text",
+          "default": "Engineered for 15,000+ lbs"
+        },
+        {
+          "type": "header",
+          "content": "Feature 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_3_icon",
+          "label": "Feature 3 Icon"
+        },
+        {
+          "type": "text",
+          "id": "feature_3_text",
+          "label": "Feature 3 Text",
+          "default": "Grade 1 Treated Lumber"
+        },
+        {
+          "type": "header",
+          "content": "Feature 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_4_icon",
+          "label": "Feature 4 Icon"
+        },
+        {
+          "type": "text",
+          "id": "feature_4_text",
+          "label": "Feature 4 Text",
+          "default": "5-Year Structural Warranty"
+        },
+        {
+          "type": "header",
+          "content": "Card Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Bottom Image",
+          "info": "Defaults to Product Featured Image if empty"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Wood Deck",
+            "price": "$3,399",
+            "compare_at_price": "$4,199",
+            "discount_tag": "19% Off"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "badge_text": "LOW MAINTENANCE",
+            "title": "Composite Deck",
+            "price": "$4,400",
+            "compare_at_price": "$5,200",
+            "discount_tag": "15% Off"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

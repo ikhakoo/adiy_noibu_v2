@@ -1,0 +1,341 @@
+{{ 'video-section.css' | asset_url | stylesheet_tag }}
+{{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .custom-video-section.gradient{
+    background: #3a6958;
+  }
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Responsive Container Fix */
+  .video-section__media-autoplay {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 20px; /* Card rounded corners match karne ke liye */
+  }
+
+  /* Target iframe or custom embedded app */
+  .custom-iframe-wrapper {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Mobile par optimal height */
+    overflow: hidden;
+  }
+
+  .custom-iframe-wrapper iframe,
+  .video-section__media-autoplay iframe,
+  .video-section__media-autoplay video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .custom-iframe-wrapper {
+      height: 600px; /* Desktop height */
+    }
+  }
+
+  .section-text {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    color: #fff;
+  }
+
+  .vid-btn {
+    margin-top: 3rem;
+  }
+  
+  .vid-btn .video-button {
+    color: #fff;
+    border: 1px solid #fff;
+    text-decoration: none;
+    padding: 1.5rem 4rem;
+    border-radius: 50px;
+    font-weight: 400;
+    display: inline-block;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+  }
+  
+  .vid-btn .video-button:hover {
+    background: #fff;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color: #000;
+  }
+
+  .custom-video-section .video-section__media-autoplay{
+    background: transparent !important;
+  }
+  .custom-video-section .video-section .title-wrapper{
+    margin-bottom: 0;
+  }
+  .custom-video-section .video-section .title-wrapper .title{
+    color: #fff;
+    margin-bottom: 0;
+  }
+  .custom-video-section .video-section .section-text{
+    font-size: 22px;
+    font-weight: 300;
+  }
+
+  @media screen and (max-width:990px) {
+    .custom-video-section .video-section .section-text{
+      font-size: 18px;
+    }
+  }
+  @media screen and (max-width:768px) {
+    .custom-video-section .video-section .title-wrapper .title {
+      font-size: 23px;
+    }
+    .custom-video-section .video-section .section-text{
+      font-size: 14px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{%- liquid
+  assign video_id = section.settings.video.id | default: section.settings.video_url.id
+-%}
+
+<div class="custom-video-section color-{{ section.settings.color_scheme }} gradient">
+  <div class="video-section isolate{% unless section.settings.full_width %} page-width{% endunless %} section-{{ section.id }}-padding">
+    <div {% if section.settings.full_width %} class="page-width" {% endif %}>
+      {%- unless section.settings.heading == blank -%}
+        <div class="title-wrapper title-wrapper--no-top-margin">
+          <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        </div>
+      {%- endunless -%}
+
+      {%- unless section.settings.text == blank -%}
+        <div class="section-text rte">
+          {{ section.settings.text }}
+        </div>
+      {%- endunless -%}
+    </div>
+
+    <div class="video-section__media-autoplay global-media-settings{% if section.settings.full_width %} global-media-settings--full-width{% endif %}">
+      {%- if section.settings.iframe_code != blank -%}
+        <div class="custom-iframe-wrapper">
+          {{ section.settings.iframe_code }}
+        </div>
+      {%- elsif section.settings.video == null and section.settings.video_url != null -%}
+        <div class="custom-iframe-wrapper">
+          {%- liquid
+            assign loop = ''
+            if section.settings.enable_video_looping
+              assign loop = '&loop=1&playlist=' | append: video_id
+            endif
+          -%}
+          {%- if section.settings.video_url.type == 'youtube' -%}
+            <iframe
+              src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=0&mute=1&muted=1&controls=1{{ loop }}"
+              class="js-youtube"
+              allow="encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- else -%}
+            <iframe
+              src="https://player.vimeo.com/video/{{ video_id }}?autoplay=0&muted=1&autopause=0{{ loop }}"
+              class="js-vimeo"
+              allow="encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        {{
+          section.settings.video
+          | video_tag:
+            image_size: '1100x',
+            autoplay: false,
+            loop: section.settings.enable_video_looping,
+            controls: true,
+            muted: true,
+            playsinline: true
+        }}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.btn-text != blank -%}
+      <div class="vid-btn">
+        <a class="video-button" href="{{ section.settings.btn-text-link }}">{{ section.settings.btn-text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.video.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "t:sections.video.settings.heading.default",
+      "label": "t:sections.video.settings.heading.label"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Add subtext or descriptive paragraph here.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "hxl",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "hxxl",
+          "label": "t:sections.all.heading_size.options__5.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": "t:sections.video.settings.enable_video_looping.label",
+      "default": false
+    },
+    {
+      "type": "html",
+      "id": "iframe_code",
+      "label": "Custom Iframe Code / Embed Code",
+      "info": "Paste custom <iframe> code here. If filled, this will override YouTube/Vimeo/Shopify Video options."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__1.content"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.video.settings.video.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__2.content"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.video.settings.paragraph.content"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube", "vimeo"],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "label": "t:sections.video.settings.video_url.label",
+      "info": "t:sections.video.settings.video_url.info"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "t:sections.video.settings.description.label",
+      "info": "t:sections.video.settings.description.info"
+    },
+    {
+      "type": "text",
+      "id": "btn-text",
+      "label": "Button"
+    },
+    {
+      "type": "url",
+      "id": "btn-text-link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__3.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.video.settings.full_width.label",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.video.presets.name"
+    }
+  ]
+}
+{% endschema %}

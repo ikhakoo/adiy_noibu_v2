@@ -1,0 +1,730 @@
+{% comment %} <div class="text-comparison-wrapper section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="text-comparison__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="text-comparison__title inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <div class="text-comparison__subheading rte">
+            {{ section.settings.subheading }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="text-comparison__grid">
+      <!-- Left Column -->
+      <div class="text-comparison__column">
+        {%- if section.settings.left_col_title != blank -%}
+          <h3 class="text-comparison__col-title">{{ section.settings.left_col_title }}</h3>
+        {%- endif -%}
+        <div class="text-comparison__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'left_item' -%}
+              <div class="text-comparison__item" {{ block.shopify_attributes }}>
+                <h4 class="text-comparison__item-title">{{ block.settings.title }}</h4>
+                <div class="text-comparison__item-desc">{{ block.settings.description }}</div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- Center Divider Line -->
+      <div class="text-comparison__divider" aria-hidden="true"></div>
+
+      <!-- Right Column -->
+      <div class="text-comparison__column">
+        {%- if section.settings.right_col_title != blank -%}
+          <h3 class="text-comparison__col-title">{{ section.settings.right_col_title }}</h3>
+        {%- endif -%}
+        <div class="text-comparison__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'right_item' -%}
+              <div class="text-comparison__item" {{ block.shopify_attributes }}>
+                <h4 class="text-comparison__item-title">{{ block.settings.title }}</h4>
+                <div class="text-comparison__item-desc">{{ block.settings.description }}</div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .text-comparison-wrapper {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+  }
+
+  .text-comparison__header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 3.5rem auto;
+  }
+
+  .text-comparison__title {
+    color: {{ section.settings.text_color }};
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    font-size: 44px;
+  }
+
+  .text-comparison__subheading {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 20px;
+    line-height: 1.5;
+    max-width: 75%;
+    margin: 3rem auto 1rem;
+  }
+
+  /* Grid & Columns */
+  .text-comparison__grid {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 3rem;
+    position: relative;
+  }
+
+  .text-comparison__column {
+    flex: 1;
+    padding: 0 15px;
+  }
+
+  .text-comparison__col-title {
+    color: {{ section.settings.text_color }};
+    font-size: 30px;
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+
+  .text-comparison__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .text-comparison__item-title {
+    color: #f1f1f1;
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0 0 0.35rem 0;
+  }
+
+  .text-comparison__item-desc {
+    color: #C4C7C7;
+    font-size: 18px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* Vertical Divider */
+  .text-comparison__divider {
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.25);
+    align-self: stretch;
+    display:block !important;
+  }
+
+  @media screen and (max-width: 990px){
+    .text-comparison__header{
+      max-width: 100%;
+    }
+    .text-comparison__subheading{
+      max-width: 100%;
+    }
+    .text-comparison__title{
+      font-size: 36px;
+      margin: 0;
+    }
+    .text-comparison__col-title{
+      font-size: 27px;
+    }
+    .text-comparison__item-title{
+      font-size: 20px;
+    }
+    .text-comparison__item-desc{
+      font-size: 16px;
+    }
+  }
+
+  /* Responsive / Mobile Styling */
+  @media screen and (max-width: 749px) {
+    .text-comparison__grid {
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .text-comparison__divider {
+      width: 100%;
+      height: 1px;
+      margin: 0.5rem 0;
+    }
+    .text-comparison__title{
+      font-size: 26px;
+    }
+    .text-comparison__subheading {
+        margin-top: 2rem;
+        font-size: 20px;
+    }
+    .text-comparison__col-title {
+        font-size: 20px;
+    }
+    .text-comparison__item-title {
+        font-size: 18px;
+    }
+
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Text Comparison",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From Concept to Reality."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading Size"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Elevate your spatial experience with a structural foundation built for longevity.</p>"
+    },
+    {
+      "type": "text",
+      "id": "left_col_title",
+      "label": "Left Column Header",
+      "default": "Struggling with Contractors?"
+    },
+    {
+      "type": "text",
+      "id": "right_col_title",
+      "label": "Right Column Header",
+      "default": "Considering DIY?"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left_item",
+      "name": "Left Column Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Item Title",
+          "default": "Endless Quotes"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Item Description",
+          "default": "Spending weeks getting multiple quotes from contractors who may charge more than expected?"
+        }
+      ]
+    },
+    {
+      "type": "right_item",
+      "name": "Right Column Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Item Title",
+          "default": "Complexity"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Item Description",
+          "default": "Endless hours watching how-to videos, renting or buying tools, and making multiple store trips."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Comparison",
+      "blocks": [
+        {
+          "type": "left_item",
+          "settings": {
+            "title": "Endless Quotes",
+            "description": "Spending weeks getting multiple quotes from contractors who may charge more than expected?"
+          }
+        },
+        {
+          "type": "left_item",
+          "settings": {
+            "title": "High Costs",
+            "description": "Facing quotes that are often sky-high and not within your budget?"
+          }
+        },
+        {
+          "type": "left_item",
+          "settings": {
+            "title": "Uncertain Timelines",
+            "description": "Frustrated with delays and the uncertainty of whether your deck will be completed on time?"
+          }
+        },
+        {
+          "type": "right_item",
+          "settings": {
+            "title": "Complexity",
+            "description": "Endless hours watching how-to videos, renting or buying tools, and making multiple store trips."
+          }
+        },
+        {
+          "type": "right_item",
+          "settings": {
+            "title": "Time-Consuming",
+            "description": "Planning a deck requires time off work and away from family"
+          }
+        },
+        {
+          "type": "right_item",
+          "settings": {
+            "title": "Hidden Costs",
+            "description": "What seems like a cost-effective option can quickly become stress and more expensive with mistakes and added expenses."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} {% endcomment %}
+
+
+
+<div class="text-comparison-wrapper section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="text-comparison__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="text-comparison__title inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <div class="text-comparison__subheading rte">
+            {{ section.settings.subheading }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="text-comparison__grid">
+      <!-- Left Column Card -->
+      <div class="text-comparison__column">
+        {%- if section.settings.left_col_title != blank -%}
+          <h3 class="text-comparison__col-title">{{ section.settings.left_col_title }}</h3>
+        {%- endif -%}
+        <div class="text-comparison__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'left_item' -%}
+              <div class="text-comparison__item" {{ block.shopify_attributes }}>
+                <h4 class="text-comparison__item-title">{{ block.settings.title }}</h4>
+                <div class="text-comparison__item-desc">{{ block.settings.description }}</div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- Right Column Card -->
+      <div class="text-comparison__column">
+        {%- if section.settings.right_col_title != blank -%}
+          <h3 class="text-comparison__col-title">{{ section.settings.right_col_title }}</h3>
+        {%- endif -%}
+        <div class="text-comparison__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'right_item' -%}
+              <div class="text-comparison__item" {{ block.shopify_attributes }}>
+                <h4 class="text-comparison__item-title">{{ block.settings.title }}</h4>
+                <div class="text-comparison__item-desc">{{ block.settings.description }}</div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .text-comparison-wrapper {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+  }
+
+  .text-comparison__header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 3.5rem auto;
+  }
+
+  .text-comparison__title {
+    color: {{ section.settings.text_color }};
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    font-size: 44px;
+  }
+
+  .text-comparison__subheading {
+    color: {{ section.settings.item_title_color }};
+    opacity: 0.8;
+    font-size: 20px;
+    line-height: 1.5;
+    max-width: 75%;
+    margin: 3rem auto 1rem;
+  }
+
+  /* Grid & Rounded Cards Layout */
+  .text-comparison__grid {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .text-comparison__column {
+    flex: 1;
+    background-color: {{ section.settings.card_bg_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    padding: 2.5rem 2rem;
+  }
+
+  .text-comparison__col-title {
+    color: {{ section.settings.card_heading_color }};
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .text-comparison__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .text-comparison__item-title {
+    color: {{ section.settings.item_title_color }};
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .text-comparison__item-desc {
+    color: {{ section.settings.item_desc_color }};
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  @media screen and (max-width: 990px){
+    .text-comparison__header {
+      max-width: 100%;
+    }
+    .text-comparison__subheading {
+      max-width: 100%;
+    }
+    .text-comparison__title {
+      font-size: 36px;
+      margin: 0;
+    }
+  }
+
+  /* Responsive Mobile Styling */
+  @media screen and (max-width: 749px) {
+    .text-comparison__grid {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .text-comparison__column {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .text-comparison__title {
+      font-size: 26px;
+    }
+
+    .text-comparison__subheading {
+      margin-top: 1.5rem;
+      font-size: 16px;
+    }
+
+    .text-comparison__col-title {
+      font-size: 20px;
+    }
+
+    .text-comparison__item-title {
+      font-size: 15px;
+    }
+
+    .text-comparison__item-desc {
+      font-size: 13px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Text Comparison Cards",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Outer Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#f4f3f0"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Border Radius",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Header Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "card_heading_color",
+      "label": "Card Main Title Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "item_title_color",
+      "label": "Item Title Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "item_desc_color",
+      "label": "Item Description Color",
+      "default": "#666666"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From Concept to Reality."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading Size"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Elevate your spatial experience with a structural foundation built for longevity.</p>"
+    },
+    {
+      "type": "text",
+      "id": "left_col_title",
+      "label": "Left Column Header",
+      "default": "Struggling with Contractors?"
+    },
+    {
+      "type": "text",
+      "id": "right_col_title",
+      "label": "Right Column Header",
+      "default": "Considering DIY?"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left_item",
+      "name": "Left Column Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Item Title",
+          "default": "Endless Quotes"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Item Description",
+          "default": "Spending weeks getting multiple quotes from contractors who may charge more than expected?"
+        }
+      ]
+    },
+    {
+      "type": "right_item",
+      "name": "Right Column Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Item Title",
+          "default": "Time-Consuming"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Item Description",
+          "default": "Planning a deck requires time off work and away from family."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Comparison Cards",
+      "blocks": [
+        {
+          "type": "left_item",
+          "settings": {
+            "title": "Endless Quotes",
+            "description": "Spending weeks getting multiple quotes from contractors who may charge more than expected?"
+          }
+        },
+        {
+          "type": "left_item",
+          "settings": {
+            "title": "High Costs",
+            "description": "Facing quotes that are often sky-high and not within your budget?"
+          }
+        },
+        {
+          "type": "left_item",
+          "settings": {
+            "title": "Uncertain Timelines",
+            "description": "Frustrated with delays and the uncertainty of whether your deck will be completed on time?"
+          }
+        },
+        {
+          "type": "right_item",
+          "settings": {
+            "title": "Time-Consuming",
+            "description": "Planning a deck requires time off work and away from family."
+          }
+        },
+        {
+          "type": "right_item",
+          "settings": {
+            "title": "Complexity",
+            "description": "Endless hours watching how-to videos, renting or buying tools, and making multiple store trips."
+          }
+        },
+        {
+          "type": "right_item",
+          "settings": {
+            "title": "Hidden Costs",
+            "description": "What seems like a cost-effective option can quickly become stressful and more expensive with mistakes and added expenses."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,537 @@
+{{ 'section-material-selection.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .material-selection-wrapper-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .material-selection__header {
+    margin: 0 auto 3rem auto;
+  }
+  .material-selection__title {
+      margin-bottom: 1rem;
+      font-size: 46px;
+  }
+  .material-selection__subheading{
+      font-size: 20px;
+  }
+  .material-selection__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+  }
+  @media screen and (min-width: 750px) {
+    .material-selection__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Card Styling */
+  .material-card {
+      display: flex;
+      flex-direction: column;
+  }
+  .material-card__media-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background-color: #e0e0e0;
+  }
+  .material-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+  }
+  .material-card__overlay-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+  }
+  .material-card__badge {
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+  }
+  .material-card__overlay-heading {
+      color: #ffffff;
+      font-size: 20px;
+      margin: 0;
+      font-weight: 400;
+      margin-left: 5px;
+  }
+
+  /* Content Area */
+  .material-card__content {
+      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 1rem;
+  }
+  .material-card__header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
+      padding-right: 1rem;
+  }
+  .material-card__title {
+      font-size: 24px;
+      margin: 0;
+      line-height: 1.6;
+      font-weight: 400;
+      color: #000;
+      max-width: 60%;
+  }
+  .material-card__price,
+  .material-card__price .price-prefix {
+      font-size: 18px;
+      font-weight: 400;
+      color: #194636;
+  }
+  .material-card__description {
+      font-size: 17px;
+      color: #4a4a4a;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+  }
+  .material-card__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+  }
+  .material-card__features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+      font-size: 16px;
+      color: #333;
+  }
+  .material-card__features svg {
+      color: #194636;
+      flex-shrink: 0;
+  }
+  .material-card__action {
+      margin-top: auto; 
+  }
+  .material-card__btn {
+      width: 100%;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 1.2rem;
+      font-weight: 400;
+      text-decoration: none;
+      text-align: center;
+      border: 1px solid #194636;
+      transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+  }
+  .material-card__btn:hover{
+      background: #000;
+      box-shadow: 0 0 10px #2b4f42, 
+                  0 0 2px #000, 
+                  0 0 30px rgba(43, 79, 66, 0.6);
+      transform: translateY(-2px);
+      color:#fff;
+
+  }
+
+  @media screen and (max-width:989px){
+    .material-selection__title{
+      font-size: 36px;
+      letter-spacing: 0;
+    }
+  }
+
+  @media screen and (max-width:749px){
+    .material-selection__title{
+      font-size: 30px;
+    }
+    .material-selection__subheading{
+      font-size: 16px;
+    }
+    .material-card__title{
+      line-height: 1.4;
+      font-size: 22px;
+    }
+  }
+
+  @media screen and (max-width:549px){
+    .material-card__features li{
+      font-size: 14px;
+    }
+    .material-card__description{
+      font-size: 16px;
+    }
+    .material-card__price,
+    .material-card__price .price-prefix{
+      font-size: 16px;
+    }
+    .material-card__title{
+      font-size: 20px;
+    }
+  }
+
+{%- endstyle -%}
+
+<div class="material-selection-wrapper material-selection-wrapper-{{ section.id }} section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="material-selection__header center">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="material-selection__title inline-richtext h1">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <div class="material-selection__subheading rte">
+            {{ section.settings.subheading }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="material-selection__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+            assign card_product = block.settings.product
+
+            if block.settings.use_dynamic_content and card_product != blank
+                assign card_title = card_product.title
+                assign card_price = card_product.price | money_without_trailing_zeros
+                assign card_url = card_product.url
+            else
+                assign card_title = block.settings.custom_title
+                assign card_price = block.settings.custom_price
+                assign card_url = block.settings.button_link
+            endif
+        -%}
+
+        <div class="material-card" {{ block.shopify_attributes }}>
+          {%- comment -%} Card Image & Overlay {%- endcomment -%}
+          <div class="material-card__media-wrapper">
+            {%- if block.settings.image != blank -%}
+              <a href="{{ card_url | default: '#' }}">
+                <img
+                  src="{{ block.settings.image | image_url: width: 800 }}"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  class="material-card__image"
+                >
+              </a>
+            {%- elsif card_product.featured_media != blank and block.settings.use_dynamic_content -%}
+              <a href="{{ card_url | default: '#' }}">
+                <img
+                  src="{{ card_product.featured_media | image_url: width: 800 }}"
+                  alt="{{ card_product.featured_media.alt | escape }}"
+                  loading="lazy"
+                  width="{{ card_product.featured_media.width }}"
+                  height="{{ card_product.featured_media.height }}"
+                  class="material-card__image"
+                >
+              </a>    
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg material-card__image' }}
+            {%- endif -%}
+
+            <div class="material-card__overlay-content">
+              {%- if block.settings.badge_text != blank -%}
+                <span class="material-card__badge" style="background-color: {{ block.settings.badge_bg_color }}; color: {{ block.settings.badge_text_color }};">
+                  {{ block.settings.badge_text }}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.overlay_heading != blank -%}
+                <h3 class="material-card__overlay-heading">{{ block.settings.overlay_heading }}</h3>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment -%} Card Details {%- endcomment -%}
+          <div class="material-card__content">
+            <div class="material-card__header-row">
+              <h3 class="material-card__title">
+                {%- if card_title != blank -%}
+                  {{ card_title }}
+                {%- else -%}
+                  Material Title
+                {%- endif -%}
+              </h3>
+              <div class="material-card__price">
+                {%- if card_price != blank -%}
+                  <span class="price-prefix">From </span>{{ card_price }}
+                {%- endif -%}
+              </div>
+            </div>
+
+            {%- if block.settings.description != blank -%}
+              <div class="material-card__description rte">
+                {{ block.settings.description }}
+              </div>
+            {%- endif -%}
+
+            {%- comment -%} Bullet Features {%- endcomment -%}
+            {%- assign features = block.settings.features_list | newline_to_br | split: '<br />' -%}
+            {%- if features.size > 0 -%}
+              <ul class="material-card__features">
+                {%- for feature in features -%}
+                  {%- assign trimmed_feature = feature | strip -%}
+                  {%- if trimmed_feature != blank -%}
+                    <li>
+                      <svg class="icon-checkmark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <span>{{ trimmed_feature }}</span>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- comment -%} Action Button {%- endcomment -%}
+            <div class="material-card__action">
+              <a 
+                href="{{ card_url | default: '#' }}" 
+                class="button material-card__btn {% if block.settings.button_style == 'solid' %}button--primary{% else %}button--secondary{% endif %}"
+                {% if block.settings.button_style == 'solid' %}
+                  style="background-color: {{ block.settings.button_bg }}; color: {{ block.settings.button_color }}; border-color: {{ block.settings.button_bg }};"
+                {% endif %}
+              >
+                {{ block.settings.button_label | default: 'Configure' }}
+              </a>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Material Selection",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Select Your Material",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "default": "<p>Two distinct paths to outdoor luxury, engineered for the same seamless build experience.</p>",
+      "label": "Subheading"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f9f8f6"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "material_card",
+      "name": "Material Card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product & Data Source"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_dynamic_content",
+          "label": "Use Dynamic Title & Price from Selected Product",
+          "default": false,
+          "info": "If checked, the product title and price will automatically override the custom text fields below."
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title",
+          "default": "Pressure-Treated Cedar"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom Price Text",
+          "default": "$2,499"
+        },
+        {
+          "type": "header",
+          "content": "Media & Overlay"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Label",
+          "default": "CLASSIC HERITAGE"
+        },
+        {
+          "type": "color",
+          "id": "badge_bg_color",
+          "label": "Badge Background Color",
+          "default": "#d2b48c"
+        },
+        {
+          "type": "color",
+          "id": "badge_text_color",
+          "label": "Badge Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "overlay_heading",
+          "label": "Overlay Heading",
+          "default": "Authentic Wood Kit"
+        },
+        {
+          "type": "header",
+          "content": "Details & Features"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "For the purist who values the unmistakable feel and fragrance of real timber."
+        },
+        {
+          "type": "textarea",
+          "id": "features_list",
+          "label": "Features (One per line)",
+          "default": "Authentic look and feel\nNaturally pest resistant\n15-Year structural warranty",
+          "info": "Enter each feature point on a new line."
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Configure Wood Kit"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Custom Button Link",
+          "info": "Used if Dynamic Content checkbox is unchecked."
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            {
+              "value": "outline",
+              "label": "Outline"
+            },
+            {
+              "value": "solid",
+              "label": "Solid"
+            }
+          ],
+          "default": "outline"
+        },
+        {
+          "type": "color",
+          "id": "button_bg",
+          "label": "Solid Button Background Color",
+          "default": "#1e3a2b"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Solid Button Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Material Selection",
+      "blocks": [
+        {
+          "type": "material_card",
+          "settings": {
+            "custom_title": "Pressure-Treated Cedar",
+            "custom_price": "$2,499",
+            "badge_text": "CLASSIC HERITAGE",
+            "overlay_heading": "Authentic Wood Kit",
+            "button_style": "outline"
+          }
+        },
+        {
+          "type": "material_card",
+          "settings": {
+            "custom_title": "Ultra-Guard Composite",
+            "custom_price": "$4,199",
+            "badge_text": "MODERN PERFORMANCE",
+            "overlay_heading": "Ultimate Composite Kit",
+            "button_style": "solid"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

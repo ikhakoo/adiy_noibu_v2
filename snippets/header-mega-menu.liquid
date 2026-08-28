@@ -1,0 +1,406 @@
+{% comment %} {% comment %}
+  Renders a megamenu for the header.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span
+                  {%- if link.child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </span>
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+              >
+                <ul
+                  class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                  role="list"
+                >
+                  {%- for childlink in link.links -%}
+                    <li>
+                      <a
+                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                        href="{{ childlink.url }}"
+                        class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                        {% if childlink.current %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{ childlink.title | escape }}
+                      </a>
+                      {%- if childlink.links != blank -%}
+                        <ul class="list-unstyled" role="list">
+                          {%- for grandchildlink in childlink.links -%}
+                            <li>
+                              <a
+                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                href="{{ grandchildlink.url }}"
+                                class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                {% if grandchildlink.current %}
+                                  aria-current="page"
+                                {% endif %}
+                              >
+                                {{ grandchildlink.title | escape }}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span
+              {%- if link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav> {% endcomment %}
+
+
+{% comment %}
+  Renders a Hanso-style custom product megamenu for the header.
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li class="hanso-menu-item-wrapper">
+        
+        {%- comment -%} Check if any block matches this menu title {%- endcomment -%}
+        {%- assign has_custom_block = false -%}
+        {%- for block in section.blocks -%}
+          {%- assign block_trigger = block.settings.trigger_title | downcase | trim -%}
+          {%- assign menu_title = link.title | downcase | trim -%}
+          {%- if block.type == 'mega_menu_product' and block_trigger == menu_title -%}
+            {%- assign has_custom_block = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if link.links != blank or has_custom_block -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>
+                  {{- link.title | escape -}}
+                </span>
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </summary>
+
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup hanso-mega-menu-popup"
+                tabindex="-1"
+              >
+                <div class="page-width hanso-mega-menu-inner">
+                  
+                  {%- if has_custom_block -%}
+                    {%- comment -%} Custom Hanso Cards Block Layout {%- endcomment -%}
+                    <div class="hanso-cards-container">
+                      {%- for block in section.blocks -%}
+                        {%- assign block_trigger = block.settings.trigger_title | downcase | trim -%}
+                        {%- assign menu_title = link.title | downcase | trim -%}
+                        
+                        {%- if block.type == 'mega_menu_product' and block_trigger == menu_title -%}
+                          {%- assign product = block.settings.product -%}
+                          
+                          <div class="hanso-card" {{ block.shopify_attributes }}>
+                            
+                            <!-- Left: Image, Title, Badge & Shop Button -->
+                            <div class="hanso-card__left">
+                              <div class="hanso-card__image">
+                                {%- if product.featured_media != blank -%}
+                                  <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+                                {%- else -%}
+                                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                {%- endif -%}
+                              </div>
+                              <div class="hanso-card__info">
+                                {%- if block.settings.badge != blank -%}
+                                  <span class="hanso-card__badge">{{ block.settings.badge }}</span>
+                                {%- endif -%}
+                                <h3 class="hanso-card__title">
+                                  {%- if product != blank -%}{{ product.title }}{%- else -%}{{ block.settings.custom_title | default: "Product Title" }}{%- endif -%}
+                                </h3>
+                                <a href="{{ product.url | default: '#' }}" class="hanso-btn hanso-btn--primary">Shop Now</a>
+                              </div>
+                            </div>
+
+                            <!-- Right: Features / Specs Grid & Description -->
+                            <div class="hanso-card__right">
+                              <div class="hanso-card__specs">
+                                {%- if block.settings.spec_1 != blank -%}
+                                  <div class="hanso-spec-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                    <span>{{ block.settings.spec_1 }}</span>
+                                  </div>
+                                {%- endif -%}
+
+                                {%- if block.settings.spec_2 != blank -%}
+                                  <div class="hanso-spec-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
+                                    <span>{{ block.settings.spec_2 }}</span>
+                                  </div>
+                                {%- endif -%}
+
+                                {%- if block.settings.spec_3 != blank -%}
+                                  <div class="hanso-spec-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                                    <span>{{ block.settings.spec_3 }}</span>
+                                  </div>
+                                {%- endif -%}
+                              </div>
+
+                              <p class="hanso-card__desc">
+                                {%- if block.settings.description != blank -%}
+                                  {{ block.settings.description }}
+                                {%- else -%}
+                                  {{ product.description | strip_html | truncatewords: 25 }}
+                                {%- endif -%}
+                              </p>
+                            </div>
+
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+
+                    <!-- Bottom Bar (Compare / Learn buttons) -->
+                    <div class="hanso-menu-footer">
+                      <div class="hanso-menu-footer__text">
+                        <p><strong>Don't know which is yours?</strong> Compare them side by side, or learn what makes us built to outlast generations.</p>
+                      </div>
+                      <div class="hanso-menu-footer__btns">
+                        <a href="/pages/compare" class="hanso-btn hanso-btn--secondary">Compare Models</a>
+                        <a href="/pages/about" class="hanso-btn hanso-btn--accent">Learn More</a>
+                      </div>
+                    </div>
+
+                  {%- else -%}
+                    
+                    {%- comment -%} Fallback Standard Megamenu Links {%- endcomment -%}
+                    <ul class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}" role="list">
+                      {%- for childlink in link.links -%}
+                        <li>
+                          <a id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}" href="{{ childlink.url }}" class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}">
+                            {{ childlink.title | escape }}
+                          </a>
+                          {%- if childlink.links != blank -%}
+                            <ul class="list-unstyled" role="list">
+                              {%- for grandchildlink in childlink.links -%}
+                                <li>
+                                  <a id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}" href="{{ grandchildlink.url }}" class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}">
+                                    {{ grandchildlink.title | escape }}
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+
+                  {%- endif -%}
+
+                </div>
+              </div>
+            </details>
+          </header-menu>
+
+        {%- else -%}
+          <a id="HeaderMenu-{{ link.handle }}" href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset" {% if link.current %}aria-current="page"{% endif %}>
+            <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{- link.title | escape -}}</span>
+          </a>
+        {%- endif -%}
+
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+<style>
+  /* Hanso Megamenu Custom CSS */
+  .hanso-mega-menu-popup {
+    padding: 30px 0 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+
+  .hanso-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hanso-card {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+    align-items: center;
+    text-align: left;
+  }
+
+  .hanso-card:last-child {
+    border-bottom: none;
+  }
+
+  .hanso-card__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hanso-card__image {
+    width: 110px;
+    height: 90px;
+    flex-shrink: 0;
+    background: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .hanso-card__image img, .hanso-card__image svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hanso-card__badge {
+    display: inline-block;
+    background: #ecebe9;
+    color: #666;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .hanso-card__title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 2px 0 10px;
+    color: #111;
+  }
+
+  .hanso-btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .hanso-btn--primary {
+    background: #8b6b57;
+    color: #fff;
+  }
+
+  .hanso-card__right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hanso-card__specs {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .hanso-spec-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .hanso-card__desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Footer Section */
+  .hanso-menu-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e8e8e8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .hanso-menu-footer__text p {
+    margin: 0;
+    font-size: 13px;
+    color: #555;
+  }
+
+  .hanso-menu-footer__btns {
+    display: flex;
+    gap: 10px;
+  }
+
+  .hanso-btn--secondary {
+    background: #e5e7e4;
+    color: #222;
+  }
+
+  .hanso-btn--accent {
+    background: #8b6b57;
+    color: #fff;
+  }
+</style>

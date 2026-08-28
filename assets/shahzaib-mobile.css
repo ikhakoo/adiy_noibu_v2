@@ -1,0 +1,168 @@
+/*********************************************** NEW SCREEN ***********************************************/
+
+
+@media screen and (max-width: 1150px){
+    .consultant-page .banner__box .banner__heading{
+        font-size: 39px;
+    }
+}
+
+
+/*********************************************** NEW SCREEN ***********************************************/
+
+
+@media screen and (max-width: 990px){
+    .consultant-page.banner--desktop-transparent .banner__box{
+        max-width: 78%;
+    }
+    .sec1.consultant-page.banner--desktop-transparent .banner__box{
+        max-width: 100%;
+        padding-bottom: 0;
+    }
+    .text-comparison__header{
+        max-width: 100%;
+    }
+    .custom-multi-row .image-with-text__text-item .image-with-text__heading{
+        font-size: 24px;
+    }
+    .custom-multi-row .image-with-text__text-item .image-with-text__text{
+        font-size: 15px;
+    }
+    .custom-multi-row .image-with-text__text-item .multirow-card__sub-title{
+        font-size: 17px;
+    }
+    .custom-multi-row .image-with-text__text-item .multirow-card__sub-text{
+        font-size: 16px;
+    }
+}
+
+
+/*********************************************** NEW SCREEN ***********************************************/
+
+
+@media screen and (max-width: 749px){
+    .consultant-page.banner--desktop-transparent .banner__box{
+        max-width: 80%;
+    }
+    .shopify-section.section .consultant-page.banner .banner__content{
+        min-height: 50rem;
+        align-items: end;
+    }
+    .shopify-section.section .sec1.consultant-page.banner .banner__content{
+        min-height: 60rem;
+    }
+    .sec1.consultant-page.banner--desktop-transparent .banner__box{
+        padding-bottom: 4rem;
+    }
+    .consultant-page .banner__box .banner__heading{
+        font-size: 32px;
+    }
+    .custom-multi-row.multirow .multirow__inner .image-with-text .image-with-text__grid{
+        flex-direction: column;
+    }
+    .custom-multi-row .image-with-text__grid .grid__item{
+        width:100%;
+    }
+    .custom-multi-row .image-with-text .grid__item img{
+        position: unset;
+    }
+    .consultant-icon-sec.multicolumn .title{
+        font-size: 30px;
+    }
+    
+    
+}
+
+
+/*********************************************** NEW SCREEN ***********************************************/
+
+
+@media screen and (max-width: 628px){
+    .sec1.consultant-page .sub-title.banner__text{
+        font-size: 15px;
+    }
+    .sec1.consultant-page .banner__box .banner__heading{
+        font-size: 26px;
+    }
+    .sec1.consultant-page .banner__box .below-heading.subtitle{
+        font-size: 17px;
+    }
+    .sec1.consultant-page .banner__box .main-body.banner__text {
+        font-size: 14px;
+    }
+    .sec1 .banner__features-list{
+        gap: 8px;
+    }
+    .sec1 .banner__feature-item{
+        font-size: 12px;
+    }
+    .consultant-icon-sec.multicolumn .title{
+        font-size: 26px;
+    }
+    .consultant-icon-sec.multicolumn .title:after {
+        top: 9rem;
+        width: 20%;
+    }
+    .consultant-icon-sec .multicolumn-list__item{
+        padding: 10px;
+    }
+    .consultant-icon-sec .multicolumn-card .multicolumn-card__info h3{
+        font-size: 16px;
+    }
+    .consultant-icon-sec .multicolumn-card .multicolumn-card__info p{
+        font-size:14px;
+        letter-spacing:0;
+    }
+    .shopify-section.section .consultant-icon-sec2.multicolumn .multicolumn-list .multicolumn-list__item .multicolumn-card__info{
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .consultant-icon-sec2 .multicolumn-card .multicolumn-card__info h3{
+        font-size: 17px;
+    }
+    .consultant-icon-sec2 .multicolumn-card .multicolumn-card__info .rte{
+        font-size: 14px;
+    }
+}
+
+
+
+/*********************************************** NEW SCREEN ***********************************************/
+
+
+@media screen and (max-width: 600px){ 
+    .consultant-page.banner--desktop-transparent .banner__box{
+        max-width: 100%;
+    }
+    .consultant-page .banner__box .banner__heading{
+        font-size: 26px;
+    }
+    .custom-multi-row .multirow-custom__title{
+        font-size: 30px;
+    }
+    .consultant-richtext .rich-text__blocks{
+        gap: 20px;
+    }
+    .consultant-richtext .rich-text__blocks .rich-text__heading{
+        font-size: 26px;
+    }
+    .consultant-richtext .rich-text__blocks .rich-text__text{
+        max-width: 100%;
+    }
+    .consultant-richtext .rich-text__blocks .rich-text__buttons a{
+        font-size: 15px;
+        padding: 12px 20px;
+    }
+    
+}
+
+
+
+/*********************************************** NEW SCREEN ***********************************************/
+
+
+@media screen and (max-width: 485px){ 
+    .shopify-section.section .sec1.consultant-page.banner .banner__content{
+        min-height: 67rem;
+    }
+}

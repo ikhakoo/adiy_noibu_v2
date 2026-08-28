@@ -1,0 +1,617 @@
+{%- style -%}
+  .reviews-wall-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding: 40px 0 40px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #111;
+  }
+
+  .reviews-container {
+    position: relative;
+  }
+
+  /* Header Box */
+  .custom-review-sec .reviews-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .custom-review-sec .reviews-title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+    text-align: left;
+  }
+
+  .custom-review-sec .rating-summary-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: #ffffff;
+    padding: 24px 32px;
+    border-radius: 16px;
+    /* max-width: 80%; */
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .custom-review-sec .rating-score-box {
+    text-align: left;
+  }
+
+  .custom-review-sec .rating-number {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+    color: #000;
+  }
+
+  .custom-review-sec .star-icons {
+    color: #00b67a;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .custom-review-sec .rating-subtext {
+    font-size: 13px;
+    color: #666;
+  }
+
+  .custom-review-sec .rating-bars {
+    flex: 1;
+    max-width: 320px;
+  }
+
+  .custom-review-sec .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+
+  .custom-review-sec .bar-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .custom-review-sec .bar-bg {
+    flex: 1;
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .custom-review-sec .bar-fill {
+    height: 100%;
+    background: #00b67a;
+    display: block !important;
+  }
+
+  .custom-review-sec .badge-box {
+    background: #00b67a;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Grid Layout & After Effect Gradient */
+  .custom-review-sec .reviews-grid-wrapper {
+    position: relative;
+    max-height: 580px;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .custom-review-sec .reviews-grid-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(to bottom, rgba(248, 248, 245, 0) 0%, {{ section.settings.bg_color }} 100%);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 4;
+  }
+
+  .custom-review-sec .reviews-grid-wrapper.is-expanded {
+    max-height: 5000px;
+  }
+
+  .custom-review-sec .reviews-grid-wrapper.is-expanded::after {
+    opacity: 0;
+  }
+
+  .custom-review-sec .reviews-flex-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .custom-review-sec .reviews-flex-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .custom-review-sec .rating-summary-card {
+      padding: 12px;
+      gap: 17px;
+      max-width: 100%;
+      flex-direction: column;
+    }
+    .custom-review-sec .rating-score-box {
+      text-align: center;
+    }
+    .custom-review-sec .rating-bars {
+      width: 100%;
+    }
+    .custom-review-sec .rating-number{
+      font-size: 35px;
+    }
+    .custom-review-sec .rating-subtext{
+      font-size: 11px;
+    }
+  }
+
+  .custom-review-sec .review-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Card Styling */
+  .custom-review-sec .card-box {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    position: relative;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .custom-review-sec .media-wrapper {
+    position: relative;
+    width: 100%;
+    background: #000;
+    overflow: hidden;
+    cursor: pointer; /* Entire video container is clickable */
+    border-radius:12px;
+  }
+
+  .custom-review-sec .media-wrapper.aspect-tall {
+    aspect-ratio: 9 / 14;
+  }
+
+  .custom-review-sec .media-wrapper.aspect-medium {
+    aspect-ratio: 9 / 11;
+  }
+
+  .custom-review-sec .media-wrapper video,
+  .custom-review-sec .media-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Play Button Icon Overlay */
+  .custom-review-sec .review-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    pointer-events: none; /* Allows click through to .media-wrapper */
+  }
+
+  .custom-review-sec .media-wrapper:hover .review-play-button {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: #ffffff;
+  }
+
+  .custom-review-sec .review-play-button::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 0 8px 14px;
+    border-color: transparent transparent transparent #111111;
+    margin-left: 3px;
+  }
+
+  .custom-review-sec .media-overlay-text {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-weight: 800;
+    font-size: 16px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    padding: 0 12px;
+    pointer-events: none;
+  }
+
+  .custom-review-sec .review-details {
+    padding: 14px 16px;
+    background: #ECEBEB;
+    border-radius: 12px;
+  }
+
+  .custom-review-sec .user-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .custom-review-sec .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .custom-review-sec .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .custom-review-sec .user-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .custom-review-sec .user-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.2;
+  }
+
+  .custom-review-sec .review-date {
+    font-size: 11px;
+    color: #777;
+    margin-top: 2px;
+  }
+
+  .custom-review-sec .social-icon {
+    width: 20px;
+    height: 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-review-sec .social-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .custom-review-sec .review-text {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.45;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+  }
+
+  .custom-review-sec .load-more-action-box {
+    text-align: center;
+    margin-top: 15px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .custom-review-sec .load-more-btn {
+    background-color: #1c4d39;
+    color: #ffffff;
+    border: none;
+    padding: 12px 36px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+  }
+
+  .custom-review-sec .load-more-btn:hover {
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+  }
+{%- endstyle -%}
+
+<div class="reviews-wall-section-{{ section.id }}">
+  <div class="custom-review-sec reviews-container page-width">
+    
+    <!-- Header Card -->
+    <div class="reviews-header">
+      <h2 class="reviews-title">{{ section.settings.heading }}</h2>
+      
+      <div class="rating-summary-card">
+        <div class="rating-score-box">
+          <div class="rating-number">{{ section.settings.rating_score }}</div>
+          <div class="star-icons">★★★★★</div>
+          <div class="rating-subtext">
+            4.8/5 stars <span class="dynamic-review-count-global">1,746</span> reviews
+          </div>
+        </div>
+
+        <div class="rating-bars">
+          <div class="bar-row"><span>5 stars</span><div class="bar-bg"><div class="bar-fill" style="width: 84%;"></div></div><span>84%</span></div>
+          <div class="bar-row"><span>4 stars</span><div class="bar-bg"><div class="bar-fill" style="width: 9%;"></div></div><span>9%</span></div>
+          <div class="bar-row"><span>3 stars</span><div class="bar-bg"><div class="bar-fill" style="width: 3%;"></div></div><span>3%</span></div>
+          <div class="bar-row"><span>2 stars</span><div class="bar-bg"><div class="bar-fill" style="width: 2%;"></div></div><span>2%</span></div>
+          <div class="bar-row"><span>1 stars</span><div class="bar-bg"><div class="bar-fill" style="width: 2%;"></div></div><span>2%</span></div>
+        </div>
+
+        <div class="badge-box">
+          <small style="font-weight: normal; opacity: 0.9;">Trust Score</small><br>
+          <strong>{{ section.settings.badge_label }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-Column Wall Grid -->
+    <div class="reviews-grid-wrapper" id="ReviewsGrid-{{ section.id }}">
+      <div class="reviews-flex-grid">
+        
+        {%- for i in (1..3) -%}
+          {%- assign col_name = 'col' | append: i -%}
+          <div class="review-column">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.column == col_name -%}
+                <div class="card-box" {{ block.shopify_attributes }}>
+                  {%- if block.settings.video != blank -%}
+                    <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
+                      {{ block.settings.video | video_tag: image_size: '600x', loop: true, muted: true, playsinline: true, preload: 'metadata' }}
+                      <div class="review-play-button"></div>
+                      {%- if block.settings.overlay_text != blank -%}
+                        <div class="media-overlay-text">{{ block.settings.overlay_text }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.review_text != blank or block.settings.author_name != blank -%}
+                    <div class="review-details">
+                      <div class="user-header">
+                        <div class="user-info">
+                          {%- if block.settings.author_image != blank -%}
+                            <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="{{ block.settings.author_name }}">
+                          {%- endif -%}
+                          <div class="user-meta">
+                            <span class="user-name">{{ block.settings.author_name }}</span>
+                            {%- if block.settings.review_date != blank -%}
+                              <span class="review-date">{{ block.settings.review_date }}</span>
+                            {%- endif -%}
+                          </div>
+                        </div>
+
+                        {%- if block.settings.social_icon != 'none' -%}
+                          <div class="social-icon">
+                            {%- case block.settings.social_icon -%}
+                              {%- when 'facebook' -%}
+                                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                              {%- when 'x' -%}
+                                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                              {%- when 'instagram' -%}
+                                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                              {%- when 'youtube' -%}
+                                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            {%- endcase -%}
+                          </div>
+                        {%- endif -%}
+                      </div>
+
+                      {%- if block.settings.review_text != blank -%}
+                        <p class="review-text">{{ block.settings.review_text }}</p>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+
+      </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-action-box">
+      <button class="load-more-btn" id="LoadMoreBtn-{{ section.id }}" data-expanded="false">Load More</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Play/Pause Entire Video Wrapper Click Handler
+    const mediaWrappers = document.querySelectorAll('.reviews-wall-section-{{ section.id }} .media-wrapper');
+    mediaWrappers.forEach(wrapper => {
+      wrapper.addEventListener('click', function() {
+        const video = this.querySelector('video');
+        const playBtn = this.querySelector('.review-play-button');
+
+        if (video) {
+          if (video.paused) {
+            video.muted = false;
+            video.play();
+            if (playBtn) playBtn.style.opacity = '0';
+          } else {
+            video.pause();
+            if (playBtn) playBtn.style.opacity = '1';
+          }
+        }
+      });
+    });
+
+    // Expand/Collapse Wall Handler
+    const toggleBtn = document.getElementById('LoadMoreBtn-{{ section.id }}');
+    const gridWrapper = document.getElementById('ReviewsGrid-{{ section.id }}');
+
+    if (toggleBtn && gridWrapper) {
+      toggleBtn.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('data-expanded') === 'true';
+
+        if (!isExpanded) {
+          gridWrapper.classList.add('is-expanded');
+          this.textContent = 'View Less';
+          this.setAttribute('data-expanded', 'true');
+        } else {
+          gridWrapper.classList.remove('is-expanded');
+          this.textContent = 'Load More';
+          this.setAttribute('data-expanded', 'false');
+          gridWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Verified Reviews Wall",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Rated Excellent by Verified Buyers"
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating Score",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge Text",
+      "default": "Excellent"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f8f8f5"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Review Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Select Column",
+          "options": [
+            { "value": "col1", "label": "Column 1 (Left)" },
+            { "value": "col2", "label": "Column 2 (Center)" },
+            { "value": "col3", "label": "Column 3 (Right)" }
+          ],
+          "default": "col1"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify Upload)"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Video Size Style",
+          "options": [
+            { "value": "tall", "label": "Tall (Primary Video)" },
+            { "value": "medium", "label": "Medium (Compact Video)" }
+          ],
+          "default": "tall"
+        },
+        {
+          "type": "text",
+          "id": "overlay_text",
+          "label": "Overlay Text on Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "User Profile Avatar"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Customer Name",
+          "default": "KaiB"
+        },
+        {
+          "type": "text",
+          "id": "review_date",
+          "label": "Date / Subtext",
+          "default": "22 Jul"
+        },
+        {
+          "type": "select",
+          "id": "social_icon",
+          "label": "Social Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "facebook", "label": "Facebook" },
+            { "value": "x", "label": "X (Twitter)" },
+            { "value": "instagram", "label": "Instagram" },
+            { "value": "youtube", "label": "YouTube" }
+          ],
+          "default": "facebook"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Description Text",
+          "default": "KaiB was phenomenal with our dog, Max! We were first-time users of a pet-sitting service..."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Verified Reviews Wall"
+    }
+  ]
+}
+{% endschema %}

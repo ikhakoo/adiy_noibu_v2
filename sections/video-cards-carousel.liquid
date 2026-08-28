@@ -1,0 +1,585 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .video-carousel__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .video-carousel__heading {
+    font-size: 3rem;
+    font-weight: 400;
+    margin: 0 0 0.8rem 0;
+    line-height: 1.2;
+    color: #111;
+  }
+
+  .video-carousel__subheading {
+    font-size: 1.4rem;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Slider Track */
+  .video-carousel__track-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .video-carousel__track-wrapper.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+
+  .video-carousel__track {
+    display: flex;
+    gap: 1.8rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Video Card */
+  .video-carousel__card {
+    position: relative;
+    flex: 0 0 280px;
+    height: 480px;
+    border-radius: 90px;
+    overflow: hidden;
+    background-color: #000000;
+  }
+
+  @media screen and (min-width: 750px) {
+    .video-carousel__card {
+      flex: 0 0 310px;
+      height: 520px;
+    }
+  }
+
+  .video-carousel__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Center Play/Pause & Loader Overlay */
+  .video-carousel__play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    pointer-events: none; /* Pointer click passes to card container */
+  }
+
+  .video-carousel__card.is-paused .video-carousel__play-btn,
+  .video-carousel__card.is-buffering .video-carousel__play-btn {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .video-carousel__play-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #000;
+    margin-left: 2px;
+  }
+
+  .video-carousel__card.is-buffering .video-carousel__play-btn svg {
+    display: none;
+  }
+
+  .video-carousel__card.is-buffering .video-carousel__play-btn::after {
+    content: "";
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(0,0,0,0.2);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: v-spin 0.8s linear infinite;
+  }
+
+  @keyframes v-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* SCROLLBAR STYLES */
+  .scrollbar-navigation {
+    margin-top: 2.5rem;
+    width: 100%;
+  }
+
+  .scrollbar-track-wrapper {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 40px;
+    background-color: #1b4d3e;
+    border-radius: 9999px;
+    cursor: grab;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .scrollbar-thumb:active,
+  .scrollbar-thumb.is-dragging {
+    cursor: grabbing;
+    background-color: #0d2a22;
+  }
+
+  .scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .video-carousel__heading{
+      font-size: 26px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#ffffff' }};">
+  <div class="page-width">
+    
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="video-carousel__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="video-carousel__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="video-carousel__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Video Track Wrapper -->
+    <div class="video-carousel__track-wrapper js-video-track-wrapper">
+      <div class="video-carousel__track">
+        {%- for block in section.blocks -%}
+          <div class="video-carousel__card js-video-card" {{ block.shopify_attributes }}>
+            
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: 
+                autoplay: false, 
+                loop: true, 
+                muted: true, 
+                playsinline: true, 
+                controls: false, 
+                class: 'video-carousel__video js-video-element' 
+              }}
+            {%- elsif block.settings.external_video_url != blank -%}
+              <video 
+                src="{{ block.settings.external_video_url }}" 
+                class="video-carousel__video js-video-element" 
+                loop 
+                muted 
+                playsinline
+              ></video>
+            {%- else -%}
+              <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#fff; background:#222;">
+                Upload Video
+              </div>
+            {%- endif -%}
+
+            <button class="video-carousel__play-btn js-play-btn" aria-label="Play / Pause Video">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Scrollbar Navigation -->
+    <div class="scrollbar-navigation">
+      <div class="scrollbar-track-wrapper js-scroll-bar">
+        <button 
+          type="button" 
+          class="scrollbar-thumb js-scroll-thumb" 
+          aria-label="Scroll thumb"
+          style="left: 0%; width: 25%;"
+        >
+          <span class="scrollbar-thumb-hitbox"></span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.section-{{ section.id }}-padding');
+    if (!sectionContainer) return;
+
+    const trackWrapper = sectionContainer.querySelector('.js-video-track-wrapper');
+    const scrollBarTrack = sectionContainer.querySelector('.js-scroll-bar');
+    const scrollThumb = sectionContainer.querySelector('.js-scroll-thumb');
+    const cards = sectionContainer.querySelectorAll('.js-video-card');
+
+    if (!trackWrapper || !scrollBarTrack || !scrollThumb) return;
+
+    let isThumbDragging = false;
+    let dragStartX = 0;
+    let initialScrollLeft = 0;
+    let rAFId = null;
+
+    /* -------------------------------------------------------------
+       1. Dynamic Thumb Sync
+    ------------------------------------------------------------- */
+    function updateThumbUI() {
+      const scrollWidth = trackWrapper.scrollWidth;
+      const clientWidth = trackWrapper.clientWidth;
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (maxScrollLeft <= 0) {
+        scrollThumb.style.width = '100%';
+        scrollThumb.style.left = '0%';
+        return;
+      }
+
+      const thumbWidthRatio = clientWidth / scrollWidth;
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 10);
+      const maxThumbLeftPercent = 100 - thumbWidthPercent;
+      
+      const currentScrollRatio = trackWrapper.scrollLeft / maxScrollLeft;
+      const currentLeftPercent = currentScrollRatio * maxThumbLeftPercent;
+
+      scrollThumb.style.width = thumbWidthPercent + '%';
+      scrollThumb.style.left = currentLeftPercent + '%';
+    }
+
+    function onScroll() {
+      if (!isThumbDragging) {
+        requestAnimationFrame(updateThumbUI);
+      }
+    }
+
+    trackWrapper.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateThumbUI);
+    updateThumbUI();
+
+    /* -------------------------------------------------------------
+       2. Pointer Capture Dragging
+    ------------------------------------------------------------- */
+    scrollThumb.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      isThumbDragging = true;
+      dragStartX = e.clientX;
+      initialScrollLeft = trackWrapper.scrollLeft;
+
+      trackWrapper.style.scrollBehavior = 'auto';
+      scrollThumb.classList.add('is-dragging');
+      scrollThumb.setPointerCapture(e.pointerId);
+    });
+
+    scrollThumb.addEventListener('pointermove', (e) => {
+      if (!isThumbDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const trackWidth = scrollBarTrack.clientWidth;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      if (maxThumbMove > 0) {
+        const scrollDelta = (deltaX / maxThumbMove) * maxContainerScroll;
+        const targetScrollLeft = initialScrollLeft + scrollDelta;
+
+        if (rAFId) cancelAnimationFrame(rAFId);
+        rAFId = requestAnimationFrame(() => {
+          trackWrapper.scrollLeft = targetScrollLeft;
+          updateThumbUI();
+        });
+      }
+    });
+
+    const releasePointer = (e) => {
+      if (isThumbDragging) {
+        isThumbDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        scrollThumb.classList.remove('is-dragging');
+        
+        if (rAFId) cancelAnimationFrame(rAFId);
+
+        try {
+          scrollThumb.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+      }
+    };
+
+    scrollThumb.addEventListener('pointerup', releasePointer);
+    scrollThumb.addEventListener('pointercancel', releasePointer);
+
+    /* -------------------------------------------------------------
+       3. Instant Track Click
+    ------------------------------------------------------------- */
+    scrollBarTrack.addEventListener('click', (e) => {
+      if (e.target.closest('.js-scroll-thumb')) return;
+
+      const trackRect = scrollBarTrack.getBoundingClientRect();
+      const clickX = e.clientX - trackRect.left;
+      const thumbWidth = scrollThumb.offsetWidth;
+      
+      let targetLeft = clickX - (thumbWidth / 2);
+      const maxThumbMove = trackRect.width - thumbWidth;
+
+      if (targetLeft < 0) targetLeft = 0;
+      if (targetLeft > maxThumbMove) targetLeft = maxThumbMove;
+
+      const clickRatio = targetLeft / maxThumbMove;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      trackWrapper.style.scrollBehavior = 'smooth';
+      trackWrapper.scrollTo({
+        left: clickRatio * maxContainerScroll,
+        behavior: 'smooth'
+      });
+    });
+
+    /* -------------------------------------------------------------
+       4. Track Mouse Dragging
+    ------------------------------------------------------------- */
+    let isTrackDragging = false;
+    let startX, scrollLeftPos;
+
+    trackWrapper.addEventListener('mousedown', (e) => {
+      if (scrollBarTrack.contains(e.target)) return;
+      isTrackDragging = true;
+      trackWrapper.style.scrollBehavior = 'auto';
+      trackWrapper.classList.add('is-dragging');
+      startX = e.pageX - trackWrapper.offsetLeft;
+      scrollLeftPos = trackWrapper.scrollLeft;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isTrackDragging) {
+        isTrackDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        trackWrapper.classList.remove('is-dragging');
+      }
+    });
+
+    trackWrapper.addEventListener('mousemove', (e) => {
+      if (!isTrackDragging) return;
+      e.preventDefault();
+      const x = e.pageX - trackWrapper.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      trackWrapper.scrollLeft = scrollLeftPos - walk;
+    });
+
+    /* -------------------------------------------------------------
+       5. Single Active Playback, Autoplay First & Hover Controls
+    ------------------------------------------------------------- */
+    function pauseAllOtherVideos(currentVideo) {
+      cards.forEach(card => {
+        const video = card.querySelector('.js-video-element');
+        if (video && video !== currentVideo) {
+          video.pause();
+          video.controls = false;
+          card.classList.add('is-paused');
+        }
+      });
+    }
+
+    cards.forEach((card, index) => {
+      const video = card.querySelector('.js-video-element');
+      if (!video) return;
+
+      // Event Listeners for UI state update
+      video.addEventListener('play', () => {
+        card.classList.remove('is-paused', 'is-buffering');
+      });
+
+      video.addEventListener('pause', () => {
+        card.classList.add('is-paused');
+        video.controls = false;
+      });
+
+      video.addEventListener('waiting', () => {
+        card.classList.add('is-buffering');
+      });
+
+      video.addEventListener('playing', () => {
+        card.classList.remove('is-buffering', 'is-paused');
+      });
+
+      // Hover control logic: Hover par tabhi controls aayein agar video playing state me ho
+      card.addEventListener('mouseenter', () => {
+        if (!video.paused) {
+          video.controls = true;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        video.controls = false;
+      });
+
+      // Click Play / Pause functionality
+      card.addEventListener('click', (e) => {
+        // Dragging ke waqt trigger na ho
+        if (isTrackDragging || isThumbDragging) return;
+
+        // Controls par click ignore karne ke liye check
+        if (e.target === video && video.controls) return;
+
+        if (video.paused) {
+          pauseAllOtherVideos(video);
+          video.play().then(() => {
+            if (card.matches(':hover')) {
+              video.controls = true;
+            }
+          }).catch(() => {});
+        } else {
+          video.pause();
+          video.controls = false;
+        }
+      });
+
+      // 1st Video Autoplay Setup
+      if (index === 0) {
+        const startPromise = video.play();
+        if (startPromise !== undefined) {
+          startPromise.catch(() => {
+            card.classList.add('is-paused');
+          });
+        }
+      } else {
+        video.pause();
+        card.classList.add('is-paused');
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Video Carousel Slider",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Outside Feels Different Now."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Your backyard was always part of your home. Now it finally feels like it."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_item",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify Hosted Video"
+        },
+        {
+          "type": "url",
+          "id": "external_video_url",
+          "label": "Direct MP4 Video URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Carousel Slider",
+      "blocks": [
+        { "type": "video_item" },
+        { "type": "video_item" },
+        { "type": "video_item" },
+        { "type": "video_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

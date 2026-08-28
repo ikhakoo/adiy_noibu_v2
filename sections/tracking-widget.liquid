@@ -1,0 +1,422 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .tracking-widget-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: inherit;
+    text-align: center;
+  }
+
+  .tracking-widget__container {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tracking-widget__logo-wrapper {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .tracking-widget__logo {
+    display: block;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .tracking-widget__subtext {
+    font-size: 15px;
+    line-height: 1.4;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 28px;
+    max-width: 500px;
+  }
+
+  .tracking-widget__subtext p {
+    margin: 0;
+  }
+
+  .tracking-widget__form {
+    width: 100%;
+    max-width: 520px;
+    margin-bottom: 80px;
+  }
+
+  .tracking-widget__input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .tracking-widget__input {
+    flex: 1;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid #103254;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+  }
+
+  .tracking-widget__input:focus {
+    border-color: #002B49;
+    box-shadow: 0 0 0 1px #002B49;
+  }
+
+  .tracking-widget__input::placeholder {
+    color: #666666;
+  }
+
+  .tracking-widget__button {
+    height: 44px;
+    padding: 0 28px;
+    background-color: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_text_color }};
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tracking-widget__button:hover {
+    opacity: 0.92;
+  }
+
+  .tracking-widget__footer-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555555;
+    max-width: 600px;
+    margin-top: 20px;
+  }
+
+  .tracking-widget__footer-text p {
+    margin: 0;
+  }
+
+  /* Smooth Slide Up Animation for Stage Sections */
+  .stage-1-section,
+  .stage-2-section,
+  .stage-3-section,
+  .stage-section-wrapper {
+    display: none !important;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .stage-1-section.show-stage,
+  .stage-2-section.show-stage,
+  .stage-3-section.show-stage,
+  .stage-section-wrapper.show-stage {
+    display: block !important;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tracking-widget-container.hide-widget {
+    display: none !important;
+  }
+
+  /* Fixed Corner Back Button */
+  .stage-back-btn {
+    position: absolute;
+    top: 24px;
+    left: 3rem;
+    z-index: 99999;
+    background: #ffffff;
+    color: #111827;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .stage-back-btn:hover {
+    background: #f3f4f6;
+    transform: translateY(-2px);
+  }
+
+  @media screen and (max-width: 480px) {
+    .tracking-widget__input-group {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tracking-widget__input,
+    .tracking-widget__button {
+      width: 100%;
+    }
+  }
+{%- endstyle -%}
+
+<!-- Floating Corner Back Button -->
+<button id="stageBackBtn" class="stage-back-btn" onclick="resetTrackingView()">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <path d="M19 12H5M12 19l-7-7 7-7"/>
+  </svg>
+  Back to Search
+</button>
+
+<div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding tracking-widget-container">
+  <div class="page-width page-width--narrow">
+    <div class="tracking-widget__container">
+      {%- if section.settings.logo != blank -%}
+        <div class="tracking-widget__logo-wrapper">
+          <img
+            src="{{ section.settings.logo | image_url: width: 600 }}"
+            alt="{{ section.settings.logo.alt | escape }}"
+            loading="lazy"
+            width="{{ section.settings.logo_width }}"
+            height="auto"
+            class="tracking-widget__logo"
+            style="max-width: {{ section.settings.logo_width }}px;"
+          >
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.subtext != blank -%}
+        <div class="tracking-widget__subtext">
+          {{ section.settings.subtext }}
+        </div>
+      {%- endif -%}
+
+      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" onsubmit="handleTrackingSubmit(event)">
+        <div class="tracking-widget__input-group">
+          <input
+            type="text"
+            id="TrackingInput-{{ section.id }}"
+            class="tracking-widget__input"
+            placeholder="{{ section.settings.placeholder_text }}"
+            required
+            aria-label="{{ section.settings.placeholder_text }}"
+          >
+          <button type="submit" class="tracking-widget__button">
+            {{ section.settings.button_text }}
+          </button>
+        </div>
+      </form>
+
+      {%- if section.settings.footer_text != blank -%}
+        <div class="tracking-widget__footer-text">
+          {{ section.settings.footer_text }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  async function handleTrackingSubmit(event) {
+    event.preventDefault();
+
+    const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
+    const rawValue = inputElement ? inputElement.value.trim() : '';
+    if (!rawValue) return;
+
+    const cleanOrderNum = rawValue.replace('#', '');
+    console.log(`%c 🔍 Fetching Order: #${cleanOrderNum}...`, "color: #3b82f6; font-weight: bold;");
+
+    try {
+      // Shopify App Proxy route (CORS-free & Secure)
+      const proxyUrl = `/apps/order-tracker/api/track-order?order=${cleanOrderNum}`;
+      const response = await fetch(proxyUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Server status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.success) {
+        alert(`Order #${cleanOrderNum} not found in store!`);
+        return;
+      }
+
+      console.log("%c 📦 Live Order Data:", "color: #22c55e; font-weight: bold;");
+      console.table({
+        "Order": data.orderNumber,
+        "Customer": data.customerName,
+        "Fulfillment": data.fulfillmentStatus,
+        "Stage": `Stage ${data.stage}`
+      });
+
+      // UI Stage Updates
+      const trackingWidget = document.getElementById('trackingWidgetContainer');
+      if (trackingWidget) trackingWidget.classList.add('hide-widget');
+
+      const backBtn = document.getElementById('stageBackBtn');
+      if (backBtn) backBtn.style.display = 'flex';
+
+      document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
+        .forEach(s => s.classList.remove('show-stage'));
+
+      const targetStage = document.querySelector(`.stage-${data.stage}-section`) || document.querySelector('.stage-section-wrapper');
+      if (targetStage) {
+        targetStage.classList.add('show-stage');
+        targetStage.scrollIntoView({ behavior: 'smooth' });
+      }
+
+    } catch (error) {
+      console.error("Tracking Error:", error);
+      alert("Error fetching order status. Please verify the order number.");
+    }
+  }
+
+  function resetTrackingView() {
+    document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
+      .forEach(stage => stage.classList.remove('show-stage'));
+
+    const backBtn = document.getElementById('stageBackBtn');
+    if (backBtn) backBtn.style.display = 'none';
+
+    const trackingWidget = document.getElementById('trackingWidgetContainer');
+    if (trackingWidget) trackingWidget.classList.remove('hide-widget');
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Tracking Widget",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 100,
+      "max": 400,
+      "step": 10,
+      "default": 260,
+      "unit": "px",
+      "label": "Logo Width"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>To view the most up-to-date status of your shipment, enter your tracking number below.</p>"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Input Placeholder",
+      "default": "enter tracking number"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Track"
+    },
+    {
+      "type": "text",
+      "id": "tracking_url",
+      "label": "Tracking URL Template",
+      "info": "Leave empty for default."
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "<p>For any questions, call A-DIY Control Tower at +1 (786) 358-2872 or email us at updates@a-diy.com</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#002B49"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#002B49"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tracking Widget"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,320 @@
+{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Custom Styles for Features Design */
+  .feature-section__header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3.5rem auto;
+  }
+
+  .feature-section__title {
+    margin: 0 0 1.2rem 0;
+    font-size: 36px;
+    font-weight: 600;
+  }
+
+  .feature-section__subheading {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #5E5E5E;
+  }
+
+  .feature-section__divider {
+    width: 20%;
+    height: 4px;
+    background-color: #194636;
+    margin: 3rem auto 5rem;
+    border: none;
+    display: block !important;
+  }
+
+  .feature-section__container {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .feature-section__media {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .feature-section__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .feature-section__content-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+  }
+
+  .feature-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .feature-block__title {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+    color: #20221D;
+    line-height: 1.3;
+  }
+
+  .feature-block__text {
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 0;
+    color: #4F453F;
+    letter-spacing: 0;
+  }
+
+  @media screen and (max-width: 1350px) {
+    .feature-section__content-col{
+      width: 60%;
+    }
+    .feature-section__media-col{
+      width: 40%;
+    }
+    .feature-block__title {
+      font-size: 22px;
+    }
+    .feature-block__text{
+      font-size: 17px;
+    }
+    .feature-section__content-col{
+      gap: 10px;
+    }
+  }
+
+  @media screen and (max-width: 1100px){
+    .feature-section__container{
+      flex-direction: column-reverse;
+    }
+    .feature-section__content-col,
+    .feature-section__media-col{
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 749px){
+    .feature-section__title{
+      font-size: 30px;
+    }
+  }
+  
+
+
+{%- endstyle -%}
+
+<div class="feature-section section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }}">
+  <div class="page-width">
+    
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="feature-section__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="feature-section__title inline-richtext">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <div class="feature-section__subheading rte">
+            {{ section.settings.subheading }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_header_line -%}
+          <div class="feature-section__divider"></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="feature-section__container">
+      
+      {%- comment -%} Left Column: Main Image {%- endcomment -%}
+      <div class="feature-section__media-col">
+        <div class="feature-section__media">
+          {%- if section.settings.image != blank -%}
+            {{
+              section.settings.image
+              | image_url: width: 1200
+              | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '375, 550, 750, 1100, 1200'
+            }}
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Right Column: Features List Blocks {%- endcomment -%}
+      <div class="feature-section__content-col">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'feature_item' -%}
+              <div class="feature-block" {{ block.shopify_attributes }}>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="feature-block__title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <p class="feature-block__text">{{ block.settings.text }}</p>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with Feature List",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "What If Building Your Deck Felt Different?"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Section Subheading",
+      "default": "<p>Imagine a deck-building experience that's designed around simplicity—not complexity. Instead of spending weeks planning, sourcing materials, and second-guessing every decision, imagine a system that helps you move confidently from delivery to completion.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header_line",
+      "label": "Show Decorative Line Under Subheading",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Side Image"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_item",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "One complete deck system"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Professionally engineered components designed to work together."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Feature List",
+      "blocks": [
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "One complete deck system",
+            "text": "Professionally engineered components designed to work together."
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "Clear step-by-step guidance",
+            "text": "Easy-to-follow 3D instructions that keep every stage organized."
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "Less planning, more building",
+            "text": "Spend less time figuring things out and more time making progress."
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "Fewer trips and fewer surprises",
+            "text": "Everything arrives together to help streamline your project."
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "A rewarding DIY experience",
+            "text": "Build a beautiful outdoor space with confidence using a standard residential power drill."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

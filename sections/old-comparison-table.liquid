@@ -1,0 +1,528 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .comparison-table__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .comparison-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .comparison-table-wrapper.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+
+  .comparison-table-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+    background-color: #fbfbfb;
+    border-spacing: 0;
+  }
+
+  /* Header Styling */
+  .comparison-table th {
+    background-color: #121212;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    padding: 18px 20px;
+    text-transform: uppercase;
+    border: none;
+    white-space: nowrap;
+  }
+
+  /* Highlight Column (Green Header & Tinted Body) */
+  .comparison-table th.col-highlight {
+    background-color: #426b58 !important;
+    display: flex;
+  }
+  .comparison-table th.col-highlight img{
+    height: auto;
+  }
+
+  .comparison-table td.col-highlight {
+    background-color: #edf3f0;
+    font-weight: 400;
+    color: #121212;
+  }
+
+  /* Table Body Styling */
+  .comparison-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #eef0f2;
+    color: #333333;
+    vertical-align: middle;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .comparison-table td.col-feature {
+    font-weight: 700;
+    color: #121212;
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* ALPINE/PRECISION-THEME STYLE SCROLLBAR */
+  .scrollbar-navigation {
+    margin-top: 2.5rem;
+    width: 100%;
+  }
+
+  .scrollbar-track-wrapper {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 40px;
+    background-color: #1b4d3e; /* Green Theme Color */
+    border-radius: 9999px;
+    cursor: grab;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .scrollbar-thumb:active,
+  .scrollbar-thumb.is-dragging {
+    cursor: grabbing;
+    background-color: #0d2a22;
+  }
+
+  /* Extended invisible touch/click hit box */
+  .scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+  }
+
+  /* Mobile Responsive Adjustments */
+  @media screen and (max-width: 749px) {
+    .comparison-table {
+      font-size: 11px;
+    }
+
+    .comparison-table th {
+      /* font-size: 10px;
+      padding: 12px 10px; */
+      letter-spacing: 0;
+    }
+
+    .comparison-table td {
+      /* padding: 10px 10px; */
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+{%- endstyle -%}
+
+<div class="comparison-table-section page-width section-{{ section.id }}-padding">
+  {%- if section.settings.heading != blank -%}
+    <div class="comparison-table__header">
+      <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+        {{ section.settings.heading }}
+      </h2>
+    </div>
+  {%- endif -%}
+
+  <div class="comparison-table-wrapper js-table-track-wrapper">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th class="col-feature">{{ section.settings.col_1_heading | default: 'FEATURE' }}</th>
+          {% comment %} <th class="col-highlight">{{ section.settings.col_2_heading | default: 'A-DIY SYSTEM' }}</th> {% endcomment %}
+          <th class="col-highlight">
+            {% if section.settings.col_2_image != blank %}
+              {{ section.settings.col_2_image | image_url: width: 100 | image_tag: alt: section.settings.col_2_image.alt }}
+            {% else %}
+              A-DIY SYSTEM
+            {% endif %}
+          </th>
+          <th class="col-standard">{{ section.settings.col_3_heading | default: 'TRADITIONAL CONTRACTOR' }}</th>
+          <th class="col-standard">{{ section.settings.col_4_heading | default: 'BIG BOX DIY' }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for block in section.blocks -%}
+          <tr {{ block.shopify_attributes }}>
+            <td class="col-feature">{{ block.settings.feature_name }}</td>
+            <td class="col-highlight">{{ block.settings.col_2_val }}</td>
+            <td class="col-standard">{{ block.settings.col_3_val }}</td>
+            <td class="col-standard">{{ block.settings.col_4_val }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Theme Standard Custom Scrollbar Navigation -->
+  <div class="scrollbar-navigation">
+    <div class="scrollbar-track-wrapper js-scroll-bar">
+      <button 
+        type="button" 
+        class="scrollbar-thumb js-scroll-thumb" 
+        aria-label="Scroll thumb"
+        style="left: 0%; width: 25%;"
+      >
+        <span class="scrollbar-thumb-hitbox"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.section-{{ section.id }}-padding');
+    if (!sectionContainer) return;
+
+    const trackWrapper = sectionContainer.querySelector('.js-table-track-wrapper');
+    const scrollBarTrack = sectionContainer.querySelector('.js-scroll-bar');
+    const scrollThumb = sectionContainer.querySelector('.js-scroll-thumb');
+
+    if (!trackWrapper || !scrollBarTrack || !scrollThumb) return;
+
+    let isThumbDragging = false;
+    let dragStartX = 0;
+    let initialScrollLeft = 0;
+    let rAFId = null;
+
+    /* -------------------------------------------------------------
+       1. Dynamic Thumb Sync (rAF Throttled)
+    ------------------------------------------------------------- */
+    function updateThumbUI() {
+      const scrollWidth = trackWrapper.scrollWidth;
+      const clientWidth = trackWrapper.clientWidth;
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (maxScrollLeft <= 0) {
+        scrollThumb.style.width = '100%';
+        scrollThumb.style.left = '0%';
+        scrollBarTrack.parentElement.style.display = 'none';
+        return;
+      } else {
+        scrollBarTrack.parentElement.style.display = 'block';
+      }
+
+      const thumbWidthRatio = clientWidth / scrollWidth;
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 10);
+      const maxThumbLeftPercent = 100 - thumbWidthPercent;
+      
+      const currentScrollRatio = trackWrapper.scrollLeft / maxScrollLeft;
+      const currentLeftPercent = currentScrollRatio * maxThumbLeftPercent;
+
+      scrollThumb.style.width = thumbWidthPercent + '%';
+      scrollThumb.style.left = currentLeftPercent + '%';
+    }
+
+    function onScroll() {
+      if (!isThumbDragging) {
+        requestAnimationFrame(updateThumbUI);
+      }
+    }
+
+    trackWrapper.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateThumbUI);
+    updateThumbUI();
+
+    /* -------------------------------------------------------------
+       2. Pointer Capture Dragging for Thumb
+    ------------------------------------------------------------- */
+    scrollThumb.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      isThumbDragging = true;
+      dragStartX = e.clientX;
+      initialScrollLeft = trackWrapper.scrollLeft;
+
+      trackWrapper.style.scrollBehavior = 'auto';
+      scrollThumb.classList.add('is-dragging');
+      scrollThumb.setPointerCapture(e.pointerId);
+    });
+
+    scrollThumb.addEventListener('pointermove', (e) => {
+      if (!isThumbDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const trackWidth = scrollBarTrack.clientWidth;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      if (maxThumbMove > 0) {
+        const scrollDelta = (deltaX / maxThumbMove) * maxContainerScroll;
+        const targetScrollLeft = initialScrollLeft + scrollDelta;
+
+        if (rAFId) cancelAnimationFrame(rAFId);
+        rAFId = requestAnimationFrame(() => {
+          trackWrapper.scrollLeft = targetScrollLeft;
+          updateThumbUI();
+        });
+      }
+    });
+
+    const releasePointer = (e) => {
+      if (isThumbDragging) {
+        isThumbDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        scrollThumb.classList.remove('is-dragging');
+        
+        if (rAFId) cancelAnimationFrame(rAFId);
+
+        try {
+          scrollThumb.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+      }
+    };
+
+    scrollThumb.addEventListener('pointerup', releasePointer);
+    scrollThumb.addEventListener('pointercancel', releasePointer);
+
+    /* -------------------------------------------------------------
+       3. Instant Smooth Track Click
+    ------------------------------------------------------------- */
+    scrollBarTrack.addEventListener('click', (e) => {
+      if (e.target.closest('.js-scroll-thumb')) return;
+
+      const trackRect = scrollBarTrack.getBoundingClientRect();
+      const clickX = e.clientX - trackRect.left;
+      const thumbWidth = scrollThumb.offsetWidth;
+      
+      let targetLeft = clickX - (thumbWidth / 2);
+      const maxThumbMove = trackRect.width - thumbWidth;
+
+      if (targetLeft < 0) targetLeft = 0;
+      if (targetLeft > maxThumbMove) targetLeft = maxThumbMove;
+
+      const clickRatio = targetLeft / maxThumbMove;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      trackWrapper.style.scrollBehavior = 'smooth';
+      trackWrapper.scrollTo({
+        left: clickRatio * maxContainerScroll,
+        behavior: 'smooth'
+      });
+    });
+
+    /* -------------------------------------------------------------
+       4. Track Mouse Dragging (Table Scroll via Click & Drag)
+    ------------------------------------------------------------- */
+    let isTrackDragging = false;
+    let startX, scrollLeftPos;
+
+    trackWrapper.addEventListener('mousedown', (e) => {
+      if (scrollBarTrack.contains(e.target)) return;
+      isTrackDragging = true;
+      trackWrapper.style.scrollBehavior = 'auto';
+      trackWrapper.classList.add('is-dragging');
+      startX = e.pageX - trackWrapper.offsetLeft;
+      scrollLeftPos = trackWrapper.scrollLeft;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isTrackDragging) {
+        isTrackDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        trackWrapper.classList.remove('is-dragging');
+      }
+    });
+
+    trackWrapper.addEventListener('mousemove', (e) => {
+      if (!isTrackDragging) return;
+      e.preventDefault();
+      const x = e.pageX - trackWrapper.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      trackWrapper.scrollLeft = scrollLeftPos - walk;
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Comparison Table",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "How We Compare"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading Size"
+    },
+    {
+      "type": "text",
+      "id": "col_1_heading",
+      "label": "Column 1 Header",
+      "default": "FEATURE"
+    },
+    {
+      "type": "image_picker",
+      "id": "col_2_image",
+      "label": "Column 2 Image (Highlight)"
+    },
+    {
+      "type": "text",
+      "id": "col_3_heading",
+      "label": "Column 3 Header",
+      "default": "TRADITIONAL CONTRACTOR"
+    },
+    {
+      "type": "text",
+      "id": "col_4_heading",
+      "label": "Column 4 Header",
+      "default": "BIG BOX DIY"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_name",
+          "label": "Feature Name",
+          "default": "Total Cost"
+        },
+        {
+          "type": "text",
+          "id": "col_2_val",
+          "label": "A-DIY System Value",
+          "default": "Middle Ground"
+        },
+        {
+          "type": "text",
+          "id": "col_3_val",
+          "label": "Traditional Contractor Value",
+          "default": "Highest (Labor + Markup)"
+        },
+        {
+          "type": "text",
+          "id": "col_4_val",
+          "label": "Big Box DIY Value",
+          "default": "Lowest Upfront"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Table",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Total Cost",
+            "col_2_val": "Middle Ground",
+            "col_3_val": "Highest (Labor + Markup)",
+            "col_4_val": "Lowest Upfront"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Installation Time",
+            "col_2_val": "1-2 Weekends",
+            "col_3_val": "Weeks to Months",
+            "col_4_val": "3-5 Weekends"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Design Precision",
+            "col_2_val": "Professional CAD Engineering",
+            "col_3_val": "Varies by Contractor",
+            "col_4_val": "Manual Calculations"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Long-term Warranty",
+            "col_2_val": "25-Year Structural",
+            "col_3_val": "1-5 Year Workmanship",
+            "col_4_val": "Limited Manufacturer Only"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

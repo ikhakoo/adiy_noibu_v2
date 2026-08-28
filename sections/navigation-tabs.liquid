@@ -1,0 +1,296 @@
+{%- style -%}
+  .custom-nav-tabs-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    width: 100%;
+  }
+
+  .custom-nav-tabs__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .custom-nav-tabs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: {{ section.settings.alignment }};
+    gap: {{ section.settings.gap }}px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .custom-nav-tabs__item {
+    display: inline-block;
+  }
+
+  .custom-nav-tabs__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    font-size: {{ section.settings.font_size }}px;
+    font-weight: {{ section.settings.font_weight }};
+    color: {{ section.settings.text_color }};
+    background-color: {{ section.settings.btn_bg }};
+    border: 1px solid {{ section.settings.border_color }};
+    border-radius: {{ section.settings.border_radius }}px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .custom-nav-tabs__link:hover {
+    color: {{ section.settings.active_text_color }};
+    background-color: {{ section.settings.active_bg_color }};
+    border-color: {{ section.settings.active_border_color }};
+  }
+
+  /* Active State Styling */
+  .custom-nav-tabs__link.is-active {
+    color: {{ section.settings.active_text_color }};
+    background-color: {{ section.settings.active_bg_color }};
+    border: 1.5px solid {{ section.settings.active_border_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-nav-tabs__list {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .custom-nav-tabs__list::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    .custom-nav-tabs__list::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="custom-nav-tabs-{{ section.id }}">
+  <div class="custom-nav-tabs__container">
+    <ul class="custom-nav-tabs__list" role="tablist">
+      {% for block in section.blocks %}
+        <li class="custom-nav-tabs__item" {{ block.shopify_attributes }}>
+          <a 
+            href="{{ block.settings.link | default: '#' }}" 
+            class="custom-nav-tabs__link{% if block.settings.is_active %} is-active{% endif %}"
+          >
+            {{ block.settings.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Navigation Tabs Menu",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Tab Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap Between Tabs",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Normal State Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "header",
+      "content": "Active / Hover State Colors"
+    },
+    {
+      "type": "color",
+      "id": "active_text_color",
+      "label": "Active Text Color",
+      "default": "#2d372e"
+    },
+    {
+      "type": "color",
+      "id": "active_bg_color",
+      "label": "Active Background",
+      "default": "#eceae2"
+    },
+    {
+      "type": "color",
+      "id": "active_border_color",
+      "label": "Active Border Color",
+      "default": "#2d372e"
+    },
+    {
+      "type": "header",
+      "content": "Style Customization"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Corner Radius",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Label",
+          "default": "Overview"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link Destination"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Set as Active Tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navigation Tabs Menu",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": { "title": "Overview", "is_active": true }
+        },
+        {
+          "type": "tab",
+          "settings": { "title": "Costs" }
+        },
+        {
+          "type": "tab",
+          "settings": { "title": "Contractors" }
+        },
+        {
+          "type": "tab",
+          "settings": { "title": "Permits" }
+        },
+        {
+          "type": "tab",
+          "settings": { "title": "Materials" }
+        },
+        {
+          "type": "tab",
+          "settings": { "title": "A-DIY" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

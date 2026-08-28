@@ -1,0 +1,465 @@
+{%- style -%}
+  .logo-bar-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .logo-bar-{{ section.id }} .logo-bar__container {
+    max-width: {{ section.settings.page_width }}px;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: {{ section.settings.bg_color }};
+    border-radius:15px;
+  }
+
+  /* Quote Container & Clean Height Setup */
+  .logo-bar-{{ section.id }} .logo-bar__quote-wrapper {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .logo-bar-{{ section.id }} .logo-bar__quote {
+    font-size: {{ section.settings.quote_font_size }}px;
+    color: {{ section.settings.quote_color }};
+    font-weight: 400;
+    max-width: 850px;
+    margin: 0;
+    line-height: 1.4;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    border: 0;
+  }
+
+  /* Directional Slide Initial States */
+  .logo-bar-{{ section.id }} .logo-bar__quote.enter-from-top {
+    transform: translate(-50%, -140%);
+    opacity: 0;
+  }
+
+  .logo-bar-{{ section.id }} .logo-bar__quote.enter-from-bottom {
+    transform: translate(-50%, 40%);
+    opacity: 0;
+  }
+
+  /* Active Quote In Position */
+  .logo-bar-{{ section.id }} .logo-bar__quote.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Slider Track Setup */
+  .logo-bar-{{ section.id }} .logo-bar__slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .logo-bar-{{ section.id }} .logo-bar__track {
+    display: flex;
+    align-items: center;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+  }
+
+  .logo-bar-{{ section.id }} .logo-item {
+    flex: 0 0 calc(100% / {{ section.settings.visible_desktop }});
+    max-width: calc(100% / {{ section.settings.visible_desktop }});
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px 15px;
+    box-sizing: border-box;
+  }
+
+  .logo-bar-{{ section.id }} .logo-img {
+    max-width: {{ section.settings.logo_max_width }}px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: {{ section.settings.logo_filter }};
+    opacity: 0.35;
+    transition: all 0.4s ease;
+  }
+
+  .logo-bar-{{ section.id }} .logo-item.is-active .logo-img {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.08);
+  }
+
+  @media screen and (max-width: 768px) {
+    .logo-bar-{{ section.id }} .logo-bar__quote {
+      font-size: {{ section.settings.quote_font_size | times: 0.85 }}px;
+    }
+
+    .logo-bar-{{ section.id }} .logo-item {
+      flex: 0 0 calc(100% / {{ section.settings.visible_mobile }});
+      max-width: calc(100% / {{ section.settings.visible_mobile }});
+    }
+  }
+{%- endstyle -%}
+
+<div class="page-width logo-bar-{{ section.id }}">
+  <div class="logo-bar__container">
+    
+    <!-- Quotes Container -->
+    <div class="logo-bar__quote-wrapper">
+      {%- for block in section.blocks -%}
+        <blockquote 
+          class="logo-bar__quote js-quote-{{ section.id }}{% if forloop.first %} is-active{% endif %}" 
+          data-index="{{ forloop.index0 }}"
+        >
+          {%- if block.settings.quote != blank -%}
+            "{{ block.settings.quote }}"
+          {%- endif -%}
+        </blockquote>
+      {%- endfor -%}
+    </div>
+
+    <!-- Logos Slider Track -->
+    <div class="logo-bar__slider-wrapper">
+      <div class="logo-bar__track js-track-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          <div 
+            class="logo-item js-logo-{{ section.id }}{% if forloop.first %} is-active{% endif %}" 
+            data-index="{{ forloop.index0 }}" 
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.logo_image != blank -%}
+              <img
+                src="{{ block.settings.logo_image | image_url: width: 300 }}"
+                alt="{{ block.settings.logo_image.alt | escape | default: 'Brand Logo' }}"
+                loading="lazy"
+                width="{{ block.settings.logo_image.width }}"
+                height="{{ block.settings.logo_image.height }}"
+                class="logo-img"
+              >
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionId = '{{ section.id }}';
+    const track = document.querySelector('.js-track-' + sectionId);
+    const logos = document.querySelectorAll('.js-logo-' + sectionId);
+    const quotes = document.querySelectorAll('.js-quote-' + sectionId);
+
+    if (!logos.length) return;
+
+    let currentIndex = 0;
+    const totalItems = logos.length;
+    const delay = {{ section.settings.auto_delay }} * 1000;
+    let autoTimer = null;
+
+    function getVisibleCount() {
+      return window.innerWidth <= 768 
+        ? {{ section.settings.visible_mobile }} 
+        : {{ section.settings.visible_desktop }};
+    }
+
+    function updateActiveState(nextIndex) {
+      if (nextIndex === currentIndex) return;
+
+      const isForward = nextIndex > currentIndex || (currentIndex === totalItems - 1 && nextIndex === 0);
+      currentIndex = nextIndex;
+
+      // Immediately hide/reset all quotes
+      quotes.forEach((quote) => {
+        quote.classList.remove('is-active', 'enter-from-top', 'enter-from-bottom');
+      });
+
+      // Target new active quote
+      const newQuote = quotes[currentIndex];
+      if (newQuote) {
+        // Set starting position for transition
+        if (isForward) {
+          newQuote.classList.add('enter-from-top');
+        } else {
+          newQuote.classList.add('enter-from-bottom');
+        }
+
+        // Trigger smooth slide in
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            newQuote.classList.add('is-active');
+            newQuote.classList.remove('enter-from-top', 'enter-from-bottom');
+          });
+        });
+      }
+
+      // Update Active Logo
+      logos.forEach((logo, i) => {
+        if (i === currentIndex) {
+          logo.classList.add('is-active');
+        } else {
+          logo.classList.remove('is-active');
+        }
+      });
+
+      // Slide Track Position
+      const visibleCount = getVisibleCount();
+      let slideIndex = currentIndex;
+
+      if (slideIndex > totalItems - visibleCount) {
+        slideIndex = totalItems - visibleCount;
+      }
+      if (slideIndex < 0) slideIndex = 0;
+
+      const itemWidthPercent = 100 / visibleCount;
+      track.style.transform = `translateX(-${slideIndex * itemWidthPercent}%)`;
+    }
+
+    function nextSlide() {
+      let nextIndex = currentIndex + 1;
+      if (nextIndex >= totalItems) {
+        nextIndex = 0;
+      }
+      updateActiveState(nextIndex);
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoTimer = setInterval(nextSlide, delay);
+    }
+
+    function stopAutoPlay() {
+      if (autoTimer) clearInterval(autoTimer);
+    }
+
+    // Hover Event Trigger (MouseEnter)
+    logos.forEach((logo) => {
+      logo.addEventListener('mouseenter', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        stopAutoPlay();
+        updateActiveState(index);
+      });
+
+      logo.addEventListener('mouseleave', function() {
+        startAutoPlay();
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      const visibleCount = getVisibleCount();
+      let slideIndex = currentIndex;
+      if (slideIndex > totalItems - visibleCount) slideIndex = totalItems - visibleCount;
+      if (slideIndex < 0) slideIndex = 0;
+      const itemWidthPercent = 100 / visibleCount;
+      track.style.transform = `translateX(-${slideIndex * itemWidthPercent}%)`;
+    });
+
+    startAutoPlay();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Logo Bar",
+  "tag": "section",
+  "class": "section-logo-bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider & Layout Limits"
+    },
+    {
+      "type": "range",
+      "id": "visible_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Visible Logos on Desktop",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "visible_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Visible Logos on Mobile",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "auto_delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto Switch Delay (Seconds)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "page_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Container Width",
+      "default": 1300
+    },
+    {
+      "type": "header",
+      "content": "Styles & Typography"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote Text Color",
+      "default": "#222222"
+    },
+    {
+      "type": "range",
+      "id": "quote_font_size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Quote Font Size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 60,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Max Width",
+      "default": 120
+    },
+    {
+      "type": "select",
+      "id": "logo_filter",
+      "label": "Inactive Logo Style",
+      "options": [
+        {
+          "value": "none",
+          "label": "Original Colors"
+        },
+        {
+          "value": "grayscale(100%)",
+          "label": "Grayscale"
+        }
+      ],
+      "default": "grayscale(100%)"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 35
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo_item",
+      "name": "Logo & Quote",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image"
+        },
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Quote / Review",
+          "default": "Daily Mail highlighted Hanso as a fast-rising brand in luxury outdoor spaces."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo Bar",
+      "blocks": [
+        {
+          "type": "logo_item",
+          "settings": {
+            "quote": "Daily Mail highlighted Hanso as a fast-rising brand in luxury outdoor spaces."
+          }
+        },
+        {
+          "type": "logo_item",
+          "settings": {
+            "quote": "Featured in The Sun as the ultimate upgrade for outdoor living."
+          }
+        },
+        {
+          "type": "logo_item",
+          "settings": {
+            "quote": "The Daily Beast praises Hanso for unmatched engineering."
+          }
+        },
+        {
+          "type": "logo_item",
+          "settings": {
+            "quote": "USA Today names Hanso top tier in pergola innovation."
+          }
+        },
+        {
+          "type": "logo_item",
+          "settings": {
+            "quote": "HGTV showcases Hanso for modern home transformation."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

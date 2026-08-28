@@ -1,0 +1,161 @@
+{% comment %}
+  Renders product buy-buttons.
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} product form id.
+  - section_id: {String} id of section to which this snippet belongs.
+  - show_pickup_availability: {Boolean} for the pickup availability. If true the pickup availability is rendered, false - not rendered (optional).
+
+  Usage:
+  {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
+{% endcomment %}
+<div {{ block.shopify_attributes }}>
+  {%- if product != blank -%}
+    {%- liquid
+      assign gift_card_recipient_feature_active = false
+      if block.settings.show_gift_card_recipient and product.gift_card?
+        assign gift_card_recipient_feature_active = true
+      endif
+
+      assign show_dynamic_checkout = false
+      if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
+        assign show_dynamic_checkout = true
+      endif
+    -%}
+
+    <product-form
+      class="product-form"
+      data-hide-errors="{{ gift_card_recipient_feature_active }}"
+      data-section-id="{{ section.id }}"
+    >
+      <div class="product-form__error-message-wrapper" role="alert" hidden>
+        <span class="svg-wrapper">
+          {{- 'icon-error.svg' | inline_asset_content -}}
+        </span>
+        <span class="product-form__error-message"></span>
+      </div>
+
+      {%- form 'product',
+        product,
+        id: product_form_id,
+        class: 'form',
+        novalidate: 'novalidate',
+        data-type: 'add-to-cart-form'
+      -%}
+        <input
+          type="hidden"
+          name="id"
+          value="{{ product.selected_or_first_available_variant.id }}"
+          {% if product.selected_or_first_available_variant.available == false
+            or quantity_rule_soldout
+            or product.selected_or_first_available_variant == null
+          %}
+            disabled
+          {% endif %}
+          class="product-variant-id"
+        >
+
+        {%- if gift_card_recipient_feature_active -%}
+          {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
+        {%- endif -%}
+
+        <div class="product-form__buttons">
+          {%- liquid
+            assign check_against_inventory = true
+            if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+              assign check_against_inventory = false
+            endif
+            if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+              assign quantity_rule_soldout = true
+            endif
+          -%}
+          
+
+          <button
+            id="ProductSubmitButton-{{ section_id }}"
+            type="submit"
+            name="add"
+            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            {% if product.selected_or_first_available_variant.available == false
+              or quantity_rule_soldout
+              or product.selected_or_first_available_variant == null
+            %}
+              disabled
+            {% endif %}
+          >
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.87329 1.33337L3.45996 3.75337" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10.1265 1.33337L12.5398 3.75337" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1.3335 5.23347C1.3335 4.00015 1.9935 3.90015 2.8135 3.90015H13.1868C14.0068 3.90015 14.6668 4.00015 14.6668 5.23347C14.6668 6.66681 14.0068 6.56681 13.1868 6.56681H2.8135C1.9935 6.56681 1.3335 6.66681 1.3335 5.23347Z" stroke="white"/>
+              <path d="M6.50684 9.33337V11.7001" stroke="white" stroke-linecap="round"/>
+              <path d="M9.57324 9.33337V11.7001" stroke="white" stroke-linecap="round"/>
+              <path d="M2.3335 6.66663L3.2735 12.4267C3.48682 13.7199 4.00016 14.6667 5.90682 14.6667H9.92682C12.0002 14.6667 12.3068 13.7599 12.5468 12.5067L13.6668 6.66663" stroke="white" stroke-linecap="round"/>
+            </svg>
+            <span>
+              {%- if product.selected_or_first_available_variant == null -%}
+                {{ 'products.product.unavailable' | t }}
+              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- else -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- endif -%}
+            </span>
+            {%- render 'loading-spinner' -%}
+          </button>
+          {%- if show_dynamic_checkout -%}
+            {{ form | payment_button }}
+          {%- endif -%}
+        </div>
+      {%- endform -%}
+    </product-form>
+  {%- else -%}
+    <div class="product-form">
+      <div class="product-form__buttons form">
+        <button
+          type="submit"
+          name="add"
+          class="product-form__submit button button--full-width button--primary"
+          disabled
+        >
+          {{ 'products.product.sold_out' | t }}
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if show_pickup_availability -%}
+    {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
+
+    {%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities
+      | where: 'pick_up_enabled', true
+    -%}
+
+    <pickup-availability
+      class="product__pickup-availabilities quick-add-hidden"
+      {% if product.selected_or_first_available_variant.available and pick_up_availabilities.size > 0 %}
+        available
+      {% endif %}
+      data-root-url="{{ routes.root_url }}"
+      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+      data-has-only-default-variant="{{ product.has_only_default_variant }}"
+      data-product-page-color-scheme="gradient color-{{ section.settings.color_scheme }}"
+    >
+      <template>
+        <pickup-availability-preview class="pickup-availability-preview">
+          <span class="svg-wrapper">
+            {{- 'icon-unavailable.svg' | inline_asset_content -}}
+          </span>
+          <div class="pickup-availability-info">
+            <p class="caption-large">{{ 'products.product.pickup_availability.unavailable' | t }}</p>
+            <button class="pickup-availability-button link link--text underlined-link">
+              {{ 'products.product.pickup_availability.refresh' | t }}
+            </button>
+          </div>
+        </pickup-availability-preview>
+      </template>
+    </pickup-availability>
+
+    <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+</div>

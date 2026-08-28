@@ -1,0 +1,426 @@
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #announcement-bar{
+    {% comment %} background: #f7f9fa; {% endcomment %}
+    background: transparent;
+  }
+  .template-index #announcement-bar{
+    background: transparent;
+  }
+  #announcement-bar .custom-annoucement-bar {
+      padding: 0;
+      display: flex;
+      max-width: 100%;
+      {% comment %} background: #f7f9fa; {% endcomment %}
+      background: transparent;
+  }
+  #announcement-bar .custom-annoucement-bar .announcement-bar {
+      background: #ECEBEB;
+      width: 100%;
+      margin: 10px 3rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 2rem;
+  }
+  .template-index #announcement-bar .custom-annoucement-bar {
+    {% comment %} background: #010101; {% endcomment %}
+    background: transparent;
+  }
+  .template-index #announcement-bar .custom-annoucement-bar .announcement-bar {
+    background: #1e1e1e;
+  }
+  .template-index .custom-annoucement-bar .announcement-bar .right-side svg path{
+    stroke: #fff;
+  }
+  .custom-annoucement-bar .announcement-bar .right-side svg path{
+    fill: transparent;
+    stroke: #000;
+  }
+  .header-contact-icon{
+    position: relative;
+  }
+  .header-contact-icon .online-indicator-badge{
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    width: 11px;
+    height: 11px;
+    background-color: #52c41a;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+  }
+  .custom-annoucement-bar .announcement-bar p {
+      margin: 0;
+      color: #000;
+      font-size: 14px;
+  }
+  .custom-annoucement-bar .announcement-bar a {
+      text-decoration: none;
+      color: #000;
+      font-size: 14px;
+  }
+  .template-index .custom-annoucement-bar .announcement-bar p,
+  .template-index .custom-annoucement-bar .announcement-bar a {
+    color: #fff;
+  }
+
+  /* SVG Base & Dynamic Color Fix */
+  .custom-annoucement-bar .announcement-bar svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+      fill: currentColor; /* Inherits text color automatically */
+  }
+  .template-index .custom-annoucement-bar .announcement-bar svg {
+      fill: #ffffff; /* White icon for dark theme */
+  }
+
+  .custom-annoucement-bar .announcement-bar .left-side {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+  }
+  .custom-annoucement-bar .announcement-bar .left-side svg,
+  .custom-annoucement-bar .announcement-bar .left-side img {
+      width: 100px;
+      height: auto;
+  }
+  .custom-annoucement-bar .announcement-bar .middle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+  }
+  .custom-annoucement-bar .announcement-bar .right-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+  }
+  
+  .custom-annoucement-bar .announcement-bar .right-side .text-box,
+  .custom-annoucement-bar .announcement-bar .right-side .contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+  }
+  
+  .custom-annoucement-bar .announcement-bar .right-side svg,
+  .custom-annoucement-bar .announcement-bar .right-side img {
+      width: 22px;
+      height: auto;
+      border-radius:50px;
+  }
+
+  @media screen and (max-width:1300px){
+    .custom-annoucement-bar .announcement-bar p,
+    .custom-annoucement-bar .announcement-bar a {
+      font-size: 12px;
+    }
+    .custom-annoucement-bar .announcement-bar .right-side svg,
+    .custom-annoucement-bar .announcement-bar .right-side img {
+      width: 20px;
+    }
+    .custom-annoucement-bar .announcement-bar .left-side svg,
+    .custom-annoucement-bar .announcement-bar .left-side img {
+      width: 70px;
+    }
+  }
+  @media screen and (max-width:1100px){
+    .custom-annoucement-bar .announcement-bar .middle {
+      display: none;
+    }
+  }
+  @media screen and (max-width:989px){
+    .custom-annoucement-bar .announcement-bar .right-side {
+      gap: 10px;
+    }
+    .custom-annoucement-bar .announcement-bar p, 
+    .custom-annoucement-bar .announcement-bar a {
+      font-size: 10px;
+    }
+  }
+  @media screen and (max-width:628px) {
+    #announcement-bar .custom-annoucement-bar .announcement-bar {
+      flex-wrap: nowrap;
+      margin: 10px 1rem;
+    }
+    .custom-annoucement-bar .announcement-bar .left-side svg,
+    .custom-annoucement-bar .announcement-bar .left-side img {
+      width: 60px;
+    }
+    .custom-annoucement-bar .announcement-bar p,
+    .custom-annoucement-bar .announcement-bar a {
+      font-size: 13px;
+    }
+    
+    .custom-annoucement-bar .announcement-bar .right-side p {
+      display: none;  
+    }
+  }
+</style>
+
+<div
+  id="announcement-bar"
+  class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
+>
+  <div class="custom-annoucement-bar page-width utility-bar__grid">
+    <div class="announcement-bar">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'left' %}
+            <div class="left-side" {{ block.shopify_attributes }}>
+              
+                {% if block.settings.svg_code != blank %}
+                  {{ block.settings.svg_code }}
+                {% elsif block.settings.icon != blank %}
+                  <img
+                    src="{{ block.settings.icon | image_url }}"
+                    alt="{{ block.settings.text_prefix }}"
+                    loading="lazy"
+                  />
+                {% endif %}
+              <a href="{{ block.settings.left_link }}" class="left-side-link">
+                <p>
+                  {{ block.settings.rating_text }} 
+                  <span class="dynamic-review-count-global">{{ block.settings.base_count }}</span> 
+                  {{ block.settings.text_suffix }}
+                </p>
+              </a>
+            </div>
+
+          {% when 'middle' %}
+            <div class="middle" {{ block.shopify_attributes }}>
+              {% if block.settings.text != blank %}
+                {{ block.settings.text }}
+              {% endif %}
+
+              {% if block.settings.button_text != blank %}
+                <a href="{{ block.settings.button_link }}">
+                  {{ block.settings.button_text }}
+                </a>
+              {% endif %}
+            </div>
+
+          {% when 'right' %}
+            <div class="right-side" {{ block.shopify_attributes }}>
+              <div class="text-box">
+                {% if block.settings.message_link != blank %}
+                  <a href="{{ block.settings.message_link }}" style="display: flex; align-items: center; gap: 10px;">
+                {% endif %}
+
+                {% if block.settings.message_svg_code != blank %}
+                  {{ block.settings.message_svg_code }}
+                {% elsif block.settings.message_icon != blank %}
+                  <img
+                    src="{{ block.settings.message_icon | image_url }}"
+                    alt="{{ block.settings.message_text }}"
+                    loading="lazy"
+                  >
+                {% endif %}
+
+                {% if block.settings.message_text != blank %}
+                  <p>{{ block.settings.message_text }}</p>
+                {% endif %}
+
+                {% if block.settings.message_link != blank %}
+                  </a>
+                {% endif %}
+              </div>
+
+              <div class="contact">
+                <div class="header-contact-icon">
+                  {% if block.settings.contact_svg_code != blank %}
+                    {{ block.settings.contact_svg_code }}
+                  {% elsif block.settings.contact_icon != blank %}
+                    <img
+                      src="{{ block.settings.contact_icon | image_url }}"
+                      alt="{{ block.settings.phone }}"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                  <span class="online-indicator-badge"></span>
+                </div>
+
+                {% if block.settings.phone != blank %}
+                  <p>
+                    <a href="{{ block.settings.phone_link }}">
+                      {{ block.settings.phone }}
+                    </a>
+                  </p>
+                {% endif %}
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "A DIY announcement",
+  "class": "announcement-bar-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left",
+      "name": "Left",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "svg_code",
+          "label": "SVG Code (Overrides Image)",
+          "info": "Paste raw <svg>...</svg> code here to allow custom CSS coloring"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "rating_text",
+          "label": "Rating Text",
+          "default": "4.8/5 Stars"
+        },
+        {
+          "type": "text",
+          "id": "text_suffix",
+          "label": "Text Suffix",
+          "default": "Reviews"
+        },
+        {
+          "type": "text",
+          "id": "start_date",
+          "label": "Start Date (YYYY-MM-DD)",
+          "default": "2026-07-23"
+        },
+        {
+          "type": "number",
+          "id": "base_count",
+          "label": "Base Count",
+          "default": 1746
+        },
+        {
+          "type": "number",
+          "id": "daily_increment",
+          "label": "Daily Increment",
+          "default": 1
+        },
+        {
+          "type": "url",
+          "id": "left_link",
+          "label": "Link",
+        }
+      ]
+    },
+    {
+      "type": "middle",
+      "name": "Middle",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Our Deck Specialists Are Just a Call Away</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Link Text",
+          "default": "Call 1 (786) 358-2872"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "right",
+      "name": "Right",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "message_svg_code",
+          "label": "Message SVG Code"
+        },
+        {
+          "type": "image_picker",
+          "id": "message_icon",
+          "label": "Message Icon (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "message_text",
+          "label": "Message Text",
+          "default": "Message Us"
+        },
+        {
+          "type": "url",
+          "id": "message_link",
+          "label": "Message Link"
+        },
+        {
+          "type": "html",
+          "id": "contact_svg_code",
+          "label": "Contact SVG Code"
+        },
+        {
+          "type": "image_picker",
+          "id": "contact_icon",
+          "label": "Contact Icon (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone Number",
+          "default": "+1 (786) 358-2872"
+        },
+        {
+          "type": "url",
+          "id": "phone_link",
+          "label": "Phone Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "A DIY announcement",
+      "blocks": [
+        {
+          "type": "left"
+        },
+        {
+          "type": "middle"
+        },
+        {
+          "type": "right"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

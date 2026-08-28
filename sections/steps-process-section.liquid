@@ -1,0 +1,349 @@
+<div class="steps-section-{{ section.id }} section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="steps-section__header">
+        <h2 class="steps-section__title">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="steps-section__grid">
+      <!-- Left Image Column -->
+      <div class="steps-section__media">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1000 }}"
+            alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+            loading="lazy"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            class="steps-section__image"
+          >
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'steps-section__image placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <!-- Right Steps List Column -->
+      <div class="steps-section__content">
+        {%- for block in section.blocks -%}
+          <div class="steps-section__item" {{ block.shopify_attributes }}>
+            <div class="steps-section__number">
+              {% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}
+            </div>
+            <div class="steps-section__text">
+              {%- if block.settings.title != blank -%}
+                <h3 class="steps-section__item-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="steps-section__item-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .steps-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  .steps-section-{{ section.id }} .page-width {
+    max-width: {{ section.settings.page_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .steps-section__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .steps-section__title {
+    font-size: 32px;
+    font-weight: 600;
+    color: {{ section.settings.heading_color }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  /* Main Grid Layout */
+  .steps-section__grid {
+    display: flex;
+    {% comment %} align-items: center; {% endcomment %}
+    gap: 4rem;
+  }
+
+  .steps-section__media {
+    flex: 1;
+    width: 50%;
+  }
+
+  .steps-section__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: {{ section.settings.image_radius }}px;
+    display: block;
+  }
+
+  .steps-section__content {
+    flex: 1;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+
+  /* Step Item Layout */
+  .steps-section__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .steps-section__number {
+    font-size: 58px;
+    font-weight: 700;
+    color: {{ section.settings.number_color }};
+    line-height: 0.8;
+    flex-shrink: 0;
+    letter-spacing: -2px;
+    user-select: none;
+  }
+
+  .steps-section__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 2px;
+  }
+
+  .steps-section__item-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: {{ section.settings.item_title_color }};
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .steps-section__item-desc {
+    font-size: 13px;
+    font-weight: 400;
+    color: {{ section.settings.item_desc_color }};
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Responsive Styling */
+  @media screen and (max-width: 989px) {
+    .steps-section__grid {
+      gap: 2.5rem;
+    }
+    .steps-section__number {
+      font-size: 46px;
+    }
+    .steps-section__title {
+      font-size: 26px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .steps-section__grid {
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .steps-section__media,
+    .steps-section__content {
+      width: 100%;
+      flex: none;
+    }
+
+    .steps-section__header {
+      margin-bottom: 2.5rem;
+    }
+
+    .steps-section__number {
+      font-size: 42px;
+    }
+
+    .steps-section__item-title {
+      font-size: 16px;
+    }
+
+    .steps-section__item-desc {
+      font-size: 13px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Steps Process Section",
+  "tag": "section",
+  "class": "section-steps-process",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "The 5-Step Path to Permanence"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Left Side Image"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Border Radius",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "page_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Page Width",
+      "default": 1300
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f9f8f6"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Steps Number Color",
+      "default": "#e2e2e2"
+    },
+    {
+      "type": "color",
+      "id": "item_title_color",
+      "label": "Step Title Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "item_desc_color",
+      "label": "Step Description Color",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Choose Your Deck"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step Description",
+          "default": "Select the deck size, layout, and material that best fits your home, lifestyle, and outdoor space."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Steps Process Section",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Choose Your Deck",
+            "description": "Select the deck size, layout, and material that best fits your home, lifestyle, and outdoor space."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Receive Your Complete Deck Kit",
+            "description": "Your professionally engineered deck system arrives with the components, hardware, and detailed 3D instructions needed for assembly—all organized to help simplify the building process."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Prepare Your Foundation",
+            "description": "Install your preferred foundation solution, whether that's deck blocks, sonotubes, or another approved option based on your project and local requirements."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Assemble with Confidence",
+            "description": "Follow the step-by-step 3D instructions using a standard residential power drill. Every component is designed to work together, helping reduce guesswork throughout the build."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Enjoy Your New Outdoor Space",
+            "description": "Step back and enjoy a deck you built yourself—a place for family dinners, weekend barbecues, relaxing evenings, and memories that will last for years."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

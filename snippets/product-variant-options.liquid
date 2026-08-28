@@ -1,0 +1,267 @@
+{% comment %}
+  Renders product variant options (Handles Metafield Series for Size + Standard rendering for Color/Material)
+{% endcomment %}
+
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign option_name_lower = option.name | downcase
+-%}
+
+{%- if option_name_lower contains 'size' -%}
+  {%- comment -%} 1. Extract unique series list from product variants {%- endcomment -%}
+  {%- assign series_list = '' -%}
+  {%- for variant in product.variants -%}
+    {%- assign series_val = variant.metafields.smart.size_series.value -%}
+    {%- if series_val != blank -%}
+      {%- unless series_list contains series_val -%}
+        {%- assign series_list = series_list | append: series_val | append: '||' -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- assign series_array = series_list | split: '||' -%}
+
+  {%- comment -%} 2. Render Accordions by Series for Size {%- endcomment -%}
+  <div class="custom-series-wrapper">
+    {%- for series in series_array -%}
+      {%- if series != blank -%}
+        {%- comment -%} Check if any variant inside this series is currently selected {%- endcomment -%}
+        {%- assign is_series_active = false -%}
+        {%- for value in option.values -%}
+          {%- if value.selected -%}
+            {%- for variant in product.variants -%}
+              {%- assign v_series = variant.metafields.smart.size_series.value -%}
+              {%- if v_series == series -%}
+                {%- if variant.options contains value.name or variant.options contains value -%}
+                  {%- assign is_series_active = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        <details
+          class="series-group"
+          {% if is_series_active or forloop.first %}
+            open
+          {% endif %}
+        >
+          <summary class="series-header">
+            <span>{{ series }}</span>
+            <span class="chevron-icon">
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_465_828)">
+                  <path d="M0.999786 5.65332L5.70642 0.95998L10.4131 5.65331" stroke="#194636" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_465_828">
+                    <rect width="12" height="7" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </span>
+          </summary>
+
+          <div class="series-cards-grid">
+            {%- for value in option.values -%}
+              {%- comment -%} Find variant matching this option value & series {%- endcomment -%}
+              {%- assign matched_variant = null -%}
+              {%- for variant in product.variants -%}
+                {%- if variant.options contains value.name or variant.options contains value -%}
+                  {%- if variant.metafields.smart.size_series.value == series -%}
+                    {%- assign matched_variant = variant -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if matched_variant != null -%}
+                {%- capture input_id -%}{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
+                {%- capture input_name -%}{{ option.name }}-{{ option.position }}{%- endcapture -%}
+                {%- capture input_dataset -%}
+                data-product-url="{{ value.product_url }}"
+                data-option-value-id="{{ value.id }}"
+                data-option-name="{{ option.name | escape }}"
+              {%- endcapture -%}
+
+                {%- assign custom_variant_img = matched_variant.metafields.custom.variant_image.value -%}
+
+                <div class="custom-variant-card" data-size="{{ value | handleize }}">
+                  <input
+                    type="radio"
+                    id="{{ input_id }}"
+                    name="{{ input_name | escape }}"
+                    value="{{ value | escape }}"
+                    form="{{ product_form_id }}"
+                    {% if value.selected %}
+                      checked
+                    {% endif %}
+                    {% unless value.available %}
+                      class="disabled"
+                    {% endunless %}
+                    {{ input_dataset }}
+                  >
+                  <label for="{{ input_id }}" class="card-label">
+                    <div class="card-image-wrapper">
+                      {%- if custom_variant_img != blank -%}
+                        <img
+                          src="{{ custom_variant_img | image_url: width: 300 }}"
+                          alt="{{ value | escape }}"
+                          loading="lazy"
+                          width="300"
+                          height="auto"
+                        >
+                      {%- elsif matched_variant.image -%}
+                        <img
+                          src="{{ matched_variant.image | image_url: width: 300 }}"
+                          alt="{{ value | escape }}"
+                          loading="lazy"
+                          width="300"
+                          height="auto"
+                        >
+                      {%- endif -%}
+                    </div>
+
+                    <span class="size-title">{{ value }}</span>
+                  </label>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </details>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+{%- else -%}
+  {%- comment -%} Color / Custom Option Grid Card Layout {%- endcomment -%}
+  {%- assign option_name_lower = option.name | downcase -%}
+
+  {%- if option_name_lower contains 'color' or option_name_lower contains 'colour' -%}
+    <div class="color-cards-grid">
+      {%- for value in option.values -%}
+        {%- liquid
+          assign option_disabled = true
+          if value.available
+            assign option_disabled = false
+          endif
+
+          comment
+            Find variant associated with this option value for featured image fallback
+          endcomment
+          assign matched_variant = null
+          for variant in product.variants
+            if variant.options[option.position_index0] == value
+              assign matched_variant = variant
+              break
+            endif
+          endfor
+        -%}
+
+        {%- capture input_id -%}{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
+        {%- capture input_name -%}{{ option.name }}-{{ option.position }}{%- endcapture -%}
+        {%- capture input_dataset -%}
+        data-product-url="{{ value.product_url }}"
+        data-option-value-id="{{ value.id }}"
+        data-option-name="{{ option.name | escape }}"
+      {%- endcapture -%}
+
+        {%- assign escaped_value = value | escape -%}
+
+        <div class="custom-variant-card color-card-item">
+          <input
+            type="radio"
+            id="{{ input_id }}"
+            name="{{ input_name | escape }}"
+            value="{{ escaped_value }}"
+            form="{{ product_form_id }}"
+            {% if value.selected %}
+              checked
+            {% endif %}
+            {% if option_disabled %}
+              class="disabled"
+            {% endif %}
+            {{ input_dataset }}
+          >
+          <label for="{{ input_id }}" class="card-label">
+            <div class="card-image-wrapper">
+              {%- comment -%} 1. Swatch Image -> 2. Smart Metafield Image -> 3. Variant Image -> 4. Color Swatch {%- endcomment -%}
+              {%- assign smart_img = matched_variant.metafields.smart.images.value -%}
+              {%- if smart_img != blank -%}
+                {%- assign display_img = smart_img.first | default: smart_img -%}
+                <img
+                  src="{{ display_img | image_url: width: 200 }}"
+                  alt="{{ escaped_value }}"
+                  loading="lazy"
+                  width="200"
+                  height="auto"
+                >
+              {%- elsif value.swatch.image -%}
+                <img
+                  src="{{ value.swatch.image | image_url: width: 200 }}"
+                  alt="{{ escaped_value }}"
+                  loading="lazy"
+                  width="200"
+                  height="auto"
+                >
+              {%- elsif matched_variant.image -%}
+                <img
+                  src="{{ matched_variant.image | image_url: width: 200 }}"
+                  alt="{{ escaped_value }}"
+                  loading="lazy"
+                  width="200"
+                  height="auto"
+                >
+              {%- elsif value.swatch.color -%}
+                <span class="color-swatch-fallback" style="background-color: rgb({{ value.swatch.color.rgb }});"></span>
+              {%- else -%}
+                <span class="color-swatch-fallback" style="background-color: {{ value | handleize }};"></span>
+              {%- endif -%}
+            </div>
+            <span class="size-title">{{ value }}</span>
+          </label>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  {%- else -%}
+    {%- comment -%} Standard Fallback (Other non-color options) {%- endcomment -%}
+    {%- for value in option.values -%}
+      {%- liquid
+        assign option_disabled = true
+        if value.available
+          assign option_disabled = false
+        endif
+      -%}
+
+      {%- capture input_id -%}{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
+      {%- capture input_name -%}{{ option.name }}-{{ option.position }}{%- endcapture -%}
+      {%- capture input_dataset -%}
+      data-product-url="{{ value.product_url }}"
+      data-option-value-id="{{ value.id }}"
+      data-option-name="{{ option.name | escape }}"
+    {%- endcapture -%}
+
+      {%- assign escaped_value = value | escape -%}
+
+      <input
+        type="radio"
+        id="{{ input_id }}"
+        name="{{ input_name | escape }}"
+        value="{{ escaped_value }}"
+        form="{{ product_form_id }}"
+        {% if value.selected %}
+          checked
+        {% endif %}
+        {% if option_disabled %}
+          class="disabled"
+        {% endif %}
+        {{ input_dataset }}
+      >
+      <label for="{{ input_id }}">
+        {{ value -}}
+      </label>
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}

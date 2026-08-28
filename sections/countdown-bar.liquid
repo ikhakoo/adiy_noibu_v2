@@ -1,0 +1,285 @@
+{%- style -%}
+  .custom-countdown-bar-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    text-align: center;
+    width: 100%;
+    font-size: {{ section.settings.font_size }}px;
+    line-height: 1.4;
+    overflow: hidden;
+  }
+
+  .custom-countdown-bar-{{ section.id }} .countdown-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .custom-countdown-bar-{{ section.id }} .mobile-marquee-wrapper {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .custom-countdown-bar-{{ section.id }} .timer-display {
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .custom-countdown-bar-{{ section.id }} .timer-expired-text {
+    font-weight: 600;
+  }
+
+  /* DESKTOP SPECIFIC FIX */
+  @media screen and (min-width: 990px) {
+    /* Cloned marquee line ko desktop par chupa dein taake text duplicate na ho */
+    .custom-countdown-bar-{{ section.id }} .mobile-marquee-content[aria-hidden="true"] {
+      display: none !important;
+    }
+
+    .custom-countdown-bar-{{ section.id }} .cs-top-countdown {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  /* MOBILE MARQUEE & STACKED TIMER */
+  @media screen and (max-width: 989px) {
+    .custom-countdown-bar-{{ section.id }} .countdown-content {
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      font-size: 12px;
+    }
+
+    .custom-countdown-bar-{{ section.id }} .timer-display {
+      font-size: 12px;
+    }
+
+    .custom-countdown-bar-{{ section.id }} .mobile-marquee-wrapper {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .custom-countdown-bar-{{ section.id }} .mobile-marquee-content {
+      display: flex;
+      flex-shrink: 0;
+      /* min-width: 100%; */
+      justify-content: center;
+      gap: 20px;
+      animation: marquee-scroll-banner 15s linear infinite;
+      padding-left: 3px;
+    }
+
+    .custom-countdown-bar-{{ section.id }} .mobile-marquee-wrapper:hover .mobile-marquee-content,
+    .custom-countdown-bar-{{ section.id }} .mobile-marquee-wrapper:active .mobile-marquee-content {
+      animation-play-state: paused;
+    }
+
+    .custom-countdown-bar-{{ section.id }} .cs-top-countdown {
+      width: 100%;
+      text-align: center;
+      padding: 0 15px;
+    }
+  }
+  @media screen and (max-width: 628px){
+    .custom-countdown-bar-{{ section.id }} .countdown-content {
+      font-size: 14px;
+    }
+  }
+
+  @keyframes marquee-scroll-banner {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+{%- endstyle -%}
+
+<div class="custom-countdown-bar-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="countdown-content">
+    
+    <!-- Line 1: Main Text (Mobile Par Marquee, Desktop Par Single Line) -->
+    <div class="mobile-marquee-wrapper">
+      <div class="mobile-marquee-content">
+        <span>{{ section.settings.main_text }}</span>
+      </div>
+      <!-- Cloned for Mobile Marquee Only -->
+      <div class="mobile-marquee-content" aria-hidden="true">
+        <span>{{ section.settings.main_text }}</span>
+      </div>
+    </div>
+    
+    <!-- Countdown Timer -->
+    <div class="cs-top-countdown" data-deadline="{{ section.settings.countdown_deadline }}" data-expired="{{ section.settings.expired_text }}">
+      <span>Ends in&nbsp;</span>
+      <span class="timer-display">
+        <span data-cd="days">00</span>d : 
+        <span data-cd="hrs">00</span>h : 
+        <span data-cd="min">00</span>m : 
+        <span data-cd="secs">00</span>s
+      </span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function startTimer(el) {
+      var rawDeadline = el.getAttribute('data-deadline');
+      if (!rawDeadline) return;
+
+      var formattedDate = rawDeadline.includes(' ') ? rawDeadline.replace(' ', 'T') : rawDeadline;
+      var deadline = new Date(formattedDate).getTime();
+      var expiredText = el.getAttribute('data-expired') || 'Offer Expired';
+
+      var fields = {
+        days: el.querySelector('[data-cd="days"]'),
+        hrs:  el.querySelector('[data-cd="hrs"]'),
+        min:  el.querySelector('[data-cd="min"]'),
+        secs: el.querySelector('[data-cd="secs"]')
+      };
+
+      if (!fields.days || !fields.hrs || !fields.min || !fields.secs) return;
+
+      function expire() {
+        el.innerHTML = '<span class="timer-expired-text">' + expiredText + '</span>';
+      }
+
+      function tick() {
+        var now = Date.now();
+        var diff = deadline - now;
+
+        if (isNaN(deadline)) { expire(); return; }
+        if (diff <= 0) { 
+          expire(); 
+          if (el.timerId) clearInterval(el.timerId); 
+          return; 
+        }
+
+        var s = Math.floor(diff / 1000);
+        fields.days.textContent = pad(Math.floor(s / 86400));
+        fields.hrs.textContent  = pad(Math.floor((s % 86400) / 3600));
+        fields.min.textContent  = pad(Math.floor((s % 3600) / 60));
+        fields.secs.textContent = pad(s % 60);
+      }
+
+      tick();
+      if (el.timerId) clearInterval(el.timerId);
+      el.timerId = setInterval(tick, 1000);
+    }
+
+    function initAll() {
+      document.querySelectorAll('.custom-countdown-bar-{{ section.id }} .cs-top-countdown').forEach(startTimer);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initAll();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Countdown Banner",
+  "tag": "section",
+  "class": "section-countdown-banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "main_text",
+      "label": "Banner Main Text",
+      "default": "Flexible Payment Plans · Made in USA · 5-Year Warranty · July 4th Sale —"
+    },
+    {
+      "type": "text",
+      "id": "countdown_deadline",
+      "label": "Countdown Deadline",
+      "default": "2026-12-31T23:59:59-04:00",
+      "info": "ISO format: YYYY-MM-DDTHH:MM:SS-04:00 (Timezone offset lazmi dalein)"
+    },
+    {
+      "type": "text",
+      "id": "expired_text",
+      "label": "Expired Message",
+      "default": "00d : 00h : 00m : 00s"
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Countdown Banner"
+    }
+  ]
+}
+{% endschema %}

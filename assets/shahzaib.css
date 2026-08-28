@@ -1,0 +1,992 @@
+#chat-button{
+    z-index:8;
+}
+#CartDrawer{
+    z-index:9;
+}
+.button:before, .shopify-challenge__button:before, .customer button:before, .shopify-payment-button__button--unbranded:before,
+.button:after, .shopify-challenge__button:after, .customer button:after, .shopify-payment-button__button--unbranded:after{
+    display:none;
+}
+
+.header__inline-menu.only-for-mob {
+    display:none;
+}
+.rte{
+  letter-spacing: 0;  
+}
+.gradient{
+    background: #f7f9fa;
+}
+.header__icon--menu[aria-expanded=true]:before{
+    background: none !important;
+}
+.js details[open].menu-opening>.menu-drawer{
+    background: transparent!important;
+    margin-top: 1rem;
+}
+
+
+
+#menu-drawer .menu-drawer__inner-container{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    height: 88%;
+    background: #fff;
+    border-radius: 10px;
+    margin: 1rem;
+    margin-top:0;
+}
+#menu-drawer .menu-drawer__navigation{
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 0;
+}
+#menu-drawer .custom-drawer__footer{
+    border-radius: 0 0 10px 10px;
+}
+#menu-drawer summary.menu-drawer__menu-item{
+    padding-right: 0;
+    color: #000;
+    font-weight: 400;
+    padding: 10px 0;
+    font-size: 16px;
+}
+#menu-drawer .custom-drawer__summary,
+#menu-drawer .custom-drawer__link {
+    font-weight: 400;
+    padding: 10px 0;
+    font-size: 16px;
+
+}
+.js .menu-drawer{
+    margin-top: 1rem;
+}
+.custom-drawer__submenu ul {
+    padding: 0;
+}
+.custom-drawer__submenu ul li{
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    padding-left: 20px;
+}
+.custom-drawer__submenu ul li:last-child{
+    border-bottom: 0;
+}
+.custom-drawer__submenu ul li a{
+    color: #000;
+    text-decoration: none;
+}
+.custom-drawer__submenu{
+    padding: 0 !important;
+}
+
+
+
+/****************************** Home page / Hero section ******************************/
+.shopify-section .hero-sec.banner {
+    margin-top:-15rem
+}
+.hero-sec.banner .banner__box .banner__heading {
+    font-size: 36px;
+}
+.shopify-section .hero-sec.banner .banner__box{
+    padding-top:20rem;
+}
+.hero-sec.banner .banner__box .banner__buttons .button{
+    background: #fff;
+    color: #000;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 18px;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.hero-sec.banner .banner__box .banner__buttons .button:hover{
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+
+}
+.for-mob.banner__text {
+    display:none;
+}
+@media screen and (max-width:1300px){
+    .hero-sec .banner__content .banner__box{
+        padding-top: 0;
+    }
+}
+@media screen and (max-width:1100px){
+    .hero-sec.banner .banner__box .banner__heading{
+        font-size: 26px;
+    }
+    .hero-sec.banner .banner__box .banner__text{
+        font-size: 14px;
+    }
+    .hero-sec.banner .banner__box .banner__buttons .button{
+        font-size: 15px;
+    }
+}
+@media screen and (max-width:989px){
+    .hero-sec.banner .banner__box .banner__heading{
+        font-size: 19px;
+    }
+    .hero-sec.banner .banner__box .banner__text{
+        font-size: 13px;
+    }
+    .hero-sec.banner .banner__box .banner__buttons .button{
+        font-size: 13px;
+    }
+    
+}
+@media screen and (max-width:628px){
+    .hero-sec.banner .banner__content{
+        align-items: start;
+    }
+    .hero-sec .banner__content .banner__box{
+        padding-top:4rem
+    }
+    .hero-sec.banner .banner__box .banner__heading{
+        font-size: 26px;
+    }
+    .hero-sec.banner .banner__box .banner__text,
+    .hero-sec.banner .banner__box .banner__buttons .button{
+        font-size: 16px;
+    }
+    .for-desktop.banner__text{
+        display:none;
+    }
+    .for-mob.banner__text {
+        display:block;
+    }
+}
+/********************* end *******************/
+
+/******************************* Home page / Brands logo section *******************************/
+
+.brands-for-adiy .rich-text .rich-text__blocks .rich-text__text p{
+    color: #000;
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 1100px){
+    .brands-for-adiy .rich-text__image-wrapper img {
+        width:70% !important;
+    }
+}
+@media screen and (min-width: 990px){
+    .brands-for-adiy .rich-text .rich-text__blocks{
+        max-width: 72rem;
+    }
+}
+@media screen and (max-width: 989px){
+    .brands-for-adiy .rich-text .rich-text__blocks .rich-text__text p{
+        font-size: 15px;
+    }   
+}
+@media screen and (max-width: 628px){
+    .brands-for-adiy .rich-text__image-wrapper img {
+        width:100% !important;
+    }
+    .brands-for-adiy .rich-text .rich-text__blocks .rich-text__text p{
+        font-size: 16px;
+        margin-bottom: 30px;
+    }   
+}
+
+
+/********************* end *******************/
+
+/******************************* Home page / video with text section *******************************/
+.image-with-text-matrix  .image-with-text{
+    background: #F2F2F2;
+    padding: 20px;
+    border-radius: 15px;
+}
+.image-with-text-matrix .image-with-text__sub-heading{
+    margin: 0;
+    font-size: 40px;
+    color: #000;
+    font-weight: 300;
+} 
+.image-with-text-matrix .image-with-text__heading {
+    margin: 0;
+    font-size: 42px;
+    color: #194636;
+    font-weight: 800;
+}
+
+@media screen and (max-width:1300px){
+    .image-with-text-matrix .image-with-text__sub-heading{
+        font-size: 32px;
+    }
+    .image-with-text-matrix .image-with-text__heading{
+        font-size: 35px;
+    }
+    .image-with-text-matrix .image-with-text__content{
+        padding: 3rem;
+    }
+}
+@media screen and (max-width:1100px){
+    .image-with-text-matrix .image-with-text__sub-heading{
+        font-size: 25px;
+    }
+    .image-with-text-matrix .image-with-text__heading{
+        font-size: 28px;
+    }
+    
+}
+@media screen and (max-width:989px){
+    .image-with-text-matrix .image-with-text__grid{
+        flex-wrap:nowrap;
+    }
+    .image-with-text-matrix .image-with-text__content {
+        justify-content: center;
+        align-items: center;
+    }
+    .image-with-text-matrix .image-with-text{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .image-with-text-matrix .image-with-text .image-with-text__content {
+        padding-left: 0;
+
+    }
+    .image-with-text__buttons .button{
+        padding: 10px;
+    }
+
+}
+@media screen and (max-width:800px){
+    .image-with-text-matrix .image-with-text__grid{
+        flex-direction: column-reverse;
+        gap: 2rem;
+        flex-wrap:wrap;
+    }
+    .image-with-text-matrix .image-with-text__text-item .image-with-text__content{
+        padding: 2rem 0;
+    }
+    .image-with-text-matrix .image-with-text__grid .image-with-text__media-item,
+    .image-with-text-matrix .image-with-text__grid .image-with-text__text-item{
+        width:100%;
+    }
+    .image-with-text-matrix .image-with-text__sub-heading,
+    .image-with-text-matrix .image-with-text__heading {
+        text-align: center;
+        width: 100%;
+    }
+    .image-with-text__buttons{
+        justify-content: center;
+    }
+
+}
+
+/********************* end *******************/
+
+/******************************* Home Page / affirm section *******************************/
+.affirm-sec .image-with-text {
+    padding: 3rem 4rem;
+    background: #ECEBEB;
+    border-radius: 8px;
+}
+.affirm-sec .image-with-text .image-with-text__media{
+    border: 0;
+    padding: 0 !important;
+    background: transparent;
+    height: fit-content;
+} 
+.affirm-sec .image-with-text .image-with-text__media img{
+    position: unset !important;
+}
+.affirm-sec .image-with-text .image-with-text__media img{
+    object-fit: contain;
+}
+.affirm-sec .image-with-text .image-with-text__content{
+    background: transparent;
+    padding: 0;
+    padding-right: 10rem;
+}
+.affirm-sec .image-with-text .image-with-text__content .image-with-text__sub-heading{
+    margin: 0;
+    font-size: 20px;
+    color: #4F453F;
+}
+.affirm-sec .image-with-text .image-with-text__content .image-with-text__heading {
+    font-size: 36px;
+    font-weight: 800;
+    color: #26170C;
+    margin-top: 10px;
+}
+.affirm-sec .image-with-text .image-with-text__content .image-with-text__text{
+    font-size: 16px;
+    color: #4F453F;
+    margin-top: 15px;
+}
+@media screen and (max-width:1300px){
+    .affirm-sec .image-with-text .image-with-text__content .image-with-text__sub-heading{
+        font-size: 18px;
+    }
+    .affirm-sec .image-with-text .image-with-text__content .image-with-text__heading{
+        font-size: 30px;
+    }
+    .affirm-sec .image-with-text .image-with-text__content .image-with-text__text{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width:1100px){
+    .affirm-sec .image-with-text .image-with-text__content{
+        margin-right:0;
+    }
+    .affirm-sec .image-with-text .image-with-text__content .image-with-text__sub-heading{
+        font-size: 16px;
+    }
+    .affirm-sec .image-with-text .image-with-text__content .image-with-text__heading{
+        font-size: 26px;
+    }
+    .affirm-sec .image-with-text .image-with-text__content .image-with-text__text{
+        font-size: 13px;
+    }
+}
+@media screen and (max-width:989px){
+    .affirm-sec .image-with-text .image-with-text__grid{
+        gap: 20px;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+    .affirm-sec .image-with-text .image-with-text__media img{
+        position: unset;
+    }
+    .affirm-sec .image-with-text .image-with-text__content{
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+    .affirm-sec .image-with-text .image-with-text__content .image-with-text__text{
+        text-align: center;
+    }
+}
+@media screen and (max-width:749px){
+    .affirm-sec .image-with-text{
+        padding: 2rem 1rem;
+    }
+}
+/********************* end *******************/
+
+/*=====================================================================================================================================*/
+/************************************************************************************** Product Page **************************************************************************************/
+/*=====================================================================================================================================*/
+
+
+/******************************* Product Page / Main section *******************************/
+.template-product .product__info-wrapper .price__regular .price-item--regular{
+    font-weight: 800;
+    font-size: 32px;
+}
+.template-product .product__info-wrapper .title-top-text{
+    background: #EEEEEB;
+    width: fit-content;
+    padding: 0 10px;
+    border-radius: 5px;
+    color: #000;
+}
+.template-product .product__info-wrapper .product__title{
+    margin: 5px 0 0;
+}
+.template-product .product__info-wrapper  .product-price{
+    margin: 5px 0;
+}
+.template-product .product__info-wrapper .accordion summary{
+    padding: 2rem 0;
+}
+.template-product .product__info-wrapper .accordion__title{
+    color: #000;
+    font-size: 16px;
+}
+.product .product__info-wrapper .product-sub-title{
+    font-size: 15px;
+    color: #1b3d2f;
+    font-weight: 300;
+    margin: 5px 0;
+}
+/********************* end *******************/
+
+
+/******************************* Product Page / Video section *******************************/
+.product-video-sec .title-wrapper-with-link{
+    flex-direction: column;
+}
+@media screen and (min-width: 750px){
+    .product-video-sec.background-none .multicolumn-card__image-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .product-video-sec .grid{
+        gap: 16px;
+    }
+}
+@media screen and (min-width: 990px){
+    .product-video-sec .grid--3-col-desktop .grid__item {
+        width: 32.33%
+    }
+}
+.product-video-sec .multicolumn-card__info .inline-richtext{
+    font-size: 24px;
+    font-weight: 400;
+}
+.product-video-sec .multicolumn-card__info .rte{
+    font-size: 14px;
+}
+.template-product .product .product__media-list{
+    margin-bottom:8px;
+}
+.template-product .product .product__media-list .product__media-item .product__media img{
+    border-radius:12px;
+}
+.template-product .custom-gallery-hide{
+    display:none !important;
+}
+.custom-product-slider-wrapper{
+    display:none;
+}
+
+.template-product .custom-product-slider-wrapper {
+    width: 100%;
+    margin: 0 ;
+    padding: 0 ;
+    height: 40rem;
+    margin-bottom: 15px;
+    display:block;
+  }
+
+  .custom-main-slider {
+    width: 100% ;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 40rem;
+  }
+
+  .custom-slide-img-wrap {
+    width: 100%;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40rem;
+  }
+
+  .custom-slide-img-wrap img {
+    width: 100%;
+    height: 40rem;
+    display: block;
+    margin: 0;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  /* Green Floating Round Arrows */
+  .custom-main-slider .custom-arrow {
+    background-color: #3f7b6b;
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .custom-main-slider .swiper-button-prev {
+    left: 12px;
+  }
+
+  .custom-main-slider .swiper-button-next {
+    right: 12px;
+  }
+
+  .custom-main-slider .custom-arrow:hover {
+    background-color: #2c594d;
+    transform: scale(1.05);
+  }
+
+  .custom-main-slider .custom-arrow::after {
+    font-size: 10px;
+  }
+
+  /* Hide Pagination / Unwanted gaps */
+  .custom-main-slider .swiper-pagination,
+  .custom-thumbs-slider {
+    display: none;
+  }
+
+  /* Parent Dawn theme container resets */
+  .product__media-wrapper,
+  .product__media-list,
+  .grid__item {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+/********************* end *******************/
+
+/******************************* Product Page / Tailored to Your Space section *******************************/
+.tailored-space-sec.multicolumn .page-width{
+    max-width: 1200px;
+}
+.tailored-space-sec .title{
+    text-align: center;
+    width: 100%;
+}
+.tailored-space-sec .multicolumn-card__info .inline-richtext {
+    font-size: 24px;
+}
+.tailored-space-sec .multicolumn-card__info .rte {
+    text-align: left;
+    font-size: 14px;
+    max-width: 85%;
+    margin: 10px auto 0;
+}
+.tailored-space-sec .multicolumn-card__info .rte strong {
+    font-weight: 400;
+    color: #000;
+    font-size: 16px;
+}
+.tailored-space-sec.multicolumn .button{
+    background: #194636;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.tailored-space-sec.multicolumn .button:hover{
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+}
+@media screen and (max-width:768px){
+    .tailored-space-sec .multicolumn-card__info .rte{
+        max-width:100%;
+    }
+}
+/********************* end *******************/
+
+/******************************* Collection page / video section *******************************/
+.template-collection .video-section.page-width{
+    padding-left:0;
+    padding-right:0;
+}
+@media screen and (max-width:768px){
+    .template-collection .rich-text .rich-text__heading.h1{
+        font-size: 23px;
+    }
+}
+
+/********************* end *******************/
+
+/******************************* Desgin Consultant Page / Top section *******************************/
+.template-page-free-design-consultation #announcement-bar .custom-annoucement-bar,
+.template-page-free-design-consultation #announcement-bar,
+.template-page-free-design-consultation .section-header,
+.template-page-free-design-consultation .section-header .header-wrapper,
+.template-page-why-a-diy #announcement-bar .custom-annoucement-bar,
+.template-page-why-a-diy #announcement-bar,
+.template-page-why-a-diy .section-header,
+.template-page-why-a-diy .section-header .header-wrapper{
+  background: transparent;
+}
+.shopify-section .consultant-page.banner{
+    margin-top: -15rem;
+} 
+.shopify-section .consultant-page.banner .banner__media img{
+    object-fit: cover;
+    object-position: bottom;
+}
+.shopify-section .consultant-page.banner.why-a-diy-hero .banner__media img{
+    object-position: top;
+}
+.template-page-free-design-consultation .banner__buttons{
+    max-width: 100%;
+    width: 100%;
+}
+@media screen and (min-width: 750px){
+    .consultant-page.banner--desktop-transparent .banner__box{
+        padding-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+    .consultant-page .banner__box .banner__heading{
+        margin-top:0;
+        font-weight: 800;
+        font-size: 50px;
+        margin-bottom: 1rem;
+    }
+    .consultant-page .below-heading.banner__text p{
+        font-weight: 600;
+        font-size: 21px;
+    }
+    .consultant-page .main-body.banner__text{
+        margin-bottom: 2rem;
+    }
+}
+.consultant-page .sub-title.banner__text{
+    color: #755845;
+}
+.consultant-page .banner__buttons .button{
+    background: #194636;
+    border-radius: 8px;
+    padding: 1.5rem 3rem;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.consultant-page .banner__buttons .button:hover{
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+
+}
+.consultant-page .banner__media img{
+    object-fit: fill;
+}
+.template-page-free-design-consultation .image-with-text-matrix.gradient{
+    background: #f5f3f1;
+}
+@media screen and (max-width:768px){
+    .template-page-free-design-consultation .shopify-section.section .consultant-page.banner .banner__content {
+        align-items: center;
+    }
+    .template-page-free-design-consultation .consultant-page.banner--desktop-transparent .banner__box {
+        padding-top: 1rem;
+    }
+    .template-page-free-design-consultation .review-badge-block{
+        justify-content: center;
+    }
+    .template-page-free-design-consultation .review-badge-block img {
+        height: 17px !important;
+    }
+    .template-page-free-design-consultation .review-badge-block .review-badge__text{
+        font-size: 12px !important;
+    }
+}
+
+/********************* end *******************/
+
+/******************************* Desgin Consultant Page / consultant-icon-sec multicolumn section *******************************/
+.consultant-icon-sec.gradient{
+    background: #fff;
+} 
+.consultant-icon-sec .multicolumn-card .multicolumn-card__image-wrapper{
+    width: 30px;
+    height: 30px;
+    margin: 0;
+}
+.consultant-icon-sec .multicolumn-card .multicolumn-card__info{
+    padding: 0 !important;
+    margin-top: 15px;
+    padding-bottom: 10px !important;
+}
+.consultant-icon-sec .multicolumn-list__item{
+    padding: 16px;
+    border: 1px solid;
+}
+.consultant-icon-sec .multicolumn-card .multicolumn-card__info h3{
+    font-size: 21px;
+}
+.consultant-icon-sec.multicolumn .title,
+.consultant-icon-sec2.multicolumn .title {
+    letter-spacing: normal;
+    text-align: center;
+    width: 100%;
+    font-size: 36px;
+    position: relative;
+    margin-bottom: 4rem;
+}
+.consultant-icon-sec.multicolumn .title:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    width: 10%;
+    height: 4px;
+    background-color: #111;
+    border-radius: 10px;
+    top: 7rem;
+}
+
+.consultant-icon-sec2 .multicolumn-card .multicolumn-card__image-wrapper{
+    width: 80px;
+    height: 80px;
+}
+.consultant-icon-sec2 .multicolumn-card .multicolumn-card__info h3{
+    font-size: 19px;
+}
+/********************* end *******************/
+
+/******************************* Desgin Consultant Page / consultant-richtext Richtext section *******************************/
+.consultant-richtext .rich-text__blocks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.consultant-richtext .rich-text__blocks .rich-text__heading{
+    font-size: 36px;
+}
+.consultant-richtext .rich-text__blocks .rich-text__text{
+    margin: 0;
+    max-width: 75%;
+    font-size: 18px;
+    font-weight: 400;
+}
+.consultant-richtext .rich-text__blocks .rich-text__buttons{
+    margin: 0;
+}
+.consultant-richtext .rich-text__blocks .rich-text__buttons a{
+    background: #3A6958;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 18px 50px;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.consultant-richtext .rich-text__blocks .rich-text__buttons a:hover{
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+
+}
+/********************* end *******************/
+
+
+/******************************* Why A-DIY Page / Hero section *******************************/
+.template-page-why-a-diy.gradient,
+.template-page-why-a-diy main .gradient{
+    background: #F6F4F2;
+}
+
+
+.why-a-diy-hero .sub-title.banner__text {
+    color: #747878;
+}
+.why-a-diy-hero.banner--desktop-transparent .banner__box{
+    background: transparent;
+}
+.template-page-why-a-diy .why-a-diy-hero.banner--desktop-transparent .banner__box{
+    align-items: flex-start;
+}
+@media screen and (min-width: 750px){
+    .contact-hero.banner--desktop-transparent .banner__box{
+        max-width: 100%;
+        padding-bottom: 8rem;
+    }
+    .why-a-diy-hero.banner--desktop-transparent .banner__box{
+
+    }
+    .why-a-diy-hero .banner__box .banner__heading{
+        font-size: 47px;
+    }
+    .why-a-diy-hero .main-body.banner__text{
+        max-width: 80%;
+    }
+    .template-page-about-us .why-a-diy-hero.banner--desktop-transparent .banner__box{
+        align-items: flex-start;
+    }
+    .template-page-about-us .why-a-diy-hero .main-body.banner__text{
+        max-width: 100%;
+        font-size: 20px;
+    }
+}
+@media screen and (max-width:768px){
+    .template-page-why-a-diy .shopify-section.section .why-a-diy-hero.banner .banner__content {
+        align-items: center;
+    }
+    .template-page-why-a-diy .why-a-diy-hero.banner--desktop-transparent .banner__box {
+        padding-top: 1rem;
+    }
+    .template-page-why-a-diy .review-badge-block{
+        justify-content: center;
+    }
+    .template-page-why-a-diy .review-badge-block img {
+        height: 17px !important;
+    }
+    .template-page-why-a-diy .review-badge-block .review-badge__text{
+        font-size: 12px !important;
+    }
+}
+/********************* end *******************/
+
+/******************************* Why A-DIY Page / multirow section *******************************/
+.custom-multi-row .multirow__inner{
+    row-gap: 25px;
+}
+.custom-multi-row .image-with-text__grid{
+    gap: 20px;
+}
+.custom-multi-row .image-with-text__grid .grid__item{
+    width: 48%;
+}
+.custom-multi-row .image-with-text .grid__item {
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+
+}
+.custom-multi-row .image-with-text .grid__item img{
+    border-radius: 20px;
+}
+.custom-multi-row .multirow-custom__title{
+    font-size: 46px;
+    font-weight: 600;
+}
+.custom-multi-row .multirow-custom__header{
+    margin-bottom: 0;
+}
+.custom-multi-row.multirow .image-with-text__content{
+    justify-content: start;
+}
+.custom-multi-row.multirow .image-with-text__content{
+    gap: 10px;
+}
+.custom-multi-row .image-with-text__text-item .multirow-card__icon{
+    width: 25px;
+    height: 25px;
+    margin-bottom:0;
+}
+.custom-multi-row .image-with-text__text-item .image-with-text__heading{
+    font-size: 27px;
+    margin-bottom: 1rem;
+}
+.custom-multi-row .image-with-text__text-item .image-with-text__text{
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.4;
+    color: #121212;
+    margin-bottom: 15px;
+}
+.custom-multi-row .image-with-text__text-item .multirow-card__sub-item{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.custom-multi-row .image-with-text__text-item .multirow-card__sub-title{
+    font-size: 19px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 9px;
+    margin-top: 0;
+}
+.custom-multi-row .image-with-text__text-item .multirow-card__sub-text{
+    font-size: 16px;
+    color: #121212;
+    margin-bottom: 15px;
+    letter-spacing: 0;
+}
+.custom-multi-row .image-with-text__media--medium{
+    height: auto;
+}
+
+
+/********************* end *******************/
+
+/******************************* Why A-DIY Page / comparison table section *******************************/
+.template-page-why-a-diy .comparison-table{
+    background-color: #fff;
+    border-radius: 20px;
+}
+.template-page-why-a-diy .comparison-table th.col-feature{
+    border-radius: 20px 0 0 0;
+}
+.template-page-why-a-diy .comparison-table th.col-standard:last-child {
+    border-radius: 0 20px 0 0;
+}
+/********************* end *******************/
+
+
+
+/******************************* About Us Page / Hero section *******************************/
+.about-us.banner .banner__content{
+    max-width:90%;
+}
+.shopify-section .about-us.banner.why-a-diy-hero .banner__media img{
+    object-position: bottom;
+}
+.template-page-about-us .shopify-section.section {
+    background: #F6F4F2;
+}
+.about-us .banner__box .banner__heading:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    transform: translate(-50%);
+    width: 20%;
+    height: 5px;
+    background-color: #111;
+    border-radius: 10px;
+    top: 12.5rem;
+}
+.about-us .main-body.banner__text{
+    margin-top: 2rem;
+}
+/********************* end *******************/
+
+
+/******************************* Contact Us Page *******************************/
+.template-page-contact-us .content-for-layout .shopify-section > .gradient,
+.template-page-contact-us .rich-text.gradient{
+    background: #F6F4F2;
+}
+/********************* end *******************/
+
+
+
+/******************************* Contact Us Page *******************************/
+@media screen and (min-width: 990px){
+    .seo-hero-sec .image-with-text__content{
+        padding: 1rem 5rem 1rem 1rem;
+    }
+}
+.seo-hero-sec .image-with-text__heading{
+    font-size: 33px;
+    letter-spacing: 0;
+}
+.seo-hero-sec .image-with-text__text{
+    font-size: 15px;
+}
+.seo-hero-sec .image-with-text__buttons{
+    margin-top: 0;
+}
+.seo-hero-sec .image-with-text__buttons .button{
+    font-size: 15px;
+}
+.seo-hero-sec .image-with-text__media-item .image-with-text__media{
+    border-radius: 15px;
+}
+/********************* end *******************/
+.template-page-tracking #MainContent{
+    position: relative;
+}
+
+
+#MainProduct-template--38726855688214__main{
+    background: #F7F9FA;
+}
+
+
+

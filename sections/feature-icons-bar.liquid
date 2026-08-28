@@ -1,0 +1,447 @@
+{%- style -%}
+  .feature-bar-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .feature-bar-{{ section.id }} .feature-bar__container {
+    max-width: {{ section.settings.page_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Desktop Grid Layout */
+  .feature-bar-{{ section.id }} .feature-bar__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: 30px;
+    align-items: center;
+  }
+
+  .feature-bar-{{ section.id }} .feature-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    white-space: nowrap;
+  }
+
+  .feature-bar-{{ section.id }} .feature-block__icon-wrapper {
+    flex-shrink: 0;
+    width: {{ section.settings.icon_width }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-bar-{{ section.id }} .feature-block__icon {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .feature-bar-{{ section.id }} .feature-block__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature-bar-{{ section.id }} .feature-block__title {
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: 400;
+    color: {{ section.settings.title_color }};
+    margin: 0 0 2px 0;
+    line-height: 1.2;
+  }
+
+  .feature-bar-{{ section.id }} .feature-block__subtitle {
+    font-size: {{ section.settings.subtitle_font_size }}px;
+    font-weight: 400;
+    color: {{ section.settings.subtitle_color }};
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* Hide Marquee by Default (Desktop) */
+  .feature-bar-{{ section.id }} .marquee-wrapper {
+    display: none;
+  }
+
+  @media screen and (max-width: 1100px) and (min-width: 951px) {
+    .feature-bar-{{ section.id }} .feature-bar__grid {
+      gap: 20px;
+    }
+    .feature-bar-{{ section.id }} .feature-block__title {
+      font-size: 13px;
+    }
+    .feature-bar-{{ section.id }} .feature-block__subtitle {
+      font-size: 11px;
+    }
+  }
+
+  /* MOBILE MARQUEE ANIMATION */
+  {%- if section.settings.enable_mobile_marquee -%}
+    @media screen and (max-width: 950px) {
+      .feature-bar-{{ section.id }} .feature-bar__grid--desktop {
+        display: none !important;
+      }
+
+      .feature-bar-{{ section.id }} .feature-bar__container {
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .feature-bar-{{ section.id }} .marquee-wrapper {
+        display: flex;
+        overflow: hidden;
+        user-select: none;
+        width: 100%;
+      }
+
+      .feature-bar-{{ section.id }} .marquee-content {
+        display: flex;
+        flex-shrink: 0;
+        gap: 40px;
+        align-items: center;
+        justify-content: space-around;
+        min-width: 100%;
+        animation: marquee-scroll-{{ section.id }} {{ section.settings.marquee_speed }}s linear infinite;
+        padding-right: 40px;
+      }
+
+      .feature-bar-{{ section.id }} .feature-block {
+        flex-shrink: 0;
+      }
+    }
+
+    @keyframes marquee-scroll-{{ section.id }} {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  {%- else -%}
+    @media screen and (max-width: 989px) {
+      .feature-bar-{{ section.id }} .feature-bar__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+    }
+    @media screen and (max-width: 575px) {
+      .feature-bar-{{ section.id }} .feature-bar__grid {
+        grid-template-columns: {{ section.settings.mobile_layout }};
+        gap: 20px;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="feature-bar-{{ section.id }}">
+  <div class="feature-bar__container">
+    
+    {%- comment -%} Desktop View (Normal Clean Grid) {%- endcomment -%}
+    <div class="feature-bar__grid feature-bar__grid--desktop">
+      {%- for block in section.blocks -%}
+        <div class="feature-block" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon_image != blank -%}
+            <div class="feature-block__icon-wrapper">
+              <img
+                src="{{ block.settings.icon_image | image_url: width: 200 }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+                width="{{ block.settings.icon_image.width }}"
+                height="{{ block.settings.icon_image.height }}"
+                class="feature-block__icon"
+              >
+            </div>
+          {%- endif -%}
+
+          <div class="feature-block__content">
+            {%- if block.settings.title != blank -%}
+              <h3 class="feature-block__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.subtitle != blank -%}
+              <p class="feature-block__subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Mobile View (Continuous Marquee) {%- endcomment -%}
+    {%- if section.settings.enable_mobile_marquee -%}
+      <div class="marquee-wrapper">
+        <div class="marquee-content">
+          {%- for block in section.blocks -%}
+            <div class="feature-block">
+              {%- if block.settings.icon_image != blank -%}
+                <div class="feature-block__icon-wrapper">
+                  <img
+                    src="{{ block.settings.icon_image | image_url: width: 200 }}"
+                    alt="{{ block.settings.title | escape }}"
+                    loading="lazy"
+                    width="{{ block.settings.icon_image.width }}"
+                    height="{{ block.settings.icon_image.height }}"
+                    class="feature-block__icon"
+                  >
+                </div>
+              {%- endif -%}
+
+              <div class="feature-block__content">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="feature-block__title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.subtitle != blank -%}
+                  <p class="feature-block__subtitle">{{ block.settings.subtitle }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="marquee-content" aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <div class="feature-block">
+              {%- if block.settings.icon_image != blank -%}
+                <div class="feature-block__icon-wrapper">
+                  <img
+                    src="{{ block.settings.icon_image | image_url: width: 200 }}"
+                    alt="{{ block.settings.title | escape }}"
+                    loading="lazy"
+                    width="{{ block.settings.icon_image.width }}"
+                    height="{{ block.settings.icon_image.height }}"
+                    class="feature-block__icon"
+                  >
+                </div>
+              {%- endif -%}
+
+              <div class="feature-block__content">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="feature-block__title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.subtitle != blank -%}
+                  <p class="feature-block__subtitle">{{ block.settings.subtitle }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Feature Icons Bar",
+  "tag": "section",
+  "class": "section-feature-icons-bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "page_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Max Container Width",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Desktop Columns per Row",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_marquee",
+      "label": "Enable Mobile Marquee (Continuous Scroll)",
+      "default": true,
+      "info": "Mobile par continuous scrolling loop chalegi."
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "label": "Marquee Speed (Seconds)",
+      "default": 12,
+      "info": "Kam seconds matlab ziada tez speed."
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Grid Layout (If Marquee Disabled)",
+      "options": [
+        {
+          "value": "1fr",
+          "label": "1 Column"
+        },
+        {
+          "value": "repeat(2, 1fr)",
+          "label": "2 Columns"
+        }
+      ],
+      "default": "1fr"
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon Image Width",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Style & Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Typography Sizes"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Title Font Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Font Size",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 25
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_item",
+      "name": "Feature Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image (PNG/SVG)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "1,746+ Reviews"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle / Content",
+          "default": "Sold in America"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Icons Bar",
+      "blocks": [
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "1,746+ Reviews",
+            "subtitle": "Sold in America"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "Made in USA",
+            "subtitle": "100% made in America"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "A-DIY Patented Deck System",
+            "subtitle": "Not made engineered DIY"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "title": "5 Years Structural warranty",
+            "subtitle": "25 Years Composite warranty"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
