@@ -36,7 +36,8 @@
             "heading_html": "Questions? <br>\nOur Deck Specialists Are Just a Call Away.",
             "heading": "",
             "heading_tag": "h2",
-            "heading_size": "h1"
+            "font_size_desktop": "",
+            "font_size_mobile": ""
           }
         },
         "text_aQGiMz": {
@@ -111,6 +112,7 @@
           "type": "card",
           "settings": {
             "icon_type": "email",
+            "custom_icon": "shopify://shop_images/Container_2.png",
             "heading": "Email",
             "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
             "action_text": "<p>Send us an email at <a href=\"mailto:support@go-diy.com\">support@go-diy.com</a>.</p>"
@@ -120,6 +122,7 @@
           "type": "card",
           "settings": {
             "icon_type": "phone",
+            "custom_icon": "shopify://shop_images/Container_3.png",
             "heading": "Phone",
             "timing_text": "Monday-Friday, 9AM - 5 PM EST excluding holidays.",
             "action_text": "<p>Give us a call <a href=\"tel:17863582872\">1 (786) 358-2872</a>.</p>"
@@ -129,6 +132,7 @@
           "type": "card",
           "settings": {
             "icon_type": "chat",
+            "custom_icon": "shopify://shop_images/Container_4.png",
             "heading": "Chat",
             "timing_text": "Is it after hours?<br>\nLaunch our chat to talk with a specialist now.",
             "action_text": ""
@@ -142,17 +146,29 @@
       ],
       "name": "Contact Cards",
       "settings": {
-        "bg_color": "#F4F4F6",
-        "card_bg_color": "#FFFFFF",
-        "icon_color": "#2D5A43",
-        "heading_color": "#1A1A1A",
+        "bg_color": "#f4f4f6",
+        "card_bg_color": "#ffffff",
+        "icon_color": "#2d5a43",
+        "heading_color": "#1a1a1a",
         "text_color": "#333333",
         "padding_top": 0,
         "padding_bottom": 60
       }
     },
+    "contact_form_simple_6gbHac": {
+      "type": "Contact-form-simple",
+      "name": "Contact form",
+      "settings": {
+        "heading": "Or Send Us A Message",
+        "subtext": "<p>Our customer service team is available via email Monday-Friday, 9AM - 5 PM EST excluding holidays. We generally respond to all inquiries within one business day.</p>",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "form": {
       "type": "contact-form",
+      "disabled": true,
       "settings": {
         "heading": "",
         "heading_size": "h1",
@@ -219,6 +235,7 @@
     "image_banner_HeJkDJ",
     "rich_text_C9Eb3B",
     "contact_cards_pEMcBK",
+    "contact_form_simple_6gbHac",
     "form",
     "rich_text_bJ8wL8"
   ]
