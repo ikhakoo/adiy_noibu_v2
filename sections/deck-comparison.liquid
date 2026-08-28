@@ -453,6 +453,60 @@
                       {{ block.settings.financing_link_text }}
                     </a>
                   {%- endif -%} 
+                  {%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "affirm-block"
+  assign section_type = "card_product-card"
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+<div 
+  data-style-id="{{ section.id }}--{{ block.id }}" 
+  {% if anchor_id != blank %}id="{{ anchor_id }}" {% endif %} 
+  {{ block.shopify_attributes }} 
+  class="flex" 
+  x-data="{
+    affirmMessage: ' ',
+    async fetchAffirmMessage() {
+      const publicKey = 'M97BIX0W3ONNSNNH';
+      const productPrice = card?.product?.price;
+      const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${productPrice}&field=ala&use_best_terms=true&page_type=product`;
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        console.log(data, 'data', response, 'response')
+        if (data && data.promo && data.promo.html_ala) {
+          this.affirmMessage = data.promo.html_ala;
+        }
+      }
+      catch {
+        console.log('Error fetching Affirm message')
+      }
+      if (window.affirm && affirm.ui) {
+        affirm.ui.ready(() => affirm.ui.refresh());
+      }
+    }
+  }" 
+  x-init="fetchAffirmMessage()"
+>
+  <p class="affirm-as-low-as"
+      data-page-type="product"
+      :data-amount="card?.product?.price">
+    <span x-html="affirmMessage"></span>
+  </p>
+</div>
+
+
+
                   
                 </div>
               {%- endif -%}
