@@ -191,6 +191,7 @@
         },
         "collapsible_tab_etLcFt": {
           "type": "collapsible_tab",
+          "disabled": true,
           "settings": {
             "collapsible_tab_class": "",
             "heading": "Watch in Action",
