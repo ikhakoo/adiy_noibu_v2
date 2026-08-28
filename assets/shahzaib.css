@@ -998,6 +998,12 @@
 .template-page-how-to-build-a-deck footer{
     display:none !important;
 }
-.template-page-how-to-build-a-deck
-.template-page-how-to-build-a-deck
+.template-page-how-to-build-a-deck .page-width{
+    max-width: 100%;
+    padding: 0;
+}
+.template-page-how-to-build-a-deck .main-page-title{
+    display:none !important;
+
+}
 .template-page-how-to-build-a-deck
