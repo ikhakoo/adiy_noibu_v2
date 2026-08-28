@@ -360,7 +360,7 @@ if (firstMenuItem) {
 
 
 (function () {
-    // 1. #affirm Link Click Handler
+    // 1. Link click handler (#affirm)
     document.addEventListener("click", function (event) {
       const linkTarget = event.target.closest('a[href*="#affirm"]');
       if (linkTarget) {
@@ -372,47 +372,58 @@ if (firstMenuItem) {
       }
     });
 
-    // 2. Dynamic Price Extraction
-    function syncAffirmPrice() {
-      // Affirm block ke andar price text find karna ($ price format)
-      const affirmContainer = document.querySelector(".affirm-as-low-as");
-      const dynamicTitleSpan = document.querySelector(".js-financing-dynamic-title");
-
-      if (affirmContainer && dynamicTitleSpan) {
-        // Direct price span ya pure text me se price matcher regex
-        const priceElement = affirmContainer.querySelector(".affirm-ala-price");
-        let priceText = priceElement ? priceElement.textContent.trim() : "";
-
-        if (!priceText) {
-          const match = affirmContainer.textContent.match(/\$\d+(\.\d+)?/);
-          if (match) priceText = match[0];
-        }
-
-        if (priceText) {
-          // Exact format matching: "As Low As $184/Month With Affirm"
-          dynamicTitleSpan.textContent = `As Low As ${priceText}/Month With Affirm`;
-          return true; // Price mil gayi
+    // 2. Exact Price Extractor Logic
+    function getAffirmPriceText() {
+      // Affirm ke inner elements ko scan karega
+      const priceElem = document.querySelector(".affirm-as-low-as .affirm-ala-price");
+      if (priceElem && priceElem.textContent.trim() !== "") {
+        return priceElem.textContent.trim();
+      }
+      
+      // Fallback: Agar span replace ho gaya ho to poore block me regex search karega
+      const mainBlock = document.querySelector(".affirm-as-low-as");
+      if (mainBlock) {
+        const text = mainBlock.innerText || mainBlock.textContent;
+        const match = text.match(/\$\d+(\.\d+)?/);
+        if (match) {
+          return match[0];
         }
       }
-      return false;
+      return null;
     }
 
-    // Interval polling filter - dynamic scripts response load tak monitor karega
-    let checks = 0;
-    const priceInterval = setInterval(function () {
-      const success = syncAffirmPrice();
-      checks++;
-      if (success || checks > 30) { 
-        clearInterval(priceInterval); // 15 seconds baad stop ho jayega
+    function updateTitleWithPrice() {
+      const price = getAffirmPriceText();
+      const dynamicTitleSpan = document.querySelector(".js-financing-dynamic-title");
+      
+      if (price && dynamicTitleSpan) {
+        // Output result format: "As Low As $225/Month With Affirm" ya "As Low As $184/Month With Affirm"
+        dynamicTitleSpan.textContent = `As Low As ${price}/Month With Affirm`;
       }
-    }, 500);
+    }
 
-    // MutationObserver backup for Variant change updates
-    document.addEventListener("DOMContentLoaded", function () {
-      const targetNode = document.querySelector(".affirm-as-low-as");
-      if (targetNode) {
-        const observer = new MutationObserver(syncAffirmPrice);
-        observer.observe(targetNode, { childList: true, subtree: true, characterData: true });
+    // Interval: Dynamic load hone tak continuous run hoga (Every 250ms)
+    const checkInterval = setInterval(function () {
+      const price = getAffirmPriceText();
+      if (price) {
+        updateTitleWithPrice();
       }
+    }, 250);
+
+    // Dynamic Variant Change Listeners
+    window.addEventListener("load", function () {
+      updateTitleWithPrice();
+      
+      // Global body MutationObserver to catch Shopify Variant / Price Changes
+      const observer = new MutationObserver(function () {
+        updateTitleWithPrice();
+      });
+
+      const affirmContainer = document.body;
+      observer.observe(affirmContainer, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
     });
   })();
