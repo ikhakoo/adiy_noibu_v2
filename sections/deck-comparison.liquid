@@ -423,38 +423,56 @@
                 </a>
               {%- endif -%}
 
-              <!-- Financing -->
-              {%- if block.settings.show_financing -%}
-                <div class="deck-card__financing-bar">
-                  {%- if block.settings.financing_text_before != blank -%}
-                    <span class="financing-text-prefix">{{ block.settings.financing_text_before }}</span>
-                  {%- endif -%}
+              <!-- Financing / Pure JS & Liquid Affirm Integration -->
+{%- if block.settings.show_financing -%}
+  {%- liquid
+    assign current_price = 0
+    if card_product != blank
+      assign current_price = card_product.price_min
+    elsif block.settings.price != blank
+      assign current_price = block.settings.price | remove: '$' | remove: ',' | times: 100
+    endif
+  -%}
 
-                  <span class="financing-logo-wrapper">
-                    {%- if block.settings.financing_logo != blank -%}
-                      <img
-                        src="{{ block.settings.financing_logo | image_url: width: 150 }}"
-                        alt="Affirm"
-                        loading="lazy"
-                        width="50"
-                        height="auto"
-                      >
-                    {%- else -%}
-                      <svg width="45" height="18" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.5 35H6L18 5h6.5l12 30h-6.5l-3-8h-11l-3 8zm5.5-13h8l-4-11-4 11z" fill="#000"/>
-                        <path d="M0 20C0 8.95 8.95 0 20 0s20 8.95 20 20" stroke="#4A90E2" stroke-width="4" fill="none"/>
-                      </svg>
-                    {%- endif -%}
-                  </span>
+  <div class="deck-card__financing-bar">
+    {%- if current_price > 0 -%}
+      <!-- Affirm Standard HTML Container -->
+      <div 
+        class="affirm-as-low-as-container" 
+        data-amount="{{ current_price }}"
+        data-price-cents="{{ current_price }}"
+      >
+        <p 
+          class="affirm-as-low-as" 
+          data-page-type="product" 
+          data-amount="{{ current_price }}"
+        ></p>
+      </div>
+    {%- else -%}
+      <!-- Fallback UI (Agar price available na ho) -->
+      {%- if block.settings.financing_text_before != blank -%}
+        <span class="financing-text-prefix">{{ block.settings.financing_text_before }}</span>
+      {%- endif -%}
 
-                  {%- if block.settings.financing_link_text != blank -%}
-                    <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
-                      {{ block.settings.financing_link_text }}
-                    </a>
-                  {%- endif -%} 
-                  
-                </div>
-              {%- endif -%}
+      <span class="financing-logo-wrapper">
+        {%- if block.settings.financing_logo != blank -%}
+          <img src="{{ block.settings.financing_logo | image_url: width: 150 }}" alt="Affirm" loading="lazy" width="50" height="auto">
+        {%- else -%}
+          <svg width="45" height="18" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 35H6L18 5h6.5l12 30h-6.5l-3-8h-11l-3 8zm5.5-13h8l-4-11-4 11z" fill="#000"/>
+            <path d="M0 20C0 8.95 8.95 0 20 0s20 8.95 20 20" stroke="#4A90E2" stroke-width="4" fill="none"/>
+          </svg>
+        {%- endif -%}
+      </span>
+
+      {%- if block.settings.financing_link_text != blank -%}
+        <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
+          {{ block.settings.financing_link_text }}
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{%- endif -%}
 
               <!-- Image -->
               {%- assign card_img = block.settings.card_image -%}
@@ -673,6 +691,43 @@
     });
 
   });
+</script>
+
+<script>
+  function loadAffirmPromos() {
+    const publicKey = 'M97BIX0W3ONNSNNH';
+    const containers = document.querySelectorAll('.affirm-as-low-as-container');
+
+    containers.forEach(async (container) => {
+      const price = container.getAttribute('data-price-cents');
+      if (!price) return;
+
+      const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${price}&field=ala&use_best_terms=true&page_type=product`;
+
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data && data.promo && data.promo.html_ala) {
+          const promoElem = container.querySelector('.affirm-as-low-as');
+          if (promoElem) {
+            promoElem.innerHTML = data.promo.html_ala;
+          }
+        }
+      } catch (e) {
+        console.error('Error fetching Affirm promo:', e);
+      }
+    });
+
+    // Refresh Affirm Modal Triggers
+    if (window.affirm && window.affirm.ui) {
+      window.affirm.ui.ready(() => {
+        window.affirm.ui.refresh();
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadAffirmPromos);
 </script>
 
 
