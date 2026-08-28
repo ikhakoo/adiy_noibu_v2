@@ -359,56 +359,18 @@ if (firstMenuItem) {
 
 
 
-(function() {
-    // 1. '#affirm' Link trigger click logic
-    document.addEventListener("click", function (event) {
-      const linkTarget = event.target.closest('a[href*="#affirm"]');
-      if (linkTarget) {
-        event.preventDefault();
-        const affirmTrigger = document.querySelector(".affirm-modal-trigger");
-        if (affirmTrigger) {
-          affirmTrigger.click();
-        }
-      }
-    });
-
-    // 2. Fetch Exact Dynamic Monthly Price Direct from Affirm API
-    async function getExactAffirmPrice() {
-      const publicKey = 'M97BIX0W3ONNSNNH';
-      // Standard Shopify product price variable in cents
-      const productPrice = {{ product.selected_or_first_available_variant.price | default: 0 }};
-      
-      if (!productPrice) return;
-
-      const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${productPrice}&field=ala&use_best_terms=true&page_type=product`;
-      
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        if (data && data.promo && data.promo.html_ala) {
-          // Response text se exact price match karein ($184, $225 etc)
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = data.promo.html_ala;
-          const rawText = tempDiv.textContent || tempDiv.innerText;
-          const match = rawText.match(/\$\d+(\.\d+)?/);
-          
-          if (match && match[0]) {
-            const dynamicTitleSpan = document.querySelector(".js-financing-dynamic-title");
-            if (dynamicTitleSpan) {
-              dynamicTitleSpan.textContent = `As Low As ${match[0]}/Month With Affirm`;
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Affirm dynamic price fetch error:", error);
-      }
-    }
-
-    // Call function on page ready
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", getExactAffirmPrice);
-    } else {
-      getExactAffirmPrice();
-    }
-  })();
+document.addEventListener("DOMContentLoaded", function () {
+                      // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
+                      document.addEventListener("click", function (event) {
+                        const linkTarget = event.target.closest('a[href*="#affirm"]');
+                        
+                        if (linkTarget) {
+                          event.preventDefault(); // Default anchor anchor jump ko rokega
+                          
+                          const affirmTrigger = document.querySelector(".affirm-modal-trigger");
+                          if (affirmTrigger) {
+                            affirmTrigger.click(); // Affirm app ke official modal trigger button par click simulate karega
+                          }
+                        }
+                      });
+                    });
