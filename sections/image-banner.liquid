@@ -225,7 +225,9 @@
             </div>
 
           {%- when 'heading' -%}
-            <h2
+            {%- assign header_tag = block.settings.heading_tag | default: 'h2' -%}
+
+            <{{ header_tag }}
               class="{{ block.settings.class_heading }} banner__heading inline-richtext {{ block.settings.heading_size }}"
               {{ block.shopify_attributes }}
             >
@@ -234,7 +236,7 @@
               {%- else -%}
                 {{ block.settings.heading }}
               {%- endif -%}
-            </h2>
+            </{{ header_tag }}>
           {%- when 'text' -%}
             <div class="{{ block.settings.class_text }} banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
               {%- if block.settings.text_html != blank -%}
@@ -533,6 +535,20 @@
           "id": "heading",
           "default": "t:sections.image-banner.blocks.heading.settings.heading.default",
           "label": "t:sections.image-banner.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading Tag (SEO)",
+          "default": "h2",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ]
         },
         {
           "type": "select",
