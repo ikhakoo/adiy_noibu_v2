@@ -23,7 +23,7 @@
         "heading_xwkBUD": {
           "type": "heading",
           "settings": {
-            "heading": "Contact Us",
+            "heading": "Frequently Asked Questions",
             "heading_tag": "h1",
             "class_heading": "",
             "font_size_desktop": "54",
@@ -34,7 +34,7 @@
         "text_e8ynYi": {
           "type": "text",
           "settings": {
-            "text": "<p>Question? Our Deck Specialists Are Just a Call Away.</p>"
+            "text": "<p>Need clarity?<br/>You’re in the right place. Here you’ll find answers to our most frequently asked questions. </p>"
           }
         }
       },
