@@ -374,3 +374,42 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                       });
                     });
+
+
+
+   (function () {
+    // 1. '#affirm' Link click trigger functionality
+    document.addEventListener("click", function (event) {
+      const linkTarget = event.target.closest('a[href*="#affirm"]');
+      if (linkTarget) {
+        event.preventDefault();
+        const affirmTrigger = document.querySelector(".affirm-modal-trigger");
+        if (affirmTrigger) {
+          affirmTrigger.click();
+        }
+      }
+    });
+
+    // 2. Direct Price Copying Logic (.affirm-ala-price -> .js-affirm-price-target)
+    function syncPrice() {
+      const sourcePriceElem = document.querySelector(".affirm-ala-price");
+      const targetSpan = document.querySelector(".js-affirm-price-target");
+
+      if (sourcePriceElem && targetSpan) {
+        const val = sourcePriceElem.textContent.trim();
+        if (val && val !== targetSpan.textContent) {
+          targetSpan.textContent = val; // Direct price like "$119" ya "$184" copy kar dega
+        }
+      }
+    }
+
+    // Interval polling (Fast sync for initial render)
+    const timer = setInterval(syncPrice, 200);
+
+    // MutationObserver to watch variant changes on the product page
+    document.addEventListener("DOMContentLoaded", function () {
+      syncPrice();
+      const bodyObserver = new MutationObserver(syncPrice);
+      bodyObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
+    });
+  })();
