@@ -253,6 +253,18 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   background-color: rgba(var(--color-foreground), 0.2);
 }
 
+/* Form controls do not inherit typography from the document by default, which
+   makes them fall back to the browser UI font. Inherit so they follow the
+   font set in Theme settings > Typography. */
+button,
+input,
+select,
+textarea,
+optgroup {
+  font-family: inherit;
+  font-style: inherit;
+}
+
 .text-body {
   font-size: 1.5rem;
   letter-spacing: 0.06rem;
