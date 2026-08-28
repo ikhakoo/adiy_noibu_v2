@@ -354,27 +354,29 @@ if (firstMenuItem) {
 }
 
 
-// end ================================
+// ================================ end ================================
 
 
 
+// =========================================== Open Affirm popup  ===========================================
 
 document.addEventListener("DOMContentLoaded", function () {
-                      // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
-                      document.addEventListener("click", function (event) {
-                        const linkTarget = event.target.closest('a[href*="#affirm"]');
-                        
-                        if (linkTarget) {
-                          event.preventDefault(); // Default anchor anchor jump ko rokega
-                          
-                          const affirmTrigger = document.querySelector(".affirm-modal-trigger");
-                          if (affirmTrigger) {
-                            affirmTrigger.click(); // Affirm app ke official modal trigger button par click simulate karega
-                          }
-                        }
-                      });
-                    });
+  // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
+  document.addEventListener("click", function (event) {
+    const linkTarget = event.target.closest('a[href*="#affirm"]');
+    
+    if (linkTarget) {
+      event.preventDefault(); // Default anchor anchor jump ko rokega
+      
+      const affirmTrigger = document.querySelector(".affirm-modal-trigger");
+      if (affirmTrigger) {
+        affirmTrigger.click(); // Affirm app ke official modal trigger button par click simulate karega
+      }
+    }
+  });
+});
 
 
+// ================================ end ================================
 
   
