@@ -377,42 +377,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-   // Dynamic Class Value Overwrite Logic
-  (function rewriteAffirmPrice() {
-    function updatePrice() {
-      const sourceElem = document.querySelector('.affirm-ala-price');
-      const targetElem = document.querySelector('.js-affirm-price-target');
-
-      if (sourceElem && targetElem) {
-        const sourceValue = sourceElem.innerText || sourceElem.textContent;
-        if (sourceValue && sourceValue.trim() !== "") {
-          targetElem.textContent = sourceValue.trim(); // Direct overwrite
-        }
-      }
-    }
-
-    // 1. Instant execution loop (Runs every 100ms)
-    const intervalId = setInterval(updatePrice, 100);
-
-    // 2. Clear interval after 8 seconds (To save memory)
-    setTimeout(() => {
-      clearInterval(intervalId);
-    }, 8000);
-
-    // 3. DOM Observer (Variant switch / Ajax page load sync)
-    document.addEventListener("DOMContentLoaded", () => {
-      updatePrice();
-      const observer = new MutationObserver(updatePrice);
-      observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-    });
-
-    // 4. Also handle #affirm trigger click
-    document.addEventListener("click", function (event) {
-      const linkTarget = event.target.closest('a[href*="#affirm"]');
-      if (linkTarget) {
-        event.preventDefault();
-        const affirmTrigger = document.querySelector(".affirm-modal-trigger");
-        if (affirmTrigger) affirmTrigger.click();
-      }
-    });
-  })();
+  
