@@ -378,7 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
    (function () {
-    // 1. '#affirm' Link click trigger functionality
+    // 1. #affirm link par Affirm Modal Trigger
     document.addEventListener("click", function (event) {
       const linkTarget = event.target.closest('a[href*="#affirm"]');
       if (linkTarget) {
@@ -390,26 +390,52 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // 2. Direct Price Copying Logic (.affirm-ala-price -> .js-affirm-price-target)
-    function syncPrice() {
-      const sourcePriceElem = document.querySelector(".affirm-ala-price");
+    // 2. Exact Price Extraction Logic
+    function syncDynamicAffirmPrice() {
       const targetSpan = document.querySelector(".js-affirm-price-target");
+      if (!targetSpan) return;
 
-      if (sourcePriceElem && targetSpan) {
-        const val = sourcePriceElem.textContent.trim();
-        if (val && val !== targetSpan.textContent) {
-          targetSpan.textContent = val; // Direct price like "$119" ya "$184" copy kar dega
+      // Method A: Direct Class Selector Scan
+      const priceElem = document.querySelector(".affirm-ala-price");
+      if (priceElem && priceElem.textContent.trim()) {
+        const extracted = priceElem.textContent.trim();
+        if (targetSpan.textContent !== extracted) {
+          targetSpan.textContent = extracted;
+        }
+        return;
+      }
+
+      // Method B: Text Regex Fallback (Starts at $225/mo)
+      const affirmBlock = document.querySelector(".affirm-as-low-as");
+      if (affirmBlock) {
+        const textContent = affirmBlock.innerText || affirmBlock.textContent;
+        const match = textContent.match(/\$\d+(\.\d+)?/);
+        if (match && match[0]) {
+          if (targetSpan.textContent !== match[0]) {
+            targetSpan.textContent = match[0];
+          }
         }
       }
     }
 
-    // Interval polling (Fast sync for initial render)
-    const timer = setInterval(syncPrice, 200);
+    // High frequency interval (Jab tak Affirm script dynamic amount inject na karde)
+    const priceCheckTimer = setInterval(syncDynamicAffirmPrice, 100);
 
-    // MutationObserver to watch variant changes on the product page
+    // Stop checking after 10 seconds to avoid performance issue
+    setTimeout(function() {
+      clearInterval(priceCheckTimer);
+    }, 10000);
+
+    // MutationObserver to catch dynamic variant updates
     document.addEventListener("DOMContentLoaded", function () {
-      syncPrice();
-      const bodyObserver = new MutationObserver(syncPrice);
-      bodyObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
+      syncDynamicAffirmPrice();
+      const targetContainer = document.querySelector(".affirm-as-low-as") || document.body;
+      
+      const observer = new MutationObserver(syncDynamicAffirmPrice);
+      observer.observe(targetContainer, { 
+        childList: true, 
+        subtree: true, 
+        characterData: true 
+      });
     });
   })();

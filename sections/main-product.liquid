@@ -1050,8 +1050,8 @@
                 {%- when 'financing_widget' -%}
                   <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
                     <div class="financing-header">
-                      <!-- Hardcoded Text with Dynamic Price Binding Span -->
-      <span class="financing-title">
+                      <!-- Title HTML me fix kar diya hai, $0 dynamic replacement span hai -->
+      <span class="financing-title js-financing-heading-wrap">
         As Low As <span class="js-affirm-price-target">$0</span>/Month With Affirm
       </span>
                       <button type="button" class="financing-toggle-btn js-financing-toggle">
