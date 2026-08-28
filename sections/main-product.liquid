@@ -1050,10 +1050,7 @@
                 {%- when 'financing_widget' -%}
                   <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
                     <div class="financing-header">
-                      <!-- Title HTML me fix kar diya hai, $0 dynamic replacement span hai -->
-                      <span class="financing-title js-financing-title-wrap">
-        As Low As <span class="js-affirm-price-target">$0</span>/Month With Affirm
-      </span>
+                      <span class="financing-title">{{ block.settings.heading_text }}</span>
                       <button type="button" class="financing-toggle-btn js-financing-toggle">
                         <span class="toggle-text">Show more</span>
                         <svg width="12" height="7" viewBox="0 0 12 7" fill="none" class="chevron-icon">
@@ -1090,62 +1087,6 @@
                       {%- endfor -%}
                     </div>
                   </div>
-
-                  <script>
-  (function () {
-    // 1. '#affirm' Link click se Affirm app modal trigger karna
-    document.addEventListener("click", function (event) {
-      const linkTarget = event.target.closest('a[href*="#affirm"]');
-      if (linkTarget) {
-        event.preventDefault();
-        const affirmTrigger = document.querySelector(".affirm-modal-trigger, .affirm-as-low-as");
-        if (affirmTrigger) {
-          affirmTrigger.click();
-        }
-      }
-    });
-
-    // 2. Direct Rewrite Logic from App Block
-    function fetchAndWriteAffirmPrice() {
-      const targetSpan = document.querySelector(".js-affirm-price-target");
-      if (!targetSpan) return;
-
-      // Affirm App Block selector search
-      const appBlock = document.querySelector('[class*="affirm_pay_over_time_messaging"], .affirm-as-low-as');
-      
-      if (appBlock) {
-        // Option A: Direct span class scan (.affirm-ala-price)
-        const alaPriceElem = appBlock.querySelector(".affirm-ala-price");
-        if (alaPriceElem && alaPriceElem.textContent.trim()) {
-          targetSpan.textContent = alaPriceElem.textContent.trim();
-          return;
-        }
-
-        // Option B: Text Regex Extraction ($225, $184 etc.)
-        const blockText = appBlock.innerText || appBlock.textContent;
-        const matchedPrice = blockText.match(/\$\d+(\.\d+)?/);
-        if (matchedPrice && matchedPrice[0]) {
-          targetSpan.textContent = matchedPrice[0];
-        }
-      }
-    }
-
-    // 3. Fast Poll to capture App Block load delay (Runs every 100ms)
-    const syncTimer = setInterval(fetchAndWriteAffirmPrice, 100);
-
-    // 4. Global DOM Observer for Variant Switch (Jab variation badle gi to price update hoga)
-    document.addEventListener("DOMContentLoaded", function () {
-      fetchAndWriteAffirmPrice();
-      
-      const observer = new MutationObserver(fetchAndWriteAffirmPrice);
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
-    });
-  })();
-</script>
 
                 {%- when 'material_switcher' -%}
                   <div class="material-switcher-block" {{ block.shopify_attributes }}>
