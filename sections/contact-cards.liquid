@@ -1,0 +1,257 @@
+{%- style -%}
+  .contact-cards-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+  }
+
+  .contact-cards-container-{{ section.id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .contact-card-item {
+    background-color: {{ section.settings.card_bg_color }};
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact-card-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  }
+
+  .contact-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .contact-card-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ section.settings.icon_color }};
+    flex-shrink: 0;
+  }
+
+  .contact-card-icon img, .contact-card-icon svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .contact-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    margin: 0;
+  }
+
+  .contact-card-timing {
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .contact-card-action {
+    font-size: 14px;
+    color: {{ section.settings.text_color }};
+    line-height: 1.5;
+    margin-top: auto;
+  }
+
+  .contact-card-action a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+{%- endstyle -%}
+
+<div class="contact-cards-section-{{ section.id }}">
+  <div class="contact-cards-container-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      <div class="contact-card-item" {{ block.shopify_attributes }}>
+        <div class="contact-card-header">
+          <div class="contact-card-icon">
+            {%- if block.settings.custom_icon != blank -%}
+              <img src="{{ block.settings.custom_icon | image_url: width: 48 }}" alt="{{ block.settings.heading }}" loading="lazy" width="24" height="24">
+            {%- else -%}
+              {%- case block.settings.icon_type -%}
+                {%- when 'email' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                {%- when 'phone' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.826-1.015-5.099-3.288-6.114-6.116l1.292-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+                {%- when 'chat' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a.75.75 0 01-1.024-.848l.744-2.825A7.525 7.525 0 013 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" /></svg>
+              {%- endcase -%}
+            {%- endif -%}
+          </div>
+          {%- if block.settings.heading != blank -%}
+            <h3 class="contact-card-title">{{ block.settings.heading }}</h3>
+          {%- endif -%}
+        </div>
+
+        {%- if block.settings.timing_text != blank -%}
+          <div class="contact-card-timing">
+            {{ block.settings.timing_text }}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.action_text != blank -%}
+          <div class="contact-card-action">
+            {{ block.settings.action_text }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Cards",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#F5F4F0"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#2D5A43"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Contact Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Default Icon",
+          "options": [
+            { "value": "email", "label": "Email" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "chat", "label": "Chat" }
+          ],
+          "default": "email"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon (Optional)",
+          "info": "Upload custom SVG/PNG to override default icon"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Title",
+          "default": "Email"
+        },
+        {
+          "type": "textarea",
+          "id": "timing_text",
+          "label": "Timings / Subtitle",
+          "default": "Monday–Friday, 9AM - 5 PM EST excluding holidays."
+        },
+        {
+          "type": "richtext",
+          "id": "action_text",
+          "label": "Action Text / Link",
+          "default": "<p>Send us an email at <a href=\"mailto:support@example.com\">support@example.com</a>.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "email",
+            "heading": "Email",
+            "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
+            "action_text": "<p>Send us an email at <a href=\"mailto:support@go-diy.com\">support@go-diy.com</a>.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "phone",
+            "heading": "Phone",
+            "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
+            "action_text": "<p>Give us a call <a href=\"tel:17863582872\">1(786) 358-2872</a>.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "chat",
+            "heading": "Chat",
+            "timing_text": "Is it after hours?",
+            "action_text": "<p>Launch our chat to talk with a specialist now.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
