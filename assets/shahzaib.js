@@ -377,65 +377,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-   (function () {
-    // 1. #affirm link par Affirm Modal Trigger
+   // Dynamic Class Value Overwrite Logic
+  (function rewriteAffirmPrice() {
+    function updatePrice() {
+      const sourceElem = document.querySelector('.affirm-ala-price');
+      const targetElem = document.querySelector('.js-affirm-price-target');
+
+      if (sourceElem && targetElem) {
+        const sourceValue = sourceElem.innerText || sourceElem.textContent;
+        if (sourceValue && sourceValue.trim() !== "") {
+          targetElem.textContent = sourceValue.trim(); // Direct overwrite
+        }
+      }
+    }
+
+    // 1. Instant execution loop (Runs every 100ms)
+    const intervalId = setInterval(updatePrice, 100);
+
+    // 2. Clear interval after 8 seconds (To save memory)
+    setTimeout(() => {
+      clearInterval(intervalId);
+    }, 8000);
+
+    // 3. DOM Observer (Variant switch / Ajax page load sync)
+    document.addEventListener("DOMContentLoaded", () => {
+      updatePrice();
+      const observer = new MutationObserver(updatePrice);
+      observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    });
+
+    // 4. Also handle #affirm trigger click
     document.addEventListener("click", function (event) {
       const linkTarget = event.target.closest('a[href*="#affirm"]');
       if (linkTarget) {
         event.preventDefault();
         const affirmTrigger = document.querySelector(".affirm-modal-trigger");
-        if (affirmTrigger) {
-          affirmTrigger.click();
-        }
+        if (affirmTrigger) affirmTrigger.click();
       }
-    });
-
-    // 2. Exact Price Extraction Logic
-    function syncDynamicAffirmPrice() {
-      const targetSpan = document.querySelector(".js-affirm-price-target");
-      if (!targetSpan) return;
-
-      // Method A: Direct Class Selector Scan
-      const priceElem = document.querySelector(".affirm-ala-price");
-      if (priceElem && priceElem.textContent.trim()) {
-        const extracted = priceElem.textContent.trim();
-        if (targetSpan.textContent !== extracted) {
-          targetSpan.textContent = extracted;
-        }
-        return;
-      }
-
-      // Method B: Text Regex Fallback (Starts at $225/mo)
-      const affirmBlock = document.querySelector(".affirm-as-low-as");
-      if (affirmBlock) {
-        const textContent = affirmBlock.innerText || affirmBlock.textContent;
-        const match = textContent.match(/\$\d+(\.\d+)?/);
-        if (match && match[0]) {
-          if (targetSpan.textContent !== match[0]) {
-            targetSpan.textContent = match[0];
-          }
-        }
-      }
-    }
-
-    // High frequency interval (Jab tak Affirm script dynamic amount inject na karde)
-    const priceCheckTimer = setInterval(syncDynamicAffirmPrice, 100);
-
-    // Stop checking after 10 seconds to avoid performance issue
-    setTimeout(function() {
-      clearInterval(priceCheckTimer);
-    }, 10000);
-
-    // MutationObserver to catch dynamic variant updates
-    document.addEventListener("DOMContentLoaded", function () {
-      syncDynamicAffirmPrice();
-      const targetContainer = document.querySelector(".affirm-as-low-as") || document.body;
-      
-      const observer = new MutationObserver(syncDynamicAffirmPrice);
-      observer.observe(targetContainer, { 
-        childList: true, 
-        subtree: true, 
-        characterData: true 
-      });
     });
   })();
