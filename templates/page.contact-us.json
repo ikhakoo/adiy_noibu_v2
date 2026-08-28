@@ -160,6 +160,10 @@
       "name": "Contact form",
       "settings": {
         "heading": "Or Send Us A Message",
+        "heading_tag": "h4",
+        "class_heading": "",
+        "font_size_desktop": "",
+        "font_size_mobile": "",
         "subtext": "<p>Our customer service team is available via email Monday-Friday, 9AM - 5 PM EST excluding holidays. We generally respond to all inquiries within one business day.</p>",
         "color_scheme": "",
         "padding_top": 36,
