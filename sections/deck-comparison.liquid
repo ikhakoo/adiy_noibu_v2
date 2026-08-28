@@ -665,7 +665,7 @@
       });
     });
 
-    /* 4. Mouse Dragging on Content Area */
+    {% comment %} /* 4. Mouse Dragging on Content Area */
     let isTrackDragging = false;
     let startX, scrollLeftPos;
 
@@ -676,7 +676,7 @@
       trackWrapper.classList.add('is-dragging');
       startX = e.pageX - trackWrapper.offsetLeft;
       scrollLeftPos = trackWrapper.scrollLeft;
-    });
+    }); {% endcomment %}
 
     document.addEventListener('mouseup', () => {
       if (isTrackDragging) {
@@ -692,6 +692,29 @@
       const x = e.pageX - trackWrapper.offsetLeft;
       const walk = (x - startX) * 1.5;
       trackWrapper.scrollLeft = scrollLeftPos - walk;
+    });
+
+
+    /* 4. Mouse Dragging on Content Area */
+    let isTrackDragging = false;
+    let startX, scrollLeftPos;
+
+    trackWrapper.addEventListener('mousedown', (e) => {
+      // FINANCING LINK / AFFIRM MODAL TRIGGER KO DRAG SE PREVENT KAREIN
+      if (
+        scrollBarTrack.contains(e.target) || 
+        e.target.closest('.deck-card__btn') || 
+        e.target.closest('.financing-qualify-link') ||
+        e.target.closest('.affirm-modal-trigger')
+      ) {
+        return;
+      }
+      
+      isTrackDragging = true;
+      trackWrapper.style.scrollBehavior = 'auto';
+      trackWrapper.classList.add('is-dragging');
+      startX = e.pageX - trackWrapper.offsetLeft;
+      scrollLeftPos = trackWrapper.scrollLeft;
     });
   });
 </script>
