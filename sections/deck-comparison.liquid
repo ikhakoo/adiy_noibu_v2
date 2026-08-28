@@ -75,11 +75,6 @@
       padding-bottom: 0.5rem;
     }
 
-    /* .deck-grid::after {
-      content: '';
-      flex: 0 0 1.5rem;
-    } */
-
     .deck-card {
       flex: 0 0 85%;
       max-width: 85%;
@@ -205,7 +200,7 @@
     text-decoration: underline;
     font-weight: 500;
     transition: opacity 0.2s ease;
-    /* display:none; */
+    cursor: pointer;
   }
   .financing-qualify-link:hover { opacity: 0.8; }
 
@@ -448,18 +443,14 @@
                     {%- endif -%}
                   </span>
 
-                  {% comment %} {%- if block.settings.financing_link_text != blank -%}
-                    <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
-                      {{ block.settings.financing_link_text }}
-                    </a>
-                  {%- endif -%} {% endcomment %}
                   {%- if block.settings.financing_link_text != blank -%}
+                    {%- assign affirm_amount = card_product.price_min | default: 0 -%}
                     <a 
                       href="javascript:void(0)" 
-                      class="financing-qualify-link affirm-modal-trigger"
-                      data-amount="{{ product.price }}"
+                      class="financing-qualify-link affirm-site-modal"
+                      data-amount="{{ affirm_amount }}"
                       data-page-type="product"
-                      aria-label="{{ block.settings.financing_link_text }}">
+                      aria-label="{{ block.settings.financing_link_text | escape }}">
                       {{ block.settings.financing_link_text }}
                     </a>
                   {%- endif -%}
@@ -528,11 +519,9 @@
 </div>
 
 <!-- Affirm JS Script & Public Key Config -->
-<script async src="https://cdn1.affirm.com/js/v2/affirm.js"></script>
-
 <script type="text/javascript">
   var _affirm_config = {
-    public_api_key: "M97BIX0W3ONNSNNH", // Apni Affirm Public Key lagayein
+    public_api_key: "M97BIX0W3ONNSNNH",
     script: "https://cdn1.affirm.com/js/v2/affirm.js"
   };
   (function(l,g,m,e,a,f,b){var d,c=l[m]||{},h=document.createElement(f),n=document.getElementsByTagName(f)[0],k=function(a,b,c){return function(){a[b].apply(a,c)}};c[e]=c[e]||function(){(c[e].q=c[e].q||[]).push(arguments)};c.a=c[e];if(c[e].ready){c[e].ready(a)}else{c[e].a=c[e].a||[];c[e].a.push(a)}c.l=1*new Date();for(d=0;d<b.length;d++)c[b[d]]=k(c,b[d],arguments);a=0;for(;a<g.length;a++)if(g[a].indexOf(f)<0)h.async=true,h.src=g[a],n.parentNode.insertBefore(h,n);c[m]=c;l[m]=c})(window,["https://cdn1.affirm.com/js/v2/affirm.js"],"affirm","checkout","ui",["get","token","ready","refresh"],[]);
@@ -547,6 +536,30 @@
     const scrollBarTrack = sectionContainer.querySelector('.collection .js-scroll-bar');
     const scrollThumb = sectionContainer.querySelector('.collection .js-scroll-thumb');
 
+    /* 0. Affirm Modal Click Trigger */
+    sectionContainer.addEventListener('click', function(e) {
+      const modalTrigger = e.target.closest('.financing-qualify-link');
+      if (modalTrigger) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const amount = parseInt(modalTrigger.getAttribute('data-amount') || '0', 10);
+
+        if (window.affirm && window.affirm.ui && typeof window.affirm.ui.open === 'function') {
+          window.affirm.ui.open({
+            checkout: {
+              total: amount
+            },
+            data: {
+              page_type: 'product'
+            }
+          });
+        } else if (window.affirm && window.affirm.show) {
+          window.affirm.show();
+        }
+      }
+    });
+
     if (!trackWrapper || !scrollBarTrack || !scrollThumb) return;
 
     let isThumbDragging = false;
@@ -554,7 +567,7 @@
     let initialScrollLeft = 0;
     let rAFId = null;
 
-    /* 1. Dynamic Thumb Sync (Ultra Fast via rAF) */
+    /* 1. Dynamic Thumb Sync */
     function updateThumbUI() {
       const scrollWidth = trackWrapper.scrollWidth;
       const clientWidth = trackWrapper.clientWidth;
@@ -587,7 +600,7 @@
     window.addEventListener('resize', updateThumbUI);
     updateThumbUI();
 
-    /* 2. Ultra-Smooth Pointer Capture Dragging for Green Bar */
+    /* 2. Pointer Capture Dragging */
     scrollThumb.addEventListener('pointerdown', (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -663,18 +676,25 @@
       });
     });
 
-    {% comment %} /* 4. Mouse Dragging on Content Area */
+    /* 4. Content Dragging */
     let isTrackDragging = false;
     let startX, scrollLeftPos;
 
     trackWrapper.addEventListener('mousedown', (e) => {
-      if (scrollBarTrack.contains(e.target) || e.target.closest('.deck-card__btn')) return;
+      if (
+        scrollBarTrack.contains(e.target) || 
+        e.target.closest('.deck-card__btn') || 
+        e.target.closest('.financing-qualify-link')
+      ) {
+        return;
+      }
+      
       isTrackDragging = true;
       trackWrapper.style.scrollBehavior = 'auto';
       trackWrapper.classList.add('is-dragging');
       startX = e.pageX - trackWrapper.offsetLeft;
       scrollLeftPos = trackWrapper.scrollLeft;
-    }); {% endcomment %}
+    });
 
     document.addEventListener('mouseup', () => {
       if (isTrackDragging) {
@@ -691,31 +711,8 @@
       const walk = (x - startX) * 1.5;
       trackWrapper.scrollLeft = scrollLeftPos - walk;
     });
-
-    let isTrackDragging = false;
-    let startX, scrollLeftPos;
-
-    trackWrapper.addEventListener('mousedown', (e) => {
-      // FINANCING LINK / AFFIRM MODAL TRIGGER KO DRAG SE PREVENT KAREIN
-      if (
-        scrollBarTrack.contains(e.target) || 
-        e.target.closest('.deck-card__btn') || 
-        e.target.closest('.financing-qualify-link') ||
-        e.target.closest('.affirm-modal-trigger')
-      ) {
-        return;
-      }
-      
-      isTrackDragging = true;
-      trackWrapper.style.scrollBehavior = 'auto';
-      trackWrapper.classList.add('is-dragging');
-      startX = e.pageX - trackWrapper.offsetLeft;
-      scrollLeftPos = trackWrapper.scrollLeft;
-    });
-
   });
 </script>
-
 
 {% schema %}
 {
