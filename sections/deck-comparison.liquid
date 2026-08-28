@@ -448,12 +448,46 @@
                     {%- endif -%}
                   </span>
 
-                  {%- if block.settings.financing_link_text != blank -%}
+                  {% comment %} {%- if block.settings.financing_link_text != blank -%}
                     <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
                       {{ block.settings.financing_link_text }}
                     </a>
-                  {%- endif -%} 
-                  
+                  {%- endif -%}  {% endcomment %}
+                  {%- comment -%} Integrated Affirm Block {%- endcomment -%}
+{%- if card_product != blank -%}
+  <div 
+    class="financing-qualify-link"
+    x-data="{
+      affirmMessage: '',
+      async fetchAffirmMessage() {
+        const publicKey = 'M97BIX0W3ONNSNNH';
+        const productPrice = {{ card_product.price }};
+        const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${productPrice}&field=ala&use_best_terms=true&page_type=product`;
+        try {
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+          if (data && data.promo && data.promo.html_ala) {
+            this.affirmMessage = data.promo.html_ala;
+          }
+        } catch(e) {
+          console.log('Error fetching Affirm message', e);
+        }
+        if (window.affirm && window.affirm.ui) {
+          window.affirm.ui.ready(() => window.affirm.ui.refresh());
+        }
+      }
+    }" 
+    x-init="fetchAffirmMessage()"
+  >
+    <p class="affirm-as-low-as" data-page-type="product" data-amount="{{ card_product.price }}">
+      <span x-html="affirmMessage"></span>
+    </p>
+  </div>
+{%- elsif block.settings.financing_link_text != blank -%}
+  <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
+    {{ block.settings.financing_link_text }}
+  </a>
+{%- endif -%}
                 </div>
               {%- endif -%}
 
@@ -517,17 +551,6 @@
 
   </div>
 </div>
-
-<!-- Affirm JS Script & Public Key Config -->
-<script async src="https://cdn1.affirm.com/js/v2/affirm.js"></script>
-
-<script type="text/javascript">
-  var _affirm_config = {
-    public_api_key: "M97BIX0W3ONNSNNH", // Apni Affirm Public Key lagayein
-    script: "https://cdn1.affirm.com/js/v2/affirm.js"
-  };
-  (function(l,g,m,e,a,f,b){var d,c=l[m]||{},h=document.createElement(f),n=document.getElementsByTagName(f)[0],k=function(a,b,c){return function(){a[b].apply(a,c)}};c[e]=c[e]||function(){(c[e].q=c[e].q||[]).push(arguments)};c.a=c[e];if(c[e].ready){c[e].ready(a)}else{c[e].a=c[e].a||[];c[e].a.push(a)}c.l=1*new Date();for(d=0;d<b.length;d++)c[b[d]]=k(c,b[d],arguments);a=0;for(;a<g.length;a++)if(g[a].indexOf(f)<0)h.async=true,h.src=g[a],n.parentNode.insertBefore(h,n);c[m]=c;l[m]=c})(window,["https://cdn1.affirm.com/js/v2/affirm.js"],"affirm","checkout","ui",["get","token","ready","refresh"],[]);
-</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
