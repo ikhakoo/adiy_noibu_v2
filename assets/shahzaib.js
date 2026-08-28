@@ -359,8 +359,8 @@ if (firstMenuItem) {
 
 
 
-(function () {
-    // 1. Link click handler (#affirm)
+(function() {
+    // 1. '#affirm' Link trigger click logic
     document.addEventListener("click", function (event) {
       const linkTarget = event.target.closest('a[href*="#affirm"]');
       if (linkTarget) {
@@ -372,58 +372,43 @@ if (firstMenuItem) {
       }
     });
 
-    // 2. Exact Price Extractor Logic
-    function getAffirmPriceText() {
-      // Affirm ke inner elements ko scan karega
-      const priceElem = document.querySelector(".affirm-as-low-as .affirm-ala-price");
-      if (priceElem && priceElem.textContent.trim() !== "") {
-        return priceElem.textContent.trim();
-      }
+    // 2. Fetch Exact Dynamic Monthly Price Direct from Affirm API
+    async function getExactAffirmPrice() {
+      const publicKey = 'M97BIX0W3ONNSNNH';
+      // Standard Shopify product price variable in cents
+      const productPrice = {{ product.selected_or_first_available_variant.price | default: 0 }};
       
-      // Fallback: Agar span replace ho gaya ho to poore block me regex search karega
-      const mainBlock = document.querySelector(".affirm-as-low-as");
-      if (mainBlock) {
-        const text = mainBlock.innerText || mainBlock.textContent;
-        const match = text.match(/\$\d+(\.\d+)?/);
-        if (match) {
-          return match[0];
+      if (!productPrice) return;
+
+      const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${productPrice}&field=ala&use_best_terms=true&page_type=product`;
+      
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        if (data && data.promo && data.promo.html_ala) {
+          // Response text se exact price match karein ($184, $225 etc)
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = data.promo.html_ala;
+          const rawText = tempDiv.textContent || tempDiv.innerText;
+          const match = rawText.match(/\$\d+(\.\d+)?/);
+          
+          if (match && match[0]) {
+            const dynamicTitleSpan = document.querySelector(".js-financing-dynamic-title");
+            if (dynamicTitleSpan) {
+              dynamicTitleSpan.textContent = `As Low As ${match[0]}/Month With Affirm`;
+            }
+          }
         }
-      }
-      return null;
-    }
-
-    function updateTitleWithPrice() {
-      const price = getAffirmPriceText();
-      const dynamicTitleSpan = document.querySelector(".js-financing-dynamic-title");
-      
-      if (price && dynamicTitleSpan) {
-        // Output result format: "As Low As $225/Month With Affirm" ya "As Low As $184/Month With Affirm"
-        dynamicTitleSpan.textContent = `As Low As ${price}/Month With Affirm`;
+      } catch (error) {
+        console.error("Affirm dynamic price fetch error:", error);
       }
     }
 
-    // Interval: Dynamic load hone tak continuous run hoga (Every 250ms)
-    const checkInterval = setInterval(function () {
-      const price = getAffirmPriceText();
-      if (price) {
-        updateTitleWithPrice();
-      }
-    }, 250);
-
-    // Dynamic Variant Change Listeners
-    window.addEventListener("load", function () {
-      updateTitleWithPrice();
-      
-      // Global body MutationObserver to catch Shopify Variant / Price Changes
-      const observer = new MutationObserver(function () {
-        updateTitleWithPrice();
-      });
-
-      const affirmContainer = document.body;
-      observer.observe(affirmContainer, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
-    });
+    // Call function on page ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", getExactAffirmPrice);
+    } else {
+      getExactAffirmPrice();
+    }
   })();
