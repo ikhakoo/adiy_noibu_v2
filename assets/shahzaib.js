@@ -360,17 +360,42 @@ if (firstMenuItem) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-                      // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
-                      document.addEventListener("click", function (event) {
-                        const linkTarget = event.target.closest('a[href*="#affirm"]');
-                        
-                        if (linkTarget) {
-                          event.preventDefault(); // Default anchor anchor jump ko rokega
-                          
-                          const affirmTrigger = document.querySelector(".affirm-modal-trigger");
-                          if (affirmTrigger) {
-                            affirmTrigger.click(); // Affirm app ke official modal trigger button par click simulate karega
-                          }
-                        }
-                      });
-                    });
+    // 1. #affirm link click trigger functionality
+    document.addEventListener("click", function (event) {
+      const linkTarget = event.target.closest('a[href*="#affirm"]');
+      
+      if (linkTarget) {
+        event.preventDefault();
+        const affirmTrigger = document.querySelector(".affirm-modal-trigger");
+        if (affirmTrigger) {
+          affirmTrigger.click();
+        }
+      }
+    });
+
+    // 2. Dynamic Price Synchronization Function
+    function updateFinancingTitle() {
+      const affirmPriceElement = document.querySelector(".affirm-ala-price");
+      const dynamicTitleSpan = document.querySelector(".js-financing-dynamic-title");
+
+      if (affirmPriceElement && dynamicTitleSpan) {
+        const price = affirmPriceElement.textContent.trim();
+        if (price) {
+          // Dynamic calculated price inject ki ja rahi hai
+          dynamicTitleSpan.textContent = `As Low As ${price}/Month With Affirm`;
+        }
+      }
+    }
+
+    // Direct Sync Check
+    updateFinancingTitle();
+
+    // Affirm JS async load hoti hai, isliye Observer dynamic DOM change monitor karega
+    const affirmBlockContainer = document.querySelector(".affirm-as-low-as");
+    if (affirmBlockContainer) {
+      const observer = new MutationObserver(function() {
+        updateFinancingTitle();
+      });
+      observer.observe(affirmBlockContainer, { childList: true, subtree: true });
+    }
+  });
