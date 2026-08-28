@@ -153,8 +153,8 @@
         "bg_color": "#f6f4f2",
         "card_bg_color": "#ffffff",
         "icon_color": "#2d5a43",
-        "heading_color": "#1a1a1a",
-        "text_color": "#333333",
+        "heading_color": "#000000",
+        "text_color": "#000000",
         "padding_top": 0,
         "padding_bottom": 0
       }
