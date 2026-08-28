@@ -119,7 +119,7 @@
             "custom_icon": "shopify://shop_images/Container_2.png",
             "heading": "Email",
             "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
-            "action_text": "<p>Send us an email at <a href=\"mailto:support@go-diy.com\">support@go-diy.com</a>.</p>"
+            "action_text": "<p>Send us an email at <a href=\"mailto:support@a-diy.com\" title=\"mailto:support@a-diy.com\">support@a-diy.com</a>.</p>"
           }
         },
         "card_WqFDwJ": {
@@ -138,8 +138,8 @@
             "icon_type": "chat",
             "custom_icon": "shopify://shop_images/Container_4.png",
             "heading": "Chat",
-            "timing_text": "Is it after hours?<br>\nLaunch our chat to talk with a specialist now.",
-            "action_text": ""
+            "timing_text": "Launch our chat to talk with a specialist now.",
+            "action_text": "<p><a href=\"#chat\" title=\"#chat\">Launch Chat</a></p>"
           }
         }
       },
