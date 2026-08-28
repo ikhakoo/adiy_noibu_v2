@@ -48,6 +48,17 @@
           "type": "price",
           "settings": {}
         },
+        "affirm_pay_over_time_messaging_product_block_nTFQar": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "settings": {
+            "logo_align": "left",
+            "font_size": 16,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
+          }
+        },
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
           "settings": {
@@ -207,6 +218,7 @@
         "title",
         "text_ifcgmB",
         "price",
+        "affirm_pay_over_time_messaging_product_block_nTFQar",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
         "material_switcher_EDGrz6",
@@ -2263,6 +2275,10 @@
       "name": "Tabbed FAQ Accordion",
       "settings": {
         "heading": "Frequently Asked Questions",
+        "heading_tag": "h2",
+        "class_heading": "",
+        "font_size_desktop": "",
+        "font_size_mobile": "",
         "tabs_list": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
         "bg_color": "#ffffff",
         "color_scheme": "",
