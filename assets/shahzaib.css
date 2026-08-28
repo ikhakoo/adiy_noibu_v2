@@ -992,9 +992,11 @@
 
 
 
-.template-page-how-to-build-a-deck .announcement-bar-section, {
-.template-page-how-to-build-a-deck .section-header {
-    display:none;
+.template-page-how-to-build-a-deck .announcement-bar-section,
+.template-page-how-to-build-a-deck .section-header,  
+.template-page-how-to-build-a-deck .shopify-section-group-footer-group,
+.template-page-how-to-build-a-deck footer{
+    display:none !important;
 }
 .template-page-how-to-build-a-deck
 .template-page-how-to-build-a-deck
