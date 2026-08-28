@@ -454,11 +454,13 @@
                     </a>
                   {%- endif -%} {% endcomment %}
                   {%- if block.settings.financing_link_text != blank -%}
+                    {%- assign affirm_amount = card_product.price | default: 10000 -%}
                     <a 
                       href="javascript:void(0)" 
                       class="financing-qualify-link affirm-modal-trigger"
-                      data-amount="{{ product.price | default: card.product.price }}"
+                      data-amount="{{ affirm_amount }}"
                       data-page-type="product"
+                      onclick="if(window.affirm && affirm.ui) { affirm.ui.ready(function() { affirm.ui.openModal({amount: {{ affirm_amount }}, page_type: 'product'}); }); }"
                       aria-label="{{ block.settings.financing_link_text }} (opens in modal)">
                       {{ block.settings.financing_link_text }}
                     </a>
