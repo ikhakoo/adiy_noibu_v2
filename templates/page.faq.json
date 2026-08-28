@@ -1,1 +1,343 @@
-{"sections":{"main":{"type":"main-page","disabled":true,"settings":{"padding_top":28,"padding_bottom":28}},"image_banner_HeJkDJ":{"type":"image-banner","blocks":{"text_4mmrY3":{"type":"text","settings":{"class_text":"sub-title","text":"FAQ’s","text_style":"subtitle"}},"heading_m7P9Ar":{"type":"heading","settings":{"class_heading":"","heading":"Your Questions,\u2028Answered","heading_size":"h1"}},"feature_fGjx7p":{"type":"feature","name":"Feature Highlights","settings":{"text_1":"Free Consultation","text_2":"Personalized Expert Guidance","text_3":"No Obligation"}}},"block_order":["text_4mmrY3","heading_m7P9Ar","feature_fGjx7p"],"name":"t:sections.image-banner.presets.name","settings":{"custom_class":"consultant-page sec1","image":"shopify:\/\/shop_images\/Free_Design_Consultation_525b3e45-b56c-4750-9e9b-7ea007d3fdab.png","mobile_image":"shopify:\/\/shop_images\/Free_Design_Consultation_1.png","image_overlay_opacity":0,"image_height":"large","image_behavior":"none","desktop_content_position":"bottom-center","desktop_content_alignment":"center","show_text_box":false,"color_scheme":"","stack_images_on_mobile":true,"mobile_content_alignment":"center","show_text_below":false}},"tabbed_faq_accordion_wXDX99":{"type":"tabbed-faq-accordion","blocks":{"faq_item_y3eYGL":{"type":"faq_item","settings":{"assign_tabs":"About, General, Assembly, Permit, Finance, Shipping, Warranty","question":"What makes A-DIY different from traditional deck building?","answer":"<p>A-DIY systems are engineered for fast, tool-free assembly without compromising structural integrity.<\/p>"}},"faq_item_3CQ8KN":{"type":"faq_item","settings":{"assign_tabs":"About, General, Assembly, Permit, Finance, Shipping, Warranty","question":"How long does it take to build?","answer":"<p>Most standard deck kits can be assembled in a single weekend — typically 8–16 hours.<\/p>"}},"faq_item_gaBYdx":{"type":"faq_item","settings":{"assign_tabs":"About, General, Assembly, Permit, Finance, Shipping, Warranty","question":"What if I have uneven ground or a slope?","answer":"<p>Our adjustable pedestal feet accommodate slopes up to 15°. For steeper grades, contact our support team.<\/p>"}},"faq_item_gNQMLH":{"type":"faq_item","settings":{"assign_tabs":"About, General, Assembly, Permit, Finance, Shipping, Warranty","question":"Why should I choose A-DIY over hiring a contractor?","answer":"<p>You save 40–60% on labour costs and retain full creative control.<\/p>"}},"faq_item_CF69y3":{"type":"faq_item","settings":{"assign_tabs":"About, General, Assembly, Permit, Finance, Shipping, Warranty","question":"Do I need special tools or experience?","answer":"<p>No special tools or prior experience is required. Every kit includes step-by-step instructions.<\/p>"}}},"block_order":["faq_item_y3eYGL","faq_item_3CQ8KN","faq_item_gaBYdx","faq_item_gNQMLH","faq_item_CF69y3"],"name":"Tabbed FAQ Accordion","settings":{"heading":"Frequently Asked Questions","tabs_list":"About, General, Assembly, Permit, Finance, Shipping, Warranty","bg_color":"#f6f4f2","color_scheme":"","padding_top":40,"padding_bottom":40}},"rich_text_bJ8wL8":{"type":"rich-text","blocks":{"heading_YNq7yH":{"type":"heading","settings":{"heading":"Ready to Start Planning Your Backyard?","heading_size":"h1"}},"text_NLD7r9":{"type":"text","settings":{"text":"<p>Take the first step toward your dream deck today. Our experts are waiting to help you bring your vision to life.<\/p>"}},"button_gBDjCj":{"type":"button","settings":{"button_label":"SCHEDULE MY FREE CONSULTATION","button_link":"#chat","button_style_secondary":false,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading_YNq7yH","text_NLD7r9","button_gBDjCj"],"name":"t:sections.rich-text.presets.name","settings":{"custom_class":"consultant-richtext","desktop_content_position":"center","content_alignment":"center","color_scheme":"","full_width":true,"padding_top":80,"padding_bottom":80}},"custom_contact_section_BLBbkP":{"type":"custom-contact-section","blocks":{"contact_info_abz44N":{"type":"contact_info","settings":{"label":"EMAIL US","value":"support@a-diy.com","link":"#chat","icon_image":"shopify:\/\/shop_images\/Background.png"}},"contact_info_6MFCaT":{"type":"contact_info","settings":{"label":"CALL US","value":"1 (786) 358-2872","link":"#chat","icon_image":"shopify:\/\/shop_images\/Background-1.png"}},"contact_info_zCANDY":{"type":"contact_info","settings":{"label":"CHAT WITH US","value":"LIVE CHAT","link":"#chat","icon_image":"shopify:\/\/shop_images\/Background-2.png"}},"image_block_UpNXcP":{"type":"image_block","settings":{"image":"shopify:\/\/shop_images\/image_8555.png","image_corner_radius":20}}},"block_order":["contact_info_abz44N","contact_info_6MFCaT","contact_info_zCANDY","image_block_UpNXcP"],"name":"Custom Project Contact","settings":{"heading":"Let's Start Planning Your Backyard","description":"<p>Complete the form below and one of our deck specialists will contact you to discuss your project.<br\/><br\/>Whether you're replacing an old deck, remodeling your backyard, or planning a brand-new outdoor living space, we're here to help every step of the way.<\/p>","form_heading":"Tell Us About Your Project","button_label":"SCHEDULE MY FREE CONSULTATION","disclaimer":"By submitting this form and signing up for text messages, you consent to receive recurring marketing messages (including promotions and cart reminders) from A-DIY at the number provided. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to unsubscribe. See our Privacy Policy and Terms of Use for more information.","color_scheme":"","padding_top":36,"padding_bottom":36}}},"order":["main","image_banner_HeJkDJ","tabbed_faq_accordion_wXDX99","rich_text_bJ8wL8","custom_contact_section_BLBbkP"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "image_banner_HeJkDJ": {
+      "type": "image-banner",
+      "blocks": {
+        "text_4mmrY3": {
+          "type": "text",
+          "settings": {
+            "class_text": "sub-title",
+            "text": "FAQ’s",
+            "text_style": "subtitle"
+          }
+        },
+        "heading_m7P9Ar": {
+          "type": "heading",
+          "settings": {
+            "class_heading": "",
+            "heading": "Your Questions, Answered"
+          }
+        },
+        "feature_fGjx7p": {
+          "type": "feature",
+          "name": "Feature Highlights",
+          "settings": {
+            "text_1": "Free Consultation",
+            "text_2": "Personalized Expert Guidance",
+            "text_3": "No Obligation"
+          }
+        }
+      },
+      "block_order": [
+        "text_4mmrY3",
+        "heading_m7P9Ar",
+        "feature_fGjx7p"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "custom_class": "consultant-page sec1",
+        "image": "shopify://shop_images/Free_Design_Consultation_525b3e45-b56c-4750-9e9b-7ea007d3fdab.png",
+        "mobile_image": "shopify://shop_images/Free_Design_Consultation_1.png",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "tabbed_faq_accordion_wXDX99": {
+      "type": "tabbed-faq-accordion",
+      "blocks": {
+        "faq_item_y3eYGL": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "question": "What makes A-DIY different from traditional deck building?",
+            "answer": "<p>A-DIY systems are engineered for fast, tool-free assembly without compromising structural integrity.</p>"
+          }
+        },
+        "faq_item_3CQ8KN": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "question": "How long does it take to build?",
+            "answer": "<p>Most standard deck kits can be assembled in a single weekend — typically 8–16 hours.</p>"
+          }
+        },
+        "faq_item_gaBYdx": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "question": "What if I have uneven ground or a slope?",
+            "answer": "<p>Our adjustable pedestal feet accommodate slopes up to 15°. For steeper grades, contact our support team.</p>"
+          }
+        },
+        "faq_item_gNQMLH": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "question": "Why should I choose A-DIY over hiring a contractor?",
+            "answer": "<p>You save 40–60% on labour costs and retain full creative control.</p>"
+          }
+        },
+        "faq_item_CF69y3": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "question": "Do I need special tools or experience?",
+            "answer": "<p>No special tools or prior experience is required. Every kit includes step-by-step instructions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_y3eYGL",
+        "faq_item_3CQ8KN",
+        "faq_item_gaBYdx",
+        "faq_item_gNQMLH",
+        "faq_item_CF69y3"
+      ],
+      "name": "Tabbed FAQ Accordion",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "tabs_list": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+        "bg_color": "#f6f4f2",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "rich_text_bJ8wL8": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_YNq7yH": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ready to Start Planning Your Backyard?",
+            "heading_size": "h1"
+          }
+        },
+        "text_NLD7r9": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Take the first step toward your dream deck today. Our experts are waiting to help you bring your vision to life.</p>"
+          }
+        },
+        "button_gBDjCj": {
+          "type": "button",
+          "settings": {
+            "button_label": "SCHEDULE MY FREE CONSULTATION",
+            "button_link": "#chat",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_YNq7yH",
+        "text_NLD7r9",
+        "button_gBDjCj"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "consultant-richtext",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "custom_contact_section_BLBbkP": {
+      "type": "custom-contact-section",
+      "blocks": {
+        "contact_info_abz44N": {
+          "type": "contact_info",
+          "settings": {
+            "label": "EMAIL US",
+            "value": "support@a-diy.com",
+            "link": "#chat",
+            "icon_image": "shopify://shop_images/Background.png"
+          }
+        },
+        "contact_info_6MFCaT": {
+          "type": "contact_info",
+          "settings": {
+            "label": "CALL US",
+            "value": "1 (786) 358-2872",
+            "link": "#chat",
+            "icon_image": "shopify://shop_images/Background-1.png"
+          }
+        },
+        "contact_info_zCANDY": {
+          "type": "contact_info",
+          "settings": {
+            "label": "CHAT WITH US",
+            "value": "LIVE CHAT",
+            "link": "#chat",
+            "icon_image": "shopify://shop_images/Background-2.png"
+          }
+        },
+        "image_block_UpNXcP": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/image_8555.png",
+            "image_corner_radius": 20
+          }
+        }
+      },
+      "block_order": [
+        "contact_info_abz44N",
+        "contact_info_6MFCaT",
+        "contact_info_zCANDY",
+        "image_block_UpNXcP"
+      ],
+      "name": "Custom Project Contact",
+      "settings": {
+        "heading": "Let's Start Planning Your Backyard",
+        "description": "<p>Complete the form below and one of our deck specialists will contact you to discuss your project.<br/><br/>Whether you're replacing an old deck, remodeling your backyard, or planning a brand-new outdoor living space, we're here to help every step of the way.</p>",
+        "form_heading": "Tell Us About Your Project",
+        "button_label": "SCHEDULE MY FREE CONSULTATION",
+        "disclaimer": "By submitting this form and signing up for text messages, you consent to receive recurring marketing messages (including promotions and cart reminders) from A-DIY at the number provided. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to unsubscribe. See our Privacy Policy and Terms of Use for more information.",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_C9Eb3B": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xwkBUD": {
+          "type": "heading",
+          "settings": {
+            "heading": "Contact Us",
+            "heading_tag": "h1",
+            "class_heading": "",
+            "font_size_desktop": "54",
+            "font_size_mobile": "",
+            "heading_size": "h1"
+          }
+        },
+        "text_e8ynYi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Question? Our Deck Specialists Are Just a Call Away.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xwkBUD",
+        "text_e8ynYi"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "contact_cards_pEMcBK": {
+      "type": "contact-cards",
+      "blocks": {
+        "card_NP7xJH": {
+          "type": "card",
+          "settings": {
+            "icon_type": "email",
+            "custom_icon": "shopify://shop_images/Container_2.png",
+            "heading": "Email",
+            "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
+            "action_text": "<p>Send us an email at <a href=\"mailto:support@a-diy.com\" title=\"mailto:support@a-diy.com\">support@a-diy.com</a>.</p>"
+          }
+        },
+        "card_WqFDwJ": {
+          "type": "card",
+          "settings": {
+            "icon_type": "phone",
+            "custom_icon": "shopify://shop_images/Container_3.png",
+            "heading": "Phone",
+            "timing_text": "Monday-Friday, 9AM - 5 PM EST excluding holidays.",
+            "action_text": "<p>Give us a call <a href=\"tel:17863582872\">1 (786) 358-2872</a>.</p>"
+          }
+        },
+        "card_Q9E7AY": {
+          "type": "card",
+          "settings": {
+            "icon_type": "chat",
+            "custom_icon": "shopify://shop_images/Container_4.png",
+            "heading": "Chat",
+            "timing_text": "Launch our chat to talk with a specialist now.",
+            "action_text": "<p><a href=\"#chat\" title=\"#chat\">Launch Chat</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_NP7xJH",
+        "card_WqFDwJ",
+        "card_Q9E7AY"
+      ],
+      "name": "Contact Cards",
+      "settings": {
+        "bg_color": "#f6f4f2",
+        "card_bg_color": "#ffffff",
+        "icon_color": "#2d5a43",
+        "heading_color": "#000000",
+        "text_color": "#000000",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "contact_form_simple_6gbHac": {
+      "type": "Contact-form-simple",
+      "name": "Contact form",
+      "settings": {
+        "heading": "Or Send Us A Message",
+        "heading_tag": "h4",
+        "class_heading": "",
+        "font_size_desktop": "",
+        "font_size_mobile": "",
+        "subtext": "<p>Our customer service team is available via email Monday-Friday, 9AM - 5 PM EST excluding holidays. We generally respond to all inquiries within one business day.</p>",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_HeJkDJ",
+    "tabbed_faq_accordion_wXDX99",
+    "rich_text_bJ8wL8",
+    "custom_contact_section_BLBbkP",
+    "rich_text_C9Eb3B",
+    "contact_cards_pEMcBK",
+    "contact_form_simple_6gbHac"
+  ]
+}
