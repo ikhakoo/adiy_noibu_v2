@@ -663,6 +663,35 @@
       });
     });
 
+    {% comment %} /* 4. Mouse Dragging on Content Area */
+    let isTrackDragging = false;
+    let startX, scrollLeftPos;
+
+    trackWrapper.addEventListener('mousedown', (e) => {
+      if (scrollBarTrack.contains(e.target) || e.target.closest('.deck-card__btn')) return;
+      isTrackDragging = true;
+      trackWrapper.style.scrollBehavior = 'auto';
+      trackWrapper.classList.add('is-dragging');
+      startX = e.pageX - trackWrapper.offsetLeft;
+      scrollLeftPos = trackWrapper.scrollLeft;
+    }); {% endcomment %}
+
+    document.addEventListener('mouseup', () => {
+      if (isTrackDragging) {
+        isTrackDragging = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        trackWrapper.classList.remove('is-dragging');
+      }
+    });
+
+    trackWrapper.addEventListener('mousemove', (e) => {
+      if (!isTrackDragging) return;
+      e.preventDefault();
+      const x = e.pageX - trackWrapper.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      trackWrapper.scrollLeft = scrollLeftPos - walk;
+    });
+
     let isTrackDragging = false;
     let startX, scrollLeftPos;
 
@@ -684,21 +713,6 @@
       scrollLeftPos = trackWrapper.scrollLeft;
     });
 
-    document.addEventListener('mouseup', () => {
-      if (isTrackDragging) {
-        isTrackDragging = false;
-        trackWrapper.style.scrollBehavior = 'smooth';
-        trackWrapper.classList.remove('is-dragging');
-      }
-    });
-
-    trackWrapper.addEventListener('mousemove', (e) => {
-      if (!isTrackDragging) return;
-      e.preventDefault();
-      const x = e.pageX - trackWrapper.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      trackWrapper.scrollLeft = scrollLeftPos - walk;
-    });
   });
 </script>
 
