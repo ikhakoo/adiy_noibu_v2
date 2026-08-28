@@ -1,1 +1,225 @@
-{"sections":{"main":{"type":"main-page","disabled":true,"settings":{"padding_top":36,"padding_bottom":36}},"image_banner_HeJkDJ":{"type":"image-banner","blocks":{"text_4mmrY3":{"type":"text","settings":{"class_text":"sub-title","text_html":"","text":"GET IN TOUCH","text_style":"subtitle"}},"heading_m7P9Ar":{"type":"heading","settings":{"class_heading":"","heading_html":"Questions? <br>\nOur Deck Specialists Are Just a Call Away.","heading":"","heading_size":"h1"}},"text_aQGiMz":{"type":"text","settings":{"class_text":"main-body","text_html":"","text":"Architectural deck kits designed for the modern home, delivered directly to your door. Precision meet permanence.","text_style":"body"}}},"block_order":["text_4mmrY3","heading_m7P9Ar","text_aQGiMz"],"disabled":true,"name":"t:sections.image-banner.presets.name","settings":{"custom_class":"consultant-page why-a-diy-hero contact-hero","image":"shopify:\/\/shop_images\/Contact_Page.png","mobile_image":"shopify:\/\/shop_images\/Hero_Section_1.png","image_overlay_opacity":0,"image_height":"large","image_behavior":"none","desktop_content_position":"bottom-center","desktop_content_alignment":"center","show_text_box":false,"color_scheme":"","stack_images_on_mobile":true,"mobile_content_alignment":"center","show_text_below":false}},"rich_text_C9Eb3B":{"type":"rich-text","blocks":{"heading_xwkBUD":{"type":"heading","settings":{"heading":"Contact Us","heading_size":"h1"}},"text_e8ynYi":{"type":"text","settings":{"text":"<p>Question? Our Deck Specialists Are Just a Call Away.<\/p>"}}},"block_order":["heading_xwkBUD","text_e8ynYi"],"name":"t:sections.rich-text.presets.name","settings":{"custom_class":"","desktop_content_position":"center","content_alignment":"center","color_scheme":"","full_width":true,"padding_top":52,"padding_bottom":52}},"form":{"type":"contact-form","settings":{"heading":"","heading_size":"h1","color_scheme":"scheme-1","email_address":"support@a-diy.com","email_subtext":"Response within one business day","phone_number":"1 (786) 358-2872","phone_subtext":"Mon–Fri, 9:00 AM–5:00 PM EST","address_text":"53 Knightsbridge Rd Suite 204,\nPiscataway, NJ 08854","map_url":"https:\/\/maps.app.goo.gl\/G4qAs1XzsFooNdLf7","side_image":"shopify:\/\/shop_images\/Frame_2147260109.png","image_caption":"Engineering Excellence, Delivered to Your Door.","padding_top":36,"padding_bottom":36}},"rich_text_bJ8wL8":{"type":"rich-text","blocks":{"heading_YNq7yH":{"type":"heading","settings":{"heading":"Ready to Start Planning Your Backyard?","heading_size":"h1"}},"text_NLD7r9":{"type":"text","settings":{"text":"<p>Take the first step toward your dream deck today. Our experts are waiting to help you bring your vision to life.<\/p>"}},"button_gBDjCj":{"type":"button","settings":{"button_label":"SCHEDULE MY FREE CONSULTATION","button_link":"#chat","button_style_secondary":false,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading_YNq7yH","text_NLD7r9","button_gBDjCj"],"name":"t:sections.rich-text.presets.name","settings":{"custom_class":"consultant-richtext","desktop_content_position":"center","content_alignment":"center","color_scheme":"","full_width":true,"padding_top":80,"padding_bottom":80}}},"order":["main","image_banner_HeJkDJ","rich_text_C9Eb3B","form","rich_text_bJ8wL8"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_HeJkDJ": {
+      "type": "image-banner",
+      "blocks": {
+        "text_4mmrY3": {
+          "type": "text",
+          "settings": {
+            "class_text": "sub-title",
+            "text_html": "",
+            "text": "GET IN TOUCH",
+            "text_style": "subtitle"
+          }
+        },
+        "heading_m7P9Ar": {
+          "type": "heading",
+          "settings": {
+            "class_heading": "",
+            "heading_html": "Questions? <br>\nOur Deck Specialists Are Just a Call Away.",
+            "heading": "",
+            "heading_tag": "h2",
+            "heading_size": "h1"
+          }
+        },
+        "text_aQGiMz": {
+          "type": "text",
+          "settings": {
+            "class_text": "main-body",
+            "text_html": "",
+            "text": "Architectural deck kits designed for the modern home, delivered directly to your door. Precision meet permanence.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_4mmrY3",
+        "heading_m7P9Ar",
+        "text_aQGiMz"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "custom_class": "consultant-page why-a-diy-hero contact-hero",
+        "image": "shopify://shop_images/Contact_Page.png",
+        "mobile_image": "shopify://shop_images/Hero_Section_1.png",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "rich_text_C9Eb3B": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xwkBUD": {
+          "type": "heading",
+          "settings": {
+            "heading": "Contact Us",
+            "heading_size": "h1"
+          }
+        },
+        "text_e8ynYi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Question? Our Deck Specialists Are Just a Call Away.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xwkBUD",
+        "text_e8ynYi"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "contact_cards_pEMcBK": {
+      "type": "contact-cards",
+      "blocks": {
+        "card_NP7xJH": {
+          "type": "card",
+          "settings": {
+            "icon_type": "email",
+            "heading": "Email",
+            "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
+            "action_text": "<p>Send us an email at <a href=\"mailto:support@go-diy.com\">support@go-diy.com</a>.</p>"
+          }
+        },
+        "card_WqFDwJ": {
+          "type": "card",
+          "settings": {
+            "icon_type": "phone",
+            "heading": "Phone",
+            "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
+            "action_text": "<p>Give us a call <a href=\"tel:17863582872\">1(786) 358-2872</a>.</p>"
+          }
+        },
+        "card_Q9E7AY": {
+          "type": "card",
+          "settings": {
+            "icon_type": "chat",
+            "heading": "Chat",
+            "timing_text": "Is it after hours?",
+            "action_text": "<p>Launch our chat to talk with a specialist now.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_NP7xJH",
+        "card_WqFDwJ",
+        "card_Q9E7AY"
+      ],
+      "name": "Contact Cards",
+      "settings": {
+        "bg_color": "#F4F4F6",
+        "card_bg_color": "#FFFFFF",
+        "icon_color": "#2D5A43",
+        "heading_color": "#1A1A1A",
+        "text_color": "#333333",
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "color_scheme": "scheme-1",
+        "email_address": "support@a-diy.com",
+        "email_subtext": "Response within one business day",
+        "phone_number": "1 (786) 358-2872",
+        "phone_subtext": "Mon–Fri, 9:00 AM–5:00 PM EST",
+        "address_text": "53 Knightsbridge Rd Suite 204,\nPiscataway, NJ 08854",
+        "map_url": "https://maps.app.goo.gl/G4qAs1XzsFooNdLf7",
+        "side_image": "shopify://shop_images/Frame_2147260109.png",
+        "image_caption": "Engineering Excellence, Delivered to Your Door.",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_bJ8wL8": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_YNq7yH": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ready to Start Planning Your Backyard?",
+            "heading_size": "h1"
+          }
+        },
+        "text_NLD7r9": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Take the first step toward your dream deck today. Our experts are waiting to help you bring your vision to life.</p>"
+          }
+        },
+        "button_gBDjCj": {
+          "type": "button",
+          "settings": {
+            "button_label": "SCHEDULE MY FREE CONSULTATION",
+            "button_link": "#chat",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_YNq7yH",
+        "text_NLD7r9",
+        "button_gBDjCj"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "consultant-richtext",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_HeJkDJ",
+    "rich_text_C9Eb3B",
+    "contact_cards_pEMcBK",
+    "form",
+    "rich_text_bJ8wL8"
+  ]
+}
