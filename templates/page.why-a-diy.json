@@ -47,7 +47,8 @@
             "heading_html": "",
             "heading": "Transform Your Backyard Without The Hassle",
             "heading_tag": "h1",
-            "heading_size": "h1"
+            "font_size_desktop": "",
+            "font_size_mobile": ""
           }
         },
         "buttons_eaPPcz": {
@@ -286,7 +287,7 @@
       ],
       "name": "Steps Process Section",
       "settings": {
-        "heading": "The 5-Step Path to Your New Favorite",
+        "heading": "The 5-Step Path to Your New Favorite Place",
         "image": "shopify://shop_images/Photo_Jul_26_2026_3_05_43_PM.jpg",
         "image_radius": 16,
         "page_width": 1300,
@@ -3014,6 +3015,10 @@
       "name": "Verified Reviews Wall New",
       "settings": {
         "heading": "The Deck Gets The Compliments. The Experience Earns The Reviews.",
+        "heading_tag": "h2",
+        "class_heading": "",
+        "font_size_desktop": "",
+        "font_size_mobile": "",
         "sub_heading": "",
         "rating_score": "4.8",
         "total_reviews": "30,215",
