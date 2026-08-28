@@ -75,6 +75,11 @@
       padding-bottom: 0.5rem;
     }
 
+    /* .deck-grid::after {
+      content: '';
+      flex: 0 0 1.5rem;
+    } */
+
     .deck-card {
       flex: 0 0 85%;
       max-width: 85%;
@@ -199,8 +204,8 @@
     color: #1b3d2f;
     text-decoration: underline;
     font-weight: 500;
-    cursor: pointer;
     transition: opacity 0.2s ease;
+    /* display:none; */
   }
   .financing-qualify-link:hover { opacity: 0.8; }
 
@@ -444,14 +449,11 @@
                   </span>
 
                   {%- if block.settings.financing_link_text != blank -%}
-                    {%- assign affirm_price = card_product.selected_or_first_available_variant.price | default: card_product.price | default: 284900 -%}
-                    <a href="javascript:void(0)" 
-                       class="financing-qualify-link affirm-modal-trigger"
-                       data-amount="{{ affirm_price }}"
-                       data-page-type="product">
+                    <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
                       {{ block.settings.financing_link_text }}
                     </a>
-                  {%- endif -%}
+                  {%- endif -%} 
+                  
                 </div>
               {%- endif -%}
 
@@ -516,24 +518,19 @@
   </div>
 </div>
 
-<!-- Affirm API Configuration & Script -->
+<!-- Affirm JS Script & Public Key Config -->
+<script async src="https://cdn1.affirm.com/js/v2/affirm.js"></script>
+
 <script type="text/javascript">
   var _affirm_config = {
-    public_api_key: "M97BIX0W3ONNSNNH",
+    public_api_key: "M97BIX0W3ONNSNNH", // Apni Affirm Public Key lagayein
     script: "https://cdn1.affirm.com/js/v2/affirm.js"
   };
-  (function(l,g,m,e,a,f,b){var d,c=l[m]||{},h=document,k=c.u||function(){(c.u.q=c.u.q||[]).push(arguments)},y=h.getElementsByTagName("script")[0];k.l=+new Date;c.a=k;l[m]=c;a=h.createElement(g);a.async=1;a.src=e;y.parentNode.insertBefore(a,y)})(window,"script","affirm","https://cdn1.affirm.com/js/v2/affirm.js");
+  (function(l,g,m,e,a,f,b){var d,c=l[m]||{},h=document.createElement(f),n=document.getElementsByTagName(f)[0],k=function(a,b,c){return function(){a[b].apply(a,c)}};c[e]=c[e]||function(){(c[e].q=c[e].q||[]).push(arguments)};c.a=c[e];if(c[e].ready){c[e].ready(a)}else{c[e].a=c[e].a||[];c[e].a.push(a)}c.l=1*new Date();for(d=0;d<b.length;d++)c[b[d]]=k(c,b[d],arguments);a=0;for(;a<g.length;a++)if(g[a].indexOf(f)<0)h.async=true,h.src=g[a],n.parentNode.insertBefore(h,n);c[m]=c;l[m]=c})(window,["https://cdn1.affirm.com/js/v2/affirm.js"],"affirm","checkout","ui",["get","token","ready","refresh"],[]);
 </script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    /* Initialize Affirm UI for dynamic triggers */
-    if (window.affirm && window.affirm.ui) {
-      window.affirm.ui.ready(function() {
-        window.affirm.ui.refresh();
-      });
-    }
-
     const sectionContainer = document.querySelector('.section-{{ section.id }}-padding');
     if (!sectionContainer) return;
 
@@ -548,7 +545,7 @@
     let initialScrollLeft = 0;
     let rAFId = null;
 
-    /* Dynamic Thumb Sync */
+    /* 1. Dynamic Thumb Sync (Ultra Fast via rAF) */
     function updateThumbUI() {
       const scrollWidth = trackWrapper.scrollWidth;
       const clientWidth = trackWrapper.clientWidth;
@@ -581,7 +578,7 @@
     window.addEventListener('resize', updateThumbUI);
     updateThumbUI();
 
-    /* Dragging Logic */
+    /* 2. Ultra-Smooth Pointer Capture Dragging for Green Bar */
     scrollThumb.addEventListener('pointerdown', (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -633,7 +630,7 @@
     scrollThumb.addEventListener('pointerup', releasePointer);
     scrollThumb.addEventListener('pointercancel', releasePointer);
 
-    /* Track Click Logic */
+    /* 3. Smooth Track Click */
     scrollBarTrack.addEventListener('click', (e) => {
       if (e.target.closest('.js-scroll-thumb')) return;
 
@@ -657,12 +654,12 @@
       });
     });
 
-    /* Content Area Mouse Dragging */
+    /* 4. Mouse Dragging on Content Area */
     let isTrackDragging = false;
     let startX, scrollLeftPos;
 
     trackWrapper.addEventListener('mousedown', (e) => {
-      if (scrollBarTrack.contains(e.target) || e.target.closest('.deck-card__btn') || e.target.closest('.affirm-modal-trigger')) return;
+      if (scrollBarTrack.contains(e.target) || e.target.closest('.deck-card__btn')) return;
       isTrackDragging = true;
       trackWrapper.style.scrollBehavior = 'auto';
       trackWrapper.classList.add('is-dragging');
@@ -688,6 +685,7 @@
 
   });
 </script>
+
 
 {% schema %}
 {
