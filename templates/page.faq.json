@@ -94,7 +94,7 @@
       ],
       "name": "Contact Cards",
       "settings": {
-        "bg_color": "#F7F9FA",
+        "bg_color": "#f7f9fa",
         "card_bg_color": "#ffffff",
         "icon_color": "#2d5a43",
         "heading_color": "#000000",
@@ -156,9 +156,13 @@
       ],
       "name": "Tabbed FAQ Accordion",
       "settings": {
-        "heading": "Frequently Asked Questions",
+        "heading": "",
+        "heading_tag": "h2",
+        "class_heading": "",
+        "font_size_desktop": "",
+        "font_size_mobile": "",
         "tabs_list": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
-        "bg_color": "#f6f4f2",
+        "bg_color": "#F7F9FA",
         "color_scheme": "",
         "padding_top": 40,
         "padding_bottom": 40
@@ -206,7 +210,7 @@
         "custom_class": "consultant-richtext",
         "desktop_content_position": "center",
         "content_alignment": "center",
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "full_width": true,
         "padding_top": 80,
         "padding_bottom": 80
