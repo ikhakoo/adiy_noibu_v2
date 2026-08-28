@@ -146,13 +146,13 @@
       ],
       "name": "Contact Cards",
       "settings": {
-        "bg_color": "#f4f4f6",
+        "bg_color": "#F6F4F2",
         "card_bg_color": "#ffffff",
         "icon_color": "#2d5a43",
         "heading_color": "#1a1a1a",
         "text_color": "#333333",
         "padding_top": 0,
-        "padding_bottom": 60
+        "padding_bottom": 0
       }
     },
     "contact_form_simple_6gbHac": {
