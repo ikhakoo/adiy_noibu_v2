@@ -358,7 +358,7 @@ if (firstMenuItem) {
 
 
 
-// =========================================== Open Affirm popup  ===========================================
+// =========================================== Open Affirm popup  (#affirm)  ===========================================
 
 document.addEventListener("DOMContentLoaded", function () {
   // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
