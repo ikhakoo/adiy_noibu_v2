@@ -149,8 +149,36 @@
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#ffffff' }};">
   <div class="page-width">
     
-    {%- if section.settings.heading != blank -%}
+    {% comment %} {%- if section.settings.heading != blank -%}
       <h2 class="faq-section__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%} {% endcomment %}
+    {%- assign header_tag = section.settings.heading_tag | default: 'h2' -%}
+
+    {%- if section.settings.heading != blank -%}
+      <{{ header_tag }}
+        id="FaqHeading-{{ section.id }}"
+        class="{{ section.settings.class_heading }} faq-section__heading"
+      >
+        {{ section.settings.heading }}
+      </{{ header_tag }}>
+
+      {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
+        <style>
+          {%- if section.settings.font_size_mobile != blank -%}
+            #FaqHeading-{{ section.id }} {
+              font-size: {{ section.settings.font_size_mobile | strip }}px !important;
+            }
+          {%- endif -%}
+
+          {%- if section.settings.font_size_desktop != blank -%}
+            @media screen and (min-width: 750px) {
+              #FaqHeading-{{ section.id }} {
+                font-size: {{ section.settings.font_size_desktop | strip }}px !important;
+              }
+            }
+          {%- endif -%}
+        </style>
+      {%- endif -%}
     {%- endif -%}
 
     {%- comment -%} Parse Tab List from Section Setting {%- endcomment -%}
@@ -298,6 +326,37 @@
       "id": "heading",
       "label": "Heading",
       "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag (SEO)",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "class_heading",
+      "label": "Add Heading Class"
+    },
+    {
+      "type": "text",
+      "id": "font_size_desktop",
+      "label": "Desktop Font Size (px)",
+      "info": "E.g. 36 (Just enter number, px will automatically apply)"
+    },
+    {
+      "type": "text",
+      "id": "font_size_mobile",
+      "label": "Mobile Font Size (px)",
+      "info": "E.g. 16 (Just enter number, px will automatically apply)"
     },
     {
       "type": "textarea",
