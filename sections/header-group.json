@@ -1,1 +1,128 @@
-{"name":"t:sections.header.name","type":"header","sections":{"custom_announcement_bar_9Fx64V":{"type":"custom-announcement-bar","blocks":{"left_gjyWhe":{"type":"left","settings":{"svg_code":"","icon":"shopify:\/\/shop_images\/star_img.png","rating_text":"4.8\/5 Stars","text_suffix":"Reviews","start_date":"2026-07-23","base_count":1740,"daily_increment":1,"left_link":"shopify:\/\/pages\/reviews"}},"middle_mPCh7k":{"type":"middle","settings":{"text":"<p>End Of Summer Sale Is Live! Use Code: S1200<\/p>","button_text":"","button_link":"tel:+17863582872"}},"right_JFtxxY":{"type":"right","settings":{"message_svg_code":"<svg width=\"20\" height=\"20\" viewbox=\"0 0 20 20\" fill=\"none\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\">\n<path d=\"M17.5 12.333V5.99701C17.5 5.06601 17.5 4.60001 17.319 4.24301C17.1585 3.92942 16.903 3.67461 16.589 3.51501C16.233 3.33301 15.767 3.33301 14.834 3.33301H5.167C4.233 3.33301 3.767 3.33301 3.41 3.51501C3.096 3.67501 2.841 3.93001 2.682 4.24301C2.5 4.60001 2.5 5.06701 2.5 6.00001V15.56C2.5 16.447 2.5 16.891 2.682 17.12C2.76002 17.218 2.8592 17.2971 2.97212 17.3513C3.08503 17.4055 3.20875 17.4334 3.334 17.433C3.626 17.433 3.973 17.155 4.666 16.6L5.936 15.584C6.207 15.368 6.342 15.259 6.493 15.182C6.62767 15.114 6.76867 15.0647 6.916 15.034C7.082 15 7.256 15 7.602 15H14.833C15.767 15 16.233 15 16.59 14.818C16.9037 14.6582 17.1588 14.4034 17.319 14.09C17.5 13.734 17.5 13.268 17.5 12.336V12.333Z\" stroke=\"white\" stroke-width=\"1.667\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><\/path>\n<\/svg>","message_icon":"shopify:\/\/shop_images\/SVG.svg","message_text":"Message Us","message_link":"#chat","contact_svg_code":"","contact_icon":"shopify:\/\/shop_images\/image_29_62947b22-be35-4408-a2e2-7bd8122ec26d.png","phone":"+1 (786) 358-2872","phone_link":"tel:+17863582872"}}},"block_order":["left_gjyWhe","middle_mPCh7k","right_JFtxxY"],"name":"A DIY announcement","settings":{"color_scheme":"scheme-3"}},"header":{"type":"header","blocks":{"mega_menu_product_4zeY4p":{"type":"mega_menu_product","settings":{"trigger_title":"Shop","product":"a-diy-composite-deck-kit","card_title":"Composite Deck Kit","description":"Grade 1 Southern Yellow Pine. Pressure Treated and Kiln Dried.","spec_1_icon":"shopify:\/\/shop_images\/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_6.png","spec_1_text":"25-Year  Warranty","spec_2_icon":"shopify:\/\/shop_images\/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_7.png","spec_2_text":"Sustainability","spec_3_icon":"shopify:\/\/shop_images\/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_8.png","spec_3_text":"Stain and Fade Resistance","spec_4_icon":"shopify:\/\/shop_images\/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_10.png","spec_4_text":"Barefoot Friendly"}},"mega_menu_product_VJHAC9":{"type":"mega_menu_product","settings":{"trigger_title":"Shop","product":"pressure-treated-kiln-dried-wood-deck-kit","card_title":"Wood Deck Kit","description":"","spec_1_icon":"shopify:\/\/shop_images\/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_2_6911b065-8660-4487-b435-4b140819384f.png","spec_1_text":"Built To Resist The Elements","spec_2_icon":"shopify:\/\/shop_images\/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_5.png","spec_2_text":"Naturally Beautiful","spec_3_icon":"shopify:\/\/shop_images\/Group_2147228895_243bd22a-7c6e-4382-8143-ae055352a944.png","spec_3_text":"Engineered for Strength","spec_4_icon":"shopify:\/\/shop_images\/Group_2147228896_66b209ab-c421-4464-8cca-2d9b1861c9bc.png","spec_4_text":"5-Year Structural Warranty"}}},"block_order":["mega_menu_product_4zeY4p","mega_menu_product_VJHAC9"],"settings":{"logo_position":"middle-center","mobile_logo_position":"center","menu":"a-diy-header-mobile","menu_left_handle":"a-diy-header-left","menu_right_handle":"a-diy-header-right","menu_type_desktop":"dropdown","sticky_header_type":"always","show_line_separator":true,"color_scheme":"scheme-ddc5657a-87bc-4902-88aa-ab71ad3610ba","menu_color_scheme":"scheme-1","enable_country_selector":false,"enable_language_selector":false,"enable_customer_avatar":false,"margin_bottom":0,"padding_top":20,"padding_bottom":20}}},"order":["custom_announcement_bar_9Fx64V","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "custom_announcement_bar_9Fx64V": {
+      "type": "custom-announcement-bar",
+      "blocks": {
+        "left_gjyWhe": {
+          "type": "left",
+          "settings": {
+            "svg_code": "",
+            "icon": "shopify://shop_images/star_img.png",
+            "rating_text": "4.8/5 Stars",
+            "text_suffix": "Reviews",
+            "start_date": "2026-07-23",
+            "base_count": 1740,
+            "daily_increment": 1,
+            "left_link": "shopify://pages/reviews"
+          }
+        },
+        "middle_mPCh7k": {
+          "type": "middle",
+          "settings": {
+            "text": "<p>End Of Summer Sale Is Live! Use Code: S1200</p>",
+            "button_text": "",
+            "button_link": "tel:+17863582872"
+          }
+        },
+        "right_JFtxxY": {
+          "type": "right",
+          "settings": {
+            "message_svg_code": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 20 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M17.5 12.333V5.99701C17.5 5.06601 17.5 4.60001 17.319 4.24301C17.1585 3.92942 16.903 3.67461 16.589 3.51501C16.233 3.33301 15.767 3.33301 14.834 3.33301H5.167C4.233 3.33301 3.767 3.33301 3.41 3.51501C3.096 3.67501 2.841 3.93001 2.682 4.24301C2.5 4.60001 2.5 5.06701 2.5 6.00001V15.56C2.5 16.447 2.5 16.891 2.682 17.12C2.76002 17.218 2.8592 17.2971 2.97212 17.3513C3.08503 17.4055 3.20875 17.4334 3.334 17.433C3.626 17.433 3.973 17.155 4.666 16.6L5.936 15.584C6.207 15.368 6.342 15.259 6.493 15.182C6.62767 15.114 6.76867 15.0647 6.916 15.034C7.082 15 7.256 15 7.602 15H14.833C15.767 15 16.233 15 16.59 14.818C16.9037 14.6582 17.1588 14.4034 17.319 14.09C17.5 13.734 17.5 13.268 17.5 12.336V12.333Z\" stroke=\"white\" stroke-width=\"1.667\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n</svg>",
+            "message_icon": "shopify://shop_images/SVG.svg",
+            "message_text": "Message Us",
+            "message_link": "#chat",
+            "contact_svg_code": "",
+            "contact_icon": "shopify://shop_images/image_51.png",
+            "phone": "+1 (786) 358-2872",
+            "phone_link": "tel:+17863582872"
+          }
+        }
+      },
+      "block_order": [
+        "left_gjyWhe",
+        "middle_mPCh7k",
+        "right_JFtxxY"
+      ],
+      "name": "A DIY announcement",
+      "settings": {
+        "color_scheme": "scheme-3"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_product_4zeY4p": {
+          "type": "mega_menu_product",
+          "settings": {
+            "trigger_title": "Shop",
+            "product": "a-diy-composite-deck-kit",
+            "card_title": "Composite Deck Kit",
+            "description": "Grade 1 Southern Yellow Pine. Pressure Treated and Kiln Dried.",
+            "spec_1_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_6.png",
+            "spec_1_text": "25-Year  Warranty",
+            "spec_2_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_7.png",
+            "spec_2_text": "Sustainability",
+            "spec_3_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_8.png",
+            "spec_3_text": "Stain and Fade Resistance",
+            "spec_4_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_10.png",
+            "spec_4_text": "Barefoot Friendly"
+          }
+        },
+        "mega_menu_product_VJHAC9": {
+          "type": "mega_menu_product",
+          "settings": {
+            "trigger_title": "Shop",
+            "product": "pressure-treated-kiln-dried-wood-deck-kit",
+            "card_title": "Wood Deck Kit",
+            "description": "",
+            "spec_1_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_2_6911b065-8660-4487-b435-4b140819384f.png",
+            "spec_1_text": "Built To Resist The Elements",
+            "spec_2_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_5.png",
+            "spec_2_text": "Naturally Beautiful",
+            "spec_3_icon": "shopify://shop_images/Group_2147228895_243bd22a-7c6e-4382-8143-ae055352a944.png",
+            "spec_3_text": "Engineered for Strength",
+            "spec_4_icon": "shopify://shop_images/Group_2147228896_66b209ab-c421-4464-8cca-2d9b1861c9bc.png",
+            "spec_4_text": "5-Year Structural Warranty"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_product_4zeY4p",
+        "mega_menu_product_VJHAC9"
+      ],
+      "settings": {
+        "logo_position": "middle-center",
+        "mobile_logo_position": "center",
+        "menu": "a-diy-header-mobile",
+        "menu_left_handle": "a-diy-header-left",
+        "menu_right_handle": "a-diy-header-right",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "always",
+        "show_line_separator": true,
+        "color_scheme": "scheme-ddc5657a-87bc-4902-88aa-ab71ad3610ba",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "enable_customer_avatar": false,
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "custom_announcement_bar_9Fx64V",
+    "header"
+  ]
+}
