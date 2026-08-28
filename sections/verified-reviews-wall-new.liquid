@@ -485,7 +485,35 @@
       
       <!-- HEADER STYLE 1 -->
       <div class="wall-header header-style-1">
-        {%- if section.settings.heading != blank -%}<h2 class="wall-title">{{ section.settings.heading }}</h2>{%- endif -%}
+        {% comment %} {%- if section.settings.heading != blank -%}<h2 class="wall-title">{{ section.settings.heading }}</h2>{%- endif -%} {% endcomment %}
+        {%- assign header_tag = section.settings.heading_tag | default: 'h2' -%}
+
+        {%- if section.settings.heading != blank -%}
+          <{{ header_tag }}
+            id="SectionHeading-{{ section.id }}"
+            class="{{ section.settings.class_heading }} wall-title"
+          >
+            {{ section.settings.heading }}
+          </{{ header_tag }}>
+
+          {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
+            <style>
+              {%- if section.settings.font_size_mobile != blank -%}
+                #SectionHeading-{{ section.id }} {
+                  font-size: {{ section.settings.font_size_mobile | strip }}px !important;
+                }
+              {%- endif -%}
+
+              {%- if section.settings.font_size_desktop != blank -%}
+                @media screen and (min-width: 750px) {
+                  #SectionHeading-{{ section.id }} {
+                    font-size: {{ section.settings.font_size_desktop | strip }}px !important;
+                  }
+                }
+              {%- endif -%}
+            </style>
+          {%- endif -%}
+        {%- endif -%}
         
         <div class="wall-rating-box">
           <div class="rating-score">{{ section.settings.rating_score }}</div>
@@ -549,7 +577,35 @@
 
       <!-- HEADER STYLE 2 -->
       <div class="wall-header header-style-2">
-        {%- if section.settings.heading != blank -%}<h2 class="wall-title">{{ section.settings.heading }}</h2>{%- endif -%}
+        {% comment %} {%- if section.settings.heading != blank -%}<h2 class="wall-title">{{ section.settings.heading }}</h2>{%- endif -%} {% endcomment %}
+        {%- assign header_tag = section.settings.heading_tag | default: 'h2' -%}
+
+        {%- if section.settings.heading != blank -%}
+          <{{ header_tag }}
+            id="SectionHeading-{{ section.id }}"
+            class="{{ section.settings.class_heading }} wall-title"
+          >
+            {{ section.settings.heading }}
+          </{{ header_tag }}>
+
+          {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
+            <style>
+              {%- if section.settings.font_size_mobile != blank -%}
+                #SectionHeading-{{ section.id }} {
+                  font-size: {{ section.settings.font_size_mobile | strip }}px !important;
+                }
+              {%- endif -%}
+
+              {%- if section.settings.font_size_desktop != blank -%}
+                @media screen and (min-width: 750px) {
+                  #SectionHeading-{{ section.id }} {
+                    font-size: {{ section.settings.font_size_desktop | strip }}px !important;
+                  }
+                }
+              {%- endif -%}
+            </style>
+          {%- endif -%}
+        {%- endif -%}
 
         <div class="h2-main-grid">
           <!-- Left: Score + Star Boxes -->
@@ -827,6 +883,37 @@
       "id": "heading",
       "label": "Heading",
       "default": "Sleep you can't stop talking about"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag (SEO)",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "class_heading",
+      "label": "Add Class"
+    },
+    {
+      "type": "text",
+      "id": "font_size_desktop",
+      "label": "Desktop Font Size (px)",
+      "info": "E.g. 36 (Just enter number, px will automatically apply)"
+    },
+    {
+      "type": "text",
+      "id": "font_size_mobile",
+      "label": "Mobile Font Size (px)",
+      "info": "E.g. 16 (Just enter number, px will automatically apply)"
     },
     {
       "type": "text",
