@@ -121,8 +121,8 @@
           "settings": {
             "icon_type": "phone",
             "heading": "Phone",
-            "timing_text": "Monday–Friday, 9AM - 5 PM EST excluding holidays.",
-            "action_text": "<p>Give us a call <a href=\"tel:17863582872\">1(786) 358-2872</a>.</p>"
+            "timing_text": "Monday-Friday, 9AM - 5 PM EST excluding holidays.",
+            "action_text": "<p>Give us a call <a href=\"tel:17863582872\">1 (786) 358-2872</a>.</p>"
           }
         },
         "card_Q9E7AY": {
@@ -130,8 +130,8 @@
           "settings": {
             "icon_type": "chat",
             "heading": "Chat",
-            "timing_text": "Is it after hours?",
-            "action_text": "<p>Launch our chat to talk with a specialist now.</p>"
+            "timing_text": "Is it after hours?<br>\nLaunch our chat to talk with a specialist now.",
+            "action_text": ""
           }
         }
       },
