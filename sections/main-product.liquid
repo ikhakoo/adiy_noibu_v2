@@ -1047,82 +1047,50 @@
                   </div>
                   {% endcomment %}
 
-                {%- when 'financing_widget' -%}
-  <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
-    <div class="financing-header">
-      <span class="financing-title">{{ block.settings.heading_text }}</span>
-      <button type="button" class="financing-toggle-btn js-financing-toggle">
-        <span class="toggle-text">Show more</span>
-        <svg width="12" height="7" viewBox="0 0 12 7" fill="none" class="chevron-icon">
-          <path d="M1 1L6 6L11 1" stroke="#222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
+                  {%- when 'financing_widget' -%}
+                    <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
+                      <div class="financing-header">
+                        <span class="financing-title">{{ block.settings.heading_text }}</span>
+                        <button type="button" class="financing-toggle-btn js-financing-toggle">
+                          <span class="toggle-text">Show more</span>
+                          <svg width="12" height="7" viewBox="0 0 12 7" fill="none" class="chevron-icon">
+                            <path d="M1 1L6 6L11 1" stroke="#222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </button>
+                      </div>
 
-    <div class="financing-box-container">
-      {%- for i in (1..3) -%}
-        {%- capture logo_id -%}logo_{{ i }}{%- endcapture -%}
-        {%- capture text_id -%}text_{{ i }}{%- endcapture -%}
-        {%- capture link_id -%}link_{{ i }}{%- endcapture -%}
+                      <div class="financing-box-container">
+                        {%- for i in (1..3) -%}
+                          {%- capture logo_id -%}logo_{{ i }}{%- endcapture -%}
+                          {%- capture text_id -%}text_{{ i }}{%- endcapture -%}
+                          {%- capture link_id -%}link_{{ i }}{%- endcapture -%}
 
-        {%- assign logo = block.settings[logo_id] -%}
-        {%- assign text = block.settings[text_id] -%}
-        {%- assign link = block.settings[link_id] -%}
+                          {%- assign logo = block.settings[logo_id] -%}
+                          {%- assign text = block.settings[text_id] -%}
+                          {%- assign link = block.settings[link_id] -%}
 
-        {%- if text != blank -%}
-          <div class="financing-row" data-provider="{{ text | downcase }}">
-            <div class="financing-logo-col">
-              {%- if logo != blank -%}
-                <img src="{{ logo | image_url: width: 200 }}" alt="Financing Logo" loading="lazy">
-              {%- endif -%}
-            </div>
-            <div class="financing-text-col">
-              {{ text }}
-            </div>
-            <div class="financing-btn-col">
-              <!-- Custom button with data attribute for triggering -->
-              <a href="{{ link | default: 'javascript:void(0)' }}" class="financing-learn-btn js-trigger-affirm" data-index="{{ i }}">Learn More</a>
-            </div>
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  </div>
+                          {%- if text != blank -%}
+                            <div class="financing-row">
+                              <div class="financing-logo-col">
+                                {%- if logo != blank -%}
+                                  <img src="{{ logo | image_url: width: 200 }}" alt="Financing Logo" loading="lazy">
+                                {%- endif -%}
+                              </div>
+                              <div class="financing-text-col">
+                                {{ text }}
+                              </div>
+                              <div class="financing-btn-col">
+                                <a href="{{ link | default: '#' }}" class="financing-learn-btn">Learn More</a>
+                              </div>
+                            </div>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // 1. "Learn More" Button click par Affirm Modal Trigger karna
-    document.addEventListener("click", function (event) {
-      if (event.target.matches(".js-trigger-affirm")) {
-        const row = event.target.closest(".financing-row");
-        
-        // Agar row me Affirm ka mention hai target karein
-        const affirmModalTrigger = document.querySelector(".affirm-modal-trigger");
-        if (affirmModalTrigger) {
-          event.preventDefault();
-          affirmModalTrigger.click(); // Standard Affirm modal trigger click logic
-        }
-      }
-    });
-
-    // 2. Dynamic Price Update (Affirm ALA element se value fetch karke sync karna)
-    function syncAffirmPrice() {
-      const originalAffirmPrice = document.querySelector(".affirm-ala-price");
-      const customPriceTarget = document.querySelector(".js-custom-affirm-price");
-
-      if (originalAffirmPrice && customPriceTarget) {
-        customPriceTarget.textContent = originalAffirmPrice.textContent;
-      }
-    }
-
-    // Observer setup dynamic DOM update sync ke liye
-    const targetNode = document.querySelector(".affirm-as-low-as");
-    if (targetNode) {
-      const observer = new MutationObserver(syncAffirmPrice);
-      observer.observe(targetNode, { childList: true, subtree: true });
-    }
-  });
-</script>
+                  <script>
+                    
+                  </script>
 
                 {%- when 'material_switcher' -%}
                   <div class="material-switcher-block" {{ block.shopify_attributes }}>
