@@ -26,14 +26,29 @@
     border: 1px solid #eaeaea;
   }
 
+  /* Dynamic Heading Base Styling */
   .contact-form-heading {
     margin-top: 0;
     margin-bottom: 16px;
-    font-size: 32px;
     font-weight: 800;
     color: #2b1c11;
     letter-spacing: -0.5px;
     line-height: 1.2;
+    {%- if section.settings.font_size_mobile != blank -%}
+      font-size: {{ section.settings.font_size_mobile }}px;
+    {%- else -%}
+      font-size: 26px;
+    {%- endif -%}
+  }
+
+  @media screen and (min-width: 750px) {
+    .contact-form-heading {
+      {%- if section.settings.font_size_desktop != blank -%}
+        font-size: {{ section.settings.font_size_desktop }}px;
+      {%- else -%}
+        font-size: 32px;
+      {%- endif -%}
+    }
   }
 
   .contact-form-subtext {
@@ -115,9 +130,10 @@
       
       <div class="contact-form-card">
         {%- if section.settings.heading != blank -%}
-          <h2 class="contact-form-heading">
+          {%- assign heading_tag = section.settings.heading_tag | default: 'h2' -%}
+          <{{ heading_tag }} class="contact-form-heading {% if section.settings.class_heading != blank %}{{ section.settings.class_heading }}{% endif %}">
             {{ section.settings.heading }}
-          </h2>
+          </{{ heading_tag }}>
         {%- endif -%}
 
         {%- if section.settings.subtext != blank -%}
@@ -227,10 +243,41 @@
   },
   "settings": [
     {
-      "type": "inline_richtext",
+      "type": "text",
       "id": "heading",
-      "default": "Or Send Us A Message",
-      "label": "Heading"
+      "label": "Heading",
+      "default": "Sleep you can't stop talking about"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag (SEO)",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "class_heading",
+      "label": "Add Class"
+    },
+    {
+      "type": "text",
+      "id": "font_size_desktop",
+      "label": "Desktop Font Size (px)",
+      "info": "E.g. 36 (Just enter number, px will automatically apply)"
+    },
+    {
+      "type": "text",
+      "id": "font_size_mobile",
+      "label": "Mobile Font Size (px)",
+      "info": "E.g. 16 (Just enter number, px will automatically apply)"
     },
     {
       "type": "richtext",
