@@ -205,7 +205,6 @@
     text-decoration: underline;
     font-weight: 500;
     transition: opacity 0.2s ease;
-    /* display: none; */
   }
   .financing-qualify-link:hover { opacity: 0.8; }
 
@@ -448,46 +447,12 @@
                     {%- endif -%}
                   </span>
 
-                  {% comment %} {%- if block.settings.financing_link_text != blank -%}
+                  {%- if block.settings.financing_link_text != blank -%}
                     <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
                       {{ block.settings.financing_link_text }}
                     </a>
-                  {%- endif -%}  {% endcomment %}
-                  {%- comment -%} Integrated Affirm Block {%- endcomment -%}
-{%- if card_product != blank -%}
-  <div 
-    class="financing-qualify-link"
-    x-data="{
-      affirmMessage: '',
-      async fetchAffirmMessage() {
-        const publicKey = 'M97BIX0W3ONNSNNH';
-        const productPrice = {{ card_product.price }};
-        const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${productPrice}&field=ala&use_best_terms=true&page_type=product`;
-        try {
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-          if (data && data.promo && data.promo.html_ala) {
-            this.affirmMessage = data.promo.html_ala;
-          }
-        } catch(e) {
-          console.log('Error fetching Affirm message', e);
-        }
-        if (window.affirm && window.affirm.ui) {
-          window.affirm.ui.ready(() => window.affirm.ui.refresh());
-        }
-      }
-    }" 
-    x-init="fetchAffirmMessage()"
-  >
-    <p class="affirm-as-low-as" data-page-type="product" data-amount="{{ card_product.price }}">
-      <span x-html="affirmMessage">See qualify</span>
-    </p>
-  </div>
-{%- elsif block.settings.financing_link_text != blank -%}
-  <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
-    {{ block.settings.financing_link_text }}
-  </a>
-{%- endif -%}
+                  {%- endif -%} 
+                  
                 </div>
               {%- endif -%}
 
@@ -551,6 +516,7 @@
 
   </div>
 </div>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
