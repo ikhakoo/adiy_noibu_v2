@@ -205,6 +205,7 @@
     text-decoration: underline;
     font-weight: 500;
     transition: opacity 0.2s ease;
+    display:none;
   }
   .financing-qualify-link:hover { opacity: 0.8; }
 
@@ -423,48 +424,38 @@
                 </a>
               {%- endif -%}
 
-              <!-- Financing / Pure JS & Liquid Affirm Integration -->
-{%- if block.settings.show_financing -%}
-  {%- liquid
-    assign current_price = 0
-    if card_product != blank
-      assign current_price = card_product.price_min
-    elsif block.settings.price != blank
-      assign current_price = block.settings.price | remove: '$' | remove: ',' | times: 100
-    endif
-  -%}
+              <!-- Financing -->
+              {%- if block.settings.show_financing -%}
+                <div class="deck-card__financing-bar">
+                  {%- if block.settings.financing_text_before != blank -%}
+                    <span class="financing-text-prefix">{{ block.settings.financing_text_before }}</span>
+                  {%- endif -%}
 
-  <div class="deck-card__financing-bar">
-    {%- if current_price > 0 -%}
-      <!-- Affirm Standard HTML Container -->
-      <div class="affirm-as-low-as-container" data-price-cents="150000" data-amount="150000">
-        <span class="affirm-as-low-as"></span>
-      </div>
-    {%- else -%}
-      <!-- Fallback UI (Agar price available na ho) -->
-      {%- if block.settings.financing_text_before != blank -%}
-        <span class="financing-text-prefix">{{ block.settings.financing_text_before }}</span>
-      {%- endif -%}
+                  <span class="financing-logo-wrapper">
+                    {%- if block.settings.financing_logo != blank -%}
+                      <img
+                        src="{{ block.settings.financing_logo | image_url: width: 150 }}"
+                        alt="Affirm"
+                        loading="lazy"
+                        width="50"
+                        height="auto"
+                      >
+                    {%- else -%}
+                      <svg width="45" height="18" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.5 35H6L18 5h6.5l12 30h-6.5l-3-8h-11l-3 8zm5.5-13h8l-4-11-4 11z" fill="#000"/>
+                        <path d="M0 20C0 8.95 8.95 0 20 0s20 8.95 20 20" stroke="#4A90E2" stroke-width="4" fill="none"/>
+                      </svg>
+                    {%- endif -%}
+                  </span>
 
-      <span class="financing-logo-wrapper">
-        {%- if block.settings.financing_logo != blank -%}
-          <img src="{{ block.settings.financing_logo | image_url: width: 150 }}" alt="Affirm" loading="lazy" width="50" height="auto">
-        {%- else -%}
-          <svg width="45" height="18" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 35H6L18 5h6.5l12 30h-6.5l-3-8h-11l-3 8zm5.5-13h8l-4-11-4 11z" fill="#000"/>
-            <path d="M0 20C0 8.95 8.95 0 20 0s20 8.95 20 20" stroke="#4A90E2" stroke-width="4" fill="none"/>
-          </svg>
-        {%- endif -%}
-      </span>
-
-      {%- if block.settings.financing_link_text != blank -%}
-        <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
-          {{ block.settings.financing_link_text }}
-        </a>
-      {%- endif -%}
-    {%- endif -%}
-  </div>
-{%- endif -%}
+                  {%- if block.settings.financing_link_text != blank -%}
+                    <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
+                      {{ block.settings.financing_link_text }}
+                    </a>
+                  {%- endif -%} 
+                  
+                </div>
+              {%- endif -%}
 
               <!-- Image -->
               {%- assign card_img = block.settings.card_image -%}
@@ -526,6 +517,7 @@
 
   </div>
 </div>
+
 
 
 <script>
@@ -683,80 +675,6 @@
     });
 
   });
-</script>
-
-<script>
-  (function(m,g,e,i,a,s,c){m[i]=m[i]||function(){(m[i].q=m[i].q||[]).push(arguments)};
-  m[i].l=1*new Date();a=g.createElement(e);s=g.getElementsByTagName(e)[0];
-  a.async=1;a.src=c;s.parentNode.insertBefore(a,s);
-  })(window,document,'script','affirm','https://cdn1.affirm.com/js/v2/affirm.js');
-
-  _affirm_config = {
-    public_api_key: "M97BIX0W3ONNSNNH",
-    script: "https://cdn1.affirm.com/js/v2/affirm.js"
-  };
-</script>
-
-<!-- Fetch Promo & Handle Modal Trigger logic -->
-<script>
-  async function loadAffirmPromos() {
-    const publicKey = 'M97BIX0W3ONNSNNH';
-    const containers = document.querySelectorAll('.affirm-as-low-as-container');
-
-    for (const container of containers) {
-      const price = container.getAttribute('data-price-cents');
-      if (!price) continue;
-
-      const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${price}&field=ala&use_best_terms=true&page_type=product`;
-
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data && data.promo && data.promo.html_ala) {
-          const promoElem = container.querySelector('.affirm-as-low-as');
-          if (promoElem) {
-            promoElem.innerHTML = data.promo.html_ala;
-          }
-        }
-      } catch (e) {
-        console.error('Error fetching Affirm promo:', e);
-      }
-    }
-
-    // Refresh Affirm UI UI components after dynamic inject
-    if (window.affirm && window.affirm.ui) {
-      window.affirm.ui.ready(function() {
-        window.affirm.ui.refresh();
-      });
-    }
-  }
-
-  // Dynamic Click Listener Event Delegation (Fixes Popup Break)
-  document.addEventListener('click', function(e) {
-    const trigger = e.target.closest('.affirm-modal-trigger, .affirm-ala-trigger');
-    
-    if (trigger) {
-      e.preventDefault();
-      const container = trigger.closest('.affirm-as-low-as-container');
-      const amount = container ? container.getAttribute('data-amount') : null;
-
-      if (window.affirm && window.affirm.ui && typeof window.affirm.ui.open === 'function') {
-        window.affirm.ui.open({
-          checkoutPage: false,
-          pageType: 'product',
-          amount: amount ? parseInt(amount, 10) : undefined
-        });
-      }
-    }
-  });
-
-  // Run on page load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadAffirmPromos);
-  } else {
-    loadAffirmPromos();
-  }
 </script>
 
 
