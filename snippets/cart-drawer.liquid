@@ -419,6 +419,81 @@
     }
   }
 
+
+  .om-empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.om-empty-cart__title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #111111;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.02em;
+}
+
+.om-empty-cart__subtext {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+  margin: 0 0 30px 0;
+  font-weight: 400;
+}
+
+.om-empty-cart__links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.om-empty-cart__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #f7f6f4;
+  padding: 10px 14px;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.om-empty-cart__card:hover {
+  background-color: #efeeea;
+  transform: translateY(-1px);
+}
+
+.om-empty-cart__img-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #e5e3df;
+  flex-shrink: 0;
+}
+
+.om-empty-cart__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.om-empty-cart__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #dedcdc;
+}
+
+.om-empty-cart__card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #111111;
+  text-align: left;
+}
+
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -506,7 +581,7 @@
       {%- if cart == empty -%}
         <div class="drawer__inner-empty">
           <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
-            <div class="cart-drawer__empty-content">
+            {% comment %} <div class="cart-drawer__empty-content">
               <h2 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h2>
               {% comment %} <button
                 class="drawer__close"
@@ -527,7 +602,48 @@
                   {{ 'sections.cart.login.paragraph_html' | t: link: routes.account_login_url }}
                 </p>
               {%- endif -%}
-            </div>
+            </div> {% endcomment %}
+            <div class="cart-drawer__empty-content om-empty-cart">
+  <h2 class="om-empty-cart__title">Your Cart is Empty</h2>
+  <p class="om-empty-cart__subtext">
+    Looks like your cart is empty! Feel free to browse our selection and add some items you love.
+  </p>
+
+  <div class="om-empty-cart__links">
+    {% comment %} Card 1: Pressure Treated Deck {% endcomment %}
+    <a href="/collections/pressure-treated-deck" class="om-empty-cart__card">
+      <div class="om-empty-cart__img-wrap">
+        {%- assign collection_1 = collections['pressure-treated-deck'] -%}
+        {%- if collection_1.featured_image != blank -%}
+          {{ collection_1.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: 'Pressure Treated Deck' }}
+        {%- else -%}
+          <div class="om-empty-cart__placeholder"></div>
+        {%- endif -%}
+      </div>
+      <span class="om-empty-cart__card-title">Pressure Treated Deck</span>
+    </a>
+
+    {% comment %} Card 2: Composite Deck {% endcomment %}
+    <a href="/collections/composite-deck" class="om-empty-cart__card">
+      <div class="om-empty-cart__img-wrap">
+        {%- assign collection_2 = collections['composite-deck'] -%}
+        {%- if collection_2.featured_image != blank -%}
+          {{ collection_2.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: 'Composite Deck' }}
+        {%- else -%}
+          <div class="om-empty-cart__placeholder"></div>
+        {%- endif -%}
+      </div>
+      <span class="om-empty-cart__card-title">Composite Deck</span>
+    </a>
+  </div>
+
+  {%- if shop.customer_accounts_enabled and customer == null -%}
+    <p class="cart__login-title h3">{{ 'sections.cart.login.title' | t }}</p>
+    <p class="cart__login-paragraph">
+      {{ 'sections.cart.login.paragraph_html' | t: link: routes.account_login_url }}
+    </p>
+  {%- endif -%}
+</div>
           </div>
           {%- if settings.cart_drawer_collection != blank -%}
             <div class="cart-drawer__collection">
