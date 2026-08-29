@@ -98,24 +98,27 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
-  @media screen and (max-width: 749px) {
-  #Banner-{{ section.id }} {
-    flex-direction: column;
-  }
-  
-  #Banner-{{ section.id }} .banner__content {
-    position: absolute !important;
-    height: 100% !important;
-    width: 100% !important;
-    top: 0;
-    left: 0;
-    background: transparent !important;
-  }
-  
-  #Banner-{{ section.id }}.banner--mobile-bottom::before {
+  #Banner-{{ section.id }} .swiper-pagination {
     display: none !important;
   }
-}
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} {
+      flex-direction: column;
+    }
+    
+    #Banner-{{ section.id }} .banner__content {
+      position: absolute !important;
+      height: 100% !important;
+      width: 100% !important;
+      top: 0;
+      left: 0;
+      background: transparent !important;
+    }
+    
+    #Banner-{{ section.id }}.banner--mobile-bottom::before {
+      display: none !important;
+    }
+  }
 {%- endstyle -%}
 
 {%- liquid
