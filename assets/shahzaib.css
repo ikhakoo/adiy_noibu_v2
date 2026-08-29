@@ -383,6 +383,12 @@
 
 
 /******************************* Product Page / Main section *******************************/
+
+.affirm-modal-trigger{
+    color:#000 !important;
+}
+
+
 .template-product .product__info-wrapper .price__regular .price-item--regular{
     font-weight: 800;
     font-size: 32px;
