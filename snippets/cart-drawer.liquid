@@ -604,41 +604,40 @@
               {%- endif -%}
             </div> {% endcomment %}
             <div class="cart-drawer__empty-content om-empty-cart">
-  <h2 class="om-empty-cart__title">Your Cart is Empty</h2>
-  <p class="om-empty-cart__subtext">
-    Looks like your cart is empty! Feel free to browse our selection and add some items you love.
-  </p>
+              <h2 class="om-empty-cart__title">Your Cart is Empty</h2>
+              <p class="om-empty-cart__subtext">
+                Looks like your cart is empty! Feel free to browse our selection and add some items you love.
+              </p>
 
-  <div class="om-empty-cart__links">
-    {% comment %} Card 1: Pressure Treated Deck {% endcomment %}
-    <a href="/collections/pressure-treated-deck" class="om-empty-cart__card">
-      <div class="om-empty-cart__img-wrap">
-        {%- assign collection_1 = collections['pressure-treated-deck'] -%}
-        {%- if collection_1.featured_image != blank -%}
-          {{ collection_1.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: 'Pressure Treated Deck' }}
-        {%- else -%}
-          <div class="om-empty-cart__placeholder"></div>
-        {%- endif -%}
-      </div>
-      <span class="om-empty-cart__card-title">Pressure Treated Deck</span>
-    </a>
+              <div class="om-empty-cart__links">
+                {% comment %} Card 1: Pressure Treated Deck {% endcomment %}
+                <a href="/collections/pressure-treated-deck" class="om-empty-cart__card">
+                  <div class="om-empty-cart__img-wrap">
+                    {%- assign collection_1 = collections['pressure-treated-deck'] -%}
+                    {%- if collection_1.featured_image != blank -%}
+                      {{ collection_1.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: 'Pressure Treated Deck' }}
+                    {%- else -%}
+                      <div class="om-empty-cart__placeholder"></div>
+                    {%- endif -%}
+                  </div>
+                  <span class="om-empty-cart__card-title">Pressure Treated Deck</span>
+                </a>
 
-    {% comment %} Card 2: Composite Deck {% endcomment %}
-    <a href="/collections/composite-deck" class="om-empty-cart__card">
-      <div class="om-empty-cart__img-wrap">
-        {%- assign collection_2 = collections['composite-deck'] -%}
-        {%- if collection_2.featured_image != blank -%}
-          {{ collection_2.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: 'Composite Deck' }}
-        {%- else -%}
-          <div class="om-empty-cart__placeholder"></div>
-        {%- endif -%}
-      </div>
-      <span class="om-empty-cart__card-title">Composite Deck</span>
-    </a>
-  </div>
-
-  <a href="/collections/start-your-new-deck"> Shop All </a>
-</div>
+                {% comment %} Card 2: Composite Deck {% endcomment %}
+                <a href="/collections/composite-deck" class="om-empty-cart__card">
+                  <div class="om-empty-cart__img-wrap">
+                    {%- assign collection_2 = collections['composite-deck'] -%}
+                    {%- if collection_2.featured_image != blank -%}
+                      {{ collection_2.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: 'Composite Deck' }}
+                    {%- else -%}
+                      <div class="om-empty-cart__placeholder"></div>
+                    {%- endif -%}
+                  </div>
+                  <span class="om-empty-cart__card-title">Composite Deck</span>
+                </a>
+              </div>
+            </div>
+            <a href="/collections/start-your-new-deck"> Shop All </a>
           </div>
           {%- if settings.cart_drawer_collection != blank -%}
             <div class="cart-drawer__collection">
