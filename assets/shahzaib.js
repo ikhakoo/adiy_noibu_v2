@@ -379,4 +379,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ================================ end ================================
 
-  
+  document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('klarnaModal');
+  const closeIcon = document.getElementById('klarnaCloseIcon');
+  const closeBtn = document.getElementById('klarnaCloseBtn');
+
+  function openModal() {
+    if (modal) {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeModal() {
+    if (modal) {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  // Pure page par check karega jis link/button ke href me "#klarna" ho
+  document.body.addEventListener('click', function (e) {
+    const trigger = e.target.closest('a[href*="#klarna"], button[href*="#klarna"], [data-href*="#klarna"]');
+    if (trigger) {
+      e.preventDefault();
+      openModal();
+    }
+  });
+
+  // Close events
+  if (closeIcon) closeIcon.addEventListener('click', closeModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  // Background click par close
+  if (modal) {
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
+
+  // Keyboard Escape key press hone par close
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+});
