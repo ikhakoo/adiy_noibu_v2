@@ -1,22 +1,28 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
 {%- style -%}
   #Banner-{{ section.id }}::after {
     opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
   }
 
-  /* Mobile Specific Image CSS Logic */
-  {%- if section.settings.mobile_image != blank -%}
+  /* Swiper Mobile Specific Dots Styling */
+  #Banner-{{ section.id }} .swiper-pagination-bullet-active {
+    background: #755845;
+  }
+
+  /* Mobile vs Desktop Display Logic */
+  {%- if section.settings.mobile_image_1 != blank or section.settings.mobile_image_2 != blank or section.settings.mobile_image_3 != blank -%}
     @media screen and (max-width: 749px) {
-      #Banner-{{ section.id }} .banner__media.desktop-image-only {
+      #Banner-{{ section.id }} .desktop-banner-media {
         display: none !important;
       }
-      #Banner-{{ section.id }} .banner__media.mobile-image-only {
+      #Banner-{{ section.id }} .mobile-banner-media {
         display: block !important;
       }
     }
     @media screen and (min-width: 750px) {
-      #Banner-{{ section.id }} .banner__media.mobile-image-only {
+      #Banner-{{ section.id }} .mobile-banner-media {
         display: none !important;
       }
     }
@@ -24,7 +30,7 @@
 
   {%- if section.settings.image_height == 'adapt' -%}
     @media screen and (max-width: 749px) {
-      {%- assign mobile_adapt_image = section.settings.mobile_image | default: section.settings.image -%}
+      {%- assign mobile_adapt_image = section.settings.mobile_image_1 | default: section.settings.image -%}
       {%- if mobile_adapt_image != blank -%}
         #Banner-{{ section.id }}::before,
         #Banner-{{ section.id }} .banner__media::before,
@@ -92,7 +98,6 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
-
 {%- endstyle -%}
 
 {%- liquid
@@ -111,9 +116,24 @@
     assign half_width = '50vw'
     assign stacked_sizes = '(min-width: 750px) 50vw, 100vw'
   endif
+
   assign fetch_priority = 'auto'
   if section.index == 1
     assign fetch_priority = 'high'
+  endif
+
+  comment
+    Counting uploaded mobile images
+  endcomment
+  assign mobile_count = 0
+  if section.settings.mobile_image_1 != blank
+    assign mobile_count = mobile_count | plus: 1
+  endif
+  if section.settings.mobile_image_2 != blank
+    assign mobile_count = mobile_count | plus: 1
+  endif
+  if section.settings.mobile_image_3 != blank
+    assign mobile_count = mobile_count | plus: 1
   endif
 -%}
 
@@ -121,8 +141,9 @@
   id="Banner-{{ section.id }}"
   class="{{ section.settings.custom_class }} banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
+  {%- comment -%} STANDARD DESKTOP IMAGES (STATIC) {%- endcomment -%}
   {%- if section.settings.image != blank -%}
-    <div class="banner__media media{% if section.settings.mobile_image != blank %} desktop-image-only{% endif %}{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    <div class="banner__media media desktop-banner-media{% if mobile_count > 0 %} desktop-image-only{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- liquid
         assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio
         if section.settings.image_2 != blank
@@ -148,32 +169,14 @@
           fetchpriority: fetch_priority
       }}
     </div>
-  {%- elsif section.settings.image_2 == blank and section.settings.mobile_image == blank -%}
-    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+  {%- elsif section.settings.image_2 == blank and mobile_count == 0 -%}
+    <div class="banner__media media placeholder desktop-banner-media">
       {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
     </div>
   {%- endif -%}
 
-  {%- if section.settings.mobile_image != blank -%}
-    <div class="banner__media media mobile-image-only{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {%- liquid
-        assign mobile_image_height = section.settings.mobile_image.width | divided_by: section.settings.mobile_image.aspect_ratio
-      -%}
-      {{
-        section.settings.mobile_image
-        | image_url: width: 1500
-        | image_tag:
-          width: section.settings.mobile_image.width,
-          height: mobile_image_height,
-          sizes: '100vw',
-          widths: '375, 550, 750, 1100',
-          fetchpriority: fetch_priority
-      }}
-    </div>
-  {%- endif -%}
-
   {%- if section.settings.image_2 != blank -%}
-    <div class="banner__media media{% if section.settings.image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    <div class="banner__media media desktop-banner-media{% if section.settings.image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- liquid
         assign image_height_2 = section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio
         if section.settings.image != blank
@@ -201,11 +204,41 @@
     </div>
   {%- endif -%}
 
+  {%- comment -%} MOBILE SWIPER SLIDER (UP TO 3 IMAGES) {%- endcomment -%}
+  {%- if mobile_count > 0 -%}
+    <div class="mobile-banner-media swiper swiper-mobile-{{ section.id }}" style="width: 100%;">
+      <div class="swiper-wrapper">
+        {%- for i in (1..3) -%}
+          {%- assign mobile_img_key = 'mobile_image_' | append: i -%}
+          {%- assign current_mobile_image = section.settings[mobile_img_key] -%}
+          {%- if current_mobile_image != blank -%}
+            <div class="swiper-slide banner__media media">
+              {%- assign mobile_image_height = current_mobile_image.width | divided_by: current_mobile_image.aspect_ratio -%}
+              {{
+                current_mobile_image
+                | image_url: width: 1500
+                | image_tag:
+                  width: current_mobile_image.width,
+                  height: mobile_image_height,
+                  sizes: '100vw',
+                  widths: '375, 550, 750, 1100',
+                  fetchpriority: fetch_priority
+              }}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if mobile_count > 1 -%}
+        <div class="swiper-pagination"></div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} CONTENT OVERLAY BLOCK {%- endcomment -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
-
           {%- when 'review_badge' -%}
             <div class="review-badge-block" {{ block.shopify_attributes }}>
               {%- if block.settings.star_image != blank -%}
@@ -226,9 +259,6 @@
 
           {%- when 'heading' -%}
             {%- assign header_tag = block.settings.heading_tag | default: 'h2' -%}
-
-            {%- assign header_tag = block.settings.heading_tag | default: 'h2' -%}
-
             <{{ header_tag }}
               id="BannerHeading-{{ block.id }}"
               class="{{ block.settings.class_heading }} banner__heading inline-richtext"
@@ -267,6 +297,7 @@
                 <p>{{ block.settings.text }}</p>
               {%- endif -%}
             </div>
+
           {%- when 'feature' -%}
             <div class="banner__features-list" {{ block.shopify_attributes }}>
               {%- for i in (1..3) -%}
@@ -289,11 +320,10 @@
                     </span>
                     <span class="banner__feature-text">{{ item_text }}</span>
                   </div>
-                {%- if item_text != blank -%}
-                {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
             </div>
+
           {%- when 'buttons' -%}
             <div
               class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}"
@@ -324,13 +354,32 @@
                 </a>
               {%- endif -%}
             </div>
-          
 
         {%- endcase -%}
       {%- endfor -%}
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const autoplaySpeed = {{ section.settings.autorotate_speed | times: 1000 }};
+    const enableAutoplay = {{ section.settings.enable_autorotate | json }};
+
+    // Initialize Mobile Swiper only if mobile images > 1
+    if ({{ mobile_count }} > 1) {
+      new Swiper('.swiper-mobile-{{ section.id }}', {
+        loop: true,
+        autoplay: enableAutoplay ? { delay: autoplaySpeed, disableOnInteraction: false } : false,
+        pagination: { 
+          el: '#Banner-{{ section.id }} .swiper-mobile-{{ section.id }} .swiper-pagination', 
+          clickable: true 
+        },
+      });
+    }
+  });
+</script>
 
 {% schema %}
 {
@@ -347,6 +396,10 @@
       "label": "Add Class"
     },
     {
+      "type": "header",
+      "content": "Desktop Banner Images"
+    },
+    {
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.image-banner.settings.image.label"
@@ -357,9 +410,43 @@
       "label": "t:sections.image-banner.settings.image_2.label"
     },
     {
+      "type": "header",
+      "content": "Mobile Banner Images (Up to 3 Sliders)"
+    },
+    {
       "type": "image_picker",
-      "id": "mobile_image",
-      "label": "Mobile Image (Optional)"
+      "id": "mobile_image_1",
+      "label": "Mobile Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image_2",
+      "label": "Mobile Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image_3",
+      "label": "Mobile Image 3"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autorotate",
+      "label": "Auto-rotate mobile slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autorotate_speed",
+      "label": "Change slides every",
+      "min": 2,
+      "max": 9,
+      "step": 1,
+      "unit": "s",
+      "default": 5
     },
     {
       "type": "range",
@@ -508,7 +595,7 @@
       "id": "stack_images_on_mobile",
       "default": true,
       "label": "t:sections.image-banner.settings.stack_images_on_mobile.label"
-    },    
+    }, 
     {
       "type": "select",
       "id": "mobile_content_alignment",
