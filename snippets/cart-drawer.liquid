@@ -626,12 +626,7 @@
                 {% comment %} Card 2: Composite Deck {% endcomment %}
                 <a href="/collections/composite-deck" class="om-empty-cart__card">
                   <div class="om-empty-cart__img-wrap">
-                    {%- assign collection_2 = collections['composite-deck'] -%}
-                    {%- if collection_2.featured_image != blank -%}
-                      {{ collection_2.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: 'Composite Deck' }}
-                    {%- else -%}
-                      <div class="om-empty-cart__placeholder"></div>
-                    {%- endif -%}
+                    <img src="//a-diy.com/cdn/shop/files/Image_Ratios_18.png?crop=center&height=144&v=1737102930&width=144" alt="compsite deck" width="144">
                   </div>
                   <span class="om-empty-cart__card-title">Composite Deck</span>
                 </a>
