@@ -494,6 +494,15 @@
   text-align: left;
 }
 
+.drawer__inner-empty .cart-drawer__warnings{
+    justify-content: space-between;
+    padding-bottom: 5rem;
+}
+.drawer__inner-empty .cart-drawer__warnings a.btn{
+  background: #194636;
+  color:#fff;
+}
+
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -627,7 +636,7 @@
                 </a>
               </div>
             </div>
-            <a href="/collections/start-your-new-deck"> Shop All </a>
+            <a href="/collections/start-your-new-deck" class="btn"> Shop All </a>
           </div>
           {%- if settings.cart_drawer_collection != blank -%}
             <div class="cart-drawer__collection">
