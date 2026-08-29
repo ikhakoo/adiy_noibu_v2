@@ -354,6 +354,17 @@
 
 
 
+{%- comment -%}
+  When this section renders no heading of its own, its column titles become the top level
+  of the section and move up to h2. The .h3 / .h4 classes pin the sizes either way.
+{%- endcomment -%}
+{%- if section.settings.heading != blank -%}
+  {%- assign tc_col_tag = 'h3' -%}
+  {%- assign tc_item_tag = 'h4' -%}
+{%- else -%}
+  {%- assign tc_col_tag = 'h2' -%}
+  {%- assign tc_item_tag = 'h3' -%}
+{%- endif -%}
 <div class="text-comparison-wrapper section-{{ section.id }}-padding">
   <div class="page-width">
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
@@ -375,13 +386,13 @@
       <!-- Left Column Card -->
       <div class="text-comparison__column">
         {%- if section.settings.left_col_title != blank -%}
-          <h3 class="text-comparison__col-title">{{ section.settings.left_col_title }}</h3>
+          <{{ tc_col_tag }} class="text-comparison__col-title h3">{{ section.settings.left_col_title }}</{{ tc_col_tag }}>
         {%- endif -%}
         <div class="text-comparison__list">
           {%- for block in section.blocks -%}
             {%- if block.type == 'left_item' -%}
               <div class="text-comparison__item" {{ block.shopify_attributes }}>
-                <h4 class="text-comparison__item-title">{{ block.settings.title }}</h4>
+                <{{ tc_item_tag }} class="text-comparison__item-title h4">{{ block.settings.title }}</{{ tc_item_tag }}>
                 <div class="text-comparison__item-desc">{{ block.settings.description }}</div>
               </div>
             {%- endif -%}
@@ -392,13 +403,13 @@
       <!-- Right Column Card -->
       <div class="text-comparison__column">
         {%- if section.settings.right_col_title != blank -%}
-          <h3 class="text-comparison__col-title">{{ section.settings.right_col_title }}</h3>
+          <{{ tc_col_tag }} class="text-comparison__col-title h3">{{ section.settings.right_col_title }}</{{ tc_col_tag }}>
         {%- endif -%}
         <div class="text-comparison__list">
           {%- for block in section.blocks -%}
             {%- if block.type == 'right_item' -%}
               <div class="text-comparison__item" {{ block.shopify_attributes }}>
-                <h4 class="text-comparison__item-title">{{ block.settings.title }}</h4>
+                <{{ tc_item_tag }} class="text-comparison__item-title h4">{{ block.settings.title }}</{{ tc_item_tag }}>
                 <div class="text-comparison__item-desc">{{ block.settings.description }}</div>
               </div>
             {%- endif -%}

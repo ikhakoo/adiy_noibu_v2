@@ -46,7 +46,6 @@
           "type": "heading",
           "settings": {
             "heading": "Which deck is right for you?",
-            "heading_tag": "h2",
             "class_heading": "",
             "font_size_desktop": "",
             "font_size_mobile": "",
@@ -63,7 +62,6 @@
           "type": "heading",
           "settings": {
             "heading": "<strong>Every A-DIY deck includes:</strong>",
-            "heading_tag": "h2",
             "class_heading": "",
             "font_size_desktop": "",
             "font_size_mobile": "",

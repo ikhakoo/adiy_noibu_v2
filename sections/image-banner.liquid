@@ -258,6 +258,8 @@
   {%- comment -%} CONTENT OVERLAY BLOCK {%- endcomment -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+      {%- comment -%}Only the first heading block in a section may claim the page h1.{%- endcomment -%}
+      {%- assign page_h1_used = false -%}
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'review_badge' -%}
@@ -279,10 +281,22 @@
             </div>
 
           {%- when 'heading' -%}
-            {%- assign header_tag = block.settings.heading_tag | default: 'h2' -%}
-            <{{ header_tag }}
+            {%- comment -%}
+            Page heading rule: the first section rendered in a template owns the page h1,
+            everything below it is h2. section.index counts only enabled sections, and is
+            nil in the theme editor and the Section Rendering API - those fall through to
+            h2, which looks identical because the size is pinned by a heading_size class.
+            {%- endcomment -%}
+            {%- if section.index == 1 and section.location == 'template' and page_h1_used == false -%}
+            {%- assign page_heading_tag = 'h1' -%}
+            {%- assign page_h1_used = true -%}
+            {%- else -%}
+            {%- assign page_heading_tag = 'h2' -%}
+            {%- endif -%}
+            
+            <{{ page_heading_tag }}
               id="BannerHeading-{{ block.id }}"
-              class="{{ block.settings.class_heading }} banner__heading inline-richtext"
+              class="{{ block.settings.class_heading }} banner__heading inline-richtext {{ block.settings.heading_size }}"
               {{ block.shopify_attributes }}
             >
               {%- if block.settings.heading_html != blank -%}
@@ -290,7 +304,7 @@
               {%- else -%}
                 {{ block.settings.heading }}
               {%- endif -%}
-            </{{ header_tag }}>
+            </{{ page_heading_tag }}>
 
             {%- if block.settings.font_size_desktop != blank or block.settings.font_size_mobile != blank -%}
               <style>
@@ -668,17 +682,16 @@
         },
         {
           "type": "select",
-          "id": "heading_tag",
-          "label": "Heading Tag (SEO)",
-          "default": "h2",
+          "id": "heading_size",
           "options": [
-            { "value": "h1", "label": "H1" },
-            { "value": "h2", "label": "H2" },
-            { "value": "h3", "label": "H3" },
-            { "value": "h4", "label": "H4" },
-            { "value": "h5", "label": "H5" },
-            { "value": "p", "label": "Paragraph (p)" }
-          ]
+            { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+            { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+            { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" },
+            { "value": "hxl", "label": "t:sections.all.heading_size.options__4.label" },
+            { "value": "hxxl", "label": "t:sections.all.heading_size.options__5.label" }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
         },
         {
           "type": "text",

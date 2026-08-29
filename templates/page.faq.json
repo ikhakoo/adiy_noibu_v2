@@ -24,7 +24,6 @@
           "type": "heading",
           "settings": {
             "heading": "Frequently Asked Questions",
-            "heading_tag": "h1",
             "class_heading": "",
             "font_size_desktop": "",
             "font_size_mobile": "",
@@ -157,7 +156,6 @@
       "name": "Tabbed FAQ Accordion",
       "settings": {
         "heading": "",
-        "heading_tag": "h2",
         "class_heading": "",
         "font_size_desktop": "",
         "font_size_mobile": "",
@@ -175,7 +173,6 @@
           "type": "heading",
           "settings": {
             "heading": "Ready to Start Planning Your Backyard?",
-            "heading_tag": "h2",
             "class_heading": "",
             "font_size_desktop": "",
             "font_size_mobile": "",

@@ -29,7 +29,12 @@
       {%- endif -%}
 
       {%- if section.settings.main_heading != blank -%}
-        <h2 class="stage-1__main-heading">{{ section.settings.main_heading }}</h2>
+        {%- comment -%}
+          stage-1 is used only by templates/page.tracking.json, where the section at index 1
+          (tracking-widget) renders no heading of its own - so this is the page's first
+          heading and owns the h1. .h2 pins the size it renders at today.
+        {%- endcomment -%}
+        <h1 class="stage-1__main-heading h2">{{ section.settings.main_heading }}</h1>
       {%- endif -%}
 
       {%- if section.settings.subheading != blank -%}
@@ -121,7 +126,7 @@
     {%- comment -%} What's Happening Checklist Section {%- endcomment -%}
     <div class="stage-1__checklist-container">
       {%- if section.settings.checklist_heading != blank -%}
-        <h3 class="stage-1__checklist-title">{{ section.settings.checklist_heading }}</h3>
+        <h2 class="stage-1__checklist-title h3">{{ section.settings.checklist_heading }}</h2>
       {%- endif -%}
 
       <div class="stage-1__checklist">
@@ -137,7 +142,7 @@
               {%- endif -%}
             </div>
             <div class="stage-1__check-content">
-              <h4 class="stage-1__check-title">{{ block.settings.title }}</h4>
+              <h3 class="stage-1__check-title h4">{{ block.settings.title }}</h3>
               {%- if block.settings.description != blank -%}
                 <p class="stage-1__check-desc">{{ block.settings.description }}</p>
               {%- endif -%}

@@ -1004,12 +1004,20 @@
                       {%- assign display_title = product.title -%}
                     {%- endif -%}
 
-                    <h1>{{ display_title | escape }}</h1>
-                    <a href="{{ product.url }}" class="product__title">
-                      <h2 class="h1">
-                        {{ display_title | escape }}
-                      </h2>
-                    </a>
+                    {%- comment -%}
+                      On the product page itself the title is the page h1. The same block is
+                      re-rendered into the quick-add modal over a collection page, where the
+                      page already has its own h1 - there it drops to h2 and links to the PDP.
+                    {%- endcomment -%}
+                    {%- if request.page_type == 'product' -%}
+                      <h1 class="h1">{{ display_title | escape }}</h1>
+                    {%- else -%}
+                      <a href="{{ product.url }}" class="product__title">
+                        <h2 class="h1">
+                          {{ display_title | escape }}
+                        </h2>
+                      </a>
+                    {%- endif -%}
                   </div>
                 {%- when 'price' -%}
                   <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price">
@@ -1146,9 +1154,9 @@
                 {%- when 'accessories_block' -%}
                   <div class="product-accessories-widget" {{ block.shopify_attributes }}>
                     {%- if block.settings.heading_bold != blank or block.settings.heading_sub != blank -%}
-                      <h3 class="accessories-header-title">
+                      <h2 class="accessories-header-title h3">
                         <strong>{{ block.settings.heading_bold }}</strong> <span>{{ block.settings.heading_sub }}</span>
-                      </h3>
+                      </h2>
                     {%- endif -%}
 
                     {%- assign accessories = product.metafields.custom.accessory_products.value | default: block.settings.accessory_products -%}
@@ -1166,7 +1174,7 @@
 
                             {%- comment -%} Details: Title & Variants {%- endcomment -%}
                             <div class="acc-info-wrapper">
-                              <h4 class="acc-product-title">{{ item.title }}</h4>
+                              <h3 class="acc-product-title h4">{{ item.title }}</h3>
                               {%- if item.has_only_default_variant == false -%}
                                 <select class="acc-variant-select js-acc-variant-select">
                                   {%- for variant in item.variants -%}
@@ -1315,7 +1323,7 @@
                   -%}
 
                   <div class="estimated-delivery-block" {{ block.shopify_attributes }}>
-                    <h4 class="delivery-title">
+                    <h2 class="delivery-title h4">
                       {{ block.settings.heading_prefix }}
                       <span class="delivery-date-range">
                         {%- if min_month == max_month -%}
@@ -1324,7 +1332,7 @@
                           {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
                         {%- endif -%}
                       </span>
-                    </h4>
+                    </h2>
                     <p class="delivery-subtext">
                       {%- if block.settings.subtext_prefix != blank -%}
                         <span class="stock-status">{{ block.settings.subtext_prefix }}</span>
@@ -1703,7 +1711,7 @@
 
                       <div class="assistance-text">
                         {%- if block.settings.title != blank -%}
-                          <h4 class="assistance-title">{{ block.settings.title }}</h4>
+                          <h2 class="assistance-title h4">{{ block.settings.title }}</h2>
                         {%- endif -%}
                         {%- if block.settings.subtitle != blank -%}
                           <p class="assistance-sub">{{ block.settings.subtitle }}</p>
@@ -1920,7 +1928,7 @@
               {{- 'icon-close.svg' | inline_asset_content -}}
             </button>
             <div class="product-popup-modal__content-info">
-              <h1 class="h2">{{ block.settings.page.title | escape }}</h1>
+              <h2 class="h2">{{ block.settings.page.title | escape }}</h2>
               {{ block.settings.page.content }}
             </div>
           </div>

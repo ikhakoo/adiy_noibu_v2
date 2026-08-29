@@ -129,10 +129,9 @@
       
       <div class="contact-form-card">
         {%- if section.settings.heading != blank -%}
-          {%- assign heading_tag = section.settings.heading_tag | default: 'h2' -%}
-          <{{ heading_tag }} class="contact-form-heading {% if section.settings.class_heading != blank %}{{ section.settings.class_heading }}{% endif %}">
+          <h2 class="contact-form-heading {{ section.settings.heading_size }}{% if section.settings.class_heading != blank %} {{ section.settings.class_heading }}{% endif %}">
             {{ section.settings.heading }}
-          </{{ heading_tag }}>
+          </h2>
         {%- endif -%}
 
         {%- if section.settings.subtext != blank -%}
@@ -249,17 +248,16 @@
     },
     {
       "type": "select",
-      "id": "heading_tag",
-      "label": "Heading Tag (SEO)",
-      "default": "h2",
+      "id": "heading_size",
       "options": [
-        { "value": "h1", "label": "H1" },
-        { "value": "h2", "label": "H2" },
-        { "value": "h3", "label": "H3" },
-        { "value": "h4", "label": "H4" },
-        { "value": "h5", "label": "H5" },
-        { "value": "p", "label": "Paragraph (p)" }
-      ]
+        { "value": "h4", "label": "Extra small" },
+        { "value": "h3", "label": "Small" },
+        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" }
+      ],
+      "default": "h4",
+      "label": "t:sections.all.heading_size.label"
     },
     {
       "type": "text",

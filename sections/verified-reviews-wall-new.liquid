@@ -485,16 +485,24 @@
       
       <!-- HEADER STYLE 1 -->
       <div class="wall-header header-style-1">
-        {% comment %} {%- if section.settings.heading != blank -%}<h2 class="wall-title">{{ section.settings.heading }}</h2>{%- endif -%} {% endcomment %}
-        {%- assign header_tag = section.settings.heading_tag | default: 'h2' -%}
-
+        {%- comment -%}
+          Page heading rule: the first section rendered in a template owns the page h1,
+          everything below it is h2. section.index counts only enabled sections, and is nil
+          in the theme editor and the Section Rendering API - those fall through to h2,
+          which looks identical because the size is pinned by a heading_size class.
+        {%- endcomment -%}
+        {%- if section.index == 1 and section.location == 'template' -%}
+          {%- assign page_heading_tag = 'h1' -%}
+        {%- else -%}
+          {%- assign page_heading_tag = 'h2' -%}
+        {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <{{ header_tag }}
+          <{{ page_heading_tag }}
             id="SectionHeading-{{ section.id }}"
-            class="{{ section.settings.class_heading }} wall-title"
+            class="{{ section.settings.class_heading }} wall-title {{ section.settings.heading_size }}"
           >
             {{ section.settings.heading }}
-          </{{ header_tag }}>
+          </{{ page_heading_tag }}>
 
           {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
             <style>
@@ -577,16 +585,24 @@
 
       <!-- HEADER STYLE 2 -->
       <div class="wall-header header-style-2">
-        {% comment %} {%- if section.settings.heading != blank -%}<h2 class="wall-title">{{ section.settings.heading }}</h2>{%- endif -%} {% endcomment %}
-        {%- assign header_tag = section.settings.heading_tag | default: 'h2' -%}
-
+        {%- comment -%}
+          Page heading rule: the first section rendered in a template owns the page h1,
+          everything below it is h2. section.index counts only enabled sections, and is nil
+          in the theme editor and the Section Rendering API - those fall through to h2,
+          which looks identical because the size is pinned by a heading_size class.
+        {%- endcomment -%}
+        {%- if section.index == 1 and section.location == 'template' -%}
+          {%- assign page_heading_tag = 'h1' -%}
+        {%- else -%}
+          {%- assign page_heading_tag = 'h2' -%}
+        {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <{{ header_tag }}
+          <{{ page_heading_tag }}
             id="SectionHeading-{{ section.id }}"
-            class="{{ section.settings.class_heading }} wall-title"
+            class="{{ section.settings.class_heading }} wall-title {{ section.settings.heading_size }}"
           >
             {{ section.settings.heading }}
-          </{{ header_tag }}>
+          </{{ page_heading_tag }}>
 
           {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
             <style>
@@ -886,17 +902,16 @@
     },
     {
       "type": "select",
-      "id": "heading_tag",
-      "label": "Heading Tag (SEO)",
-      "default": "h2",
+      "id": "heading_size",
       "options": [
-        { "value": "h1", "label": "H1" },
-        { "value": "h2", "label": "H2" },
-        { "value": "h3", "label": "H3" },
-        { "value": "h4", "label": "H4" },
-        { "value": "h5", "label": "H5" },
-        { "value": "p", "label": "Paragraph (p)" }
-      ]
+        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" },
+        { "value": "hxl", "label": "t:sections.all.heading_size.options__4.label" },
+        { "value": "hxxl", "label": "t:sections.all.heading_size.options__5.label" }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
     },
     {
       "type": "text",

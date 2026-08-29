@@ -31,14 +31,18 @@
 >
   <div class="page-width">
     <div class="title-wrapper-with-link">
-      <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
+      {%- unless cart == empty -%}
+        <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
+      {%- endunless -%}
       <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
         {{- 'general.continue_shopping' | t -}}
       </a>
     </div>
 
     <div class="cart__warnings">
-      <h1 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h1>
+      {%- if cart == empty -%}
+        <h1 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h1>
+      {%- endif -%}
       <a href="{{ routes.all_products_collection_url }}" class="button">
         {{ 'general.continue_shopping' | t }}
       </a>

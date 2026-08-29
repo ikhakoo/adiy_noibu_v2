@@ -249,17 +249,32 @@
             id="ImageWithText--{{ section.id }}"
             class="image-with-text__content image-with-text__content--{{ section.settings.desktop_content_position }} image-with-text__content--desktop-{{ section.settings.desktop_content_alignment }} image-with-text__content--mobile-{{ section.settings.mobile_content_alignment }} image-with-text__content--{{ section.settings.height }} content-container{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}"
           >
+            {%- comment -%}Only the first heading block in a section may claim the page h1.{%- endcomment -%}
+            {%- assign page_h1_used = false -%}
             {%- for block in section.blocks -%}
               {% case block.type %}
                 {%- when 'heading' -%}
                   {% if block.settings.sub_heading != blank %}
-                    <h4 class="image-with-text__sub-heading" {{ block.shopify_attributes }}>
+                    <p class="image-with-text__sub-heading h4" {{ block.shopify_attributes }}>
                       {{ block.settings.sub_heading }}
-                    </h4>
+                    </p>
                   {% endif %}
-                  <h2 class="image-with-text__heading inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                  {%- comment -%}
+                  Page heading rule: the first section rendered in a template owns the page h1,
+                  everything below it is h2. section.index counts only enabled sections, and is
+                  nil in the theme editor and the Section Rendering API - those fall through to
+                  h2, which looks identical because the size is pinned by a heading_size class.
+                  {%- endcomment -%}
+                  {%- if section.index == 1 and section.location == 'template' and page_h1_used == false -%}
+                  {%- assign page_heading_tag = 'h1' -%}
+                  {%- assign page_h1_used = true -%}
+                  {%- else -%}
+                  {%- assign page_heading_tag = 'h2' -%}
+                  {%- endif -%}
+            
+                  <{{ page_heading_tag }} class="image-with-text__heading inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
                     {{ block.settings.heading }}
-                  </h2>
+                  </{{ page_heading_tag }}>
 
                 {%- when 'caption' -%}
                   <p class="image-with-text__text image-with-text__text--caption {{ block.settings.text_style }} {{ block.settings.text_style }}--{{ block.settings.text_size }}" {{ block.shopify_attributes }}>
@@ -282,7 +297,7 @@
                         {%- endif -%}
                         <div class="image-with-text__icon-content">
                           {%- if block.settings.title_1 != blank -%}
-                            <h5 class="image-with-text__icon-title">{{ block.settings.title_1 }}</h5>
+                            <p class="image-with-text__icon-title h5">{{ block.settings.title_1 }}</p>
                           {%- endif -%}
                           {%- if block.settings.desc_1 != blank -%}
                             <p class="image-with-text__icon-desc">{{ block.settings.desc_1 }}</p>
@@ -300,7 +315,7 @@
                         {%- endif -%}
                         <div class="image-with-text__icon-content">
                           {%- if block.settings.title_2 != blank -%}
-                            <h5 class="image-with-text__icon-title">{{ block.settings.title_2 }}</h5>
+                            <p class="image-with-text__icon-title h5">{{ block.settings.title_2 }}</p>
                           {%- endif -%}
                           {%- if block.settings.desc_2 != blank -%}
                             <p class="image-with-text__icon-desc">{{ block.settings.desc_2 }}</p>

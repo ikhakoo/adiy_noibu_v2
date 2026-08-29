@@ -35,7 +35,6 @@
             "class_heading": "",
             "heading_html": "Questions? <br>\nOur Deck Specialists Are Just a Call Away.",
             "heading": "",
-            "heading_tag": "h2",
             "font_size_desktop": "",
             "font_size_mobile": ""
           }
@@ -80,7 +79,6 @@
           "type": "heading",
           "settings": {
             "heading": "Contact Us",
-            "heading_tag": "h1",
             "class_heading": "",
             "font_size_desktop": "54",
             "font_size_mobile": "",
@@ -164,7 +162,7 @@
       "name": "Contact form",
       "settings": {
         "heading": "Or Send Us A Message",
-        "heading_tag": "h4",
+        "heading_size": "h4",
         "class_heading": "",
         "font_size_desktop": "",
         "font_size_mobile": "",
@@ -200,7 +198,6 @@
           "type": "heading",
           "settings": {
             "heading": "Ready to Start Planning Your Backyard?",
-            "heading_tag": "h2",
             "class_heading": "",
             "font_size_desktop": "",
             "font_size_mobile": "",

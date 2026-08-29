@@ -336,11 +336,28 @@
 
 <div class="collection section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
   <div class="page-width">
+  {%- comment -%}
+    Page heading rule: the first section rendered in a template owns the page h1, everything
+    below it is h2, and this section's card/feature headings shift with it. section.index
+    counts only enabled sections and is nil in the theme editor and the Section Rendering
+    API - those fall through to h2. The .h2 / .h3 / .h4 classes pin the sizes, so the tag
+    can move without changing how anything looks. Assigned here, outside the header block,
+    because that block only renders when a heading or subheading is set.
+  {%- endcomment -%}
+  {%- if section.index == 1 and section.location == 'template' -%}
+    {%- assign page_heading_tag = 'h1' -%}
+    {%- assign deck_card_tag = 'h2' -%}
+    {%- assign deck_feature_tag = 'h3' -%}
+  {%- else -%}
+    {%- assign page_heading_tag = 'h2' -%}
+    {%- assign deck_card_tag = 'h3' -%}
+    {%- assign deck_feature_tag = 'h4' -%}
+  {%- endif -%}
     
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="deck-section__header">
         {%- if section.settings.heading != blank -%}
-          <h2 class="deck-section__heading">{{ section.settings.heading }}</h2>
+          <{{ page_heading_tag }} class="deck-section__heading h2">{{ section.settings.heading }}</{{ page_heading_tag }}>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
           <p class="deck-section__subheading">{{ section.settings.subheading }}</p>
@@ -365,7 +382,7 @@
               </div>
 
               <!-- Title -->
-              <h3 class="deck-card__title">
+              <{{ deck_card_tag }} class="deck-card__title h3">
                 {%- if block.settings.title != blank -%}
                   {{ block.settings.title }}
                 {%- elsif card_product != blank -%}
@@ -373,7 +390,7 @@
                 {%- else -%}
                   Deck Kit Title
                 {%- endif -%}
-              </h3>
+              </{{ deck_card_tag }}>
 
               <!-- Pricing -->
               <div class="deck-card__pricing">
@@ -492,7 +509,7 @@
                       {%- if feature_icon != blank -%}
                         <img src="{{ feature_icon | image_url: width: 60 }}" alt="" class="deck-card__feature-icon" loading="lazy">
                       {%- endif -%}
-                      <h4 class="deck-card__feature-title">{{ feature_title }}</h4>
+                      <{{ deck_feature_tag }} class="deck-card__feature-title h4">{{ feature_title }}</{{ deck_feature_tag }}>
                       {%- if feature_desc != blank -%}
                         <p class="deck-card__feature-desc">{{ feature_desc }}</p>
                       {%- endif -%}
