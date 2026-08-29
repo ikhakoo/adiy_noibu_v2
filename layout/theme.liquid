@@ -355,6 +355,8 @@
       <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
     </ul>
 
+    {% render 'klarna-modal' %}
+
     <script>
       window.shopUrl = '{{ request.origin }}';
       window.routes = {
