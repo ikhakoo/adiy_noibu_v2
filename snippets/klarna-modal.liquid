@@ -1,0 +1,122 @@
+{% style %}
+  /* Dark Overlay Background */
+  .klarna-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  /* Active State */
+  .klarna-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Modal Card Container */
+  .klarna-modal-container {
+    position: relative;
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 580px;
+    padding: 45px 35px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-family: inherit;
+    color: #3d2219;
+    box-sizing: border-box;
+  }
+
+  /* Top Right Cross Icon */
+  .klarna-modal-close-icon {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    font-weight: 300;
+    color: #3d2219;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: opacity 0.2s;
+  }
+
+  .klarna-modal-close-icon:hover {
+    opacity: 0.6;
+  }
+
+  /* Text Elements */
+  .klarna-modal-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    color: #3d2219;
+  }
+
+  .klarna-modal-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 25px 0;
+    line-height: 1.4;
+    color: #3d2219;
+  }
+
+  /* Bottom Outline Close Button */
+  .klarna-modal-btn {
+    width: 100%;
+    padding: 12px 0;
+    background: transparent;
+    border: 1px solid #d3c7c2;
+    color: #3d2219;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s;
+    margin-bottom: 25px;
+  }
+
+  .klarna-modal-btn:hover {
+    background-color: #3d2219;
+    color: #ffffff;
+  }
+
+  /* Disclaimer Text */
+  .klarna-modal-disclaimer {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #6e5851;
+    margin: 0;
+  }
+{% endstyle %}
+
+<!-- Modal HTML Layout -->
+<div id="klarnaModal" class="klarna-modal-overlay" aria-hidden="true" role="dialog">
+  <div class="klarna-modal-container">
+    <button class="klarna-modal-close-icon" id="klarnaCloseIcon" aria-label="Close modal">&times;</button>
+    
+    <h2 class="klarna-modal-title">BUILD NOW, PAY LATER</h2>
+    <p class="klarna-modal-subtitle">Flexible monthly payment options are available at checkout.</p>
+    
+    <button class="klarna-modal-btn" id="klarnaCloseBtn">CLOSE</button>
+    
+    <p class="klarna-modal-disclaimer">
+      *Subject to eligibility check and approval. Estimated payment amount excludes taxes and shipping fees
+    </p>
+  </div>
+</div>
