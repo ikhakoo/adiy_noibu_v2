@@ -252,48 +252,55 @@
     .om-card__desc { font-size: 13.5px; }
   }
 {% endstylesheet %}
-
 <script>
   (function() {
-    // Function to play all videos inside this section
-    function playSectionVideos(container) {
-      if (!container) return;
-      const videos = container.querySelectorAll('.om-card__video');
-      videos.forEach((video) => {
-        video.muted = true; // Required for autoplay policies
+    // Unique ID for THIS specific section instance
+    const sectionId = '{{ section_id }}';
+
+    function playOnlyThisSectionVideos() {
+      const currentSection = document.getElementById(sectionId);
+      if (!currentSection) return;
+
+      // Targets strictly ONLY videos inside this specific section container
+      const sectionVideos = currentSection.querySelectorAll('.om-card__video');
+      
+      sectionVideos.forEach((video) => {
+        video.muted = true;
         const playPromise = video.play();
         if (playPromise !== undefined) {
-          playPromise.catch((error) => {
-            console.warn('Autoplay prevented or interrupted:', error);
+          playPromise.catch(() => {
+            // Silence standard browser autoplay interruptions
           });
         }
       });
     }
 
-    const sectionElement = document.getElementById('{{ section_id }}');
-    
-    // Initial Trigger
-    if (sectionElement) {
-      playSectionVideos(sectionElement);
+    // Initialize on page load
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      playOnlyThisSectionVideos();
+    } else {
+      document.addEventListener('DOMContentLoaded', playOnlyThisSectionVideos);
     }
 
-    // Shopify Variant Switch Events Listener
-    document.addEventListener('DOMContentLoaded', function() {
-      // Handles Dawn Theme and standard Shopify variant updates
-      document.addEventListener('variant:change', function() {
-        playSectionVideos(document.getElementById('{{ section_id }}'));
+    // Listen to Variant Changes & DOM updates SPECIFICALLY inside this section
+    const targetNode = document.getElementById(sectionId);
+    if (targetNode) {
+      // Observer only watches changes inside this section block element
+      const observer = new MutationObserver(function(mutations) {
+        playOnlyThisSectionVideos();
       });
 
-      // MutationObserver: Tracks HTML replacement inside section when variant changes
-      if (sectionElement) {
-        const observer = new MutationObserver(function(mutations) {
-          playSectionVideos(sectionElement);
-        });
+      observer.observe(targetNode, {
+        childList: true,
+        subtree: true
+      });
+    }
 
-        observer.observe(sectionElement, {
-          childList: true,
-          subtree: true
-        });
+    // Theme level variant change fallback (Scoped to section element)
+    document.addEventListener('variant:change', function(e) {
+      // Checks if the event happened on or within this section
+      if (e.target && targetNode && targetNode.contains(e.target)) {
+        playOnlyThisSectionVideos();
       }
     });
   })();
