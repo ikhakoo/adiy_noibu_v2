@@ -1,1 +1,31 @@
 {%- render 'cart-drawer' -%}
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Custom Drawer Settings"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "top_announcement",
+      "label": "Top Announcement Text",
+      "default": "QUESTION? OUR DECK SPECIALISTS ARE JUST A CALL AWAY"
+    },
+    {
+      "type": "text",
+      "id": "warranty_badge",
+      "label": "Warranty Badge Text",
+      "default": "5 YEAR STRUCTURAL WARRANTY"
+    },
+    {
+      "type": "richtext",
+      "id": "delivery_info",
+      "label": "Delivery Info Text",
+      "default": "<p><strong>Get it delivered by September 17–19</strong><br>In stock, expertly crated and delivered to your site</p>"
+    }
+  ]
+}
+{% endschema %}
