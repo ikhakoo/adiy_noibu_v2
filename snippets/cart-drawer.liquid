@@ -1387,7 +1387,7 @@
         <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968" alt="Delivery Truck" class="truck-icon">
 
         <div class="content">
-          <p class="heading">
+          {% comment %} <p class="heading">
             Get it delivered by 
             <span class="delivery-date-range">
               {%- if min_month == max_month -%}
@@ -1396,9 +1396,12 @@
                 {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
               {%- endif -%}
             </span>
+          </p> {% endcomment %}
+          <p class="heading">
+            $1200 OFF - offer Ends August 31st
           </p>
           <p class="subtext">
-            In stock, expertly crated and delivered to your site in 20–22 business days
+            Use Code — S1200
           </p>
         </div>
       </div>
