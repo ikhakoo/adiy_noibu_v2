@@ -843,6 +843,26 @@
       margin: 0 !important;
       padding: 0 !important;
     }
+    .financing-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .financing-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Title ke baad vertical line add karne ke liye */
+    .financing-title::after {
+      content: "";
+      display: inline-block;
+      width: 1px;
+      height: 14px; /* Apni requirement ke mutabiq height adjust karein */
+      background-color: #222; /* Line ka color */
+    }
     
     @media screen and (max-width:628px){
       
@@ -1051,6 +1071,7 @@
                   <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
                     <div class="financing-header">
                       <span class="financing-title">{{ block.settings.heading_text }}</span>
+                      <span class="financing-divider" style="margin: 0 8px; color: #222;">|</span>
                       <button type="button" class="financing-toggle-btn js-financing-toggle">
                         <span class="toggle-text">Show more</span>
                         <svg width="12" height="7" viewBox="0 0 12 7" fill="none" class="chevron-icon">
