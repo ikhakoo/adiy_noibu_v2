@@ -253,6 +253,52 @@
   }
 {% endstylesheet %}
 
+<script>
+  (function() {
+    // Function to play all videos inside this section
+    function playSectionVideos(container) {
+      if (!container) return;
+      const videos = container.querySelectorAll('.om-card__video');
+      videos.forEach((video) => {
+        video.muted = true; // Required for autoplay policies
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.warn('Autoplay prevented or interrupted:', error);
+          });
+        }
+      });
+    }
+
+    const sectionElement = document.getElementById('{{ section_id }}');
+    
+    // Initial Trigger
+    if (sectionElement) {
+      playSectionVideos(sectionElement);
+    }
+
+    // Shopify Variant Switch Events Listener
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handles Dawn Theme and standard Shopify variant updates
+      document.addEventListener('variant:change', function() {
+        playSectionVideos(document.getElementById('{{ section_id }}'));
+      });
+
+      // MutationObserver: Tracks HTML replacement inside section when variant changes
+      if (sectionElement) {
+        const observer = new MutationObserver(function(mutations) {
+          playSectionVideos(sectionElement);
+        });
+
+        observer.observe(sectionElement, {
+          childList: true,
+          subtree: true
+        });
+      }
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Outdoor Moments",
