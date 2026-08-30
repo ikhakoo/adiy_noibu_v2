@@ -1,3 +1,7 @@
+{%- comment -%}
+  Fallback alt for gallery images whose alt was never set in the Files admin.
+{%- endcomment -%}
+{%- assign gallery_alt_fallback = section.settings.title | default: 'A-DIY deck gallery image' | strip_html -%}
 <div class="custom-gallery-wrapper-main mobile-layout-{{ section.settings.mobile_layout }}" style="background-color: {{ section.settings.bg_color | default: '#f7f7f7' }};">
     <div class="custom-gallery-wrapper page-width">
         {% if section.settings.title != blank or section.settings.subtitle != blank %}
@@ -24,10 +28,10 @@
                     <img 
                     src="{{ block.settings.image_1 | image_url: width: 800 }}" 
                     data-full-src="{{ block.settings.image_1 | image_url: width: 1600 }}"
-                    alt="{{ block.settings.image_1.alt | escape }}" 
+                    alt="{{ block.settings.image_1.alt | default: gallery_alt_fallback | escape }}" 
                     loading="lazy" 
-                    width="800" 
-                    height="800"
+                    width="{{ block.settings.image_1.width }}" 
+                    height="{{ block.settings.image_1.height }}"
                     class="gallery-lightbox-trigger"
                     >
                 </div>
@@ -42,10 +46,10 @@
                     <img 
                         src="{{ img_val | image_url: width: 400 }}" 
                         data-full-src="{{ img_val | image_url: width: 1600 }}"
-                        alt="{{ img_val.alt | escape }}" 
+                        alt="{{ img_val.alt | default: gallery_alt_fallback | escape }}" 
                         loading="lazy" 
-                        width="400" 
-                        height="400"
+                        width="{{ img_val.width }}" 
+                        height="{{ img_val.height }}"
                         class="gallery-lightbox-trigger"
                     >
                     </div>
@@ -78,7 +82,7 @@
     
     <!-- Fixed Square / Universal Frame Container -->
     <div class="lightbox-frame">
-      <img src="" id="LightboxImage-{{ section.id }}" alt="Gallery Modal Image">
+      <img src="" id="LightboxImage-{{ section.id }}" alt="">
     </div>
 
     <button type="button" class="lightbox-nav lightbox-next" id="LightboxNext-{{ section.id }}" aria-label="Next">&rsaquo;</button>
@@ -456,6 +460,7 @@
       const fullSrc = targetImg.getAttribute('data-full-src') || targetImg.src;
 
       lightboxImg.src = fullSrc;
+      lightboxImg.alt = targetImg.getAttribute('alt') || '';
       lightbox.classList.add('active');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';

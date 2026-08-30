@@ -311,14 +311,14 @@
       {%- if section.settings.logo_image != blank -%}
         <img 
           src="{{ section.settings.logo_image | image_url: width: 400 }}" 
-          alt="{{ shop.name }}" 
+          alt="{{ shop.name | escape }}" 
           class="footer-centered__logo-img"
           width="{{ section.settings.logo_image.width }}"
           height="{{ section.settings.logo_image.height }}"
           loading="lazy"
         >
       {%- elsif section.settings.logo_text != blank -%}
-        <h2 class="footer-centered__logo-text">{{ section.settings.logo_text }}</h2>
+        <p class="footer-centered__logo-text">{{ section.settings.logo_text }}</p>
       {%- endif -%}
 
       {%- if section.settings.newsletter_heading != blank -%}
@@ -367,13 +367,37 @@
               {%- assign icon_img = section.settings[icon_key] -%}
               {%- assign icon_link = section.settings[link_key] -%}
 
-              {%- if icon_link != blank or icon_img != blank -%}
+              {%- comment -%}
+                Name the destination for screen readers and search engines instead of
+                "Social Link 3", and skip the row entirely when no URL is set - an icon
+                with no link used to fall through to href="#".
+              {%- endcomment -%}
+              {%- liquid
+                assign social_label = 'Social media'
+                if icon_link contains 'facebook'
+                  assign social_label = 'Facebook'
+                elsif icon_link contains 'instagram'
+                  assign social_label = 'Instagram'
+                elsif icon_link contains 'tiktok'
+                  assign social_label = 'TikTok'
+                elsif icon_link contains 'youtube'
+                  assign social_label = 'YouTube'
+                elsif icon_link contains 'pinterest'
+                  assign social_label = 'Pinterest'
+                elsif icon_link contains 'linkedin'
+                  assign social_label = 'LinkedIn'
+                elsif icon_link contains 'twitter' or icon_link contains 'x.com'
+                  assign social_label = 'X'
+                endif
+                assign social_label = social_label | append: ' (opens in a new window)'
+              -%}
+              {%- if icon_link != blank -%}
                 <li>
-                  <a href="{{ icon_link | default: '#' }}" class="footer-centered__social-icon-btn" target="_blank" aria-label="Social Link {{ i }}">
+                  <a href="{{ icon_link }}" class="footer-centered__social-icon-btn" target="_blank" rel="noopener noreferrer" aria-label="{{ social_label | escape }}">
                     {%- if icon_img != blank -%}
                       <img 
                         src="{{ icon_img | image_url: width: 100 }}" 
-                        alt="Social Icon {{ i }}" 
+                        alt="" 
                         class="footer-centered__social-custom-img"
                         width="{{ icon_img.width }}" 
                         height="{{ icon_img.height }}" 
@@ -410,9 +434,10 @@
           {%- when 'link_list' -%}
             <div class="footer-centered__col" {{ block.shopify_attributes }}>
               {%- if block.settings.heading != blank -%}
-                <h4 class="footer-centered__col-heading">{{ block.settings.heading }}</h4>
+                <h4 class="footer-centered__col-heading" id="FooterHeading-{{ block.id }}">{{ block.settings.heading }}</h4>
               {%- endif -%}
               {%- if block.settings.menu != blank -%}
+                <nav{% if block.settings.heading != blank %} aria-labelledby="FooterHeading-{{ block.id }}"{% else %} aria-label="Footer"{% endif %}>
                 <ul class="footer-centered__link-list">
                   {%- for link in block.settings.menu.links -%}
                     <li class="footer-centered__link-item">
@@ -420,6 +445,7 @@
                     </li>
                   {%- endfor -%}
                 </ul>
+                </nav>
               {%- endif -%}
             </div>
 

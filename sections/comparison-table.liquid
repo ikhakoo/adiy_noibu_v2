@@ -863,7 +863,8 @@
               {% comment %} <h3 class="comp-card-title">{{ block.settings.title }}</h3> {% endcomment %}
               <h3 class="comp-card-title">
                 {% if block.settings.title_image != blank %}
-                  {{ block.settings.title_image | image_url: width: 100 | image_tag: alt: block.settings.title_image.alt }}
+                  {%- assign comp_card_title_alt = block.settings.title_image.alt | default: block.settings.title -%}
+                  {{ block.settings.title_image | image_url: width: 100 | image_tag: alt: comp_card_title_alt }}
                 {% else %}
                   {{ block.settings.title }}
                 {% endif %}

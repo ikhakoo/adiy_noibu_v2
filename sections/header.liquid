@@ -367,7 +367,7 @@
     {%- comment -%} Left Side Custom Menu Render (With Submenus support) {%- endcomment -%}
     {% comment %} {%- assign left_menu = linklists[section.settings.menu_left_handle] -%}
     {%- if left_menu != blank and left_menu.links.size > 0 -%}
-      <nav class="header-menu-left header__inline-menu a">
+      <nav class="header-menu-left header__inline-menu a" aria-label="Primary">
         <ul class="list-menu list-menu--inline" role="list">
           {%- for link in left_menu.links -%}
             <li class="{% if link.links != blank %}custom-dropdown-item{% endif %}">
@@ -397,7 +397,7 @@
     <!-- NAV BAR CODE (Only Menu Links) -->
     {%- assign left_menu = linklists[section.settings.menu_left_handle] -%}
     {%- if left_menu != blank and left_menu.links.size > 0 -%}
-      <nav class="header-menu-left header__inline-menu a">
+      <nav class="header-menu-left header__inline-menu a" aria-label="Primary">
         <ul class="list-menu list-menu--inline" role="list">
           {%- for link in left_menu.links -%}
             {%- assign has_custom_block = false -%}
@@ -858,7 +858,7 @@
       {%- comment -%} Right Side Custom Menu Render (With Submenus support) {%- endcomment -%}
       {%- assign right_menu = linklists[section.settings.menu_right_handle] -%}
       {%- if right_menu != blank and right_menu.links.size > 0 -%}
-        <nav class="header-menu-right header__inline-menu b">
+        <nav class="header-menu-right header__inline-menu b" aria-label="Secondary">
           <ul class="list-menu list-menu--inline" role="list">
             {%- for link in right_menu.links -%}
               <li class="{% if link.links != blank %}custom-dropdown-item{% endif %}">
@@ -1056,26 +1056,42 @@
   customElements.define('sticky-header', StickyHeader);
 {% endjavascript %}
 
+{%- liquid
+  comment
+    Organization / WebSite JSON-LD. sameAs is built by hand so blank social settings
+    are dropped entirely rather than emitted as empty strings.
+  endcomment
+  assign social_link_string = settings.social_twitter_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_facebook_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_pinterest_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_instagram_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_tiktok_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_tumblr_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_snapchat_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_youtube_link
+  assign social_link_string = social_link_string | append: '||' | append: settings.social_vimeo_link
+  assign social_links = social_link_string | split: '||'
+  assign organization_id = request.origin | append: '/#organization'
+  assign website_id = request.origin | append: '/#website'
+-%}
+{%- capture organization_same_as -%}
+  {%- assign same_as_separator = '' -%}
+  {%- for social_link in social_links -%}{%- if social_link != blank -%}{{ same_as_separator }}{{ social_link | json }}{%- assign same_as_separator = ',' -%}{%- endif -%}{%- endfor -%}
+{%- endcapture -%}
+{%- assign organization_same_as = organization_same_as | strip -%}
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": {{ organization_id | json }},
     "name": {{ shop.name | json }},
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
-    "sameAs": [
-      {{ settings.social_twitter_link | json }},
-      {{ settings.social_facebook_link | json }},
-      {{ settings.social_pinterest_link | json }},
-      {{ settings.social_instagram_link | json }},
-      {{ settings.social_tiktok_link | json }},
-      {{ settings.social_tumblr_link | json }},
-      {{ settings.social_snapchat_link | json }},
-      {{ settings.social_youtube_link | json }},
-      {{ settings.social_vimeo_link | json }}
-    ],
-    "url": {{ request.origin | append: page.url | json }}
+    {% if organization_same_as != blank %}
+      "sameAs": [{{ organization_same_as }}],
+    {% endif %}
+    "url": {{ request.origin | json }}
   }
 </script>
 
@@ -1083,15 +1099,17 @@
   {% assign potential_action_target = request.origin | append: routes.search_url | append: '?q={search_term_string}' %}
   <script type="application/ld+json">
     {
-      "@context": "http://schema.org",
+      "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": {{ website_id | json }},
       "name": {{ shop.name | json }},
+      "publisher": { "@id": {{ organization_id | json }} },
       "potentialAction": {
         "@type": "SearchAction",
         "target": {{ potential_action_target | json }},
         "query-input": "required name=search_term_string"
       },
-      "url": {{ request.origin | append: page.url | json }}
+      "url": {{ request.origin | json }}
     }
   </script>
 {%- endif -%}

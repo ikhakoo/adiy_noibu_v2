@@ -698,7 +698,7 @@
                     <div class="user-header">
                       <div class="user-info">
                         {%- if block.settings.author_image != blank -%}
-                          <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="{{ block.settings.author_name }}">
+                          <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="">
                         {%- endif -%}
                         <div class="user-meta">
                           <span class="user-name">{{ block.settings.author_name }}</span>
@@ -728,7 +728,8 @@
                   </div>
                 {%- endif -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
-                  <img src="{{ block.settings.review_image | image_url: width: 800 }}" class="review-main-image" alt="{{ block.settings.author_name | escape }}" loading="lazy">
+                  {%- assign review_image_alt = block.settings.review_image.alt | default: block.settings.headline | default: 'Customer photo of a finished A-DIY deck' -%}
+                  <img src="{{ block.settings.review_image | image_url: width: 800 }}" class="review-main-image" alt="{{ review_image_alt | strip_html | escape }}" loading="lazy">
                 </div>
 
               {%- when 'text_review' -%}
@@ -736,7 +737,7 @@
                   <div class="user-header">
                     <div class="user-info">
                       {%- if block.settings.author_image != blank -%}
-                        <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="{{ block.settings.author_name }}">
+                        <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="">
                       {%- endif -%}
                       <div class="user-meta">
                         <span class="user-name">{{ block.settings.author_name }}</span>

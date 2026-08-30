@@ -240,7 +240,7 @@
                     alt="{{ block.settings.image.alt | escape }}"
                     loading="lazy"
                     width="{{ block.settings.image_width }}"
-                    height="auto"
+                    height="{{ block.settings.image_width | times: block.settings.image.height | divided_by: block.settings.image.width }}"
                     class="rich-text__image"
                     style="width: {{ block.settings.image_width }}px;"
                   >

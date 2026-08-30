@@ -198,6 +198,21 @@
   if section.index == 1
     assign fetch_priority = 'high'
   endif
+
+  comment
+    Fallback alt so the section image is not shipped with alt="" when nobody set
+    one in the Files admin. The paired icons keep alt="" on purpose - each sits
+    next to its own visible title, so naming them would just duplicate that text.
+  endcomment
+  assign iwt_alt_fallback = ''
+  for block in section.blocks
+    if block.type == 'heading' and block.settings.heading != blank
+      assign iwt_alt_fallback = block.settings.heading | strip_html
+      break
+    endif
+  endfor
+  assign iwt_alt_fallback = iwt_alt_fallback | default: shop.name
+  assign iwt_image_alt = section.settings.image.alt | default: iwt_alt_fallback
   if section.settings.color_scheme == section.settings.section_color_scheme and section.settings.content_layout == 'no-overlap'
     assign remove_color_classes = true
   endif
@@ -235,7 +250,7 @@
               {{
                 section.settings.image
                 | image_url: width: 1500
-                | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                | image_tag: alt: iwt_image_alt, sizes: sizes, widths: widths, fetchpriority: fetch_priority
               }}
             {%- else -%}
               {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}

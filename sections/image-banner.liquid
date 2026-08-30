@@ -144,6 +144,22 @@
   endif
 
   comment
+    Fallback alt text for the banner images. image_tag defaults to the media's own
+    alt, which is blank whenever nobody filled it in in the Files admin - and this
+    is the hero, so it is the worst place on the site to ship alt="".
+  endcomment
+  assign banner_alt_fallback = ''
+  for block in section.blocks
+    if block.type == 'heading' and block.settings.heading != blank
+      assign banner_alt_fallback = block.settings.heading | strip_html
+      break
+    endif
+  endfor
+  assign banner_alt_fallback = banner_alt_fallback | default: shop.name
+  assign banner_image_alt = section.settings.image.alt | default: banner_alt_fallback
+  assign banner_image_2_alt = section.settings.image_2.alt | default: banner_alt_fallback
+
+  comment
     Counting uploaded mobile images
   endcomment
   assign mobile_count = 0
@@ -185,6 +201,7 @@
           width: section.settings.image.width,
           height: image_height,
           class: image_class,
+          alt: banner_image_alt,
           sizes: sizes,
           widths: widths,
           fetchpriority: fetch_priority
@@ -218,6 +235,7 @@
           width: section.settings.image_2.width,
           height: image_height_2,
           class: image_class_2,
+          alt: banner_image_2_alt,
           sizes: sizes,
           widths: widths,
           fetchpriority: fetch_priority
@@ -234,13 +252,17 @@
           {%- assign current_mobile_image = section.settings[mobile_img_key] -%}
           {%- if current_mobile_image != blank -%}
             <div class="swiper-slide banner__media media">
-              {%- assign mobile_image_height = current_mobile_image.width | divided_by: current_mobile_image.aspect_ratio -%}
+              {%- liquid
+                assign mobile_image_height = current_mobile_image.width | divided_by: current_mobile_image.aspect_ratio
+                assign mobile_image_alt = current_mobile_image.alt | default: banner_alt_fallback
+              -%}
               {{
                 current_mobile_image
                 | image_url: width: 1500
                 | image_tag:
                   width: current_mobile_image.width,
                   height: mobile_image_height,
+                  alt: mobile_image_alt,
                   sizes: '100vw',
                   widths: '375, 550, 750, 1100',
                   fetchpriority: fetch_priority

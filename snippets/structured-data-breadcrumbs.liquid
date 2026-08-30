@@ -1,0 +1,64 @@
+{%- comment -%}
+  Emits BreadcrumbList JSON-LD. There is no visible breadcrumb UI in this theme;
+  Google accepts the markup on its own. Nothing is emitted on the homepage, the
+  cart, search, 404 or customer templates, where a breadcrumb trail is meaningless.
+
+  The trail is built as a list of "url|name" pairs so the JSON loop stays flat.
+{%- endcomment -%}
+
+{%- liquid
+  assign crumbs = ''
+  assign home_crumb = routes.root_url | append: '|' | append: 'Home'
+
+  case request.page_type
+    when 'product'
+      assign crumb_collection = collection | default: product.collections.first
+      if crumb_collection != blank and crumb_collection.handle != blank
+        assign crumbs = home_crumb | append: '~~' | append: crumb_collection.url | append: '|' | append: crumb_collection.title
+      else
+        assign crumbs = home_crumb
+      endif
+      assign crumbs = crumbs | append: '~~' | append: product.url | append: '|' | append: product.title
+
+    when 'collection'
+      if collection.handle != blank
+        assign crumbs = home_crumb | append: '~~' | append: collection.url | append: '|' | append: collection.title
+      endif
+
+    when 'list-collections'
+      assign crumbs = home_crumb | append: '~~' | append: routes.collections_url | append: '|' | append: page_title
+
+    when 'article'
+      assign crumbs = home_crumb | append: '~~' | append: blog.url | append: '|' | append: blog.title
+      assign crumbs = crumbs | append: '~~' | append: article.url | append: '|' | append: article.title
+
+    when 'blog'
+      assign crumbs = home_crumb | append: '~~' | append: blog.url | append: '|' | append: blog.title
+
+    when 'page'
+      assign crumbs = home_crumb | append: '~~' | append: page.url | append: '|' | append: page.title
+  endcase
+
+  assign crumb_list = crumbs | split: '~~'
+-%}
+
+{%- if crumb_list.size > 1 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {%- for crumb in crumb_list -%}
+          {%- assign crumb_url = crumb | split: '|' | first -%}
+          {%- assign crumb_name = crumb | remove_first: crumb_url | remove_first: '|' -%}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "name": {{ crumb_name | strip_html | json }},
+            "item": {{ request.origin | append: crumb_url | json }}
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}

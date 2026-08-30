@@ -291,6 +291,39 @@
   });
 </script>
 
+{%- comment -%}
+  FAQPage JSON-LD. Note this no longer earns an accordion rich result for a commerce
+  site - Google restricted those to government and health domains in 2023 - but it
+  still lets answer engines parse the Q&A cleanly. Only one FAQPage per page is valid,
+  and no template places this section twice.
+{%- endcomment -%}
+{%- assign faq_schema_blocks = section.blocks | where: 'type', 'faq_item' -%}
+{%- if faq_schema_blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign faq_separator = '' -%}
+        {%- for block in faq_schema_blocks -%}
+          {%- if block.settings.question != blank and block.settings.answer != blank -%}
+            {{ faq_separator }}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | strip_html | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ block.settings.answer | strip_html | json }}
+              }
+            }
+            {%- assign faq_separator = ',' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Tabbed FAQ Accordion",

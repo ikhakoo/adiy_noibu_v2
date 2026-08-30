@@ -39,6 +39,7 @@
           {%- if block.type == 'card' -%}
             <article class="om-card" {{ block.shopify_attributes }}>
               <div class="om-card__media">
+                {%- assign om_card_image_alt = block.settings.image.alt | default: block.settings.title -%}
                 {%- if block.settings.video != blank -%}
                   {{
                     block.settings.video
@@ -60,7 +61,7 @@
                       class: 'om-card__img',
                       widths: '300, 480, 600, 800, 1000, 1200',
                       sizes: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
-                      alt: block.settings.image.alt | default: block.settings.title
+                      alt: om_card_image_alt
                   }}
 
                 {%- else -%}

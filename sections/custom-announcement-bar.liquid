@@ -181,7 +181,7 @@
                 {% elsif block.settings.icon != blank %}
                   <img
                     src="{{ block.settings.icon | image_url }}"
-                    alt="{{ block.settings.text_prefix }}"
+                    alt=""
                     loading="lazy"
                   />
                 {% endif %}
@@ -219,7 +219,7 @@
                 {% elsif block.settings.message_icon != blank %}
                   <img
                     src="{{ block.settings.message_icon | image_url }}"
-                    alt="{{ block.settings.message_text }}"
+                    alt=""
                     loading="lazy"
                   >
                 {% endif %}
@@ -240,7 +240,7 @@
                   {% elsif block.settings.contact_icon != blank %}
                     <img
                       src="{{ block.settings.contact_icon | image_url }}"
-                      alt="{{ block.settings.phone }}"
+                      alt=""
                       loading="lazy"
                     >
                   {% endif %}

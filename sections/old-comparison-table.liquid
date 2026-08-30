@@ -178,7 +178,8 @@
           {% comment %} <th class="col-highlight">{{ section.settings.col_2_heading | default: 'A-DIY SYSTEM' }}</th> {% endcomment %}
           <th class="col-highlight">
             {% if section.settings.col_2_image != blank %}
-              {{ section.settings.col_2_image | image_url: width: 100 | image_tag: alt: section.settings.col_2_image.alt }}
+              {%- assign col_2_image_alt = section.settings.col_2_image.alt | default: section.settings.col_2_heading | default: 'A-DIY SYSTEM' -%}
+              {{ section.settings.col_2_image | image_url: width: 100 | image_tag: alt: col_2_image_alt }}
             {% else %}
               A-DIY SYSTEM
             {% endif %}

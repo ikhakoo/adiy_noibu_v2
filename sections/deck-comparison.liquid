@@ -463,10 +463,17 @@
                     {%- endif -%}
                   </span>
 
+                  {%- comment -%}
+                    Render as plain text rather than href="#" when no URL is set.
+                  {%- endcomment -%}
                   {%- if block.settings.financing_link_text != blank -%}
-                    <a href="{{ block.settings.financing_link_url | default: '#' }}" class="financing-qualify-link">
-                      {{ block.settings.financing_link_text }}
-                    </a>
+                    {%- if block.settings.financing_link_url != blank -%}
+                      <a href="{{ block.settings.financing_link_url }}" class="financing-qualify-link">
+                        {{ block.settings.financing_link_text }}
+                      </a>
+                    {%- else -%}
+                      <span class="financing-qualify-link">{{ block.settings.financing_link_text }}</span>
+                    {%- endif -%}
                   {%- endif -%} 
                   
                   

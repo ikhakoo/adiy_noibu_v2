@@ -11,6 +11,18 @@
   elsif request.page_type == 'password'
     assign og_url = request.origin
   endif
+
+  comment
+    Every page needs a share image, so fall back to the shop logo when the page
+    itself has none - otherwise collections, /search, /cart, 404 and most /pages
+    render a large-image Twitter card with no image in it.
+  endcomment
+  assign share_image = page_image | default: settings.logo
+  assign share_image_alt = share_image.alt | default: og_title
+
+  if localization.country.iso_code != blank
+    assign og_locale = request.locale.iso_code | append: '_' | append: localization.country.iso_code
+  endif
 %}
 
 <meta property="og:site_name" content="{{ shop.name }}">
@@ -18,17 +30,38 @@
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:description" content="{{ og_description | escape }}">
+{%- if og_locale != blank -%}
+  <meta property="og:locale" content="{{ og_locale }}">
+{%- endif -%}
 
-{%- if page_image -%}
-  <meta property="og:image" content="http:{{ page_image | image_url }}">
-  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
-  <meta property="og:image:width" content="{{ page_image.width }}">
-  <meta property="og:image:height" content="{{ page_image.height }}">
+{%- if share_image != blank -%}
+  {%- assign share_image_url = share_image | image_url: width: 1200 | prepend: 'https:' -%}
+  <meta property="og:image" content="{{ share_image_url }}">
+  <meta property="og:image:secure_url" content="{{ share_image_url }}">
+  <meta property="og:image:alt" content="{{ share_image_alt | escape }}">
+  {%- if share_image.width and share_image.height -%}
+    {%- assign share_image_height = 1200 | times: share_image.height | divided_by: share_image.width -%}
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="{{ share_image_height }}">
+  {%- endif -%}
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
-  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  {%- assign share_variant = product.selected_or_first_available_variant -%}
+  <meta property="og:price:amount" content="{{ share_variant.price | money_without_currency | strip_html }}">
   <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+  <meta property="og:availability" content="{% if product.available %}instock{% else %}oos{% endif %}">
+{%- endif -%}
+
+{%- if request.page_type == 'article' -%}
+  <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
+  <meta property="article:modified_time" content="{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
+  {%- if article.author != blank -%}
+    <meta property="article:author" content="{{ article.author | escape }}">
+  {%- endif -%}
+  {%- for tag in article.tags -%}
+    <meta property="article:tag" content="{{ tag | escape }}">
+  {%- endfor -%}
 {%- endif -%}
 
 {%- if settings.social_twitter_link != blank -%}
@@ -37,3 +70,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
 <meta name="twitter:description" content="{{ og_description | escape }}">
+{%- if share_image != blank -%}
+  <meta name="twitter:image" content="{{ share_image | image_url: width: 1200 | prepend: 'https:' }}">
+  <meta name="twitter:image:alt" content="{{ share_image_alt | escape }}">
+{%- endif -%}

@@ -1,0 +1,27 @@
+{%- comment -%}
+  Emits a robots meta tag only where Shopify's default robots.txt does not already
+  keep crawlers out. That file disallows /cart/, /checkout, /account, /orders,
+  sort_by and multi-filter collection URLs, so those need nothing here.
+
+  It does NOT disallow /search, and search result pages are thin, near-duplicate
+  and infinite, so they are the main thing this snippet covers. Gift card pages
+  are per-recipient URLs that should never be indexed either.
+
+  "follow" is kept so link equity still flows out of these pages.
+{%- endcomment -%}
+
+{%- liquid
+  assign robots_noindex = false
+
+  if request.page_type == 'search' or request.page_type == 'gift_card'
+    assign robots_noindex = true
+  endif
+
+  if template.directory == 'customers'
+    assign robots_noindex = true
+  endif
+-%}
+
+{%- if robots_noindex -%}
+  <meta name="robots" content="noindex,follow">
+{%- endif -%}

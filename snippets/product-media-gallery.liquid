@@ -420,7 +420,7 @@
         <div class="gallery-image-item">
           <img 
             src="{{ image | image_url: width: 600 }}" 
-            alt="{{ image.alt | default: product.title }}" 
+            alt="{{ image.alt | default: product.title | escape }}" 
             width="300" 
             height="300" 
             loading="lazy"

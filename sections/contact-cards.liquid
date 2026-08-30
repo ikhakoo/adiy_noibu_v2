@@ -87,7 +87,7 @@
         <div class="contact-card-header">
           <div class="contact-card-icon">
             {%- if block.settings.custom_icon != blank -%}
-              <img src="{{ block.settings.custom_icon | image_url: width: 48 }}" alt="{{ block.settings.heading }}" loading="lazy" width="24" height="24">
+              <img src="{{ block.settings.custom_icon | image_url: width: 48 }}" alt="" loading="lazy" width="24" height="24">
             {%- else -%}
               {%- case block.settings.icon_type -%}
                 {%- when 'email' -%}

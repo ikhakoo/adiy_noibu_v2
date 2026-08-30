@@ -155,10 +155,11 @@
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.image != blank -%}
+            {%- assign gallery_image_alt = block.settings.image.alt | default: section.settings.heading -%}
             {{ block.settings.image | image_url: width: 1200 | image_tag: 
               loading: 'lazy', 
               class: 'gallery__image', 
-              alt: block.settings.image.alt | default: section.settings.heading 
+              alt: gallery_image_alt 
             }}
           {%- else -%}
             <div class="gallery__placeholder">

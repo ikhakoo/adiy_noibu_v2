@@ -2,13 +2,14 @@
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="">
+    {%- assign theme_color = settings.color_schemes.first.settings.background | default: '#ffffff' -%}
+    <meta name="theme-color" content="{{ theme_color }}">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
     {%- endif -%}
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
@@ -16,7 +17,7 @@
     {%- endunless -%}
 
     <title>
-      {{ page_title }}
+      {{- page_title -}}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
@@ -27,6 +28,9 @@
     {% endif %}
 
     {% render 'meta-tags' %}
+
+    {% render 'meta-robots' %}
+    {% render 'structured-data-breadcrumbs' %}
 
     <script type="module">
       import * as StandardEvents from 'https://cdn.shopify.com/storefront/standard-events.js';
@@ -449,11 +453,6 @@
 
     <script src="{{ 'shahzaib.js' | asset_url }}" defer="defer"></script>
 
-    {% if request.path == '/collections' or request.path == '/collections/all' %}
-      <script>
-        window.location.replace('/collections/deck-kits');
-      </script>
-    {% endif %}
     
 
   </body>

@@ -497,9 +497,15 @@
     <script src="{{ 'product-model.js' | asset_url }}" defer></script>
   {%- endif -%}
 
-  <script type="application/ld+json">
-    {{ product | structured_data }}
-  </script>
+  {%- comment -%}
+    main-product already owns the Product graph on a product page; emitting a second
+    one here would give the page two competing Product nodes.
+  {%- endcomment -%}
+  {%- if request.page_type != 'product' -%}
+    <script type="application/ld+json">
+      {{ product | structured_data }}
+    </script>
+  {%- endif -%}
 
   {% if product.media.size > 0 %}
     <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>

@@ -435,7 +435,7 @@
                     <div class="comparison-card__feature-item">
                       <div class="comparison-card__feature-item-icon">
                         {%- if feature_icon != blank -%}
-                          <img src="{{ feature_icon | image_url: width: 500 }}" alt="icon" class="comparison-card__feature-icon" loading="lazy">
+                          <img src="{{ feature_icon | image_url: width: 500 }}" alt="" class="comparison-card__feature-icon" loading="lazy">
                         {%- endif -%}
                       </div>
                       <span class="comparison-card__feature-text">{{ feature_text }}</span>
@@ -459,8 +459,8 @@
                   alt="{{ block.settings.title | escape }}"
                   class="comparison-card__image"
                   loading="lazy"
-                  width="800"
-                  height="600"
+                  width="{{ card_img.width }}"
+                  height="{{ card_img.height }}"
                 >
               </div>
             {%- endif -%}

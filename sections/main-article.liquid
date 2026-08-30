@@ -288,8 +288,47 @@
   {%- endif -%}
 </article>
 
+{%- comment -%}
+  Hand-rolled instead of `article | structured_data` because that filter omits
+  `publisher`, which Google requires on Article/BlogPosting.
+{%- endcomment -%}
 <script type="application/ld+json">
-  {{ article | structured_data }}
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ request.origin | append: article.url | json }}
+    },
+    "headline": {{ article.title | strip_html | truncate: 110 | json }},
+    "articleBody": {{ article.content | strip_html | json }},
+    {% if article.excerpt != blank %}
+      "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+    {% if article.image %}
+      "image": [{{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}],
+    {% endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "dateModified": {{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    {% if article.author != blank %}
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+      },
+    {% endif %}
+    "publisher": {
+      "@type": "Organization",
+      "@id": {{ request.origin | append: '/#organization' | json }},
+      "name": {{ shop.name | json }}
+      {%- if settings.logo %},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ settings.logo | image_url: width: 500 | prepend: 'https:' | json }}
+      }
+      {%- endif %}
+    },
+    "url": {{ request.origin | append: article.url | json }}
+  }
 </script>
 
 {% schema %}

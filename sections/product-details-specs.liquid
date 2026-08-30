@@ -181,7 +181,7 @@
     <div class="pd-specs-card">
       <div class="pd-specs-image-wrapper">
         {% if section.settings.specs_image != blank %}
-          <img src="{{ section.settings.specs_image | image_url: width: 800 }}" alt="{{ section.settings.specs_title }}" loading="lazy">
+          <img src="{{ section.settings.specs_image | image_url: width: 800 }}" alt="" loading="lazy">
         {% else %}
           {{ 'product-1' | placeholder_svg_tag }}
         {% endif %}
@@ -210,7 +210,7 @@
           <div class="pd-included-card" {{ block.shopify_attributes }}>
             <div class="pd-included-icon">
               {% if block.settings.icon != blank %}
-                <img src="{{ block.settings.icon | image_url: width: 100 }}" alt="{{ block.settings.title }}" loading="lazy">
+                <img src="{{ block.settings.icon | image_url: width: 100 }}" alt="" loading="lazy">
               {% else %}
                 {{ 'image' | placeholder_svg_tag }}
               {% endif %}
