@@ -46,10 +46,7 @@
           "type": "heading",
           "settings": {
             "heading": "Which deck is right for you?",
-            "class_heading": "",
-            "font_size_desktop": "",
-            "font_size_mobile": "",
-            "heading_size": "h1"
+            "class_heading": ""
           }
         },
         "text_VT96iP": {
@@ -62,10 +59,7 @@
           "type": "heading",
           "settings": {
             "heading": "<strong>Every A-DIY deck includes:</strong>",
-            "class_heading": "",
-            "font_size_desktop": "",
-            "font_size_mobile": "",
-            "heading_size": "h2"
+            "class_heading": ""
           }
         }
       },
@@ -274,7 +268,6 @@
       "settings": {
         "heading": "A Real Deck. Made Simple.",
         "text": "<p>Every part is engineered to fit before it reaches your door. All that’s left is to unpack, assemble, and enjoy.</p>",
-        "heading_size": "h1",
         "enable_video_looping": true,
         "iframe_code": "",
         "video_url": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",

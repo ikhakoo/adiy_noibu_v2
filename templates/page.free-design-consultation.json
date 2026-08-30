@@ -35,8 +35,7 @@
           "settings": {
             "class_heading": "",
             "heading_html": "",
-            "heading": "The World First and Only Professional Grade Deck kit",
-            "heading_size": "h1"
+            "heading": "The World First and Only Professional Grade Deck kit"
           }
         },
         "text_XLbJRX": {
@@ -113,8 +112,7 @@
           "type": "heading",
           "settings": {
             "sub_heading": "A Deck So Easy,",
-            "heading": "Anyone Can Build It",
-            "heading_size": "h1"
+            "heading": "Anyone Can Build It"
           }
         },
         "stats_NiGXpX": {
@@ -239,7 +237,6 @@
       "settings": {
         "custom_class": "consultant-icon-sec",
         "title": "Plan your deck with confidence.",
-        "heading_size": "h1",
         "title_content": "",
         "image_width": "third",
         "image_ratio": "adapt",
@@ -499,7 +496,6 @@
       "settings": {
         "custom_class": "consultant-icon-sec2",
         "title": "Why Build With A-DIY?",
-        "heading_size": "h1",
         "title_content": "",
         "image_width": "third",
         "image_ratio": "adapt",
@@ -564,7 +560,6 @@
       "name": "Old Comparison Table",
       "settings": {
         "heading": "",
-        "heading_size": "h1",
         "col_1_heading": "FEATURE",
         "col_2_image": "shopify://shop_images/logotype.png",
         "col_3_heading": "CONTRACTOR",
@@ -2977,8 +2972,7 @@
         "heading_YNq7yH": {
           "type": "heading",
           "settings": {
-            "heading": "Ready to Start Planning Your Backyard?",
-            "heading_size": "h1"
+            "heading": "Ready to Start Planning Your Backyard?"
           }
         },
         "text_NLD7r9": {

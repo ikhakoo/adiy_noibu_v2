@@ -18,8 +18,6 @@
   }
 
   .reviews-wall-scroll-{{ section.id }} .header-style-1 .wall-title {
-    font-size: 40px;
-    font-weight: 400;
     margin-bottom: 16px;
     color: #111;
     letter-spacing: 0;
@@ -112,8 +110,6 @@
   }
 
   .reviews-wall-scroll-{{ section.id }} .header-style-2 .wall-title {
-    font-size: 36px;
-    font-weight: 400;
     text-align: center;
     margin-bottom: 24px;
   }
@@ -274,7 +270,6 @@
       padding-left: 0;
     }
     .reviews-wall-scroll-{{ section.id }} .header-style-2 .wall-title {
-      font-size: 23px;
     }
     .reviews-wall-scroll-{{ section.id }} .wall-header.header-style-2 {
       max-width: 100%;
@@ -499,28 +494,11 @@
         {%- if section.settings.heading != blank -%}
           <{{ page_heading_tag }}
             id="SectionHeading-{{ section.id }}"
-            class="{{ section.settings.class_heading }} wall-title {{ section.settings.heading_size }}"
+            class="{{ section.settings.class_heading }} wall-title"
           >
             {{ section.settings.heading }}
           </{{ page_heading_tag }}>
 
-          {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
-            <style>
-              {%- if section.settings.font_size_mobile != blank -%}
-                #SectionHeading-{{ section.id }} {
-                  font-size: {{ section.settings.font_size_mobile | strip }}px !important;
-                }
-              {%- endif -%}
-
-              {%- if section.settings.font_size_desktop != blank -%}
-                @media screen and (min-width: 750px) {
-                  #SectionHeading-{{ section.id }} {
-                    font-size: {{ section.settings.font_size_desktop | strip }}px !important;
-                  }
-                }
-              {%- endif -%}
-            </style>
-          {%- endif -%}
         {%- endif -%}
         
         <div class="wall-rating-box">
@@ -599,28 +577,11 @@
         {%- if section.settings.heading != blank -%}
           <{{ page_heading_tag }}
             id="SectionHeading-{{ section.id }}"
-            class="{{ section.settings.class_heading }} wall-title {{ section.settings.heading_size }}"
+            class="{{ section.settings.class_heading }} wall-title"
           >
             {{ section.settings.heading }}
           </{{ page_heading_tag }}>
 
-          {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
-            <style>
-              {%- if section.settings.font_size_mobile != blank -%}
-                #SectionHeading-{{ section.id }} {
-                  font-size: {{ section.settings.font_size_mobile | strip }}px !important;
-                }
-              {%- endif -%}
-
-              {%- if section.settings.font_size_desktop != blank -%}
-                @media screen and (min-width: 750px) {
-                  #SectionHeading-{{ section.id }} {
-                    font-size: {{ section.settings.font_size_desktop | strip }}px !important;
-                  }
-                }
-              {%- endif -%}
-            </style>
-          {%- endif -%}
         {%- endif -%}
 
         <div class="h2-main-grid">
@@ -901,34 +862,9 @@
       "default": "Sleep you can't stop talking about"
     },
     {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
-        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
-        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" },
-        { "value": "hxl", "label": "t:sections.all.heading_size.options__4.label" },
-        { "value": "hxxl", "label": "t:sections.all.heading_size.options__5.label" }
-      ],
-      "default": "h2",
-      "label": "t:sections.all.heading_size.label"
-    },
-    {
       "type": "text",
       "id": "class_heading",
       "label": "Heading Add Class"
-    },
-    {
-      "type": "text",
-      "id": "font_size_desktop",
-      "label": "Desktop Font Size (px)",
-      "info": "E.g. 36 (Just enter number, px will automatically apply)"
-    },
-    {
-      "type": "text",
-      "id": "font_size_mobile",
-      "label": "Mobile Font Size (px)",
-      "info": "E.g. 16 (Just enter number, px will automatically apply)"
     },
     {
       "type": "text",

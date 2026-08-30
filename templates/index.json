@@ -17,9 +17,7 @@
           "settings": {
             "class_heading": "",
             "heading_html": "",
-            "heading": "Meet Your New Favorite Place",
-            "font_size_desktop": "48",
-            "font_size_mobile": ""
+            "heading": "Meet Your New Favorite Place"
           }
         },
         "text_DgbitQ": {
@@ -255,8 +253,7 @@
           "type": "heading",
           "settings": {
             "sub_heading": "A Deck So Easy,",
-            "heading": "Anyone Can Build It",
-            "heading_size": "h1"
+            "heading": "Anyone Can Build It"
           }
         },
         "stats_NiGXpX": {
@@ -398,8 +395,7 @@
           "type": "heading",
           "settings": {
             "sub_heading": "BUILD NOW, PAY LATER",
-            "heading": "<strong>Flexible Payment Plans</strong>",
-            "heading_size": "h1"
+            "heading": "<strong>Flexible Payment Plans</strong>"
           }
         },
         "text_nxQx7W": {
@@ -3284,8 +3280,6 @@
       "settings": {
         "heading": "The Deck Gets The Compliments. The Experience Earns The Reviews.",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "sub_heading": "",
         "rating_score": "4.8",
         "total_reviews": "30,215",
@@ -3359,8 +3353,6 @@
       "settings": {
         "heading": "Frequently Asked Questions",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "tabs_list": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
         "bg_color": "#ffffff",
         "color_scheme": "",

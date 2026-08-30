@@ -38,8 +38,6 @@
   .custom-contact-form-card .title {
     margin-top: 0;
     margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 600;
   }
 
   .custom-contact-fields-grid {
@@ -224,7 +222,7 @@
       <!-- LEFT COLUMN: Contact Form -->
       <div class="custom-contact-form-card">
         {%- if section.settings.heading != blank -%}
-          <h2 class="title {{ section.settings.heading_size }}">
+          <h2 class="title">
             {{ section.settings.heading }}
           </h2>
         {%- endif -%}
@@ -418,17 +416,6 @@
       "id": "heading",
       "default": "Send a Message",
       "label": "Heading"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        { "value": "h2", "label": "Small" },
-        { "value": "h1", "label": "Medium" },
-        { "value": "h0", "label": "Large" }
-      ],
-      "default": "h1",
-      "label": "Heading Size"
     },
     {
       "type": "color_scheme",

@@ -12,8 +12,6 @@
   }
 
   .faq-section__heading {
-    font-size: 3.2rem;
-    font-weight: 400;
     text-align: center;
     margin-bottom: 2.5rem;
     color: #111;
@@ -136,7 +134,6 @@
 
   @media screen and (max-width: 1100px) {
     .faq-section__heading{
-      font-size:26px;
     }
     .faq-tab-btn{
       padding: 0.8rem 2rem;
@@ -152,28 +149,11 @@
     {%- if section.settings.heading != blank -%}
       <h2
         id="FaqHeading-{{ section.id }}"
-        class="{{ section.settings.class_heading }} faq-section__heading {{ section.settings.heading_size }}"
+        class="{{ section.settings.class_heading }} faq-section__heading"
       >
         {{ section.settings.heading }}
       </h2>
 
-      {%- if section.settings.font_size_desktop != blank or section.settings.font_size_mobile != blank -%}
-        <style>
-          {%- if section.settings.font_size_mobile != blank -%}
-            #FaqHeading-{{ section.id }} {
-              font-size: {{ section.settings.font_size_mobile | strip }}px !important;
-            }
-          {%- endif -%}
-
-          {%- if section.settings.font_size_desktop != blank -%}
-            @media screen and (min-width: 750px) {
-              #FaqHeading-{{ section.id }} {
-                font-size: {{ section.settings.font_size_desktop | strip }}px !important;
-              }
-            }
-          {%- endif -%}
-        </style>
-      {%- endif -%}
     {%- endif -%}
 
     {%- comment -%} Parse Tab List from Section Setting {%- endcomment -%}
@@ -323,34 +303,9 @@
       "default": "Frequently Asked Questions"
     },
     {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
-        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
-        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" },
-        { "value": "hxl", "label": "t:sections.all.heading_size.options__4.label" },
-        { "value": "hxxl", "label": "t:sections.all.heading_size.options__5.label" }
-      ],
-      "default": "h2",
-      "label": "t:sections.all.heading_size.label"
-    },
-    {
       "type": "text",
       "id": "class_heading",
       "label": "Add Heading Class"
-    },
-    {
-      "type": "text",
-      "id": "font_size_desktop",
-      "label": "Desktop Font Size (px)",
-      "info": "E.g. 36 (Just enter number, px will automatically apply)"
-    },
-    {
-      "type": "text",
-      "id": "font_size_mobile",
-      "label": "Mobile Font Size (px)",
-      "info": "E.g. 16 (Just enter number, px will automatically apply)"
     },
     {
       "type": "textarea",

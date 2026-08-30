@@ -45,9 +45,7 @@
           "settings": {
             "class_heading": "",
             "heading_html": "",
-            "heading": "Transform Your Backyard Without The Hassle",
-            "font_size_desktop": "",
-            "font_size_mobile": ""
+            "heading": "Transform Your Backyard Without The Hassle"
           }
         },
         "buttons_eaPPcz": {
@@ -150,7 +148,6 @@
         "item_title_color": "#333333",
         "item_desc_color": "#666666",
         "heading": "",
-        "heading_size": "h1",
         "subheading": "",
         "left_col_title": "Struggling with Contractors?",
         "right_col_title": "Considering DIY?",
@@ -226,7 +223,6 @@
         "image_height": "large",
         "desktop_image_width": "medium",
         "image_layout": "alternate-right",
-        "heading_size": "h1",
         "text_style": "body",
         "button_style": "secondary",
         "desktop_content_position": "middle",
@@ -388,7 +384,6 @@
       "name": "Old Comparison Table",
       "settings": {
         "heading": "There’s the old way. And there’s A-DIY.",
-        "heading_size": "h1",
         "col_1_heading": "FEATURE",
         "col_2_image": "shopify://shop_images/logotype.png",
         "col_3_heading": "Traditional DIY",
@@ -404,8 +399,7 @@
           "type": "heading",
           "settings": {
             "sub_heading": "BUILD NOW, PAY LATER",
-            "heading": "Build Now, Pay Later",
-            "heading_size": "h1"
+            "heading": "Build Now, Pay Later"
           }
         },
         "text_nxQx7W": {
@@ -3015,8 +3009,6 @@
       "settings": {
         "heading": "The Deck Gets The Compliments. The Experience Earns The Reviews.",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "sub_heading": "",
         "rating_score": "4.8",
         "total_reviews": "30,215",

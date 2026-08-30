@@ -24,10 +24,7 @@
           "type": "heading",
           "settings": {
             "heading": "Frequently Asked Questions",
-            "class_heading": "",
-            "font_size_desktop": "",
-            "font_size_mobile": "",
-            "heading_size": "h1"
+            "class_heading": ""
           }
         },
         "text_e8ynYi": {
@@ -157,8 +154,6 @@
       "settings": {
         "heading": "",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "tabs_list": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
         "bg_color": "#f7f9fa",
         "color_scheme": "",
@@ -173,10 +168,7 @@
           "type": "heading",
           "settings": {
             "heading": "Ready to Start Planning Your Backyard?",
-            "class_heading": "",
-            "font_size_desktop": "",
-            "font_size_mobile": "",
-            "heading_size": "h1"
+            "class_heading": ""
           }
         },
         "text_NLD7r9": {

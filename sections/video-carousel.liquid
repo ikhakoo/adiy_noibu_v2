@@ -21,17 +21,13 @@
   }
 
   .pb-video-carousel__subheading {
-    font-size: 1.2rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: #555;
     margin: 0 0 0.5rem 0;
-    font-weight: 500;
   }
 
   .pb-video-carousel__heading {
-    font-size: 3.2rem;
-    font-weight: 400;
     margin: 0;
     line-height: 1.15;
     color: #1c1b18;
@@ -233,7 +229,7 @@
     <div class="pb-video-carousel__header">
       <div class="pb-video-carousel__header-left">
         {%- if section.settings.subheading != blank -%}
-          <p class="pb-video-carousel__subheading">{{ section.settings.subheading }}</p>
+          <p class="pb-video-carousel__subheading eyebrow">{{ section.settings.subheading }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
           <h2 class="pb-video-carousel__heading">{{ section.settings.heading }}</h2>

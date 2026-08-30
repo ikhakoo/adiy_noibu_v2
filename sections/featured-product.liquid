@@ -109,7 +109,7 @@
                     {{- block.settings.text -}}
                   </p>
                 {%- when 'title' -%}
-                  <h2 class="product__title {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                  <h2 class="product__title" {{ block.shopify_attributes }}>
                     {%- unless placeholder -%}
                       {{ product.title | escape }}
                     {%- else -%}
@@ -400,7 +400,6 @@
                   {%- render 'product-disclosures',
                     product: product,
                     heading: block.settings.heading,
-                    heading_size: block.settings.heading_size,
                     open_by_default: block.settings.open_by_default,
                     block: block,
                     surface: 'product_page'
@@ -557,34 +556,6 @@
       "name": "t:sections.featured-product.blocks.title.name",
       "limit": 1,
       "settings": [
-        {
-          "type": "select",
-          "id": "heading_size",
-          "options": [
-            {
-              "value": "h2",
-              "label": "t:sections.all.heading_size.options__1.label"
-            },
-            {
-              "value": "h1",
-              "label": "t:sections.all.heading_size.options__2.label"
-            },
-            {
-              "value": "h0",
-              "label": "t:sections.all.heading_size.options__3.label"
-            },
-            {
-              "value": "hxl",
-              "label": "t:sections.all.heading_size.options__4.label"
-            },
-            {
-              "value": "hxxl",
-              "label": "t:sections.all.heading_size.options__5.label"
-            }
-          ],
-          "default": "h1",
-          "label": "t:sections.all.heading_size.label"
-        }
       ]
     },
     {
@@ -728,26 +699,6 @@
           "id": "heading",
           "label": "t:sections.disclosures.settings.heading.label",
           "default": "t:sections.disclosures.name"
-        },
-        {
-          "type": "select",
-          "id": "heading_size",
-          "options": [
-            {
-              "value": "h2",
-              "label": "t:sections.all.heading_size.options__1.label"
-            },
-            {
-              "value": "h1",
-              "label": "t:sections.all.heading_size.options__2.label"
-            },
-            {
-              "value": "h0",
-              "label": "t:sections.all.heading_size.options__3.label"
-            }
-          ],
-          "default": "h2",
-          "label": "t:sections.all.heading_size.label"
         },
         {
           "type": "checkbox",

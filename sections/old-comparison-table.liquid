@@ -164,7 +164,7 @@
 <div class="comparison-table-section page-width section-{{ section.id }}-padding">
   {%- if section.settings.heading != blank -%}
     <div class="comparison-table__header">
-      <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+      <h2 class="title inline-richtext">
         {{ section.settings.heading }}
       </h2>
     </div>
@@ -393,17 +393,6 @@
       "id": "heading",
       "label": "Section Heading",
       "default": "How We Compare"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        { "value": "h2", "label": "Small" },
-        { "value": "h1", "label": "Medium" },
-        { "value": "h0", "label": "Large" }
-      ],
-      "default": "h1",
-      "label": "Heading Size"
     },
     {
       "type": "text",

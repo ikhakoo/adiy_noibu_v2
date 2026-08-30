@@ -19,8 +19,6 @@
 
   .deck-section__heading {
     margin: 0 0 1rem;
-    font-size: 2.8rem;
-    font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
   }
@@ -357,7 +355,7 @@
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="deck-section__header">
         {%- if section.settings.heading != blank -%}
-          <{{ page_heading_tag }} class="deck-section__heading h2">{{ section.settings.heading }}</{{ page_heading_tag }}>
+          <{{ page_heading_tag }} class="deck-section__heading">{{ section.settings.heading }}</{{ page_heading_tag }}>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
           <p class="deck-section__subheading">{{ section.settings.subheading }}</p>

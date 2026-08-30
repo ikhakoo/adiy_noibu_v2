@@ -34,9 +34,7 @@
           "settings": {
             "class_heading": "",
             "heading_html": "Questions? <br>\nOur Deck Specialists Are Just a Call Away.",
-            "heading": "",
-            "font_size_desktop": "",
-            "font_size_mobile": ""
+            "heading": ""
           }
         },
         "text_aQGiMz": {
@@ -79,10 +77,7 @@
           "type": "heading",
           "settings": {
             "heading": "Contact Us",
-            "class_heading": "",
-            "font_size_desktop": "54",
-            "font_size_mobile": "",
-            "heading_size": "h1"
+            "class_heading": ""
           }
         },
         "text_e8ynYi": {
@@ -162,10 +157,7 @@
       "name": "Contact form",
       "settings": {
         "heading": "Or Send Us A Message",
-        "heading_size": "h4",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "subtext": "<p>Our customer service team is available via email Monday-Friday, 9AM - 5 PM EST excluding holidays. We generally respond to all inquiries within one business day.</p>",
         "color_scheme": "",
         "padding_top": 36,
@@ -177,7 +169,6 @@
       "disabled": true,
       "settings": {
         "heading": "",
-        "heading_size": "h1",
         "color_scheme": "scheme-1",
         "email_address": "support@a-diy.com",
         "email_subtext": "Response within one business day",
@@ -198,10 +189,7 @@
           "type": "heading",
           "settings": {
             "heading": "Ready to Start Planning Your Backyard?",
-            "class_heading": "",
-            "font_size_desktop": "",
-            "font_size_mobile": "",
-            "heading_size": "h1"
+            "class_heading": ""
           }
         },
         "text_NLD7r9": {

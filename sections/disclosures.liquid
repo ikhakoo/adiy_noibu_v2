@@ -16,7 +16,6 @@
   {%- render 'product-disclosures',
     product: product,
     heading: section.settings.heading,
-    heading_size: section.settings.heading_size,
     open_by_default: section.settings.open_by_default,
     surface: 'product_page'
   -%}
@@ -46,26 +45,6 @@
       "id": "heading",
       "label": "t:sections.disclosures.settings.heading.label",
       "default": "t:sections.disclosures.name"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        }
-      ],
-      "default": "h2",
-      "label": "t:sections.all.heading_size.label"
     },
     {
       "type": "checkbox",

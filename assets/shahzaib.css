@@ -89,7 +89,6 @@
     margin-top:-15rem
 }
 .hero-sec.banner .banner__box .banner__heading {
-    font-size: 36px;
 }
 .shopify-section .hero-sec.banner .banner__box{
     padding-top:20rem;
@@ -121,7 +120,6 @@
 }
 @media screen and (max-width:1100px){
     .hero-sec.banner .banner__box .banner__heading{
-        font-size: 26px;
     }
     .hero-sec.banner .banner__box .banner__text{
         font-size: 14px;
@@ -132,7 +130,6 @@
 }
 @media screen and (max-width:989px){
     .hero-sec.banner .banner__box .banner__heading{
-        font-size: 19px;
     }
     .hero-sec.banner .banner__box .banner__text{
         font-size: 13px;
@@ -150,7 +147,6 @@
         padding-top:4rem
     }
     .hero-sec.banner .banner__box .banner__heading{
-        font-size: 26px;
     }
     .hero-sec.banner .banner__box .banner__text,
     .hero-sec.banner .banner__box .banner__buttons .button{
@@ -209,23 +205,17 @@
 }
 .image-with-text-matrix .image-with-text__sub-heading{
     margin: 0;
-    font-size: 40px;
     color: #000;
-    font-weight: 300;
 } 
 .image-with-text-matrix .image-with-text__heading {
     margin: 0;
-    font-size: 42px;
     color: #194636;
-    font-weight: 800;
 }
 
 @media screen and (max-width:1300px){
     .image-with-text-matrix .image-with-text__sub-heading{
-        font-size: 32px;
     }
     .image-with-text-matrix .image-with-text__heading{
-        font-size: 35px;
     }
     .image-with-text-matrix .image-with-text__content{
         padding: 3rem;
@@ -233,10 +223,8 @@
 }
 @media screen and (max-width:1100px){
     .image-with-text-matrix .image-with-text__sub-heading{
-        font-size: 25px;
     }
     .image-with-text-matrix .image-with-text__heading{
-        font-size: 28px;
     }
     
 }
@@ -312,12 +300,9 @@
 }
 .affirm-sec .image-with-text .image-with-text__content .image-with-text__sub-heading{
     margin: 0;
-    font-size: 20px;
     color: #4F453F;
 }
 .affirm-sec .image-with-text .image-with-text__content .image-with-text__heading {
-    font-size: 36px;
-    font-weight: 800;
     color: #26170C;
     margin-top: 10px;
 }
@@ -328,10 +313,8 @@
 }
 @media screen and (max-width:1300px){
     .affirm-sec .image-with-text .image-with-text__content .image-with-text__sub-heading{
-        font-size: 18px;
     }
     .affirm-sec .image-with-text .image-with-text__content .image-with-text__heading{
-        font-size: 30px;
     }
     .affirm-sec .image-with-text .image-with-text__content .image-with-text__text{
         font-size: 14px;
@@ -342,10 +325,8 @@
         margin-right:0;
     }
     .affirm-sec .image-with-text .image-with-text__content .image-with-text__sub-heading{
-        font-size: 16px;
     }
     .affirm-sec .image-with-text .image-with-text__content .image-with-text__heading{
-        font-size: 26px;
     }
     .affirm-sec .image-with-text .image-with-text__content .image-with-text__text{
         font-size: 13px;
@@ -594,7 +575,6 @@
 }
 @media screen and (max-width:768px){
     .template-collection .rich-text .rich-text__heading.h1{
-        font-size: 23px;
     }
 }
 
@@ -634,8 +614,6 @@
     }
     .consultant-page .banner__box .banner__heading{
         margin-top:0;
-        font-weight: 800;
-        font-size: 50px;
         margin-bottom: 1rem;
     }
     .consultant-page .below-heading.banner__text p{
@@ -709,14 +687,12 @@
     border: 1px solid;
 }
 .consultant-icon-sec .multicolumn-card .multicolumn-card__info h3{
-    font-size: 21px;
 }
 .consultant-icon-sec.multicolumn .title,
 .consultant-icon-sec2.multicolumn .title {
     letter-spacing: normal;
     text-align: center;
     width: 100%;
-    font-size: 36px;
     position: relative;
     margin-bottom: 4rem;
 }
@@ -738,7 +714,6 @@
     height: 80px;
 }
 .consultant-icon-sec2 .multicolumn-card .multicolumn-card__info h3{
-    font-size: 19px;
 }
 /********************* end *******************/
 
@@ -751,13 +726,10 @@
     gap: 40px;
 }
 .consultant-richtext .rich-text__blocks .rich-text__heading{
-    font-size: 36px;
 }
 .consultant-richtext .rich-text__blocks .rich-text__text{
     margin: 0;
     max-width: 75%;
-    font-size: 18px;
-    font-weight: 400;
 }
 .consultant-richtext .rich-text__blocks .rich-text__buttons{
     margin: 0;
@@ -765,7 +737,6 @@
 .consultant-richtext .rich-text__blocks .rich-text__buttons a{
     background: #3A6958;
     border-radius: 10px;
-    font-size: 16px;
     padding: 18px 50px;
     transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
@@ -806,7 +777,6 @@
 
     }
     .why-a-diy-hero .banner__box .banner__heading{
-        font-size: 47px;
     }
     .why-a-diy-hero .main-body.banner__text{
         max-width: 80%;
@@ -858,8 +828,6 @@
     border-radius: 20px;
 }
 .custom-multi-row .multirow-custom__title{
-    font-size: 46px;
-    font-weight: 600;
 }
 .custom-multi-row .multirow-custom__header{
     margin-bottom: 0;
@@ -876,7 +844,6 @@
     margin-bottom:0;
 }
 .custom-multi-row .image-with-text__text-item .image-with-text__heading{
-    font-size: 27px;
     margin-bottom: 1rem;
 }
 .custom-multi-row .image-with-text__text-item .image-with-text__text{
@@ -891,8 +858,6 @@
     margin-top: 0;
 }
 .custom-multi-row .image-with-text__text-item .multirow-card__sub-title{
-    font-size: 19px;
-    font-weight: 400;
     color: #000;
     margin-bottom: 9px;
     margin-top: 0;
@@ -969,7 +934,6 @@
     }
 }
 .seo-hero-sec .image-with-text__heading{
-    font-size: 33px;
     letter-spacing: 0;
 }
 .seo-hero-sec .image-with-text__text{

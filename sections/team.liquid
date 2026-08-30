@@ -29,25 +29,20 @@
   }
 
   .team-subheading {
-    font-size: 13px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    font-weight: 700;
     color: {{ section.settings.accent_color }};
     margin: 0 0 12px 0;
   }
 
   .team-heading {
-    font-size: 32px;
     line-height: 1.2;
-    font-weight: 600;
     color: {{ section.settings.heading_color }};
     margin: 0 0 16px 0;
   }
 
   @media screen and (min-width: 750px) {
     .team-heading {
-      font-size: 40px;
     }
   }
 
@@ -115,10 +110,8 @@
   }
 
   .team-member-subtitle {
-    font-size: 11px;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    font-weight: 700;
     color: {{ section.settings.accent_color }};
     margin: 0 0 12px 0;
   }
@@ -137,7 +130,7 @@
     <!-- Section Header -->
     <div class="team-header">
       {%- if section.settings.subheading != blank -%}
-        <p class="team-subheading">{{ section.settings.subheading | escape }}</p>
+        <p class="team-subheading eyebrow">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
 
       {%- if section.settings.heading != blank -%}
@@ -174,7 +167,7 @@
           {%- endif -%}
 
           {%- if block.settings.subtitle != blank -%}
-            <p class="team-member-subtitle">{{ block.settings.subtitle | escape }}</p>
+            <p class="team-member-subtitle eyebrow">{{ block.settings.subtitle | escape }}</p>
           {%- endif -%}
 
           {%- if block.settings.bio != blank -%}

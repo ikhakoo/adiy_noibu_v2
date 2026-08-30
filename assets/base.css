@@ -266,7 +266,7 @@ optgroup {
 }
 
 .text-body {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   letter-spacing: 0.06rem;
   line-height: calc(1 + 0.8 / var(--font-body-scale));
   font-family: var(--font-body-family);
@@ -274,12 +274,17 @@ optgroup {
   font-weight: var(--font-body-weight);
 }
 
+@media only screen and (min-width: 750px) {
+  .text-body {
+    font-size: 1.7rem;
+  }
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
-.h0,
 .h1,
 .h2,
 .h3,
@@ -287,72 +292,57 @@ h5,
 .h5 {
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
-  font-weight: var(--font-heading-weight);
   letter-spacing: calc(var(--font-heading-scale) * 0.06rem);
   color: rgb(var(--color-foreground));
   line-height: calc(1 + 0.3 / max(1, var(--font-heading-scale)));
   word-break: break-word;
 }
 
-.hxxl {
-  font-size: clamp(calc(var(--font-heading-scale) * 5.6rem), 14vw, calc(var(--font-heading-scale) * 7.2rem));
-  line-height: 1.1;
-}
-
-.hxl {
-  font-size: calc(var(--font-heading-scale) * 5rem);
-  line-height: calc(1 + 0.3 / max(1, var(--font-heading-scale)));
-}
-
-@media only screen and (min-width: 750px) {
-  .hxl {
-    font-size: calc(var(--font-heading-scale) * 6.2rem);
-  }
-}
-
-.h0 {
-  font-size: calc(var(--font-heading-scale) * 4rem);
-}
-
-@media only screen and (min-width: 750px) {
-  .h0 {
-    font-size: calc(var(--font-heading-scale) * 5.2rem);
-  }
-}
+/* ---------------------------------------------------------------------------
+   Type scale. The semantic tag drives the size - see the type scale table.
+   Sizes are rem (1rem = 10px via html{62.5%}) wrapped in the heading scale so the
+   Theme Settings type sliders and browser zoom keep working. Weights come from
+   layout/theme.liquid, which resolves them against the weights the chosen font
+   actually ships, so we never ask for a weight that would be faux-bolded.
+   Desktop starts at 750px, the theme's existing typography breakpoint.
+   --------------------------------------------------------------------------- */
 
 h1,
 .h1 {
-  font-size: calc(var(--font-heading-scale) * 3rem);
+  font-size: calc(var(--font-heading-scale) * 3.4rem);
+  font-weight: var(--font-weight-h1);
 }
 
 @media only screen and (min-width: 750px) {
   h1,
   .h1 {
-    font-size: calc(var(--font-heading-scale) * 4rem);
+    font-size: calc(var(--font-heading-scale) * 5.6rem);
   }
 }
 
 h2,
 .h2 {
-  font-size: calc(var(--font-heading-scale) * 2rem);
+  font-size: calc(var(--font-heading-scale) * 2.8rem);
+  font-weight: var(--font-weight-h2);
 }
 
 @media only screen and (min-width: 750px) {
   h2,
   .h2 {
-    font-size: calc(var(--font-heading-scale) * 2.4rem);
+    font-size: calc(var(--font-heading-scale) * 4rem);
   }
 }
 
 h3,
 .h3 {
-  font-size: calc(var(--font-heading-scale) * 1.7rem);
+  font-size: calc(var(--font-heading-scale) * 2.2rem);
+  font-weight: var(--font-weight-h3);
 }
 
 @media only screen and (min-width: 750px) {
   h3,
   .h3 {
-    font-size: calc(var(--font-heading-scale) * 1.8rem);
+    font-size: calc(var(--font-heading-scale) * 2.8rem);
   }
 }
 
@@ -360,18 +350,27 @@ h4,
 .h4 {
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
-  font-size: calc(var(--font-heading-scale) * 1.5rem);
+  font-size: calc(var(--font-heading-scale) * 1.8rem);
+  font-weight: var(--font-weight-h4);
+}
+
+@media only screen and (min-width: 750px) {
+  h4,
+  .h4 {
+    font-size: calc(var(--font-heading-scale) * 2rem);
+  }
 }
 
 h5,
 .h5 {
-  font-size: calc(var(--font-heading-scale) * 1.2rem);
+  font-size: calc(var(--font-heading-scale) * 1.5rem);
+  font-weight: var(--font-weight-h5);
 }
 
 @media only screen and (min-width: 750px) {
   h5,
   .h5 {
-    font-size: calc(var(--font-heading-scale) * 1.3rem);
+    font-size: calc(var(--font-heading-scale) * 1.6rem);
   }
 }
 
@@ -392,6 +391,37 @@ blockquote {
 @media screen and (min-width: 750px) {
   blockquote {
     padding-left: 1.5rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Body copy and the two small-text utilities that complete the type scale.
+   "Body" in the scale table maps to <p>; .small and .eyebrow are the utilities
+   for the rows below it. .eyebrow deliberately sets size and weight only - no
+   text-transform or letter-spacing - so it can be dropped onto the existing
+   eyebrows without changing their casing.
+   --------------------------------------------------------------------------- */
+
+p {
+  font-size: inherit;
+  font-weight: var(--font-body-weight);
+}
+
+.small {
+  font-size: 1.4rem;
+  font-weight: var(--font-body-weight);
+  line-height: calc(1 + 0.6 / var(--font-body-scale));
+}
+
+.eyebrow {
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-eyebrow);
+  line-height: calc(1 + 0.4 / var(--font-body-scale));
+}
+
+@media only screen and (min-width: 750px) {
+  .eyebrow {
+    font-size: 1.3rem;
   }
 }
 
@@ -2473,6 +2503,8 @@ input[type='checkbox'] {
 }
 
 .header__heading-link .h2 {
+  /* Shop-name fallback when no logo image is set - a wordmark, not a heading. */
+  font-size: 2.4rem;
   line-height: 1;
   color: rgba(var(--color-foreground), 0.75);
 }

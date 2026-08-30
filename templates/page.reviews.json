@@ -34,9 +34,7 @@
           "settings": {
             "class_heading": "",
             "heading_html": "",
-            "heading": "Customer Reviews",
-            "font_size_desktop": "",
-            "font_size_mobile": ""
+            "heading": "Customer Reviews"
           }
         }
       },
@@ -1526,10 +1524,7 @@
       "name": "Verified Reviews Wall New",
       "settings": {
         "heading": "The Deck Gets The Compliments. The Experience Earns The Reviews.",
-        "heading_size": "h1",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "sub_heading": "",
         "rating_score": "4.8",
         "total_reviews": "30,215",
@@ -1644,7 +1639,6 @@
       "settings": {
         "heading": "",
         "text": "<p>Add subtext or descriptive paragraph here.</p>",
-        "heading_size": "h1",
         "enable_video_looping": true,
         "iframe_code": "",
         "video_url": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",

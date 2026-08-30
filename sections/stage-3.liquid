@@ -41,8 +41,6 @@
   }
 
   .stage3-title {
-    font-size: 32px;
-    font-weight: 800;
     line-height: 1.2;
     margin: 0;
     color: #111827;
@@ -220,8 +218,6 @@
   }
 
   .stage3-warning-title {
-    font-size: 22px;
-    font-weight: 800;
     margin: 0 0 12px 0;
     color: #111827;
   }
@@ -284,8 +280,6 @@
   }
 
   .stage3-delivery-title {
-    font-size: 22px;
-    font-weight: 800;
     margin: 0 0 8px 0;
     color: #111827;
   }
@@ -370,7 +364,6 @@
 
   @media (max-width: 640px) {
     .stage3-title {
-      font-size: 24px;
     }
     .stage3-step-label {
       font-size: 11px;
@@ -392,7 +385,7 @@
     <!-- Header -->
     <div class="stage3-header">
       <div class="stage3-step-badge">{{ section.settings.step_badge_text }}</div>
-      <h2 class="stage3-title h1">{{ section.settings.heading }}</h2>
+      <h2 class="stage3-title">{{ section.settings.heading }}</h2>
       <p class="stage3-subtitle">{{ section.settings.subheading }}</p>
       <div class="stage3-estimate-badge">{{ section.settings.estimate_text }}</div>
     </div>

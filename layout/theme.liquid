@@ -69,6 +69,14 @@
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
       assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+
+      # Type scale weights. font_modify returns nil when the family has no such weight, so each
+      # step falls back to the next lighter one that does exist. The resolved weight is written
+      # into a CSS variable below, so CSS only ever asks for a weight that was actually loaded
+      # - that avoids the browser synthesising a faux-bold.
+      assign heading_font_700 = settings.type_header_font | font_modify: 'weight', '700' | default: settings.type_header_font
+      assign heading_font_600 = settings.type_header_font | font_modify: 'weight', '600' | default: heading_font_700
+      assign heading_font_800 = settings.type_header_font | font_modify: 'weight', '800' | default: heading_font_700
     %}
 
     {% style %}
@@ -77,6 +85,9 @@
       {{ body_font_italic | font_face: font_display: 'swap' }}
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
+      {{ heading_font_600 | font_face: font_display: 'swap' }}
+      {{ heading_font_700 | font_face: font_display: 'swap' }}
+      {{ heading_font_800 | font_face: font_display: 'swap' }}
 
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
@@ -132,6 +143,14 @@
         --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};
+
+        /* Type scale weights - resolved above, so these only name weights that were loaded. */
+        --font-weight-h1: {{ heading_font_800.weight }};
+        --font-weight-h2: {{ heading_font_700.weight }};
+        --font-weight-h3: {{ heading_font_700.weight }};
+        --font-weight-h4: {{ heading_font_600.weight }};
+        --font-weight-h5: {{ heading_font_600.weight }};
+        --font-weight-eyebrow: {{ heading_font_600.weight }};
 
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
@@ -263,7 +282,7 @@
         flex-direction: column;
         min-height: 100%;
         margin: 0;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         letter-spacing: 0.06rem;
         line-height: calc(1 + 0.8 / var(--font-body-scale));
         font-family: var(--font-body-family);
@@ -273,7 +292,7 @@
 
       @media screen and (min-width: 750px) {
         body {
-          font-size: 1.6rem;
+          font-size: 1.7rem;
         }
       }
     {% endstyle %}

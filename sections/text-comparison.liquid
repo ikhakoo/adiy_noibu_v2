@@ -3,7 +3,7 @@
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="text-comparison__header">
         {%- if section.settings.heading != blank -%}
-          <h2 class="text-comparison__title inline-richtext {{ section.settings.heading_size }}">
+          <h2 class="text-comparison__title inline-richtext">
             {{ section.settings.heading }}
           </h2>
         {%- endif -%}
@@ -76,8 +76,6 @@
   .text-comparison__title {
     color: {{ section.settings.text_color }};
     margin: 0 0 1rem 0;
-    font-weight: 500;
-    font-size: 44px;
   }
 
   .text-comparison__subheading {
@@ -104,8 +102,6 @@
 
   .text-comparison__col-title {
     color: {{ section.settings.text_color }};
-    font-size: 30px;
-    font-weight: 400;
     margin-bottom: 2rem;
   }
 
@@ -145,11 +141,9 @@
       max-width: 100%;
     }
     .text-comparison__title{
-      font-size: 36px;
       margin: 0;
     }
     .text-comparison__col-title{
-      font-size: 27px;
     }
     .text-comparison__item-title{
       font-size: 20px;
@@ -172,14 +166,12 @@
       margin: 0.5rem 0;
     }
     .text-comparison__title{
-      font-size: 26px;
     }
     .text-comparison__subheading {
         margin-top: 2rem;
         font-size: 20px;
     }
     .text-comparison__col-title {
-        font-size: 20px;
     }
     .text-comparison__item-title {
         font-size: 18px;
@@ -211,17 +203,6 @@
       "id": "heading",
       "label": "Heading",
       "default": "From Concept to Reality."
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        { "value": "h2", "label": "Small" },
-        { "value": "h1", "label": "Medium" },
-        { "value": "h0", "label": "Large" }
-      ],
-      "default": "h1",
-      "label": "Heading Size"
     },
     {
       "type": "richtext",
@@ -370,7 +351,7 @@
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="text-comparison__header">
         {%- if section.settings.heading != blank -%}
-          <h2 class="text-comparison__title inline-richtext {{ section.settings.heading_size }}">
+          <h2 class="text-comparison__title inline-richtext">
             {{ section.settings.heading }}
           </h2>
         {%- endif -%}
@@ -386,7 +367,7 @@
       <!-- Left Column Card -->
       <div class="text-comparison__column">
         {%- if section.settings.left_col_title != blank -%}
-          <{{ tc_col_tag }} class="text-comparison__col-title h3">{{ section.settings.left_col_title }}</{{ tc_col_tag }}>
+          <{{ tc_col_tag }} class="text-comparison__col-title">{{ section.settings.left_col_title }}</{{ tc_col_tag }}>
         {%- endif -%}
         <div class="text-comparison__list">
           {%- for block in section.blocks -%}
@@ -403,7 +384,7 @@
       <!-- Right Column Card -->
       <div class="text-comparison__column">
         {%- if section.settings.right_col_title != blank -%}
-          <{{ tc_col_tag }} class="text-comparison__col-title h3">{{ section.settings.right_col_title }}</{{ tc_col_tag }}>
+          <{{ tc_col_tag }} class="text-comparison__col-title">{{ section.settings.right_col_title }}</{{ tc_col_tag }}>
         {%- endif -%}
         <div class="text-comparison__list">
           {%- for block in section.blocks -%}
@@ -440,8 +421,6 @@
   .text-comparison__title {
     color: {{ section.settings.text_color }};
     margin: 0 0 1rem 0;
-    font-weight: 500;
-    font-size: 44px;
   }
 
   .text-comparison__subheading {
@@ -470,8 +449,6 @@
 
   .text-comparison__col-title {
     color: {{ section.settings.card_heading_color }};
-    font-size: 22px;
-    font-weight: 500;
     margin: 0 0 1.5rem 0;
   }
 
@@ -503,7 +480,6 @@
       max-width: 100%;
     }
     .text-comparison__title {
-      font-size: 36px;
       margin: 0;
     }
   }
@@ -520,7 +496,6 @@
     }
 
     .text-comparison__title {
-      font-size: 26px;
     }
 
     .text-comparison__subheading {
@@ -529,7 +504,6 @@
     }
 
     .text-comparison__col-title {
-      font-size: 20px;
     }
 
     .text-comparison__item-title {
@@ -599,17 +573,6 @@
       "id": "heading",
       "label": "Heading",
       "default": "From Concept to Reality."
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        { "value": "h2", "label": "Small" },
-        { "value": "h1", "label": "Medium" },
-        { "value": "h0", "label": "Large" }
-      ],
-      "default": "h1",
-      "label": "Heading Size"
     },
     {
       "type": "richtext",

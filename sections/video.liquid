@@ -107,7 +107,6 @@
   }
   @media screen and (max-width:768px) {
     .custom-video-section .video-section .title-wrapper .title {
-      font-size: 23px;
     }
     .custom-video-section .video-section .section-text{
       font-size: 14px;
@@ -125,7 +124,7 @@
     <div {% if section.settings.full_width %} class="page-width" {% endif %}>
       {%- unless section.settings.heading == blank -%}
         <div class="title-wrapper title-wrapper--no-top-margin">
-          <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+          <h2 class="title inline-richtext">{{ section.settings.heading }}</h2>
         </div>
       {%- endunless -%}
 
@@ -209,34 +208,6 @@
       "id": "text",
       "label": "Text",
       "default": "<p>Add subtext or descriptive paragraph here.</p>"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        },
-        {
-          "value": "hxl",
-          "label": "t:sections.all.heading_size.options__4.label"
-        },
-        {
-          "value": "hxxl",
-          "label": "t:sections.all.heading_size.options__5.label"
-        }
-      ],
-      "default": "h1",
-      "label": "t:sections.all.heading_size.label"
     },
     {
       "type": "checkbox",

@@ -1010,10 +1010,10 @@
                       page already has its own h1 - there it drops to h2 and links to the PDP.
                     {%- endcomment -%}
                     {%- if request.page_type == 'product' -%}
-                      <h1 class="h1">{{ display_title | escape }}</h1>
+                      <h1>{{ display_title | escape }}</h1>
                     {%- else -%}
                       <a href="{{ product.url }}" class="product__title">
-                        <h2 class="h1">
+                        <h2>
                           {{ display_title | escape }}
                         </h2>
                       </a>
@@ -1593,7 +1593,6 @@
                   {%- render 'product-disclosures',
                     product: product,
                     heading: block.settings.heading,
-                    heading_size: block.settings.heading_size,
                     open_by_default: block.settings.open_by_default,
                     block: block,
                     surface: 'product_page'
@@ -2425,26 +2424,6 @@
           "id": "heading",
           "label": "t:sections.disclosures.settings.heading.label",
           "default": "t:sections.disclosures.name"
-        },
-        {
-          "type": "select",
-          "id": "heading_size",
-          "options": [
-            {
-              "value": "h2",
-              "label": "t:sections.all.heading_size.options__1.label"
-            },
-            {
-              "value": "h1",
-              "label": "t:sections.all.heading_size.options__2.label"
-            },
-            {
-              "value": "h0",
-              "label": "t:sections.all.heading_size.options__3.label"
-            }
-          ],
-          "default": "h2",
-          "label": "t:sections.all.heading_size.label"
         },
         {
           "type": "checkbox",

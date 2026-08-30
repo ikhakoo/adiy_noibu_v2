@@ -22,7 +22,6 @@
   }
   .material-selection__title {
       margin-bottom: 1rem;
-      font-size: 46px;
   }
   .material-selection__subheading{
       font-size: 20px;
@@ -162,14 +161,12 @@
 
   @media screen and (max-width:989px){
     .material-selection__title{
-      font-size: 36px;
       letter-spacing: 0;
     }
   }
 
   @media screen and (max-width:749px){
     .material-selection__title{
-      font-size: 30px;
     }
     .material-selection__subheading{
       font-size: 16px;
@@ -203,7 +200,7 @@
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="material-selection__header center">
         {%- if section.settings.heading != blank -%}
-          <h2 class="material-selection__title inline-richtext h1">
+          <h2 class="material-selection__title inline-richtext">
             {{ section.settings.heading }}
           </h2>
         {%- endif -%}

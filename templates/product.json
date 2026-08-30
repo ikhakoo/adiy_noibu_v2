@@ -314,8 +314,7 @@
           "type": "heading",
           "settings": {
             "sub_heading": "BUILD NOW, PAY LATER",
-            "heading": "Build Now, Pay Later",
-            "heading_size": "h1"
+            "heading": "Build Now, Pay Later"
           }
         },
         "text_nxQx7W": {
@@ -354,7 +353,6 @@
       "settings": {
         "heading": "A Real Deck. Made Simple.",
         "text": "<p>Every part is engineered to fit before it reaches your door. All that’s left is to unpack, assemble, and enjoy.</p>",
-        "heading_size": "h1",
         "enable_video_looping": true,
         "iframe_code": "",
         "video_url": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",
@@ -504,7 +502,6 @@
       "settings": {
         "custom_class": "tailored-space-sec",
         "title": "Tailored to Your Space",
-        "heading_size": "h1",
         "title_content": "",
         "image_width": "full",
         "image_ratio": "adapt",
@@ -2201,8 +2198,6 @@
       "settings": {
         "heading": "The Deck Gets The Compliments. The Experience Earns The Reviews.",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "sub_heading": "",
         "rating_score": "4.8",
         "total_reviews": "30,215",
@@ -2276,8 +2271,6 @@
       "settings": {
         "heading": "Frequently Asked Questions",
         "class_heading": "",
-        "font_size_desktop": "",
-        "font_size_mobile": "",
         "tabs_list": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
         "bg_color": "#ffffff",
         "color_scheme": "",
@@ -2290,7 +2283,6 @@
       "disabled": true,
       "settings": {
         "heading": "You may also like",
-        "heading_size": "h2",
         "products_to_show": 4,
         "columns_desktop": 4,
         "columns_mobile": "2",

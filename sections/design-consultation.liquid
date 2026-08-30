@@ -50,17 +50,13 @@
   }
 
   .consultation-banner__caption {
-    font-size: 1.2rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: {{ section.settings.caption_color }};
-    font-weight: 600;
     margin-bottom: 1.2rem;
   }
 
   .consultation-banner__heading {
-    font-size: 3.8rem;
-    font-weight: 800;
     line-height: 1.15;
     color: {{ section.settings.heading_color }};
     margin: 0 0 1.5rem 0;
@@ -149,7 +145,6 @@
     }
 
     .consultation-banner__heading {
-      font-size: 2.8rem;
     }
 
     .consultation-banner__subheading {
@@ -192,7 +187,7 @@
 
     <div class="consultation-banner__content">
       {%- if section.settings.caption != blank -%}
-        <div class="consultation-banner__caption">{{ section.settings.caption }}</div>
+        <div class="consultation-banner__caption eyebrow">{{ section.settings.caption }}</div>
       {%- endif -%}
 
       {%- if section.settings.heading != blank -%}
