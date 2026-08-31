@@ -259,7 +259,7 @@
       ],
       "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "custom_class": "",
+        "custom_class": "button-only",
         "desktop_content_position": "center",
         "content_alignment": "center",
         "color_scheme": "scheme-65990323-3194-4954-88df-bbdd751af6a7",
@@ -349,7 +349,7 @@
       ],
       "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "custom_class": "",
+        "custom_class": "button-only",
         "desktop_content_position": "center",
         "content_alignment": "center",
         "color_scheme": "scheme-65990323-3194-4954-88df-bbdd751af6a7",
