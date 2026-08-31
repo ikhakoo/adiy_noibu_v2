@@ -539,6 +539,40 @@
       updatePlayIcons();
       updateMuteIcons();
     });
+    
+    /* Mobile video preview: autoplay briefly, then pause */
+    if (window.matchMedia('(max-width: 749px)').matches) {
+      cards.forEach(card => {
+        const video = card.querySelector('.js-pb-video');
+        if (!video) return;
+
+        video.muted = true;
+        video.playsInline = true;
+
+        // Try to load the first frame
+        video.load();
+
+        video.addEventListener('loadeddata', function previewVideo() {
+          video.currentTime = 0;
+
+          const playPromise = video.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                setTimeout(() => {
+                  video.pause();
+                  video.currentTime = 0;
+                  updatePlayIcons();
+                }, 1000);
+              })
+              .catch(() => {});
+          }
+
+          video.removeEventListener('loadeddata', previewVideo);
+        });
+      });
+    }
   });
 </script>
 
