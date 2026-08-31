@@ -817,6 +817,9 @@
     .template-page-why-a-diy .review-badge-block .review-badge__text{
         font-size: 12px !important;
     }
+    .why-a-diy-hero .mobile-banner-media .banner__media{
+        min-height: 50rem;
+    }
 }
 /********************* end *******************/
 
