@@ -1,4 +1,4 @@
-{% comment %} Comparison Table Section with Fixed Vertical Scroll & Custom Scrollbar {% endcomment %}
+{% comment %} with slider for mobile {% endcomment %}
 <style>
   .comp-section-{{ section.id }} {
     padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
@@ -21,12 +21,16 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    touch-action: pan-y !important; /* Fixes vertical scroll trapping */
-    overscroll-behavior-x: contain;
+    user-select: none;
   }
 
   .comp-grid-wrapper::-webkit-scrollbar {
     display: none;
+  }
+
+  .comp-grid-wrapper.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
   }
 
   .comp-grid {
@@ -149,13 +153,10 @@
     color: #fff;
   }
 
-  /* Custom Progress Scrollbar Styling */
+  /* Scrollbar Navigation Styling */
   .scrollbar-navigation-{{ section.id }} {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     width: 100%;
-    max-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
     display: none;
     justify-content: center;
   }
@@ -163,21 +164,21 @@
   .scrollbar-track-wrapper {
     position: relative;
     width: 100%;
-    height: 6px;
-    background-color: #e2e2e2;
-    border-radius: 999px;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 9999px;
     cursor: pointer;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
   }
 
   .scrollbar-thumb {
     position: absolute;
     top: 0;
-    left: 0;
     height: 100%;
-    width: 30%;
+    min-width: 40px;
     background-color: {{ section.settings.highlight_bg_color | default: '#1b4332' }};
-    border-radius: 999px;
+    border-radius: 9999px;
     cursor: grab;
     border: none;
     padding: 0;
@@ -192,7 +193,15 @@
     background-color: #0d2a22;
   }
 
-  /* Responsive Rules */
+  .scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+  }
+
+  /* Mobile/Tablet Responsive Slider */
   @media (max-width: 991px) {
     .comp-grid {
       display: flex;
@@ -205,6 +214,9 @@
       max-width: 82%;
     }
 
+    .comp-main-title {
+    }
+
     .scrollbar-navigation-{{ section.id }} {
       display: flex;
     }
@@ -214,6 +226,9 @@
     .comp-card {
       flex: 0 0 88%;
       max-width: 88%;
+    }
+
+    .comp-main-title {
     }
   }
 </style>
@@ -286,16 +301,17 @@
       </div>
     </div>
 
-    <!-- Scrollbar Navigation Bar -->
+    <!-- Scrollbar Navigation -->
     <div class="scrollbar-navigation-{{ section.id }}">
       <div class="scrollbar-track-wrapper js-scroll-bar-{{ section.id }}">
-        <button type="button" class="scrollbar-thumb js-scroll-thumb-{{ section.id }}" aria-label="Scroll thumb"></button>
+        <button type="button" class="scrollbar-thumb js-scroll-thumb-{{ section.id }}" aria-label="Scroll thumb">
+          <span class="scrollbar-thumb-hitbox"></span>
+        </button>
       </div>
     </div>
 
   </div>
 </section>
-
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const sectionContainer = document.querySelector('.comp-section-{{ section.id }}');
@@ -312,7 +328,7 @@
     let initialScrollLeft = 0;
     let rAFId = null;
 
-    /* Dynamic Scroll Thumb Indicator Sync */
+    /* 1. Dynamic UI Sync */
     function updateThumbUI() {
       const scrollWidth = trackWrapper.scrollWidth;
       const clientWidth = trackWrapper.clientWidth;
@@ -325,7 +341,7 @@
       }
 
       const thumbWidthRatio = clientWidth / scrollWidth;
-      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 25);
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 10);
       const maxThumbLeftPercent = 100 - thumbWidthPercent;
       
       const currentScrollRatio = trackWrapper.scrollLeft / maxScrollLeft;
@@ -335,16 +351,17 @@
       scrollThumb.style.left = currentLeftPercent + '%';
     }
 
-    trackWrapper.addEventListener('scroll', function() {
+    function onScroll() {
       if (!isThumbDragging) {
         requestAnimationFrame(updateThumbUI);
       }
-    }, { passive: true });
+    }
 
+    trackWrapper.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', updateThumbUI);
     updateThumbUI();
 
-    /* Drag Handle on Thumb Bar */
+    /* 2. Pointer Capture Dragging (Thumb) */
     scrollThumb.addEventListener('pointerdown', (e) => {
       e.stopPropagation();
 
@@ -395,7 +412,7 @@
     scrollThumb.addEventListener('pointerup', releasePointer);
     scrollThumb.addEventListener('pointercancel', releasePointer);
 
-    /* Click Handler on Track Bar */
+    /* 3. Track Click Handler */
     scrollBarTrack.addEventListener('click', (e) => {
       if (e.target.closest('.js-scroll-thumb-{{ section.id }}')) return;
 
@@ -417,6 +434,56 @@
         left: clickRatio * maxContainerScroll,
         behavior: 'smooth'
       });
+    });
+
+    /* 4. Safe Content Dragging (Fixes Vertical Scroll Interference) */
+    let isTrackDragging = false;
+    let startClientX = 0;
+    let startClientY = 0;
+    let scrollLeftPos = 0;
+    let isHorizontalIntent = false;
+
+    trackWrapper.addEventListener('mousedown', (e) => {
+      if (scrollBarTrack.contains(e.target)) return;
+      isTrackDragging = true;
+      isHorizontalIntent = false;
+      startClientX = e.clientX;
+      startClientY = e.clientY;
+      scrollLeftPos = trackWrapper.scrollLeft;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isTrackDragging) {
+        isTrackDragging = false;
+        isHorizontalIntent = false;
+        trackWrapper.style.scrollBehavior = 'smooth';
+        trackWrapper.classList.remove('is-dragging');
+      }
+    });
+
+    trackWrapper.addEventListener('mousemove', (e) => {
+      if (!isTrackDragging) return;
+
+      const deltaX = Math.abs(e.clientX - startClientX);
+      const deltaY = Math.abs(e.clientY - startClientY);
+
+      // Check intent: horizontally drag karna chahta hai ya vertically scroll
+      if (!isHorizontalIntent) {
+        if (deltaX > 5 && deltaX > deltaY) {
+          isHorizontalIntent = true;
+          trackWrapper.style.scrollBehavior = 'auto';
+          trackWrapper.classList.add('is-dragging');
+        } else if (deltaY > 5) {
+          // Vertical movement detect hui -> drag Cancel kar dein
+          isTrackDragging = false;
+          return;
+        }
+      }
+
+      if (isHorizontalIntent) {
+        const walk = (e.clientX - startClientX) * 1.5;
+        trackWrapper.scrollLeft = scrollLeftPos - walk;
+      }
     });
   });
 </script>
@@ -646,7 +713,7 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %} 
 
 {% comment %} 
 <style>
