@@ -450,3 +450,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+
+// =============================== end ==========================
+
+document.addEventListener('DOMContentLoaded', () => {
+  const checkAndAddClass = () => {
+    const promoWrapper = document.querySelector('.affirm-promo-wrapper');
+    if (promoWrapper) {
+      const financingHeader = promoWrapper.closest('.financing-header');
+      if (financingHeader) {
+        financingHeader.classList.add('show');
+      }
+    }
+  };
+
+  // Immediate check
+  checkAndAddClass();
+
+  // MutationObserver for async DOM changes
+  const observer = new MutationObserver(() => {
+    checkAndAddClass();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+});
