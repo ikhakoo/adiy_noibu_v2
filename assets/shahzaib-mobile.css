@@ -115,6 +115,9 @@
     .product__info-container .affirm-as-low-as{
         font-size: 11px;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .collection-top-sec{
         font-size:22px;
