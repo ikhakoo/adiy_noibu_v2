@@ -99,6 +99,7 @@
         padding: 10px;
     }
     .consultant-icon-sec .multicolumn-card .multicolumn-card__info h3{
+        font-size:18px;
     }
     .consultant-icon-sec .multicolumn-card .multicolumn-card__info p{
         letter-spacing:0;
