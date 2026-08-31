@@ -1510,7 +1510,7 @@
       {%- assign max_month = max_date_seconds | date: "%B" -%}
       {%- assign max_day = max_date_seconds | date: "%-d" -%}
 
-      <div class="truck-icon-text">
+      {% comment %} <div class="truck-icon-text">
         <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968" alt="Delivery Truck" class="truck-icon">
 
         <div class="content">
@@ -1531,7 +1531,66 @@
             Use Code — S1200
           </p>
         </div>
+      </div> {% endcomment %}
+
+      {%- liquid
+      comment
+        10 to 14 Business Days calculation without schema settings
+      endcomment
+      assign min_days = 10
+      assign max_days = 14
+
+      assign min_calendar_days = min_days | divided_by: 5 | times: 2 | plus: min_days
+      assign max_calendar_days = max_days | divided_by: 5 | times: 2 | plus: max_days
+
+      assign current_time_seconds = 'now' | date: '%s'
+      assign min_seconds = min_calendar_days | times: 86400
+      assign max_seconds = max_calendar_days | times: 86400
+
+      assign min_delivery_timestamp = current_time_seconds | plus: min_seconds
+      assign max_delivery_timestamp = current_time_seconds | plus: max_seconds
+
+      assign min_dow = min_delivery_timestamp | date: '%w' | plus: 0
+      if min_dow == 0
+        assign min_delivery_timestamp = min_delivery_timestamp | plus: 86400
+      elsif min_dow == 6
+        assign min_delivery_timestamp = min_delivery_timestamp | plus: 172800
+      endif
+
+      assign max_dow = max_delivery_timestamp | date: '%w' | plus: 0
+      if max_dow == 0
+        assign max_delivery_timestamp = max_delivery_timestamp | plus: 86400
+      elsif max_dow == 6
+        assign max_delivery_timestamp = max_delivery_timestamp | plus: 172800
+      endif
+
+      assign min_month = min_delivery_timestamp | date: '%B'
+      assign max_month = max_delivery_timestamp | date: '%B'
+
+      assign min_day = min_delivery_timestamp | date: '%d' | plus: 0
+      assign max_day = max_delivery_timestamp | date: '%d' | plus: 0
+    -%}
+
+    <div class="truck-icon-text">
+      <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968" alt="Delivery Truck" class="truck-icon" width="auto" height="auto" loading="lazy">
+
+      <div class="content">
+        <p class="heading">
+          Get it delivered by 
+          <span class="delivery-date-range">
+            {%- if min_month == max_month -%}
+              {{ min_month }} {{ min_day }}–{{ max_day }}
+            {%- else -%}
+              {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+            {%- endif -%}
+          </span>
+        </p>
+
+        <p class="subtext">
+          Estimated delivery time: 10–14 business days
+        </p>
       </div>
+    </div>
 
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
