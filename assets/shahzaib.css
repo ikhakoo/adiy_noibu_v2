@@ -101,6 +101,9 @@
     font-size: 18px;
     transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
+.banner__box .banner__text{
+    color#fff;
+}
 .hero-sec.banner .banner__box .banner__buttons .button:hover{
     background: #000;
     box-shadow: 0 0 10px #2b4f42, 
