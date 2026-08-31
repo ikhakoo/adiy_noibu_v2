@@ -22,9 +22,12 @@
       "blocks": {
         "review_badge_Mjy3He": {
           "type": "review_badge",
+          "disabled": true,
           "settings": {
             "star_image": "shopify://shop_images/Frame_1597879831_774d76b7-a845-40e5-b221-67a0486e311b.png",
             "star_image_height": 25,
+            "review_text_before": "4.8/5 Stars",
+            "review_text_after": "Reviews",
             "text_color": "#333333",
             "text_size": 16
           }
@@ -44,15 +47,14 @@
           "settings": {
             "class_heading": "",
             "heading_html": "",
-            "heading": "Transform Your Backyard Without The Hassle"
+            "heading": "The World First and Only Professional Grade Deck kit"
           }
         },
         "buttons_eaPPcz": {
           "type": "buttons",
-          "disabled": true,
           "settings": {
-            "button_label_1": "Shop the Collection",
-            "button_link_1": "shopify://collections/deck-kits",
+            "button_label_1": "SCHEDULE MY FREE CONSULTATION",
+            "button_link_1": "#form",
             "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
@@ -158,6 +160,7 @@
         "feature_fGjx7p",
         "buttons_eaPPcz"
       ],
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "custom_class": "consultant-page sec1",
