@@ -837,6 +837,20 @@
 /********************* end *******************/
 
 /******************************* Why A-DIY Page / multirow section *******************************/
+
+.button-only .button{
+    font-size: 18px;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.button-only .button:hover{
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+
+}
 .custom-multi-row .multirow__inner{
     row-gap: 25px;
 }
