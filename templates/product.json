@@ -156,12 +156,14 @@
         },
         "custom_liquid_hbTRG9": {
           "type": "custom_liquid",
+          "disabled": true,
           "settings": {
             "custom_liquid": "<hr>"
           }
         },
         "accessories_block_TPUpnp": {
           "type": "accessories_block",
+          "disabled": true,
           "settings": {
             "heading_bold": "Accessories.",
             "heading_sub": "Choose the right Accessories",
