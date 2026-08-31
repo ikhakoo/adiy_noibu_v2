@@ -839,6 +839,7 @@
 /******************************* Why A-DIY Page / multirow section *******************************/
 
 .button-only .button{
+    border-radius:8px;
     font-size: 18px;
     transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
