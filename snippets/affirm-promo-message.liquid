@@ -1,0 +1,54 @@
+{%- comment -%}
+  Re-usable Affirm Promo Snippet
+  Accepts parameter: price (Optional, defaults to product.price)
+{%- endcomment -%}
+
+{%- assign current_price = price | default: product.price -%}
+{%- assign public_key = 'M97BIX0W3ONNSNNH' -%}
+
+<div 
+  class="affirm-promo-wrapper flex"
+  x-data="{
+    affirmMessage: '',
+    async fetchAffirmMessage() {
+      const productPrice = {{ current_price | json }};
+      const publicKey = '{{ public_key }}';
+      if (!productPrice) return;
+
+      const apiUrl = `https://www.affirm.com/api/promos/v2/${publicKey}?amount=${productPrice}&field=ala&use_best_terms=true&page_type=product`;
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (data && data.promo && data.promo.html_ala) {
+          this.affirmMessage = data.promo.html_ala;
+        }
+      } catch (error) {
+        console.error('Error fetching Affirm message:', error);
+      }
+
+      if (window.affirm && window.affirm.ui) {
+        window.affirm.ui.ready(() => window.affirm.ui.refresh());
+      }
+    }
+  }" 
+  x-init="fetchAffirmMessage()"
+>
+  <p 
+    class="affirm-as-low-as" 
+    data-page-type="product" 
+    data-amount="{{ current_price }}"
+  >
+    <span x-html="affirmMessage"></span>
+  </p>
+</div>
+
+{%- comment -%} Ensure Affirm JS Script is only loaded once {%- endcomment -%}
+<script>
+  if (!window.affirmScriptLoaded) {
+    window.affirmScriptLoaded = true;
+    const script = document.createElement('script');
+    script.src = 'https://cdn1.affirm.com/js/v2/affirm.js';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+</script>
