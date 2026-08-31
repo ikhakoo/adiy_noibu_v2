@@ -329,7 +329,7 @@
         "text_nxQx7W": {
           "type": "text",
           "settings": {
-            "text": "<p>Get your deck board now with $0 down and 0% interest. Enjoy flexible and transparent payments up to 24 months.<br/>Financing is subject to credit approval. Terms and conditions apply.</p>",
+            "text": "<p>Get your deck now with $0 down and 0% interest. Enjoy flexible and transparent payments up to 24 months.<br/><em>Financing is subject to credit approval. Terms and conditions apply.</em></p>",
             "text_style": "body"
           }
         }
