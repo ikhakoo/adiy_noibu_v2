@@ -116,6 +116,9 @@ details[open].menu-opening > .menu-drawer__submenu {
   color: rgb(var(--color-foreground));
   background-color: rgba(var(--color-foreground), 0.04);
 }
+.header .menu-drawer__menu-item:hover {
+  color:#000;
+}
 
 .menu-drawer__menu-item--active:hover {
   background-color: rgba(var(--color-foreground), 0.08);
