@@ -313,7 +313,15 @@
           "type": "heading",
           "settings": {
             "sub_heading": "BUILD NOW, PAY LATER",
-            "heading": "Build Now, Pay Later"
+            "sub_heading_tag": "h2",
+            "class_sub_heading": "",
+            "sub_font_size_desktop": "24",
+            "sub_font_size_mobile": "20",
+            "heading": "Build Now, Pay Later",
+            "heading_tag": "auto",
+            "class_heading": "",
+            "font_size_desktop": "",
+            "font_size_mobile": ""
           }
         },
         "text_nxQx7W": {
@@ -705,7 +713,6 @@
           "type": "column",
           "settings": {
             "title": "A-DIY",
-            "title_image": "shopify://shop_images/logotype.png",
             "is_highlight": true,
             "badge_text": "SUPERIOR CHOICE",
             "label_1": "PRICE",
