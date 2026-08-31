@@ -20,6 +20,16 @@
   if template.directory == 'customers'
     assign robots_noindex = true
   endif
+
+  comment
+    Per-order utility pages. The tracking page renders all three shipment stages
+    into the HTML and reveals the right one with JS, so to a crawler it reads as
+    three contradictory narratives at once; dc-ty-page is a post-consultation
+    thank-you. Neither should be in an index or quoted by an answer engine.
+  endcomment
+  if template.suffix == 'tracking' or page.handle == 'dc-ty-page'
+    assign robots_noindex = true
+  endif
 -%}
 
 {%- if robots_noindex -%}

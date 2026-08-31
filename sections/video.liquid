@@ -148,13 +148,19 @@
               assign loop = '&loop=1&playlist=' | append: video_id
             endif
           -%}
+          {%- liquid
+            assign video_frame_title = section.settings.heading | default: section.settings.description | strip_html
+            if video_frame_title == blank or video_frame_title == 'video' or video_frame_title == 'Video'
+              assign video_frame_title = shop.name | append: ' video'
+            endif
+          -%}
           {%- if section.settings.video_url.type == 'youtube' -%}
             <iframe
               src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=0&mute=1&muted=1&controls=1{{ loop }}"
               class="js-youtube"
               allow="encrypted-media"
               allowfullscreen
-              title="{{ section.settings.description | escape }}"
+              title="{{ video_frame_title | escape }}"
             ></iframe>
           {%- else -%}
             <iframe
@@ -162,7 +168,7 @@
               class="js-vimeo"
               allow="encrypted-media"
               allowfullscreen
-              title="{{ section.settings.description | escape }}"
+              title="{{ video_frame_title | escape }}"
             ></iframe>
           {%- endif -%}
         </div>

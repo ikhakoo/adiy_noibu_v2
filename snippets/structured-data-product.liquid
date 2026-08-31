@@ -1,0 +1,148 @@
+{%- comment -%}
+  Product structured data, written out by hand rather than using
+  `{{ product | structured_data }}`.
+
+  The filter emits a correct ProductGroup, but it is opaque - there is no way to
+  add the facts this page already states in text (joist spacing, beam size, board
+  width, load rating, warranty term, delivery window). Those are exactly the
+  fields an answer engine quotes, so the graph is built here instead.
+
+  Everything the filter produced is preserved: ProductGroup with productGroupID,
+  brand, description, url, and one Product per variant carrying sku, image and an
+  Offer with price, priceCurrency, availability and url.
+
+  The system specs below mirror the copy in the `product-details-specs` section.
+  They describe the A-DIY deck system as a whole and are identical for every
+  product, which is why they live here rather than in per-product data. If that
+  section's copy changes, change it here too.
+
+  Accepts: product
+{%- endcomment -%}
+
+{%- liquid
+  assign product_url = request.origin | append: product.url
+
+  comment
+    Material and warranty term are the only two facts that differ between the two
+    kits, and the product title is the only signal the theme has for which is which.
+  endcomment
+  assign is_composite = false
+  if product.title contains 'Composite' or product.handle contains 'composite'
+    assign is_composite = true
+  endif
+
+  if is_composite
+    assign product_material = 'Composite decking - a blend of wood fibres and recycled plastics'
+    assign warranty_years = 25
+    assign warranty_scope = '25-year warranty covering structure, staining and fading on the composite boards'
+  else
+    assign product_material = 'Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated'
+    assign warranty_years = 5
+    assign warranty_scope = '5-year structural warranty'
+  endif
+-%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProductGroup",
+    "@id": {{ product_url | append: '#product' | json }},
+    "name": {{ product.title | strip_html | json }},
+    "url": {{ product_url | json }},
+    "productGroupID": {{ product.id | json }},
+    "description": {{ product.description | strip_html | truncate: 5000 | json }},
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | default: shop.name | json }}
+    },
+    {%- if product.type != blank %}
+    "category": {{ product.type | json }},
+    {%- endif %}
+    {%- capture product_images -%}
+      {%- assign image_separator = '' -%}
+      {%- for media in product.media limit: 6 -%}
+        {%- if media.media_type == 'image' -%}
+          {{ image_separator }}{{ media | image_url: width: 1200 | prepend: 'https:' | json }}
+          {%- assign image_separator = ',' -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- assign product_images = product_images | strip %}
+    {%- if product_images != blank %}
+    "image": [{{ product_images }}],
+    {%- endif %}
+    "material": {{ product_material | json }},
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Structural warranty", "value": {{ warranty_scope | json }} },
+      { "@type": "PropertyValue", "name": "Load rating", "value": "Engineered for 15,000+ lbs" },
+      { "@type": "PropertyValue", "name": "Beams", "value": "6 x 6" },
+      { "@type": "PropertyValue", "name": "Joists", "value": "2 x 8, spaced 13 to 14 inches on centre to meet standard deck codes" },
+      { "@type": "PropertyValue", "name": "Deck board width", "value": "5.5 inches, pre-sealed" },
+      { "@type": "PropertyValue", "name": "Deck height", "value": "15 to 17 inches off the ground as supplied" },
+      { "@type": "PropertyValue", "name": "Hardware", "value": "Galvanized, corrosion-resistant screws and brackets" },
+      { "@type": "PropertyValue", "name": "Assembly time", "value": "8 to 16 hours" },
+      { "@type": "PropertyValue", "name": "Tools required", "value": "A standard power drill. No cutting or measuring required." },
+      { "@type": "PropertyValue", "name": "Country of origin", "value": "United States" }
+    ],
+    "hasVariant": [
+      {%- for variant in product.variants -%}
+        {
+          "@type": "Product",
+          "@id": {{ request.origin | append: variant.url | append: '#variant' | json }},
+          "name": {{ variant.title | prepend: ' - ' | prepend: product.title | strip_html | json }},
+          {%- if variant.sku != blank %}
+          "sku": {{ variant.sku | json }},
+          {%- endif %}
+          {%- if variant.featured_media %}
+          "image": {{ variant.featured_media | image_url: width: 1200 | prepend: 'https:' | json }},
+          {%- endif %}
+          "material": {{ product_material | json }},
+          "offers": {
+            "@type": "Offer",
+            "@id": {{ request.origin | append: variant.url | append: '#offer' | json }},
+            "url": {{ request.origin | append: variant.url | json }},
+            "price": {{ variant.price | divided_by: 100.0 | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "availability": {% if variant.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
+            "itemCondition": "https://schema.org/NewCondition",
+            "seller": { "@id": {{ request.origin | append: '/#organization' | json }} },
+            "warranty": {
+              "@type": "WarrantyPromise",
+              "durationOfWarranty": {
+                "@type": "QuantitativeValue",
+                "value": {{ warranty_years }},
+                "unitCode": "ANN"
+              }
+            },
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "addressCountry": "US"
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "transitTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 10,
+                  "maxValue": 14,
+                  "unitCode": "DAY"
+                },
+                "businessDays": {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": [
+                    "https://schema.org/Monday",
+                    "https://schema.org/Tuesday",
+                    "https://schema.org/Wednesday",
+                    "https://schema.org/Thursday",
+                    "https://schema.org/Friday"
+                  ]
+                }
+              }
+            }
+          }
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+</script>

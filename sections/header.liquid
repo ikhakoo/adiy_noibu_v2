@@ -1091,6 +1091,33 @@
     {% if organization_same_as != blank %}
       "sameAs": [{{ organization_same_as }}],
     {% endif %}
+    "legalName": "Laccoo Outdoors, LLC",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "53 Knightsbridge Rd Suite 204",
+      "addressLocality": "Piscataway",
+      "addressRegion": "NJ",
+      "postalCode": "08854",
+      "addressCountry": "US"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "telephone": "+1-786-358-2872",
+      "email": "support@a-diy.com",
+      "availableLanguage": "English",
+      "areaServed": "US",
+      "hoursAvailable": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
     "url": {{ request.origin | json }}
   }
 </script>

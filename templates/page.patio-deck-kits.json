@@ -1,0 +1,372 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "intro": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_intro": {
+          "type": "heading",
+          "settings": {
+            "heading": "Portable Patio Deck Kits",
+            "class_heading": ""
+          }
+        },
+        "text_intro": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A patio deck kit turns a slab, a gravel pad or a flat stretch of lawn into a finished outdoor room, without pouring concrete or hiring a crew.</p><p>The deck is freestanding and rests on Tuff Block foundations, so nothing attaches to the house. Boards arrive cut to length, the hardware is galvanized and corrosion-resistant, and a standard build takes 8 to 16 hours with a power drill.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_intro",
+        "text_intro"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 64,
+        "padding_bottom": 36
+      }
+    },
+    "proof": {
+      "type": "featured-icon-scrolling",
+      "blocks": {
+        "marquee_item_1": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "",
+            "custom_svg": "",
+            "text": "Professionally engineered system"
+          }
+        },
+        "marquee_item_2": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "",
+            "custom_svg": "",
+            "text": "Assembles in 8 to 16 hours"
+          }
+        },
+        "marquee_item_3": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "",
+            "custom_svg": "",
+            "text": "Engineered for 15,000+ lbs"
+          }
+        },
+        "marquee_item_4": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "",
+            "custom_svg": "",
+            "text": "5-year structural warranty"
+          }
+        },
+        "marquee_item_5": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "",
+            "custom_svg": "",
+            "text": "Ships nationwide in 10 to 14 business days"
+          }
+        },
+        "marquee_item_6": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "",
+            "custom_svg": "",
+            "text": "Sourced and manufactured in the USA"
+          }
+        }
+      },
+      "block_order": [
+        "marquee_item_1",
+        "marquee_item_2",
+        "marquee_item_3",
+        "marquee_item_4",
+        "marquee_item_5",
+        "marquee_item_6"
+      ],
+      "name": "Icon Scrolling Marquee",
+      "settings": {
+        "bg_color": "#f5f3ee",
+        "text_color": "#4a554a",
+        "speed": 30,
+        "pause_on_hover": true,
+        "item_gap": 50,
+        "font_size": 14,
+        "font_weight": "600",
+        "icon_size": 28,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "kit": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_kit_1": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Engineered lumber, cut to size",
+            "text": "<p>Every board arrives cut to length. Wood kits use Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated so it resists warping, cracking and moisture. Composite kits use a blend of wood fibres and recycled plastics.</p><p>6 x 6 beams carry the load, 2 x 8 joists sit 13 to 14 inches on centre to meet standard deck codes, and 5.5-inch pre-sealed boards finish the surface.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        },
+        "column_kit_2": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Hardware and foundation included",
+            "text": "<p>Galvanized, corrosion-resistant screws and brackets come in the box, along with Tuff Block foundation blocks. There is no separate parts list to source and no trip to the lumber yard.</p><p>The deck is engineered for 15,000+ lbs and ships ready to assemble at 15 to 17 inches off the ground.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        },
+        "column_kit_3": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Instructions built for one person",
+            "text": "<p>A standard power drill is the only tool you need. There is no cutting and no measuring on site.</p><p>Every kit ships with step-by-step instructions and access to the 3D instructional app, which walks you through the build one component at a time.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        }
+      },
+      "block_order": [
+        "column_kit_1",
+        "column_kit_2",
+        "column_kit_3"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "custom_class": "",
+        "title": "What arrives in the box",
+        "title_content": "",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "detail": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_detail": {
+          "type": "heading",
+          "settings": {
+            "heading": "Over an existing patio",
+            "class_heading": ""
+          }
+        },
+        "text_detail": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A kit can sit over an existing slab as long as the surface drains and the blocks bear evenly. Kits ship at 15 to 17 inches off the ground; where a slab raises the starting height, shorter footings or a shallow dig under the blocks bring it back down.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_detail",
+        "text_detail"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "ways": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_ways_1": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Hire a deck contractor",
+            "text": "<p>A contractor handles design, materials, permits, foundation, construction and cleanup. It is the right answer for a complex build, and it is the most expensive: you are paying a premium for time and labour, and timelines run to weeks.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        },
+        "column_ways_2": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Build from raw materials",
+            "text": "<p>Buying lumber, hardware and decking separately gives you the lowest upfront cost and the most work. You own the design, the measurements, every cut and the structural layout — typically across several weekends.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        },
+        "column_ways_3": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Use an engineered deck kit",
+            "text": "<p>A-DIY sits between the two. The structural design is already done and the components arrive prepared for assembly, so a standard build takes 8 to 16 hours and costs 30 to 50% less than hiring a contractor.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        }
+      },
+      "block_order": [
+        "column_ways_1",
+        "column_ways_2",
+        "column_ways_3"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "custom_class": "",
+        "title": "Three ways to build a deck",
+        "title_content": "",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "buying": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_buying_1": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Delivery",
+            "text": "<p>Kits ship via LTL ground freight anywhere in the United States, typically arriving within 10 to 14 business days. The carrier contacts you to schedule curbside delivery.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        },
+        "column_buying_2": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Warranty",
+            "text": "<p>Wood kits carry a 5-year structural warranty. Composite kits carry a 25-year warranty that covers the structure as well as staining and fading on the boards.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        },
+        "column_buying_3": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Paying over time",
+            "text": "<p>Financing is available through Affirm, Klarna and Shop Pay, with $0 down and 0% interest options over terms of up to 24 months. Financing is subject to credit approval; terms and conditions apply.</p>",
+            "link_label": "",
+            "link": "",
+            "enable_autoplay": false
+          }
+        }
+      },
+      "block_order": [
+        "column_buying_1",
+        "column_buying_2",
+        "column_buying_3"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "custom_class": "",
+        "title": "Delivery, warranty and payment",
+        "title_content": "",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "cta": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_cta": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ready to plan your deck?",
+            "class_heading": ""
+          }
+        },
+        "text_cta": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Book a free design consultation and an A-DIY specialist will size the deck to your space, or browse the kits and pick your size and finish.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_cta",
+        "text_cta"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 44,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main",
+    "intro",
+    "proof",
+    "kit",
+    "detail",
+    "ways",
+    "buying",
+    "cta"
+  ]
+}

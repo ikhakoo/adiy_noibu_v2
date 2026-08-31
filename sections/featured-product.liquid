@@ -502,9 +502,7 @@
     one here would give the page two competing Product nodes.
   {%- endcomment -%}
   {%- if request.page_type != 'product' -%}
-    <script type="application/ld+json">
-      {{ product | structured_data }}
-    </script>
+    {% render 'structured-data-product', product: product %}
   {%- endif -%}
 
   {% if product.media.size > 0 %}

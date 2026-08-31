@@ -498,6 +498,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/I built this entire @decks by myself… six weeks postpartum in about 6 hours! The best part This .mp4",
+            "video_title": "Built solo in about six hours, six weeks postpartum",
+            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
             "external_video_url": ""
           }
         },
@@ -505,6 +507,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/This project got a billion times easier… @decks 12x20 deck kit was like building a Lego set. So .mp4",
+            "video_title": "A 12x20 deck kit that goes together like Lego",
+            "video_description": "A customer assembles the 12 x 20 A-DIY deck kit and compares the process to building a Lego set.",
             "external_video_url": ""
           }
         },
@@ -512,6 +516,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Comment “deck” and I’ll send you the deets & a discount code! 😍We totally needed a deck to make.mp4",
+            "video_title": "Why we finally added a deck",
+            "video_description": "A customer explains why they added a deck to their backyard and which A-DIY kit they used.",
             "external_video_url": ""
           }
         },
@@ -519,6 +525,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/We built a deck in TWO DAYS!!! 🤯 If you’re in the market for a new deck, check out A-DIY @decks.mp4",
+            "video_title": "A deck built in two days",
+            "video_description": "A customer builds an A-DIY deck over two days and recommends the kit to anyone shopping for a new deck.",
             "external_video_url": ""
           }
         },
@@ -526,6 +534,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
+            "video_title": "Creating a dream backyard with a kit shipped to the door",
+            "video_description": "A customer transforms their backyard with a custom A-DIY deck kit delivered to their door.",
             "external_video_url": ""
           }
         },
@@ -533,6 +543,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/DIY deck walkway ✔️One of the biggest goals for our backyard makeover has been creating better f.mp4",
+            "video_title": "A DIY deck walkway for better backyard flow",
+            "video_description": "A customer builds a deck walkway as part of a backyard makeover, to improve how the space connects.",
             "external_video_url": ""
           }
         },
@@ -540,6 +552,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/From overgrown patio area to deck extension! As easy as 1,2,3 thanks to @decks. Their deck kits .mp4",
+            "video_title": "From overgrown patio to deck extension",
+            "video_description": "A customer turns an overgrown patio area into a deck extension using an A-DIY kit.",
             "external_video_url": ""
           }
         },
@@ -547,6 +561,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
+            "video_title": "Almost hired a contractor, built it instead",
+            "video_description": "A customer explains why they chose an A-DIY kit over hiring a contractor to build their deck.",
             "external_video_url": ""
           }
         },
@@ -554,6 +570,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
+            "video_title": "A 16x20 deck that transformed a backyard",
+            "video_description": "A customer builds a 16 x 20 composite A-DIY deck and shows how one project changed their backyard.",
             "external_video_url": ""
           }
         },
@@ -561,6 +579,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Our new deck is finally done thanks to A-DIY @decks 🤍✨I wanted something that looked beautiful .mp4",
+            "video_title": "A finished deck that looks the part",
+            "video_description": "A customer shares their completed A-DIY deck, chosen because they wanted something that looked beautiful.",
             "external_video_url": ""
           }
         },
@@ -568,6 +588,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Had a great time assembling my new deck by @decks! So satisfying and the results are amazing! So.mp4",
+            "video_title": "Satisfying to assemble, and the result shows",
+            "video_description": "A customer describes assembling their A-DIY deck and the finished result.",
             "external_video_url": ""
           }
         },
@@ -575,6 +597,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/We got the deck kit from @decks and customized it to be 18x28 ft and we havent gotten to it yet.mp4",
+            "video_title": "A deck kit customized to 18 x 28 feet",
+            "video_description": "A customer customizes an A-DIY deck kit to 18 x 28 feet for their backyard.",
             "external_video_url": ""
           }
         },
@@ -582,6 +606,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/We loved seeing our deck come to life for the Maker’s Mark activation in Orlando! If you’re in t.mp4",
+            "video_title": "A-DIY deck built for the Maker's Mark activation in Orlando",
+            "video_description": "An A-DIY deck assembled on site for the Maker's Mark brand activation in Orlando.",
             "external_video_url": ""
           }
         },
@@ -589,6 +615,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Another A-DIYer officially in their deck era ✨Nothing better than happy customers, fresh lumber,.mp4",
+            "video_title": "Another finished A-DIY deck",
+            "video_description": "A customer's completed A-DIY deck: fresh lumber and a finished backyard space.",
             "external_video_url": ""
           }
         },

@@ -865,6 +865,9 @@
                 {% if block.settings.title_image != blank %}
                   {%- assign comp_card_title_alt = block.settings.title_image.alt | default: block.settings.title -%}
                   {{ block.settings.title_image | image_url: width: 100 | image_tag: alt: comp_card_title_alt }}
+                  {%- if block.settings.title != blank -%}
+                    <span class="visually-hidden">{{ block.settings.title }}</span>
+                  {%- endif -%}
                 {% else %}
                   {{ block.settings.title }}
                 {% endif %}

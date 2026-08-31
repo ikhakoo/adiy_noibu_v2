@@ -285,6 +285,17 @@
               ></video>
             {%- endif -%}
 
+            {%- if block.settings.video_title != blank or block.settings.video_description != blank -%}
+              <div class="pb-video-card__caption visually-hidden">
+                {%- if block.settings.video_title != blank -%}
+                  <p class="pb-video-card__caption-title">{{ block.settings.video_title | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.video_description != blank -%}
+                  <p class="pb-video-card__caption-text">{{ block.settings.video_description | escape }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
             <!-- Bottom Control Overlay Bar -->
             <div class="pb-video-controls">
               <!-- Play/Pause Toggle Button -->
@@ -487,6 +498,54 @@
   });
 </script>
 
+{%- comment -%}
+  VideoObject for each captioned card. Without this, 15 videos on this page carry
+  no machine-readable text at all - no transcript, no caption track, no name.
+{%- endcomment -%}
+{%- capture video_objects -%}
+  {%- assign vo_separator = '' -%}
+  {%- for block in section.blocks -%}
+    {%- if block.settings.video_title != blank -%}
+      {%- liquid
+        assign vo_video = block.settings.video
+        assign vo_thumb = block.settings.poster_image | default: vo_video.preview_image
+        assign vo_source = vo_video.sources | where: 'format', 'mp4' | first
+      -%}
+      {{ vo_separator }}
+      {
+        "@type": "VideoObject",
+        "name": {{ block.settings.video_title | strip_html | json }},
+        "description": {{ block.settings.video_description | default: block.settings.video_title | strip_html | json }}
+        {%- if vo_thumb != blank -%},
+        "thumbnailUrl": {{ vo_thumb | image_url: width: 1200 | prepend: 'https:' | json }}
+        {%- endif -%}
+        {%- if vo_source.url != blank -%},
+        "contentUrl": {{ vo_source.url | json }}
+        {%- elsif block.settings.external_video_url != blank -%},
+        "contentUrl": {{ block.settings.external_video_url | json }}
+        {%- endif -%}
+        {%- if vo_video.duration > 0 -%},
+        "duration": {{ vo_video.duration | divided_by: 1000 | prepend: 'PT' | append: 'S' | json }}
+        {%- endif -%}
+        {%- if block.settings.video_upload_date != blank -%},
+        "uploadDate": {{ block.settings.video_upload_date | json }}
+        {%- endif -%},
+        "publisher": { "@id": {{ request.origin | append: '/#organization' | json }} }
+      }
+      {%- assign vo_separator = ',' -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign video_objects = video_objects | strip -%}
+{%- if video_objects != blank -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [{{ video_objects }}]
+    }
+  </script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Video Carousel",
@@ -563,6 +622,24 @@
           "id": "poster_image",
           "label": "Custom Video Thumbnail/Poster",
           "info": "Optional: Leave empty to auto-extract thumbnail from video."
+        },
+        {
+          "type": "text",
+          "id": "video_title",
+          "label": "Video title",
+          "info": "Text alternative for the video, read by screen readers and used for VideoObject structured data. Videos with no text are invisible to search and answer engines."
+        },
+        {
+          "type": "textarea",
+          "id": "video_description",
+          "label": "Video description",
+          "info": "One or two sentences describing what happens in the video."
+        },
+        {
+          "type": "text",
+          "id": "video_upload_date",
+          "label": "Upload date (YYYY-MM-DD)",
+          "info": "Optional. Required by Google before a video can appear in video results; it cannot be read from the file."
         }
       ]
     }

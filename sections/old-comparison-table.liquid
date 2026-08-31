@@ -180,6 +180,7 @@
             {% if section.settings.col_2_image != blank %}
               {%- assign col_2_image_alt = section.settings.col_2_image.alt | default: section.settings.col_2_heading | default: 'A-DIY SYSTEM' -%}
               {{ section.settings.col_2_image | image_url: width: 100 | image_tag: alt: col_2_image_alt }}
+              <span class="visually-hidden">{{ section.settings.col_2_heading | default: 'A-DIY SYSTEM' }}</span>
             {% else %}
               A-DIY SYSTEM
             {% endif %}

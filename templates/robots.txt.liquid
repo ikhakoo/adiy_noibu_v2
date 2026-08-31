@@ -1,0 +1,34 @@
+{%- comment -%}
+  Shopify's default robots.txt already permits every crawler through its `*` group
+  and disallows cart, checkout, account, sort and multi-filter URLs. This template
+  reproduces those defaults verbatim, then names the AI crawlers explicitly.
+
+  IMPORTANT: a crawler that matches a named User-agent group ignores the `*` group
+  completely. So each named group below repeats the same rules as `*` - otherwise
+  naming GPTBot would silently hand it the cart, checkout and filter crawl traps
+  that the default group exists to keep it out of.
+{%- endcomment -%}
+{%- liquid
+  assign ai_agents = 'GPTBot,OAI-SearchBot,ChatGPT-User,ClaudeBot,PerplexityBot,Google-Extended,Applebot-Extended,CCBot' | split: ','
+-%}
+{%- for group in robots.default_groups -%}
+  {%- if group.user_agent.value == '*' -%}
+    {%- assign wildcard_rules = group.rules -%}
+  {%- endif -%}
+  {{- group.user_agent }}
+  {%- for rule in group.rules %}
+{{ rule }}
+  {%- endfor -%}
+  {%- if group.sitemap != blank %}
+{{ group.sitemap }}
+  {%- endif %}
+
+{% endfor -%}
+{%- comment -%} Named AI crawlers, inheriting the same rules as the `*` group. {%- endcomment -%}
+{%- for agent in ai_agents -%}
+User-agent: {{ agent }}
+  {%- for rule in wildcard_rules %}
+{{ rule }}
+  {%- endfor %}
+
+{% endfor -%}

@@ -308,6 +308,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/I built this entire @decks by myself… six weeks postpartum in about 6 hours! The best part This .mp4",
+            "video_title": "Built solo in about six hours, six weeks postpartum",
+            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
             "external_video_url": ""
           }
         },
@@ -315,6 +317,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/This project got a billion times easier… @decks 12x20 deck kit was like building a Lego set. So .mp4",
+            "video_title": "A 12x20 deck kit that goes together like Lego",
+            "video_description": "A customer assembles the 12 x 20 A-DIY deck kit and compares the process to building a Lego set.",
             "external_video_url": ""
           }
         },
@@ -322,6 +326,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Comment “deck” and I’ll send you the deets & a discount code! 😍We totally needed a deck to make.mp4",
+            "video_title": "Why we finally added a deck",
+            "video_description": "A customer explains why they added a deck to their backyard and which A-DIY kit they used.",
             "external_video_url": ""
           }
         },
@@ -329,6 +335,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/We built a deck in TWO DAYS!!! 🤯 If you’re in the market for a new deck, check out A-DIY @decks.mp4",
+            "video_title": "A deck built in two days",
+            "video_description": "A customer builds an A-DIY deck over two days and recommends the kit to anyone shopping for a new deck.",
             "external_video_url": ""
           }
         },
@@ -336,6 +344,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
+            "video_title": "Creating a dream backyard with a kit shipped to the door",
+            "video_description": "A customer transforms their backyard with a custom A-DIY deck kit delivered to their door.",
             "external_video_url": ""
           }
         },
@@ -343,6 +353,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/DIY deck walkway ✔️One of the biggest goals for our backyard makeover has been creating better f.mp4",
+            "video_title": "A DIY deck walkway for better backyard flow",
+            "video_description": "A customer builds a deck walkway as part of a backyard makeover, to improve how the space connects.",
             "external_video_url": ""
           }
         },
@@ -350,6 +362,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/From overgrown patio area to deck extension! As easy as 1,2,3 thanks to @decks. Their deck kits .mp4",
+            "video_title": "From overgrown patio to deck extension",
+            "video_description": "A customer turns an overgrown patio area into a deck extension using an A-DIY kit.",
             "external_video_url": ""
           }
         },
@@ -357,6 +371,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
+            "video_title": "Almost hired a contractor, built it instead",
+            "video_description": "A customer explains why they chose an A-DIY kit over hiring a contractor to build their deck.",
             "external_video_url": ""
           }
         },
@@ -364,6 +380,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
+            "video_title": "A 16x20 deck that transformed a backyard",
+            "video_description": "A customer builds a 16 x 20 composite A-DIY deck and shows how one project changed their backyard.",
             "external_video_url": ""
           }
         },
@@ -371,6 +389,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Our new deck is finally done thanks to A-DIY @decks 🤍✨I wanted something that looked beautiful .mp4",
+            "video_title": "A finished deck that looks the part",
+            "video_description": "A customer shares their completed A-DIY deck, chosen because they wanted something that looked beautiful.",
             "external_video_url": ""
           }
         },
@@ -378,6 +398,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Had a great time assembling my new deck by @decks! So satisfying and the results are amazing! So.mp4",
+            "video_title": "Satisfying to assemble, and the result shows",
+            "video_description": "A customer describes assembling their A-DIY deck and the finished result.",
             "external_video_url": ""
           }
         },
@@ -385,6 +407,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/We got the deck kit from @decks and customized it to be 18x28 ft and we havent gotten to it yet.mp4",
+            "video_title": "A deck kit customized to 18 x 28 feet",
+            "video_description": "A customer customizes an A-DIY deck kit to 18 x 28 feet for their backyard.",
             "external_video_url": ""
           }
         },
@@ -392,6 +416,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/We loved seeing our deck come to life for the Maker’s Mark activation in Orlando! If you’re in t.mp4",
+            "video_title": "A-DIY deck built for the Maker's Mark activation in Orlando",
+            "video_description": "An A-DIY deck assembled on site for the Maker's Mark brand activation in Orlando.",
             "external_video_url": ""
           }
         },
@@ -399,6 +425,8 @@
           "type": "video_card",
           "settings": {
             "video": "shopify://files/videos/Another A-DIYer officially in their deck era ✨Nothing better than happy customers, fresh lumber,.mp4",
+            "video_title": "Another finished A-DIY deck",
+            "video_description": "A customer's completed A-DIY deck: fresh lumber and a finished backyard space.",
             "external_video_url": ""
           }
         },
@@ -3012,53 +3040,179 @@
     "tabbed_faq_accordion_wXDX99": {
       "type": "tabbed-faq-accordion",
       "blocks": {
-        "faq_item_y3eYGL": {
+        "faq_item_about_difference": {
           "type": "faq_item",
           "settings": {
-            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "assign_tabs": "About",
             "question": "What makes A-DIY different from traditional deck building?",
-            "answer": "<p>A-DIY systems are engineered for fast, tool-free assembly without compromising structural integrity.</p>"
+            "answer": "<p>A-DIY is a pre-engineered deck system. The lumber arrives cut to size with the hardware and structural layout worked out in advance, so you assemble a finished deck rather than building one from raw materials.</p>"
           }
         },
-        "faq_item_3CQ8KN": {
+        "faq_item_about_vs_contractor": {
           "type": "faq_item",
           "settings": {
-            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "assign_tabs": "About",
+            "question": "Why should I choose A-DIY over hiring a contractor?",
+            "answer": "<p>You save 30–50% compared with hiring a contractor, and you keep full creative control over the design.</p>"
+          }
+        },
+        "faq_item_about_company": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "About",
+            "question": "Who makes A-DIY deck kits?",
+            "answer": "<p>A-DIY is a registered trademark of Laccoo Outdoors, LLC, based at 53 Knightsbridge Rd Suite 204, Piscataway, NJ 08854. Every component is sourced and manufactured in the USA.</p>"
+          }
+        },
+        "faq_item_general_included": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "General",
+            "question": "What is included in a deck kit?",
+            "answer": "<p>Engineered lumber parts in Grade 1 kiln-dried, pressure-treated wood; galvanized screws and metal brackets; Tuff Block foundation blocks; and access to the 3D instructional app that walks you through the build step by step.</p>"
+          }
+        },
+        "faq_item_general_sizes": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "General",
+            "question": "What sizes and colours can I order?",
+            "answer": "<p>Choose your deck size on the product page. Composite kits add a colour choice; wood kits ship in a single natural finish. Every size is a complete kit — no separate parts list to assemble.</p>"
+          }
+        },
+        "faq_item_general_height": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "General",
+            "question": "How high off the ground does the deck sit?",
+            "answer": "<p>Each kit is ready to assemble at 15–17 inches off the ground. Longer post kits with bracing raise it, and digging a few inches where the footings sit lowers it.</p>"
+          }
+        },
+        "faq_item_assembly_time": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Assembly",
             "question": "How long does it take to build?",
             "answer": "<p>Most standard deck kits can be assembled in a single weekend — typically 8–16 hours.</p>"
           }
         },
-        "faq_item_gaBYdx": {
+        "faq_item_assembly_tools": {
           "type": "faq_item",
           "settings": {
-            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
+            "assign_tabs": "Assembly",
+            "question": "Do I need special tools or experience?",
+            "answer": "<p>No prior experience and no specialty tools. A standard power drill is enough — there is no cutting and no measuring. Every kit ships with step-by-step instructions and the 3D instructional app.</p>"
+          }
+        },
+        "faq_item_assembly_slope": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Assembly",
             "question": "What if I have uneven ground or a slope?",
             "answer": "<p>Our adjustable pedestal feet accommodate slopes up to 15°. For steeper grades, contact our support team.</p>"
           }
         },
-        "faq_item_gNQMLH": {
+        "faq_item_assembly_structure": {
           "type": "faq_item",
           "settings": {
-            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
-            "question": "Why should I choose A-DIY over hiring a contractor?",
-            "answer": "<p>You save 40–60% on labour costs and retain full creative control.</p>"
+            "assign_tabs": "Assembly",
+            "question": "How is the deck built structurally?",
+            "answer": "<p>6 x 6 beams carry the load, 2 x 8 joists are spaced 13 to 14 inches on centre to meet standard deck codes, and 5.5-inch pre-sealed boards finish the surface. The system is engineered for 15,000+ lbs, with galvanized corrosion-resistant hardware throughout.</p>"
           }
         },
-        "faq_item_CF69y3": {
+        "faq_item_permit_required": {
           "type": "faq_item",
           "settings": {
-            "assign_tabs": "About, General, Assembly, Permit, Finance, Shipping, Warranty",
-            "question": "Do I need special tools or experience?",
-            "answer": "<p>No special tools or prior experience is required. Every kit includes step-by-step instructions.</p>"
+            "assign_tabs": "Permit",
+            "question": "Do I need a permit to build a deck?",
+            "answer": "<p>Permit requirements are set by your local municipality and vary with deck height, size and placement, so check with your local building department before you build. Engineering diagrams are available to support a permit application.</p>"
+          }
+        },
+        "faq_item_permit_codes": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Permit",
+            "question": "Does the deck meet building codes?",
+            "answer": "<p>Joists are spaced 13 to 14 inches on centre, meeting standard deck codes for support. Local codes still vary, so confirm the requirements with your building department.</p>"
+          }
+        },
+        "faq_item_finance_options": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Finance",
+            "question": "Can I pay for my deck over time?",
+            "answer": "<p>Yes. Financing is available through Affirm, Klarna and Shop Pay, with $0 down and 0% interest options over terms of up to 24 months. Financing is subject to credit approval; terms and conditions apply.</p>"
+          }
+        },
+        "faq_item_finance_methods": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Finance",
+            "question": "What payment methods do you accept?",
+            "answer": "<p>Visa, Mastercard, American Express, Discover and Diners Club, plus Apple Pay, Google Pay, Amazon Pay and Shop Pay.</p>"
+          }
+        },
+        "faq_item_shipping_time": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Shipping",
+            "question": "How long does delivery take?",
+            "answer": "<p>Your deck ships via LTL ground freight and is typically delivered within 10–14 business days. The carrier will contact you to schedule curbside delivery.</p>"
+          }
+        },
+        "faq_item_shipping_where": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Shipping",
+            "question": "Where do you ship?",
+            "answer": "<p>We ship nationwide across the United States.</p>"
+          }
+        },
+        "faq_item_shipping_returns": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Shipping",
+            "question": "Can I cancel or return my order?",
+            "answer": "<p>Plans change. Cancellations and returns are covered by our refund policy, which sets out eligibility, any applicable fees and the next steps.</p>"
+          }
+        },
+        "faq_item_warranty_terms": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Warranty",
+            "question": "What warranty comes with the deck?",
+            "answer": "<p>Wood kits carry a 5-year structural warranty. Composite kits carry a 25-year warranty covering the structure as well as staining and fading on the composite boards.</p>"
+          }
+        },
+        "faq_item_warranty_weather": {
+          "type": "faq_item",
+          "settings": {
+            "assign_tabs": "Warranty",
+            "question": "How does the lumber hold up to weather?",
+            "answer": "<p>Boards are kiln-dried and pressure-treated, which makes them resistant to warping, cracking and moisture damage. All screws and hardware are galvanized to prevent rust.</p>"
           }
         }
       },
       "block_order": [
-        "faq_item_y3eYGL",
-        "faq_item_3CQ8KN",
-        "faq_item_gaBYdx",
-        "faq_item_gNQMLH",
-        "faq_item_CF69y3"
+        "faq_item_about_difference",
+        "faq_item_about_vs_contractor",
+        "faq_item_about_company",
+        "faq_item_general_included",
+        "faq_item_general_sizes",
+        "faq_item_general_height",
+        "faq_item_assembly_time",
+        "faq_item_assembly_tools",
+        "faq_item_assembly_slope",
+        "faq_item_assembly_structure",
+        "faq_item_permit_required",
+        "faq_item_permit_codes",
+        "faq_item_finance_options",
+        "faq_item_finance_methods",
+        "faq_item_shipping_time",
+        "faq_item_shipping_where",
+        "faq_item_shipping_returns",
+        "faq_item_warranty_terms",
+        "faq_item_warranty_weather"
       ],
       "name": "Tabbed FAQ Accordion",
       "settings": {

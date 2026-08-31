@@ -1311,19 +1311,42 @@
 
                 {%- when 'estimated_delivery' -%}
                   {%- liquid
-                    assign min_days = block.settings.min_days | default: 20
-                    assign max_days = block.settings.max_days | default: 22
+                    comment
+                      min_days / max_days are BUSINESS days, so they have to be converted
+                      to calendar days before being added to the clock - two extra days per
+                      whole week. The estimate is then nudged off Saturday and Sunday, since
+                      nothing is delivered on a date the label implies is a working day.
+                    endcomment
+                    assign min_days = block.settings.min_days | default: 10
+                    assign max_days = block.settings.max_days | default: 14
+
+                    assign min_calendar_days = min_days | divided_by: 5 | times: 2 | plus: min_days
+                    assign max_calendar_days = max_days | divided_by: 5 | times: 2 | plus: max_days
 
                     assign current_time_seconds = 'now' | date: '%s'
-                    assign min_seconds = min_days | times: 86400
-                    assign max_seconds = max_days | times: 86400
+                    assign min_seconds = min_calendar_days | times: 86400
+                    assign max_seconds = max_calendar_days | times: 86400
 
                     assign min_delivery_timestamp = current_time_seconds | plus: min_seconds
                     assign max_delivery_timestamp = current_time_seconds | plus: max_seconds
 
+                    assign min_dow = min_delivery_timestamp | date: '%w' | plus: 0
+                    if min_dow == 0
+                      assign min_delivery_timestamp = min_delivery_timestamp | plus: 86400
+                    elsif min_dow == 6
+                      assign min_delivery_timestamp = min_delivery_timestamp | plus: 172800
+                    endif
+
+                    assign max_dow = max_delivery_timestamp | date: '%w' | plus: 0
+                    if max_dow == 0
+                      assign max_delivery_timestamp = max_delivery_timestamp | plus: 86400
+                    elsif max_dow == 6
+                      assign max_delivery_timestamp = max_delivery_timestamp | plus: 172800
+                    endif
+
                     assign min_month = min_delivery_timestamp | date: '%B'
                     assign max_month = max_delivery_timestamp | date: '%B'
-                    
+
                     assign min_day = min_delivery_timestamp | date: '%d' | plus: 0
                     assign max_day = max_delivery_timestamp | date: '%d' | plus: 0
                   -%}
@@ -1952,9 +1975,7 @@
         <script src="{{ 'product-model.js' | asset_url }}" defer></script>
       {%- endif -%}
 
-      <script type="application/ld+json">
-        {{ product | structured_data }}
-      </script>
+      {% render 'structured-data-product', product: product %}
     </div>
   </product-component>
 </product-info>
@@ -2263,13 +2284,13 @@
           "type": "number",
           "id": "min_days",
           "label": "Minimum Business Days",
-          "default": 20
+          "default": 10
         },
         {
           "type": "number",
           "id": "max_days",
           "label": "Maximum Business Days",
-          "default": 22
+          "default": 14
         },
         {
           "type": "text",
