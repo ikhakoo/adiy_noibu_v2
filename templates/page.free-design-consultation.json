@@ -78,7 +78,7 @@
         "enable_autorotate": false,
         "autorotate_speed": 5,
         "image_overlay_opacity": 0,
-        "image_height": "adapt",
+        "image_height": "medium",
         "image_behavior": "none",
         "desktop_content_position": "bottom-left",
         "desktop_content_alignment": "left",
