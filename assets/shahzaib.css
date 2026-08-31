@@ -368,7 +368,9 @@
 .affirm-modal-trigger{
     color:#000 !important;
 }
-
+.financing-title .affirm-modal-trigger {
+    display:none;
+}
 
 .template-product .product__info-wrapper .price__regular .price-item--regular{
     font-weight: 800;
