@@ -847,6 +847,23 @@
     .comp-main-title{
     }
   }
+
+{%- comment -%}
+  Mobile readability floor. These selectors are declared once for all viewports,
+  so they are overridden here rather than edited - desktop keeps its current size.
+{%- endcomment -%}
+@media screen and (max-width: 749px) {
+    .comp-card-badge { font-size: 12px; }
+}
+
+@media screen and (max-width: 749px) {
+
+  /* The visible bar stays 8px; the invisible drag hitbox reaches 44px. */
+  .scrollbar-thumb-hitbox {
+    top: -18px;
+    bottom: -18px;
+  }
+}
 </style>
 
 <section class="comp-section-{{ section.id }}">

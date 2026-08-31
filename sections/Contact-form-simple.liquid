@@ -106,6 +106,13 @@
   .contact-submit-button:hover {
     background-color: #132e23;
   }
+
+@media screen and (max-width: 749px) {
+
+  .contact-input-element {
+    font-size: 16px;
+  }
+}
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
@@ -172,7 +179,7 @@
               <label class="contact-input-label" for="ContactForm-email">Email</label>
               <input
                 autocomplete="email"
-                type="email"
+                type="email" inputmode="email"
                 id="ContactForm-email"
                 class="contact-input-element"
                 name="contact[email]"

@@ -467,6 +467,15 @@
       width: calc((100% / {{ section.settings.columns_mobile }}) - 2px);
     }
   }
+
+@media screen and (max-width: 749px) {
+
+  /* Mute badge was 38x38. Selector mirrors the base rule's specificity. */
+  .reviews-wall-scroll-{{ section.id }} .mute-badge-icon {
+    width: 44px;
+    height: 44px;
+  }
+}
 {%- endstyle -%}
 
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>

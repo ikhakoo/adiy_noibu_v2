@@ -1,12 +1,14 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
-<link
-  rel="stylesheet"
-  href="{{ 'component-cart-notification.css' | asset_url }}"
-  media="print"
-  onload="this.media='all'"
->
+{%- if settings.cart_type == 'notification' -%}
+  <link
+    rel="stylesheet"
+    href="{{ 'component-cart-notification.css' | asset_url }}"
+    media="print"
+    onload="this.media='all'"
+  >
+{%- endif -%}
 
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -317,7 +319,13 @@
   }
 {%- endstyle -%}
 
-<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+{%- comment -%}
+  Only needed when the cart type is 'notification'; the markup it drives
+  (render 'cart-notification' further down) is gated the same way.
+{%- endcomment -%}
+{%- if settings.cart_type == 'notification' -%}
+  <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {%- liquid
   for block in section.blocks

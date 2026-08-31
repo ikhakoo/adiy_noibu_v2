@@ -141,6 +141,14 @@
     }
   }
 
+
+@media screen and (max-width: 749px) {
+
+  /* Tab buttons were ~36px tall. */
+  .faq-tab-btn {
+    min-height: 44px;
+  }
+}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#ffffff' }};">

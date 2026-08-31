@@ -311,13 +311,13 @@
       gap: 10px;
     }
     .comparison-card__description {
-      font-size: 10px;
+      font-size: 13px;
     }
     .comparison-card__content{
       padding: 2rem 5px 0;
     }
     .comparison-card__feature-text{
-      font-size: 7px;
+      font-size: 13px;
     }
     .comparison-card__btn{
       padding: 0.5rem 2.5rem;
@@ -332,6 +332,26 @@
       align-items: flex-start;
     }
   }
+
+@media screen and (max-width: 749px) {
+
+  /* The visible bar stays 8px; the invisible drag hitbox reaches 44px. */
+  .scrollbar-thumb-hitbox {
+    top: -18px;
+    bottom: -18px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+
+  .comparison-card__btn,
+  .comparison-section__top-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">

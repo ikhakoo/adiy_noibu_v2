@@ -79,6 +79,14 @@
       padding: 1.5rem !important;
     }
   }
+
+{%- comment -%}
+  Mobile readability floor. These selectors are declared once for all viewports,
+  so they are overridden here rather than edited - desktop keeps its current size.
+{%- endcomment -%}
+@media screen and (max-width: 749px) {
+    .multirow-card__sub-title { font-size: 13px; }
+}
 {%- endstyle -%}
 
 {%- liquid

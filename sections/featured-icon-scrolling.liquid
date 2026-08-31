@@ -69,6 +69,25 @@
       transform: translateX(-50%);
     }
   }
+
+@media screen and (max-width: 749px) {
+
+  /* This section had no mobile handling at all: identical type, icon and gap
+     sizes at 1920px and 390px. Used by every landing page. */
+  .scrolling-marquee__item {
+    font-size: 13px;
+    gap: 8px;
+  }
+  .scrolling-marquee__track {
+    gap: 28px;
+    padding-right: 28px;
+  }
+  .scrolling-marquee__icon img,
+  .scrolling-marquee__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+}
 {%- endstyle -%}
 
 <div class="scrolling-marquee-{{ section.id }}">

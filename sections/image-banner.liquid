@@ -1,5 +1,24 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+{%- liquid
+  comment
+    mobile_count is not computed until further down the file, so this guard reads the
+    settings directly. A slider only exists when more than one mobile image is set.
+  endcomment
+  assign banner_mobile_images = 0
+  if section.settings.mobile_image_1 != blank
+    assign banner_mobile_images = banner_mobile_images | plus: 1
+  endif
+  if section.settings.mobile_image_2 != blank
+    assign banner_mobile_images = banner_mobile_images | plus: 1
+  endif
+  if section.settings.mobile_image_3 != blank
+    assign banner_mobile_images = banner_mobile_images | plus: 1
+  endif
+-%}
+{%- if banner_mobile_images > 1 -%}
+  <link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}</noscript>
+{%- endif -%}
 
 {%- style -%}
   #Banner-{{ section.id }}::after {
@@ -156,6 +175,14 @@
     endif
   endfor
   assign banner_alt_fallback = banner_alt_fallback | default: shop.name
+  comment
+    Both banner sets ship in the same HTML and are switched with display:none, which
+    does not prevent a download. These sizes hints tell the browser each set is
+    effectively 0px wide outside its own breakpoint, so it picks the smallest
+    candidate there instead of a full-width one.
+  endcomment
+  assign desktop_banner_sizes = '(max-width: 749px) 1px, 100vw'
+  assign mobile_banner_sizes = '(min-width: 750px) 1px, 100vw'
   assign banner_image_alt = section.settings.image.alt | default: banner_alt_fallback
   assign banner_image_2_alt = section.settings.image_2.alt | default: banner_alt_fallback
 
@@ -202,7 +229,7 @@
           height: image_height,
           class: image_class,
           alt: banner_image_alt,
-          sizes: sizes,
+          sizes: desktop_banner_sizes,
           widths: widths,
           fetchpriority: fetch_priority
       }}
@@ -236,7 +263,7 @@
           height: image_height_2,
           class: image_class_2,
           alt: banner_image_2_alt,
-          sizes: sizes,
+          sizes: desktop_banner_sizes,
           widths: widths,
           fetchpriority: fetch_priority
       }}
@@ -263,7 +290,7 @@
                   width: current_mobile_image.width,
                   height: mobile_image_height,
                   alt: mobile_image_alt,
-                  sizes: '100vw',
+                  sizes: mobile_banner_sizes,
                   widths: '375, 550, 750, 1100',
                   fetchpriority: fetch_priority
               }}
@@ -401,7 +428,13 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{%- comment -%}
+  defer keeps this out of the parser's way. Deferred scripts run in document order
+  before DOMContentLoaded, so the init listener below still finds Swiper defined.
+{%- endcomment -%}
+{%- if mobile_count > 1 -%}
+  <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const autoplaySpeed = {{ section.settings.autorotate_speed | times: 1000 }};

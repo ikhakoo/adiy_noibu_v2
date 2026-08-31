@@ -151,7 +151,7 @@
 
   @media screen and (max-width:628px){
     .pd-included-desc{
-      font-size: 10px;
+      font-size: 13px;
     }
     .pd-included-title {
       font-size: 13px;
@@ -164,6 +164,15 @@
     }
   }
   
+
+@media screen and (max-width: 749px) {
+
+  /* Two spec columns on a 390px screen left ~165px per item. */
+  .pd-specs-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
 </style>
 
 <section class="pd-section-{{ section.id }}">

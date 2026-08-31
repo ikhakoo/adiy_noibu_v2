@@ -301,6 +301,42 @@
       justify-content: center;
     }
   }
+
+@media screen and (max-width: 749px) {
+
+  /* Touch targets: social buttons were 34x34, submit 36px tall. The icons
+     inside are unchanged - only the tappable box grows. */
+  .footer-centered__social-icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .footer-centered__submit-btn {
+    min-height: 44px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+
+  /* 16px stops iOS zooming the page when this field takes focus. */
+  .footer-centered__input-wrapper .field__input {
+    font-size: 16px;
+  }
+  /* Column links were 14px tall. */
+  .footer-centered__link-item {
+    margin-bottom: 0;
+  }
+  .footer-centered__link-item a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .footer-centered__policy-links a,
+  .footer-centered__bottom a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
 {%- endstyle -%}
 
 <footer class="footer-centered color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">

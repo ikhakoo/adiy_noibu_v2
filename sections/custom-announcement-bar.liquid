@@ -163,6 +163,28 @@
       display: none;  
     }
   }
+
+@media screen and (max-width: 749px) {
+
+  /* Touch targets: the icon links were 20x20 and the rating link 23px tall.
+     Padding grows the hit box; the matching negative margin keeps the row
+     exactly where it was, so nothing moves. */
+  .custom-annoucement-bar .announcement-bar .right-side .text-box > a,
+  .custom-annoucement-bar .announcement-bar .right-side .contact > a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+    margin: -12px;
+  }
+  .custom-annoucement-bar .announcement-bar .left-side-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
 </style>
 
 <div
@@ -180,7 +202,7 @@
                   {{ block.settings.svg_code }}
                 {% elsif block.settings.icon != blank %}
                   <img
-                    src="{{ block.settings.icon | image_url }}"
+                    src="{{ block.settings.icon | image_url: width: 120 }}"
                     alt=""
                     loading="lazy"
                   />
@@ -218,7 +240,7 @@
                   {{ block.settings.message_svg_code }}
                 {% elsif block.settings.message_icon != blank %}
                   <img
-                    src="{{ block.settings.message_icon | image_url }}"
+                    src="{{ block.settings.message_icon | image_url: width: 88 }}"
                     alt=""
                     loading="lazy"
                   >
@@ -239,7 +261,7 @@
                     {{ block.settings.contact_svg_code }}
                   {% elsif block.settings.contact_icon != blank %}
                     <img
-                      src="{{ block.settings.contact_icon | image_url }}"
+                      src="{{ block.settings.contact_icon | image_url: width: 88 }}"
                       alt=""
                       loading="lazy"
                     >

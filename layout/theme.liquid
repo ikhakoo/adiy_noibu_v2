@@ -85,13 +85,24 @@
     %}
 
     {% style %}
+      {%- comment -%}
+        One @font-face per distinct family/weight/style actually in use.
+        The header and body font resolve to the same family here, so emitting both
+        produced two byte-identical rules; the italic variants emit nothing at all
+        because the family has no italic. Duplicates are skipped rather than removed
+        outright, so this still holds if the two font settings are changed apart.
+      {%- endcomment -%}
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
-      {{ body_font_italic | font_face: font_display: 'swap' }}
-      {{ body_font_bold_italic | font_face: font_display: 'swap' }}
-      {{ settings.type_header_font | font_face: font_display: 'swap' }}
+      {%- if body_font_italic -%}{{ body_font_italic | font_face: font_display: 'swap' }}{%- endif -%}
+      {%- if body_font_bold_italic -%}{{ body_font_bold_italic | font_face: font_display: 'swap' }}{%- endif -%}
+      {%- unless settings.type_header_font.family == settings.type_body_font.family -%}
+        {{ settings.type_header_font | font_face: font_display: 'swap' }}
+      {%- endunless -%}
       {{ heading_font_600 | font_face: font_display: 'swap' }}
-      {{ heading_font_700 | font_face: font_display: 'swap' }}
+      {%- unless heading_font_700.weight == body_font_bold.weight and heading_font_700.family == body_font_bold.family -%}
+        {{ heading_font_700 | font_face: font_display: 'swap' }}
+      {%- endunless -%}
       {{ heading_font_800 | font_face: font_display: 'swap' }}
 
       {% for scheme in settings.color_schemes -%}
@@ -302,8 +313,11 @@
       }
     {% endstyle %}
 
-<!-- Swiper CSS CDN -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+{%- comment -%}
+  Swiper is now self-hosted and loaded only by the two sections that use it:
+  sections/image-banner.liquid (mobile slider) and sections/main-product.liquid
+  (product gallery). See assets/swiper-bundle.min.*
+{%- endcomment -%}
   
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'shahzaib.css' | asset_url | stylesheet_tag }}
@@ -312,11 +326,24 @@
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
-      {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
-      {{ 'component-cart.css' | asset_url | stylesheet_tag }}
-      {{ 'component-totals.css' | asset_url | stylesheet_tag }}
-      {{ 'component-price.css' | asset_url | stylesheet_tag }}
-      {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+      {%- comment -%}
+        The cart drawer is off-screen until it is opened, so none of this is needed
+        to paint the page. Deferred with the same media=print swap already used for
+        component-cart-items.css above - five stylesheets off the blocking chain on
+        every single page.
+      {%- endcomment -%}
+      <link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-cart.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-totals.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-discounts.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript>
+        {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
+        {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+        {{ 'component-totals.css' | asset_url | stylesheet_tag }}
+        {{ 'component-price.css' | asset_url | stylesheet_tag }}
+        {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+      </noscript>
     {%- endif -%}
 
     {%- unless settings.type_body_font.system? -%}
@@ -326,7 +353,20 @@
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {%- comment -%}
+        Above-the-fold headings use 700/800. Preloading only weight 400 meant those
+        files were not discovered until the blocking style block had parsed.
+        The 400 weight is already preloaded just above via type_body_font.
+      {%- endcomment -%}
+      {%- unless settings.type_header_font.family == settings.type_body_font.family -%}
+        <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {%- endunless -%}
+      {%- if heading_font_700 -%}
+        <link rel="preload" as="font" href="{{ heading_font_700 | font_url }}" type="font/woff2" crossorigin>
+      {%- endif -%}
+      {%- if heading_font_800 -%}
+        <link rel="preload" as="font" href="{{ heading_font_800 | font_url }}" type="font/woff2" crossorigin>
+      {%- endif -%}
       {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
 
@@ -449,8 +489,6 @@
     </script>
 
 
-<!-- Swiper JS CDN -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script src="{{ 'shahzaib.js' | asset_url }}" defer="defer"></script>
 

@@ -151,3 +151,67 @@
         min-height: 67rem;
     }
 }
+
+/* ------------------------------------------------------------------
+   Mobile form fields: 16px minimum.
+   iOS Safari zooms the whole page when a focused input/select/textarea
+   computes below 16px, which then leaves the layout scrolled sideways.
+   Scoped to phones only - desktop type sizes are unchanged.
+   ------------------------------------------------------------------ */
+@media screen and (max-width: 749px) {
+  .field__input,
+  .select__select,
+  .customer .field input,
+  .customer select,
+  .text-area,
+  .quantity__input,
+  .footer-centered__input-wrapper .field__input,
+  .contact-input-element,
+  .custom-input-field,
+  .custom-contact__input,
+  .custom-contact__textarea,
+  .tracking-widget__input,
+  .acc-variant-select,
+  .acc-qty-wrapper .qty-input,
+  .facet-filters__sort {
+    font-size: 16px;
+  }
+}
+
+
+/* ------------------------------------------------------------------
+   Scroll chaining: without this, flicking an open drawer, lightbox or
+   horizontal carousel past its end scrolls the page behind it.
+   ------------------------------------------------------------------ */
+.drawer,
+.gallery-lightbox,
+.mobile-facets,
+.comp-grid-wrapper,
+.deck-grid-wrapper,
+.comparison-grid-wrapper,
+.pb-video-carousel__track-wrapper,
+.comparison-table-wrapper {
+  overscroll-behavior: contain;
+}
+
+@media screen and (max-width: 749px) {
+  /* Safe areas on notched devices, paired with viewport-fit=cover. */
+  .drawer__inner,
+  .cart-drawer__footer,
+  .mobile-facets__footer {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .lightbox-close {
+    top: calc(20px + env(safe-area-inset-top, 0px));
+  }
+}
+
+@media screen and (max-width: 749px) {
+  /* Higher specificity than component-facets.css / base.css so the native
+     select does not trigger an iOS zoom on focus. */
+  .facets__form .select__select,
+  select.facet-filters__sort,
+  .facet-filters__field .select__select {
+    font-size: 16px;
+  }
+}

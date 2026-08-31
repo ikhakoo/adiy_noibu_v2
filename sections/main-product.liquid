@@ -9,6 +9,16 @@
     data-zoom-on-hover
   {% endif %}
 >
+  {%- comment -%}
+    Swiper powers the product gallery (assets/shahzaib.js). It used to load
+    globally from a CDN on every page; it is now self-hosted and loaded only here
+    and in image-banner. Deferred scripts execute in document order before
+    DOMContentLoaded, so shahzaib.js still finds Swiper defined.
+  {%- endcomment -%}
+  <link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}</noscript>
+  <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -856,7 +866,7 @@
       }
       .custom-badge-pill{
         width: 49%;
-        font-size: 8px;
+        font-size: 12px;
       }
       .badge-custom-icon{
         width: 15px;
@@ -885,7 +895,7 @@
         width: 80%;
       }
       .acc-add-to-cart-btn{
-        font-size: 9px;
+        font-size: 13px;
       }
       .acc-qty-wrapper .qty-input{
         font-size: 12px;
@@ -894,7 +904,41 @@
 
     
     
-  {%- endstyle -%}
+  
+{%- comment -%}
+  Mobile readability floor. These selectors are declared once for all viewports,
+  so they are overridden here rather than edited - desktop keeps its current size.
+{%- endcomment -%}
+@media screen and (max-width: 749px) {
+    .financing-text-col { font-size: 13px; }
+}
+
+@media screen and (max-width: 749px) {
+
+  .acc-variant-select,
+  .acc-qty-wrapper .qty-input,
+  .qty-input {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+
+  .qty-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .acc-variant-select {
+    min-height: 44px;
+  }
+  .financing-learn-btn,
+  .financing-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+{%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>

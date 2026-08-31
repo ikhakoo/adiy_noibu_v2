@@ -1,4 +1,9 @@
-{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Never the first section on any template that uses it, so this is below the
+  fold and does not need to block first paint.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'component-image-with-text.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}</noscript>
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -191,6 +196,14 @@
       padding: 6rem 4rem 7rem;
     }
   }
+
+{%- comment -%}
+  Mobile readability floor. These selectors are declared once for all viewports,
+  so they are overridden here rather than edited - desktop keeps its current size.
+{%- endcomment -%}
+@media screen and (max-width: 749px) {
+    .image-with-text__icon-desc { font-size: 13px; }
+}
 {%- endstyle -%}
 
 {%- liquid

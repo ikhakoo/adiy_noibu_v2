@@ -180,6 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // product image slider
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Swiper is only loaded on templates that need it (product gallery, mobile
+    // banner). Bail out quietly everywhere else instead of throwing.
+    if (typeof Swiper === 'undefined' || !document.querySelector('.custom-main-slider')) return;
+
     // 1. Initialize Main Slider without loop
     var mainSwiper = new Swiper(".custom-main-slider", {
       spaceBetween: 0,
@@ -384,18 +388,37 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeIcon = document.getElementById('klarnaCloseIcon');
   const closeBtn = document.getElementById('klarnaCloseBtn');
 
+  // Remembers what opened the modal so focus can be handed back on close.
+  let klarnaOpener = null;
+
   function openModal() {
-    if (modal) {
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden', 'false');
+    if (!modal) return;
+    klarnaOpener = document.activeElement;
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.setAttribute('aria-modal', 'true');
+    // Without this the page keeps scrolling behind the open modal on a phone.
+    document.body.classList.add('overflow-hidden');
+    // Move focus into the dialog; trapFocus is Dawn's helper from global.js.
+    if (typeof trapFocus === 'function') {
+      trapFocus(modal, closeIcon || modal);
+    } else if (closeIcon) {
+      closeIcon.focus();
     }
   }
 
   function closeModal() {
-    if (modal) {
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden', 'true');
+    if (!modal) return;
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.removeAttribute('aria-modal');
+    document.body.classList.remove('overflow-hidden');
+    if (typeof removeTrapFocus === 'function') {
+      removeTrapFocus(klarnaOpener);
+    } else if (klarnaOpener && klarnaOpener.focus) {
+      klarnaOpener.focus();
     }
+    klarnaOpener = null;
   }
 
   // Pure page par check karega jis link/button ke href me "#klarna" ho

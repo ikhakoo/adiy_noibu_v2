@@ -78,6 +78,14 @@
     text-underline-offset: 3px;
     font-weight: 500;
   }
+
+@media screen and (max-width: 749px) {
+
+  /* Card padding did not scale below desktop. */
+  .contact-card-item {
+    padding: 22px 18px;
+  }
+}
 {%- endstyle -%}
 
 <div class="contact-cards-section-{{ section.id }}">

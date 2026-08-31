@@ -220,6 +220,19 @@
     }
   }
 
+
+@media screen and (max-width: 749px) {
+
+  /* Play/pause and mute were 38x38; carousel arrows 42x42. */
+  .pb-control-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .pb-video-carousel__nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#faf8f5' }};">

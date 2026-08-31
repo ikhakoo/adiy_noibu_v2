@@ -107,10 +107,24 @@
             -%}
             <div class="swiper-slide" data-media-id="{{ media.id }}" data-variant-ids="{{ variant_ids }}">
               <div class="custom-slide-img-wrap">
-                <img 
-                  src="{{ media | image_url: width: 1200 }}" 
+                {%- comment -%}
+                  This is the LCP element on a product page. It had a single fixed
+                  1200px source with no srcset and no sizes, so a phone downloaded the
+                  desktop-sized file; and no fetchpriority, so it queued behind the
+                  eager thumbnails. Same image, same layout - only the candidate the
+                  browser picks changes.
+                {%- endcomment -%}
+                <img
+                  src="{{ media | image_url: width: 1200 }}"
+                  srcset="{{ media | image_url: width: 400 }} 400w,
+                          {{ media | image_url: width: 600 }} 600w,
+                          {{ media | image_url: width: 800 }} 800w,
+                          {{ media | image_url: width: 1200 }} 1200w,
+                          {{ media | image_url: width: 1600 }} 1600w"
+                  sizes="(min-width: 990px) 50vw, 100vw"
                   alt="{{ media.alt | default: product.title | escape }}"
                   loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  {% if forloop.first %}fetchpriority="high"{% endif %}
                   width="{{ media.width }}"
                   height="{{ media.height }}"
                 >

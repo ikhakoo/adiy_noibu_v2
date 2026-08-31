@@ -317,6 +317,17 @@
     }
   }
 
+
+@media screen and (max-width: 749px) {
+
+  /* Form fields were side by side at 390px. */
+  .custom-contact__grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .custom-contact__radio-group--inline {
+    grid-template-columns: 1fr;
+  }
+}
 {%- endstyle -%}
 
 <div class="custom-contact-sec color-{{ section.settings.color_scheme }} gradient" id="{{ section.settings.custom_id }}">
@@ -424,14 +435,14 @@
             {%- comment -%} Phone Input with Validation {%- endcomment -%}
             <div class="custom-contact__field-group">
               <label class="custom-contact__label" for="ContactForm-Phone">Phone</label>
-              <input class="custom-contact__input" type="tel" id="ContactForm-Phone" name="contact[Phone]" value="+1 " placeholder="+1 000 000 0000" autocomplete="off">
+              <input class="custom-contact__input" type="tel" inputmode="tel" id="ContactForm-Phone" name="contact[Phone]" value="+1 " placeholder="+1 000 000 0000" autocomplete="tel">
               <small class="custom-contact__error-text" id="PhoneError">Invalid phone number</small>
             </div>
 
             {%- comment -%} Email Input with Validation {%- endcomment -%}
             <div class="custom-contact__field-group">
               <label class="custom-contact__label" for="ContactForm-Email">Email</label>
-              <input class="custom-contact__input" type="text" id="ContactForm-Email" name="contact[email]" placeholder="john@example.com" autocomplete="off">
+              <input class="custom-contact__input" type="email" inputmode="email" id="ContactForm-Email" name="contact[email]" placeholder="john@example.com" autocomplete="email">
               <small class="custom-contact__error-text" id="EmailError">Please enter a valid email address</small>
             </div>
 

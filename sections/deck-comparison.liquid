@@ -330,6 +330,15 @@
     .deck-card__feature-desc { font-size: 14px; }
     .deck-card__features-vertical { padding: 0 10px; }
   }
+
+@media screen and (max-width: 749px) {
+
+  /* The visible bar stays 8px; the invisible drag hitbox reaches 44px. */
+  .scrollbar-thumb-hitbox {
+    top: -18px;
+    bottom: -18px;
+  }
+}
 {%- endstyle -%}
 
 <div class="collection section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
