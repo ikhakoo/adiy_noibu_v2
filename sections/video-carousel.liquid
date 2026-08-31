@@ -116,7 +116,7 @@
     display: block;
   }
 
-  /* Floating Overlay Controls (Poly & Bark Style) */
+  /* Floating Overlay Controls */
   .pb-video-controls {
     position: absolute;
     bottom: 16px;
@@ -154,7 +154,7 @@
     fill: #222;
   }
 
-  /* Progress Bar Pill */
+  /* Progress Bar Pill - Fixed touch-action for vertical scroll */
   .pb-progress-wrapper {
     flex-grow: 1;
     height: 18px;
@@ -166,7 +166,7 @@
     cursor: pointer;
     position: relative;
     backdrop-filter: blur(2px);
-    touch-action: none; /* Smooth touch dragging optimization */
+    touch-action: pan-y; /* Fix: Enables normal vertical page scrolling */
     user-select: none;
   }
 
@@ -220,19 +220,16 @@
     }
   }
 
-
-@media screen and (max-width: 749px) {
-
-  /* Play/pause and mute were 38x38; carousel arrows 42x42. */
-  .pb-control-btn {
-    width: 44px;
-    height: 44px;
+  @media screen and (max-width: 749px) {
+    .pb-control-btn {
+      width: 44px;
+      height: 44px;
+    }
+    .pb-video-carousel__nav-btn {
+      width: 44px;
+      height: 44px;
+    }
   }
-  .pb-video-carousel__nav-btn {
-    width: 44px;
-    height: 44px;
-  }
-}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#faf8f5' }};">
@@ -450,7 +447,7 @@
       video.addEventListener('play', updatePlayIcons);
       video.addEventListener('pause', updatePlayIcons);
 
-      // --- SMOOTH DRAGGING / SCRUBBING LOGIC ---
+      // --- SMOOTH DRAGGING / SCRUBBING LOGIC WITH SCROLL FIX ---
       if (progressBar) {
         function scrub(e) {
           const rect = progressBar.getBoundingClientRect();
@@ -464,25 +461,26 @@
         }
 
         progressBar.addEventListener('pointerdown', (e) => {
-          e.stopPropagation();
           isDragging = true;
           progressBar.classList.add('is-dragging');
-          progressBar.setPointerCapture(e.pointerId);
+          progressBar.style.touchAction = 'none'; // Lock scrolling only while active drag
+          if (e.pointerId) {
+            progressBar.setPointerCapture(e.pointerId);
+          }
           scrub(e);
         });
 
         progressBar.addEventListener('pointermove', (e) => {
           if (isDragging) {
-            e.stopPropagation();
             scrub(e);
           }
         });
 
         const stopDragging = (e) => {
           if (isDragging) {
-            e.stopPropagation();
             isDragging = false;
             progressBar.classList.remove('is-dragging');
+            progressBar.style.touchAction = 'pan-y'; // Re-enable normal scrolling
             if (e.pointerId && progressBar.hasPointerCapture(e.pointerId)) {
               progressBar.releasePointerCapture(e.pointerId);
             }
@@ -512,8 +510,7 @@
 </script>
 
 {%- comment -%}
-  VideoObject for each captioned card. Without this, 15 videos on this page carry
-  no machine-readable text at all - no transcript, no caption track, no name.
+  VideoObject for each captioned card.
 {%- endcomment -%}
 {%- capture video_objects -%}
   {%- assign vo_separator = '' -%}
