@@ -392,6 +392,10 @@
 .template-product .product__info-wrapper .product__title{
     margin: 5px 0 0;
 }
+.template-product .product__info-wrapper .product__title h1{
+    font-size: 36px;
+    font-weight: 600;
+}
 .template-product .product__info-wrapper  .product-price{
     margin: 5px 0;
 }
