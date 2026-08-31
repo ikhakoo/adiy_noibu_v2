@@ -495,7 +495,20 @@
         trackWrapper.scrollLeft = scrollLeftPos - walk;
       }
     });
+
   });
+  const wrapper = document.querySelector('.comp-grid-wrapper');
+
+if (wrapper) {
+  // Mobile touch listeners ko passive force karein taake page scroll na ruke
+  wrapper.addEventListener('touchstart', function(e) {
+    // DO NOT call e.preventDefault()
+  }, { passive: true });
+
+  wrapper.addEventListener('touchmove', function(e) {
+    // DO NOT call e.preventDefault()
+  }, { passive: true });
+}
 </script>
 
 {% schema %}
