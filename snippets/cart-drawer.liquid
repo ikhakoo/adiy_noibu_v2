@@ -1731,7 +1731,11 @@
             Checkout
           </button>
         </div>
-        {% render 'affirm-promo-message', price: cart.total_price %}
+        {% comment %} {% render 'affirm-promo-message', price: cart.total_price %} {% endcomment %}
+        <div class="cart-drawer-footer-text">
+          <p>BUILD NOW, PAY LATER</p>
+          <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/Untitled_design_32.png-2.png?v=1785184098" alt="affirm">
+        </div>
       </div>
     </div>
   </div>
