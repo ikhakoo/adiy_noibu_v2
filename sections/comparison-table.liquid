@@ -221,7 +221,17 @@
       display: flex;
     }
   }
+.comp-grid-wrapper {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch;
+}
 
+/* Jab user horizontal swipe na kar raha ho tab browser naturally scroll kare */
+.comp-grid {
+  touch-action: pan-y !important;
+}
   @media (max-width: 576px) {
     .comp-card {
       flex: 0 0 88%;
