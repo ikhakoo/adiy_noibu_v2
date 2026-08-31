@@ -379,8 +379,8 @@
 }
 
 .template-product .product__info-wrapper .price__regular .price-item--regular{
-    font-weight: 800;
-    font-size: 32px;
+    font-weight: 500;
+    font-size: 30px;
 }
 .template-product .product__info-wrapper .title-top-text{
     background: #EEEEEB;
