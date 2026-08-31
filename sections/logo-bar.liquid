@@ -119,6 +119,19 @@
       max-width: calc(100% / {{ section.settings.visible_mobile }});
     }
   }
+
+  @media screen and (max-width: 768px){
+    .logo-bar-{{ section.id }} {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .logo-bar-{{ section.id }} .logo-bar__quote {
+      padding:0
+    }
+    .logo-bar-{{ section.id }} .logo-bar__container{
+      padding: 20px 10px;
+    }
+  }
 {%- endstyle -%}
 
 <div class="page-width logo-bar-{{ section.id }}">
