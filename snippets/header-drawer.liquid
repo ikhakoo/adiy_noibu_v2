@@ -355,7 +355,10 @@
                                   {%- endif -%}
                                 </div>
                                 <div class="custom-drawer__card-info">
-                                  <h3 class="custom-drawer__card-title">{{ product.title | default: "Product Title" }}</h3>
+                                  {% comment %} <h3 class="custom-drawer__card-title">{{ product.title | default: "Product Title" }}</h3> {% endcomment %}
+                                  <h3 class="custom-drawer__card-title">
+                                    {{ product.metafields.smart.short_name | default: product.title | default: "Product Title" }}
+                                  </h3>
                                   {%- if product.metafields.custom.short_description != blank -%}
                                     <p class="custom-drawer__card-desc">{{ product.metafields.custom.short_description.value | default: product.metafields.custom.short_description }}</p>
                                   {%- endif -%}
