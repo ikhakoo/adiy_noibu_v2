@@ -1001,7 +1001,7 @@
                     {{- block.settings.text -}}
                   </p>
                 
-                {%- when 'review_rating_bar' -%}
+                {% comment %} {%- when 'review_rating_bar' -%}
                   <div class="product-review-bar-block" {{ block.shopify_attributes }}>
                     <div class="review-bar-content">
                       <div class="review-stars-icon">
@@ -1037,7 +1037,52 @@
                         </span>
                       </div>
                     </div>
-                  </div>  
+                  </div>   {% endcomment %}
+                {%- when 'review_rating_bar' -%}
+                  <div class="product-review-bar-block" {{ block.shopify_attributes }}>
+                    {%- if block.settings.review_link != blank -%}
+                      <a href="{{ block.settings.review_link }}" class="review-bar-content-link">
+                    {%- endif -%}
+
+                      <div class="review-bar-content">
+                        <div class="review-stars-icon">
+                          {%- if block.settings.svg_code != blank -%}
+                            {{ block.settings.svg_code }}
+                          {%- elsif block.settings.icon != blank -%}
+                            <img
+                              src="{{ block.settings.icon | image_url: width: 150 }}"
+                              alt="Star Ratings"
+                              loading="lazy"
+                              width="120"
+                              height="auto"
+                            />
+                          {%- else -%}
+                            {%- comment -%} Fallback 5-Star Green Badges {%- endcomment -%}
+                            <div class="default-star-badges">
+                              {%- for i in (1..5) -%}
+                                <span class="star-box">
+                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+                                    <path d="M12 1.75l3.09 6.26 6.91.99-5 4.87 1.18 6.88L12 17.5l-6.18 3.25 1.18-6.88-5-4.87 6.91-.99L12 1.75z"/>
+                                  </svg>
+                                </span>
+                              {%- endfor -%}
+                            </div>
+                          {%- endif -%}
+                        </div>
+
+                        <div class="review-text-wrapper">
+                          {{ block.settings.rating_text | default: '4.8 / 5 stars' }}
+                          <span class="review-count-text">
+                            <span class="dynamic-review-count-global">{{ block.settings.base_count | default: '1746' }}</span>
+                            {{ block.settings.text_suffix | default: 'reviews' }}
+                          </span>
+                        </div>
+                      </div>
+
+                    {%- if block.settings.review_link != blank -%}
+                      </a>
+                    {%- endif -%}
+                  </div>
 
                 {%- when 'title' -%}
                   <div class="product__title" {{ block.shopify_attributes }}>
