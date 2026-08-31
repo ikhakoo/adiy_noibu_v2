@@ -1,1 +1,106 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"consultant_cta_banner_qfpJDQ":{"type":"consultant-cta-banner","name":"Consultant CTA Banner","settings":{"heading":"Not sure what your space needs?","subheading":"Whatever your space calls for, our team can help you plan it right.","button_label":"Talk to an Expert","button_link":"#chat","section_bg_color":"#1a1d1a","box_bg_color":"#232723","border_color":"#2e332e","heading_color":"#ffffff","subheading_color":"#968068","button_bg_color":"#1b4d3e","button_text_color":"#ffffff","padding_top":36,"padding_bottom":36}},"footer":{"type":"footer","blocks":{"link_list_cgQKFR":{"type":"link_list","settings":{"heading":"Shop","menu":"shop"}},"link_list_MxYEzU":{"type":"link_list","settings":{"heading":"Explore","menu":"smart-3-0-footer-about-us"}},"link_list_XiMVyf":{"type":"link_list","settings":{"heading":"Support","menu":"smart-3-0-footer-support"}},"custom_text_col_N3iXy4":{"type":"custom_text_col","settings":{"heading":"Need Help? We’re here for you!","content":"<p>Send us an email at <a href=\"mailto:support@a-diy.com\" title=\"mailto:support@a-diy.com\">support@a-diy.com<\/a>, give us a call <a href=\"tel:+17863582872\" title=\"tel:+17863582872\">1 (786) 358-2872<\/a>.<\/p>","address":"<p>53 Knightsbridge Rd Suite 204<br\/>Piscataway, NJ 08854<\/p>"}}},"block_order":["link_list_cgQKFR","link_list_MxYEzU","link_list_XiMVyf","custom_text_col_N3iXy4"],"settings":{"color_scheme":"scheme-3","logo_text":"A-DIY","logo_image":"shopify:\/\/shop_images\/logotype.png","newsletter_enable":true,"newsletter_heading":"Subscribe for store updates and discounts.","newsletter_subheading":"Be the first to know of our exclusive store updates, special offers, and discounts","input_placeholder":"Enter Email Address","button_text":"Subscribe","show_social":true,"social_handle_text":"@decks","social_icon_height":24,"social_icon_1":"shopify:\/\/shop_images\/facebook.png","social_link_1":"https:\/\/www.facebook.com\/ADIY.outdoors","social_icon_2":"shopify:\/\/shop_images\/Instagram.png","social_link_2":"https:\/\/www.instagram.com\/decks\/","social_icon_3":"shopify:\/\/shop_images\/tiktok.png","social_link_3":"https:\/\/www.tiktok.com\/@decks","social_icon_4":"shopify:\/\/shop_images\/youtube.png","social_link_4":"https:\/\/www.youtube.com\/@decks","social_link_5":"","copyright_text":"A-DIY is a registered trademark of Laccoo Outdoors, LLC. ©2026, Laccoo Outdoors, LLC All rights reserved.","policy_menu":"smart-3-0-footer-bottom","show_default_payments":true,"margin_top":0,"padding_top":36,"padding_bottom":36}}},"order":["consultant_cta_banner_qfpJDQ","footer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "consultant_cta_banner_qfpJDQ": {
+      "type": "consultant-cta-banner",
+      "name": "Consultant CTA Banner",
+      "settings": {
+        "heading": "Not sure what your space needs?",
+        "subheading": "Whatever your space calls for, our team can help you plan it right.",
+        "button_label": "Talk to an Expert",
+        "button_link": "#chat",
+        "section_bg_color": "#1a1d1a",
+        "box_bg_color": "#232723",
+        "border_color": "#2e332e",
+        "heading_color": "#ffffff",
+        "subheading_color": "#968068",
+        "button_bg_color": "#1b4d3e",
+        "button_text_color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link_list_cgQKFR": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop",
+            "menu": "shop"
+          }
+        },
+        "link_list_MxYEzU": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Explore",
+            "menu": "smart-3-0-footer-about-us"
+          }
+        },
+        "link_list_XiMVyf": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Support",
+            "menu": "smart-3-0-footer-support"
+          }
+        },
+        "custom_text_col_N3iXy4": {
+          "type": "custom_text_col",
+          "settings": {
+            "heading": "Need Help? We’re here for you!",
+            "content": "<p>Send us an email at <a href=\"mailto:support@a-diy.com\" title=\"mailto:support@a-diy.com\">support@a-diy.com</a>, give us a call <a href=\"tel:+17863582872\" title=\"tel:+17863582872\">1(786) 358-2872</a>.</p>",
+            "address": "<p>53 Knightsbridge Rd Suite 204<br/>Piscataway, NJ 08854</p>"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_cgQKFR",
+        "link_list_MxYEzU",
+        "link_list_XiMVyf",
+        "custom_text_col_N3iXy4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-3",
+        "logo_text": "A-DIY",
+        "logo_image": "shopify://shop_images/logotype.png",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe for store updates and discounts.",
+        "newsletter_subheading": "Be the first to know of our exclusive store updates, special offers, and discounts",
+        "input_placeholder": "Enter Email Address",
+        "button_text": "Subscribe",
+        "show_social": true,
+        "social_handle_text": "@decks",
+        "social_icon_height": 24,
+        "social_icon_1": "shopify://shop_images/facebook.png",
+        "social_link_1": "https://www.facebook.com/ADIY.outdoors",
+        "social_icon_2": "shopify://shop_images/Instagram.png",
+        "social_link_2": "https://www.instagram.com/decks/",
+        "social_icon_3": "shopify://shop_images/tiktok.png",
+        "social_link_3": "https://www.tiktok.com/@decks",
+        "social_icon_4": "shopify://shop_images/youtube.png",
+        "social_link_4": "https://www.youtube.com/@decks",
+        "social_link_5": "",
+        "copyright_text": "A-DIY is a registered trademark of Laccoo Outdoors, LLC. ©2026, Laccoo Outdoors, LLC All rights reserved.",
+        "policy_menu": "smart-3-0-footer-bottom",
+        "show_default_payments": true,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "consultant_cta_banner_qfpJDQ",
+    "footer"
+  ]
+}
