@@ -81,7 +81,6 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    touch-action: pan-x pan-y; /* FIX: Allow page vertical scroll & carousel horizontal scroll */
   }
 
   .pb-video-carousel__track-wrapper::-webkit-scrollbar {
@@ -117,7 +116,7 @@
     display: block;
   }
 
-  /* Floating Overlay Controls */
+  /* Floating Overlay Controls (Poly & Bark Style) */
   .pb-video-controls {
     position: absolute;
     bottom: 16px;
@@ -167,7 +166,7 @@
     cursor: pointer;
     position: relative;
     backdrop-filter: blur(2px);
-    touch-action: pan-y; /* FIX: Changed from none to pan-y to allow page scrolling */
+    touch-action: none; /* Smooth touch dragging optimization */
     user-select: none;
   }
 
@@ -221,16 +220,19 @@
     }
   }
 
-  @media screen and (max-width: 749px) {
-    .pb-control-btn {
-      width: 44px;
-      height: 44px;
-    }
-    .pb-video-carousel__nav-btn {
-      width: 44px;
-      height: 44px;
-    }
+
+@media screen and (max-width: 749px) {
+
+  /* Play/pause and mute were 38x38; carousel arrows 42x42. */
+  .pb-control-btn {
+    width: 44px;
+    height: 44px;
   }
+  .pb-video-carousel__nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#faf8f5' }};">
@@ -411,6 +413,7 @@
       // Play/Pause Trigger
       if (playBtn) {
         playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
           if (video.paused) {
             stopOtherVideos(video);
             video.play().catch(() => {});
@@ -423,6 +426,7 @@
       // Mute/Unmute Trigger
       if (muteBtn) {
         muteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
           video.muted = !video.muted;
           updateMuteIcons();
         });
@@ -446,7 +450,7 @@
       video.addEventListener('play', updatePlayIcons);
       video.addEventListener('pause', updatePlayIcons);
 
-      // --- SMOOTH DRAGGING / SCRUBBING LOGIC (FIXED) ---
+      // --- SMOOTH DRAGGING / SCRUBBING LOGIC ---
       if (progressBar) {
         function scrub(e) {
           const rect = progressBar.getBoundingClientRect();
@@ -460,6 +464,7 @@
         }
 
         progressBar.addEventListener('pointerdown', (e) => {
+          e.stopPropagation();
           isDragging = true;
           progressBar.classList.add('is-dragging');
           progressBar.setPointerCapture(e.pointerId);
@@ -468,12 +473,14 @@
 
         progressBar.addEventListener('pointermove', (e) => {
           if (isDragging) {
+            e.stopPropagation();
             scrub(e);
           }
         });
 
         const stopDragging = (e) => {
           if (isDragging) {
+            e.stopPropagation();
             isDragging = false;
             progressBar.classList.remove('is-dragging');
             if (e.pointerId && progressBar.hasPointerCapture(e.pointerId)) {
@@ -505,7 +512,8 @@
 </script>
 
 {%- comment -%}
-  VideoObject Schema
+  VideoObject for each captioned card. Without this, 15 videos on this page carry
+  no machine-readable text at all - no transcript, no caption track, no name.
 {%- endcomment -%}
 {%- capture video_objects -%}
   {%- assign vo_separator = '' -%}
@@ -632,7 +640,7 @@
           "type": "text",
           "id": "video_title",
           "label": "Video title",
-          "info": "Text alternative for the video."
+          "info": "Text alternative for the video, read by screen readers and used for VideoObject structured data. Videos with no text are invisible to search and answer engines."
         },
         {
           "type": "textarea",
@@ -644,7 +652,7 @@
           "type": "text",
           "id": "video_upload_date",
           "label": "Upload date (YYYY-MM-DD)",
-          "info": "Optional."
+          "info": "Optional. Required by Google before a video can appear in video results; it cannot be read from the file."
         }
       ]
     }
