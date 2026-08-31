@@ -111,6 +111,10 @@
     }
     .consultant-icon-sec2 .multicolumn-card .multicolumn-card__info .rte{
     }
+    .product__info-container .affirm-as-low-as{
+        font-size: 11px;
+        text-align: center;
+    }
 }
 
 
