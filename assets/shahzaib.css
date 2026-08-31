@@ -998,3 +998,7 @@
     text-align: center;
     font-weight: 400;
 }
+.template-page-informatic-pages ul li p{
+    margin: 0;
+    display: inline;
+}
