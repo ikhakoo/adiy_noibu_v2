@@ -1103,7 +1103,7 @@
                 {%- when 'financing_widget' -%}
                   <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
                     <div class="financing-header">
-                      <span class="financing-title">{{ block.settings.heading_text }}</span>
+                      <span class="financing-title">{% render 'affirm-promo-message', price: product.price %}</span>
                       <span class="financing-divider" style="margin: 0; color: #adadad;">|</span>
                       <button type="button" class="financing-toggle-btn js-financing-toggle">
                         <span class="toggle-text">Show more</span>
