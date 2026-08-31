@@ -270,6 +270,59 @@
     width: auto;
   }
 
+  /* Container Wrapper Styling */
+.footer-custom_newsletter-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Form Container ko modern pill shape dena */
+.footer-custom_newsletter-form form {
+  background-color: #3b3b3b !important; /* Dark Grey Background */
+  border-radius: 50px !important;       /* Rounded Corners */
+  padding: 6px 6px 6px 24px !important;  /* Inner Spacing */
+  display: flex !important;
+  align-items: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Text Input Field Override */
+.footer-custom_newsletter-form input[type="email"] {
+  background: transparent !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  padding: 10px 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+/* Placeholder Text Styling */
+.footer-custom_newsletter-form input[type="email"]::placeholder {
+  color: #cccccc !important;
+  opacity: 1 !important;
+}
+
+/* Subscribe Button Styling */
+.footer-custom_newsletter-form button {
+  background-color: #ffffff !important; /* White Button */
+  color: #000000 !important;           /* Black Text */
+  border-radius: 40px !important;       /* Rounded Button */
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  padding: 12px 28px !important;
+  border: none !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: opacity 0.2s ease !important;
+}
+
+/* Button Hover Effect */
+.footer-custom_newsletter-form button:hover {
+  opacity: 0.9 !important;
+}
+
   /* Responsive Queries */
   @media screen and (min-width: 750px) {
     .footer-centered {
