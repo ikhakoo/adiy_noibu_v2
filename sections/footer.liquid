@@ -365,7 +365,7 @@
         <p class="footer-centered__subheading">{{ section.settings.newsletter_subheading }}</p>
       {%- endif -%}
 
-      {%- if section.settings.newsletter_enable -%}
+      {% comment %} {%- if section.settings.newsletter_enable -%}
         {%- form 'customer', class: 'footer-centered__newsletter-form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <div class="footer-centered__input-wrapper">
@@ -387,7 +387,8 @@
             </button>
           </div>
         {%- endform -%}
-      {%- endif -%}
+      {%- endif -%} {% endcomment %}
+      <div class="klaviyo-form-YqJLxx footer-centered__newsletter-form"></div>
 
       <!-- Social Icons with Custom Image Upload Support -->
       {%- if section.settings.show_social -%}
