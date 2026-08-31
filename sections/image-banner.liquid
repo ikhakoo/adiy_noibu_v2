@@ -322,12 +322,12 @@
                 >
               {%- endif -%}
 
-              {%- if block.settings.review_text != blank -%}
+              {%- if block.settings.review_text_before != blank -%}
                 {% comment %} <span class="review-badge__text" style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px;">
                   {{ block.settings.review_text }}
                 </span> {% endcomment %}
                 <span class="review-badge__text" style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px;">
-                  {{ block.settings.review_text-before }} 
+                  {{ block.settings.review_text_before }} 
                   <span class="dynamic-review-count-global">{{ block.settings.base_count }}</span> 
                   {{ block.settings.review_text_after }}
                 </span>
