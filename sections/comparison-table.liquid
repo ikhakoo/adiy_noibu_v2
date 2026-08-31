@@ -312,7 +312,6 @@
 
   </div>
 </section>
-
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const sectionContainer = document.querySelector('.comp-section-{{ section.id }}');
@@ -362,10 +361,9 @@
     window.addEventListener('resize', updateThumbUI);
     updateThumbUI();
 
-    /* 2. Pointer Capture Dragging */
+    /* 2. Pointer Capture Dragging (Thumb) */
     scrollThumb.addEventListener('pointerdown', (e) => {
       e.stopPropagation();
-      e.preventDefault();
 
       isThumbDragging = true;
       dragStartX = e.clientX;
@@ -438,22 +436,26 @@
       });
     });
 
-    /* 4. Mouse Dragging on Content Container */
+    /* 4. Safe Content Dragging (Fixes Vertical Scroll Interference) */
     let isTrackDragging = false;
-    let startX, scrollLeftPos;
+    let startClientX = 0;
+    let startClientY = 0;
+    let scrollLeftPos = 0;
+    let isHorizontalIntent = false;
 
     trackWrapper.addEventListener('mousedown', (e) => {
       if (scrollBarTrack.contains(e.target)) return;
       isTrackDragging = true;
-      trackWrapper.style.scrollBehavior = 'auto';
-      trackWrapper.classList.add('is-dragging');
-      startX = e.pageX - trackWrapper.offsetLeft;
+      isHorizontalIntent = false;
+      startClientX = e.clientX;
+      startClientY = e.clientY;
       scrollLeftPos = trackWrapper.scrollLeft;
     });
 
     document.addEventListener('mouseup', () => {
       if (isTrackDragging) {
         isTrackDragging = false;
+        isHorizontalIntent = false;
         trackWrapper.style.scrollBehavior = 'smooth';
         trackWrapper.classList.remove('is-dragging');
       }
@@ -461,10 +463,27 @@
 
     trackWrapper.addEventListener('mousemove', (e) => {
       if (!isTrackDragging) return;
-      e.preventDefault();
-      const x = e.pageX - trackWrapper.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      trackWrapper.scrollLeft = scrollLeftPos - walk;
+
+      const deltaX = Math.abs(e.clientX - startClientX);
+      const deltaY = Math.abs(e.clientY - startClientY);
+
+      // Check intent: horizontally drag karna chahta hai ya vertically scroll
+      if (!isHorizontalIntent) {
+        if (deltaX > 5 && deltaX > deltaY) {
+          isHorizontalIntent = true;
+          trackWrapper.style.scrollBehavior = 'auto';
+          trackWrapper.classList.add('is-dragging');
+        } else if (deltaY > 5) {
+          // Vertical movement detect hui -> drag Cancel kar dein
+          isTrackDragging = false;
+          return;
+        }
+      }
+
+      if (isHorizontalIntent) {
+        const walk = (e.clientX - startClientX) * 1.5;
+        trackWrapper.scrollLeft = scrollLeftPos - walk;
+      }
     });
   });
 </script>
