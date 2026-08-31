@@ -75,13 +75,16 @@
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
       assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
 
-      # Type scale weights. font_modify returns nil when the family has no such weight, so each
-      # step falls back to the next lighter one that does exist. The resolved weight is written
-      # into a CSS variable below, so CSS only ever asks for a weight that was actually loaded
-      # - that avoids the browser synthesising a faux-bold.
+      # Type scale weights - the scale steps 700/600/500/400/300 from h1 down to h5.
+      # font_modify returns nil when the family has no such weight, so each step falls back to
+      # one that does exist. The resolved weight is written into a CSS variable below, so CSS
+      # only ever asks for a weight that was actually loaded - that avoids the browser
+      # synthesising a faux-bold.
       assign heading_font_700 = settings.type_header_font | font_modify: 'weight', '700' | default: settings.type_header_font
       assign heading_font_600 = settings.type_header_font | font_modify: 'weight', '600' | default: heading_font_700
-      assign heading_font_800 = settings.type_header_font | font_modify: 'weight', '800' | default: heading_font_700
+      assign heading_font_500 = settings.type_header_font | font_modify: 'weight', '500' | default: settings.type_header_font
+      assign heading_font_400 = settings.type_header_font | font_modify: 'weight', '400' | default: settings.type_header_font
+      assign heading_font_300 = settings.type_header_font | font_modify: 'weight', '300' | default: settings.type_header_font
     %}
 
     {% style %}
@@ -103,7 +106,12 @@
       {%- unless heading_font_700.weight == body_font_bold.weight and heading_font_700.family == body_font_bold.family -%}
         {{ heading_font_700 | font_face: font_display: 'swap' }}
       {%- endunless -%}
-      {{ heading_font_800 | font_face: font_display: 'swap' }}
+      {%- unless heading_font_500.weight == settings.type_header_font.weight -%}
+        {{ heading_font_500 | font_face: font_display: 'swap' }}
+      {%- endunless -%}
+      {%- unless heading_font_300.weight == settings.type_header_font.weight -%}
+        {{ heading_font_300 | font_face: font_display: 'swap' }}
+      {%- endunless -%}
 
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
@@ -161,11 +169,11 @@
         --font-heading-weight: {{ settings.type_header_font.weight }};
 
         /* Type scale weights - resolved above, so these only name weights that were loaded. */
-        --font-weight-h1: {{ heading_font_800.weight }};
-        --font-weight-h2: {{ heading_font_700.weight }};
-        --font-weight-h3: {{ heading_font_700.weight }};
-        --font-weight-h4: {{ heading_font_600.weight }};
-        --font-weight-h5: {{ heading_font_600.weight }};
+        --font-weight-h1: {{ heading_font_700.weight }};
+        --font-weight-h2: {{ heading_font_600.weight }};
+        --font-weight-h3: {{ heading_font_500.weight }};
+        --font-weight-h4: {{ heading_font_400.weight }};
+        --font-weight-h5: {{ heading_font_300.weight }};
         --font-weight-eyebrow: {{ heading_font_600.weight }};
 
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
@@ -308,7 +316,7 @@
 
       @media screen and (min-width: 750px) {
         body {
-          font-size: 1.7rem;
+          font-size: 1.8rem;
         }
       }
     {% endstyle %}
@@ -354,9 +362,11 @@
     {%- unless settings.type_header_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       {%- comment -%}
-        Above-the-fold headings use 700/800. Preloading only weight 400 meant those
-        files were not discovered until the blocking style block had parsed.
-        The 400 weight is already preloaded just above via type_body_font.
+        Above-the-fold headings use 700 (h1) and 600 (h2, eyebrow). Preloading only
+        weight 400 meant those files were not discovered until the blocking style block
+        had parsed. The 400 weight is already preloaded just above via type_body_font;
+        the lighter 500/300 steps sit further down the page, so they are left to the
+        normal font_face discovery.
       {%- endcomment -%}
       {%- unless settings.type_header_font.family == settings.type_body_font.family -%}
         <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
@@ -364,8 +374,8 @@
       {%- if heading_font_700 -%}
         <link rel="preload" as="font" href="{{ heading_font_700 | font_url }}" type="font/woff2" crossorigin>
       {%- endif -%}
-      {%- if heading_font_800 -%}
-        <link rel="preload" as="font" href="{{ heading_font_800 | font_url }}" type="font/woff2" crossorigin>
+      {%- if heading_font_600 -%}
+        <link rel="preload" as="font" href="{{ heading_font_600 | font_url }}" type="font/woff2" crossorigin>
       {%- endif -%}
       {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
