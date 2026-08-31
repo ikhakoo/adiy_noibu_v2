@@ -198,14 +198,16 @@
   .financing-logo-wrapper { display: inline-flex; align-items: center; }
   .financing-logo-wrapper img { height: auto; max-height: 20px; width: auto; object-fit: contain; }
 
-  .financing-qualify-link {
+  .financing-qualify-link,
+  .deck-card__financing-bar .affirm-modal-trigger {
     color: #1b3d2f;
     text-decoration: underline;
     font-weight: 500;
     transition: opacity 0.2s ease;
   
   }
-  .financing-qualify-link:hover { opacity: 0.8; }
+  .financing-qualify-link:hover,
+  .deck-card__financing-bar .affirm-modal-trigger:hover { opacity: 0.8; }
 
   .deck-card__image-wrapper {
     width: 100%;
@@ -309,6 +311,7 @@
   .deck-card.hide .deck-card__badge{
     opacity:0;
   }
+  
 
   @media screen and (max-width: 850px) {
     .scrollbar-navigation {
