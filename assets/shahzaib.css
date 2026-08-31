@@ -102,7 +102,7 @@
     transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
 .banner__box .banner__text{
-    color#fff;
+    color: #fff;
 }
 .hero-sec.banner .banner__box .banner__buttons .button:hover{
     background: #000;
