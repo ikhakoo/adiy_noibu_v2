@@ -15,6 +15,7 @@
         "review_rating_bar_CcqBf9": {
           "type": "review_rating_bar",
           "settings": {
+            "review_link": "shopify://pages/reviews",
             "svg_code": "",
             "icon": "shopify://shop_images/Frame_1597879831.png",
             "rating_text": "4.8 / 5 stars",
