@@ -49,6 +49,8 @@
                       muted: true,
                       controls: false,
                       playsinline: true,
+                      webkit-playsinline: true,
+                      preload: 'metadata',
                       class: 'om-card__video'
                   }}
 
@@ -146,11 +148,6 @@
     gap: 15px;
   }
 
-  /* .om-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-  } */
-
   .om-card__media {
     width: 100%;
     aspect-ratio: 10 / 15;
@@ -158,13 +155,15 @@
     border-radius: 20px;
     background: #eaeaea;
     margin-bottom: 10px;
+    position: relative;
   }
 
-  .om-card__img {
+  .om-card__img,
+  .om-card__video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
+    object-fit: cover;
   }
 
   .om-card__title {
@@ -185,18 +184,6 @@
     margin-bottom:20px;
     margin-top: 0;
   }
-  .om-card__media {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .om-card__img,
-  .om-card__video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
 
   /* Tablet */
   @media (max-width: 1240px) {
@@ -209,11 +196,7 @@
     .om-section {
       padding: var(--om-pt-m, 50px) 0 var(--om-pb-m, 50px);
     }
-
-    .om-title{
-    }
     
-    /* Container padding adjustment for edge-to-edge look */
     .om-container { 
       padding: 0; 
     }
@@ -223,7 +206,6 @@
       margin-bottom: 28px;
     }
 
-    /* Grid turning into a Scroll Container */
     .om-grid {
       display: flex;
       flex-wrap: nowrap;
@@ -231,18 +213,16 @@
       -webkit-overflow-scrolling: touch;
       scroll-snap-type: x mandatory;
       gap: 16px;
-      padding: 0 20px 20px; /* Side padding so cards don't touch edges */
-      scrollbar-width: none; /* Hide scrollbar for Firefox */
+      padding: 0 20px 20px;
+      scrollbar-width: none;
     }
 
-    /* Hide scrollbar for Chrome/Safari */
     .om-grid::-webkit-scrollbar {
       display: none;
     }
 
-    /* Card adjustment for Slider */
     .om-card {
-      flex: 0 0 90%; /* Card width on mobile (80% makes next card visible) */
+      flex: 0 0 90%;
       scroll-snap-align: center;
       padding:0;
     }
@@ -250,72 +230,67 @@
     .om-card__desc { font-size: 13.5px; }
   }
 {% endstylesheet %}
+
 <script>
   (function() {
     const SECTION_ID = '{{ section_id }}';
 
-    // 1. Core function strictly scoped to THIS section ID only
-    function ensureVideoAutoplay() {
+    function initIOSAutoplay() {
       const section = document.getElementById(SECTION_ID);
       if (!section) return;
 
       const videos = section.querySelectorAll('video.om-card__video');
+      
       videos.forEach(function(video) {
+        // iOS Safari ke zaroori HTML attributes enforce karein
         video.muted = true;
+        video.defaultMuted = true;
         video.playsInline = true;
         video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
         video.setAttribute('muted', '');
-        
-        // Force play request
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(function() {
-            // Fallback for iOS/Safari: re-trigger play on user touch/click
-            const forcePlay = function() {
-              video.play();
-              window.removeEventListener('click', forcePlay);
-              window.removeEventListener('touchstart', forcePlay);
-            };
-            window.addEventListener('click', forcePlay, { once: true });
-            window.addEventListener('touchstart', forcePlay, { once: true });
-          });
+
+        // IntersectionObserver: Jab video viewport mein aye tabhi play kare (iOS Autoplay Policy bypass)
+        if ('IntersectionObserver' in window) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const promise = video.play();
+                if (promise !== undefined) {
+                  promise.catch(() => {
+                    // Touch fallback agar browser policy block kare
+                    const playOnTouch = () => {
+                      video.play();
+                      document.removeEventListener('touchstart', playOnTouch);
+                    };
+                    document.addEventListener('touchstart', playOnTouch, { once: true });
+                  });
+                }
+              } else {
+                video.pause();
+              }
+            });
+          }, { threshold: 0.2 });
+
+          observer.observe(video);
+        } else {
+          video.play().catch(() => {});
         }
       });
     }
 
-    // 2. Initial execution
-    ensureVideoAutoplay();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initIOSAutoplay);
+    } else {
+      initIOSAutoplay();
+    }
 
-    // 3. Catch ALL Ajax / Variant changes via Global Click Interception
-    // Filters strictly for variant selectors to avoid affecting anything else
-    document.addEventListener('change', function(e) {
-      if (e.target && (e.target.matches('select, input[type="radio"]') && e.target.closest('form[action*="/cart/add"]'))) {
-        setTimeout(ensureVideoAutoplay, 100);
-        setTimeout(ensureVideoAutoplay, 400); // Dual timer for dynamic delays
+    // Shopify Theme Editor / Dynamic Render Support
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail.sectionId === '{{ section.id }}') {
+        initIOSAutoplay();
       }
-    }, true);
-
-    document.addEventListener('click', function(e) {
-      if (e.target && e.target.closest('variant-radios, variant-selects, form[action*="/cart/add"]')) {
-        setTimeout(ensureVideoAutoplay, 100);
-        setTimeout(ensureVideoAutoplay, 400);
-      }
-    }, true);
-
-    // 4. Fallback: Re-play when video gets paused unexpectedly inside this section
-    document.addEventListener('pause', function(e) {
-      if (e.target && e.target.tagName === 'VIDEO' && e.target.classList.contains('om-card__video')) {
-        const parentSection = e.target.closest('#' + SECTION_ID);
-        if (parentSection) {
-          setTimeout(function() {
-            if (e.target.paused) {
-              e.target.play().catch(function(){});
-            }
-          }, 50);
-        }
-      }
-    }, true);
-
+    });
   })();
 </script>
 
