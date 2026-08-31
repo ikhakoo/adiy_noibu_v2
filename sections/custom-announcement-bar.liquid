@@ -257,16 +257,18 @@
 
               <div class="contact">
                 <div class="header-contact-icon">
-                  {% if block.settings.contact_svg_code != blank %}
-                    {{ block.settings.contact_svg_code }}
-                  {% elsif block.settings.contact_icon != blank %}
-                    <img
-                      src="{{ block.settings.contact_icon | image_url: width: 88 }}"
-                      alt=""
-                      loading="lazy"
-                    >
-                  {% endif %}
-                  <span class="online-indicator-badge"></span>
+                  <a href="{{ block.settings.phone_link }}">
+                    {% if block.settings.contact_svg_code != blank %}
+                      {{ block.settings.contact_svg_code }}
+                    {% elsif block.settings.contact_icon != blank %}
+                      <img
+                        src="{{ block.settings.contact_icon | image_url: width: 88 }}"
+                        alt=""
+                        loading="lazy"
+                      >
+                    {% endif %}
+                    <span class="online-indicator-badge"></span>
+                  </a>
                 </div>
 
                 {% if block.settings.phone != blank %}
