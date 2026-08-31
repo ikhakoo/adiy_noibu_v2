@@ -453,10 +453,8 @@
                 <div class="deck-card__financing-bar">
                   {% render 'affirm-promo-message', price: product.selected_or_first_available_variant.price %}
 
-                  {%- comment -%}
-                    Render as plain text rather than href="#" when no URL is set.
-                  {%- endcomment -%}
-                  {%- if block.settings.financing_link_text != blank -%}
+                  
+                  {% comment %} {%- if block.settings.financing_link_text != blank -%}
                     {%- if block.settings.financing_link_url != blank -%}
                       <a href="{{ block.settings.financing_link_url }}" class="financing-qualify-link">
                         {{ block.settings.financing_link_text }}
@@ -464,7 +462,7 @@
                     {%- else -%}
                       <span class="financing-qualify-link">{{ block.settings.financing_link_text }}</span>
                     {%- endif -%}
-                  {%- endif -%} 
+                  {%- endif -%}  {% endcomment %}
                   
                   
                 </div>
