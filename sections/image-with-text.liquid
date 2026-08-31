@@ -281,18 +281,13 @@
             {%- assign page_h1_used = false -%}
             {%- for block in section.blocks -%}
               {% case block.type %}
-                {%- when 'heading' -%}
+                {% comment %} {%- when 'heading' -%}
                   {% if block.settings.sub_heading != blank %}
                     <h2 class="image-with-text__sub-heading" {{ block.shopify_attributes }}>
                       {{ block.settings.sub_heading }}
                     </h2>
                   {% endif %}
-                  {%- comment -%}
-                  Page heading rule: the first section rendered in a template owns the page h1,
-                  everything below it is h2. section.index counts only enabled sections, and is
-                  nil in the theme editor and the Section Rendering API - those fall through to
-                  h2, which looks identical because the size is pinned by a heading_size class.
-                  {%- endcomment -%}
+                  
                   {%- if section.index == 1 and section.location == 'template' and page_h1_used == false -%}
                   {%- assign page_heading_tag = 'h1' -%}
                   {%- assign page_h1_used = true -%}
@@ -302,7 +297,74 @@
             
                   <{{ page_heading_tag }} class="image-with-text__heading inline-richtext" {{ block.shopify_attributes }}>
                     {{ block.settings.heading }}
-                  </{{ page_heading_tag }}>
+                  </{{ page_heading_tag }}> {% endcomment %}
+                {%- when 'heading' -%}
+                  {%- assign sub_header_tag = block.settings.sub_heading_tag | default: 'h2' -%}
+                  
+                  {% if block.settings.sub_heading != blank %}
+                    <{{ sub_header_tag }}
+                      id="SubHeading-{{ block.id }}"
+                      class="{{ block.settings.class_sub_heading }} image-with-text__sub-heading"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{ block.settings.sub_heading }}
+                    </{{ sub_header_tag }}>
+
+                    {%- if block.settings.sub_font_size_desktop != blank or block.settings.sub_font_size_mobile != blank -%}
+                      <style>
+                        {%- if block.settings.sub_font_size_mobile != blank -%}
+                          #SubHeading-{{ block.id }} {
+                            font-size: {{ block.settings.sub_font_size_mobile | strip }}px !important;
+                          }
+                        {%- endif -%}
+
+                        {%- if block.settings.sub_font_size_desktop != blank -%}
+                          @media screen and (min-width: 750px) {
+                            #SubHeading-{{ block.id }} {
+                              font-size: {{ block.settings.sub_font_size_desktop | strip }}px !important;
+                            }
+                          }
+                        {%- endif -%}
+                      </style>
+                    {%- endif -%}
+                  {% endif %}
+                  
+                  {%- if block.settings.heading_tag != blank and block.settings.heading_tag != 'auto' -%}
+                    {%- assign page_heading_tag = block.settings.heading_tag -%}
+                  {%- elsif section.index == 1 and section.location == 'template' and page_h1_used == false -%}
+                    {%- assign page_heading_tag = 'h1' -%}
+                    {%- assign page_h1_used = true -%}
+                  {%- else -%}
+                    {%- assign page_heading_tag = 'h2' -%}
+                  {%- endif -%}
+
+                  {% if block.settings.heading != blank %}
+                    <{{ page_heading_tag }}
+                      id="ImageWithTextHeading-{{ block.id }}"
+                      class="{{ block.settings.class_heading }} image-with-text__heading inline-richtext"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{ block.settings.heading }}
+                    </{{ page_heading_tag }}>
+
+                    {%- if block.settings.font_size_desktop != blank or block.settings.font_size_mobile != blank -%}
+                      <style>
+                        {%- if block.settings.font_size_mobile != blank -%}
+                          #ImageWithTextHeading-{{ block.id }} {
+                            font-size: {{ block.settings.font_size_mobile | strip }}px !important;
+                          }
+                        {%- endif -%}
+
+                        {%- if block.settings.font_size_desktop != blank -%}
+                          @media screen and (min-width: 750px) {
+                            #ImageWithTextHeading-{{ block.id }} {
+                              font-size: {{ block.settings.font_size_desktop | strip }}px !important;
+                            }
+                          }
+                        {%- endif -%}
+                      </style>
+                    {%- endif -%}
+                  {% endif %}
 
                 {%- when 'caption' -%}
                   <p class="image-with-text__text image-with-text__text--caption {{ block.settings.text_style }} {{ block.settings.text_style }}--{{ block.settings.text_size }}" {{ block.shopify_attributes }}>
@@ -622,15 +684,86 @@
       "name": "t:sections.image-with-text.blocks.heading.name",
       "settings": [
         {
+          "type": "header",
+          "content": "Sub Heading Settings"
+        },
+        {
           "type": "inline_richtext",
           "id": "sub_heading",
           "label": "Sub Heading"
+        },
+        {
+          "type": "select",
+          "id": "sub_heading_tag",
+          "label": "Sub Heading Tag",
+          "default": "h2",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "class_sub_heading",
+          "label": "Sub Heading Add Class"
+        },
+        {
+          "type": "text",
+          "id": "sub_font_size_desktop",
+          "label": "Sub Heading Desktop Font Size (px)",
+          "info": "E.g. 20"
+        },
+        {
+          "type": "text",
+          "id": "sub_font_size_mobile",
+          "label": "Sub Heading Mobile Font Size (px)",
+          "info": "E.g. 14"
+        },
+        {
+          "type": "header",
+          "content": "Main Heading Settings"
         },
         {
           "type": "inline_richtext",
           "id": "heading",
           "default": "t:sections.image-with-text.blocks.heading.settings.heading.default",
           "label": "t:sections.image-with-text.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading Tag (SEO)",
+          "default": "auto",
+          "options": [
+            { "value": "auto", "label": "Auto (H1 if top section, else H2)" },
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "class_heading",
+          "label": "Heading Add Class"
+        },
+        {
+          "type": "text",
+          "id": "font_size_desktop",
+          "label": "Heading Desktop Font Size (px)",
+          "info": "E.g. 36"
+        },
+        {
+          "type": "text",
+          "id": "font_size_mobile",
+          "label": "Heading Mobile Font Size (px)",
+          "info": "E.g. 16"
         }
       ]
     },
