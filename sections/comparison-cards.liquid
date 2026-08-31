@@ -246,6 +246,17 @@
   /* MOBILE / TABLET RESPONSIVE FIXES */
   @media screen and (max-width: 850px) {
     .comparison-grid-wrapper {
+      /* overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      margin: 0 -1.5rem;
+      padding: 0 1.5rem;
+      cursor: grab;
+      user-select: none; */
+
       overflow-x: auto;
       overflow-y: hidden;
       scroll-behavior: smooth;
@@ -256,6 +267,9 @@
       padding: 0 1.5rem;
       cursor: grab;
       user-select: none;
+      /* Important */
+      overscroll-behavior-x: contain;
+      overscroll-behavior-y: auto;
     }
 
     .comparison-grid-wrapper.is-dragging {
@@ -627,6 +641,24 @@
         behavior: 'smooth'
       });
     });
+
+    /* Allow page vertical scrolling while mouse/trackpad is over horizontal scroller */
+    trackWrapper.addEventListener('wheel', function (e) {
+      // Only handle vertical scrolling
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) {
+        return;
+      }
+
+      // Allow the main page to continue scrolling
+      e.preventDefault();
+
+      window.scrollBy({
+        top: e.deltaY,
+        left: 0,
+        behavior: 'auto'
+      });
+    }, { passive: false });
+    
   });
 </script>
 
