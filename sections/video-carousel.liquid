@@ -75,12 +75,24 @@
 
   /* Slider Track */
   .pb-video-carousel__track-wrapper {
+    /* overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none; */
+
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+
+    /* Prevent horizontal scroll from affecting page,
+      while allowing vertical scroll to pass through */
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
   }
 
   .pb-video-carousel__track-wrapper::-webkit-scrollbar {
@@ -349,6 +361,25 @@
     const cards = sectionContainer.querySelectorAll('.js-pb-card');
     const prevBtn = sectionContainer.querySelector('.js-pb-prev');
     const nextBtn = sectionContainer.querySelector('.js-pb-next');
+
+    /* Allow vertical page scrolling while cursor is over carousel */
+    if (trackWrapper) {
+      trackWrapper.addEventListener('wheel', function (e) {
+        // Horizontal trackpad movement → keep scrolling the carousel
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+          return;
+        }
+
+        // Vertical mouse/trackpad movement → scroll the page
+        e.preventDefault();
+
+        window.scrollBy({
+          top: e.deltaY,
+          left: 0,
+          behavior: 'auto'
+        });
+      }, { passive: false });
+    }
 
     /* 1. Header Navigation Arrows */
     if (prevBtn && nextBtn && trackWrapper) {
