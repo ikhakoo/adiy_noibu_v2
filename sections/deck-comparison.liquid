@@ -451,7 +451,7 @@
               <!-- Financing -->
               {%- if block.settings.show_financing -%}
                 <div class="deck-card__financing-bar">
-                  {% render 'affirm-promo-message', price: card.product.price %}
+                  {% render 'affirm-promo-message', price: product.selected_or_first_available_variant.price %}
 
                   {%- comment -%}
                     Render as plain text rather than href="#" when no URL is set.
