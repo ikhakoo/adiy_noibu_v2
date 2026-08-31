@@ -25,7 +25,8 @@
           "settings": {
             "star_image": "shopify://shop_images/Frame_1597879831_774d76b7-a845-40e5-b221-67a0486e311b.png",
             "star_image_height": 25,
-            "review_text": "OVER 1,760 HAPPY CUSTOMERS",
+            "review_text_before": "4.8/5 Stars",
+            "review_text_after": "Reviews",
             "text_color": "#333333",
             "text_size": 16
           }
@@ -157,6 +158,35 @@
         "right_col_title": "Considering DIY?",
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "rich_text_QTiMjr": {
+      "type": "rich-text",
+      "blocks": {
+        "button_CNb87i": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "button_CNb87i"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-65990323-3194-4954-88df-bbdd751af6a7",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     },
     "multirow_KDHCBy": {
@@ -403,7 +433,15 @@
           "type": "heading",
           "settings": {
             "sub_heading": "BUILD NOW, PAY LATER",
-            "heading": "Build Now, Pay Later"
+            "sub_heading_tag": "h2",
+            "class_sub_heading": "",
+            "sub_font_size_desktop": "",
+            "sub_font_size_mobile": "",
+            "heading": "Build Now, Pay Later",
+            "heading_tag": "auto",
+            "class_heading": "",
+            "font_size_desktop": "",
+            "font_size_mobile": ""
           }
         },
         "text_nxQx7W": {
@@ -3140,6 +3178,7 @@
     "main",
     "image_banner_HeJkDJ",
     "text_comparison_KknYdp",
+    "rich_text_QTiMjr",
     "multirow_KDHCBy",
     "steps_process_section_Ygi4pa",
     "old_comparison_table_XkFyyw",
