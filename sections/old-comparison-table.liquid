@@ -291,6 +291,24 @@
     }
 
     trackWrapper.addEventListener('scroll', onScroll, { passive: true });
+
+    /* Allow vertical page scrolling while cursor is over table */
+    trackWrapper.addEventListener('wheel', function (e) {
+      // Keep horizontal scrolling inside the table
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        return;
+      }
+
+      // Send vertical scrolling to the main page
+      e.preventDefault();
+
+      window.scrollBy({
+        top: e.deltaY,
+        left: 0,
+        behavior: 'auto'
+      });
+    }, { passive: false });
+    
     window.addEventListener('resize', updateThumbUI);
     updateThumbUI();
 
