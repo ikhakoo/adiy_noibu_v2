@@ -453,3 +453,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // =============================== end ==========================
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Un sabhi horizontal scrollable elements ko target karein
+  // Agar aapke specific sections me unique class name hai (e.g., '.scrollable-section'), toh yahan update kar dein
+  const horizontalScrollContainers = document.querySelectorAll('.scrollable-section, [data-scrollable], .has-horizontal-scroll');
+
+  horizontalScrollContainers.forEach(function (container) {
+    // 1. Mouse Wheel / Trackpad Scroll Fix
+    container.addEventListener('wheel', function (e) {
+      // Agar user vertical (up/down) scroll kar raha hai
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        // Event ko capture karke page ko naturally scroll karne dein
+        e.stopPropagation();
+        
+        // Window ko vertically scroll karayein
+        window.scrollBy({
+          top: e.deltaY,
+          behavior: 'auto'
+        });
+      }
+    }, { passive: false });
+
+    // 2. Touch Devices (Mobile / Trackpad touch gestures) Fix
+    let startY = 0;
+    let startX = 0;
+
+    container.addEventListener('touchstart', function (e) {
+      startY = e.touches[0].pageY;
+      startX = e.touches[0].pageX;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', function (e) {
+      let currentY = e.touches[0].pageY;
+      let currentX = e.touches[0].pageX;
+
+      let diffY = Math.abs(startY - currentY);
+      let diffX = Math.abs(startX - currentX);
+
+      // Agar swipe movement zayada vertical hai, toh horizontal container event bypass karein
+      if (diffY > diffX) {
+        e.stopPropagation();
+      }
+    }, { passive: true });
+  });
+});
