@@ -17,6 +17,17 @@
   }
 
   .comparison-table-wrapper {
+    /* width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none; */
+
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
@@ -27,6 +38,9 @@
     -ms-overflow-style: none;
     cursor: grab;
     user-select: none;
+
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
   }
 
   .comparison-table-wrapper.is-dragging {
