@@ -374,6 +374,24 @@ h5,
   }
 }
 
+/* Merchant rich-text fields let <strong>/<b> through. The browser default is
+   font-weight: bolder, which resolves one step past the heading's own weight - 900
+   against an h2 at 600 - and 900 is not a weight we load, so it faux-bolds. Pin it to
+   700, the heaviest face the scale loads. Note this makes <strong> a no-op inside an
+   h1, which is already 700. */
+h1 strong, h1 b,
+h2 strong, h2 b,
+h3 strong, h3 b,
+h4 strong, h4 b,
+h5 strong, h5 b,
+.h1 strong, .h1 b,
+.h2 strong, .h2 b,
+.h3 strong, .h3 b,
+.h4 strong, .h4 b,
+.h5 strong, .h5 b {
+  font-weight: 700;
+}
+
 h6,
 .h6 {
   color: rgba(var(--color-foreground), 0.75);
