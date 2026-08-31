@@ -830,6 +830,9 @@
     .shopify-section .consultant-page.banner.why-a-diy-hero .banner__media img{
         object-position: top left;
     }
+    .template-page-why-a-diy .banner__box .banner__heading{
+        font-size: 28px;
+    }
 }
 /********************* end *******************/
 
@@ -912,6 +915,7 @@
 .template-page-why-a-diy .comparison-table th.col-standard:last-child {
     border-radius: 0 20px 0 0;
 }
+
 /********************* end *******************/
 
 
