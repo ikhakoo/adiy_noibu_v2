@@ -676,6 +676,13 @@
     .template-page-free-design-consultation .review-badge-block .review-badge__text{
         font-size: 12px !important;
     }
+    .template-page-free-design-consultation .banner__box .banner__heading {
+        font-size: 26px;
+    }
+    .template-page-free-design-consultation .banner__box .banner__buttons .button{
+        font-size: 14px;
+        margin: auto;
+    }
 }
 
 /********************* end *******************/
