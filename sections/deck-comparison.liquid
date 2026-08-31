@@ -501,13 +501,15 @@
 
               {%- if card_img != blank -%}
                 <div class="deck-card__image-wrapper">
-                  <img
-                    src="{{ card_img | image_url: width: 800 }}"
-                    alt="{{ block.settings.title | escape }}"
-                    loading="lazy"
-                    width="800"
-                    height="600"
-                  >
+                  <a href="{{ btn_url | default: '#' }}">
+                    <img
+                      src="{{ card_img | image_url: width: 800 }}"
+                      alt="{{ block.settings.title | escape }}"
+                      loading="lazy"
+                      width="800"
+                      height="600"
+                    >
+                  </a>
                 </div>
               {%- endif -%}
 
