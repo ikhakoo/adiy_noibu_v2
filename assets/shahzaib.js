@@ -346,16 +346,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // =========================================== auto on mobile mega menu  ===========================================
-const firstMenuItem = document.querySelector('#Details-menu-drawer-menu-item-1');
-if (firstMenuItem) {
-  firstMenuItem.setAttribute('open', '');
-  firstMenuItem.classList.add('menu-opening');
+// const firstMenuItem = document.querySelector('#Details-menu-drawer-menu-item-1');
+// if (firstMenuItem) {
+//   firstMenuItem.setAttribute('open', '');
+//   firstMenuItem.classList.add('menu-opening');
   
-  const summary = firstMenuItem.querySelector('summary');
-  if (summary) {
-    summary.setAttribute('aria-expanded', 'true');
-  }
-}
+//   const summary = firstMenuItem.querySelector('summary');
+//   if (summary) {
+//     summary.setAttribute('aria-expanded', 'true');
+//   }
+// }
 
 
 // ================================ end ================================
