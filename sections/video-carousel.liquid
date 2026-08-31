@@ -73,7 +73,7 @@
     fill: currentColor;
   }
 
-  /* Slider Track - Added touch-action pan-y */
+  /* Slider Track */
   .pb-video-carousel__track-wrapper {
     overflow-x: auto;
     overflow-y: hidden;
@@ -81,7 +81,6 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    touch-action: pan-x pan-y;
   }
 
   .pb-video-carousel__track-wrapper::-webkit-scrollbar {
@@ -101,7 +100,6 @@
     border-radius: 12px;
     overflow: hidden;
     background-color: #000;
-    touch-action: pan-y;
   }
 
   @media screen and (min-width: 750px) {
@@ -116,10 +114,9 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    pointer-events: none; /* Prevents native touch lock */
   }
 
-  /* Controls Overlay */
+  /* Floating Overlay Controls (Poly & Bark Style) */
   .pb-video-controls {
     position: absolute;
     bottom: 16px;
@@ -129,7 +126,6 @@
     align-items: center;
     gap: 10px;
     z-index: 2;
-    touch-action: pan-y;
   }
 
   .pb-control-btn {
@@ -146,7 +142,6 @@
     flex-shrink: 0;
     padding: 0;
     transition: transform 0.15s ease;
-    touch-action: manipulation;
   }
 
   .pb-control-btn:active {
@@ -171,9 +166,8 @@
     cursor: pointer;
     position: relative;
     backdrop-filter: blur(2px);
-    touch-action: pan-y !important; /* Forces vertical scrolling capability */
+    touch-action: none; /* Smooth touch dragging optimization */
     user-select: none;
-    -webkit-user-select: none;
   }
 
   .pb-progress-track {
@@ -226,22 +220,25 @@
     }
   }
 
-  @media screen and (max-width: 749px) {
-    .pb-control-btn {
-      width: 44px;
-      height: 44px;
-    }
-    .pb-video-carousel__nav-btn {
-      width: 44px;
-      height: 44px;
-    }
+
+@media screen and (max-width: 749px) {
+
+  /* Play/pause and mute were 38x38; carousel arrows 42x42. */
+  .pb-control-btn {
+    width: 44px;
+    height: 44px;
   }
+  .pb-video-carousel__nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#faf8f5' }};">
   <div class="page-width">
     
-    <!-- Header -->
+    <!-- Header with Left Text & Right Nav Arrows -->
     <div class="pb-video-carousel__header">
       <div class="pb-video-carousel__header-left">
         {%- if section.settings.subheading != blank -%}
@@ -265,7 +262,7 @@
       </div>
     </div>
 
-    <!-- Video Track -->
+    <!-- Video Carousel Cards Track -->
     <div class="pb-video-carousel__track-wrapper js-pb-track-wrapper">
       <div class="pb-video-carousel__track">
         {%- for block in section.blocks -%}
@@ -312,18 +309,21 @@
               </div>
             {%- endif -%}
 
-            <!-- Bottom Controls -->
+            <!-- Bottom Control Overlay Bar -->
             <div class="pb-video-controls">
+              <!-- Play/Pause Toggle Button -->
               <button class="pb-control-btn js-pb-play-toggle" aria-label="Play / Pause">
                 <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                 <svg class="icon-pause" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
               </button>
 
+              <!-- Mute Toggle Button -->
               <button class="pb-control-btn js-pb-mute-toggle" aria-label="Mute / Unmute">
                 <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
                 <svg class="icon-unmuted" viewBox="0 0 24 24" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
               </button>
 
+              <!-- Custom Video Seek Bar -->
               <div class="pb-progress-wrapper js-pb-progress-bar">
                 <div class="pb-progress-track">
                   <div class="pb-progress-fill js-pb-fill" style="display:block"></div>
@@ -350,18 +350,27 @@
     const prevBtn = sectionContainer.querySelector('.js-pb-prev');
     const nextBtn = sectionContainer.querySelector('.js-pb-next');
 
+    /* 1. Header Navigation Arrows */
     if (prevBtn && nextBtn && trackWrapper) {
-      prevBtn.addEventListener('click', () => trackWrapper.scrollBy({ left: -330, behavior: 'smooth' }));
-      nextBtn.addEventListener('click', () => trackWrapper.scrollBy({ left: 330, behavior: 'smooth' }));
-    }
-
-    function stopOtherVideos(currentVideo) {
-      cards.forEach(card => {
-        const v = card.querySelector('.js-pb-video');
-        if (v && v !== currentVideo) v.pause();
+      prevBtn.addEventListener('click', () => {
+        trackWrapper.scrollBy({ left: -330, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        trackWrapper.scrollBy({ left: 330, behavior: 'smooth' });
       });
     }
 
+    /* 2. Pause All Videos Helper */
+    function stopOtherVideos(currentVideo) {
+      cards.forEach(card => {
+        const v = card.querySelector('.js-pb-video');
+        if (v && v !== currentVideo) {
+          v.pause();
+        }
+      });
+    }
+
+    /* 3. Card level Media Controls */
     cards.forEach(card => {
       const video = card.querySelector('.js-pb-video');
       const playBtn = card.querySelector('.js-pb-play-toggle');
@@ -379,6 +388,7 @@
       
       let isDragging = false;
 
+      // Play/Pause State Toggles
       function updatePlayIcons() {
         if (video.paused) {
           if (iconPlay) iconPlay.style.display = 'block';
@@ -389,6 +399,7 @@
         }
       }
 
+      // Mute State Toggles
       function updateMuteIcons() {
         if (video.muted) {
           if (iconMuted) iconMuted.style.display = 'block';
@@ -399,6 +410,7 @@
         }
       }
 
+      // Play/Pause Trigger
       if (playBtn) {
         playBtn.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -411,6 +423,7 @@
         });
       }
 
+      // Mute/Unmute Trigger
       if (muteBtn) {
         muteBtn.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -419,12 +432,14 @@
         });
       }
 
+      // Update UI Progress Position
       function updateProgress(pct) {
         pct = Math.max(0, Math.min(100, pct));
         if (fill) fill.style.width = pct + '%';
         if (thumb) thumb.style.left = pct + '%';
       }
 
+      // Sync Progress Bar with Video Time
       video.addEventListener('timeupdate', () => {
         if (!isDragging && video.duration) {
           const pct = (video.currentTime / video.duration) * 100;
@@ -435,43 +450,50 @@
       video.addEventListener('play', updatePlayIcons);
       video.addEventListener('pause', updatePlayIcons);
 
-      // --- NON-BLOCKING SEEK BAR LOGIC ---
+      // --- SMOOTH DRAGGING / SCRUBBING LOGIC ---
       if (progressBar) {
         function scrub(e) {
           const rect = progressBar.getBoundingClientRect();
           const offsetX = e.clientX - rect.left;
           const pct = Math.max(0, Math.min(1, offsetX / rect.width));
+          
           updateProgress(pct * 100);
           if (video.duration) {
             video.currentTime = pct * video.duration;
           }
         }
 
-        progressBar.addEventListener('click', (e) => {
+        progressBar.addEventListener('pointerdown', (e) => {
           e.stopPropagation();
+          isDragging = true;
+          progressBar.classList.add('is-dragging');
+          progressBar.setPointerCapture(e.pointerId);
           scrub(e);
         });
 
-        progressBar.addEventListener('pointerdown', (e) => {
-          isDragging = true;
-          progressBar.classList.add('is-dragging');
-        });
-
-        window.addEventListener('pointermove', (e) => {
+        progressBar.addEventListener('pointermove', (e) => {
           if (isDragging) {
+            e.stopPropagation();
             scrub(e);
           }
         });
 
-        window.addEventListener('pointerup', () => {
+        const stopDragging = (e) => {
           if (isDragging) {
+            e.stopPropagation();
             isDragging = false;
             progressBar.classList.remove('is-dragging');
+            if (e.pointerId && progressBar.hasPointerCapture(e.pointerId)) {
+              progressBar.releasePointerCapture(e.pointerId);
+            }
           }
-        });
+        };
+
+        progressBar.addEventListener('pointerup', stopDragging);
+        progressBar.addEventListener('pointercancel', stopDragging);
       }
 
-      // Play/Pause Click on Card Background
+      // Card Body Click Play/Pause Toggle
       card.addEventListener('click', (e) => {
         if (e.target.closest('.pb-video-controls')) return;
         if (video.paused) {
@@ -482,13 +504,17 @@
         }
       });
 
+      // Set Initial States
       updatePlayIcons();
       updateMuteIcons();
     });
   });
 </script>
 
-{%- comment -%} Structured Data {%- endcomment -%}
+{%- comment -%}
+  VideoObject for each captioned card. Without this, 15 videos on this page carry
+  no machine-readable text at all - no transcript, no caption track, no name.
+{%- endcomment -%}
 {%- capture video_objects -%}
   {%- assign vo_separator = '' -%}
   {%- for block in section.blocks -%}
@@ -613,17 +639,20 @@
         {
           "type": "text",
           "id": "video_title",
-          "label": "Video title"
+          "label": "Video title",
+          "info": "Text alternative for the video, read by screen readers and used for VideoObject structured data. Videos with no text are invisible to search and answer engines."
         },
         {
           "type": "textarea",
           "id": "video_description",
-          "label": "Video description"
+          "label": "Video description",
+          "info": "One or two sentences describing what happens in the video."
         },
         {
           "type": "text",
           "id": "video_upload_date",
-          "label": "Upload date (YYYY-MM-DD)"
+          "label": "Upload date (YYYY-MM-DD)",
+          "info": "Optional. Required by Google before a video can appear in video results; it cannot be read from the file."
         }
       ]
     }
