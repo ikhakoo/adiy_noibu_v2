@@ -989,4 +989,12 @@
     display:none !important;
 
 }
-.template-page-how-to-build-a-deck
+
+
+.template-page-informatic-pages .page-width{
+    max-width: 1400px;
+}
+.template-page-informatic-pages .main-page-title {
+    text-align: center;
+    font-weight: 400;
+}
