@@ -527,9 +527,11 @@
 .cart-drawer-footer-text p{
   font-size: 14px;
 }
-.cart-drawer-footer-text svg,
 .cart-drawer-footer-text img{
   width: 50px;
+}
+.cart-drawer__footer .affirm-as-low-as{
+  display:none;
 }
 
 </style>
@@ -1746,7 +1748,7 @@
         {% comment %} {% render 'affirm-promo-message', price: cart.total_price %} {% endcomment %}
         <div class="cart-drawer-footer-text">
           <p>BUILD NOW, PAY LATER</p>
-          <svg data-icon-handle="icon-afirm" class="shrink-0 inline-flex items-center justify-center align-middle" x-data="{ url: getComputedStyle(document.documentElement).getPropertyValue(`--icon-icon-afirm--url`) }" :class="url ? 'cursor-pointer hf:opacity-70 transition-all duration-75': ''" :role="url ? 'link':''" :tabindex="url ? '0' : undefined" aria-label="icon-afirm" x-init="if (url) { $el.onclick = (e) =&gt; utils.isExternalURL(url) ? window.open(url) : barba.go(url) }" style="background: var(--icon-icon-afirm); aspect-ratio: var(--icon-icon-afirm-aspect-ratio, 1); height: 13px; color:currentColor;" role=""></svg>
+          <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/Untitled_design_32.png-2.png?v=1785184098" alt="affirm">
         </div>
       </div>
     </div>
