@@ -200,6 +200,7 @@
           {% when 'left' %}
             <div class="left-side" {{ block.shopify_attributes }}>
               
+              <a href="{{ block.settings.left_link }}">
                 {% if block.settings.svg_code != blank %}
                   {{ block.settings.svg_code }}
                 {% elsif block.settings.icon != blank %}
@@ -209,6 +210,7 @@
                     loading="lazy"
                   />
                 {% endif %}
+              </a>
               <a href="{{ block.settings.left_link }}" class="left-side-link">
                 <p>
                   {{ block.settings.rating_text }} 
