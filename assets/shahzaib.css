@@ -818,7 +818,10 @@
         font-size: 12px !important;
     }
     .why-a-diy-hero .mobile-banner-media .banner__media{
-        min-height: 50rem;
+        min-height: 55rem;
+    }
+    .shopify-section .consultant-page.banner.why-a-diy-hero .banner__media img{
+        object-position: top left;
     }
 }
 /********************* end *******************/
