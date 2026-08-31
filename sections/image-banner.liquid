@@ -323,8 +323,13 @@
               {%- endif -%}
 
               {%- if block.settings.review_text != blank -%}
-                <span class="review-badge__text" style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px;">
+                {% comment %} <span class="review-badge__text" style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px;">
                   {{ block.settings.review_text }}
+                </span> {% endcomment %}
+                <span class="review-badge__text" style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px;">
+                  {{ block.settings.review_text-before }} 
+                  <span class="dynamic-review-count-global">{{ block.settings.base_count }}</span> 
+                  {{ block.settings.review_text_after }}
                 </span>
               {%- endif -%}
             </div>
@@ -834,9 +839,15 @@
         },
         {
           "type": "text",
-          "id": "review_text",
+          "id": "review_text_before",
           "label": "Review Text",
-          "default": "OVER 5,000 HAPPY CUSTOMERS"
+          "default": "4.8/5 Stars"
+        },
+        {
+          "type": "text",
+          "id": "review_text_after",
+          "label": "Review Text",
+          "default": "Reviews"
         },
         {
           "type": "color",
