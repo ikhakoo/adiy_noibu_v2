@@ -89,99 +89,6 @@
         "show_text_below": false
       }
     },
-    "image_banner_HeJkDJ-1": {
-      "type": "image-banner",
-      "blocks": {
-        "text_4mmrY3": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "class_text": "sub-title",
-            "text_html": "",
-            "text": "ARCHITECTURAL EXCELLENCE",
-            "text_style": "subtitle"
-          }
-        },
-        "heading_m7P9Ar": {
-          "type": "heading",
-          "settings": {
-            "class_heading": "",
-            "heading_html": "",
-            "heading": "The World First and Only Professional Grade Deck kit"
-          }
-        },
-        "text_XLbJRX": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "class_text": "below-heading",
-            "text_html": "",
-            "text": "Get a complementary 1-on-1 Design Consultation with an A-DIY Deck Specialist",
-            "text_style": "subtitle"
-          }
-        },
-        "text_aQGiMz": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "class_text": "main-body",
-            "text_html": "",
-            "text": "Every great deck starts with a great plan. Whether you're comparing decking materials, deciding on the right size, or simply looking for expert guidance before placing your order, our deck specialists are here to help.",
-            "text_style": "body"
-          }
-        },
-        "feature_fGjx7p": {
-          "type": "feature",
-          "name": "Feature Highlights",
-          "disabled": true,
-          "settings": {
-            "text_1": "Free Consultation",
-            "text_2": "Personalized Expert Guidance",
-            "text_3": "No Obligation"
-          }
-        },
-        "buttons_eaPPcz": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "SCHEDULE MY FREE CONSULTATION",
-            "button_link_1": "#form",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "text_4mmrY3",
-        "heading_m7P9Ar",
-        "text_XLbJRX",
-        "text_aQGiMz",
-        "feature_fGjx7p",
-        "buttons_eaPPcz"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "custom_class": "consultant-page sec1",
-        "image": "shopify://shop_images/Why_A_diy.png",
-        "mobile_image_1": "shopify://shop_images/Group_2147228911_1.jpg",
-        "mobile_image_2": "shopify://shop_images/Group_2147228911_1.jpg",
-        "mobile_image_3": "shopify://shop_images/Group_2147228911_1.jpg",
-        "enable_autorotate": false,
-        "autorotate_speed": 5,
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-left",
-        "desktop_content_alignment": "left",
-        "show_text_box": false,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
     "image_with_text_WPrWpk": {
       "type": "image-with-text",
       "blocks": {
@@ -272,7 +179,7 @@
           "settings": {
             "enable_autoplay": false,
             "image": "shopify://shop_images/Frame_2147260091.png",
-            "title": "Personalized Recommendations",
+            "title": "Personalized",
             "text": "<p>Tailored layout suggestions based on your specific property dimensions and aesthetic goals.</p>",
             "link_label": "",
             "link": ""
@@ -3333,7 +3240,6 @@
   "order": [
     "main",
     "image_banner_HeJkDJ",
-    "image_banner_HeJkDJ-1",
     "image_with_text_WPrWpk",
     "multicolumn_y7P8hn",
     "custom_contact_section_BLBbkP",
