@@ -160,35 +160,6 @@
         "padding_bottom": 60
       }
     },
-    "rich_text_QTiMjr": {
-      "type": "rich-text",
-      "blocks": {
-        "button_CNb87i": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "button_CNb87i"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "custom_class": "",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-65990323-3194-4954-88df-bbdd751af6a7",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
     "multirow_KDHCBy": {
       "type": "multirow",
       "blocks": {
@@ -268,6 +239,35 @@
         "padding_bottom": 36
       }
     },
+    "rich_text_QTiMjr": {
+      "type": "rich-text",
+      "blocks": {
+        "button_CNb87i": {
+          "type": "button",
+          "settings": {
+            "button_label": "Chat With Design Consultant",
+            "button_link": "#chat",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "button_CNb87i"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-65990323-3194-4954-88df-bbdd751af6a7",
+        "full_width": true,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
     "steps_process_section_Ygi4pa": {
       "type": "steps-process-section",
       "blocks": {
@@ -327,6 +327,35 @@
         "item_desc_color": "#555555",
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "rich_text_J6iGry": {
+      "type": "rich-text",
+      "blocks": {
+        "button_xfq3pT": {
+          "type": "button",
+          "settings": {
+            "button_label": "Built Your Deck",
+            "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "button_xfq3pT"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-65990323-3194-4954-88df-bbdd751af6a7",
+        "full_width": true,
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "old_comparison_table_XkFyyw": {
@@ -3178,9 +3207,10 @@
     "main",
     "image_banner_HeJkDJ",
     "text_comparison_KknYdp",
-    "rich_text_QTiMjr",
     "multirow_KDHCBy",
+    "rich_text_QTiMjr",
     "steps_process_section_Ygi4pa",
+    "rich_text_J6iGry",
     "old_comparison_table_XkFyyw",
     "image_with_text_LqDRXM",
     "image_with_features_z4WYrb",
