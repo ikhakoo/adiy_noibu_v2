@@ -371,6 +371,9 @@
 .financing-title .affirm-modal-trigger {
     display:none;
 }
+.affirm-as-low-as{
+    margin:0;
+}
 
 .template-product .product__info-wrapper .price__regular .price-item--regular{
     font-weight: 800;
