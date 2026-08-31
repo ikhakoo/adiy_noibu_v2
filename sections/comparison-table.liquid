@@ -221,17 +221,7 @@
       display: flex;
     }
   }
-.comp-grid-wrapper {
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  touch-action: pan-y !important;
-  -webkit-overflow-scrolling: touch;
-}
 
-/* Jab user horizontal swipe na kar raha ho tab browser naturally scroll kare */
-.comp-grid {
-  touch-action: pan-y !important;
-}
   @media (max-width: 576px) {
     .comp-card {
       flex: 0 0 88%;
@@ -322,6 +312,7 @@
 
   </div>
 </section>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const sectionContainer = document.querySelector('.comp-section-{{ section.id }}');
@@ -371,9 +362,10 @@
     window.addEventListener('resize', updateThumbUI);
     updateThumbUI();
 
-    /* 2. Pointer Capture Dragging (Thumb) */
+    /* 2. Pointer Capture Dragging */
     scrollThumb.addEventListener('pointerdown', (e) => {
       e.stopPropagation();
+      e.preventDefault();
 
       isThumbDragging = true;
       dragStartX = e.clientX;
@@ -446,26 +438,22 @@
       });
     });
 
-    /* 4. Safe Content Dragging (Fixes Vertical Scroll Interference) */
+    /* 4. Mouse Dragging on Content Container */
     let isTrackDragging = false;
-    let startClientX = 0;
-    let startClientY = 0;
-    let scrollLeftPos = 0;
-    let isHorizontalIntent = false;
+    let startX, scrollLeftPos;
 
     trackWrapper.addEventListener('mousedown', (e) => {
       if (scrollBarTrack.contains(e.target)) return;
       isTrackDragging = true;
-      isHorizontalIntent = false;
-      startClientX = e.clientX;
-      startClientY = e.clientY;
+      trackWrapper.style.scrollBehavior = 'auto';
+      trackWrapper.classList.add('is-dragging');
+      startX = e.pageX - trackWrapper.offsetLeft;
       scrollLeftPos = trackWrapper.scrollLeft;
     });
 
     document.addEventListener('mouseup', () => {
       if (isTrackDragging) {
         isTrackDragging = false;
-        isHorizontalIntent = false;
         trackWrapper.style.scrollBehavior = 'smooth';
         trackWrapper.classList.remove('is-dragging');
       }
@@ -473,42 +461,12 @@
 
     trackWrapper.addEventListener('mousemove', (e) => {
       if (!isTrackDragging) return;
-
-      const deltaX = Math.abs(e.clientX - startClientX);
-      const deltaY = Math.abs(e.clientY - startClientY);
-
-      // Check intent: horizontally drag karna chahta hai ya vertically scroll
-      if (!isHorizontalIntent) {
-        if (deltaX > 5 && deltaX > deltaY) {
-          isHorizontalIntent = true;
-          trackWrapper.style.scrollBehavior = 'auto';
-          trackWrapper.classList.add('is-dragging');
-        } else if (deltaY > 5) {
-          // Vertical movement detect hui -> drag Cancel kar dein
-          isTrackDragging = false;
-          return;
-        }
-      }
-
-      if (isHorizontalIntent) {
-        const walk = (e.clientX - startClientX) * 1.5;
-        trackWrapper.scrollLeft = scrollLeftPos - walk;
-      }
+      e.preventDefault();
+      const x = e.pageX - trackWrapper.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      trackWrapper.scrollLeft = scrollLeftPos - walk;
     });
-
   });
-  const wrapper = document.querySelector('.comp-grid-wrapper');
-
-if (wrapper) {
-  // Mobile touch listeners ko passive force karein taake page scroll na ruke
-  wrapper.addEventListener('touchstart', function(e) {
-    // DO NOT call e.preventDefault()
-  }, { passive: true });
-
-  wrapper.addEventListener('touchmove', function(e) {
-    // DO NOT call e.preventDefault()
-  }, { passive: true });
-}
 </script>
 
 {% schema %}
@@ -737,7 +695,7 @@ if (wrapper) {
   ]
 }
 {% endschema %} 
-
+ 
 {% comment %} 
 <style>
   .comp-section-{{ section.id }} {
