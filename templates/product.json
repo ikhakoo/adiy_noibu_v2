@@ -51,7 +51,6 @@
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
           "settings": {
-            "heading_text": "As Low As $142/Month With Affirm",
             "logo_1": "shopify://shop_images/Untitled_design_32.png-2.png",
             "text_1": "Pay Month With Affirm",
             "link_1": "#affirm",
@@ -354,7 +353,7 @@
         "heading": "A Real Deck. Made Simple.",
         "text": "<p>Every part is engineered to fit before it reaches your door. All that’s left is to unpack, assemble, and enjoy.</p>",
         "enable_video_looping": true,
-        "iframe_code": "<iframe style=\"border: none; border-radius: 0; width: 100%; height: 600px\" src=\"https://assembly.easemble.com/752?minimal=true&amp;hideWarnings=true&amp;accentColor=%233a6958&amp;backgroundColor=%233a6958\">\n</iframe>",
+        "iframe_code": "",
         "video_url": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",
         "description": "video",
         "btn-text": "",
