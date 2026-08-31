@@ -14,6 +14,15 @@
   }
 
   .comp-grid-wrapper {
+    {% comment %} width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    user-select: none; {% endcomment %}
+
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
@@ -22,6 +31,9 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     user-select: none;
+
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
   }
 
   .comp-grid-wrapper::-webkit-scrollbar {
@@ -358,7 +370,22 @@
       }
     }
 
-    trackWrapper.addEventListener('scroll', onScroll, { passive: true });
+    /* Allow page vertical scrolling while cursor is over horizontal slider */
+    trackWrapper.addEventListener('wheel', function (e) {
+      // Horizontal scroll stays inside the slider
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        return;
+      }
+
+      // Send vertical scroll to the main page
+      e.preventDefault();
+
+      window.scrollBy({
+        top: e.deltaY,
+        left: 0,
+        behavior: 'auto'
+      });
+    }, { passive: false });
     window.addEventListener('resize', updateThumbUI);
     updateThumbUI();
 
