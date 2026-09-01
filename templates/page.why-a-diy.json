@@ -335,7 +335,7 @@
         "button_xfq3pT": {
           "type": "button",
           "settings": {
-            "button_label": "Built Your Deck",
+            "button_label": "Build Your Deck",
             "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
             "button_style_secondary": false,
             "button_label_2": "",
@@ -3127,7 +3127,6 @@
         "class_heading": "",
         "sub_heading": "",
         "rating_score": "4.8",
-        "total_reviews": "30,215",
         "bg_color": "#f4f4f4",
         "show_full_section": false,
         "button_label": "More Reviews",
