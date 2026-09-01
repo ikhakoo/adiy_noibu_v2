@@ -247,7 +247,7 @@
             {% endif %}
           >
             {%- if section.settings.video != blank -%}
-              {{ section.settings.video | video_tag: image_size: '800x', autoplay: false, loop: true, controls: true, muted: true, preload: 'none' }}
+              {{ section.settings.video | video_tag: image_size: '800x', autoplay: true, loop: true, controls: true, muted: true }}
             {%- elsif section.settings.image != blank -%}
               {%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
                 {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
