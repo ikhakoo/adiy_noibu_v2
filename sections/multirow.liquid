@@ -13,51 +13,6 @@
     }
   }
 
-  /* Fixed Heights */
-  .multirow .image-with-text__media--medium {
-    height: 45rem;
-  }
-
-  /* Desktop Match Text Height Fix */
-  @media screen and (min-width: 750px) {
-    .multirow .image-with-text__grid {
-      align-items: stretch !important;
-    }
-
-    .multirow .image-with-text__media-item--auto {
-      align-self: stretch !important;
-      height: 100% !important;
-      display: flex !important;
-      flex-direction: column !important;
-    }
-
-    .multirow .image-with-text__media--auto {
-      height: 100% !important;
-      min-height: 100% !important;
-      padding-bottom: 0 !important;
-      flex-grow: 1 !important;
-    }
-
-    .multirow .image-with-text__media--auto img,
-    .multirow .image-with-text__media--auto svg {
-      height: 100% !important;
-      width: 100% !important;
-      object-fit: cover !important;
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .multirow .image-with-text__media--medium {
-      height: 30rem;
-    }
-    .multirow .image-with-text__media--auto {
-      min-height: 300px;
-    }
-  }
-
   /* Custom Styles for Design Match */
   .multirow-custom__header {
     text-align: center;
@@ -83,8 +38,10 @@
 
   .multirow-card__divider {
     border: none;
+    /* border-top: 1px solid #000; */
     margin: 1.5rem 0;
     width: 100%;
+
     border-top: 1px solid transparent;
     background: transparent;
   }
@@ -121,10 +78,15 @@
     .multirow .image-with-text__content {
       padding: 1.5rem !important;
     }
-    .multirow-card__sub-title { 
-      font-size: 13px; 
-    }
   }
+
+{%- comment -%}
+  Mobile readability floor. These selectors are declared once for all viewports,
+  so they are overridden here rather than edited - desktop keeps its current size.
+{%- endcomment -%}
+@media screen and (max-width: 749px) {
+    .multirow-card__sub-title { font-size: 13px; }
+}
 {%- endstyle -%}
 
 {%- liquid
@@ -179,7 +141,7 @@
         {{ block.shopify_attributes }}
       >
         <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'medium' %}2-col-tablet{% else %}3-col-tablet{% endif %}{% if section.settings.image_layout contains 'alternate' %}{% cycle odd_class, even_class %}{% else %}{{ odd_class }}{% endif %}">
-          <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.image_height }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
+          <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
             <div
               class="image-with-text__media image-with-text__media--{{ section.settings.image_height }} gradient color-{{ section.settings.row_color_scheme }} global-media-settings{% if block.settings.image != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}"
               {% if section.settings.image_height == 'adapt' and block.settings.image != blank %}
@@ -303,10 +265,6 @@
       "id": "image_height",
       "options": [
         {
-          "value": "auto",
-          "label": "Match Text Height (Desktop)"
-        },
-        {
           "value": "adapt",
           "label": "t:sections.multirow.settings.image_height.options__1.label"
         },
@@ -323,7 +281,7 @@
           "label": "t:sections.multirow.settings.image_height.options__4.label"
         }
       ],
-      "default": "auto",
+      "default": "medium",
       "label": "t:sections.multirow.settings.image_height.label"
     },
     {
