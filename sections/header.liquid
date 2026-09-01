@@ -519,7 +519,7 @@
                               <div class="hanso-spec-item">
                                 <div class="icon-img">
                                   {%- if block.settings.spec_1_icon != blank -%}
-                                    {{ block.settings.spec_1_icon | image_url: width: 500 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
+                                    {{ block.settings.spec_1_icon | image_url: width: 48 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
                                   {%- else -%}
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 4h5M12 4v16M8 8h8M6 12h12M7 16h10"/></svg>
                                   {%- endif -%}
@@ -532,7 +532,7 @@
                               <div class="hanso-spec-item">
                                 <div class="icon-img">
                                   {%- if block.settings.spec_2_icon != blank -%}
-                                    {{ block.settings.spec_2_icon | image_url: width: 500 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
+                                    {{ block.settings.spec_2_icon | image_url: width: 48 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
                                   {%- else -%}
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M3 12h18M5.5 5.5l13 13M18.5 5.5l-13 13"/></svg>
                                   {%- endif -%}
@@ -545,7 +545,7 @@
                               <div class="hanso-spec-item">
                                 <div class="icon-img">
                                   {%- if block.settings.spec_3_icon != blank -%}
-                                    {{ block.settings.spec_3_icon | image_url: width: 500 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
+                                    {{ block.settings.spec_3_icon | image_url: width: 48 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
                                   {%- else -%}
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></svg>
                                   {%- endif -%}
@@ -558,7 +558,7 @@
                               <div class="hanso-spec-item">
                                 <div class="icon-img">
                                   {%- if block.settings.spec_4_icon != blank -%}
-                                    {{ block.settings.spec_4_icon | image_url: width: 500 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
+                                    {{ block.settings.spec_4_icon | image_url: width: 48 | image_tag: loading: 'lazy', class: 'hanso-spec-img' }}
                                   {%- else -%}
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                                   {%- endif -%}
@@ -601,6 +601,7 @@
         /* Starting Hidden State */
         opacity: 0;
         visibility: hidden;
+        content-visibility: hidden;
         pointer-events: none;
         transform: translateY(-12px) scale(0.99); /* Slight slide up & shrink */
         
@@ -616,6 +617,7 @@
       .hanso-mega-menu-popup.open {
         opacity: 1;
         visibility: visible;
+        content-visibility: visible;
         pointer-events: auto;
         transform: translateY(0) scale(1); /* Smoothly drops down & expands */
       }

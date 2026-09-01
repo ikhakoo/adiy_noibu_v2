@@ -5,8 +5,19 @@
   {% render 'cart-drawer' %}
 {% endcomment %}
 
-{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  The drawer is off-screen until opened, so neither of these is needed to paint
+  the page - but this snippet renders on EVERY page (layout/theme.liquid), so
+  component-card.css alone was 14KB of render-blocking CSS site-wide. Deferred
+  with the same media=print swap used for the other cart stylesheets in
+  layout/theme.liquid.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'quantity-popover.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-card.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>
+  {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+  {{ 'component-card.css' | asset_url | stylesheet_tag }}
+</noscript>
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -653,7 +664,7 @@
                 {% comment %} Card 1: Pressure Treated Deck {% endcomment %}
                 <a href="/products/pressure-treated-kiln-dried-wood-deck-kit" class="om-empty-cart__card">
                   <div class="om-empty-cart__img-wrap">
-                    <img src="https://a-diy.com/cdn/shop/files/Image_Ratios_16.png?crop=center&height=144&v=1737102929&width=144" alt="compsite deck" width="144">
+                    <img src="https://a-diy.com/cdn/shop/files/Image_Ratios_16.png?crop=center&height=144&v=1737102929&width=144" alt="compsite deck" width="144" height="144" loading="lazy">
                   </div>
                   <span class="om-empty-cart__card-title">Pressure Treated Deck</span>
                 </a>
@@ -661,7 +672,7 @@
                 {% comment %} Card 2: Composite Deck {% endcomment %}
                 <a href="/products/a-diy-composite-deck-kit" class="om-empty-cart__card">
                   <div class="om-empty-cart__img-wrap">
-                    <img src="https://a-diy.com/cdn/shop/files/Image_Ratios_18.png?crop=center&height=144&v=1737102930&width=144" alt="compsite deck" width="144">
+                    <img src="https://a-diy.com/cdn/shop/files/Image_Ratios_18.png?crop=center&height=144&v=1737102930&width=144" alt="compsite deck" width="144" height="144" loading="lazy">
                   </div>
                   <span class="om-empty-cart__card-title">Composite Deck</span>
                 </a>
@@ -1525,7 +1536,7 @@
       {%- assign max_day = max_date_seconds | date: "%-d" -%}
 
       {% comment %} <div class="truck-icon-text">
-        <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968" alt="Delivery Truck" class="truck-icon">
+        <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
 
         <div class="content">
           {% comment %} <p class="heading">
@@ -1586,7 +1597,7 @@
     -%}
 
     <div class="truck-icon-text">
-      <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968" alt="Delivery Truck" class="truck-icon" width="auto" height="auto" loading="lazy">
+      <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
 
       <div class="content">
         <p class="heading">
@@ -1741,14 +1752,14 @@
               disabled
             {% endif %}
           >
-            <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/lock.png?v=1787850540" alt="lock" width="15">
+            <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/lock.png?v=1787850540&width=30" alt="lock" width="15" loading="lazy">
             Checkout
           </button>
         </div>
         {% comment %} {% render 'affirm-promo-message', price: cart.total_price %} {% endcomment %}
         <div class="cart-drawer-footer-text">
           <p>BUILD NOW, PAY LATER</p>
-          <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/Untitled_design_32_png_0dfb3211-1fa8-4ca3-af8f-421c843006b8.png?v=1788216133" alt="affirm">
+          <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/Untitled_design_32_png_0dfb3211-1fa8-4ca3-af8f-421c843006b8.png?v=1788216133&width=100" alt="affirm" loading="lazy">
         </div>
       </div>
     </div>

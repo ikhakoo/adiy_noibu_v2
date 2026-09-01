@@ -1,9 +1,22 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
-{{ 'section-footer.css' | asset_url | stylesheet_tag }}
-{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Deferred with the media=print swap already used in sections/header.liquid.
+  Nothing here is above the fold. component-list-menu.css in particular was
+  loaded twice per page with conflicting strategies - header.liquid defers it,
+  this file blocked on it, which cancelled the header's deferral outright.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'section-footer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-newsletter.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-payment.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-social.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>
+  {{ 'section-footer.css' | asset_url | stylesheet_tag }}
+  {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
+  {{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
+  {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
+  {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+</noscript>
 
 {%- style -%}
   .footer-centered {

@@ -473,7 +473,7 @@
                     <div class="comparison-card__feature-item">
                       <div class="comparison-card__feature-item-icon">
                         {%- if feature_icon != blank -%}
-                          <img src="{{ feature_icon | image_url: width: 500 }}" alt="" class="comparison-card__feature-icon" loading="lazy">
+                          <img src="{{ feature_icon | image_url: width: 80 }}" alt="" class="comparison-card__feature-icon" width="40" height="40" loading="lazy">
                         {%- endif -%}
                       </div>
                       <span class="comparison-card__feature-text">{{ feature_text }}</span>
@@ -495,6 +495,11 @@
                 <a href="{{ btn_url }}">
                   <img
                     src="{{ card_img | image_url: width: 800 }}"
+                    srcset="{{ card_img | image_url: width: 400 }} 400w,
+                            {{ card_img | image_url: width: 600 }} 600w,
+                            {{ card_img | image_url: width: 800 }} 800w,
+                            {{ card_img | image_url: width: 1100 }} 1100w"
+                    sizes="(min-width: 750px) 50vw, 100vw"
                     alt="{{ block.settings.title | escape }}"
                     class="comparison-card__image"
                     loading="lazy"
