@@ -15,9 +15,82 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "image_banner_HeJkDJ": {
+      "type": "image-banner",
+      "blocks": {
+        "review_badge_Mjy3He": {
+          "type": "review_badge",
+          "settings": {
+            "star_image": "shopify://shop_images/Frame_1597879831_774d76b7-a845-40e5-b221-67a0486e311b.png",
+            "star_image_height": 25,
+            "review_text_before": "4.8/5 Stars",
+            "review_text_after": "Reviews",
+            "text_color": "#333333",
+            "text_size": 16
+          }
+        },
+        "text_4mmrY3": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "class_text": "sub-title",
+            "text_html": "",
+            "text": "OVER 5,000 HAPPY CUSTOMERS",
+            "text_style": "subtitle"
+          }
+        },
+        "heading_m7P9Ar": {
+          "type": "heading",
+          "settings": {
+            "class_heading": "",
+            "heading_html": "",
+            "heading": "Transform Your Backyard Without The Hassle"
+          }
+        },
+        "buttons_eaPPcz": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Shop the Collection",
+            "button_link_1": "shopify://collections/deck-kits",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "review_badge_Mjy3He",
+        "text_4mmrY3",
+        "heading_m7P9Ar",
+        "buttons_eaPPcz"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "custom_class": "consultant-page why-a-diy-hero",
+        "image": "shopify://shop_images/Why_A_diy.png",
+        "mobile_image_1": "shopify://shop_images/Group_2147228911.jpg",
+        "mobile_image_2": "shopify://shop_images/Group_2147228911.jpg",
+        "mobile_image_3": "shopify://shop_images/Group_2147228911.jpg",
+        "enable_autorotate": false,
+        "autorotate_speed": 5,
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "image_banner_HeJkDJ"
   ]
 }
