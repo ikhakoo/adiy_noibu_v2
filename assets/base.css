@@ -394,6 +394,20 @@ h5 strong, h5 b,
   font-weight: inherit;
 }
 
+/* Body copy. p was the one tag in the scale left on `inherit`, so its size came
+   from whatever container it happened to sit in - 11px to 18px across the home
+   page. Pinning it here makes paragraphs predictable; component chrome that
+   genuinely needs a different size still wins on specificity. */
+p {
+  font-size: 1.4rem;
+}
+
+@media only screen and (min-width: 750px) {
+  p {
+    font-size: 1.6rem;
+  }
+}
+
 h6,
 .h6 {
   color: rgba(var(--color-foreground), 0.75);
