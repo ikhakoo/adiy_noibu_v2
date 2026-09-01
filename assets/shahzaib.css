@@ -1032,6 +1032,7 @@
 
 .template-page-informatic-pages .page-width{
     max-width: 1400px;
+    padding: 28px 70px;
 }
 .template-page-informatic-pages .main-page-title {
     text-align: center;
@@ -1040,4 +1041,10 @@
 .template-page-informatic-pages ul li p{
     margin: 0;
     display: inline;
+}
+
+@media screen and (max-width: 990px){
+    .template-page-informatic-pages .page-width{
+        padding: 28px
+    }
 }
