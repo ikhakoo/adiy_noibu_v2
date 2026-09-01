@@ -214,6 +214,21 @@
     assign iwt_loading = 'eager'
   endif
 
+  # height:'adapt' gives the media box its height purely through an inline
+  # padding-bottom below. That was computed from the image and skipped entirely
+  # when a video was set, so a video-only (or image+video) block collapsed the box
+  # to ~2px. An invisible element is not just unseen - Chrome will not autoplay it,
+  # so the video never started and never even fetched. Prefer the video's own
+  # aspect ratio, fall back to the image, then to 16:9.
+  assign adapt_ratio = nil
+  if section.settings.video != blank and section.settings.video.aspect_ratio > 0
+    assign adapt_ratio = section.settings.video.aspect_ratio
+  elsif section.settings.image != blank
+    assign adapt_ratio = section.settings.image.aspect_ratio
+  elsif section.settings.video != blank
+    assign adapt_ratio = 1.7778
+  endif
+
   comment
     Fallback alt so the section image is not shipped with alt="" when nobody set
     one in the Files admin. The paired icons keep alt="" on purpose - each sits
@@ -242,8 +257,8 @@
         <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
           <div
             class="image-with-text__media image-with-text__media--{{ section.settings.height }} global-media-settings{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}{% if section.settings.image != blank or section.settings.video != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}"
-            {% if section.settings.height == 'adapt' and section.settings.image != blank and section.settings.video == blank %}
-              style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
+            {% if section.settings.height == 'adapt' and adapt_ratio %}
+              style="padding-bottom: {{ 1 | divided_by: adapt_ratio | times: 100 }}%;"
             {% endif %}
           >
             {%- if section.settings.video != blank -%}
