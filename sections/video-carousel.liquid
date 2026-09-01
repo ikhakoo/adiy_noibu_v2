@@ -68,10 +68,14 @@
           <div class="pb-video-card js-pb-card" {{ block.shopify_attributes }}>
             
             {%- assign custom_poster = '' -%}
+            {%- assign poster_source = nil -%}
             {%- if block.settings.poster_image != blank -%}
-              {%- assign custom_poster = block.settings.poster_image | image_url: width: 600 -%}
+              {%- assign poster_source = block.settings.poster_image -%}
             {%- elsif block.settings.video.preview_image != blank -%}
-              {%- assign custom_poster = block.settings.video.preview_image | image_url: width: 600 -%}
+              {%- assign poster_source = block.settings.video.preview_image -%}
+            {%- endif -%}
+            {%- if poster_source -%}
+              {%- assign custom_poster = poster_source | image_url: width: 600 -%}
             {%- endif -%}
 
             {%- if block.settings.video != blank -%}
@@ -97,7 +101,13 @@
               {%- endcomment -%}
               {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
               {%- if custom_poster != blank -%}
-                <img class="pb-video-card__poster" src="{{ custom_poster }}" alt="" loading="lazy">
+                <img
+                  class="pb-video-card__poster"
+                  src="{{ custom_poster }}"
+                  width="{{ poster_source.width }}"
+                  height="{{ poster_source.height }}"
+                  alt=""
+                  loading="lazy">
               {%- endif -%}
             {%- elsif block.settings.external_video_url != blank -%}
               <video 
