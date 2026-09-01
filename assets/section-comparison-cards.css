@@ -106,7 +106,6 @@
   }
 
   .comparison-card__description {
-    font-size: 1.3rem;
     color: #555;
     margin: 0 0 2rem;
     line-height: 1.4;
@@ -295,9 +294,6 @@
       width: 100%;
     }
 
-    .comparison-card__description {
-      font-size: 12px;
-    }
   }
 
   @media screen and (max-width: 600px) {

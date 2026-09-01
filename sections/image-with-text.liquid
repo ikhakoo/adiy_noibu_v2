@@ -115,11 +115,13 @@
   }
 
   .image-with-text__media video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
-    position: unset !important;
   }
 
   .image-with-text__buttons .button {
@@ -164,7 +166,6 @@
     .image-with-text__stat-number,
     .image-with-text__stat-label { text-align: center; }
     .image-with-text__media video {
-      position: unset !important;
       border-radius: 15px;
     }
   }
@@ -214,6 +215,21 @@
     assign iwt_loading = 'eager'
   endif
 
+  # height:'adapt' gives the media box its height purely through an inline
+  # padding-bottom below. That was computed from the image and skipped entirely
+  # when a video was set, so a video-only (or image+video) block collapsed the box
+  # to ~2px. An invisible element is not just unseen - Chrome will not autoplay it,
+  # so the video never started and never even fetched. Prefer the video's own
+  # aspect ratio, fall back to the image, then to 16:9.
+  assign adapt_ratio = nil
+  if section.settings.video != blank and section.settings.video.aspect_ratio > 0
+    assign adapt_ratio = section.settings.video.aspect_ratio
+  elsif section.settings.image != blank
+    assign adapt_ratio = section.settings.image.aspect_ratio
+  elsif section.settings.video != blank
+    assign adapt_ratio = 1.7778
+  endif
+
   comment
     Fallback alt so the section image is not shipped with alt="" when nobody set
     one in the Files admin. The paired icons keep alt="" on purpose - each sits
@@ -242,12 +258,12 @@
         <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
           <div
             class="image-with-text__media image-with-text__media--{{ section.settings.height }} global-media-settings{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}{% if section.settings.image != blank or section.settings.video != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}"
-            {% if section.settings.height == 'adapt' and section.settings.image != blank and section.settings.video == blank %}
-              style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
+            {% if section.settings.height == 'adapt' and adapt_ratio %}
+              style="padding-bottom: {{ 1 | divided_by: adapt_ratio | times: 100 }}%;"
             {% endif %}
           >
             {%- if section.settings.video != blank -%}
-              {{ section.settings.video | video_tag: image_size: '800x', autoplay: false, loop: true, controls: true, muted: true, preload: 'none' }}
+              {{ section.settings.video | video_tag: image_size: '800x', autoplay: true, loop: true, controls: true, muted: true }}
             {%- elsif section.settings.image != blank -%}
               {%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
                 {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
