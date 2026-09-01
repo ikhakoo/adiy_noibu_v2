@@ -225,7 +225,7 @@
         "custom_class": "custom-multi-row",
         "heading": "Why Choose A-DIY?",
         "subheading": "",
-        "image_height": "large",
+        "image_height": "auto",
         "desktop_image_width": "medium",
         "image_layout": "alternate-right",
         "text_style": "body",
