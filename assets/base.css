@@ -424,18 +424,12 @@ blockquote {
 
 /* Body copy. p was the one tag in the scale left on `inherit`, so its size came
    from whatever container it happened to sit in - 11px to 18px across the home
-   page - while body itself is 1.8rem on desktop. Pinning it here makes paragraphs
-   predictable at 14px mobile / 16px desktop. Component chrome that genuinely
-   needs another size still wins on specificity. */
+   page. Pinning it here makes paragraphs predictable: 18px at every breakpoint,
+   deliberately flat, so there is no mobile step-down to reason about. Component
+   chrome that genuinely needs another size still wins on specificity. */
 p {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: var(--font-body-weight);
-}
-
-@media only screen and (min-width: 750px) {
-  p {
-    font-size: 1.6rem;
-  }
 }
 
 .small {
