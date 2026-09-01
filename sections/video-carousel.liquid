@@ -282,31 +282,44 @@
             
             {%- assign custom_poster = '' -%}
             {%- if block.settings.poster_image != blank -%}
-              {%- assign custom_poster = block.settings.poster_image | image_url: width: 800 -%}
+              {%- assign custom_poster = block.settings.poster_image | image_url: width: 600 -%}
+            {%- elsif block.settings.video.preview_image != blank -%}
+              {%- assign custom_poster = block.settings.video.preview_image | image_url: width: 600 -%}
             {%- endif -%}
 
             {%- if block.settings.video != blank -%}
-              {{ block.settings.video | video_tag: 
-                autoplay: false, 
-                loop: true, 
-                muted: true, 
-                playsinline: true, 
-                webkit-playsinline: true,
-                preload: 'metadata',
-                controls: false, 
-                poster: custom_poster,
-                class: 'pb-video-card__video js-pb-video' 
-              }}
+              {%- capture vc_video_markup -%}
+                {{ block.settings.video | video_tag: 
+                  image_size: '600x',
+                  autoplay: false, 
+                  loop: true, 
+                  muted: true, 
+                  playsinline: true, 
+                  webkit-playsinline: true,
+                  preload: 'none',
+                  controls: false, 
+                  poster: custom_poster,
+                  class: 'pb-video-card__video js-pb-video' 
+                }}
+              {%- endcapture -%}
+              {%- comment -%}
+                poster -> data-poster so the frame is not fetched until the card is
+                near the viewport (see the IntersectionObserver below), and the
+                fallback <img> video_tag always emits loses its src - it is only
+                shown to browsers with no <video> support, but it downloaded on
+                every load regardless.
+              {%- endcomment -%}
+              {{ vc_video_markup | replace: ' poster="', ' data-poster="' | replace: '<img src="', '<img data-fallback-src="' }}
             {%- elsif block.settings.external_video_url != blank -%}
               <video 
                 src="{{ block.settings.external_video_url }}" 
-                {% if custom_poster != blank %}poster="{{ custom_poster }}"{% endif %}
+                {% if custom_poster != blank %}data-poster="{{ custom_poster }}"{% endif %}
                 class="pb-video-card__video js-pb-video" 
                 loop 
                 muted 
                 playsinline
                 webkit-playsinline
-                preload="metadata"
+                preload="none"
               ></video>
             {%- endif -%}
 
@@ -540,11 +553,41 @@
       updateMuteIcons();
     });
     
-    /* Mobile video preview: autoplay briefly, then pause */
+    /* Posters are held in data-poster so 15 frames (~145KB each) do not download
+       on page load for a section six screens down. Swap them in as cards approach. */
+    const applyPoster = (card) => {
+      const video = card.querySelector('.js-pb-video');
+      if (!video) return;
+      const p = video.dataset.poster;
+      if (p) {
+        video.poster = p;
+        delete video.dataset.poster;
+      }
+      const fallback = video.querySelector('img[data-fallback-src]');
+      if (fallback) fallback.remove();
+    };
+
+    if ('IntersectionObserver' in window) {
+      const posterObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          obs.unobserve(entry.target);
+          applyPoster(entry.target);
+        });
+      }, { rootMargin: '600px 0px' });
+      cards.forEach(card => posterObserver.observe(card));
+    } else {
+      cards.forEach(applyPoster);
+    }
+
+    /* Mobile video preview: autoplay briefly, then pause.
+       Only for cards that actually reach the viewport - previewing all of them on
+       DOMContentLoaded downloaded 15 videos' worth of media data up front. */
     if (window.matchMedia('(max-width: 749px)').matches) {
-      cards.forEach(card => {
+      const previewCard = (card) => {
         const video = card.querySelector('.js-pb-video');
-        if (!video) return;
+        if (!video || video.dataset.previewed) return;
+        video.dataset.previewed = 'true';
 
         video.muted = true;
         video.playsInline = true;
@@ -571,7 +614,20 @@
 
           video.removeEventListener('loadeddata', previewVideo);
         });
-      });
+      };
+
+      if ('IntersectionObserver' in window) {
+        const previewObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            obs.unobserve(entry.target);
+            previewCard(entry.target);
+          });
+        }, { rootMargin: '200px 0px' });
+        cards.forEach(card => previewObserver.observe(card));
+      } else {
+        cards.forEach(previewCard);
+      }
     }
   });
 </script>
