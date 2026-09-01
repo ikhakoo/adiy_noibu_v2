@@ -13,13 +13,35 @@
     }
   }
 
-  /* Image Height Medium Fix */
+  /* Fixed Heights */
   .multirow .image-with-text__media--medium {
     height: 45rem;
   }
+
+  /* Desktop Auto Height (Match Text Box Height) */
+  @media screen and (min-width: 750px) {
+    .multirow .image-with-text__grid {
+      align-items: stretch !important;
+    }
+
+    .multirow .image-with-text__media-item--auto,
+    .multirow .image-with-text__media--auto {
+      height: 100% !important;
+      min-height: 100% !important;
+    }
+
+    .multirow .image-with-text__media--auto img {
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+  }
+
   @media screen and (max-width: 749px) {
     .multirow .image-with-text__media--medium {
       height: 30rem;
+    }
+    .multirow .image-with-text__media--auto {
+      height: 300px; /* Fallback for Mobile */
     }
   }
 
@@ -144,7 +166,7 @@
         {{ block.shopify_attributes }}
       >
         <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'medium' %}2-col-tablet{% else %}3-col-tablet{% endif %}{% if section.settings.image_layout contains 'alternate' %}{% cycle odd_class, even_class %}{% else %}{{ odd_class }}{% endif %}">
-          <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
+          <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.image_height }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
             <div
               class="image-with-text__media image-with-text__media--{{ section.settings.image_height }} gradient color-{{ section.settings.row_color_scheme }} global-media-settings{% if block.settings.image != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}"
               {% if section.settings.image_height == 'adapt' and block.settings.image != blank %}
@@ -268,6 +290,10 @@
       "id": "image_height",
       "options": [
         {
+          "value": "auto",
+          "label": "Match Text Height (Desktop)"
+        },
+        {
           "value": "adapt",
           "label": "t:sections.multirow.settings.image_height.options__1.label"
         },
@@ -284,7 +310,7 @@
           "label": "t:sections.multirow.settings.image_height.options__4.label"
         }
       ],
-      "default": "medium",
+      "default": "auto",
       "label": "t:sections.multirow.settings.image_height.label"
     },
     {
