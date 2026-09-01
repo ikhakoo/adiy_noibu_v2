@@ -32,12 +32,16 @@
 
               <div class="gallery-item {% if remainder == 0 %}item-featured{% else %}item-small{% endif %}" {{ block.shopify_attributes }}>
                 {% if block.settings.image != blank %}
-                  <img 
-                    src="{{ block.settings.image | image_url: width: 800 }}" 
-                    data-full-src="{{ block.settings.image | image_url: width: 1600 }}"
-                    alt="{{ block.settings.image.alt | default: gallery_alt_fallback | escape }}" 
-                    loading="lazy" 
-                    width="{{ block.settings.image.width }}" 
+                  <img
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    srcset="{{ block.settings.image | image_url: width: 300 }} 300w,
+                            {{ block.settings.image | image_url: width: 500 }} 500w,
+                            {{ block.settings.image | image_url: width: 800 }} 800w,
+                            {{ block.settings.image | image_url: width: 1100 }} 1100w"
+                    sizes="(min-width: 769px) 50vw, 100vw"
+                    alt="{{ block.settings.image.alt | default: gallery_alt_fallback | escape }}"
+                    loading="lazy"
+                    width="{{ block.settings.image.width }}"
                     height="{{ block.settings.image.height }}"
                     class="gallery-lightbox-trigger"
                   >
@@ -77,7 +81,14 @@
   <div class="lightbox-stage">
     <button type="button" class="lightbox-nav lightbox-prev" id="LightboxPrev-{{ section.id }}" aria-label="Previous">&lsaquo;</button>
     <div class="lightbox-frame">
-      <img src="" id="LightboxImage-{{ section.id }}" alt="" loading="lazy">
+      {%- comment -%}
+        Not lazy: this <img> starts with an empty src and only gets one when the
+        viewer clicks a thumbnail. Chrome keeps a lazy image with no initial src
+        deferred even after src is assigned, so the lightbox opened to an empty
+        frame - verified on the preview, where flipping this to eager made the
+        same URL load instantly. A click is an explicit request; nothing to defer.
+      {%- endcomment -%}
+      <img src="" id="LightboxImage-{{ section.id }}" alt="">
     </div>
     <button type="button" class="lightbox-nav lightbox-next" id="LightboxNext-{{ section.id }}" aria-label="Next">&rsaquo;</button>
   </div>
@@ -430,7 +441,12 @@
       
       currentIndex = index;
       const targetImg = galleryImages[currentIndex];
-      const fullSrc = targetImg.getAttribute('data-full-src') || targetImg.src;
+      // The lightbox wants the same image at a larger width. Deriving it from the
+      // src beats emitting a second full CDN URL as data-full-src on all 126 blocks.
+      const baseSrc = targetImg.getAttribute('src') || targetImg.src || '';
+      const fullSrc = /[?&]width=\d+/.test(baseSrc)
+        ? baseSrc.replace(/([?&]width=)\d+/, '$1' + 1600)
+        : (targetImg.currentSrc || targetImg.src);
 
       lightboxImg.src = fullSrc;
       lightboxImg.alt = targetImg.getAttribute('alt') || '';
