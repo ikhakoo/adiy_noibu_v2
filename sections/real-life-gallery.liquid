@@ -98,9 +98,13 @@
   Liquid-free rules moved to assets/section-real-life-gallery.css so they are cached across
   page views instead of being re-sent inside every HTML document. Only the
   per-section padding rules, which interpolate settings, stay inline.
+
+  Loaded blocking, not deferred: these rules set the card sizes. Deferring them
+  let the cards collapse to zero height at first paint, which put every image in
+  the section inside the viewport and defeated loading="lazy" - measured as 10
+  extra eager downloads in comparison-cards. Gzipped this is 1-2KB.
 {%- endcomment -%}
-<link rel="stylesheet" href="{{ 'section-real-life-gallery.css' | asset_url }}" media="print" onload="this.media='all'">
-<noscript>{{ 'section-real-life-gallery.css' | asset_url | stylesheet_tag }}</noscript>
+{{ 'section-real-life-gallery.css' | asset_url | stylesheet_tag }}
 <style>.custom-gallery-wrapper {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
