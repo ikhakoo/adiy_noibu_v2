@@ -87,10 +87,79 @@
         "mobile_content_alignment": "center",
         "show_text_below": false
       }
+    },
+    "comparison_cards_i9fVnQ": {
+      "type": "comparison-cards",
+      "blocks": {
+        "card_hEyPbE": {
+          "type": "card",
+          "settings": {
+            "custom_class": "wood-deck hide",
+            "bg_color": "#ffffff",
+            "product": "pressure-treated-kiln-dried-wood-deck-kit",
+            "badge_text": "maintenance",
+            "title": "Wood Deck Kit",
+            "price": "$3,399",
+            "compare_at_price": "$4,199",
+            "discount_tag": "19% Off",
+            "description": "Grade 1 Southern Yellow Pine. Pressure Treated and Kiln Dried.",
+            "button_label": "Shop Now",
+            "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+            "feature_1_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_2_6911b065-8660-4487-b435-4b140819384f.png",
+            "feature_1_text": "Built To Resist The Elements",
+            "feature_2_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_5.png",
+            "feature_2_text": "Naturally Beautiful",
+            "feature_3_icon": "shopify://shop_images/Group_2147228895_243bd22a-7c6e-4382-8143-ae055352a944.png",
+            "feature_3_text": "Engineered for Strength",
+            "feature_4_icon": "shopify://shop_images/Group_2147228896_66b209ab-c421-4464-8cca-2d9b1861c9bc.png",
+            "feature_4_text": "5-Year Structural Warranty",
+            "card_image": "shopify://shop_images/Slice_1_1.png"
+          }
+        },
+        "card_np4NiD": {
+          "type": "card",
+          "settings": {
+            "custom_class": "composite-deck show",
+            "bg_color": "#ebeceb",
+            "product": "a-diy-composite-deck-kit",
+            "badge_text": "LOW MAINTENANCE",
+            "title": "Composite Deck Kit",
+            "price": "$4,400",
+            "compare_at_price": "$5,200",
+            "discount_tag": "15% Off",
+            "description": "Engineered For Lasting Beauty.",
+            "button_label": "Shop Now",
+            "button_link": "shopify://products/a-diy-composite-deck-kit",
+            "feature_1_icon": "shopify://shop_images/icon_1_03344aee-25d2-4590-92b3-066e82c9dbab.png",
+            "feature_1_text": "25-Year Warranty",
+            "feature_2_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_7_46ddc8e1-0781-4a7f-9dac-59319a1c07c9.png",
+            "feature_2_text": "Sustainability",
+            "feature_3_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_8_cd053c86-494c-442f-9c15-21a4158518c3.png",
+            "feature_3_text": "Stain and Fade Resistance",
+            "feature_4_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_10_1e2f1ea4-a1f6-4fb4-a0e3-e9874f6ca325.png",
+            "feature_4_text": "barefoot Friendly",
+            "card_image": "shopify://shop_images/Slice_2.png"
+          }
+        }
+      },
+      "block_order": [
+        "card_hEyPbE",
+        "card_np4NiD"
+      ],
+      "name": "Comparison Cards",
+      "settings": {
+        "heading": "A real deck, engineered to come together.",
+        "top_link_text": "In-Depth Deck Comparison",
+        "top_link_url": "shopify://collections/all",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "main",
-    "image_banner_HeJkDJ"
+    "image_banner_HeJkDJ",
+    "comparison_cards_i9fVnQ"
   ]
 }
