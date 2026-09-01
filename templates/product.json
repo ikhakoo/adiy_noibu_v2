@@ -2351,7 +2351,7 @@
           "settings": {
             "assign_tabs": "Assembly",
             "question": "How is the deck built structurally?",
-            "answer": "<p>6 x 6 beams carry the load, 2 x 8 joists are spaced 13 to 14 inches on centre to meet standard deck codes, and 5.5-inch pre-sealed boards finish the surface. The system is engineered for 15,000+ lbs, with galvanized corrosion-resistant hardware throughout.</p>"
+            "answer": "<p>6 x 6 beams carry the load, 2 x 6 joists are spaced 13 to 14 inches on centre to meet standard deck codes, and 5.5-inch pre-sealed boards finish the surface. The system is engineered for 15,000+ lbs, with galvanized corrosion-resistant hardware throughout.</p>"
           }
         },
         "faq_item_permit_required": {
