@@ -75,7 +75,7 @@
         "logo_image": "shopify://shop_images/logotype.png",
         "newsletter_enable": true,
         "newsletter_heading": "Subscribe for store updates and discounts.",
-        "newsletter_subheading": "Be the first to know of our exclusive store updates, special offers, and discounts",
+        "newsletter_subheading": "Be the first to know of our exclusive store updates, special offers, and discounts.",
         "input_placeholder": "Enter Email Address",
         "button_text": "Subscribe",
         "show_social": true,
