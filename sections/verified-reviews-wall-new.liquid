@@ -294,7 +294,14 @@
     column-gap: 14px;
   }
 
-  .reviews-wall-scroll-{{ section.id }} .reviews-wrapper-relative.is-truncated .reviews-isotope-grid {
+  {%- comment -%}
+    The clamp has to sit on the wrapper, not on the multi-column grid. A max-height
+    on a multicol box does not clip it - it fragments the overflow into extra
+    columns off to the right, so the tail of the wall ended up beside the grid
+    instead of below the fold. Clipping the wrapper lets the grid lay out at its
+    natural height and simply hides what is past 1000px.
+  {%- endcomment -%}
+  .reviews-wall-scroll-{{ section.id }} .reviews-wrapper-relative.is-truncated {
     max-height: 1000px;
     overflow: hidden;
   }
