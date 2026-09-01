@@ -663,6 +663,9 @@
 .template-page-free-design-consultation .image-with-text-matrix.gradient{
     background: #f5f3f1;
 }
+.template-page-free-design-consultation .banner__content .banner__box.content-container {
+    max-width: 75rem;
+}
 @media screen and (max-width:768px){
     .template-page-free-design-consultation .shopify-section.section .consultant-page.banner .banner__content {
         align-items: center;
