@@ -382,12 +382,23 @@
   .reviews-wall-scroll-{{ section.id }} .media-wrapper.aspect-medium { aspect-ratio: 9 / 11; }
 
   .reviews-wall-scroll-{{ section.id }} .media-wrapper video,
+  .reviews-wall-scroll-{{ section.id }} .media-wrapper img.review-poster,
   .reviews-wall-scroll-{{ section.id }} .media-wrapper img.review-main-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     border-radius: 18px;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .media-wrapper img.review-poster {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .media-wrapper.is-playing img.review-poster {
+    display: none;
   }
 
   .reviews-wall-scroll-{{ section.id }} .review-play-button {
@@ -707,7 +718,21 @@
                   {%- capture rw_video_markup -%}
                     {{ block.settings.video | video_tag: image_size: '600x', loop: true, muted: true, playsinline: true, preload: 'none' }}
                   {%- endcapture -%}
-                  {{ rw_video_markup | replace: ' poster="', ' data-poster="' | replace: '<img src="', '<img data-fallback-src="' }}
+                  {%- comment -%}
+                    Strip video_tag's own poster (it downloads eagerly, ~145KB x 21)
+                    and its fallback <img> (never displayed by any browser that
+                    supports <video>, but downloaded by all of them).
+                  {%- endcomment -%}
+                  {{ rw_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
+                  {%- if block.settings.video.preview_image != blank -%}
+                    <img
+                      class="review-poster"
+                      src="{{ block.settings.video.preview_image | image_url: width: 600 }}"
+                      width="{{ block.settings.video.preview_image.width }}"
+                      height="{{ block.settings.video.preview_image.height }}"
+                      alt=""
+                      loading="lazy">
+                  {%- endif -%}
                   <div class="review-play-button"></div>
                   <button type="button" class="mute-badge-icon" aria-label="Toggle Audio">
                     <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
@@ -851,43 +876,21 @@
 
     const videoCards = sectionContainer.querySelectorAll('.card-box.is-video .media-wrapper');
 
-    // Posters live in data-poster until the card approaches the viewport.
-    const applyPoster = (wrapper) => {
-      const video = wrapper.querySelector('video');
-      if (!video) return;
-      if (video.dataset.poster) {
-        video.poster = video.dataset.poster;
-        delete video.dataset.poster;
-      }
-      const fallback = video.querySelector('img[data-fallback-src]');
-      if (fallback) fallback.remove();
-    };
-
-    if ('IntersectionObserver' in window) {
-      const posterObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          obs.unobserve(entry.target);
-          applyPoster(entry.target);
-        });
-      }, { rootMargin: '600px 0px' });
-      videoCards.forEach(w => posterObserver.observe(w));
-    } else {
-      videoCards.forEach(applyPoster);
-    }
-
     videoCards.forEach(wrapper => {
       const video = wrapper.querySelector('video');
       const muteBtn = wrapper.querySelector('.mute-badge-icon');
       if (!video) return;
 
       wrapper.addEventListener('mouseenter', function() {
-        video.play().catch(() => {});
+        // Reveal the video underneath only once it is actually showing frames,
+        // otherwise the poster is swapped for a black box while it buffers.
+        video.play().then(() => wrapper.classList.add('is-playing')).catch(() => {});
       });
 
       wrapper.addEventListener('mouseleave', function() {
         video.pause();
         video.currentTime = 0;
+        wrapper.classList.remove('is-playing');
       });
 
       if (muteBtn) {

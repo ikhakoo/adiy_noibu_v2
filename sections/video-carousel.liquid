@@ -121,11 +121,22 @@
     }
   }
 
-  .pb-video-card__video {
+  .pb-video-card__video,
+  .pb-video-card__poster {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .pb-video-card__poster {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .pb-video-card.is-playing .pb-video-card__poster {
+    display: none;
   }
 
   /* Floating Overlay Controls (Poly & Bark Style) */
@@ -303,17 +314,19 @@
                 }}
               {%- endcapture -%}
               {%- comment -%}
-                poster -> data-poster so the frame is not fetched until the card is
-                near the viewport (see the IntersectionObserver below), and the
-                fallback <img> video_tag always emits loses its src - it is only
-                shown to browsers with no <video> support, but it downloaded on
-                every load regardless.
+                Strip video_tag's poster attribute and the fallback <img> it always
+                emits - both download eagerly, and the fallback is never displayed
+                by any browser that supports <video>. The visible poster is the
+                lazy <img> below instead.
               {%- endcomment -%}
-              {{ vc_video_markup | replace: ' poster="', ' data-poster="' | replace: '<img src="', '<img data-fallback-src="' }}
+              {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
+              {%- if custom_poster != blank -%}
+                <img class="pb-video-card__poster" src="{{ custom_poster }}" alt="" loading="lazy">
+              {%- endif -%}
             {%- elsif block.settings.external_video_url != blank -%}
               <video 
                 src="{{ block.settings.external_video_url }}" 
-                {% if custom_poster != blank %}data-poster="{{ custom_poster }}"{% endif %}
+
                 class="pb-video-card__video js-pb-video" 
                 loop 
                 muted 
@@ -437,9 +450,12 @@
         if (video.paused) {
           if (iconPlay) iconPlay.style.display = 'block';
           if (iconPause) iconPause.style.display = 'none';
+          // Bring the poster back so a paused card is never a black rectangle.
+          card.classList.remove('is-playing');
         } else {
           if (iconPlay) iconPlay.style.display = 'none';
           if (iconPause) iconPause.style.display = 'block';
+          card.classList.add('is-playing');
         }
       }
 
@@ -553,33 +569,6 @@
       updateMuteIcons();
     });
     
-    /* Posters are held in data-poster so 15 frames (~145KB each) do not download
-       on page load for a section six screens down. Swap them in as cards approach. */
-    const applyPoster = (card) => {
-      const video = card.querySelector('.js-pb-video');
-      if (!video) return;
-      const p = video.dataset.poster;
-      if (p) {
-        video.poster = p;
-        delete video.dataset.poster;
-      }
-      const fallback = video.querySelector('img[data-fallback-src]');
-      if (fallback) fallback.remove();
-    };
-
-    if ('IntersectionObserver' in window) {
-      const posterObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          obs.unobserve(entry.target);
-          applyPoster(entry.target);
-        });
-      }, { rootMargin: '600px 0px' });
-      cards.forEach(card => posterObserver.observe(card));
-    } else {
-      cards.forEach(applyPoster);
-    }
-
     /* Mobile video preview: autoplay briefly, then pause.
        Only for cards that actually reach the viewport - previewing all of them on
        DOMContentLoaded downloaded 15 videos' worth of media data up front. */
