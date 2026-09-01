@@ -98,7 +98,7 @@
           "type": "feature_item",
           "settings": {
             "icon_image": "shopify://shop_images/parquet.png",
-            "title": "The World First and Only",
+            "title": "The World's First and Only",
             "subtitle": "Professional Grade Deck kit"
           }
         },
@@ -3343,7 +3343,6 @@
         "class_heading": "",
         "sub_heading": "",
         "rating_score": "4.8",
-        "total_reviews": "0",
         "bg_color": "#f4f4f4",
         "show_full_section": false,
         "button_label": "See More",
