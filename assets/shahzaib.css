@@ -554,10 +554,13 @@
     max-width: 85%;
     margin: 10px auto 0;
 }
+/* No font-size here: this rule was pinning bolded words to 16px inside paragraphs
+   that the type scale sets to 18px, so <strong> rendered smaller than the text
+   around it. Weight and colour are the deliberate part; size should follow the
+   paragraph. */
 .tailored-space-sec .multicolumn-card__info .rte strong {
     font-weight: 400;
     color: #000;
-    font-size: 16px;
 }
 .tailored-space-sec.multicolumn .button{
     background: #194636;
