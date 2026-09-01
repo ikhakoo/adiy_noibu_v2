@@ -13,6 +13,16 @@
     }
   }
 
+  /* Image Height Medium Fix */
+  .multirow .image-with-text__media--medium {
+    height: 45rem;
+  }
+  @media screen and (max-width: 749px) {
+    .multirow .image-with-text__media--medium {
+      height: 30rem;
+    }
+  }
+
   /* Custom Styles for Design Match */
   .multirow-custom__header {
     text-align: center;
@@ -38,10 +48,8 @@
 
   .multirow-card__divider {
     border: none;
-    /* border-top: 1px solid #000; */
     margin: 1.5rem 0;
     width: 100%;
-
     border-top: 1px solid transparent;
     background: transparent;
   }
@@ -78,15 +86,10 @@
     .multirow .image-with-text__content {
       padding: 1.5rem !important;
     }
+    .multirow-card__sub-title { 
+      font-size: 13px; 
+    }
   }
-
-{%- comment -%}
-  Mobile readability floor. These selectors are declared once for all viewports,
-  so they are overridden here rather than edited - desktop keeps its current size.
-{%- endcomment -%}
-@media screen and (max-width: 749px) {
-    .multirow-card__sub-title { font-size: 13px; }
-}
 {%- endstyle -%}
 
 {%- liquid
