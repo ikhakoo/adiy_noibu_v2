@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -30,22 +31,21 @@
             "text_size": 16
           }
         },
-        "text_4mmrY3": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "class_text": "sub-title",
-            "text_html": "",
-            "text": "OVER 5,000 HAPPY CUSTOMERS",
-            "text_style": "subtitle"
-          }
-        },
         "heading_m7P9Ar": {
           "type": "heading",
           "settings": {
             "class_heading": "",
             "heading_html": "",
-            "heading": "Transform Your Backyard Without The Hassle"
+            "heading": "Thank You For Your Application"
+          }
+        },
+        "text_4mmrY3": {
+          "type": "text",
+          "settings": {
+            "class_text": "sub-title",
+            "text_html": "",
+            "text": "An A-DIY Certified Consultant will be in touch with next steps.",
+            "text_style": "subtitle"
           }
         },
         "buttons_eaPPcz": {
@@ -63,8 +63,8 @@
       },
       "block_order": [
         "review_badge_Mjy3He",
-        "text_4mmrY3",
         "heading_m7P9Ar",
+        "text_4mmrY3",
         "buttons_eaPPcz"
       ],
       "name": "t:sections.image-banner.presets.name",
