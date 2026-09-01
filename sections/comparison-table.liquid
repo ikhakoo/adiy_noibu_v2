@@ -261,7 +261,18 @@
           <div class="comp-card {% if block.settings.is_highlight %}comp-card--highlight{% endif %}" {{ block.shopify_attributes }}>
             <div>
               <div class="comp-card-header">
-                <h3 class="comp-card-title">{{ block.settings.title }}</h3>
+                {% comment %} <h3 class="comp-card-title">{{ block.settings.title }}</h3> {% endcomment %}
+                <h3 class="comp-card-title">
+                  {% if block.settings.title_image != blank %}
+                    {%- assign comp_card_title_alt = block.settings.title_image.alt | default: block.settings.title -%}
+                    {{ block.settings.title_image | image_url: width: 100 | image_tag: alt: comp_card_title_alt }}
+                    {%- if block.settings.title != blank -%}
+                      <span class="visually-hidden">{{ block.settings.title }}</span>
+                    {%- endif -%}
+                  {% else %}
+                    {{ block.settings.title }}
+                  {% endif %}
+                </h3>
                 {% if block.settings.is_highlight and block.settings.badge_text != blank %}
                   <span class="comp-card-badge">{{ block.settings.badge_text }}</span>
                 {% endif %}
@@ -553,6 +564,11 @@
           "id": "title",
           "label": "Column Title",
           "default": "Contractor"
+        },
+        {
+          "type": "image_picker",
+          "id": "title_image",
+          "label": "Column Title Image"
         },
         {
           "type": "checkbox",
