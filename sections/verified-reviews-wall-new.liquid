@@ -577,7 +577,7 @@
               </svg>
             </div>
             <div class="rating-subtext">
-              <p>Based on <span class="dynamic-review-count-global">{{ section.settings.total_reviews }}</span> Reviews</p>
+              <p>Based on <span class="dynamic-review-count-global"></span> Reviews</p>
             </div>
           </div>
         </div>
@@ -660,7 +660,7 @@
                 <use href="#star-{{ section.id }}" x="208" fill="url(#half-fill-{{ section.id }})" />
               </svg>
             </div>
-            <div class="h2-meta-text">Based on <span class="dynamic-review-count-global">{{ section.settings.total_reviews }}</span> reviews </div>
+            <div class="h2-meta-text">Based on <span class="dynamic-review-count-global"></span> reviews </div>
           </div>
 
           <!-- Middle: Breakdown Bars -->
@@ -988,12 +988,6 @@
       "id": "rating_score",
       "label": "Rating Score",
       "default": "4.8"
-    },
-    {
-      "type": "text",
-      "id": "total_reviews",
-      "label": "Total Reviews Count",
-      "default": "1,751"
     },
     {
       "type": "color",
