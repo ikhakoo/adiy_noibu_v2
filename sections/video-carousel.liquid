@@ -1,5 +1,11 @@
-{%- style -%}
-  .section-{{ section.id }}-padding {
+{%- comment -%}
+  Liquid-free rules moved to assets/section-video-carousel.css so they are cached across
+  page views instead of being re-sent inside every HTML document. Only the
+  per-section padding rules, which interpolate settings, stay inline.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'section-video-carousel.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-video-carousel.css' | asset_url | stylesheet_tag }}</noscript>
+{%- style -%}.section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
     position: relative;
@@ -10,222 +16,6 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
-  }
-
-  /* Header Styles */
-  .pb-video-carousel__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 2rem;
-  }
-
-  .pb-video-carousel__subheading {
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #555;
-    margin: 0 0 0.5rem 0;
-  }
-
-  .pb-video-carousel__heading {
-    margin: 0;
-    line-height: 1.15;
-    color: #1c1b18;
-  }
-
-  .pb-video-carousel__description {
-    margin-top: 0.8rem;
-    font-size: 1.4rem;
-    color: #666;
-  }
-
-  /* Nav Buttons */
-  .pb-video-carousel__nav-btns {
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
-  }
-
-  .pb-video-carousel__nav-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.15);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: #1c1b18;
-    padding: 0;
-  }
-
-  .pb-video-carousel__nav-btn:hover {
-    background: #1b4d3e;
-    color: #fff;
-    border-color: #3e261a;
-  }
-
-  .pb-video-carousel__nav-btn svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-  }
-
-  /* Slider Track */
-  .pb-video-carousel__track-wrapper {
-    /* overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none; */
-
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    /* Prevent horizontal scroll from affecting page,
-      while allowing vertical scroll to pass through */
-    overscroll-behavior-x: contain;
-    overscroll-behavior-y: auto;
-  }
-
-  .pb-video-carousel__track-wrapper::-webkit-scrollbar {
-    display: none;
-  }
-
-  .pb-video-carousel__track {
-    display: flex;
-    gap: 2rem;
-  }
-
-  /* Card Container */
-  .pb-video-card {
-    position: relative;
-    flex: 0 0 270px;
-    height: 490px;
-    border-radius: 12px;
-    overflow: hidden;
-    background-color: #000;
-  }
-
-  @media screen and (min-width: 750px) {
-    .pb-video-card {
-      flex: 0 0 310px;
-      height: 540px;
-    }
-  }
-
-  .pb-video-card__video,
-  .pb-video-card__poster {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .pb-video-card__poster {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  .pb-video-card.is-playing .pb-video-card__poster {
-    display: none;
-  }
-
-  /* Floating Overlay Controls (Poly & Bark Style) */
-  .pb-video-controls {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 2;
-  }
-
-  .pb-control-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    flex-shrink: 0;
-    padding: 0;
-    transition: transform 0.15s ease;
-  }
-
-  .pb-control-btn:active {
-    transform: scale(0.92);
-  }
-
-  .pb-control-btn svg {
-    width: 16px;
-    height: 16px;
-    fill: #222;
-  }
-
-  /* Progress Bar Pill */
-  .pb-progress-wrapper {
-    flex-grow: 1;
-    height: 18px;
-    background: #ffffff;
-    border-radius: 999px;
-    padding: 0 8px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    backdrop-filter: blur(2px);
-    touch-action: none; /* Smooth touch dragging optimization */
-    user-select: none;
-  }
-
-  .pb-progress-track {
-    width: 100%;
-    height: 3px;
-    background: #1b4d3e6b;
-    border-radius: 2px;
-    position: relative;
-    pointer-events: none;
-  }
-
-  .pb-progress-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0%;
-    background: #1b4d3e;
-    border-radius: 2px;
-  }
-
-  .pb-progress-thumb {
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    width: 8px;
-    height: 8px;
-    background: #1b4d3e;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
-  }
-
-  .pb-progress-wrapper.is-dragging .pb-progress-thumb {
-    transform: translate(-50%, -50%) scale(1.3);
   }
 
   @media screen and (max-width:628px){
@@ -242,20 +32,6 @@
       padding-bottom:60px;
     }
   }
-
-
-@media screen and (max-width: 749px) {
-
-  /* Play/pause and mute were 38x38; carousel arrows 42x42. */
-  .pb-control-btn {
-    width: 44px;
-    height: 44px;
-  }
-  .pb-video-carousel__nav-btn {
-    width: 44px;
-    height: 44px;
-  }
-}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#faf8f5' }};">
