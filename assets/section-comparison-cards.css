@@ -1,0 +1,359 @@
+.comparison-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .comparison-section__heading {
+    margin: 0;
+  }
+
+  .comparison-section__top-link {
+    font-size: 1.4rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: #194636;
+    font-weight: 400;
+  }
+
+  /* Grid Layout for Desktop */
+  .comparison-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .comparison-card {
+    flex: 1 1 320px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .comparison-card__content {
+    padding: 3rem 2rem 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1; 
+  }
+  .comparison-grid-wrapper .hide .comparison-card__badge{
+    opacity:0;
+    margin-bottom: 1.5rem;
+    min-height: 25px;
+  }
+
+  .comparison-card__badge {
+
+    margin-bottom: 1.5rem;
+    min-height: 25px;
+  }
+
+  .comparison-card__badge:not(:empty) {
+    background-color: #1b4d3e;
+    color: #ffffff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 400;
+    opacity: 1;
+  }
+
+  .comparison-card__title {
+    font-size: 2.6rem;
+    margin: 0 0 1rem;
+    font-weight: 400;
+  }
+
+  .comparison-card__pricing {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .comparison-card__price-from {
+    color: #666;
+  }
+
+  .comparison-card__price-main {
+    font-weight: bold;
+    color: #111;
+  }
+
+  .comparison-card__price-compare {
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .comparison-card__discount-badge {
+    background-color: #e2f4ea;
+    color: #1b4d3e;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .comparison-card__description {
+    font-size: 1.3rem;
+    color: #555;
+    margin: 0 0 2rem;
+    line-height: 1.4;
+  }
+
+  .comparison-card__btn {
+    background-color: #1b4d3e;
+    color: #ffffff;
+    padding: 1rem 2.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
+    margin-bottom: 2.5rem;
+  }
+
+  .comparison-card__btn:hover {
+    background: #000;
+    box-shadow: 0 0 10px #2b4f42, 
+                0 0 2px #000, 
+                0 0 30px rgba(43, 79, 66, 0.6);
+    transform: translateY(-2px);
+    color:#fff;
+  }
+
+  .comparison-card__features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    width: 80%;
+    margin-top: auto;
+  }
+
+  .comparison-card__feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .comparison-card__feature-item .comparison-card__feature-item-icon{
+    width: 40px; 
+    height: 40px;
+    margin-bottom: 10px;
+  }
+
+  .comparison-card__feature-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    margin-bottom: 1.5rem;
+  }
+
+  .comparison-card__feature-text {
+    font-size: 10px;
+    line-height: 1.2;
+    color: #333;
+    text-transform: capitalize;
+  }
+
+  .comparison-card__image-wrapper {
+    width: 100%;
+    /* margin-top: 2rem; */
+    line-height: 0;
+  }
+
+  .comparison-card__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0 0 16px 16px;
+  }
+
+  /* SCROLLBAR NAVIGATION */
+  .comparison-scrollbar-navigation {
+    margin-top: 2.5rem;
+    width: 100%;
+    display: none;
+  }
+
+  .scrollbar-track-wrapper {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 40px;
+    background-color: #1b4d3e;
+    border-radius: 9999px;
+    cursor: grab;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .scrollbar-thumb:active,
+  .scrollbar-thumb.is-dragging {
+    cursor: grabbing;
+    background-color: #0d2a22;
+  }
+
+  .scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+  }
+
+  /* MOBILE / TABLET RESPONSIVE FIXES */
+  @media screen and (max-width: 850px) {
+    .comparison-grid-wrapper {
+      /* overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      margin: 0 -1.5rem;
+      padding: 0 1.5rem;
+      cursor: grab;
+      user-select: none; */
+
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      margin: 0 -1.5rem;
+      padding: 0 1.5rem;
+      cursor: grab;
+      user-select: none;
+      /* Important */
+      overscroll-behavior-x: contain;
+      overscroll-behavior-y: auto;
+    }
+
+    .comparison-grid-wrapper.is-dragging {
+      cursor: grabbing;
+      scroll-behavior: auto;
+    }
+
+    .comparison-grid-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .comparison-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 1.5rem;
+    }
+
+    /* FIX 1: End Spacer for Complete Right Scroll */
+    .comparison-grid::after {
+      content: '';
+      flex: 0 0 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .comparison-card {
+      flex: 0 0 85%;
+      max-width: 85%;
+    }
+
+    .comparison-scrollbar-navigation {
+      display: block;
+    }
+
+    .comparison-card__features {
+      width: 100%;
+    }
+
+    .comparison-card__description {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .comparison-card {
+      flex: 0 0 94%;
+      max-width: 94%;
+    }
+
+    .comparison-section__header {
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+    }
+    .comparison-card__description {
+      font-size: 13px;
+    }
+    .comparison-card__content{
+      padding: 2rem 5px 0;
+    }
+    .comparison-card__feature-text{
+      font-size: 9px;
+    }
+    .comparison-card__btn{
+      padding: 0.5rem 2.5rem;
+    }
+    .comparison-section__heading{
+      text-align:left;
+    }
+    /* .comparison-section__top-link{
+      display: none;
+    } */
+    .comparison-section__header{
+      align-items: flex-start;
+    }
+  }
+
+@media screen and (max-width: 749px) {
+
+  /* The visible bar stays 8px; the invisible drag hitbox reaches 44px. */
+  .scrollbar-thumb-hitbox {
+    top: -18px;
+    bottom: -18px;
+  }
+  .comparison-card {
+    flex: 0 0 94%;
+    max-width: 94%;
+  }
+}
+
+@media screen and (max-width: 749px) {
+
+  .comparison-card__btn,
+  .comparison-section__top-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+}

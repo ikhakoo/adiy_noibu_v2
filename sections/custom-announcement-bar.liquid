@@ -1,5 +1,12 @@
-{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
-{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  component-slideshow.css and component-slider.css used to be loaded here. This
+  section renders a static three-column flex bar - it has no slider and no
+  slideshow - so those 13.6KB of render-blocking CSS styled nothing. Every rule
+  in them is scoped to slider-component / slideshow-component / .slider-*, none
+  of which appear below; the one shared class, .page-width, is defined in
+  base.css. This section is first in header-group.json, so those two files were
+  the first thing blocking first paint on every page.
+{%- endcomment -%}
 
 <style>
   #announcement-bar{
@@ -216,7 +223,8 @@
                   <img
                     src="{{ block.settings.icon | image_url: width: 120 }}"
                     alt=""
-                    loading="lazy"
+                    width="24"
+                    height="24"
                   />
                 {% endif %}
               </a>
@@ -255,7 +263,8 @@
                   <img
                     src="{{ block.settings.message_icon | image_url: width: 88 }}"
                     alt=""
-                    loading="lazy"
+                    width="24"
+                    height="24"
                   >
                 {% endif %}
 
@@ -277,7 +286,8 @@
                       <img
                         src="{{ block.settings.contact_icon | image_url: width: 88 }}"
                         alt=""
-                        loading="lazy"
+                        width="24"
+                        height="24"
                       >
                     {% endif %}
                     <span class="online-indicator-badge"></span>

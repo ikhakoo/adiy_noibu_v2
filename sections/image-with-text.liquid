@@ -207,9 +207,11 @@
 {%- endstyle -%}
 
 {%- liquid
+  assign iwt_loading = 'lazy'
   assign fetch_priority = 'auto'
   if section.index == 1
     assign fetch_priority = 'high'
+    assign iwt_loading = 'eager'
   endif
 
   comment
@@ -245,7 +247,7 @@
             {% endif %}
           >
             {%- if section.settings.video != blank -%}
-              {{ section.settings.video | video_tag: autoplay: true, loop: true, controls: true, muted: true }}
+              {{ section.settings.video | video_tag: image_size: '800x', autoplay: false, loop: true, controls: true, muted: true, preload: 'none' }}
             {%- elsif section.settings.image != blank -%}
               {%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
                 {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
@@ -263,7 +265,7 @@
               {{
                 section.settings.image
                 | image_url: width: 1500
-                | image_tag: alt: iwt_image_alt, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                | image_tag: alt: iwt_image_alt, sizes: sizes, widths: widths, loading: iwt_loading, fetchpriority: fetch_priority
               }}
             {%- else -%}
               {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}

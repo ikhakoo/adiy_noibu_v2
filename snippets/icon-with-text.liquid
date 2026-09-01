@@ -46,14 +46,14 @@
         {%- render 'icon-accordion', icon: block.settings.icon_1 -%}
       {%- else -%}
         <img
-          src="{{ block.settings.image_1 | image_url }}"
+          src="{{ block.settings.image_1 | image_url: width: 60 }}"
           {% if block.settings.image_1.alt != blank %}
             alt="{{ block.settings.image_1.alt | escape }}"
           {% else %}
             role="presentation"
           {% endif %}
-          height="auto"
-          width="auto"
+          height="30"
+          width="30"
           loading="lazy"
         >
       {%- endif -%}
@@ -68,14 +68,14 @@
         {% render 'icon-accordion', icon: block.settings.icon_2 -%}
       {%- else -%}
         <img
-          src="{{ block.settings.image_2 | image_url }}"
+          src="{{ block.settings.image_2 | image_url: width: 60 }}"
           {% if block.settings.image_2.alt != blank %}
             alt="{{ block.settings.image_2.alt | escape }}"
           {% else %}
             role="presentation"
           {% endif %}
-          height="auto"
-          width="auto"
+          height="30"
+          width="30"
           loading="lazy"
         >
       {%- endif -%}
@@ -90,14 +90,14 @@
         {% render 'icon-accordion', icon: block.settings.icon_3 -%}
       {%- else -%}
         <img
-          src="{{ block.settings.image_3 | image_url }}"
+          src="{{ block.settings.image_3 | image_url: width: 60 }}"
           {% if block.settings.image_3.alt != blank %}
             alt="{{ block.settings.image_3.alt | escape }}"
           {% else %}
             role="presentation"
           {% endif %}
-          height="auto"
-          width="auto"
+          height="30"
+          width="30"
           loading="lazy"
         >
       {%- endif -%}

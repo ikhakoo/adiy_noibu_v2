@@ -1,5 +1,15 @@
-{%- style -%}
-  .section-{{ section.id }}-padding {
+{%- comment -%}
+  Liquid-free rules moved to assets/section-video-carousel.css so they are cached across
+  page views instead of being re-sent inside every HTML document. Only the
+  per-section padding rules, which interpolate settings, stay inline.
+
+  Loaded blocking, not deferred: these rules set the card sizes. Deferring them
+  let the cards collapse to zero height at first paint, which put every image in
+  the section inside the viewport and defeated loading="lazy" - measured as 10
+  extra eager downloads in comparison-cards. Gzipped this is 1-2KB.
+{%- endcomment -%}
+{{ 'section-video-carousel.css' | asset_url | stylesheet_tag }}
+{%- style -%}.section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
     position: relative;
@@ -10,211 +20,6 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
-  }
-
-  /* Header Styles */
-  .pb-video-carousel__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 2rem;
-  }
-
-  .pb-video-carousel__subheading {
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #555;
-    margin: 0 0 0.5rem 0;
-  }
-
-  .pb-video-carousel__heading {
-    margin: 0;
-    line-height: 1.15;
-    color: #1c1b18;
-  }
-
-  .pb-video-carousel__description {
-    margin-top: 0.8rem;
-    font-size: 1.4rem;
-    color: #666;
-  }
-
-  /* Nav Buttons */
-  .pb-video-carousel__nav-btns {
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
-  }
-
-  .pb-video-carousel__nav-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.15);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: #1c1b18;
-    padding: 0;
-  }
-
-  .pb-video-carousel__nav-btn:hover {
-    background: #1b4d3e;
-    color: #fff;
-    border-color: #3e261a;
-  }
-
-  .pb-video-carousel__nav-btn svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-  }
-
-  /* Slider Track */
-  .pb-video-carousel__track-wrapper {
-    /* overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none; */
-
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    /* Prevent horizontal scroll from affecting page,
-      while allowing vertical scroll to pass through */
-    overscroll-behavior-x: contain;
-    overscroll-behavior-y: auto;
-  }
-
-  .pb-video-carousel__track-wrapper::-webkit-scrollbar {
-    display: none;
-  }
-
-  .pb-video-carousel__track {
-    display: flex;
-    gap: 2rem;
-  }
-
-  /* Card Container */
-  .pb-video-card {
-    position: relative;
-    flex: 0 0 270px;
-    height: 490px;
-    border-radius: 12px;
-    overflow: hidden;
-    background-color: #000;
-  }
-
-  @media screen and (min-width: 750px) {
-    .pb-video-card {
-      flex: 0 0 310px;
-      height: 540px;
-    }
-  }
-
-  .pb-video-card__video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Floating Overlay Controls (Poly & Bark Style) */
-  .pb-video-controls {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 2;
-  }
-
-  .pb-control-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    flex-shrink: 0;
-    padding: 0;
-    transition: transform 0.15s ease;
-  }
-
-  .pb-control-btn:active {
-    transform: scale(0.92);
-  }
-
-  .pb-control-btn svg {
-    width: 16px;
-    height: 16px;
-    fill: #222;
-  }
-
-  /* Progress Bar Pill */
-  .pb-progress-wrapper {
-    flex-grow: 1;
-    height: 18px;
-    background: #ffffff;
-    border-radius: 999px;
-    padding: 0 8px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    backdrop-filter: blur(2px);
-    touch-action: none; /* Smooth touch dragging optimization */
-    user-select: none;
-  }
-
-  .pb-progress-track {
-    width: 100%;
-    height: 3px;
-    background: #1b4d3e6b;
-    border-radius: 2px;
-    position: relative;
-    pointer-events: none;
-  }
-
-  .pb-progress-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0%;
-    background: #1b4d3e;
-    border-radius: 2px;
-  }
-
-  .pb-progress-thumb {
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    width: 8px;
-    height: 8px;
-    background: #1b4d3e;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
-  }
-
-  .pb-progress-wrapper.is-dragging .pb-progress-thumb {
-    transform: translate(-50%, -50%) scale(1.3);
   }
 
   @media screen and (max-width:628px){
@@ -231,20 +36,6 @@
       padding-bottom:60px;
     }
   }
-
-
-@media screen and (max-width: 749px) {
-
-  /* Play/pause and mute were 38x38; carousel arrows 42x42. */
-  .pb-control-btn {
-    width: 44px;
-    height: 44px;
-  }
-  .pb-video-carousel__nav-btn {
-    width: 44px;
-    height: 44px;
-  }
-}
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.bg_color | default: '#faf8f5' }};">
@@ -281,32 +72,57 @@
           <div class="pb-video-card js-pb-card" {{ block.shopify_attributes }}>
             
             {%- assign custom_poster = '' -%}
+            {%- assign poster_source = nil -%}
             {%- if block.settings.poster_image != blank -%}
-              {%- assign custom_poster = block.settings.poster_image | image_url: width: 800 -%}
+              {%- assign poster_source = block.settings.poster_image -%}
+            {%- elsif block.settings.video.preview_image != blank -%}
+              {%- assign poster_source = block.settings.video.preview_image -%}
+            {%- endif -%}
+            {%- if poster_source -%}
+              {%- assign custom_poster = poster_source | image_url: width: 600 -%}
             {%- endif -%}
 
             {%- if block.settings.video != blank -%}
-              {{ block.settings.video | video_tag: 
-                autoplay: false, 
-                loop: true, 
-                muted: true, 
-                playsinline: true, 
-                webkit-playsinline: true,
-                preload: 'metadata',
-                controls: false, 
-                poster: custom_poster,
-                class: 'pb-video-card__video js-pb-video' 
-              }}
+              {%- capture vc_video_markup -%}
+                {{ block.settings.video | video_tag: 
+                  image_size: '600x',
+                  autoplay: false, 
+                  loop: true, 
+                  muted: true, 
+                  playsinline: true, 
+                  webkit-playsinline: true,
+                  preload: 'none',
+                  controls: false, 
+                  poster: custom_poster,
+                  class: 'pb-video-card__video js-pb-video' 
+                }}
+              {%- endcapture -%}
+              {%- comment -%}
+                Strip video_tag's poster attribute and the fallback <img> it always
+                emits - both download eagerly, and the fallback is never displayed
+                by any browser that supports <video>. The visible poster is the
+                lazy <img> below instead.
+              {%- endcomment -%}
+              {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
+              {%- if custom_poster != blank -%}
+                <img
+                  class="pb-video-card__poster"
+                  src="{{ custom_poster }}"
+                  width="{{ poster_source.width }}"
+                  height="{{ poster_source.height }}"
+                  alt=""
+                  loading="lazy">
+              {%- endif -%}
             {%- elsif block.settings.external_video_url != blank -%}
               <video 
                 src="{{ block.settings.external_video_url }}" 
-                {% if custom_poster != blank %}poster="{{ custom_poster }}"{% endif %}
+
                 class="pb-video-card__video js-pb-video" 
                 loop 
                 muted 
                 playsinline
                 webkit-playsinline
-                preload="metadata"
+                preload="none"
               ></video>
             {%- endif -%}
 
@@ -424,9 +240,12 @@
         if (video.paused) {
           if (iconPlay) iconPlay.style.display = 'block';
           if (iconPause) iconPause.style.display = 'none';
+          // Bring the poster back so a paused card is never a black rectangle.
+          card.classList.remove('is-playing');
         } else {
           if (iconPlay) iconPlay.style.display = 'none';
           if (iconPause) iconPause.style.display = 'block';
+          card.classList.add('is-playing');
         }
       }
 
@@ -540,11 +359,14 @@
       updateMuteIcons();
     });
     
-    /* Mobile video preview: autoplay briefly, then pause */
+    /* Mobile video preview: autoplay briefly, then pause.
+       Only for cards that actually reach the viewport - previewing all of them on
+       DOMContentLoaded downloaded 15 videos' worth of media data up front. */
     if (window.matchMedia('(max-width: 749px)').matches) {
-      cards.forEach(card => {
+      const previewCard = (card) => {
         const video = card.querySelector('.js-pb-video');
-        if (!video) return;
+        if (!video || video.dataset.previewed) return;
+        video.dataset.previewed = 'true';
 
         video.muted = true;
         video.playsInline = true;
@@ -571,7 +393,20 @@
 
           video.removeEventListener('loadeddata', previewVideo);
         });
-      });
+      };
+
+      if ('IntersectionObserver' in window) {
+        const previewObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            obs.unobserve(entry.target);
+            previewCard(entry.target);
+          });
+        }, { rootMargin: '200px 0px' });
+        cards.forEach(card => previewObserver.observe(card));
+      } else {
+        cards.forEach(previewCard);
+      }
     }
   });
 </script>

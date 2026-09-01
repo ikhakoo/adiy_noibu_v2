@@ -279,7 +279,7 @@
   }
 
   /* ==========================================
-     Isotope Grid & Truncate Wrapper
+     Masonry Grid (CSS multi-column) & Truncate Wrapper
      ========================================== */
   .reviews-wall-scroll-{{ section.id }} .reviews-wrapper-relative {
     position: relative;
@@ -290,9 +290,18 @@
     width: 100%;
     margin: 0 auto;
     transition: max-height 0.4s ease;
+    column-count: {{ section.settings.columns_desktop }};
+    column-gap: 14px;
   }
 
-  .reviews-wall-scroll-{{ section.id }} .reviews-wrapper-relative.is-truncated .reviews-isotope-grid {
+  {%- comment -%}
+    The clamp has to sit on the wrapper, not on the multi-column grid. A max-height
+    on a multicol box does not clip it - it fragments the overflow into extra
+    columns off to the right, so the tail of the wall ended up beside the grid
+    instead of below the fold. Clipping the wrapper lets the grid lay out at its
+    natural height and simply hides what is past 1000px.
+  {%- endcomment -%}
+  .reviews-wall-scroll-{{ section.id }} .reviews-wrapper-relative.is-truncated {
     max-height: 1000px;
     overflow: hidden;
   }
@@ -338,9 +347,11 @@
     transform: translateY(-2px);
   }
 
-  .reviews-wall-scroll-{{ section.id }} .grid-sizer,
   .reviews-wall-scroll-{{ section.id }} .card-box {
-    width: calc((100% / {{ section.settings.columns_desktop }}) - 14px);
+    width: 100%;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .reviews-wall-scroll-{{ section.id }} .card-box {
@@ -371,12 +382,23 @@
   .reviews-wall-scroll-{{ section.id }} .media-wrapper.aspect-medium { aspect-ratio: 9 / 11; }
 
   .reviews-wall-scroll-{{ section.id }} .media-wrapper video,
+  .reviews-wall-scroll-{{ section.id }} .media-wrapper img.review-poster,
   .reviews-wall-scroll-{{ section.id }} .media-wrapper img.review-main-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     border-radius: 18px;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .media-wrapper img.review-poster {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .media-wrapper.is-playing img.review-poster {
+    display: none;
   }
 
   .reviews-wall-scroll-{{ section.id }} .review-play-button {
@@ -463,9 +485,9 @@
   .reviews-wall-scroll-{{ section.id }} .review-text { font-size: 15px; color: #444; line-height: 1.5; margin: 0; }
 
   @media screen and (max-width: 767px) {
-    .reviews-wall-scroll-{{ section.id }} .grid-sizer,
-    .reviews-wall-scroll-{{ section.id }} .card-box {
-      width: calc((100% / {{ section.settings.columns_mobile }}) - 2px);
+    .reviews-wall-scroll-{{ section.id }} .reviews-isotope-grid {
+      column-count: {{ section.settings.columns_mobile }};
+      column-gap: 2px;
     }
   }
 
@@ -479,8 +501,16 @@
 }
 {%- endstyle -%}
 
-<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+{%- comment -%}
+  Isotope (~90KB) and imagesLoaded (~7KB) were loaded here from unpkg.com with no
+  defer and no async, mid-body, for a section eight screens down - so HTML parsing
+  stopped for a third-party DNS + TLS + download on every homepage view.
+
+  Both are gone. The masonry is now CSS multi-column (see .reviews-isotope-grid
+  above), which also fixes lazy loading: Isotope stacks every grid item at top:0
+  until it lays out, so the browser saw all ~120 images as in-viewport and fetched
+  them immediately. In normal flow they have real offsets and loading="lazy" works.
+{%- endcomment -%}
 
 <div class="reviews-wall-scroll-{{ section.id }}">
   <div class="reviews-container page-width">
@@ -665,7 +695,6 @@
     <!-- Outer Relative Grid -->
     <div class="reviews-wrapper-relative {% unless section.settings.show_full_section %}is-truncated{% endunless %}">
       <div class="reviews-isotope-grid">
-        <div class="grid-sizer"></div>
 
         {%- for block in section.blocks -%}
           {%- assign class_list = "card-box" -%}
@@ -686,7 +715,24 @@
             {%- case block.type -%}
               {%- when 'video_review' -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
-                  {{ block.settings.video | video_tag: image_size: '600x', loop: true, muted: true, playsinline: true, preload: 'metadata' }}
+                  {%- capture rw_video_markup -%}
+                    {{ block.settings.video | video_tag: image_size: '600x', loop: true, muted: true, playsinline: true, preload: 'none' }}
+                  {%- endcapture -%}
+                  {%- comment -%}
+                    Strip video_tag's own poster (it downloads eagerly, ~145KB x 21)
+                    and its fallback <img> (never displayed by any browser that
+                    supports <video>, but downloaded by all of them).
+                  {%- endcomment -%}
+                  {{ rw_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
+                  {%- if block.settings.video.preview_image != blank -%}
+                    <img
+                      class="review-poster"
+                      src="{{ block.settings.video.preview_image | image_url: width: 600 }}"
+                      width="{{ block.settings.video.preview_image.width }}"
+                      height="{{ block.settings.video.preview_image.height }}"
+                      alt=""
+                      loading="lazy">
+                  {%- endif -%}
                   <div class="review-play-button"></div>
                   <button type="button" class="mute-badge-icon" aria-label="Toggle Audio">
                     <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
@@ -708,7 +754,7 @@
                     <div class="user-header">
                       <div class="user-info">
                         {%- if block.settings.author_image != blank -%}
-                          <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="">
+                          <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="" width="40" height="40" loading="lazy">
                         {%- endif -%}
                         <div class="user-meta">
                           <span class="user-name">{{ block.settings.author_name }}</span>
@@ -724,8 +770,8 @@
                             {%- when 'x' -%}<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                             {%- when 'instagram' -%}<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                             {%- when 'youtube' -%}<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                            {%- when 'google' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_8602.png?v=1787786455" alt="Google" width="24">
-                            {%- when 'trustpilot' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_4.png?v=1787847498" alt="Trustpilot" width="100%">
+                            {%- when 'google' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_8602.png?v=1787786455&width=40" alt="Google" width="20" height="20" loading="lazy">
+                            {%- when 'trustpilot' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_4.png?v=1787847498&width=140" alt="Trustpilot" width="70" height="20" loading="lazy">
                           {%- endcase -%}
                         </div>
                       {%- endif -%}
@@ -739,7 +785,20 @@
                 {%- endif -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
                   {%- assign review_image_alt = block.settings.review_image.alt | default: block.settings.headline | default: 'Customer photo of a finished A-DIY deck' -%}
-                  <img src="{{ block.settings.review_image | image_url: width: 800 }}" class="review-main-image" alt="{{ review_image_alt | strip_html | escape }}" loading="lazy">
+                  <img
+                    src="{{ block.settings.review_image | image_url: width: 550 }}"
+                    srcset="{{ block.settings.review_image | image_url: width: 200 }} 200w,
+                            {{ block.settings.review_image | image_url: width: 300 }} 300w,
+                            {{ block.settings.review_image | image_url: width: 400 }} 400w,
+                            {{ block.settings.review_image | image_url: width: 550 }} 550w,
+                            {{ block.settings.review_image | image_url: width: 750 }} 750w,
+                            {{ block.settings.review_image | image_url: width: 900 }} 900w"
+                    sizes="(max-width: 767px) 100vw, {{ 100 | divided_by: section.settings.columns_desktop }}vw"
+                    width="{{ block.settings.review_image.width }}"
+                    height="{{ block.settings.review_image.height }}"
+                    class="review-main-image"
+                    alt="{{ review_image_alt | strip_html | escape }}"
+                    loading="lazy">
                 </div>
 
               {%- when 'text_review' -%}
@@ -747,7 +806,7 @@
                   <div class="user-header">
                     <div class="user-info">
                       {%- if block.settings.author_image != blank -%}
-                        <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="">
+                        <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="" width="40" height="40" loading="lazy">
                       {%- endif -%}
                       <div class="user-meta">
                         <span class="user-name">{{ block.settings.author_name }}</span>
@@ -763,8 +822,8 @@
                           {%- when 'x' -%}<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                           {%- when 'instagram' -%}<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                           {%- when 'youtube' -%}<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                          {%- when 'google' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_8602.png?v=1787786455" alt="Google" width="24">
-                          {%- when 'trustpilot' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_4.png?v=1787847498" alt="Trustpilot" width="100%">
+                          {%- when 'google' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_8602.png?v=1787786455&width=40" alt="Google" width="20" height="20" loading="lazy">
+                          {%- when 'trustpilot' -%}<img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_4.png?v=1787847498&width=140" alt="Trustpilot" width="70" height="20" loading="lazy">
                         {%- endcase -%}
                       </div>
                     {%- endif -%}
@@ -804,46 +863,34 @@
     const sectionContainer = document.querySelector('.reviews-wall-scroll-{{ section.id }}');
     if (!sectionContainer) return;
 
-    const gridElem = sectionContainer.querySelector('.reviews-isotope-grid');
     const relativeWrapper = sectionContainer.querySelector('.reviews-wrapper-relative');
     const expandBtn = sectionContainer.querySelector('.js-expand-reviews');
-    let iso;
 
-    if (gridElem) {
-      imagesLoaded(gridElem, function() {
-        iso = new Isotope(gridElem, {
-          itemSelector: '.card-box',
-          percentPosition: true,
-          masonry: {
-            columnWidth: '.grid-sizer',
-            gutter: 14
-          }
-        });
-      });
-    }
-
+    // Masonry is CSS multi-column now, so there is no layout pass to trigger and
+    // nothing to wait on images for - expanding just drops the max-height clamp.
     if (expandBtn && relativeWrapper) {
       expandBtn.addEventListener('click', function() {
         relativeWrapper.classList.remove('is-truncated');
-        if (iso) {
-          iso.layout();
-        }
       });
     }
 
     const videoCards = sectionContainer.querySelectorAll('.card-box.is-video .media-wrapper');
+
     videoCards.forEach(wrapper => {
       const video = wrapper.querySelector('video');
       const muteBtn = wrapper.querySelector('.mute-badge-icon');
       if (!video) return;
 
       wrapper.addEventListener('mouseenter', function() {
-        video.play().catch(() => {});
+        // Reveal the video underneath only once it is actually showing frames,
+        // otherwise the poster is swapped for a black box while it buffers.
+        video.play().then(() => wrapper.classList.add('is-playing')).catch(() => {});
       });
 
       wrapper.addEventListener('mouseleave', function() {
         video.pause();
         video.currentTime = 0;
+        wrapper.classList.remove('is-playing');
       });
 
       if (muteBtn) {
