@@ -290,8 +290,11 @@
     width: 100%;
     margin: 0 auto;
     transition: max-height 0.4s ease;
-    column-count: {{ section.settings.columns_desktop }};
-    column-gap: 14px;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .grid-sizer,
+  .reviews-wall-scroll-{{ section.id }} .card-box {
+    width: calc((100% / {{ section.settings.columns_desktop }}) - 14px);
   }
 
   {%- comment -%}
@@ -357,13 +360,6 @@
     background-color: #143528;
     color: #ffffff;
     transform: translateY(-2px);
-  }
-
-  .reviews-wall-scroll-{{ section.id }} .card-box {
-    width: 100%;
-    break-inside: avoid;
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
   }
 
   .reviews-wall-scroll-{{ section.id }} .card-box {
@@ -497,9 +493,9 @@
   .reviews-wall-scroll-{{ section.id }} .review-text { color: #444; line-height: 1.5; margin: 0; }
 
   @media screen and (max-width: 767px) {
-    .reviews-wall-scroll-{{ section.id }} .reviews-isotope-grid {
-      column-count: {{ section.settings.columns_mobile }};
-      column-gap: 2px;
+    .reviews-wall-scroll-{{ section.id }} .grid-sizer,
+    .reviews-wall-scroll-{{ section.id }} .card-box {
+      width: calc((100% / {{ section.settings.columns_mobile }}) - 2px);
     }
   }
 
@@ -514,15 +510,21 @@
 {%- endstyle -%}
 
 {%- comment -%}
-  Isotope (~90KB) and imagesLoaded (~7KB) were loaded here from unpkg.com with no
-  defer and no async, mid-body, for a section eight screens down - so HTML parsing
-  stopped for a third-party DNS + TLS + download on every homepage view.
+  Isotope gives this wall its shortest-column masonry packing - CSS cannot do that
+  (multi-column fills top-to-bottom per column, which reshuffles the cards), so the
+  library stays.
 
-  Both are gone. The masonry is now CSS multi-column (see .reviews-isotope-grid
-  above), which also fixes lazy loading: Isotope stacks every grid item at top:0
-  until it lays out, so the browser saw all ~120 images as in-viewport and fetched
-  them immediately. In normal flow they have real offsets and loading="lazy" works.
+  What changed is how it loads. These used to be two parser-blocking <script> tags
+  pointing at unpkg.com, mid-body, for a section eight screens down - every page
+  view stopped parsing for a third-party DNS + TLS + download. Now they are
+  self-hosted and deferred, and Isotope is initialised only when the section nears
+  the viewport (see below). That matters for more than the scripts: Isotope stacks
+  every card at top:0 until it lays out, so initialising it eagerly made the
+  browser treat all ~120 images as in-viewport and fetch them at once. Deferring
+  init leaves the cards in normal flow, where loading="lazy" works.
 {%- endcomment -%}
+<script src="{{ 'imagesloaded.pkgd.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'isotope.pkgd.min.js' | asset_url }}" defer="defer"></script>
 
 <div class="reviews-wall-scroll-{{ section.id }}">
   <div class="reviews-container page-width">
@@ -708,6 +710,7 @@
     <div class="reviews-wrapper-relative {% unless section.settings.show_full_section %}is-truncated{% endunless %}">
       <div class="reviews-clip">
       <div class="reviews-isotope-grid">
+        <div class="grid-sizer"></div>
 
         {%- for block in section.blocks -%}
           {%- assign class_list = "card-box" -%}
@@ -877,14 +880,51 @@
     const sectionContainer = document.querySelector('.reviews-wall-scroll-{{ section.id }}');
     if (!sectionContainer) return;
 
+    const gridElem = sectionContainer.querySelector('.reviews-isotope-grid');
     const relativeWrapper = sectionContainer.querySelector('.reviews-wrapper-relative');
     const expandBtn = sectionContainer.querySelector('.js-expand-reviews');
+    let iso;
 
-    // Masonry is CSS multi-column now, so there is no layout pass to trigger and
-    // nothing to wait on images for - expanding just drops the max-height clamp.
+    // Isotope is deferred, so it may not have parsed yet when this runs. Wait for
+    // it rather than bailing out, otherwise the wall silently stays unpacked.
+    const whenReady = (cb) => {
+      if (typeof Isotope !== 'undefined' && typeof imagesLoaded !== 'undefined') return cb();
+      let tries = 0;
+      const t = setInterval(() => {
+        if (typeof Isotope !== 'undefined' && typeof imagesLoaded !== 'undefined') { clearInterval(t); cb(); }
+        else if (++tries > 100) clearInterval(t);
+      }, 50);
+    };
+
+    const initMasonry = () => {
+      if (iso || !gridElem) return;
+      whenReady(() => {
+        iso = new Isotope(gridElem, {
+          itemSelector: '.card-box',
+          percentPosition: true,
+          masonry: { columnWidth: '.grid-sizer', gutter: 14 }
+        });
+        // Cards are lazy, so they gain height as they load - relayout when they do.
+        imagesLoaded(gridElem, () => iso && iso.layout());
+      });
+    };
+
+    // Only pack once the wall isnear the viewport. Initialising eagerly stacks every
+    // card at top:0, which makes the browser fetch all ~120 images at once.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (e.isIntersecting) { obs.disconnect(); initMasonry(); } });
+      }, { rootMargin: '800px 0px' });
+      io.observe(sectionContainer);
+    } else {
+      initMasonry();
+    }
+
     if (expandBtn && relativeWrapper) {
       expandBtn.addEventListener('click', function() {
         relativeWrapper.classList.remove('is-truncated');
+        initMasonry();
+        if (iso) iso.layout();
       });
     }
 
