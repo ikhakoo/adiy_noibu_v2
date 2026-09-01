@@ -376,9 +376,11 @@ h5,
 
 /* Merchant rich-text fields let <strong>/<b> through. The browser default is
    font-weight: bolder, which resolves one step past the heading's own weight - 900
-   against an h2 at 600 - and 900 is not a weight we load, so it faux-bolds. Pin it to
-   700, the heaviest face the scale loads. Note this makes <strong> a no-op inside an
-   h1, which is already 700. */
+   against an h2 at 600 - and 900 is not a weight we load, so it faux-bolds. Pinning it
+   to 700 fixed the faux-bold but read far too heavy against the lighter steps: a
+   bolded word inside an h5 (300) or h4 (400) jumped several weights out of the line it
+   sits in. The scale already carries the emphasis, so <strong> now just matches the
+   heading it is in - no faux-bold, no weight jump. */
 h1 strong, h1 b,
 h2 strong, h2 b,
 h3 strong, h3 b,
@@ -389,7 +391,7 @@ h5 strong, h5 b,
 .h3 strong, .h3 b,
 .h4 strong, .h4 b,
 .h5 strong, .h5 b {
-  font-weight: 700;
+  font-weight: inherit;
 }
 
 h6,

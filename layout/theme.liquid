@@ -339,7 +339,22 @@
         to paint the page. Deferred with the same media=print swap already used for
         component-cart-items.css above - five stylesheets off the blocking chain on
         every single page.
+
+        The one rule that IS needed to paint the page is inlined below. <cart-drawer>
+        is the first element in <body>, so until component-cart-drawer.css arrives the
+        drawer is a static in-flow block: on an uncached first load that reserved a
+        541px band of blank space above the header and pushed the whole page down,
+        then collapsed when the stylesheet landed. Taking it out of flow in the
+        blocking chain costs one rule and keeps the five deferred files deferred.
       {%- endcomment -%}
+      <style>
+        cart-drawer.drawer {
+          position: fixed;
+          top: 0;
+          left: 0;
+          visibility: hidden;
+        }
+      </style>
       <link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
       <link rel="stylesheet" href="{{ 'component-cart.css' | asset_url }}" media="print" onload="this.media='all'">
       <link rel="stylesheet" href="{{ 'component-totals.css' | asset_url }}" media="print" onload="this.media='all'">
