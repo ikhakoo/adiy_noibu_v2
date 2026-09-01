@@ -19,7 +19,6 @@
             "svg_code": "",
             "icon": "shopify://shop_images/Frame_1597879831.png",
             "rating_text": "4.8 / 5 stars",
-            "base_count": 1746,
             "text_suffix": "reviews"
           }
         },
@@ -498,7 +497,7 @@
             "enable_autoplay": false,
             "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL.png",
             "title": "Uneven Ground",
-            "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post with when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
+            "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
             "link": ""
           }
@@ -2255,7 +2254,6 @@
         "class_heading": "",
         "sub_heading": "",
         "rating_score": "4.8",
-        "total_reviews": "30,215",
         "bg_color": "#f4f4f4",
         "show_full_section": false,
         "button_label": "More Reviews",
