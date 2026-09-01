@@ -716,6 +716,7 @@
           "type": "column",
           "settings": {
             "title": "A-DIY",
+            "title_image": "shopify://shop_images/Site_Logo.png",
             "is_highlight": true,
             "badge_text": "SUPERIOR CHOICE",
             "label_1": "PRICE",
