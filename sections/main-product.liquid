@@ -1086,7 +1086,7 @@
                         <div class="review-text-wrapper">
                           {{ block.settings.rating_text | default: '4.8 / 5 stars' }}
                           <span class="review-count-text">
-                            <span class="dynamic-review-count-global">{{ block.settings.base_count | default: '1746' }}</span>
+                            <span class="dynamic-review-count-global"></span>
                             {{ block.settings.text_suffix | default: 'reviews' }}
                           </span>
                         </div>
@@ -2213,12 +2213,7 @@
           "label": "Rating Text",
           "default": "4.8 / 5 stars"
         },
-        {
-          "type": "number",
-          "id": "base_count",
-          "label": "Base Review Count",
-          "default": 1746
-        },
+        
         {
           "type": "text",
           "id": "text_suffix",
