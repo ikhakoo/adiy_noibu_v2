@@ -295,13 +295,25 @@
   }
 
   {%- comment -%}
-    The clamp has to sit on the wrapper, not on the multi-column grid. A max-height
-    on a multicol box does not clip it - it fragments the overflow into extra
-    columns off to the right, so the tail of the wall ended up beside the grid
-    instead of below the fold. Clipping the wrapper lets the grid lay out at its
-    natural height and simply hides what is past 1000px.
+    The clamp sits on a dedicated clip layer around the grid - not on the grid
+    itself and not on the wrapper.
+
+    Not the grid: a max-height on a multi-column box does not clip it, it fragments
+    the overflow into extra columns off to the right, so the tail of the wall ended
+    up beside the grid instead of below the fold.
+
+    Not the wrapper: the wrapper also holds the fade overlay and the read-more
+    button, and that button is position:absolute; bottom:-3rem - it hangs below the
+    overlay on purpose - so overflow:hidden there cut it in half.
+
+    .reviews-clip is a plain block box, so it clips normally, and the overlay and
+    button stay outside it in the unclipped wrapper.
   {%- endcomment -%}
-  .reviews-wall-scroll-{{ section.id }} .reviews-wrapper-relative.is-truncated {
+  .reviews-wall-scroll-{{ section.id }} .reviews-clip {
+    transition: max-height 0.4s ease;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .reviews-wrapper-relative.is-truncated .reviews-clip {
     max-height: 1000px;
     overflow: hidden;
   }
@@ -694,6 +706,7 @@
 
     <!-- Outer Relative Grid -->
     <div class="reviews-wrapper-relative {% unless section.settings.show_full_section %}is-truncated{% endunless %}">
+      <div class="reviews-clip">
       <div class="reviews-isotope-grid">
 
         {%- for block in section.blocks -%}
@@ -837,6 +850,7 @@
             {%- endcase -%}
           </div>
         {%- endfor -%}
+      </div>
       </div>
 
       <!-- Truncate Read More Button Overlay -->

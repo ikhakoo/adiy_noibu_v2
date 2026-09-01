@@ -401,7 +401,13 @@
           </div>
         {%- endform -%}
       {%- endif -%}
-      <div class="klaviyo-form-YqJLxx footer-custom_newsletter-form"></div>
+      {%- comment -%}
+        Removed: an embedded Klaviyo form (klaviyo-form-YqJLxx) that rendered a
+        second email signup directly under the theme's own newsletter form above.
+        It was invisible until the form was published in Klaviyo, which is why it
+        appeared without any theme change. Delete the form in Klaviyo too if it is
+        not used anywhere else, otherwise it will keep loading its script.
+      {%- endcomment -%}
 
       <!-- Social Icons with Custom Image Upload Support -->
       {%- if section.settings.show_social -%}
