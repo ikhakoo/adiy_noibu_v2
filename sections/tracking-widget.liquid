@@ -247,6 +247,58 @@
   </div>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const trackingForm = document.querySelector('.tracking-widget-form'); // Apne form class name se replace karein
+  const trackingInput = document.querySelector('.tracking-input'); // Apne input class name se replace karein
+  
+  const stage1 = document.querySelector('.stage-1');
+  const stage2 = document.querySelector('.stage-2');
+  const stage3 = document.querySelector('.stage-3');
+
+  function hideAllStages() {
+    if (stage1) stage1.style.display = 'none';
+    if (stage2) stage2.style.display = 'none';
+    if (stage3) stage3.style.display = 'none';
+  }
+
+  function renderStageByDays(daysOld) {
+    hideAllStages();
+
+    if (daysOld >= 0 && daysOld <= 7) {
+      if (stage1) stage1.style.display = 'block';
+    } else if (daysOld > 7 && daysOld <= 14) {
+      if (stage2) stage2.style.display = 'block';
+    } else if (daysOld > 14 && daysOld <= 21) {
+      if (stage3) stage3.style.display = 'block';
+    } else {
+      alert('Order status not found or order is beyond 21 days.');
+    }
+  }
+
+  if (trackingForm) {
+    trackingForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const orderNumber = trackingInput ? trackingInput.value.trim() : '';
+
+      if (!orderNumber) {
+        alert('Please enter a valid order number.');
+        return;
+      }
+
+      // App integration endpoint call:
+      fetch(`/apps/order-tracker/status?order=${encodeURIComponent(orderNumber)}`)
+        .then(res => res.json())
+        .then(data => {
+          renderStageByDays(data.daysOld);
+        })
+        .catch(err => {
+          console.error('Error fetching order status:', err);
+        });
+    });
+  }
+});
+</script>
 
 {% schema %}
 {
