@@ -182,12 +182,6 @@
       width: 100%;
     }
   }
-
-  @media screen and (max-width: 749px) {
-    .tracking-widget__input {
-      font-size: 16px;
-    }
-  }
 {%- endstyle -%}
 
 <!-- Floating Corner Back Button -->
@@ -258,39 +252,52 @@
     if (!rawValue) return false;
 
     const cleanOrderNum = rawValue.replace('#', '');
-    console.log(`%c 🔍 Fetching Order: #${cleanOrderNum}...`, "color: #3b82f6; font-weight: bold;");
+    console.log(`%c 🔍 Fetching Real Order: #${cleanOrderNum}...`, "color: #3b82f6; font-weight: bold;");
 
     try {
       const proxyUrl = `/apps/order-tracker/api/track-order?order=${encodeURIComponent(cleanOrderNum)}`;
       const response = await fetch(proxyUrl);
       
       if (!response.ok) {
-        throw new Error(`Server status: ${response.status}`);
+        throw new Error(`API Endpoint returned status: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log("Response Data from Backend:", data);
 
       if (!data.success) {
         alert(`Order #${cleanOrderNum} not found in store!`);
         return false;
       }
 
-      displayStage(data.stage);
+      let targetStage = 1;
 
-    } catch (error) {
-      console.warn("Tracking API Error or offline. Fallback preview logic executing:", error);
-      
-      // Fallback Demo Logic based on days / order ID for immediate testing
-      let detectedStage = 1;
-      const lastChar = parseInt(cleanOrderNum.slice(-1), 10);
+      // Backend returns created_at date OR calculated daysOld
+      if (data.daysOld !== undefined) {
+        const days = parseInt(data.daysOld, 10);
+        if (days >= 0 && days <= 7) targetStage = 1;
+        else if (days > 7 && days <= 14) targetStage = 2;
+        else if (days > 14) targetStage = 3;
+      } else if (data.createdAt || data.created_at) {
+        const orderDate = new Date(data.createdAt || data.created_at);
+        const now = new Date();
+        const diffTime = Math.abs(now - orderDate);
+        const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        console.log(`Calculated Days Difference: ${days} days`);
 
-      if (!isNaN(lastChar)) {
-        if (lastChar >= 0 && lastChar <= 3) detectedStage = 1;      // 0-7 days
-        else if (lastChar >= 4 && lastChar <= 6) detectedStage = 2; // 7-14 days
-        else detectedStage = 3;                                     // 14-21 days
+        if (days <= 7) targetStage = 1;
+        else if (days <= 14) targetStage = 2;
+        else targetStage = 3;
+      } else if (data.stage) {
+        targetStage = parseInt(data.stage, 10);
       }
 
-      displayStage(detectedStage);
+      displayStage(targetStage);
+
+    } catch (error) {
+      console.error("Backend Proxy Error:", error);
+      alert("Error contacting App Proxy. Check backend proxy endpoint configuration.");
     }
 
     return false;
@@ -306,18 +313,13 @@
     document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
       .forEach(s => s.classList.remove('show-stage'));
 
-    let targetStage = document.querySelector(`.stage-${stageNumber}-section`);
-    
-    // Fallback selector check
-    if (!targetStage) {
-      targetStage = document.querySelector(`.stage-${stageNumber}`) || document.querySelector('.stage-section-wrapper');
-    }
+    let targetStage = document.querySelector(`.stage-${stageNumber}-section`) || document.querySelector(`.stage-${stageNumber}`);
 
     if (targetStage) {
       targetStage.classList.add('show-stage');
       targetStage.scrollIntoView({ behavior: 'smooth' });
     } else {
-      alert(`Stage ${stageNumber} section is missing in your page customizer template.`);
+      alert(`Stage ${stageNumber} section is missing in Page Customizer.`);
       resetTrackingView();
     }
   }
@@ -372,12 +374,6 @@
       "id": "button_text",
       "label": "Button Text",
       "default": "Track"
-    },
-    {
-      "type": "text",
-      "id": "tracking_url",
-      "label": "Tracking URL Template",
-      "info": "Leave empty for default."
     },
     {
       "type": "richtext",
