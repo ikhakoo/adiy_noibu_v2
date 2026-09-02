@@ -1,3 +1,23 @@
+{%- comment -%}
+  CLS fix (Noibu RUM, /pages/how-to-build-your-own-deck desktop p75 0.50).
+
+  This page is set entirely in DM Sans / DM Serif Display, and the Google Fonts
+  stylesheet used to be injected by inline JS at the very BOTTOM of this section
+  (a `document.createElement("link")` after ~70KB of markup). That request could
+  not start until the whole section had been parsed and the script had run, so
+  the faces always arrived well after first paint and `display=swap` then
+  re-flowed every paragraph, heading, spec cell and quote card on the page at
+  once. Declaring the link in markup lets the preload scanner start it with the
+  rest of the document, so the swap lands at or before first paint instead of
+  several hundred ms into the page.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+>
+
 <style>
   h1 {
   position: relative;
@@ -322,11 +342,24 @@
   }
   .ab2-imgtext--reverse { direction: rtl; }
   .ab2-imgtext--reverse-child { direction: ltr; }
+  /* CLS: the <img> below is absolutely positioned on purpose.
+     These images are hardcoded CDN URLs with no width/height attributes and
+     they are lazy-loaded, so in normal flow they contribute 0px to the grid
+     row until they decode and then jump to their intrinsic height. On desktop
+     the column is ~550-720px wide, which puts the loaded height well past the
+     420px min-height and grows the row mid-scroll; on mobile the column is
+     ~390px wide, where the loaded height lands close to the 260px min-height,
+     which is why the RUM data shows this page shifting on desktop only.
+     Out-of-flow, the row height is decided entirely by the text column and the
+     min-height - both known before a single image byte arrives - and the image
+     still fills the panel exactly as before via object-fit: cover. */
   .ab2-imgtext__img {
     overflow: hidden;
     min-height: 420px;
+    position: relative;
   }
   .ab2-imgtext__img img {
+    position: absolute; inset: 0;
     width: 100%; height: 100%; object-fit: cover; display: block;
     transition: transform 0.6s ease;
   }
@@ -1544,14 +1577,10 @@
 </div>
 
 <script>
-  // Load Google Fonts
-  (function () {
-    var l = document.createElement('link');
-    l.rel = 'stylesheet';
-    l.href = 'https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap';
-    document.head.appendChild(l);
-  })();
-
+  // The Google Fonts stylesheet that used to be created here is now a real
+  // <link> at the top of this section - see the comment there. Injecting it
+  // from the bottom of the body delayed the request until after parse and made
+  // the font swap land as a full-page layout shift.
   (function () {
     var elems = document.querySelectorAll('.ab2-anim');
     if ('IntersectionObserver' in window) {
