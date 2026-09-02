@@ -137,6 +137,21 @@
   #Banner-{{ section.id }} .swiper-wrapper.banner-swiper-prejs > .swiper-slide:not(:first-child) {
     display: none;
   }
+  #Banner-{{ section.id }} .swiper-wrapper.banner-swiper-prejs {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  #Banner-{{ section.id }} .swiper-wrapper.banner-swiper-prejs > .swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  #Banner-{{ section.id }} .swiper-wrapper.banner-swiper-prejs > .swiper-slide:not(:first-child) {
+    display: none !important;
+  }
   @media screen and (max-width: 749px) {
     #Banner-{{ section.id }} {
       flex-direction: column;
