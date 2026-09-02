@@ -1493,3 +1493,81 @@ a.product__text {
     border: none;
   }
 }
+
+/* ==========================================================================
+   Layout stability (CLS) - product page
+   --------------------------------------------------------------------------
+   Noibu RUM, p75 over 30 days to 2026-09-02, on the two deck-kit PDPs:
+   0.12-0.13 on mobile (~27k visits/month), 0.09 on desktop. Every rule below
+   reserves the space an element ends up occupying, before the thing that
+   fills it - a decoded image, a third-party script - arrives. None of them
+   changes the settled layout; they only change the layout before it settles.
+   ========================================================================== */
+
+/* 1. Announcement-bar rating icon: the whole-page shift.
+
+   sections/custom-announcement-bar.liquid renders the "4.8/5 Stars" icon as
+   <img width="24" height="24">, while its own CSS sizes it width:100px
+   (70px under 1300px, 60px under 628px) with height:auto. star_img.png is a
+   wide five-star strip, not a square, so those attributes describe a false
+   aspect ratio: per spec the browser reserves a 100px (60px) SQUARE until the
+   file decodes, then recomputes the height from the real ratio - roughly 19px
+   on desktop, 11px on mobile. The bar is the first element on the page, so the
+   header, the product gallery and everything under them are dragged up by
+   ~75px on desktop and ~37px on mobile in a single shift whose impact fraction
+   is essentially the whole viewport.
+
+   aspect-ratio:auto drops the attribute-derived ratio, so the pre-decode box
+   is zero-height instead of a false square. The sibling "4.8/5 Stars ...
+   Reviews" text already sets the row height (~25px desktop, ~23px mobile) and
+   the decoded strip is shorter than that, so the settled bar is
+   pixel-identical and nothing moves when the image lands.
+
+   Scoped to the product template: that is where this stylesheet is loaded and
+   where the regression is measured. The permanent fix belongs in
+   sections/custom-announcement-bar.liquid - real width/height attributes, or
+   an explicit aspect-ratio - and this block should be deleted when it lands. */
+.template-product .custom-annoucement-bar .announcement-bar .left-side img {
+  aspect-ratio: auto;
+}
+
+/* 2. The gallery container is a custom element with no display of its own.
+   <media-gallery> picks up display:block only from .product__column-sticky,
+   which lives inside a min-width:750px media query - so on phones it computes
+   to the unknown-element default of inline and the whole gallery lays out as
+   block-in-inline. Give it a block box at every width. */
+media-gallery {
+  display: block;
+}
+
+/* 3. Gallery height floor.
+   The 40rem the gallery box occupies is declared only in assets/shahzaib.css,
+   a global stylesheet, and only under .template-product. Restating it here as
+   a min-height moves the reservation into the product page's own stylesheet,
+   so the gallery keeps its height if that global rule is ever reordered,
+   rescoped or dropped. Same value, so it is a no-op against today's
+   rendering - it just fails safe instead of collapsing to zero in the window
+   before swiper-bundle.min.css (loaded media="print" in
+   sections/main-product.liquid) and Swiper's own init arrive. */
+.product__media-wrapper .custom-product-slider-wrapper,
+.product__media-wrapper .custom-main-slider,
+.product__media-wrapper .custom-slide-img-wrap {
+  min-height: 40rem;
+}
+
+/* 4. Affirm "as low as" line in the financing block.
+   snippets/affirm-promo-message.liquid ships <p class="affirm-as-low-as"> with
+   an empty span inside; cdn1.affirm.com/js/v2/affirm.js fills it with the
+   monthly figure and a .affirm-modal-trigger link once it loads. While empty
+   it is a zero-height line box, so the financing header grows when the third
+   party answers and pushes the material switcher - and everything below it -
+   down. Reserve the one line it ends up as. */
+.product__info-container .affirm-promo-wrapper .affirm-as-low-as {
+  min-height: 25px;
+}
+
+@media screen and (max-width: 628px) {
+  .product__info-container .affirm-promo-wrapper .affirm-as-low-as {
+    min-height: 20px;
+  }
+}

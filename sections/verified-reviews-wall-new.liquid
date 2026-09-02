@@ -507,6 +507,56 @@
     height: 44px;
   }
 }
+  /* ==========================================
+     CLS: reserve the packed height before Isotope runs
+     ==========================================
+     Noibu RUM, 30 days to 2026-09-02: /pages/reviews CLS p75 is 0.39 on
+     desktop and 0.07 on mobile. This grid is that asymmetry.
+
+     Isotope is initialised lazily (IntersectionObserver, below). Until it
+     runs, every .card-box is an ordinary block-level box at
+     calc(100% / columns_desktop - 14px) wide, so all of the cards stack in ONE
+     very tall column. When Isotope packs them, the grid collapses to roughly
+     1 / columns_desktop of that height and everything after it jumps up by
+     thousands of pixels. On mobile columns_mobile is 1, so the unpacked stack
+     already matches the packed layout and nothing moves - which is exactly the
+     desktop-only signature in the data.
+
+     Fix: before JS runs, flow the cards through the same number of CSS columns
+     Isotope will use, so the height the browser reserves is already about the
+     packed height. .reviews-grid-prejs is removed synchronously in the same
+     task as `new Isotope(...)` (Isotope lays out in its constructor), so the
+     unpacked stack is never painted. If Isotope never loads at all, the class
+     simply stays and the wall degrades to a readable multi-column layout
+     instead of one tall strip.
+
+     CSS columns fill top-to-bottom per column rather than shortest-column
+     first, so the card ORDER differs from the packed result - that is fine
+     here, this is a pre-paint placeholder, not the final layout.
+  */
+  .reviews-wall-scroll-{{ section.id }} .reviews-isotope-grid.reviews-grid-prejs {
+    column-count: {{ section.settings.columns_desktop }};
+    column-gap: 14px;
+  }
+
+  /* Isotope measures .grid-sizer, but only after the class above is removed. */
+  .reviews-wall-scroll-{{ section.id }} .reviews-isotope-grid.reviews-grid-prejs > .grid-sizer {
+    display: none;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .reviews-isotope-grid.reviews-grid-prejs > .card-box {
+    width: 100%;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @media screen and (max-width: 767px) {
+    .reviews-wall-scroll-{{ section.id }} .reviews-isotope-grid.reviews-grid-prejs {
+      column-count: {{ section.settings.columns_mobile }};
+      column-gap: 2px;
+    }
+  }
 {%- endstyle -%}
 
 {%- comment -%}
@@ -577,7 +627,7 @@
               </svg>
             </div>
             <div class="rating-subtext">
-              <p>Based on <span class="dynamic-review-count-global"></span> Reviews</p>
+              <p>Based on <span class="dynamic-review-count-global">{{ section.settings.total_reviews }}</span> Reviews</p>
             </div>
           </div>
         </div>
@@ -660,7 +710,7 @@
                 <use href="#star-{{ section.id }}" x="208" fill="url(#half-fill-{{ section.id }})" />
               </svg>
             </div>
-            <div class="h2-meta-text">Based on <span class="dynamic-review-count-global"></span> reviews </div>
+            <div class="h2-meta-text">Based on <span class="dynamic-review-count-global">{{ section.settings.total_reviews }}</span> reviews </div>
           </div>
 
           <!-- Middle: Breakdown Bars -->
@@ -709,7 +759,7 @@
     <!-- Outer Relative Grid -->
     <div class="reviews-wrapper-relative {% unless section.settings.show_full_section %}is-truncated{% endunless %}">
       <div class="reviews-clip">
-      <div class="reviews-isotope-grid">
+      <div class="reviews-isotope-grid reviews-grid-prejs">
         <div class="grid-sizer"></div>
 
         {%- for block in section.blocks -%}
@@ -899,6 +949,11 @@
     const initMasonry = () => {
       if (iso || !gridElem) return;
       whenReady(() => {
+        // Drop the pre-JS column fallback in the SAME task as the constructor.
+        // Isotope lays out synchronously, so the browser never gets a frame in
+        // which the cards are an unpacked single-column stack, and no layout
+        // shift is recorded for the handover.
+        gridElem.classList.remove('reviews-grid-prejs');
         iso = new Isotope(gridElem, {
           itemSelector: '.card-box',
           percentPosition: true,
@@ -988,6 +1043,12 @@
       "id": "rating_score",
       "label": "Rating Score",
       "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "total_reviews",
+      "label": "Total Reviews Count",
+      "default": "1,751"
     },
     {
       "type": "color",
