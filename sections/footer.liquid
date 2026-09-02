@@ -400,7 +400,7 @@
       {%- endif -%}
 
       {%- if section.settings.newsletter_enable -%}
-        {%- form 'customer', class: 'footer-centered__newsletter-form' -%}
+        {% comment %} {%- form 'customer', class: 'footer-centered__newsletter-form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <div class="footer-centered__input-wrapper">
             <input
@@ -420,7 +420,7 @@
               {{ section.settings.button_text }}
             </button>
           </div>
-        {%- endform -%}
+        {%- endform -%} {% endcomment %}
         <div class="klaviyo-form-YqJLxx klaviyo footer-centered__input-wrapper"></div>
       {%- endif -%}
 
