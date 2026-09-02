@@ -928,7 +928,19 @@
       {%- endfor -%}
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset custom-icons" id="cart-icon-bubble">
-        <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/Vector.png?v=1784559414" alt="cart" width="15">
+        {%- comment -%}
+          Above the fold, so it stays eager - but it had a width and no height,
+          which leaves the row unsized until the bytes land. fetchpriority=low
+          keeps a 15px icon from competing with the hero for early bandwidth.
+        {%- endcomment -%}
+        <img
+          src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/Vector.png?v=1784559414"
+          alt="cart"
+          width="15"
+          height="15"
+          decoding="async"
+          fetchpriority="low"
+        >
         <div class="cart-icon-item">
           <p>Cart</p>
           {%- if cart != empty -%}

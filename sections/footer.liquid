@@ -578,6 +578,9 @@
             alt="Payment options" 
             class="footer-centered__payments-img"
             loading="lazy"
+            decoding="async"
+            width="{{ section.settings.payment_image.width }}"
+            height="{{ section.settings.payment_image.height }}"
           >
         {%- elsif section.settings.show_default_payments -%}
           <ul class="list list-payment" role="list">

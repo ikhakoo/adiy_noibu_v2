@@ -16,6 +16,14 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
+    {%- comment -%}
+      cdn.shopify.com serves every image on the site and the standard-events.js
+      module imported below, but nothing warmed the connection - the first image
+      paid DNS + TCP + TLS before a byte moved. Fonts had a preconnect and the
+      image origin did not.
+    {%- endcomment -%}
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
     <title>
       {{- page_title -}}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}

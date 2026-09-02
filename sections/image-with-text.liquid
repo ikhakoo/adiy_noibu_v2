@@ -263,7 +263,25 @@
             {% endif %}
           >
             {%- if section.settings.video != blank -%}
-              {{ section.settings.video | video_tag: image_size: '800x', autoplay: true, loop: true, controls: true, muted: true }}
+              {%- capture iwt_video_markup -%}
+                {{
+                  section.settings.video
+                  | video_tag: image_size: '800x', autoplay: true, loop: true, controls: true, muted: true, playsinline: true
+                }}
+              {%- endcapture -%}
+              {%- comment -%}
+                video_tag always emits a fallback <img> inside the <video>. No
+                browser that supports <video> ever displays it, so it is dead
+                markup pointing at a full-size CDN image. Renaming the attribute
+                takes it out of play, the same way video-carousel.liquid:106 and
+                verified-reviews-wall-new.liquid:792 already do.
+
+                The `poster` is deliberately NOT stripped here, unlike in those
+                two sections: this video autoplays, so the poster is the visible
+                placeholder until the first frame decodes. Those sections replace
+                it with their own lazy <img>; this one has no such substitute.
+              {%- endcomment -%}
+              {{ iwt_video_markup | replace: '<img src="', '<img data-unused-src="' }}
             {%- elsif section.settings.image != blank -%}
               {%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
                 {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
@@ -400,7 +418,7 @@
                       <div class="image-with-text__icon-item">
                         {%- if block.settings.icon_1 != blank -%}
                           <div class="image-with-text__icon-wrapper">
-                            {{ block.settings.icon_1 | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                            {{ block.settings.icon_1 | image_url: width: 100 | image_tag: loading: 'lazy', decoding: 'async', width: block.settings.icon_1.width, height: block.settings.icon_1.height }}
                           </div>
                         {%- endif -%}
                         <div class="image-with-text__icon-content">
@@ -418,7 +436,7 @@
                       <div class="image-with-text__icon-item">
                         {%- if block.settings.icon_2 != blank -%}
                           <div class="image-with-text__icon-wrapper">
-                            {{ block.settings.icon_2 | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                            {{ block.settings.icon_2 | image_url: width: 100 | image_tag: loading: 'lazy', decoding: 'async', width: block.settings.icon_2.width, height: block.settings.icon_2.height }}
                           </div>
                         {%- endif -%}
                         <div class="image-with-text__icon-content">

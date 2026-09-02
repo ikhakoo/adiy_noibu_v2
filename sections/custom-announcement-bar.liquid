@@ -223,11 +223,19 @@
                 {% if block.settings.svg_code != blank %}
                   {{ block.settings.svg_code }}
                 {% elsif block.settings.icon != blank %}
+                  {%- comment -%}
+                    Above the fold and ahead of the hero in document order, so
+                    these stay eager - lazy would only delay a 24px icon that is
+                    already in view. fetchpriority=low is the right lever: it
+                    keeps them out of the LCP image's way without deferring them.
+                  {%- endcomment -%}
                   <img
                     src="{{ block.settings.icon | image_url: width: 120 }}"
                     alt=""
                     width="24"
                     height="24"
+                    decoding="async"
+                    fetchpriority="low"
                   />
                 {% endif %}
               </a>
@@ -268,6 +276,8 @@
                     alt=""
                     width="24"
                     height="24"
+                    decoding="async"
+                    fetchpriority="low"
                   >
                 {% endif %}
 
@@ -291,6 +301,8 @@
                         alt=""
                         width="24"
                         height="24"
+                        decoding="async"
+                        fetchpriority="low"
                       >
                     {% endif %}
                     <span class="online-indicator-badge"></span>
