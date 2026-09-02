@@ -122,22 +122,24 @@
     margin: 0;
   }
 
-  /* Target all possible stage classes */
-  .stage-1-section, .stage-2-section, .stage-3-section,
-  .stage-1, .stage-2, .stage-3,
-  [class*="stage-1"], [class*="stage-2"], [class*="stage-3"] {
+  /* Stage Sections Show/Hide Logic */
+  .stage-1-section,
+  .stage-2-section,
+  .stage-3-section,
+  .stage-section-wrapper {
     display: none !important;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Shown State Class */
-  .active-stage-section {
+  .stage-1-section.show-stage,
+  .stage-2-section.show-stage,
+  .stage-3-section.show-stage,
+  .stage-section-wrapper.show-stage {
     display: block !important;
-    animation: fadeInStage 0.4s ease forwards;
-  }
-
-  @keyframes fadeInStage {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .tracking-widget-container.hide-widget {
@@ -165,10 +167,6 @@
     transition: all 0.2s ease;
   }
 
-  .stage-back-btn.show-btn {
-    display: inline-flex !important;
-  }
-
   .stage-back-btn:hover {
     background: #f3f4f6;
     transform: translateY(-2px);
@@ -184,9 +182,15 @@
       width: 100%;
     }
   }
+
+  @media screen and (max-width: 749px) {
+    .tracking-widget__input {
+      font-size: 16px;
+    }
+  }
 {%- endstyle -%}
 
-<!-- Floating Back Button -->
+<!-- Floating Corner Back Button -->
 <button id="stageBackBtn" class="stage-back-btn" type="button" onclick="resetTrackingView()">
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
     <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -217,7 +221,7 @@
         </div>
       {%- endif -%}
 
-      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="return handleTrackingSubmit(event)">
+      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="handleTrackingSubmit(event); return false;">
         <div class="tracking-widget__input-group">
           <input
             type="text"
@@ -243,101 +247,90 @@
 </div>
 
 <script>
-  function hideAllStages() {
-    // Stage sections ke saare possible selectors hide kar do
-    const allStageElements = document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-1, .stage-2, .stage-3, [class*="stage-1"], [class*="stage-2"], [class*="stage-3"]');
-    allStageElements.forEach(el => {
-      el.classList.remove('active-stage-section');
-      el.style.display = 'none';
-    });
-  }
+  async function handleTrackingSubmit(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-  function resetTrackingView() {
-    hideAllStages();
-    const widget = document.getElementById('trackingWidgetContainer');
-    const backBtn = document.getElementById('stageBackBtn');
-    
-    if (widget) widget.classList.remove('hide-widget');
-    if (backBtn) backBtn.classList.remove('show-btn');
-  }
+    const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
+    const rawValue = inputElement ? inputElement.value.trim() : '';
+    if (!rawValue) return false;
 
-  function showStage(stageNum) {
-    hideAllStages();
-    
-    const widget = document.getElementById('trackingWidgetContainer');
-    const backBtn = document.getElementById('stageBackBtn');
-    
-    // Stage element ko locate karo
-    let targetStage = document.querySelector(`.stage-${stageNum}-section`) 
-                   || document.querySelector(`.stage-${stageNum}`)
-                   || document.querySelector(`[class*="stage-${stageNum}"]`);
+    const cleanOrderNum = rawValue.replace('#', '');
+    console.log(`%c 🔍 Fetching Order: #${cleanOrderNum}...`, "color: #3b82f6; font-weight: bold;");
 
-    if (targetStage) {
-      if (widget) widget.classList.add('hide-widget');
-      if (backBtn) backBtn.classList.add('show-btn');
+    try {
+      const proxyUrl = `/apps/order-tracker/api/track-order?order=${encodeURIComponent(cleanOrderNum)}`;
+      const response = await fetch(proxyUrl);
       
-      targetStage.style.display = 'block';
-      targetStage.classList.add('active-stage-section');
-    } else {
-      alert(`Stage ${stageNum} section customizer/page me nahi mil rahi. Kindly check ke Shopify Editor me Stage ${stageNum} add hai.`);
-      resetTrackingView();
+      if (!response.ok) {
+        throw new Error(`Server status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.success) {
+        alert(`Order #${cleanOrderNum} not found in store!`);
+        return false;
+      }
+
+      displayStage(data.stage);
+
+    } catch (error) {
+      console.warn("Tracking API Error or offline. Fallback preview logic executing:", error);
+      
+      // Fallback Demo Logic based on days / order ID for immediate testing
+      let detectedStage = 1;
+      const lastChar = parseInt(cleanOrderNum.slice(-1), 10);
+
+      if (!isNaN(lastChar)) {
+        if (lastChar >= 0 && lastChar <= 3) detectedStage = 1;      // 0-7 days
+        else if (lastChar >= 4 && lastChar <= 6) detectedStage = 2; // 7-14 days
+        else detectedStage = 3;                                     // 14-21 days
+      }
+
+      displayStage(detectedStage);
     }
-  }
-
-  function handleTrackingSubmit(e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    const input = document.getElementById('TrackingInput-{{ section.id }}');
-    const orderNumber = input ? input.value.trim() : '';
-
-    if (!orderNumber) {
-      alert('Please enter an order number.');
-      return false;
-    }
-
-    // Direct API attempt with fallback logic for testing:
-    fetch(`/apps/order-tracker/status?order=${encodeURIComponent(orderNumber)}`)
-      .then(res => {
-        if (!res.ok) throw new Error("API not active");
-        return res.json();
-      })
-      .then(data => {
-        const daysOld = parseInt(data.daysOld, 10);
-        processDaysToStage(daysOld);
-      })
-      .catch(err => {
-        // BACKEND API FALLBACK / TEST LOGIC:
-        // Agar backend setup nahi hua, toh order number digits se test range calculate kar lega
-        console.warn('Backend API endpoint offline. Running test demo logic based on order value...');
-        
-        let mockDays = 4; // Default Stage 1
-        const lastDigit = parseInt(orderNumber.slice(-1), 10);
-
-        if (!isNaN(lastDigit)) {
-          if (lastDigit >= 0 && lastDigit <= 3) mockDays = 4;    // 0-7 days -> Stage 1
-          else if (lastDigit >= 4 && lastDigit <= 6) mockDays = 10; // 7-14 days -> Stage 2
-          else mockDays = 18;                                      // 14-21 days -> Stage 3
-        }
-        
-        processDaysToStage(mockDays);
-      });
 
     return false;
   }
 
-  function processDaysToStage(daysOld) {
-    if (daysOld >= 0 && daysOld <= 7) {
-      showStage(1);
-    } else if (daysOld > 7 && daysOld <= 14) {
-      showStage(2);
-    } else if (daysOld > 14 && daysOld <= 21) {
-      showStage(3);
-    } else {
-      alert('Order status not found or order is beyond 21 days.');
+  function displayStage(stageNumber) {
+    const trackingWidget = document.getElementById('trackingWidgetContainer');
+    if (trackingWidget) trackingWidget.classList.add('hide-widget');
+
+    const backBtn = document.getElementById('stageBackBtn');
+    if (backBtn) backBtn.style.display = 'inline-flex';
+
+    document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
+      .forEach(s => s.classList.remove('show-stage'));
+
+    let targetStage = document.querySelector(`.stage-${stageNumber}-section`);
+    
+    // Fallback selector check
+    if (!targetStage) {
+      targetStage = document.querySelector(`.stage-${stageNumber}`) || document.querySelector('.stage-section-wrapper');
     }
+
+    if (targetStage) {
+      targetStage.classList.add('show-stage');
+      targetStage.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      alert(`Stage ${stageNumber} section is missing in your page customizer template.`);
+      resetTrackingView();
+    }
+  }
+
+  function resetTrackingView() {
+    document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
+      .forEach(stage => stage.classList.remove('show-stage'));
+
+    const backBtn = document.getElementById('stageBackBtn');
+    if (backBtn) backBtn.style.display = 'none';
+
+    const trackingWidget = document.getElementById('trackingWidgetContainer');
+    if (trackingWidget) trackingWidget.classList.remove('hide-widget');
   }
 </script>
 
@@ -379,6 +372,12 @@
       "id": "button_text",
       "label": "Button Text",
       "default": "Track"
+    },
+    {
+      "type": "text",
+      "id": "tracking_url",
+      "label": "Tracking URL Template",
+      "info": "Leave empty for default."
     },
     {
       "type": "richtext",
