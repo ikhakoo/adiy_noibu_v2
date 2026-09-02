@@ -155,6 +155,45 @@
       display: none !important;
     }
   }
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slider container dimensions reset */
+    #Banner-{{ section.id }} .mobile-banner-media {
+      position: relative;
+      width: 100%;
+      min-height: 250px; /* Adjust default fallback banner height */
+    }
+
+    #Banner-{{ section.id }} .mobile-banner-media .swiper-slide {
+      height: auto;
+    }
+
+    #Banner-{{ section.id }} .mobile-banner-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Content box flow fix: Text overlay overlap remove logic */
+    #Banner-{{ section.id }} .banner__content {
+      position: relative !important;
+      height: auto !important;
+      width: 100% !important;
+      top: auto;
+      left: auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Unset absolute stacking if show text below is selected */
+    #Banner-{{ section.id }}.banner--mobile-bottom .banner__content {
+      position: relative !important;
+      background: transparent;
+    }
+  }
 {%- endstyle -%}
 
 {%- liquid
