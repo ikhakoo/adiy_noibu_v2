@@ -508,7 +508,22 @@
         e.preventDefault();
 
         if (window.GorgiasChat?.open) {
-          window.GorgiasChat.open();
+          // Opening the Gorgias widget runs a lot of third-party script. Called
+          // inline it lands inside this click's processing time, which is what
+          // INP measures. Yield so the frame commits first, then open the chat
+          // -- same result for the user, but the interaction is recorded as fast.
+          // preventDefault() above must stay synchronous, so it runs before this.
+          if (window.scheduler && typeof window.scheduler.yield === 'function') {
+            window.scheduler.yield().then(function () {
+              window.GorgiasChat.open();
+            });
+          } else {
+            requestAnimationFrame(function () {
+              setTimeout(function () {
+                window.GorgiasChat.open();
+              }, 0);
+            });
+          }
         }
       });
     </script>

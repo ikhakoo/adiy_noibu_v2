@@ -1,44 +1,78 @@
+//============================ # INP helper ==========================
+
+/*
+ * Runs `fn` after the browser has had a chance to paint the current
+ * interaction's visual response, instead of inside the click task itself.
+ *
+ * Third-party widgets (Affirm's modal, Gorgias' chat) do a lot of synchronous
+ * work when they are opened. Calling them straight from a click handler adds
+ * all of that to the interaction's processing time, which is what Core Web
+ * Vitals measures as INP. Yielding first lets the frame commit, so the click
+ * is recorded as fast and the widget still opens a few milliseconds later --
+ * indistinguishable to the user.
+ *
+ * Anything that MUST stay synchronous (notably event.preventDefault(), which
+ * has no effect once the handler has returned) has to run before this call.
+ */
+function runAfterPaint(fn) {
+  if (window.scheduler && typeof window.scheduler.yield === 'function') {
+    window.scheduler.yield().then(fn);
+    return;
+  }
+
+  requestAnimationFrame(function () {
+    setTimeout(fn, 0);
+  });
+}
+
+//============================ # INP helper End ==========================
+
+
 //============================ # smooth scroll ==========================
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Un sabhi anchor links ko target karein jo '#' se start hote hain
-  const hashLinks = document.querySelectorAll('a[href*="#"]');
+/*
+ * One delegated listener on the document instead of a listener per anchor.
+ * The previous version ran document.querySelectorAll('a[href*="#"]') at
+ * DOMContentLoaded and attached an individual handler to every match, which on
+ * a page with a large nav and footer is hundreds of listeners to set up and
+ * retain. Delegation also picks up anchors added to the page after load, which
+ * the old version silently missed.
+ */
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('a[href*="#"]');
+  if (!link) return;
 
-  hashLinks.forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      
-      // Check karein k link mein '#' mojood hai aur sirf '#' nahi hai
-      if (href && href.includes('#') && href !== '#') {
-        const hashIndex = href.indexOf('#');
-        const targetId = href.substring(hashIndex); // e.g. '#form'
-        const targetElement = document.querySelector(targetId);
+  const href = link.getAttribute('href');
 
-        if (targetElement) {
-          // Agar hum same page par hain, to smooth scroll karain
-          const currentPath = window.location.pathname;
-          const linkPath = href.substring(0, hashIndex);
+  // Check karein k link mein '#' mojood hai aur sirf '#' nahi hai
+  if (href && href.includes('#') && href !== '#') {
+    const hashIndex = href.indexOf('#');
+    const targetId = href.substring(hashIndex); // e.g. '#form'
+    const targetElement = document.querySelector(targetId);
 
-          if (linkPath === '' || linkPath === currentPath || href.startsWith('#')) {
-            e.preventDefault();
+    if (targetElement) {
+      // Agar hum same page par hain, to smooth scroll karain
+      const currentPath = window.location.pathname;
+      const linkPath = href.substring(0, hashIndex);
 
-            // Smooth Scroll with Header Offset (Agar fixed header ho to us se overlap na ho)
-            const headerOffset = 80; // Aap apni header height k hisab se adjustment kar sakte hain (e.g. 0 ya 80)
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      if (linkPath === '' || linkPath === currentPath || href.startsWith('#')) {
+        e.preventDefault();
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
+        // Smooth Scroll with Header Offset (Agar fixed header ho to us se overlap na ho)
+        const headerOffset = 80; // Aap apni header height k hisab se adjustment kar sakte hain (e.g. 0 ya 80)
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-            // URL mein hash update karain bina page jump kiye
-            history.pushState(null, null, targetId);
-          }
-        }
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+
+        // URL mein hash update karain bina page jump kiye
+        history.pushState(null, null, targetId);
       }
-    });
-  });
+    }
+  }
 });
 
 //============================ # smooth scroll End ==========================
@@ -368,13 +402,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
   document.addEventListener("click", function (event) {
     const linkTarget = event.target.closest('a[href*="#affirm"]');
-    
+
     if (linkTarget) {
-      event.preventDefault(); // Default anchor anchor jump ko rokega
-      
+      event.preventDefault(); // Default anchor anchor jump ko rokega -- must stay synchronous
+
       const affirmTrigger = document.querySelector(".affirm-modal-trigger");
       if (affirmTrigger) {
-        affirmTrigger.click(); // Affirm app ke official modal trigger button par click simulate karega
+        // Forwarding the click to Affirm's own trigger runs the Affirm app's
+        // modal code. Doing that inline made it part of this click's processing
+        // time; yielding first lets the frame commit before Affirm starts.
+        // The modal still opens, just after the paint.
+        runAfterPaint(function () {
+          affirmTrigger.click(); // Affirm app ke official modal trigger button par click simulate karega
+        });
       }
     }
   });
@@ -453,4 +493,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // =============================== end ==========================
-
