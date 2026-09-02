@@ -1,22 +1,13 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
-{%- comment -%}
-  The Swiper stylesheet used to load here for every visitor. It now loads from the
-  matchMedia guard at the bottom of this file, alongside the Swiper bundle itself,
-  so desktop requests neither. The mobile-image counter that gated it is gone with
-  it - `mobile_count` further down already does that job for the markup.
-{%- endcomment -%}
 
 {%- style -%}
   #Banner-{{ section.id }}::after {
     opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
   }
-
-  /* Swiper Mobile Specific Dots Styling */
   #Banner-{{ section.id }} .swiper-pagination-bullet-active {
     background: #755845;
   }
 
-  /* Mobile vs Desktop Display Logic */
   {%- if section.settings.mobile_image_1 != blank or section.settings.mobile_image_2 != blank or section.settings.mobile_image_3 != blank -%}
     @media screen and (max-width: 749px) {
       #Banner-{{ section.id }} .desktop-banner-media {
@@ -107,27 +98,6 @@
     display: none !important;
   }
 
-  /* ==========================================
-     Keep loading="lazy" honest on slides 2 and 3
-     ==========================================
-     `.banner__media` is `position: absolute; top: 0` (section-image-banner.css
-     :164-169), and the Swiper stylesheet that would lay these out as a track is
-     no longer in the markup at all - it is injected by the matchMedia guard at
-     the bottom of this file. So between first paint and Swiper's init, all three
-     slides are stacked on top of each other at full size, which puts slides 2
-     and 3 *inside the viewport*. Chrome loads a lazy image the moment it is in
-     view, so `loading="lazy"` on those slides bought nothing and the mobile hero
-     raced two other full-width images.
-
-     This block is in the section's own render-blocking style block, so it
-     applies at first paint: only the first slide occupies the box, the other two
-     are clipped out of view and stay deferred until Swiper takes over. Same
-     approach the theme already uses in comparison-cards.liquid and
-     verified-reviews-wall-new.liquid.
-
-     Swiper's own layout wins as soon as it initialises, because the JS removes
-     this class in the same task as `new Swiper(...)`.
-  */
   #Banner-{{ section.id }} .swiper-wrapper.banner-swiper-prejs {
     display: block;
     position: relative;
@@ -159,13 +129,7 @@
 {%- endstyle -%}
 
 {%- liquid
-  comment
-    The top candidate is the one that ships: with sizes:100vw a 1512px DPR-2
-    laptop resolves 3024px and takes the largest entry in the ladder. At 2400w
-    the hero measures 277 KB; at 2000w it is 225 KB and at 1780w 194 KB - on
-    the LCP element, on every desktop visit. A photographic banner at ~1.3x its
-    CSS box is indistinguishable from 2x, so the ladder stops at 2000.
-  endcomment
+  
   assign full_width = '100vw'
   assign widths = '375, 550, 750, 1100, 1500, 1780, 2000'
 
@@ -187,11 +151,6 @@
     assign fetch_priority = 'high'
   endif
 
-  comment
-    Fallback alt text for the banner images. image_tag defaults to the media's own
-    alt, which is blank whenever nobody filled it in in the Files admin - and this
-    is the hero, so it is the worst place on the site to ship alt="".
-  endcomment
   assign banner_alt_fallback = ''
   for block in section.blocks
     if block.type == 'heading' and block.settings.heading != blank
@@ -200,20 +159,11 @@
     endif
   endfor
   assign banner_alt_fallback = banner_alt_fallback | default: shop.name
-  comment
-    Both banner sets ship in the same HTML and are switched with display:none, which
-    does not prevent a download. These sizes hints tell the browser each set is
-    effectively 0px wide outside its own breakpoint, so it picks the smallest
-    candidate there instead of a full-width one.
-  endcomment
   assign desktop_banner_sizes = '(max-width: 749px) 1px, 100vw'
   assign mobile_banner_sizes = '(min-width: 750px) 1px, 100vw'
   assign banner_image_alt = section.settings.image.alt | default: banner_alt_fallback
   assign banner_image_2_alt = section.settings.image_2.alt | default: banner_alt_fallback
 
-  comment
-    Counting uploaded mobile images
-  endcomment
   assign mobile_count = 0
   if section.settings.mobile_image_1 != blank
     assign mobile_count = mobile_count | plus: 1
@@ -230,7 +180,7 @@
   id="Banner-{{ section.id }}"
   class="{{ section.settings.custom_class }} banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
-  {%- comment -%} STANDARD DESKTOP IMAGES (STATIC) {%- endcomment -%}
+  
   {%- if section.settings.image != blank -%}
     <div class="banner__media media desktop-banner-media{% if mobile_count > 0 %} desktop-image-only{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- liquid
@@ -295,7 +245,7 @@
     </div>
   {%- endif -%}
 
-  {%- comment -%} MOBILE SWIPER SLIDER (UP TO 3 IMAGES) {%- endcomment -%}
+
   {%- if mobile_count > 0 -%}
     <div class="mobile-banner-media swiper swiper-mobile-{{ section.id }}" style="width: 100%;">
       <div class="swiper-wrapper banner-swiper-prejs">
@@ -308,9 +258,6 @@
               {%- liquid
                 assign mobile_image_height = current_mobile_image.width | divided_by: current_mobile_image.aspect_ratio
                 assign mobile_image_alt = current_mobile_image.alt | default: banner_alt_fallback
-
-                # Only the first rendered slide can be the LCP. The rest are
-                # behind the Swiper and are not revealed for at least 2s.
                 assign rendered_slides = rendered_slides | plus: 1
                 assign slide_priority = 'low'
                 assign slide_loading = 'lazy'
@@ -341,10 +288,8 @@
     </div>
   {%- endif -%}
 
-  {%- comment -%} CONTENT OVERLAY BLOCK {%- endcomment -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
-      {%- comment -%}Only the first heading block in a section may claim the page h1.{%- endcomment -%}
       {%- assign page_h1_used = false -%}
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -360,9 +305,6 @@
               {%- endif -%}
 
               {%- if block.settings.review_text_before != blank -%}
-                {% comment %} <span class="review-badge__text" style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px;">
-                  {{ block.settings.review_text }}
-                </span> {% endcomment %}
                 <span class="review-badge__text" style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px;">
                   {{ block.settings.review_text_before }} 
                   <span class="dynamic-review-count-global"></span> 
@@ -372,12 +314,6 @@
             </div>
 
           {%- when 'heading' -%}
-            {%- comment -%}
-            Page heading rule: the first section rendered in a template owns the page h1,
-            everything below it is h2. section.index counts only enabled sections, and is
-            nil in the theme editor and the Section Rendering API - those fall through to
-            h2, which looks identical because the size is pinned by a heading_size class.
-            {%- endcomment -%}
             {%- if section.index == 1 and section.location == 'template' and page_h1_used == false -%}
             {%- assign page_heading_tag = 'h1' -%}
             {%- assign page_h1_used = true -%}
@@ -469,20 +405,6 @@
     </div>
   </div>
 </div>
-
-{%- comment -%}
-  Swiper is 154 KB of JS and 18 KB of CSS, and it drives the MOBILE banner only -
-  above 749px `.mobile-banner-media` is `display: none !important` (see the style
-  block at the top of this file), so desktop parsed 172 KB it could never use.
-
-  The old gate was `mobile_count > 1`, which is a content condition, not a viewport
-  one, so it fired on every device. Both assets now load behind a matchMedia check.
-  They are injected rather than emitted as tags because a `<script src>` in the
-  markup is fetched regardless of any surrounding JS.
-
-  The desktop tablet-rotation case is handled by re-checking on `change`: a device
-  that starts wide and is rotated into the mobile breakpoint loads Swiper then.
-{%- endcomment -%}
 <script>
   (function () {
     {%- if mobile_count > 1 -%}
@@ -492,9 +414,6 @@
     let started = false;
 
     function initSwiper() {
-      // Drop the pre-JS fallback in the SAME task as the constructor, so the
-      // browser never paints a frame with Swiper's layout applied but slides 2
-      // and 3 still hidden by our rule (and vice versa).
       const track = document.querySelector(
         '.swiper-mobile-{{ section.id }} .banner-swiper-prejs'
       );
@@ -521,8 +440,6 @@
 
       const js = document.createElement('script');
       js.src = {{ 'swiper-bundle.min.js' | asset_url | json }};
-      // The slider is decorative and below the hero text; async keeps it off the
-      // critical path. initSwiper runs from onload, so Swiper is always defined.
       js.async = true;
       js.onload = initSwiper;
       document.head.appendChild(js);
