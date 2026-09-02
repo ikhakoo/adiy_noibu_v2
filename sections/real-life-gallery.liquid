@@ -30,17 +30,74 @@
                 <div class="gallery-grid-block {% if is_even_group == 0 %}featured-pos-left{% else %}featured-pos-right{% endif %} {% if group_hidden %}is-hidden{% endif %}" data-gallery-block-group="{{ block_group_index }}">
               {% endif %}
 
+              {%- comment -%}
+                `sizes` must describe the tile, not the section. This grid is a
+                7-up mosaic: one `item-featured` and six `item-small` per group,
+                and the two render at very different widths.
+
+                Measured on the live homepage at 1512px / DPR 2:
+                  item-featured -> 513css box (needs 1026px)
+                  item-small    -> 250css box (needs  500px)
+
+                The previous `(min-width: 769px) 50vw, 100vw` claimed 756css for
+                BOTH, so the browser resolved 1512 device px and took the 1100w
+                candidate for every tile - a 1100px image in a 250px box on the
+                six small tiles of every group. That one attribute accounted for
+                22 MB of the homepage's 30.6 MB of image weight.
+
+                Small tiles now resolve to the 600w candidate instead of 1100w.
+                Measured over the 14 initially-visible tiles at 1512px / DPR 2:
+                4123 KB before, 1778 KB after (-57%).
+
+                The grid lives in `.page-width`, which stops growing at ~1300px,
+                so past 1400px viewport the tiles are fixed px, not a share of
+                the viewport - hence the px clause first.
+
+                Mobile: `mobile_layout` is `featured`, whose CSS is a 2-column
+                grid (section-real-life-gallery.css:216-225), so small tiles are
+                ~50vw there and only the featured tile is full-bleed.
+              {%- endcomment -%}
+              {%- if remainder == 0 -%}
+                {%- assign tile_sizes = '(min-width: 1400px) 520px, (min-width: 769px) 36vw, 100vw' -%}
+              {%- else -%}
+                {%- assign tile_sizes = '(min-width: 1400px) 260px, (min-width: 769px) 18vw, 50vw' -%}
+              {%- endif -%}
+
+              {%- comment -%}
+                Only the first two groups (14 of 126 tiles) are visible; the other
+                112 sit in `.is-hidden` (display:none) behind LOAD MORE. The srcset
+                ladder is ~1.1 KB of candidate URLs per tag, so emitting it for all
+                126 put ~123 KB of URLs in the document for images nobody has asked
+                to see.
+
+                Hidden tiles ship no ladder at all. Every candidate is the same CDN
+                URL with a different `width=`, so JS rebuilds the whole srcset from
+                `src` at reveal time - the same trick openLightbox already uses to
+                derive its 1600w URL. Only `data-sizes` has to be carried, because
+                that differs between featured and small tiles.
+
+                `src` stays on every tile: the lightbox reads it, and a display:none
+                image is never fetched anyway.
+              {%- endcomment -%}
+
               <div class="gallery-item {% if remainder == 0 %}item-featured{% else %}item-small{% endif %}" {{ block.shopify_attributes }}>
                 {% if block.settings.image != blank %}
                   <img
-                    src="{{ block.settings.image | image_url: width: 800 }}"
-                    srcset="{{ block.settings.image | image_url: width: 300 }} 300w,
-                            {{ block.settings.image | image_url: width: 500 }} 500w,
-                            {{ block.settings.image | image_url: width: 800 }} 800w,
-                            {{ block.settings.image | image_url: width: 1100 }} 1100w"
-                    sizes="(min-width: 769px) 50vw, 100vw"
+                    src="{{ block.settings.image | image_url: width: 600 }}"
+                    {% if group_hidden %}
+                      data-sizes="{{ tile_sizes }}"
+                    {% else %}
+                      srcset="{{ block.settings.image | image_url: width: 200 }} 200w,
+                              {{ block.settings.image | image_url: width: 300 }} 300w,
+                              {{ block.settings.image | image_url: width: 400 }} 400w,
+                              {{ block.settings.image | image_url: width: 600 }} 600w,
+                              {{ block.settings.image | image_url: width: 800 }} 800w,
+                              {{ block.settings.image | image_url: width: 1100 }} 1100w"
+                      sizes="{{ tile_sizes }}"
+                    {% endif %}
                     alt="{{ block.settings.image.alt | default: gallery_alt_fallback | escape }}"
                     loading="lazy"
+                    decoding="async"
                     width="{{ block.settings.image.width }}"
                     height="{{ block.settings.image.height }}"
                     class="gallery-lightbox-trigger"
@@ -147,9 +204,32 @@
         }
       }
 
+      // Hidden tiles ship without a srcset to keep it out of the HTML; rebuild it
+      // from `src` here, BEFORE the group gets a layout box, so the browser
+      // resolves the ladder once instead of fetching the `src` candidate and then
+      // re-fetching the right one. `sizes` is set first because selection reads it.
+      const GALLERY_WIDTHS = [200, 300, 400, 600, 800, 1100];
+
+      function promoteBlockImages(block) {
+        block.querySelectorAll('img[data-sizes]').forEach(function (img) {
+          const src = img.getAttribute('src') || '';
+          if (!/[?&]width=\d+/.test(src)) return;
+
+          img.setAttribute('sizes', img.dataset.sizes);
+          img.setAttribute(
+            'srcset',
+            GALLERY_WIDTHS.map(function (w) {
+              return src.replace(/([?&]width=)\d+/, '$1' + w) + ' ' + w + 'w';
+            }).join(', ')
+          );
+          delete img.dataset.sizes;
+        });
+      }
+
       loadMoreBtn.addEventListener('click', function() {
         const firstHidden = blocks.find(b => b.classList.contains('is-hidden'));
         if (firstHidden) {
+          promoteBlockImages(firstHidden);
           firstHidden.classList.remove('is-hidden');
           updateButtons();
         }
