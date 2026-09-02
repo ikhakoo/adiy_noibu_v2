@@ -77,6 +77,16 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
+    // The Cart AJAX API answers a rejected line update - a quantity past
+    // available stock is the common one - with { status, message, description }
+    // and no `sections` key at all. Reading parsedState.sections[section.id]
+    // off that payload threw "Cannot read properties of undefined (reading
+    // 'cart-drawer')", which aborted the re-render mid-flight and left the
+    // drawer showing stale quantities. Callers are responsible for surfacing
+    // the rejection message; here we just refuse to render a payload that
+    // carries no sections.
+    if (!parsedState || !parsedState.sections) return false;
+
     this.querySelector('.drawer__inner').classList.contains('is-empty') &&
       this.querySelector('.drawer__inner').classList.remove('is-empty');
     this.productId = parsedState.id;
@@ -86,17 +96,31 @@ class CartDrawer extends HTMLElement {
         : document.getElementById(section.id);
 
       if (!sectionElement) return;
-      sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+
+      // A partial payload (one section requested, or one dropped server-side)
+      // used to blank the section by assigning `undefined` into innerHTML.
+      const sectionHTML = parsedState.sections[section.id];
+      if (!sectionHTML) return;
+
+      const innerHTML = this.getSectionInnerHTML(sectionHTML, section.selector);
+      if (innerHTML === null) return;
+
+      sectionElement.innerHTML = innerHTML;
     });
 
     setTimeout(() => {
       this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
       this.open();
     });
+
+    return true;
   }
 
   getSectionInnerHTML(html, selector = '.shopify-section') {
-    return new DOMParser().parseFromString(html, 'text/html').querySelector(selector).innerHTML;
+    // Returns null - rather than throwing - when the returned markup does not
+    // contain the expected wrapper, so renderContents can skip that section.
+    const parsed = new DOMParser().parseFromString(html, 'text/html').querySelector(selector);
+    return parsed ? parsed.innerHTML : null;
   }
 
   getSectionsToRender() {
