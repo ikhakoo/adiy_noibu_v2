@@ -249,6 +249,13 @@
         }
       }
 
+      // The mobile preview block further down lives outside this closure but has
+      // to re-sync this card's icons after it auto-pauses. Calling
+      // updatePlayIcons() directly from there threw ReferenceError on Chrome and
+      // "Can't find variable" on Safari, so hang the per-card updater on the
+      // card element and let the preview block reach it through that.
+      card.pbUpdatePlayIcons = updatePlayIcons;
+
       // Mute State Toggles
       function updateMuteIcons() {
         if (video.muted) {
@@ -385,7 +392,11 @@
                 setTimeout(() => {
                   video.pause();
                   video.currentTime = 0;
-                  updatePlayIcons();
+                  // updatePlayIcons is scoped to the cards.forEach closure above;
+                  // it is exposed per card so this block can call the right copy.
+                  if (typeof card.pbUpdatePlayIcons === 'function') {
+                    card.pbUpdatePlayIcons();
+                  }
                 }, 1000);
               })
               .catch(() => {});
