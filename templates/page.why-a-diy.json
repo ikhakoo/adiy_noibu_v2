@@ -72,6 +72,8 @@
       "settings": {
         "custom_class": "consultant-page why-a-diy-hero",
         "image": "shopify://shop_images/Why_A_diy.png",
+        "enable_mobile_slider": false,
+        "mobile_image": "shopify://shop_images/Group_2147228911_1.jpg",
         "mobile_image_1": "shopify://shop_images/Group_2147228911_1.jpg",
         "mobile_image_2": "shopify://shop_images/Group_2147228911_1.jpg",
         "enable_autorotate": false,
