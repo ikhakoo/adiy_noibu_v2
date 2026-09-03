@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar
+  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync)
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -8,7 +8,7 @@
   <div class="mobile-sticky-atc-content">
     <div class="mobile-sticky-atc-info">
       <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span>
-      <span class="mobile-sticky-atc-variant">
+      <span class="mobile-sticky-atc-variant" id="MobileStickyATC-Variant-{{ section.id }}">
         {%- unless product.has_only_default_variant -%}
           {{ current_variant.title }}
         {%- endunless -%}
@@ -88,6 +88,7 @@
     .mobile-sticky-atc-variant {
       font-size: 11px;
       color: #666;
+      font-weight: 500;
     }
 
     .mobile-sticky-atc-price {
@@ -110,18 +111,67 @@
 
 <script>
   (function() {
+    // Pass product JSON to JavaScript safely
+    const productData = {{ product | json }};
+    const moneyFormat = "{{ shop.money_format | escape }}";
+
+    function formatMoney(cents, format) {
+      if (typeof cents === 'string') cents = cents.replace('.', '');
+      let value = '';
+      const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+      const formatString = format || '${{amount}}';
+
+      function defaultOption(opt, def) {
+        return (typeof opt == 'undefined') ? def : opt;
+      }
+
+      function formatWithDelimiters(number, precision, thousands, decimal) {
+        precision = defaultOption(precision, 2);
+        thousands = defaultOption(thousands, ',');
+        decimal   = defaultOption(decimal, '.');
+
+        if (isNaN(number) || number == null) return 0;
+
+        number = (number / 100.0).toFixed(precision);
+
+        const parts = number.split('.');
+        const dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
+        const cents = parts[1] ? (decimal + parts[1]) : '';
+
+        return dollars + cents;
+      }
+
+      switch (formatString.match(placeholderRegex)[1]) {
+        case 'amount':
+          value = formatWithDelimiters(cents, 2);
+          break;
+        case 'amount_no_decimals':
+          value = formatWithDelimiters(cents, 0);
+          break;
+        case 'amount_with_comma_separator':
+          value = formatWithDelimiters(cents, 2, '.', ',');
+          break;
+        case 'amount_no_decimals_with_space_separator':
+          value = formatWithDelimiters(cents, 0, ' ');
+          break;
+      }
+
+      return formatString.replace(placeholderRegex, value);
+    }
+
     function initMobileStickyATC() {
       const stickyBar = document.getElementById('MobileStickyATC-{{ section.id }}');
       if (!stickyBar) return;
 
-      // Find the main inline ATC form / button on the page
       const mainForm = document.querySelector('form[action*="/cart/add"]');
       const mainSubmitBtn = mainForm ? mainForm.querySelector('[type="submit"], [name="add"]') : null;
       const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
+      const variantTitleEl = document.getElementById('MobileStickyATC-Variant-{{ section.id }}');
+      const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
 
       if (!mainSubmitBtn) return;
 
-      // 1. Scroll Observer: Show sticky bar when main ATC button leaves screen
+      // 1. Scroll Observer (Slide in/out)
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting && window.innerWidth <= 750) {
@@ -130,33 +180,78 @@
             stickyBar.classList.remove('is-visible');
           }
         });
-      }, {
-        threshold: 0
-      });
+      }, { threshold: 0 });
 
       observer.observe(mainSubmitBtn);
 
-      // 2. Click Handler: Trigger main ATC form submit
+      // 2. Real-Time Variant Sync Function
+      function updateStickyVariant(variant) {
+        if (!variant) return;
+
+        // Update Variant Name
+        if (variantTitleEl) {
+          variantTitleEl.textContent = variant.title !== 'Default Title' ? variant.title : '';
+        }
+
+        // Update Price
+        if (priceEl && variant.price) {
+          priceEl.innerHTML = formatMoney(variant.price, moneyFormat);
+        }
+
+        // Update Button Availability State
+        if (stickyBtn) {
+          if (variant.available) {
+            stickyBtn.removeAttribute('disabled');
+            stickyBtn.textContent = "{{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}";
+          } else {
+            stickyBtn.setAttribute('disabled', 'disabled');
+            stickyBtn.textContent = "{{ 'products.product.sold_out' | t | default: 'Sold Out' }}";
+          }
+        }
+      }
+
+      // 3. Listen to Theme Variant Change Events
+      document.addEventListener('variant:change', function(evt) {
+        if (evt.detail && evt.detail.variant) {
+          updateStickyVariant(evt.detail.variant);
+        }
+      });
+
+      // 4. Fallback Observer: Track hidden ID input in main form (Dawn & modern themes)
+      const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
+      if (variantInput) {
+        const observerVariantInput = new MutationObserver(() => {
+          const selectedVariantId = parseInt(variantInput.value);
+          if (productData && productData.variants) {
+            const matchedVariant = productData.variants.find(v => v.id === selectedVariantId);
+            if (matchedVariant) updateStickyVariant(matchedVariant);
+          }
+        });
+        observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
+      }
+
+      // 5. Fallback Observer: Track URL parameter changes (?variant=123456)
+      let lastUrl = location.href;
+      new MutationObserver(() => {
+        const url = location.href;
+        if (url !== lastUrl) {
+          lastUrl = url;
+          const urlParams = new URLSearchParams(window.location.search);
+          const variantId = parseInt(urlParams.get('variant'));
+          if (variantId && productData && productData.variants) {
+            const matchedVariant = productData.variants.find(v => v.id === variantId);
+            if (matchedVariant) updateStickyVariant(matchedVariant);
+          }
+        }
+      }).observe(document, { subtree: true, childList: true });
+
+      // 6. Click Handler to submit original ATC form
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
           if (mainSubmitBtn.disabled) return;
           mainSubmitBtn.click();
         });
-      }
-
-      // 3. Variant / Price Change Sync
-      const variantIdInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
-      if (variantIdInput) {
-        const observerVariant = new MutationObserver(() => {
-          // Sync disabled status from main button
-          if (stickyBtn) {
-            stickyBtn.disabled = mainSubmitBtn.disabled;
-            stickyBtn.textContent = mainSubmitBtn.textContent;
-          }
-        });
-
-        observerVariant.observe(mainSubmitBtn, { attributes: true, childList: true, subtree: true });
       }
     }
 
