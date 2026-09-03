@@ -1160,115 +1160,198 @@
                   {% endcomment %}
 
                 {%- when 'custom_price' -%}
-  {%- liquid
-    assign current_variant = product.selected_or_first_available_variant
-    assign original_price = current_variant.price
+                  {%- liquid
+                    assign current_variant = product.selected_or_first_available_variant
+                    assign original_price = current_variant.price
 
-    # Clean input: Remove $, commas, spaces
-    assign raw_discount = block.settings.discount_price | remove: '$' | remove: ',' | strip
+                    # Clean input: Remove $, commas, spaces
+                    assign raw_discount = block.settings.discount_price | remove: '$' | remove: ',' | strip
 
-    if block.settings.discount_type == 'percentage'
-      assign discount_num = raw_discount | times: 1.0
-      assign discount_amount = original_price | times: discount_num | divided_by: 100
-    else
-      # Fixed dollar amount subtract logic
-      assign discount_num = raw_discount | times: 100
-      assign discount_amount = discount_num
-    endif
+                    if block.settings.discount_type == 'percentage'
+                      assign discount_num = raw_discount | times: 1.0
+                      assign discount_amount = original_price | times: discount_num | divided_by: 100
+                    else
+                      # Fixed dollar amount subtract logic
+                      assign discount_num = raw_discount | times: 100
+                      assign discount_amount = discount_num
+                    endif
 
-    assign final_discounted_price = original_price | minus: discount_amount
-  -%}
+                    assign final_discounted_price = original_price | minus: discount_amount
+                  -%}
 
-  <div id="custom-price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price custom-price-block">
-    
-    {% comment %} Top Main Price + Comp Value Label {% endcomment %}
-    <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
-      <div class="price-wrapper">
-        {%- render 'price',
-          product: product,
-          use_variant: true,
-          show_badges: true,
-          price_class: 'price--large'
-        -%}
-      </div>
-      <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
-        Comp Value 
+                  <div id="custom-price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price custom-price-block">
+                    
+                    {% comment %} Top Main Price + Comp Value Label {% endcomment %}
+                    <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
+                      <div class="price-wrapper">
+                        {%- render 'price',
+                          product: product,
+                          use_variant: true,
+                          show_badges: true,
+                          price_class: 'price--large'
+                        -%}
+                      </div>
+                      <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
+                        Comp Value 
+                      </span>
+                    </div>
+
+                    {% comment %} Bottom Promo Discounted Row {% endcomment %}
+                    {%- if raw_discount != blank -%}
+                      <div class="custom-discount-line" style="margin-top: 0; font-size: 16px; color: #555; display: flex; align-items: end; gap: 6px;">
+                        <span>or</span>
+                        <span class="discount-amount" style="color: #ff6b6b; font-size: 20px;">
+                          {{ final_discounted_price | money }}
+                        </span>
+                        {%- if block.settings.discount_code != blank -%}
+                          <span>with code</span>
+                          <strong class="discount-code" style="color: #333; text-transform: uppercase; font-weight: 400;">
+                            {{ block.settings.discount_code }}
+                          </strong>
+                        {%- endif -%}
+
+                        {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
+                          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center; margin-bottom: 9px;">
+                            <button 
+                              type="button" 
+                              class="js-copy-promo-btn" 
+                              data-code="{{ block.settings.discount_code }}"
+                              title="Copy Code" 
+                              style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                              </svg>
+                            </button>
+                            <span class="copy-tooltip" style="display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;">
+                              Copied!
+                            </span>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+
+                  </div>
+
+                  <script>
+                    (function() {
+                      // Isolated Scope - Doesn't affect global window
+                      const container = document.getElementById('custom-price-{{ section.id }}');
+                      if (!container) return;
+
+                      const copyBtn = container.querySelector('.js-copy-promo-btn');
+                      if (!copyBtn) return;
+
+                      copyBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const codeText = this.getAttribute('data-code');
+                        const tooltip = this.nextElementSibling;
+
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                          navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
+                        } else {
+                          const tempInput = document.createElement('input');
+                          tempInput.value = codeText;
+                          document.body.appendChild(tempInput);
+                          tempInput.select();
+                          document.execCommand('copy');
+                          document.body.removeChild(tempInput);
+                          showTooltip(tooltip);
+                        }
+                      });
+
+                      function showTooltip(tooltip) {
+                        if (tooltip) {
+                          tooltip.style.display = 'block';
+                          setTimeout(() => {
+                            tooltip.style.display = 'none';
+                          }, 1500);
+                        }
+                      }
+                    })();
+                  </script>
+                {%- when 'countdown_timer' -%}
+  <div 
+    id="countdown-block-{{ section.id }}-{{ block.id }}" 
+    class="custom-countdown-banner"
+    {{ block.shopify_attributes }}
+    style="
+      background-color: {{ block.settings.bg_color }};
+      color: {{ block.settings.text_color }};
+      padding: 10px 16px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 12px 0;
+      font-family: inherit;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    "
+  >
+    <div style="display: flex; align-items: center; gap: 10px;">
+      {% comment %} Badge % Icon {% endcomment %}
+      <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; color: {{ block.settings.bg_color }}; border-radius: 50%; width: 26px; height: 26px; font-weight: bold; font-size: 13px;">
+        %
+      </span>
+      <span style="font-weight: 700; font-size: 15px; letter-spacing: 0.2px;">
+        {{ block.settings.heading }}
       </span>
     </div>
 
-    {% comment %} Bottom Promo Discounted Row {% endcomment %}
-    {%- if raw_discount != blank -%}
-      <div class="custom-discount-line" style="margin-top: 0; font-size: 16px; color: #555; display: flex; align-items: end; gap: 6px;">
-        <span>or</span>
-        <span class="discount-amount" style="color: #ff6b6b; font-size: 20px;">
-          {{ final_discounted_price | money }}
-        </span>
-        {%- if block.settings.discount_code != blank -%}
-          <span>with code</span>
-          <strong class="discount-code" style="color: #333; text-transform: uppercase; font-weight: 400;">
-            {{ block.settings.discount_code }}
-          </strong>
-        {%- endif -%}
-
-        {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
-          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center; margin-bottom: 9px;">
-            <button 
-              type="button" 
-              class="js-copy-promo-btn" 
-              data-code="{{ block.settings.discount_code }}"
-              title="Copy Code" 
-              style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-            </button>
-            <span class="copy-tooltip" style="display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;">
-              Copied!
-            </span>
-          </div>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
+    <div class="timer-display" style="font-size: 15px; font-weight: 600; white-space: nowrap;">
+      <span class="js-timer-days">0d</span> : 
+      <span class="js-timer-hours">00h</span> : 
+      <span class="js-timer-mins">00m</span> : 
+      <span class="js-timer-secs">00s</span>
+    </div>
   </div>
 
   <script>
     (function() {
-      // Isolated Scope - Doesn't affect global window
-      const container = document.getElementById('custom-price-{{ section.id }}');
+      const container = document.getElementById('countdown-block-{{ section.id }}-{{ block.id }}');
       if (!container) return;
 
-      const copyBtn = container.querySelector('.js-copy-promo-btn');
-      if (!copyBtn) return;
+      const endDateStr = "{{ block.settings.end_date }}T{{ block.settings.end_time }}";
+      const targetDate = new Date(endDateStr).getTime();
 
-      copyBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const codeText = this.getAttribute('data-code');
-        const tooltip = this.nextElementSibling;
-
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
-        } else {
-          const tempInput = document.createElement('input');
-          tempInput.value = codeText;
-          document.body.appendChild(tempInput);
-          tempInput.select();
-          document.execCommand('copy');
-          document.body.removeChild(tempInput);
-          showTooltip(tooltip);
-        }
-      });
-
-      function showTooltip(tooltip) {
-        if (tooltip) {
-          tooltip.style.display = 'block';
-          setTimeout(() => {
-            tooltip.style.display = 'none';
-          }, 1500);
-        }
+      if (isNaN(targetDate)) {
+        console.warn('Invalid Countdown Date Format');
+        return;
       }
+
+      const daysEl = container.querySelector('.js-timer-days');
+      const hoursEl = container.querySelector('.js-timer-hours');
+      const minsEl = container.querySelector('.js-timer-mins');
+      const secsEl = container.querySelector('.js-timer-secs');
+
+      function updateTimer() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference <= 0) {
+          daysEl.textContent = '0d';
+          hoursEl.textContent = '00h';
+          minsEl.textContent = '00m';
+          secsEl.textContent = '00s';
+          clearInterval(timerInterval);
+          return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        daysEl.textContent = days + 'd';
+        hoursEl.textContent = (hours < 10 ? '0' : '') + hours + 'h';
+        minsEl.textContent = (minutes < 10 ? '0' : '') + minutes + 'm';
+        secsEl.textContent = (seconds < 10 ? '0' : '') + seconds + 's';
+      }
+
+      updateTimer();
+      const timerInterval = setInterval(updateTimer, 1000);
     })();
   </script>
 
@@ -2342,41 +2425,79 @@
       "limit": 1
     },
     {
-  "type": "custom_price",
-  "name": "Custom Promo Price",
-  "limit": 1,
-  "settings": [
-    {
-      "type": "select",
-      "id": "discount_type",
-      "label": "Discount Type",
-      "options": [
-        { "value": "fixed", "label": "Fixed Amount ($)" },
-        { "value": "percentage", "label": "Percentage (%)" }
-      ],
-      "default": "fixed"
+      "type": "custom_price",
+      "name": "Custom Promo Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "discount_type",
+          "label": "Discount Type",
+          "options": [
+            { "value": "fixed", "label": "Fixed Amount ($)" },
+            { "value": "percentage", "label": "Percentage (%)" }
+          ],
+          "default": "fixed"
+        },
+        {
+          "type": "text",
+          "id": "discount_price",
+          "label": "Minus Amount or Percentage",
+          "default": "1000",
+          "info": "Example: 1000 or $1000 (if fixed), or 20 (if percentage)"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount Code",
+          "default": "LABOR"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_copy_icon",
+          "label": "Show Copy Icon",
+          "default": true
+        }
+      ]
     },
     {
-      "type": "text",
-      "id": "discount_price",
-      "label": "Minus Amount or Percentage",
-      "default": "1000",
-      "info": "Example: 1000 or $1000 (if fixed), or 20 (if percentage)"
+      "type": "countdown_timer",
+      "name": "Countdown Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Banner Heading",
+          "default": "Labor Day Early Access Starts"
+        },
+        {
+          "type": "text",
+          "id": "end_date",
+          "label": "End Date (YYYY-MM-DD)",
+          "default": "2026-12-31",
+          "info": "Format: YYYY-MM-DD (e.g. 2026-09-10)"
+        },
+        {
+          "type": "text",
+          "id": "end_time",
+          "label": "End Time (24h format)",
+          "default": "23:59:59",
+          "info": "Format: HH:MM:SS (e.g. 23:59:59)"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#a33429"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#ffffff"
+        }
+      ]
     },
-    {
-      "type": "text",
-      "id": "discount_code",
-      "label": "Discount Code",
-      "default": "LABOR"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_copy_icon",
-      "label": "Show Copy Icon",
-      "default": true
-    }
-  ]
-},
     {
       "type": "sku",
       "name": "t:sections.main-product.blocks.sku.name",
