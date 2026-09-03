@@ -129,6 +129,16 @@
             "show_gift_card_recipient": false
           }
         },
+        "countdown_timer_NM9Fxn": {
+          "type": "countdown_timer",
+          "settings": {
+            "heading": "Labor Day Early Access Starts",
+            "end_date": "2026-09-07",
+            "end_time": "23:59:59",
+            "bg_color": "#a33429",
+            "text_color": "#ffffff"
+          }
+        },
         "affirm_pay_over_time_messaging_product_block_nTFQar": {
           "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
           "settings": {
@@ -239,6 +249,7 @@
         "custom_liquid_FnEVbe",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
+        "countdown_timer_NM9Fxn",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
         "affirm_promo_bar_dgqQry",
         "need_assistance_block_rdEmyW",
