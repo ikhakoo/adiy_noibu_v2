@@ -1,0 +1,169 @@
+{% comment %}
+  Mobile Sticky Add-to-Cart Bar
+{% endcomment %}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div id="MobileStickyATC-{{ section.id }}" class="mobile-sticky-atc-wrapper">
+  <div class="mobile-sticky-atc-content">
+    <div class="mobile-sticky-atc-info">
+      <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span>
+      <span class="mobile-sticky-atc-variant">
+        {%- unless product.has_only_default_variant -%}
+          {{ current_variant.title }}
+        {%- endunless -%}
+      </span>
+      <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
+        {{ current_variant.price | money }}
+      </span>
+    </div>
+
+    <div class="mobile-sticky-atc-action">
+      <button
+        type="button"
+        id="MobileStickyATC-Button-{{ section.id }}"
+        class="mobile-sticky-atc-btn button button--primary"
+        {% unless current_variant.available %}disabled{% endunless %}
+      >
+        {%- if current_variant.available -%}
+          {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+        {%- else -%}
+          {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
+        {%- endif -%}
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Hidden on Desktop (above 750px) */
+  @media screen and (min-width: 751px) {
+    .mobile-sticky-atc-wrapper {
+      display: none !important;
+    }
+  }
+
+  /* Mobile Styles (750px and below) */
+  @media screen and (max-width: 750px) {
+    .mobile-sticky-atc-wrapper {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+      z-index: 999;
+      padding: 12px 16px;
+      transform: translateY(100%);
+      transition: transform 0.3s ease-in-out;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .mobile-sticky-atc-wrapper.is-visible {
+      transform: translateY(0);
+    }
+
+    .mobile-sticky-atc-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .mobile-sticky-atc-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mobile-sticky-atc-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mobile-sticky-atc-variant {
+      font-size: 11px;
+      color: #666;
+    }
+
+    .mobile-sticky-atc-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      margin-top: 2px;
+    }
+
+    .mobile-sticky-atc-btn {
+      min-width: 130px;
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 4px;
+      width: 100%;
+      white-space: nowrap;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    function initMobileStickyATC() {
+      const stickyBar = document.getElementById('MobileStickyATC-{{ section.id }}');
+      if (!stickyBar) return;
+
+      // Find the main inline ATC form / button on the page
+      const mainForm = document.querySelector('form[action*="/cart/add"]');
+      const mainSubmitBtn = mainForm ? mainForm.querySelector('[type="submit"], [name="add"]') : null;
+      const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
+
+      if (!mainSubmitBtn) return;
+
+      // 1. Scroll Observer: Show sticky bar when main ATC button leaves screen
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting && window.innerWidth <= 750) {
+            stickyBar.classList.add('is-visible');
+          } else {
+            stickyBar.classList.remove('is-visible');
+          }
+        });
+      }, {
+        threshold: 0
+      });
+
+      observer.observe(mainSubmitBtn);
+
+      // 2. Click Handler: Trigger main ATC form submit
+      if (stickyBtn) {
+        stickyBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (mainSubmitBtn.disabled) return;
+          mainSubmitBtn.click();
+        });
+      }
+
+      // 3. Variant / Price Change Sync
+      const variantIdInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
+      if (variantIdInput) {
+        const observerVariant = new MutationObserver(() => {
+          // Sync disabled status from main button
+          if (stickyBtn) {
+            stickyBtn.disabled = mainSubmitBtn.disabled;
+            stickyBtn.textContent = mainSubmitBtn.textContent;
+          }
+        });
+
+        observerVariant.observe(mainSubmitBtn, { attributes: true, childList: true, subtree: true });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMobileStickyATC);
+    } else {
+      initMobileStickyATC();
+    }
+  })();
+</script>
