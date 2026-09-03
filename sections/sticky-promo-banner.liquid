@@ -1,14 +1,14 @@
 {% comment %}
-  Custom Sticky-to-Normal Promo Banner Section
+  Fixed Floating Bottom Promo Bar
 {% endcomment %}
 
-<div id="sticky-banner-{{ section.id }}" class="sticky-promo-wrapper">
-  <div class="sticky-promo-content">
-    <div class="sticky-promo-text">
+<div id="floating-promo-bar-{{ section.id }}" class="floating-promo-bar">
+  <div class="floating-promo-content">
+    <div class="floating-promo-text">
       {{ section.settings.banner_text }}
     </div>
     {% if section.settings.button_label != blank %}
-      <a href="{{ section.settings.button_link }}" class="sticky-promo-btn">
+      <a href="{{ section.settings.button_link }}" class="floating-promo-btn">
         {{ section.settings.button_label }}
       </a>
     {% endif %}
@@ -16,32 +16,21 @@
 </div>
 
 <style>
-  .sticky-promo-wrapper {
-    width: 100%;
+  /* Base Floating Style - Strictly fixed at bottom */
+  .floating-promo-bar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
     background-color: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
-    padding: 12px 20px;
+    padding: 10px 20px;
+    z-index: 999999 !important; /* Above all content */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
-    transition: all 0.3s ease;
-    z-index: 999;
   }
 
-  /* Fixed State (Jab tak section tak view scroll na ho) */
-  .sticky-promo-wrapper.is-fixed {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
-  }
-
-  /* Normal Inline State */
-  .sticky-promo-wrapper.is-static {
-    position: relative;
-    box-shadow: none;
-  }
-
-  .sticky-promo-content {
+  .floating-promo-content {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -49,66 +38,48 @@
     align-items: center;
     gap: 15px;
     text-align: center;
-    flex-wrap: wrap;
   }
 
-  .sticky-promo-text {
+  .floating-promo-text {
     font-size: 14px;
     font-weight: 500;
   }
 
-  .sticky-promo-text p {
+  .floating-promo-text p {
     margin: 0;
+    line-height: 1.2;
   }
 
-  .sticky-promo-btn {
+  .floating-promo-btn {
     display: inline-block;
-    padding: 6px 16px;
+    padding: 6px 14px;
     background-color: {{ section.settings.btn_bg_color }};
     color: {{ section.settings.btn_text_color }};
     text-decoration: none;
     border-radius: 4px;
     font-size: 13px;
     font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Responsive for mobile screens */
+  @media screen and (max-width: 749px) {
+    .floating-promo-bar {
+      padding: 8px 12px;
+    }
+    .floating-promo-text {
+      font-size: 12px;
+    }
+    .floating-promo-btn {
+      padding: 4px 10px;
+      font-size: 11px;
+    }
   }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const banner = document.getElementById('sticky-banner-{{ section.id }}');
-    if (!banner) return;
-
-    // Element placeholder create karte hain taake section height jump na kare
-    const placeholder = document.createElement('div');
-    placeholder.style.display = 'none';
-    banner.parentNode.insertBefore(placeholder, banner);
-
-    function handleScroll() {
-      const rect = placeholder.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      // Jab placeholder target threshold tak pohnch jaye
-      if (rect.top <= viewportHeight - banner.offsetHeight) {
-        banner.classList.remove('is-fixed');
-        banner.classList.add('is-static');
-        placeholder.style.display = 'none';
-      } else {
-        banner.classList.add('is-fixed');
-        banner.classList.remove('is-static');
-        placeholder.style.display = 'block';
-        placeholder.style.height = banner.offsetHeight + 'px';
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
-    handleScroll(); // Initial check
-  });
-</script>
-
 {% schema %}
 {
-  "name": "Sticky Promo Banner",
+  "name": "Sticky Bottom Promo Bar",
   "settings": [
     {
       "type": "richtext",
@@ -131,7 +102,7 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#9e7d69"
+      "default": "#8B6B58"
     },
     {
       "type": "color",
@@ -154,7 +125,7 @@
   ],
   "presets": [
     {
-      "name": "Sticky Promo Banner"
+      "name": "Sticky Bottom Promo Bar"
     }
   ]
 }
