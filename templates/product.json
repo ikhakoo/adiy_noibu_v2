@@ -132,7 +132,7 @@
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
           "settings": {
-            "heading": "Labor Day Early Access Starts",
+            "heading": "Labor day Sale Ends in:",
             "end_date": "2026-09-07",
             "end_time": "23:59:59",
             "bg_color": "#a33429",
