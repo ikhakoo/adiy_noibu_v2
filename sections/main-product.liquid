@@ -1164,11 +1164,16 @@
     assign current_variant = product.selected_or_first_available_variant
     assign original_price = current_variant.price
 
+    # Clean input: Remove $, commas, spaces
+    assign raw_discount = block.settings.discount_price | remove: '$' | remove: ',' | strip
+
     if block.settings.discount_type == 'percentage'
-      assign discount_amount = original_price | times: block.settings.discount_value | divided_by: 100
+      assign discount_num = raw_discount | times: 1.0
+      assign discount_amount = original_price | times: discount_num | divided_by: 100
     else
-      assign fixed_cents = block.settings.discount_value | times: 100
-      assign discount_amount = fixed_cents
+      # Fixed dollar amount subtract logic
+      assign discount_num = raw_discount | times: 100
+      assign discount_amount = discount_num
     endif
 
     assign final_discounted_price = original_price | minus: discount_amount
@@ -1196,8 +1201,8 @@
       </span>
     </div>
 
-    {% comment %} Bottom Promo Discounted Row with Functional Copy Icon {% endcomment %}
-    {%- if block.settings.discount_value > 0 -%}
+    {% comment %} Bottom Promo Discounted Row {% endcomment %}
+    {%- if raw_discount != blank -%}
       <div class="custom-discount-line" style="margin-top: 6px; font-size: 16px; color: #555; display: flex; align-items: center; gap: 6px;">
         <span>or</span>
         <span class="discount-amount" style="color: #ff6b6b; font-weight: bold;">
@@ -1205,7 +1210,7 @@
         </span>
         {%- if block.settings.discount_code != blank -%}
           <span>with code</span>
-          <strong class="discount-code" id="code-to-copy-{{ section.id }}" style="color: #333; text-transform: uppercase;">
+          <strong class="discount-code" style="color: #333; text-transform: uppercase;">
             {{ block.settings.discount_code }}
           </strong>
         {%- endif -%}
@@ -1241,7 +1246,6 @@
           showCopyTooltip(btnElement);
         });
       } else {
-        // Fallback for older browsers
         const tempInput = document.createElement('input');
         tempInput.value = codeText;
         document.body.appendChild(tempInput);
@@ -2333,30 +2337,41 @@
       "limit": 1
     },
     {
-      "type": "custom_price",
-      "name": "Custom Promo Price",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "text",
-          "id": "discount_price",
-          "label": "Discount Price (e.g. $2,798.40)",
-          "default": "$2,798.40"
-        },
-        {
-          "type": "text",
-          "id": "discount_code",
-          "label": "Discount Code",
-          "default": "LABOR"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_copy_icon",
-          "label": "Show Copy Icon",
-          "default": true
-        }
-      ]
+  "type": "custom_price",
+  "name": "Custom Promo Price",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "select",
+      "id": "discount_type",
+      "label": "Discount Type",
+      "options": [
+        { "value": "fixed", "label": "Fixed Amount ($)" },
+        { "value": "percentage", "label": "Percentage (%)" }
+      ],
+      "default": "fixed"
     },
+    {
+      "type": "text",
+      "id": "discount_price",
+      "label": "Minus Amount or Percentage",
+      "default": "1000",
+      "info": "Example: 1000 or $1000 (if fixed), or 20 (if percentage)"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount Code",
+      "default": "LABOR"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copy_icon",
+      "label": "Show Copy Icon",
+      "default": true
+    }
+  ]
+},
     {
       "type": "sku",
       "name": "t:sections.main-product.blocks.sku.name",
