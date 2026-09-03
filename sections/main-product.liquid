@@ -2292,6 +2292,8 @@
   </product-component>
 </product-info>
 
+{%- render 'mobile-sticky-atc', product: product, section: section -%}
+
 <script>
   document.addEventListener('click', function (e) {
     const toggleBtn = e.target.closest('.js-financing-toggle');
