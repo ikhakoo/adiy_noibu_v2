@@ -1160,33 +1160,108 @@
                   {% endcomment %}
 
                 {%- when 'custom_price' -%}
+  {%- liquid
+    assign current_variant = product.selected_or_first_available_variant
+    assign original_price = current_variant.price
+
+    if block.settings.discount_type == 'percentage'
+      assign discount_amount = original_price | times: block.settings.discount_value | divided_by: 100
+    else
+      assign fixed_cents = block.settings.discount_value | times: 100
+      assign discount_amount = fixed_cents
+    endif
+
+    assign final_discounted_price = original_price | minus: discount_amount
+  -%}
+
   <div id="custom-price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price custom-price-block">
-    {%- render 'price',
-      product: product,
-      use_variant: true,
-      show_badges: true,
-      price_class: 'price--large'
-    -%}
     
-    {%- if block.settings.discount_price != blank -%}
-      <div class="custom-discount-line" style="margin-top: 8px; font-size: 16px; color: #555; display: flex; align-items: center; gap: 6px;">
+    {% comment %} Top Main Price + Comp Value Label {% endcomment %}
+    <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
+      <div class="price-wrapper">
+        {%- render 'price',
+          product: product,
+          use_variant: true,
+          show_badges: true,
+          price_class: 'price--large'
+        -%}
+      </div>
+      <span class="comp-value-text" style="font-size: 14px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
+        Comp Value 
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+      </span>
+    </div>
+
+    {% comment %} Bottom Promo Discounted Row with Functional Copy Icon {% endcomment %}
+    {%- if block.settings.discount_value > 0 -%}
+      <div class="custom-discount-line" style="margin-top: 6px; font-size: 16px; color: #555; display: flex; align-items: center; gap: 6px;">
         <span>or</span>
         <span class="discount-amount" style="color: #ff6b6b; font-weight: bold;">
-          {{ block.settings.discount_price }}
+          {{ final_discounted_price | money }}
         </span>
-        <span>with code</span>
-        <strong class="discount-code" style="color: #333; text-transform: uppercase;">
-          {{ block.settings.discount_code }}
-        </strong>
-        {%- if block.settings.show_copy_icon -%}
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy" style="cursor: pointer; opacity: 0.7;">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
+        {%- if block.settings.discount_code != blank -%}
+          <span>with code</span>
+          <strong class="discount-code" id="code-to-copy-{{ section.id }}" style="color: #333; text-transform: uppercase;">
+            {{ block.settings.discount_code }}
+          </strong>
+        {%- endif -%}
+
+        {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
+          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center;">
+            <button 
+              type="button" 
+              class="copy-code-btn" 
+              onclick="copyDiscountCode('{{ block.settings.discount_code }}', this)" 
+              title="Copy Code" 
+              style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+            <span class="copy-tooltip" style="display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;">
+              Copied!
+            </span>
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}
+
   </div>
+
+  <script>
+    function copyDiscountCode(codeText, btnElement) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(codeText).then(() => {
+          showCopyTooltip(btnElement);
+        });
+      } else {
+        // Fallback for older browsers
+        const tempInput = document.createElement('input');
+        tempInput.value = codeText;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showCopyTooltip(btnElement);
+      }
+    }
+
+    function showCopyTooltip(btnElement) {
+      const tooltip = btnElement.nextElementSibling;
+      if (tooltip) {
+        tooltip.style.display = 'block';
+        setTimeout(() => {
+          tooltip.style.display = 'none';
+        }, 1500);
+      }
+    }
+  </script>
 
                 {%- when 'financing_widget' -%}
                   <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
