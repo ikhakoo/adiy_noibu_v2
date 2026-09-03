@@ -17,14 +17,14 @@
         "padding_bottom": 28
       }
     },
-    "how_to_buid_deck_XxiTae": {
-      "type": "how-to-buid-deck",
+    "how_to_build_deck_UgzKMb": {
+      "type": "how-to-build-deck",
       "name": "How to Build Deck",
       "settings": {}
     }
   },
   "order": [
     "main",
-    "how_to_buid_deck_XxiTae"
+    "how_to_build_deck_UgzKMb"
   ]
 }
