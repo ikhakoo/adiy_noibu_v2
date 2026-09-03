@@ -86,6 +86,19 @@
         "show_text_below": false
       }
     },
+    "sticky_promo_banner_pmpeND": {
+      "type": "sticky-promo-banner",
+      "name": "Sticky Promo Banner",
+      "settings": {
+        "banner_text": "<p>Hansø Labor Day Offers. Up to 35% OFF on Pergolas & Awnings + FREE Gift.</p>",
+        "button_label": "Claim Offer",
+        "button_link": "",
+        "bg_color": "#9e7d69",
+        "text_color": "#ffffff",
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#000000"
+      }
+    },
     "countdown_bar_ceEmt4": {
       "type": "countdown-bar",
       "disabled": true,
@@ -3560,6 +3573,7 @@
   },
   "order": [
     "image_banner",
+    "sticky_promo_banner_pmpeND",
     "countdown_bar_ceEmt4",
     "feature_icons_bar_g8dW8t",
     "logo_bar_YaqFDM",
