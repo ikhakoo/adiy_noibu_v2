@@ -858,8 +858,6 @@
     }
 
     .custom-countdown-banner{
-      background-color: {{ block.settings.bg_color }};
-      color: {{ block.settings.text_color }};
       padding: 10px 16px;
       border-radius: 6px;
       display: flex;
@@ -1295,7 +1293,7 @@
                     id="countdown-block-{{ section.id }}-{{ block.id }}" 
                     class="custom-countdown-banner"
                     {{ block.shopify_attributes }}
-                    
+                    style="background-color: {{ block.settings.bg_color }}; color: {{ block.settings.text_color }};"
                   >
                     <div style="display: flex; align-items: center; gap: 10px;">
                       {% comment %} Badge % Icon {% endcomment %}
