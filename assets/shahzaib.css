@@ -116,6 +116,14 @@
 .for-mob.banner__text {
     display:none;
 }
+.above-heading-subtitle p {
+    font-size: 48px;
+    font-weight: 300;
+    color: #fff;
+    margin: 0;
+    line-height: normal;
+    margin-bottom: -10px;
+}
 @media screen and (max-width:1300px){
     .hero-sec .banner__content .banner__box{
         padding-top: 0;
@@ -160,6 +168,9 @@
     }
     .for-mob.banner__text {
         display:block;
+    }
+    .above-heading-subtitle p {
+        font-size: 32px;
     }
 }
 /********************* end *******************/
