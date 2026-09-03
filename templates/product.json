@@ -46,7 +46,16 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {}
+        },
+        "custom_price_cWJ7Ft": {
+          "type": "custom_price",
+          "settings": {
+            "discount_price": "$4,400.00",
+            "discount_code": "LABOR",
+            "show_copy_icon": true
+          }
         },
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
@@ -220,6 +229,7 @@
         "title",
         "text_ifcgmB",
         "price",
+        "custom_price_cWJ7Ft",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
         "material_switcher_EDGrz6",
@@ -2254,6 +2264,7 @@
         "class_heading": "",
         "sub_heading": "",
         "rating_score": "4.8",
+        "total_reviews": "1,751",
         "bg_color": "#f4f4f4",
         "show_full_section": false,
         "button_label": "More Reviews",
