@@ -1,12 +1,12 @@
 {% comment %}
-  Sticky-until-scrolled-to-section Promo Banner
+  Ultra Smooth Sticky-to-Inline Promo Banner
 {% endcomment %}
 
 <div id="sticky-promo-wrapper-{{ section.id }}" class="promo-section-wrapper">
-  <!-- Dynamic Spacer (Jab section fixed hoga to page height jump se bachaye ga) -->
-  <div id="promo-placeholder-{{ section.id }}" class="promo-placeholder" style="display: none;"></div>
+  <!-- Layout jump/jerk fix karne ke liye reserved height -->
+  <div id="promo-placeholder-{{ section.id }}" class="promo-placeholder"></div>
 
-  <!-- Actual Banner Container -->
+  <!-- Actual Sticky Bar -->
   <div id="promo-banner-{{ section.id }}" class="sticky-promo-bar is-fixed">
     <div class="sticky-promo-content">
       <div class="sticky-promo-text">
@@ -25,35 +25,46 @@
   .promo-section-wrapper {
     width: 100%;
     position: relative;
+    display: block;
   }
 
-  /* Shared Banner Style */
+  .promo-placeholder {
+    width: 100%;
+    display: none;
+    visibility: hidden;
+  }
+
+  /* Base Styles */
   .sticky-promo-bar {
     width: 100%;
     background-color: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
     padding: 12px 20px;
     box-sizing: border-box;
-    transition: background-color 0.3s ease;
+    will-change: transform, position;
+    transition: background-color 0.3s ease, opacity 0.2s ease-in-out;
   }
 
-  /* State 1: Sticky at Bottom (Jab tak top content scroll ho raha ho) */
+  /* State 1: Sticky at Viewport Bottom */
   .sticky-promo-bar.is-fixed {
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    z-index: 99999 !important;
-    box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.15);
+    z-index: 999999 !important;
+    box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.12);
+    transform: translateZ(0); /* Hardware Acceleration for smooth render */
   }
 
-  /* State 2: Static / Normal Section (Jab user is section tak pohnch jaye) */
+  /* State 2: Seamlessly fitted into Normal Flow */
   .sticky-promo-bar.is-static {
     position: relative !important;
     bottom: auto !important;
     left: auto !important;
+    right: auto !important;
     box-shadow: none !important;
-    z-index: 1 !important;
+    z-index: 2 !important;
+    transform: none !important;
   }
 
   .sticky-promo-content {
@@ -101,49 +112,81 @@
 
 <script>
   (function() {
-    function initStickyBanner() {
+    function initUltraSmoothBanner() {
       const wrapper = document.getElementById('sticky-promo-wrapper-{{ section.id }}');
       const banner = document.getElementById('promo-banner-{{ section.id }}');
       const placeholder = document.getElementById('promo-placeholder-{{ section.id }}');
 
       if (!wrapper || !banner || !placeholder) return;
 
-      function checkScrollPosition() {
+      let ticking = false;
+
+      function updatePosition() {
         const wrapperRect = wrapper.getBoundingClientRect();
         const bannerHeight = banner.offsetHeight;
         const viewportHeight = window.innerHeight;
 
-        // Dynamic Position Trigger: Jab section ka actual spot viewport me bottom se enter kare
-        if (wrapperRect.top <= (viewportHeight - bannerHeight)) {
-          // Section apne real place par pohnch gaya -> Normal Section ban jaye
-          banner.classList.remove('is-fixed');
-          banner.classList.add('is-static');
-          placeholder.style.display = 'none';
+        // Threshold calculate karein
+        const targetScrollTrigger = viewportHeight - bannerHeight;
+
+        if (wrapperRect.top <= targetScrollTrigger) {
+          // Normal position me perfectly attach ho jaye bina jhatke ke
+          if (!banner.classList.contains('is-static')) {
+            banner.classList.remove('is-fixed');
+            banner.classList.add('is-static');
+            placeholder.style.display = 'none';
+          }
         } else {
-          // Page abhi upar hai -> Bottom Sticky rahe
-          banner.classList.add('is-fixed');
-          banner.classList.remove('is-static');
-          placeholder.style.height = bannerHeight + 'px';
-          placeholder.style.display = 'block';
+          // Frame sync sticky state
+          if (!banner.classList.contains('is-fixed')) {
+            placeholder.style.height = bannerHeight + 'px';
+            placeholder.style.display = 'block';
+            banner.classList.add('is-fixed');
+            banner.classList.remove('is-static');
+          }
+        }
+
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          // Browser render cycle ke sath heavy layout recalculation sync karna
+          window.requestAnimationFrame(updatePosition);
+          ticking = true;
         }
       }
 
-      window.addEventListener('scroll', checkScrollPosition, { passive: true });
-      window.addEventListener('resize', checkScrollPosition);
-      checkScrollPosition(); // Initial load check
+      // Intersection Observer se extra smooth scroll start handle karna
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            updatePosition();
+          });
+        },
+        { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+
+      observer.observe(wrapper);
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', updatePosition);
+      
+      // Page load / refresh par calculation Sync
+      updatePosition();
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initStickyBanner);
+      document.addEventListener('DOMContentLoaded', initUltraSmoothBanner);
     } else {
-      initStickyBanner();
+      initUltraSmoothBanner();
     }
   })();
 </script>
 
 {% schema %}
 {
-  "name": "Sticky Scroll-To Banner",
+  "name": "Smooth Scroll-To Banner",
   "settings": [
     {
       "type": "richtext",
@@ -189,7 +232,7 @@
   ],
   "presets": [
     {
-      "name": "Sticky Scroll-To Banner"
+      "name": "Smooth Scroll-To Banner"
     }
   ]
 }
