@@ -88,15 +88,47 @@
     },
     "sticky_promo_banner_pmpeND": {
       "type": "sticky-promo-banner",
+      "blocks": {
+        "text_item_AxQBxq": {
+          "type": "text_item",
+          "settings": {
+            "text": "Flexible Payment Plans",
+            "link": ""
+          }
+        },
+        "text_item_VqJKwr": {
+          "type": "text_item",
+          "settings": {
+            "text": "Made in USA",
+            "link": ""
+          }
+        },
+        "text_item_FmGRx6": {
+          "type": "text_item",
+          "settings": {
+            "text": "5-Year Warranty",
+            "link": ""
+          }
+        },
+        "countdown_XUQAMi": {
+          "type": "countdown",
+          "settings": {
+            "label": "Labor Day Sale — Ends in",
+            "end_date": "2026-09-07",
+            "end_time": "23:59"
+          }
+        }
+      },
+      "block_order": [
+        "text_item_AxQBxq",
+        "text_item_VqJKwr",
+        "text_item_FmGRx6",
+        "countdown_XUQAMi"
+      ],
       "name": "Sticky Promo Banner",
       "settings": {
-        "banner_text": "<p>Hansø Labor Day Offers. Up to 35% OFF on Pergolas & Awnings + FREE Gift.</p>",
-        "button_label": "Claim Offer",
-        "button_link": "",
-        "bg_color": "#9e7d69",
-        "text_color": "#ffffff",
-        "btn_bg_color": "#ffffff",
-        "btn_text_color": "#000000"
+        "bg_color": "#000000",
+        "text_color": "#ffffff"
       }
     },
     "countdown_bar_ceEmt4": {
