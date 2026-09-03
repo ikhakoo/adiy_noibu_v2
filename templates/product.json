@@ -52,7 +52,8 @@
         "custom_price_cWJ7Ft": {
           "type": "custom_price",
           "settings": {
-            "discount_price": "$1000.00",
+            "discount_type": "fixed",
+            "discount_price": "1000.00",
             "discount_code": "LABOR",
             "show_copy_icon": true
           }
