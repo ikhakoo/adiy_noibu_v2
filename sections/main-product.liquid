@@ -1191,14 +1191,14 @@
           price_class: 'price--large'
         -%}
       </div>
-      <span class="comp-value-text" style="font-size: 14px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
+      <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
         Comp Value 
       </span>
     </div>
 
     {% comment %} Bottom Promo Discounted Row {% endcomment %}
     {%- if raw_discount != blank -%}
-      <div class="custom-discount-line" style="margin-top: 6px; font-size: 16px; color: #555; display: flex; align-items: center; gap: 6px;">
+      <div class="custom-discount-line" style="margin-top: 6px; font-size: 16px; color: #555; display: flex; align-items: end; gap: 6px;">
         <span>or</span>
         <span class="discount-amount" style="color: #ff6b6b; font-weight: bold;">
           {{ final_discounted_price | money }}
@@ -1211,7 +1211,7 @@
         {%- endif -%}
 
         {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
-          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center;">
+          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center; margin-bottom: 9px;">
             <button 
               type="button" 
               class="js-copy-promo-btn" 
