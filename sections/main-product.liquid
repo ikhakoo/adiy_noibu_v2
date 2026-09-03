@@ -1219,8 +1219,8 @@
           <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center;">
             <button 
               type="button" 
-              class="copy-code-btn" 
-              onclick="copyDiscountCode('{{ block.settings.discount_code }}', this)" 
+              class="js-copy-promo-btn" 
+              data-code="{{ block.settings.discount_code }}"
               title="Copy Code" 
               style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
             >
@@ -1240,31 +1240,41 @@
   </div>
 
   <script>
-    function copyDiscountCode(codeText, btnElement) {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(codeText).then(() => {
-          showCopyTooltip(btnElement);
-        });
-      } else {
-        const tempInput = document.createElement('input');
-        tempInput.value = codeText;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        showCopyTooltip(btnElement);
-      }
-    }
+    (function() {
+      // Isolated Scope - Doesn't affect global window
+      const container = document.getElementById('custom-price-{{ section.id }}');
+      if (!container) return;
 
-    function showCopyTooltip(btnElement) {
-      const tooltip = btnElement.nextElementSibling;
-      if (tooltip) {
-        tooltip.style.display = 'block';
-        setTimeout(() => {
-          tooltip.style.display = 'none';
-        }, 1500);
+      const copyBtn = container.querySelector('.js-copy-promo-btn');
+      if (!copyBtn) return;
+
+      copyBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const codeText = this.getAttribute('data-code');
+        const tooltip = this.nextElementSibling;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
+        } else {
+          const tempInput = document.createElement('input');
+          tempInput.value = codeText;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempInput);
+          showTooltip(tooltip);
+        }
+      });
+
+      function showTooltip(tooltip) {
+        if (tooltip) {
+          tooltip.style.display = 'block';
+          setTimeout(() => {
+            tooltip.style.display = 'none';
+          }, 1500);
+        }
       }
-    }
+    })();
   </script>
 
                 {%- when 'financing_widget' -%}
