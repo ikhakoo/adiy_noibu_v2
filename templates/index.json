@@ -12,6 +12,15 @@
     "image_banner": {
       "type": "image-banner",
       "blocks": {
+        "text_wgaDyW": {
+          "type": "text",
+          "settings": {
+            "class_text": "above-heading-subtitle",
+            "text_html": "",
+            "text": "Labor Day Sale",
+            "text_style": "body"
+          }
+        },
         "heading": {
           "type": "heading",
           "settings": {
@@ -51,6 +60,7 @@
         }
       },
       "block_order": [
+        "text_wgaDyW",
         "heading",
         "text_DgbitQ",
         "text_YGRAJ8",
@@ -3343,6 +3353,7 @@
         "class_heading": "",
         "sub_heading": "",
         "rating_score": "4.8",
+        "total_reviews": "1,751",
         "bg_color": "#f4f4f4",
         "show_full_section": false,
         "button_label": "See More",
