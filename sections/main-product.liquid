@@ -1187,7 +1187,7 @@
       </div>
     {%- endif -%}
   </div>
-  
+
                 {%- when 'financing_widget' -%}
                   <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
                     <div class="financing-header">
@@ -2259,14 +2259,26 @@
     },
     {
       "type": "custom_price",
-      "name": "Custom Price Display",
+      "name": "Custom Promo Price",
       "limit": 1,
       "settings": [
         {
           "type": "text",
-          "id": "price_label",
-          "label": "Price Label",
-          "default": "Special Price:"
+          "id": "discount_price",
+          "label": "Discount Price (e.g. $2,798.40)",
+          "default": "$2,798.40"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount Code",
+          "default": "LABOR"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_copy_icon",
+          "label": "Show Copy Icon",
+          "default": true
         }
       ]
     },
