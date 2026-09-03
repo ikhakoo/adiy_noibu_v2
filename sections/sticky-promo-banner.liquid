@@ -1,0 +1,161 @@
+{% comment %}
+  Custom Sticky-to-Normal Promo Banner Section
+{% endcomment %}
+
+<div id="sticky-banner-{{ section.id }}" class="sticky-promo-wrapper">
+  <div class="sticky-promo-content">
+    <div class="sticky-promo-text">
+      {{ section.settings.banner_text }}
+    </div>
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link }}" class="sticky-promo-btn">
+        {{ section.settings.button_label }}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .sticky-promo-wrapper {
+    width: 100%;
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding: 12px 20px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+
+  /* Fixed State (Jab tak section tak view scroll na ho) */
+  .sticky-promo-wrapper.is-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Normal Inline State */
+  .sticky-promo-wrapper.is-static {
+    position: relative;
+    box-shadow: none;
+  }
+
+  .sticky-promo-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+
+  .sticky-promo-text {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .sticky-promo-text p {
+    margin: 0;
+  }
+
+  .sticky-promo-btn {
+    display: inline-block;
+    padding: 6px 16px;
+    background-color: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_text_color }};
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const banner = document.getElementById('sticky-banner-{{ section.id }}');
+    if (!banner) return;
+
+    // Element placeholder create karte hain taake section height jump na kare
+    const placeholder = document.createElement('div');
+    placeholder.style.display = 'none';
+    banner.parentNode.insertBefore(placeholder, banner);
+
+    function handleScroll() {
+      const rect = placeholder.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      // Jab placeholder target threshold tak pohnch jaye
+      if (rect.top <= viewportHeight - banner.offsetHeight) {
+        banner.classList.remove('is-fixed');
+        banner.classList.add('is-static');
+        placeholder.style.display = 'none';
+      } else {
+        banner.classList.add('is-fixed');
+        banner.classList.remove('is-static');
+        placeholder.style.display = 'block';
+        placeholder.style.height = banner.offsetHeight + 'px';
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    handleScroll(); // Initial check
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Sticky Promo Banner",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "banner_text",
+      "label": "Banner Text",
+      "default": "<p>Hansø Labor Day Offers. Up to 35% OFF on Pergolas & Awnings + FREE Gift.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Claim Offer"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#9e7d69"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky Promo Banner"
+    }
+  ]
+}
+{% endschema %}
