@@ -1,12 +1,12 @@
 {% comment %}
-  Hansø Style Ultra-Smooth Sticky Promo Bar with Dynamic Blocks & Countdown
+  Ultra Smooth Sticky-to-Inline Promo Banner with Dynamic Blocks & Countdown
 {% endcomment %}
 
 <div id="sticky-promo-wrapper-{{ section.id }}" class="promo-section-wrapper">
-  <!-- Dynamic Spacer for Layout Jump Prevention -->
+  <!-- Layout jump/jerk fix karne ke liye reserved height -->
   <div id="promo-placeholder-{{ section.id }}" class="promo-placeholder"></div>
 
-  <!-- Actual Promo Bar -->
+  <!-- Actual Sticky Bar -->
   <div id="promo-banner-{{ section.id }}" class="sticky-promo-bar is-fixed">
     <div class="sticky-promo-content">
       {%- for block in section.blocks -%}
@@ -21,219 +21,6 @@
               {% if block.settings.link != blank %}
                 </a>
               {% endif %}
-            </div>
-
-          {%- when 'countdown' -%}
-            <div class="promo-item countdown-item" {{ block.shopify_attributes }}>
-              {% if block.settings.label != blank %}
-                <span class="countdown-label">{{ block.settings.label }}</span>
-              {% endif %}
-              <span id="countdown-timer-{{ section.id }}" class="timer-display" 
-                    data-year="{{ block.settings.year }}"
-                    data-month="{{ block.settings.month }}"
-                    data-day="{{ block.settings.day }}"
-                    data-hour="{{ block.settings.hour }}"
-                    data-minute="{{ block.settings.minute }}">
-                00d : 00h : 00m : 00s
-              </span>
-            </div>
-
-        {%- endcase -%}
-        
-        {%- unless forloop.last -%}
-          <span class="promo-separator">{{ section.settings.separator }}</span>
-        {%- endunless -%}
-      {%- endfor -%}
-    </div>
-  </div>
-</div>
-
-<style>
-  .promo-section-wrapper {
-    width: 100%;
-    position: relative;
-    display: block;
-  }
-
-  .promo-placeholder {
-    width: 100%;
-    display: none;
-    visibility: hidden;
-  }
-
-  /* Base Bar Styling */
-  .sticky-promo-bar {
-    width: 100%;
-    background-color: {{ section.settings.bg_color }};
-    color: {{ section.settings.text_color }};
-    padding: 10px 20px;
-    box-sizing: border-box;
-    will-change: transform, position;
-    z-index: 999999;
-  }
-
-  /* State 1: Sticky at Bottom */
-  .sticky-promo-bar.is-fixed {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.15);
-    transform: translateZ(0); /* GPU acceleration */
-  }
-
-  /* State 2: Inline / Normal Flow */
-  .sticky-promo-bar.is-static {
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    right: auto !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-
-  .sticky-promo-content {
-    max-width: {{ section.settings.max_width }}px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .promo-item {
-    font-size: {{ section.settings.font_size }}px;
-    font-weight: 500;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .promo-link {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .promo-link:hover {
-    text-decoration: underline;
-  }
-
-  .promo-separator {
-    font-weight: 400;
-    opacity: 0.7;
-    font-size: {{ section.settings.font_size }}px;
-  }
-
-  .timer-display {
-    font-variant-numeric: tabular-nums;
-    font-weight: 600;
-  }
-
-  @media screen and (max-width: 749px) {
-    .sticky-promo-bar {
-      padding: 8px 12px;
-    }
-    .promo-item, .promo-separator {
-      font-size: 12px;
-    }
-    .sticky-promo-content {
-      gap: 6px;
-    }
-  }
-</style>
-
-<script>
-  (function() {
-    function initStickyBanner() {
-      const wrapper = document.getElementById('sticky-promo-wrapper-{{ section.id }}');
-      const banner = document.getElementById('promo-banner-{{ section.id }}');
-      const placeholder = document.getElementById('promo-placeholder-{{ section.id }}');
-
-      if (!wrapper || !banner || !placeholder) return;
-
-      let ticking = false;
-
-      // 1. Smooth Scroll Handling Logic
-      function updatePosition() {
-        const wrapperRect = wrapper.getBoundingClientRect();
-        const bannerHeight = banner.offsetHeight;
-        const viewportHeight = window.innerHeight;
-
-        const triggerPoint = viewportHeight - bannerHeight;
-
-        if (wrapperRect.top <= triggerPoint) {
-          if (!banner.classList.contains('is-static')) {
-            banner.classList.remove('is-fixed');
-            banner.classList.add('is-static');
-            placeholder.style.display = 'none';
-          }
-        } else {
-          if (!banner.classList.contains('is-fixed')) {
-            placeholder.style.height = bannerHeight + 'px';
-            placeholder.style.display = 'block';
-            banner.classList.add('is-fixed');
-            banner.classList.remove('is-static');
-          }
-        }
-        ticking = false;
-      }
-
-      function onScroll() {
-        if (!ticking) {
-          window.requestAnimationFrame(updatePosition);
-          ticking = true;
-        }
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', updatePosition);
-      updatePosition();
-
-      // 2. Countdown Timer Logic
-      const timerElement = document.getElementById('countdown-timer-{{ section.id }}');
-      if (timerElement) {
-        const year = parseInt(timerElement.getAttribute('data-year')) || 2026;
-        const month = (parseInt(timerElement.getAttribute('data-month')) || 1) - 1; // JS Months 0-based
-        const day = parseInt(timerElement.getAttribute('data-day')) || 1;
-        const hour = parseInt(timerElement.getAttribute('data-hour')) || 0;
-        const minute = parseInt(timerElement.getAttribute('data-minute')) || 0;
-
-        const targetDate = new Date(year, month, day, hour, minute, 0).getTime();
-
-        function updateTimer() {
-          const now = new Date().getTime();
-          const distance = targetDate - now;
-
-          if (distance < 0) {
-            timerElement.innerHTML = "Ended";
-            return;
-          }
-
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (100Yahan full updated code hai jisme **Blocks support** (flexible items add karne ke liye) aur **Countdown Timer** (Schema date/time inputs ke sath) dono built-in hain:
-
-### `sticky-promo-banner.liquid`
-
-```liquid
-{% comment %}
-  Smooth Sticky-to-Inline Promo Banner with Blocks and Countdown Timer
-{% endcomment %}
-
-<div id="sticky-promo-wrapper-{{ section.id }}" class="promo-section-wrapper">
-  <div id="promo-placeholder-{{ section.id }}" class="promo-placeholder"></div>
-
-  <div id="promo-banner-{{ section.id }}" class="sticky-promo-bar is-fixed">
-    <div class="sticky-promo-content">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          
-          {%- when 'text_item' -%}
-            <div class="promo-item text-item" {{ block.shopify_attributes }}>
-              {{ block.settings.text }}
             </div>
 
           {%- when 'countdown' -%}
@@ -258,87 +45,107 @@
 </div>
 
 <style>
-  .promo-section-wrapper { 
-    width: 100%; 
-    position: relative; 
-    display: block; 
-  }
-  
-  .promo-placeholder { 
-    width: 100%; 
-    display: none; 
-    visibility: hidden; 
+  .promo-section-wrapper {
+    width: 100%;
+    position: relative;
+    display: block;
   }
 
+  .promo-placeholder {
+    width: 100%;
+    display: none;
+    visibility: hidden;
+  }
+
+  /* Base Styles */
   .sticky-promo-bar {
     width: 100%;
     background-color: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
-    padding: 10px 20px;
+    padding: 12px 20px;
     box-sizing: border-box;
     will-change: transform, position;
-    z-index: 999999;
+    transition: background-color 0.3s ease, opacity 0.2s ease-in-out;
   }
 
+  /* State 1: Sticky at Viewport Bottom */
   .sticky-promo-bar.is-fixed {
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    box-shadow: 0 -3px 15px rgba(0,0,0,0.15);
-    transform: translateZ(0);
+    z-index: 999999 !important;
+    box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.12);
+    transform: translateZ(0); /* Hardware Acceleration for smooth render */
   }
 
+  /* State 2: Seamlessly fitted into Normal Flow */
   .sticky-promo-bar.is-static {
     position: relative !important;
     bottom: auto !important;
     left: auto !important;
     right: auto !important;
     box-shadow: none !important;
+    z-index: 2 !important;
     transform: none !important;
   }
 
   .sticky-promo-content {
-    max-width: {{ section.settings.max_width }}px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 15px;
+    text-align: center;
     flex-wrap: wrap;
-    gap: 12px;
-    font-family: inherit;
   }
 
   .promo-item {
-    font-size: {{ section.settings.font_size }}px;
+    font-size: 14px;
     font-weight: 500;
-    white-space: nowrap;
     display: flex;
     align-items: center;
     gap: 6px;
+    white-space: nowrap;
+  }
+
+  .promo-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .promo-link:hover {
+    text-decoration: underline;
   }
 
   .promo-separator {
     font-weight: bold;
     opacity: 0.6;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .timer-display {
     font-variant-numeric: tabular-nums;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   @media screen and (max-width: 749px) {
-    .promo-item { font-size: 12px; }
-    .promo-separator { font-size: 12px; }
-    .sticky-promo-content { gap: 6px; }
+    .sticky-promo-bar {
+      padding: 8px 12px;
+    }
+    .promo-item, .promo-separator {
+      font-size: 12px;
+    }
+    .sticky-promo-content {
+      gap: 8px;
+    }
   }
 </style>
 
 <script>
   (function() {
-    function initStickyBanner() {
+    function initUltraSmoothBanner() {
       const wrapper = document.getElementById('sticky-promo-wrapper-{{ section.id }}');
       const banner = document.getElementById('promo-banner-{{ section.id }}');
       const placeholder = document.getElementById('promo-placeholder-{{ section.id }}');
@@ -347,19 +154,23 @@
 
       let ticking = false;
 
-      // 1. Smooth Scroll Handling
       function updatePosition() {
         const wrapperRect = wrapper.getBoundingClientRect();
         const bannerHeight = banner.offsetHeight;
         const viewportHeight = window.innerHeight;
 
-        if (wrapperRect.top <= (viewportHeight - bannerHeight)) {
+        // Threshold calculate karein
+        const targetScrollTrigger = viewportHeight - bannerHeight;
+
+        if (wrapperRect.top <= targetScrollTrigger) {
+          // Normal position me perfectly attach ho jaye bina jhatke ke
           if (!banner.classList.contains('is-static')) {
             banner.classList.remove('is-fixed');
             banner.classList.add('is-static');
             placeholder.style.display = 'none';
           }
         } else {
+          // Frame sync sticky state
           if (!banner.classList.contains('is-fixed')) {
             placeholder.style.height = bannerHeight + 'px';
             placeholder.style.display = 'block';
@@ -367,21 +178,37 @@
             banner.classList.remove('is-static');
           }
         }
+
         ticking = false;
       }
 
       function onScroll() {
         if (!ticking) {
+          // Browser render cycle ke sath heavy layout recalculation sync karna
           window.requestAnimationFrame(updatePosition);
           ticking = true;
         }
       }
 
+      // Intersection Observer se extra smooth scroll start handle karna
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            updatePosition();
+          });
+        },
+        { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+
+      observer.observe(wrapper);
+
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', updatePosition);
+      
+      // Page load / refresh par calculation Sync
       updatePosition();
 
-      // 2. Countdown Timer Logic
+      // Countdown Timer Functionality
       const timerElement = document.getElementById('countdown-timer-{{ section.id }}');
       if (timerElement) {
         const targetDateStr = timerElement.getAttribute('data-date');
@@ -412,16 +239,16 @@
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initStickyBanner);
+      document.addEventListener('DOMContentLoaded', initUltraSmoothBanner);
     } else {
-      initStickyBanner();
+      initUltraSmoothBanner();
     }
   })();
 </script>
 
 {% schema %}
 {
-  "name": "Sticky Promo Bar",
+  "name": "Smooth Scroll-To Banner",
   "settings": [
     {
       "type": "color",
@@ -434,26 +261,6 @@
       "id": "text_color",
       "label": "Text Color",
       "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "font_size",
-      "min": 10,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Font Size",
-      "default": 14
-    },
-    {
-      "type": "range",
-      "id": "max_width",
-      "min": 800,
-      "max": 1600,
-      "step": 50,
-      "unit": "px",
-      "label": "Container Max Width",
-      "default": 1200
     }
   ],
   "blocks": [
@@ -466,6 +273,11 @@
           "id": "text",
           "label": "Text",
           "default": "Flexible Payment Plans"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (Optional)"
         }
       ]
     },
@@ -497,7 +309,7 @@
   ],
   "presets": [
     {
-      "name": "Sticky Promo Bar",
+      "name": "Smooth Scroll-To Banner",
       "blocks": [
         {
           "type": "text_item",
