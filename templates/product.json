@@ -53,7 +53,7 @@
           "type": "custom_price",
           "settings": {
             "discount_type": "fixed",
-            "discount_price": "1000.00",
+            "discount_price": "1000",
             "discount_code": "LABOR",
             "show_copy_icon": true
           }
