@@ -1159,6 +1159,35 @@
                   </div>
                   {% endcomment %}
 
+                {%- when 'custom_price' -%}
+  <div id="custom-price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price custom-price-block">
+    {%- render 'price',
+      product: product,
+      use_variant: true,
+      show_badges: true,
+      price_class: 'price--large'
+    -%}
+    
+    {%- if block.settings.discount_price != blank -%}
+      <div class="custom-discount-line" style="margin-top: 8px; font-size: 16px; color: #555; display: flex; align-items: center; gap: 6px;">
+        <span>or</span>
+        <span class="discount-amount" style="color: #ff6b6b; font-weight: bold;">
+          {{ block.settings.discount_price }}
+        </span>
+        <span>with code</span>
+        <strong class="discount-code" style="color: #333; text-transform: uppercase;">
+          {{ block.settings.discount_code }}
+        </strong>
+        {%- if block.settings.show_copy_icon -%}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy" style="cursor: pointer; opacity: 0.7;">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+  
                 {%- when 'financing_widget' -%}
                   <div class="financing-widget-block is-collapsed" {{ block.shopify_attributes }}>
                     <div class="financing-header">
@@ -2229,18 +2258,18 @@
       "limit": 1
     },
     {
-  "type": "custom_price",
-  "name": "Custom Price Display",
-  "limit": 1,
-  "settings": [
-    {
-      "type": "text",
-      "id": "price_label",
-      "label": "Price Label",
-      "default": "Special Price:"
-    }
-  ]
-},
+      "type": "custom_price",
+      "name": "Custom Price Display",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "price_label",
+          "label": "Price Label",
+          "default": "Special Price:"
+        }
+      ]
+    },
     {
       "type": "sku",
       "name": "t:sections.main-product.blocks.sku.name",
