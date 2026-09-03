@@ -868,6 +868,11 @@
       font-family: inherit;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+    .count-down-title{
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+    }
        
     
     @media screen and (max-width:628px){
@@ -920,6 +925,9 @@
       .custom-countdown-banner{
         flex-direction: column;
         gap: 0;
+      }
+      .count-down-title{
+        font-size: 16px;
       }
     }
 
@@ -1300,7 +1308,7 @@
                       <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; color: {{ block.settings.bg_color }}; border-radius: 50%; width: 26px; height: 26px; font-weight: bold; font-size: 13px;">
                         %
                       </span>
-                      <span style="font-weight: 400; font-size: 14px; letter-spacing: 0.2px;">
+                      <span class="count-down-title" style="font-weight: 400; font-size: 14px; letter-spacing: 0.2px;">
                         {{ block.settings.heading }}
                       </span>
                     </div>
