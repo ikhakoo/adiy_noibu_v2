@@ -1185,117 +1185,174 @@
                   {% endcomment %}
 
                 {%- when 'custom_price' -%}
-                  {%- liquid
-                    assign current_variant = product.selected_or_first_available_variant
-                    assign original_price = current_variant.price
+  {%- liquid
+    assign current_variant = product.selected_or_first_available_variant
+    assign original_price = current_variant.price
 
-                    # Clean input: Remove $, commas, spaces
-                    assign raw_discount = block.settings.discount_price | remove: '$' | remove: ',' | strip
+    # Clean input: Remove $, commas, spaces
+    assign raw_discount = block.settings.discount_price | remove: '$' | remove: ',' | strip
 
-                    if block.settings.discount_type == 'percentage'
-                      assign discount_num = raw_discount | times: 1.0
-                      assign discount_amount = original_price | times: discount_num | divided_by: 100
-                    else
-                      # Fixed dollar amount subtract logic
-                      assign discount_num = raw_discount | times: 100
-                      assign discount_amount = discount_num
-                    endif
+    if block.settings.discount_type == 'percentage'
+      assign discount_num = raw_discount | times: 1.0
+      assign discount_amount = original_price | times: discount_num | divided_by: 100
+    else
+      assign discount_num = raw_discount | times: 100
+      assign discount_amount = discount_num
+    endif
 
-                    assign final_discounted_price = original_price | minus: discount_amount
-                  -%}
+    assign final_discounted_price = original_price | minus: discount_amount
+  -%}
 
-                  <div id="custom-price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price custom-price-block">
-                    
-                    {% comment %} Top Main Price + Comp Value Label {% endcomment %}
-                    <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
-                      <div class="price-wrapper">
-                        {%- render 'price',
-                          product: product,
-                          use_variant: true,
-                          show_badges: true,
-                          price_class: 'price--large'
-                        -%}
-                      </div>
-                      <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
-                        Comp Value 
-                      </span>
-                    </div>
+  <div 
+    id="custom-price-{{ section.id }}" 
+    role="status" 
+    {{ block.shopify_attributes }} 
+    class="product-price custom-price-block"
+    data-discount-type="{{ block.settings.discount_type }}"
+    data-discount-val="{{ raw_discount }}"
+  >
+    
+    {% comment %} Top Main Price + Comp Value Label {% endcomment %}
+    <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
+      <div class="price-wrapper">
+        {%- render 'price',
+          product: product,
+          use_variant: true,
+          show_badges: true,
+          price_class: 'price--large'
+        -%}
+      </div>
+      <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
+        Comp Value 
+      </span>
+    </div>
 
-                    {% comment %} Bottom Promo Discounted Row {% endcomment %}
-                    {%- if raw_discount != blank -%}
-                      <div class="custom-discount-line" style="margin-top: 0; font-size: 16px; color: #555; display: flex; align-items: end; gap: 6px;">
-                        <span>or</span>
-                        <span class="discount-amount" style="color: #ff6b6b; font-size: 20px;">
-                          {{ final_discounted_price | money }}
-                        </span>
-                        {%- if block.settings.discount_code != blank -%}
-                          <span>with code</span>
-                          <strong class="discount-code" style="color: #333; text-transform: uppercase; font-weight: 400;">
-                            {{ block.settings.discount_code }}
-                          </strong>
-                        {%- endif -%}
+    {% comment %} Bottom Promo Discounted Row {% endcomment %}
+    {%- if raw_discount != blank -%}
+      <div class="custom-discount-line" style="margin-top: 0; font-size: 16px; color: #555; display: flex; align-items: end; gap: 6px;">
+        <span>or</span>
+        <span class="discount-amount" style="color: #ff6b6b; font-size: 20px;">
+          {{ final_discounted_price | money }}
+        </span>
+        {%- if block.settings.discount_code != blank -%}
+          <span>with code</span>
+          <strong class="discount-code" style="color: #333; text-transform: uppercase; font-weight: 400;">
+            {{ block.settings.discount_code }}
+          </strong>
+        {%- endif -%}
 
-                        {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
-                          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center; margin-bottom: 9px;">
-                            <button 
-                              type="button" 
-                              class="js-copy-promo-btn" 
-                              data-code="{{ block.settings.discount_code }}"
-                              title="Copy Code" 
-                              style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                              </svg>
-                            </button>
-                            <span class="copy-tooltip" style="display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;">
-                              Copied!
-                            </span>
-                          </div>
-                        {%- endif -%}
-                      </div>
-                    {%- endif -%}
+        {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
+          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center; margin-bottom: 9px;">
+            <button 
+              type="button" 
+              class="js-copy-promo-btn" 
+              data-code="{{ block.settings.discount_code }}"
+              title="Copy Code" 
+              style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+            <span class="copy-tooltip" style="display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;">
+              Copied!
+            </span>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
-                  </div>
+  </div>
 
-                  <script>
-                    (function() {
-                      // Isolated Scope - Doesn't affect global window
-                      const container = document.getElementById('custom-price-{{ section.id }}');
-                      if (!container) return;
+  <script>
+    (function() {
+      const container = document.getElementById('custom-price-{{ section.id }}');
+      if (!container) return;
 
-                      const copyBtn = container.querySelector('.js-copy-promo-btn');
-                      if (!copyBtn) return;
+      // Copy Button functionality
+      const copyBtn = container.querySelector('.js-copy-promo-btn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const codeText = this.getAttribute('data-code');
+          const tooltip = this.nextElementSibling;
 
-                      copyBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const codeText = this.getAttribute('data-code');
-                        const tooltip = this.nextElementSibling;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
+          } else {
+            const tempInput = document.createElement('input');
+            tempInput.value = codeText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showTooltip(tooltip);
+          }
+        });
+      }
 
-                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                          navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
-                        } else {
-                          const tempInput = document.createElement('input');
-                          tempInput.value = codeText;
-                          document.body.appendChild(tempInput);
-                          tempInput.select();
-                          document.execCommand('copy');
-                          document.body.removeChild(tempInput);
-                          showTooltip(tooltip);
-                        }
-                      });
+      function showTooltip(tooltip) {
+        if (tooltip) {
+          tooltip.style.display = 'block';
+          setTimeout(() => { tooltip.style.display = 'none'; }, 1500);
+        }
+      }
 
-                      function showTooltip(tooltip) {
-                        if (tooltip) {
-                          tooltip.style.display = 'block';
-                          setTimeout(() => {
-                            tooltip.style.display = 'none';
-                          }, 1500);
-                        }
-                      }
-                    })();
-                  </script>
+      // Format Money Helper Function
+      function formatMoney(cents) {
+        return (cents / 100).toLocaleString(undefined, {
+          style: 'currency',
+          currency: Shopify.currency.active || 'USD'
+        });
+      }
+
+      // Dynamic Price Update on Variant Change Function
+      function updateCustomPrice(variant) {
+        if (!variant) return;
+
+        const discountType = container.getAttribute('data-discount-type');
+        const discountVal = parseFloat(container.getAttribute('data-discount-val')) || 0;
+        const discountAmountElem = container.querySelector('.discount-amount');
+
+        if (!discountAmountElem) return;
+
+        let originalPrice = variant.price; // Price in cents
+        let finalPrice = originalPrice;
+
+        if (discountType === 'percentage') {
+          let discountAmount = originalPrice * (discountVal / 100);
+          finalPrice = originalPrice - discountAmount;
+        } else {
+          let discountAmount = discountVal * 100; // Convert dollar to cents
+          finalPrice = originalPrice - discountAmount;
+        }
+
+        if (finalPrice < 0) finalPrice = 0;
+
+        discountAmountElem.textContent = formatMoney(finalPrice);
+      }
+
+      // Listen for Dawn / Standard Shopify Variant Change Events
+      document.addEventListener('variant:change', function(e) {
+        if (e.detail && e.detail.variant) {
+          updateCustomPrice(e.detail.variant);
+        }
+      });
+
+      // Dawn Theme Specific custom element listener
+      const variantSelects = document.querySelector('variant-selects, variant-radios');
+      if (variantSelects) {
+        variantSelects.addEventListener('change', function() {
+          setTimeout(() => {
+            if (window.Shopify && Shopify.analytics && Shopify.analytics.meta && Shopify.analytics.meta.selectedVariantId) {
+              // Fetch updated price if available
+            }
+          }, 100);
+        });
+      }
+    })();
+  </script>
                 {%- when 'countdown_timer' -%}
                   <div 
                     id="countdown-block-{{ section.id }}-{{ block.id }}" 
