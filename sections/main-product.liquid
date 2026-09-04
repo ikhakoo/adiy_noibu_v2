@@ -1330,97 +1330,127 @@
   </style>
 
   <script>
-    if (typeof copyPromoCode !== 'function') {
-      function copyPromoCode(element, code) {
-        navigator.clipboard.writeText(code).then(function() {
-          element.classList.add('copied');
-          const copyIcon = element.querySelector('.copy-icon');
-          const checkIcon = element.querySelector('.check-icon');
-          
-          if (copyIcon && checkIcon) {
-            copyIcon.style.display = 'none';
-            checkIcon.style.display = 'block';
-          }
+  if (typeof copyPromoCode !== 'function') {
+    function copyPromoCode(element, code) {
+      navigator.clipboard.writeText(code).then(function() {
+        element.classList.add('copied');
+        const copyIcon = element.querySelector('.copy-icon');
+        const checkIcon = element.querySelector('.check-icon');
+        
+        if (copyIcon && checkIcon) {
+          copyIcon.style.display = 'none';
+          checkIcon.style.display = 'block';
+        }
 
-          setTimeout(function() {
-            element.classList.remove('copied');
-            if (copyIcon && checkIcon) {
-              copyIcon.style.display = 'block';
-              checkIcon.style.display = 'none';
-            }
-          }, 1800);
-        });
+        setTimeout(function() {
+          element.classList.remove('copied');
+          if (copyIcon && checkIcon) {
+            copyIcon.style.display = 'block';
+            checkIcon.style.display = 'none';
+          }
+        }, 1800);
+      });
+    }
+  }
+
+  (function() {
+    function initVariantDiscountListener() {
+      const promoBlock = document.getElementById('DiscountPromo-{{ section.id }}');
+      if (!promoBlock) return;
+
+      const jsonScript = promoBlock.querySelector('.variant-discounts-json');
+      if (!jsonScript) return;
+
+      let variantData = {};
+      try {
+        variantData = JSON.parse(jsonScript.textContent);
+      } catch(e) {
+        console.error('Error parsing variant discounts JSON:', e);
+        return;
       }
+
+      function formatMoney(cents) {
+        return window.Shopify && Shopify.formatMoney 
+          ? Shopify.formatMoney(cents) 
+          : '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function updateDiscountBanner(variantId) {
+        const innerContent = promoBlock.querySelector('.promo-inner-content');
+        const priceDisplay = promoBlock.querySelector('#DiscountedPrice-{{ section.id }}');
+        
+        if (!variantId || !variantData[variantId]) {
+          if (innerContent) innerContent.style.display = 'none';
+          return;
+        }
+
+        const item = variantData[variantId];
+        const discountVal = parseFloat(item.discount) || 0;
+
+        if (discountVal <= 0) {
+          if (innerContent) innerContent.style.display = 'none';
+        } else {
+          const discountInCents = discountVal * 100;
+          const newFinalPrice = Math.max(0, item.price - discountInCents);
+          
+          if (priceDisplay) {
+            priceDisplay.textContent = formatMoney(newFinalPrice);
+          }
+          if (innerContent) {
+            innerContent.style.display = 'inline-flex';
+          }
+        }
+      }
+
+      // Helper to get active variant ID from DOM inputs or URL
+      function getCurrentVariantId() {
+        // Method 1: Check hidden variant ID input (Standard Shopify forms)
+        const idInput = document.querySelector('form[action*="/cart/add"] input[name="id"]');
+        if (idInput && idInput.value) return idInput.value;
+
+        // Method 2: Check URL query param
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('variant');
+      }
+
+      // 1. Listen to standard Shopify variant:change event
+      document.addEventListener('variant:change', function(evt) {
+        if (evt.detail && evt.detail.variant) {
+          updateDiscountBanner(evt.detail.variant.id);
+        }
+      });
+
+      // 2. Direct listener on all variant inputs / dropdowns
+      const variantInputs = document.querySelectorAll('variant-selects, variant-radios, select[name="id"], input[name="id"]');
+      variantInputs.forEach(input => {
+        input.addEventListener('change', function() {
+          setTimeout(() => {
+            updateDiscountBanner(getCurrentVariantId());
+          }, 50);
+        });
+      });
+
+      // 3. Fallback: URL Mutation Observer (Detects AJAX variant switching instantly)
+      let lastUrl = location.href;
+      const observer = new MutationObserver(() => {
+        if (location.href !== lastUrl) {
+          lastUrl = location.href;
+          updateDiscountBanner(getCurrentVariantId());
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Initial check on load
+      updateDiscountBanner(getCurrentVariantId());
     }
 
-    (function() {
-      function initVariantDiscountListener() {
-        const promoBlock = document.getElementById('DiscountPromo-{{ section.id }}');
-        if (!promoBlock) return;
-
-        const jsonScript = promoBlock.querySelector('.variant-discounts-json');
-        if (!jsonScript) return;
-
-        const variantData = JSON.parse(jsonScript.textContent);
-
-        function formatMoney(cents) {
-          return window.Shopify && Shopify.formatMoney 
-            ? Shopify.formatMoney(cents) 
-            : '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-
-        function updateDiscountBanner(variantId) {
-          const innerContent = promoBlock.querySelector('.promo-inner-content');
-          const priceDisplay = promoBlock.querySelector('#DiscountedPrice-{{ section.id }}');
-          
-          if (!variantData[variantId]) {
-            if (innerContent) innerContent.style.display = 'none';
-            return;
-          }
-
-          const item = variantData[variantId];
-          const discountVal = parseFloat(item.discount) || 0;
-
-          if (discountVal <= 0) {
-            if (innerContent) innerContent.style.display = 'none';
-          } else {
-            const discountInCents = discountVal * 100;
-            const newFinalPrice = Math.max(0, item.price - discountInCents);
-            
-            if (priceDisplay) {
-              priceDisplay.textContent = formatMoney(newFinalPrice);
-            }
-            if (innerContent) {
-              innerContent.style.display = 'inline-flex';
-            }
-          }
-        }
-
-        document.addEventListener('variant:change', function(evt) {
-          if (evt.detail && evt.detail.variant) {
-            updateDiscountBanner(evt.detail.variant.id);
-          }
-        });
-
-        const variantSelectors = document.querySelectorAll('variant-selects, variant-radios');
-        variantSelectors.forEach(selector => {
-          selector.addEventListener('change', function() {
-            setTimeout(() => {
-              const urlParams = new URLSearchParams(window.location.search);
-              const variantId = urlParams.get('variant');
-              if (variantId) updateDiscountBanner(variantId);
-            }, 100);
-          });
-        });
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initVariantDiscountListener);
-      } else {
-        initVariantDiscountListener();
-      }
-    })();
-  </script>
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initVariantDiscountListener);
+    } else {
+      initVariantDiscountListener();
+    }
+  })();
+</script>
 
 
                 {%- when 'countdown_timer' -%}
@@ -2587,8 +2617,7 @@
       "type": "text",
       "id": "promo_code",
       "label": "Default Coupon Code",
-      "default": "LABOR",
-      "info": "Metafield key override: product.metafields.custom.promo_code"
+      "default": "LABOR"
     }
   ]
 },
