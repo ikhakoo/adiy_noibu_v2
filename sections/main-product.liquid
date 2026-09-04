@@ -1211,11 +1211,14 @@
     data-discount-type="{{ block.settings.discount_type }}"
     data-discount-val="{{ raw_discount }}"
   >
+    
     {% comment %} Top Main Price + Comp Value Label {% endcomment %}
     <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
       
-      {% comment %} Main Comp Value Render Target {% endcomment %}
-      <div class="price-wrapper comp-price-target" id="price-{{ section.id }}">
+      {% comment %} 
+        CRITICAL FIX: Standard ID added so Dawn's variant script updates this inner price HTML automatically
+      {% endcomment %}
+      <div class="price-wrapper" id="price-{{ section.id }}">
         {%- render 'price',
           product: product,
           use_variant: true,
@@ -1269,86 +1272,104 @@
 
   <script>
     (function() {
-      function runPriceUpdateLogic() {
-        const customBlock = document.getElementById('custom-price-{{ section.id }}');
-        if (!customBlock) return;
-
-        // 1. Find the main active product price on page (e.g. $6,300.00 in your screenshot)
-        let mainPriceElem = document.querySelector('.product__info-container .price .price-item--regular, .product__info-container .price .price-item--sale');
+      // Global Recalculate Logic Function
+      window.updateCustomPromoPrice = function() {
+        const containers = document.querySelectorAll('.custom-price-block');
         
-        // Fallback inside custom block if global not found
-        if (!mainPriceElem) {
-          mainPriceElem = customBlock.querySelector('.price-item--regular, .price-item--sale');
-        }
+        containers.forEach(container => {
+          // Dawn updates inner #price-{{ section.id }}
+          const mainPriceElem = container.querySelector('.price-item--sale, .price-item--regular');
+          const discountAmountElem = container.querySelector('.discount-amount');
 
-        const promoDiscountElem = customBlock.querySelector('.discount-amount');
-        if (!mainPriceElem || !promoDiscountElem) return;
+          if (!mainPriceElem || !discountAmountElem) return;
 
-        // Extract raw price string (e.g. "$6,300.00")
-        const rawText = mainPriceElem.textContent.trim();
-        
-        // Clean non-numeric except decimal dots
-        // Converts "$6,300.00" -> "6300.00"
-        let cleanNumberStr = rawText.replace(/[^0-9.]/g, '');
+          // Extract current rendered numeric price from DOM
+          const rawText = mainPriceElem.textContent.trim();
+          
+          // Match digits and decimal parts
+          const numericMatches = rawText.match(/[\d.,]+/);
+          if (!numericMatches) return;
 
-        // If string has multiple dots or commas used as decimal separator
-        if ((rawText.match(/,/g) || []).length === 1 && !rawText.includes('.')) {
-          cleanNumberStr = rawText.replace(/[^0-9,]/g, '').replace(',', '.');
-        }
+          let cleanedPrice = numericMatches[0];
+          
+          // Handle standard currency formatting (commas vs dots)
+          if (cleanedPrice.includes(',') && cleanedPrice.includes('.')) {
+            cleanedPrice = cleanedPrice.replace(/,/g, '');
+          } else if (cleanedPrice.includes(',') && !cleanedPrice.includes('.')) {
+            cleanedPrice = cleanedPrice.replace(',', '.');
+          }
 
-        const basePrice = parseFloat(cleanNumberStr);
-        if (isNaN(basePrice) || basePrice <= 0) return;
+          const currentPrice = parseFloat(cleanedPrice);
+          if (isNaN(currentPrice)) return;
 
-        // Get settings
-        const discountType = customBlock.getAttribute('data-discount-type');
-        const discountVal = parseFloat(customBlock.getAttribute('data-discount-val')) || 0;
+          const discountType = container.getAttribute('data-discount-type');
+          const discountVal = parseFloat(container.getAttribute('data-discount-val')) || 0;
 
-        let finalPromoPrice = basePrice;
-        if (discountType === 'percentage') {
-          finalPromoPrice = basePrice - (basePrice * (discountVal / 100));
-        } else {
-          finalPromoPrice = basePrice - discountVal;
-        }
+          let finalPrice = currentPrice;
+          if (discountType === 'percentage') {
+            finalPrice = currentPrice - (currentPrice * (discountVal / 100));
+          } else {
+            finalPrice = currentPrice - discountVal;
+          }
 
-        if (finalPromoPrice < 0) finalPromoPrice = 0;
+          if (finalPrice < 0) finalPrice = 0;
 
-        // Get currency symbol (Default $)
-        const symbolMatch = rawText.match(/[$€£₹]/);
-        const symbol = symbolMatch ? symbolMatch[0] : '$';
+          // Extract currency symbol ($ / € / £ etc)
+          const symbolMatch = rawText.match(/[^\d.,\s]+/);
+          const currencySymbol = symbolMatch ? symbolMatch[0] : '$';
 
-        // Format back with commas e.g., $5,500.00
-        const formattedFinal = symbol + finalPromoPrice.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
+          discountAmountElem.textContent = currencySymbol + finalPrice.toFixed(2);
         });
+      };
 
-        // Update Promo Discount Price Line
-        promoDiscountElem.textContent = formattedFinal;
+      // Handle Copy Button Click Event via Delegation
+      document.addEventListener('click', function(e) {
+        const copyBtn = e.target.closest('.js-copy-promo-btn');
+        if (!copyBtn) return;
+
+        e.preventDefault();
+        const codeText = copyBtn.getAttribute('data-code');
+        const tooltip = copyBtn.nextElementSibling;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
+        } else {
+          const tempInput = document.createElement('input');
+          tempInput.value = codeText;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempInput);
+          showTooltip(tooltip);
+        }
+      });
+
+      function showTooltip(tooltip) {
+        if (tooltip) {
+          tooltip.style.display = 'block';
+          setTimeout(() => { tooltip.style.display = 'none'; }, 1500);
+        }
       }
 
-      // Live mutation observer on Product Info Section
-      const productInfo = document.querySelector('.product__info-container') || document.body;
-      const observer = new MutationObserver(function() {
-        runPriceUpdateLogic();
-      });
+      // Intercept Dawn's native fetch response when variant changes
+      const originalFetch = window.fetch;
+      window.fetch = function() {
+        return originalFetch.apply(this, arguments).then(response => {
+          if (response.url && (response.url.includes('variant=') || response.url.includes('section_id='))) {
+            setTimeout(window.updateCustomPromoPrice, 50);
+            setTimeout(window.updateCustomPromoPrice, 200);
+          }
+          return response;
+        });
+      };
 
-      observer.observe(productInfo, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
-
-      // Event listener for variant change
-      document.addEventListener('variant:change', runPriceUpdateLogic);
+      // Backup Observer: Trigger on variant option click or select change
       document.addEventListener('change', function(e) {
         if (e.target.closest('variant-selects, variant-radios, .no-js-hidden')) {
-          setTimeout(runPriceUpdateLogic, 50);
-          setTimeout(runPriceUpdateLogic, 200);
+          setTimeout(window.updateCustomPromoPrice, 100);
+          setTimeout(window.updateCustomPromoPrice, 300);
         }
       });
-
-      // Initial execution
-      runPriceUpdateLogic();
     })();
   </script>
                 {%- when 'countdown_timer' -%}
