@@ -1214,7 +1214,11 @@
     
     {% comment %} Top Main Price + Comp Value Label {% endcomment %}
     <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
-      <div class="price-wrapper">
+      
+      {% comment %} 
+        CRITICAL FIX: Standard ID added so Dawn's variant script updates this inner price HTML automatically
+      {% endcomment %}
+      <div class="price-wrapper" id="price-{{ section.id }}">
         {%- render 'price',
           product: product,
           use_variant: true,
@@ -1222,6 +1226,7 @@
           price_class: 'price--large'
         -%}
       </div>
+
       <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
         Comp Value 
       </span>
@@ -1267,55 +1272,27 @@
 
   <script>
     (function() {
-      const containerId = 'custom-price-{{ section.id }}';
-
-      function initCustomPriceLogic() {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        // Copy Button Handler
-        const copyBtn = container.querySelector('.js-copy-promo-btn');
-        if (copyBtn && !copyBtn.dataset.bound) {
-          copyBtn.dataset.bound = "true";
-          copyBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const codeText = this.getAttribute('data-code');
-            const tooltip = this.nextElementSibling;
-
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-              navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
-            } else {
-              const tempInput = document.createElement('input');
-              tempInput.value = codeText;
-              document.body.appendChild(tempInput);
-              tempInput.select();
-              document.execCommand('copy');
-              document.body.removeChild(tempInput);
-              showTooltip(tooltip);
-            }
-          });
-        }
-
-        function showTooltip(tooltip) {
-          if (tooltip) {
-            tooltip.style.display = 'block';
-            setTimeout(() => { tooltip.style.display = 'none'; }, 1500);
-          }
-        }
-
-        // Price recalculation based on updated rendered DOM
-        function recalculateDiscount() {
-          const mainPriceElem = container.querySelector('.price-item--regular, .price-item--sale');
+      // Global Recalculate Logic Function
+      window.updateCustomPromoPrice = function() {
+        const containers = document.querySelectorAll('.custom-price-block');
+        
+        containers.forEach(container => {
+          // Dawn updates inner #price-{{ section.id }}
+          const mainPriceElem = container.querySelector('.price-item--sale, .price-item--regular');
           const discountAmountElem = container.querySelector('.discount-amount');
-          
+
           if (!mainPriceElem || !discountAmountElem) return;
 
-          // Extract digits and decimals from the updated main price element
-          const priceText = mainPriceElem.textContent.replace(/[^0-9.,]/g, '');
-          if (!priceText) return;
+          // Extract current rendered numeric price from DOM
+          const rawText = mainPriceElem.textContent.trim();
+          
+          // Match digits and decimal parts
+          const numericMatches = rawText.match(/[\d.,]+/);
+          if (!numericMatches) return;
 
-          // Parse float safely handling comma/dot
-          let cleanedPrice = priceText;
+          let cleanedPrice = numericMatches[0];
+          
+          // Handle standard currency formatting (commas vs dots)
           if (cleanedPrice.includes(',') && cleanedPrice.includes('.')) {
             cleanedPrice = cleanedPrice.replace(/,/g, '');
           } else if (cleanedPrice.includes(',') && !cleanedPrice.includes('.')) {
@@ -1337,37 +1314,62 @@
 
           if (finalPrice < 0) finalPrice = 0;
 
-          // Format output matching original currency symbol
-          const symbolMatch = mainPriceElem.textContent.match(/[^0-9.,\s]+/);
-          const symbol = symbolMatch ? symbolMatch[0] : '$';
-          
-          discountAmountElem.textContent = symbol + finalPrice.toFixed(2);
-        }
+          // Extract currency symbol ($ / € / £ etc)
+          const symbolMatch = rawText.match(/[^\d.,\s]+/);
+          const currencySymbol = symbolMatch ? symbolMatch[0] : '$';
 
-        // Dynamic DOM mutation observer (Triggers immediately when Dawn updates HTML price via AJAX)
-        const priceWrapper = container.querySelector('.price-wrapper');
-        if (priceWrapper && !priceWrapper.dataset.observed) {
-          priceWrapper.dataset.observed = "true";
-          const observer = new MutationObserver(function() {
-            recalculateDiscount();
-          });
-          observer.observe(priceWrapper, { childList: true, subtree: true, characterData: true });
-        }
-
-        // Global fallback event listeners for variant pickers
-        document.addEventListener('change', function(e) {
-          if (e.target.matches('variant-selects input, variant-selects select, variant-radios input')) {
-            setTimeout(recalculateDiscount, 100);
-            setTimeout(recalculateDiscount, 300);
-          }
+          discountAmountElem.textContent = currencySymbol + finalPrice.toFixed(2);
         });
+      };
+
+      // Handle Copy Button Click Event via Delegation
+      document.addEventListener('click', function(e) {
+        const copyBtn = e.target.closest('.js-copy-promo-btn');
+        if (!copyBtn) return;
+
+        e.preventDefault();
+        const codeText = copyBtn.getAttribute('data-code');
+        const tooltip = copyBtn.nextElementSibling;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
+        } else {
+          const tempInput = document.createElement('input');
+          tempInput.value = codeText;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempInput);
+          showTooltip(tooltip);
+        }
+      });
+
+      function showTooltip(tooltip) {
+        if (tooltip) {
+          tooltip.style.display = 'block';
+          setTimeout(() => { tooltip.style.display = 'none'; }, 1500);
+        }
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCustomPriceLogic);
-      } else {
-        initCustomPriceLogic();
-      }
+      // Intercept Dawn's native fetch response when variant changes
+      const originalFetch = window.fetch;
+      window.fetch = function() {
+        return originalFetch.apply(this, arguments).then(response => {
+          if (response.url && (response.url.includes('variant=') || response.url.includes('section_id='))) {
+            setTimeout(window.updateCustomPromoPrice, 50);
+            setTimeout(window.updateCustomPromoPrice, 200);
+          }
+          return response;
+        });
+      };
+
+      // Backup Observer: Trigger on variant option click or select change
+      document.addEventListener('change', function(e) {
+        if (e.target.closest('variant-selects, variant-radios, .no-js-hidden')) {
+          setTimeout(window.updateCustomPromoPrice, 100);
+          setTimeout(window.updateCustomPromoPrice, 300);
+        }
+      });
     })();
   </script>
                 {%- when 'countdown_timer' -%}
