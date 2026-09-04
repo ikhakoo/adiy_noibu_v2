@@ -48,13 +48,13 @@
           "type": "price",
           "settings": {}
         },
-        "custom_price_cWJ7Ft": {
-          "type": "custom_price",
+        "discount_promo_YW9Hge": {
+          "type": "discount_promo",
           "settings": {
-            "discount_type": "fixed",
-            "discount_price": "1000",
-            "discount_code": "LABOR",
-            "show_copy_icon": true
+            "prefix_text": "or",
+            "middle_text": "with code",
+            "promo_code": "LABOR",
+            "discount_amount": 1000
           }
         },
         "financing_widget_jbeqY8": {
@@ -239,7 +239,7 @@
         "title",
         "text_ifcgmB",
         "price",
-        "custom_price_cWJ7Ft",
+        "discount_promo_YW9Hge",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
         "material_switcher_EDGrz6",
