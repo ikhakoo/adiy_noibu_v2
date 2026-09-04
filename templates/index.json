@@ -98,6 +98,7 @@
         },
         "text_item_7CfqcJ": {
           "type": "text_item",
+          "disabled": true,
           "settings": {
             "text": "Use Code: LABOR",
             "link": ""
@@ -105,6 +106,7 @@
         },
         "text_item_VqJKwr": {
           "type": "text_item",
+          "disabled": true,
           "settings": {
             "text": "Up to $1,000 OFF + Free Shipping",
             "link": ""
