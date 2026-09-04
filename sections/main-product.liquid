@@ -1187,8 +1187,8 @@
                 {%- when 'discount_promo' -%}
   {%- liquid
     assign promo_code = block.settings.promo_code
-    if product.metafields.custom.discount_value != blank
-      assign promo_code = product.metafields.custom.discount_value.value | default: product.metafields.custom.discount_value
+    if product.metafields.custom.promo_code != blank
+      assign promo_code = product.metafields.custom.promo_code.value | default: product.metafields.custom.promo_code
     endif
   -%}
 
@@ -1196,21 +1196,14 @@
     class="discount-promo-block" 
     id="DiscountPromo-{{ section.id }}" 
     data-section-id="{{ section.id }}"
-    data-default-discount="{{ block.settings.discount_amount }}"
     {{ block.shopify_attributes }}
   >
-    {%- comment -%} Store variant-level discount metadata for JavaScript lookup {%- endcomment -%}
+    {%- comment -%} Store variant-level discount metadata (variant.metafields.custom.discount_value) {%- endcomment -%}
     <script type="application/json" class="variant-discounts-json">
       {
         {%- for variant in product.variants -%}
           {%- liquid
-            assign v_discount = variant.metafields.custom.discount_amount.value | default: variant.metafields.custom.discount_amount
-            if v_discount == blank
-              assign v_discount = product.metafields.custom.discount_amount.value | default: product.metafields.custom.discount_amount
-            endif
-            if v_discount == blank
-              assign v_discount = block.settings.discount_amount
-            endif
+            assign v_discount = variant.metafields.custom.discount_value.value | default: variant.metafields.custom.discount_value
           -%}
           "{{ variant.id }}": {
             "price": {{ variant.price }},
@@ -1222,14 +1215,7 @@
 
     {%- liquid
       assign current_variant = product.selected_or_first_available_variant
-      assign current_discount = current_variant.metafields.custom.discount_amount.value | default: current_variant.metafields.custom.discount_amount
-      if current_discount == blank
-        assign current_discount = product.metafields.custom.discount_amount.value | default: product.metafields.custom.discount_amount
-      endif
-      if current_discount == blank
-        assign current_discount = block.settings.discount_amount
-      endif
-
+      assign current_discount = current_variant.metafields.custom.discount_value.value | default: current_variant.metafields.custom.discount_value
       assign current_discount_num = current_discount | plus: 0
     -%}
 
@@ -1367,7 +1353,6 @@
       }
     }
 
-    // Dynamic Price Update on Variant Change Listener
     (function() {
       function initVariantDiscountListener() {
         const promoBlock = document.getElementById('DiscountPromo-{{ section.id }}');
@@ -1379,9 +1364,9 @@
         const variantData = JSON.parse(jsonScript.textContent);
 
         function formatMoney(cents) {
-          return Shopify && Shopify.formatMoney 
+          return window.Shopify && Shopify.formatMoney 
             ? Shopify.formatMoney(cents) 
-            : '$' + (cents / 100).toFixed(2);
+            : '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
         function updateDiscountBanner(variantId) {
@@ -1397,10 +1382,8 @@
           const discountVal = parseFloat(item.discount) || 0;
 
           if (discountVal <= 0) {
-            // Hide whole line if variant has NO discount metafield or schema discount
             if (innerContent) innerContent.style.display = 'none';
           } else {
-            // Calculate new variant discounted price
             const discountInCents = discountVal * 100;
             const newFinalPrice = Math.max(0, item.price - discountInCents);
             
@@ -1413,14 +1396,12 @@
           }
         }
 
-        // Listen for standard Shopify variant change events
         document.addEventListener('variant:change', function(evt) {
           if (evt.detail && evt.detail.variant) {
             updateDiscountBanner(evt.detail.variant.id);
           }
         });
 
-        // Dawn theme variant change support
         const variantSelectors = document.querySelectorAll('variant-selects, variant-radios');
         variantSelectors.forEach(selector => {
           selector.addEventListener('change', function() {
