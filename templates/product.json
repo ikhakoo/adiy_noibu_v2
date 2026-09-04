@@ -46,7 +46,6 @@
         },
         "price": {
           "type": "price",
-          "disabled": true,
           "settings": {}
         },
         "custom_price_cWJ7Ft": {
