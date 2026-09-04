@@ -53,8 +53,7 @@
           "settings": {
             "prefix_text": "or",
             "middle_text": "with code",
-            "promo_code": "LABOR",
-            "discount_amount": 1000
+            "promo_code": "LABOR"
           }
         },
         "financing_widget_jbeqY8": {
@@ -131,7 +130,7 @@
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
           "settings": {
-            "heading": "Labor day Sale Ends in:",
+            "heading": "Labor Day Sale Ends in:",
             "end_date": "2026-09-07",
             "end_time": "23:59:59",
             "bg_color": "#a33429",
