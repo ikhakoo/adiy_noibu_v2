@@ -96,6 +96,13 @@
             "link": ""
           }
         },
+        "text_item_7CfqcJ": {
+          "type": "text_item",
+          "settings": {
+            "text": "Use Code: LABOR",
+            "link": ""
+          }
+        },
         "text_item_VqJKwr": {
           "type": "text_item",
           "settings": {
@@ -114,6 +121,7 @@
       },
       "block_order": [
         "text_item_AxQBxq",
+        "text_item_7CfqcJ",
         "text_item_VqJKwr",
         "countdown_XUQAMi"
       ],
