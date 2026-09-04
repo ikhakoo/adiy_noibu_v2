@@ -1185,172 +1185,117 @@
                   {% endcomment %}
 
                 {%- when 'custom_price' -%}
-  {%- liquid
-    assign current_variant = product.selected_or_first_available_variant
-    assign original_price = current_variant.price
+                  {%- liquid
+                    assign current_variant = product.selected_or_first_available_variant
+                    assign original_price = current_variant.price
 
-    # Clean input: Remove $, commas, spaces
-    assign raw_discount = block.settings.discount_price | remove: '$' | remove: ',' | strip
+                    # Clean input: Remove $, commas, spaces
+                    assign raw_discount = block.settings.discount_price | remove: '$' | remove: ',' | strip
 
-    if block.settings.discount_type == 'percentage'
-      assign discount_num = raw_discount | times: 1.0
-      assign discount_amount = original_price | times: discount_num | divided_by: 100
-    else
-      assign discount_num = raw_discount | times: 100
-      assign discount_amount = discount_num
-    endif
+                    if block.settings.discount_type == 'percentage'
+                      assign discount_num = raw_discount | times: 1.0
+                      assign discount_amount = original_price | times: discount_num | divided_by: 100
+                    else
+                      # Fixed dollar amount subtract logic
+                      assign discount_num = raw_discount | times: 100
+                      assign discount_amount = discount_num
+                    endif
 
-    assign final_discounted_price = original_price | minus: discount_amount
-  -%}
+                    assign final_discounted_price = original_price | minus: discount_amount
+                  -%}
 
-  <div 
-    id="custom-price-{{ section.id }}" 
-    role="status" 
-    {{ block.shopify_attributes }} 
-    class="product-price custom-price-block"
-    data-discount-type="{{ block.settings.discount_type }}"
-    data-discount-val="{{ raw_discount }}"
-  >
-    {% comment %} Top Main Price + Comp Value Label {% endcomment %}
-    <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
-      
-      {% comment %} Main Comp Value Render Target {% endcomment %}
-      <div class="price-wrapper comp-price-target" id="price-{{ section.id }}">
-        {%- render 'price',
-          product: product,
-          use_variant: true,
-          show_badges: true,
-          price_class: 'price--large'
-        -%}
-      </div>
+                  <div id="custom-price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price custom-price-block">
+                    
+                    {% comment %} Top Main Price + Comp Value Label {% endcomment %}
+                    <div class="main-price-row" style="display: flex; align-items: center; gap: 8px;">
+                      <div class="price-wrapper">
+                        {%- render 'price',
+                          product: product,
+                          use_variant: true,
+                          show_badges: true,
+                          price_class: 'price--large'
+                        -%}
+                      </div>
+                      <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
+                        Comp Value 
+                      </span>
+                    </div>
 
-      <span class="comp-value-text" style="font-size: 13px; color: #8c7e6c; display: inline-flex; align-items: center; gap: 3px;">
-        Comp Value 
-      </span>
-    </div>
+                    {% comment %} Bottom Promo Discounted Row {% endcomment %}
+                    {%- if raw_discount != blank -%}
+                      <div class="custom-discount-line" style="margin-top: 0; font-size: 16px; color: #555; display: flex; align-items: end; gap: 6px;">
+                        <span>or</span>
+                        <span class="discount-amount" style="color: #ff6b6b; font-size: 20px;">
+                          {{ final_discounted_price | money }}
+                        </span>
+                        {%- if block.settings.discount_code != blank -%}
+                          <span>with code</span>
+                          <strong class="discount-code" style="color: #333; text-transform: uppercase; font-weight: 400;">
+                            {{ block.settings.discount_code }}
+                          </strong>
+                        {%- endif -%}
 
-    {% comment %} Bottom Promo Discounted Row {% endcomment %}
-    {%- if raw_discount != blank -%}
-      <div class="custom-discount-line" style="margin-top: 0; font-size: 16px; color: #555; display: flex; align-items: end; gap: 6px;">
-        <span>or</span>
-        <span class="discount-amount" style="color: #ff6b6b; font-size: 20px;">
-          {{ final_discounted_price | money }}
-        </span>
-        {%- if block.settings.discount_code != blank -%}
-          <span>with code</span>
-          <strong class="discount-code" style="color: #333; text-transform: uppercase; font-weight: 400;">
-            {{ block.settings.discount_code }}
-          </strong>
-        {%- endif -%}
+                        {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
+                          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center; margin-bottom: 9px;">
+                            <button 
+                              type="button" 
+                              class="js-copy-promo-btn" 
+                              data-code="{{ block.settings.discount_code }}"
+                              title="Copy Code" 
+                              style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                              </svg>
+                            </button>
+                            <span class="copy-tooltip" style="display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;">
+                              Copied!
+                            </span>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
 
-        {%- if block.settings.show_copy_icon and block.settings.discount_code != blank -%}
-          <div class="copy-btn-wrapper" style="position: relative; display: inline-flex; align-items: center; margin-bottom: 9px;">
-            <button 
-              type="button" 
-              class="js-copy-promo-btn" 
-              data-code="{{ block.settings.discount_code }}"
-              title="Copy Code" 
-              style="background: none; border: none; padding: 0; margin-left: 2px; cursor: pointer; color: #555; display: flex; align-items: center;"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-            </button>
-            <span class="copy-tooltip" style="display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;">
-              Copied!
-            </span>
-          </div>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+                  </div>
 
-  </div>
+                  <script>
+                    (function() {
+                      // Isolated Scope - Doesn't affect global window
+                      const container = document.getElementById('custom-price-{{ section.id }}');
+                      if (!container) return;
 
-  <script>
-    (function() {
-      function runPriceUpdateLogic() {
-        const customBlock = document.getElementById('custom-price-{{ section.id }}');
-        if (!customBlock) return;
+                      const copyBtn = container.querySelector('.js-copy-promo-btn');
+                      if (!copyBtn) return;
 
-        // 1. Find the main active product price on page (e.g. $6,300.00 in your screenshot)
-        let mainPriceElem = document.querySelector('.product__info-container .price .price-item--regular, .product__info-container .price .price-item--sale');
-        
-        // Fallback inside custom block if global not found
-        if (!mainPriceElem) {
-          mainPriceElem = customBlock.querySelector('.price-item--regular, .price-item--sale');
-        }
+                      copyBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const codeText = this.getAttribute('data-code');
+                        const tooltip = this.nextElementSibling;
 
-        const promoDiscountElem = customBlock.querySelector('.discount-amount');
-        if (!mainPriceElem || !promoDiscountElem) return;
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                          navigator.clipboard.writeText(codeText).then(() => showTooltip(tooltip));
+                        } else {
+                          const tempInput = document.createElement('input');
+                          tempInput.value = codeText;
+                          document.body.appendChild(tempInput);
+                          tempInput.select();
+                          document.execCommand('copy');
+                          document.body.removeChild(tempInput);
+                          showTooltip(tooltip);
+                        }
+                      });
 
-        // Extract raw price string (e.g. "$6,300.00")
-        const rawText = mainPriceElem.textContent.trim();
-        
-        // Clean non-numeric except decimal dots
-        // Converts "$6,300.00" -> "6300.00"
-        let cleanNumberStr = rawText.replace(/[^0-9.]/g, '');
-
-        // If string has multiple dots or commas used as decimal separator
-        if ((rawText.match(/,/g) || []).length === 1 && !rawText.includes('.')) {
-          cleanNumberStr = rawText.replace(/[^0-9,]/g, '').replace(',', '.');
-        }
-
-        const basePrice = parseFloat(cleanNumberStr);
-        if (isNaN(basePrice) || basePrice <= 0) return;
-
-        // Get settings
-        const discountType = customBlock.getAttribute('data-discount-type');
-        const discountVal = parseFloat(customBlock.getAttribute('data-discount-val')) || 0;
-
-        let finalPromoPrice = basePrice;
-        if (discountType === 'percentage') {
-          finalPromoPrice = basePrice - (basePrice * (discountVal / 100));
-        } else {
-          finalPromoPrice = basePrice - discountVal;
-        }
-
-        if (finalPromoPrice < 0) finalPromoPrice = 0;
-
-        // Get currency symbol (Default $)
-        const symbolMatch = rawText.match(/[$€£₹]/);
-        const symbol = symbolMatch ? symbolMatch[0] : '$';
-
-        // Format back with commas e.g., $5,500.00
-        const formattedFinal = symbol + finalPromoPrice.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        });
-
-        // Update Promo Discount Price Line
-        promoDiscountElem.textContent = formattedFinal;
-      }
-
-      // Live mutation observer on Product Info Section
-      const productInfo = document.querySelector('.product__info-container') || document.body;
-      const observer = new MutationObserver(function() {
-        runPriceUpdateLogic();
-      });
-
-      observer.observe(productInfo, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
-
-      // Event listener for variant change
-      document.addEventListener('variant:change', runPriceUpdateLogic);
-      document.addEventListener('change', function(e) {
-        if (e.target.closest('variant-selects, variant-radios, .no-js-hidden')) {
-          setTimeout(runPriceUpdateLogic, 50);
-          setTimeout(runPriceUpdateLogic, 200);
-        }
-      });
-
-      // Initial execution
-      runPriceUpdateLogic();
-    })();
-  </script>
+                      function showTooltip(tooltip) {
+                        if (tooltip) {
+                          tooltip.style.display = 'block';
+                          setTimeout(() => {
+                            tooltip.style.display = 'none';
+                          }, 1500);
+                        }
+                      }
+                    })();
+                  </script>
                 {%- when 'countdown_timer' -%}
                   <div 
                     id="countdown-block-{{ section.id }}-{{ block.id }}" 
