@@ -127,7 +127,7 @@
       ],
       "name": "Sticky Promo Banner",
       "settings": {
-        "bg_color": "#A33429",
+        "bg_color": "#000000",
         "text_color": "#ffffff"
       }
     },
