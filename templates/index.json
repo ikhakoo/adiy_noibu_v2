@@ -17,7 +17,7 @@
           "settings": {
             "class_text": "above-heading-subtitle",
             "text_html": "",
-            "text": "Labor Day Sale 🇺🇸",
+            "text": "Labor Day Sale",
             "text_style": "body"
           }
         },
@@ -127,7 +127,7 @@
       ],
       "name": "Sticky Promo Banner",
       "settings": {
-        "bg_color": "#000000",
+        "bg_color": "#A33429",
         "text_color": "#ffffff"
       }
     },
