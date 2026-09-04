@@ -1186,36 +1186,69 @@
 
                 {%- when 'discount_promo' -%}
   {%- liquid
-    assign discount_val = block.settings.discount_amount
-    if product.metafields.custom.discount_amount != blank
-      assign discount_val = product.metafields.custom.discount_amount.value | default: product.metafields.custom.discount_amount
-    endif
-
-    assign coupon = block.settings.promo_code
+    assign promo_code = block.settings.promo_code
     if product.metafields.custom.promo_code != blank
-      assign coupon = product.metafields.custom.promo_code.value | default: product.metafields.custom.promo_code
-    endif
-
-    assign current_variant = product.selected_or_first_available_variant
-    assign final_price = current_variant.price
-
-    if discount_val != blank
-      assign discount_num = discount_val | plus: 0
-      if discount_num > 0
-        assign discount_cents = discount_num | times: 100
-        assign final_price = current_variant.price | minus: discount_cents
-      endif
+      assign promo_code = product.metafields.custom.promo_code.value | default: product.metafields.custom.promo_code
     endif
   -%}
 
-  {%- if coupon != blank -%}
-    <div class="discount-promo-block" {{ block.shopify_attributes }}>
+  <div 
+    class="discount-promo-block" 
+    id="DiscountPromo-{{ section.id }}" 
+    data-section-id="{{ section.id }}"
+    data-default-discount="{{ block.settings.discount_amount }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- comment -%} Store variant-level discount metadata for JavaScript lookup {%- endcomment -%}
+    <script type="application/json" class="variant-discounts-json">
+      {
+        {%- for variant in product.variants -%}
+          {%- liquid
+            assign v_discount = variant.metafields.custom.discount_amount.value | default: variant.metafields.custom.discount_amount
+            if v_discount == blank
+              assign v_discount = product.metafields.custom.discount_amount.value | default: product.metafields.custom.discount_amount
+            endif
+            if v_discount == blank
+              assign v_discount = block.settings.discount_amount
+            endif
+          -%}
+          "{{ variant.id }}": {
+            "price": {{ variant.price }},
+            "discount": {{ v_discount | default: 0 }}
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      }
+    </script>
+
+    {%- liquid
+      assign current_variant = product.selected_or_first_available_variant
+      assign current_discount = current_variant.metafields.custom.discount_amount.value | default: current_variant.metafields.custom.discount_amount
+      if current_discount == blank
+        assign current_discount = product.metafields.custom.discount_amount.value | default: product.metafields.custom.discount_amount
+      endif
+      if current_discount == blank
+        assign current_discount = block.settings.discount_amount
+      endif
+
+      assign current_discount_num = current_discount | plus: 0
+    -%}
+
+    <div class="promo-inner-content" style="{% if current_discount_num <= 0 or promo_code == blank %}display: none;{% else %}display: inline-flex;{% endif %}">
       <span class="promo-prefix">{{ block.settings.prefix_text }}</span>
-      <span class="discounted-price">{{ final_price | money }}</span>
+      <span class="discounted-price" id="DiscountedPrice-{{ section.id }}">
+        {%- liquid
+          assign discount_cents = current_discount_num | times: 100
+          assign final_calc_price = current_variant.price | minus: discount_cents
+          if final_calc_price < 0
+            assign final_calc_price = 0
+          endif
+        -%}
+        {{ final_calc_price | money }}
+      </span>
       <span class="promo-middle">{{ block.settings.middle_text }}</span>
-      
-      <div class="promo-code-box" onclick="copyPromoCode(this, '{{ coupon }}')">
-        <span class="code-text">{{ coupon }}</span>
+
+      <div class="promo-code-box" onclick="copyPromoCode(this, '{{ promo_code }}')">
+        <span class="code-text">{{ promo_code }}</span>
         <button type="button" class="copy-btn" aria-label="Copy promo code">
           <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -1228,110 +1261,187 @@
         <span class="tooltip-text">Copied!</span>
       </div>
     </div>
+  </div>
 
-    <style>
-      .discount-promo-block {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 15px;
-        color: #4a4a4a;
-        margin: 8px 0;
-        flex-wrap: wrap;
-      }
-      .discounted-price {
-        color: #ff5a5f;
-        font-weight: 700;
-        font-size: 18px;
-      }
-      .promo-code-box {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        cursor: pointer;
-        position: relative;
-        user-select: none;
-      }
-      .code-text {
-        font-weight: 600;
-        color: #2c2c2c;
-        letter-spacing: 0.5px;
-      }
-      .copy-btn {
-        background: transparent;
-        border: none;
-        padding: 0;
-        margin: 0;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        color: #2c2c2c;
-      }
-      .copy-btn svg {
-        transition: transform 0.15s ease;
-      }
-      .promo-code-box:hover .copy-btn svg {
-        transform: scale(1.1);
-      }
-      .tooltip-text {
-        visibility: hidden;
-        position: absolute;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #2c2c2c;
-        color: #ffffff;
-        text-align: center;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 11px;
-        white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-        pointer-events: none;
-        z-index: 10;
-      }
-      .tooltip-text::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -4px;
-        border-width: 4px;
-        border-style: solid;
-        border-color: #2c2c2c transparent transparent transparent;
-      }
-      .promo-code-box.copied .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-    </style>
+  <style>
+    .discount-promo-block {
+      margin: 8px 0;
+    }
+    .promo-inner-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      color: #4a4a4a;
+      flex-wrap: wrap;
+    }
+    .discounted-price {
+      color: #ff5a5f;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .promo-code-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+    .code-text {
+      font-weight: 600;
+      color: #2c2c2c;
+      letter-spacing: 0.5px;
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #2c2c2c;
+    }
+    .copy-btn svg {
+      transition: transform 0.15s ease;
+    }
+    .promo-code-box:hover .copy-btn svg {
+      transform: scale(1.1);
+    }
+    .tooltip-text {
+      visibility: hidden;
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #2c2c2c;
+      color: #ffffff;
+      text-align: center;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -4px;
+      border-width: 4px;
+      border-style: solid;
+      border-color: #2c2c2c transparent transparent transparent;
+    }
+    .promo-code-box.copied .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
 
-    <script>
-      if (typeof copyPromoCode !== 'function') {
-        function copyPromoCode(element, code) {
-          navigator.clipboard.writeText(code).then(function() {
-            element.classList.add('copied');
-            const copyIcon = element.querySelector('.copy-icon');
-            const checkIcon = element.querySelector('.check-icon');
-            
+  <script>
+    if (typeof copyPromoCode !== 'function') {
+      function copyPromoCode(element, code) {
+        navigator.clipboard.writeText(code).then(function() {
+          element.classList.add('copied');
+          const copyIcon = element.querySelector('.copy-icon');
+          const checkIcon = element.querySelector('.check-icon');
+          
+          if (copyIcon && checkIcon) {
+            copyIcon.style.display = 'none';
+            checkIcon.style.display = 'block';
+          }
+
+          setTimeout(function() {
+            element.classList.remove('copied');
             if (copyIcon && checkIcon) {
-              copyIcon.style.display = 'none';
-              checkIcon.style.display = 'block';
+              copyIcon.style.display = 'block';
+              checkIcon.style.display = 'none';
             }
-
-            setTimeout(function() {
-              element.classList.remove('copied');
-              if (copyIcon && checkIcon) {
-                copyIcon.style.display = 'block';
-                checkIcon.style.display = 'none';
-              }
-            }, 1800);
-          });
-        }
+          }, 1800);
+        });
       }
-    </script>
-  {%- endif -%}
+    }
+
+    // Dynamic Price Update on Variant Change Listener
+    (function() {
+      function initVariantDiscountListener() {
+        const promoBlock = document.getElementById('DiscountPromo-{{ section.id }}');
+        if (!promoBlock) return;
+
+        const jsonScript = promoBlock.querySelector('.variant-discounts-json');
+        if (!jsonScript) return;
+
+        const variantData = JSON.parse(jsonScript.textContent);
+
+        function formatMoney(cents) {
+          return Shopify && Shopify.formatMoney 
+            ? Shopify.formatMoney(cents) 
+            : '$' + (cents / 100).toFixed(2);
+        }
+
+        function updateDiscountBanner(variantId) {
+          const innerContent = promoBlock.querySelector('.promo-inner-content');
+          const priceDisplay = promoBlock.querySelector('#DiscountedPrice-{{ section.id }}');
+          
+          if (!variantData[variantId]) {
+            if (innerContent) innerContent.style.display = 'none';
+            return;
+          }
+
+          const item = variantData[variantId];
+          const discountVal = parseFloat(item.discount) || 0;
+
+          if (discountVal <= 0) {
+            // Hide whole line if variant has NO discount metafield or schema discount
+            if (innerContent) innerContent.style.display = 'none';
+          } else {
+            // Calculate new variant discounted price
+            const discountInCents = discountVal * 100;
+            const newFinalPrice = Math.max(0, item.price - discountInCents);
+            
+            if (priceDisplay) {
+              priceDisplay.textContent = formatMoney(newFinalPrice);
+            }
+            if (innerContent) {
+              innerContent.style.display = 'inline-flex';
+            }
+          }
+        }
+
+        // Listen for standard Shopify variant change events
+        document.addEventListener('variant:change', function(evt) {
+          if (evt.detail && evt.detail.variant) {
+            updateDiscountBanner(evt.detail.variant.id);
+          }
+        });
+
+        // Dawn theme variant change support
+        const variantSelectors = document.querySelectorAll('variant-selects, variant-radios');
+        variantSelectors.forEach(selector => {
+          selector.addEventListener('change', function() {
+            setTimeout(() => {
+              const urlParams = new URLSearchParams(window.location.search);
+              const variantId = urlParams.get('variant');
+              if (variantId) updateDiscountBanner(variantId);
+            }, 100);
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initVariantDiscountListener);
+      } else {
+        initVariantDiscountListener();
+      }
+    })();
+  </script>
+
+  
                 {%- when 'countdown_timer' -%}
                   <div 
                     id="countdown-block-{{ section.id }}-{{ block.id }}" 
