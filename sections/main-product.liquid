@@ -1187,8 +1187,8 @@
                 {%- when 'discount_promo' -%}
   {%- liquid
     assign promo_code = block.settings.promo_code
-    if product.metafields.custom.promo_code != blank
-      assign promo_code = product.metafields.custom.promo_code.value | default: product.metafields.custom.promo_code
+    if product.metafields.custom.discount_value != blank
+      assign promo_code = product.metafields.custom.discount_value.value | default: product.metafields.custom.discount_value
     endif
   -%}
 
@@ -1441,7 +1441,7 @@
     })();
   </script>
 
-  
+
                 {%- when 'countdown_timer' -%}
                   <div 
                     id="countdown-block-{{ section.id }}-{{ block.id }}" 
@@ -2607,7 +2607,7 @@
       "id": "promo_code",
       "label": "Default Coupon Code",
       "default": "LABOR",
-      "info": "Metafield key override: product.metafields.custom.promo_code"
+      "info": "Metafield key override: product.metafields.custom.discount_value"
     },
     {
       "type": "number",
