@@ -92,21 +92,14 @@
         "text_item_AxQBxq": {
           "type": "text_item",
           "settings": {
-            "text": "Flexible Payment Plans",
+            "text": "Labor Day Sale",
             "link": ""
           }
         },
         "text_item_VqJKwr": {
           "type": "text_item",
           "settings": {
-            "text": "Made in USA",
-            "link": ""
-          }
-        },
-        "text_item_FmGRx6": {
-          "type": "text_item",
-          "settings": {
-            "text": "5-Year Warranty",
+            "text": "Up to $1,000 + Free Shipping",
             "link": ""
           }
         },
@@ -122,7 +115,6 @@
       "block_order": [
         "text_item_AxQBxq",
         "text_item_VqJKwr",
-        "text_item_FmGRx6",
         "countdown_XUQAMi"
       ],
       "name": "Sticky Promo Banner",
