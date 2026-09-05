@@ -169,6 +169,46 @@
   width: 100%;
 }
 
+/* ---------------------------------------------------------------------------
+   Mobile hero slider - critical layout
+
+   swiper-bundle.min.css is intentionally loaded async in sections/image-banner
+   .liquid (media="print" until onload) so it does not block rendering. The
+   side effect is that until it applies, `.swiper-slide` is matched only by
+   `.banner__media` above - `position: absolute` - so every slide drops out of
+   the flow, `.swiper-wrapper` computes to zero height, and the hero collapses.
+   The moment the async stylesheet lands, Swiper's own
+   `.swiper-slide { position: relative }` returns the slides to the flow, the
+   `::before` aspect-ratio padding applies, and the hero snaps to full height -
+   pushing every section below it down the page in one large layout shift.
+
+   These rules establish the horizontal track at first paint instead. They are
+   deliberately the minimum needed for geometry; pagination, transitions and
+   the rest still come from the async stylesheet, and Swiper's JS overwrites
+   the slide widths when it initialises.
+
+   Scoped to .mobile-banner-media so nothing here can leak into any other
+   Swiper instance on the site.
+   --------------------------------------------------------------------------- */
+.mobile-banner-media.swiper {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-banner-media .swiper-wrapper {
+  display: flex;
+  box-sizing: content-box;
+}
+
+.mobile-banner-media .swiper-slide {
+  /* Beats `.banner__media { position: absolute }` on specificity (0,2,0 vs 0,1,0)
+     and matches what swiper-bundle.min.css sets once it arrives. */
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: auto;
+}
+
 .banner__media-half {
   width: 50%;
 }
