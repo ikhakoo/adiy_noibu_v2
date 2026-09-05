@@ -69,9 +69,9 @@
       "settings": {
         "custom_class": "hero-sec",
         "image": "shopify://shop_images/HOMEPAGE_HERO.png",
-        "mobile_image_1": "shopify://shop_images/Frame_2147260147.png",
-        "mobile_image_2": "shopify://shop_images/banner_image_2.png",
-        "mobile_image_3": "shopify://shop_images/banner_image_3.png",
+        "mobile_image_1": "shopify://shop_images/banner_1.jpg",
+        "mobile_image_2": "shopify://shop_images/banner_2.jpg",
+        "mobile_image_3": "shopify://shop_images/banner_3.jpg",
         "enable_autorotate": true,
         "autorotate_speed": 2,
         "image_overlay_opacity": 0,
