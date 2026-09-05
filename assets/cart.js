@@ -64,8 +64,21 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
     }
   }
 
+  // Returns the quantity input for a line in either context. The cart page
+  // renders `#Quantity-{line}`; the drawer renders `#Drawer-quantity-{line}`
+  // (see snippets/cart-drawer.liquid). Callers that only looked for the former
+  // silently got null in the drawer.
+  getQuantityInput(line) {
+    return this.querySelector(`#Quantity-${line}`) || this.querySelector(`#Drawer-quantity-${line}`);
+  }
+
   resetQuantityInput(id) {
-    const input = this.querySelector(`#Quantity-${id}`);
+    // Was `this.querySelector('#Quantity-' + id)` only, which is never present
+    // in the drawer — the null deref threw "null is not an object (evaluating
+    // input.getAttribute)" and aborted setValidity() before the shopper ever
+    // saw why their quantity was rejected.
+    const input = this.getQuantityInput(id);
+    if (!input) return;
     input.value = input.getAttribute('value');
     this.isEnterPressed = false;
   }
@@ -166,6 +179,23 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
     ];
   }
 
+  // The Cart AJAX API rejects a line update in one of two shapes:
+  //
+  //   { errors: "..." }                        - validation failure
+  //   { status: 422, message, description }    - line/quantity unsatisfiable
+  //
+  // The second carries no `errors` key AND no `sections` key. Handling only
+  // `parsedState.errors` let it fall through to the render path, where
+  // `parsedState.sections[section.section]` threw "undefined is not an object"
+  // and killed the re-render mid-flight — leaving the drawer showing stale
+  // quantities with no way through to checkout.
+  getCartRejectionMessage(parsedState) {
+    if (!parsedState) return window.cartStrings.error;
+    if (parsedState.errors) return parsedState.errors;
+    if (!parsedState.sections) return parsedState.description || parsedState.message || window.cartStrings.error;
+    return null;
+  }
+
   updateQuantity(line, quantity, event, name, variantId) {
     const eventTarget = event.currentTarget instanceof CartRemoveButton ? 'clear' : 'change';
     const cartPerformanceUpdateMarker = CartPerformance.createStartingMarker(`${eventTarget}:user-action`);
@@ -173,7 +203,7 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
     this.enableLoading(line);
 
     const action = quantity === 0 ? 'remove' : 'update';
-    const quantityInput = this.querySelector(`#Quantity-${line}`) || this.querySelector(`#Drawer-quantity-${line}`);
+    const quantityInput = this.getQuantityInput(line);
     const lineVariantId = variantId || quantityInput?.dataset.quantityVariantId;
     const lineKey = quantityInput?.dataset.quantityLineKey;
     const linesUpdateDeferred = this.createCartLinesUpdateEvent(action, lineVariantId, quantity, lineKey);
@@ -194,10 +224,11 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
       })
       .then((state) => {
         const parsedState = JSON.parse(state);
+        const rejectionMessage = this.getCartRejectionMessage(parsedState);
 
-        if (parsedState.errors) {
-          this.dispatchCartErrorEvent(parsedState.errors, 'INVALID');
-          linesUpdateDeferred?.reject(new Error(parsedState.errors));
+        if (rejectionMessage) {
+          this.dispatchCartErrorEvent(rejectionMessage, 'INVALID');
+          linesUpdateDeferred?.reject(new Error(rejectionMessage));
         } else {
           this.resolveCartLinesUpdate(linesUpdateDeferred, parsedState);
         }
@@ -207,9 +238,12 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
             document.getElementById(`Quantity-${line}`) || document.getElementById(`Drawer-quantity-${line}`);
           const items = document.querySelectorAll('.cart-item');
 
-          if (parsedState.errors) {
-            quantityElement.value = quantityElement.getAttribute('value');
-            this.updateLiveRegions(line, parsedState.errors);
+          if (rejectionMessage) {
+            // Roll the input back to the last good value and tell the shopper
+            // what happened. Previously an unguarded assignment here threw when
+            // the element was absent, so even the recoverable path could die.
+            if (quantityElement) quantityElement.value = quantityElement.getAttribute('value');
+            this.updateLiveRegions(line, rejectionMessage);
             return;
           }
 
@@ -221,13 +255,14 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
           if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle('is-empty', parsedState.item_count === 0);
 
           sectionsToRender.forEach((section) => {
-            const elementToReplace =
-              document.getElementById(section.id).querySelector(section.selector) ||
-              document.getElementById(section.id);
-            elementToReplace.innerHTML = this.getSectionInnerHTML(
-              parsedState.sections[section.section],
-              section.selector
-            );
+            const sectionContainer = document.getElementById(section.id);
+            if (!sectionContainer) return;
+
+            const elementToReplace = sectionContainer.querySelector(section.selector) || sectionContainer;
+            const innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
+            if (innerHTML === null) return;
+
+            elementToReplace.innerHTML = innerHTML;
           });
           const updatedValue = parsedState.items[line - 1] ? parsedState.items[line - 1].quantity : undefined;
           let message = '';
@@ -304,12 +339,19 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
   updateLiveRegions(line, message) {
     const lineItemError =
       document.getElementById(`Line-item-error-${line}`) || document.getElementById(`CartDrawer-LineItemError-${line}`);
-    if (lineItemError) lineItemError.querySelector('.cart-item__error-text').textContent = message;
+    if (lineItemError) {
+      const errorText = lineItemError.querySelector('.cart-item__error-text');
+      if (errorText) errorText.textContent = message;
+    }
 
-    this.lineItemStatusElement.setAttribute('aria-hidden', true);
+    // Guarded: this now runs on the rejection path too, where the cart page's
+    // live-region elements may not be in the DOM at all.
+    this.lineItemStatusElement?.setAttribute('aria-hidden', true);
 
     const cartStatus =
       document.getElementById('cart-live-region-text') || document.getElementById('CartDrawer-LiveRegionText');
+    if (!cartStatus) return;
+
     cartStatus.setAttribute('aria-hidden', false);
 
     setTimeout(() => {
@@ -318,7 +360,12 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
   }
 
   getSectionInnerHTML(html, selector) {
-    return new DOMParser().parseFromString(html, 'text/html').querySelector(selector).innerHTML;
+    // Mirrors CartDrawer.getSectionInnerHTML: return null instead of throwing
+    // when the payload is absent or does not contain the expected wrapper, so a
+    // single missing section can't abort the whole re-render.
+    if (typeof html !== 'string') return null;
+    const parsed = new DOMParser().parseFromString(html, 'text/html').querySelector(selector);
+    return parsed ? parsed.innerHTML : null;
   }
 
   enableLoading(line) {
