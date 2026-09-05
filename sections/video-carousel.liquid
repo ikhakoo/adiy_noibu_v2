@@ -79,6 +79,10 @@
               {%- assign poster_source = block.settings.video.preview_image -%}
             {%- endif -%}
             {%- if poster_source -%}
+              {%- comment -%}
+                Only feeds video_tag's poster= below, which is then stripped. The
+                visible poster is the responsive image_tag further down.
+              {%- endcomment -%}
               {%- assign custom_poster = poster_source | image_url: width: 600 -%}
             {%- endif -%}
 
@@ -104,14 +108,31 @@
                 lazy <img> below instead.
               {%- endcomment -%}
               {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
-              {%- if custom_poster != blank -%}
-                <img
-                  class="pb-video-card__poster"
-                  src="{{ custom_poster }}"
-                  width="{{ poster_source.width }}"
-                  height="{{ poster_source.height }}"
-                  alt=""
-                  loading="lazy">
+              {%- if poster_source -%}
+                {%- comment -%}
+                  Card geometry is fixed in section-video-carousel.css:
+                  `flex: 0 0 270px` / height 490px on mobile, `310px` / 540px from
+                  750px up, with this image at 100% and object-fit: cover. So the
+                  poster paints at exactly 270x490 or 310x540 and the candidates
+                  below are those two widths at 1x, 2x and 3x.
+
+                  Previously this was a hand-written <img> with one fixed 600px
+                  source and no srcset, and with width/height taken from
+                  poster_source - the ORIGINAL image (e.g. 720x1280) rather than
+                  the 600px file actually in src. image_tag derives the source set
+                  and the intrinsic dimensions from the same image, so the two
+                  agree.
+                {%- endcomment -%}
+                {{
+                  poster_source
+                  | image_url: width: 930
+                  | image_tag:
+                    class: 'pb-video-card__poster',
+                    widths: '270, 310, 540, 620, 810, 930',
+                    sizes: '(min-width: 750px) 310px, 270px',
+                    alt: '',
+                    loading: 'lazy'
+                }}
               {%- endif -%}
             {%- elsif block.settings.external_video_url != blank -%}
               <video 
