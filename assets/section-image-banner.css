@@ -170,43 +170,55 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Mobile hero slider - critical layout
+   Mobile hero slider
 
-   swiper-bundle.min.css is intentionally loaded async in sections/image-banner
-   .liquid (media="print" until onload) so it does not block rendering. The
-   side effect is that until it applies, `.swiper-slide` is matched only by
-   `.banner__media` above - `position: absolute` - so every slide drops out of
-   the flow, `.swiper-wrapper` computes to zero height, and the hero collapses.
-   The moment the async stylesheet lands, Swiper's own
-   `.swiper-slide { position: relative }` returns the slides to the flow, the
-   `::before` aspect-ratio padding applies, and the hero snaps to full height -
-   pushing every section below it down the page in one large layout shift.
+   A CSS scroll-snap track. This replaced Swiper, which cost 151KB of JS plus
+   an 18KB stylesheet to run a three-slide hero whose pagination dots the
+   section hid anyway. Swiping, snapping and momentum are native browser
+   scrolling; the section's inline script only auto-advances.
 
-   These rules establish the horizontal track at first paint instead. They are
-   deliberately the minimum needed for geometry; pagination, transitions and
-   the rest still come from the async stylesheet, and Swiper's JS overwrites
-   the slide widths when it initialises.
-
-   Scoped to .mobile-banner-media so nothing here can leak into any other
-   Swiper instance on the site.
+   Because the track's layout lives here - in a stylesheet that already blocks
+   render - the slides are laid out correctly on the first frame. The earlier
+   CLS regression came from that layout arriving in an async stylesheet that
+   raced first paint, which is no longer possible.
    --------------------------------------------------------------------------- */
-.mobile-banner-media.swiper {
+.mobile-banner-media.hero-slider {
   position: relative;
-  overflow: hidden;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  /* The track is swiped, not scrollbar-dragged. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.mobile-banner-media .swiper-wrapper {
+.mobile-banner-media.hero-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-banner-media .hero-slider__track {
   display: flex;
-  box-sizing: content-box;
 }
 
-.mobile-banner-media .swiper-slide {
-  /* Beats `.banner__media { position: absolute }` on specificity (0,2,0 vs 0,1,0)
-     and matches what swiper-bundle.min.css sets once it arrives. */
+.mobile-banner-media .hero-slider__slide {
+  /* Overrides `.banner__media { position: absolute }` above (0,2,0 beats 0,1,0).
+     Without it every slide leaves the flow, the track computes to zero height
+     and the hero collapses. The slide keeps its .banner__media class so the
+     section's `::before` aspect-ratio padding still gives it height. */
   position: relative;
-  flex-shrink: 0;
+  flex: 0 0 100%;
   width: 100%;
   height: auto;
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-banner-media.hero-slider {
+    scroll-behavior: auto;
+  }
 }
 
 .banner__media-half {
