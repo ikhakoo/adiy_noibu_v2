@@ -1,22 +1,19 @@
 {%- comment -%}
   CLS fix (Noibu RUM, /pages/how-to-build-your-own-deck desktop p75 0.50).
 
-  This page is set entirely in DM Sans / DM Serif Display, and the Google Fonts
-  stylesheet used to be injected by inline JS at the very BOTTOM of this section
-  (a `document.createElement("link")` after ~70KB of markup). That request could
-  not start until the whole section had been parsed and the script had run, so
-  the faces always arrived well after first paint and `display=swap` then
-  re-flowed every paragraph, heading, spec cell and quote card on the page at
-  once. Declaring the link in markup lets the preload scanner start it with the
-  rest of the document, so the swap lands at or before first paint instead of
-  several hundred ms into the page.
+  This page used to be set in DM Sans / DM Serif Display, loaded from Google
+  Fonts. The stylesheet was first injected by inline JS at the very BOTTOM of
+  this section (a `document.createElement("link")` after ~70KB of markup), so the
+  faces always arrived well after first paint and `display=swap` then re-flowed
+  every paragraph, heading, spec cell and quote card at once; moving the link
+  into markup let the preload scanner start it with the rest of the document.
+
+  The page now uses the theme's own Outfit instead, taken from
+  --font-heading-family / --font-body-family and the weights layout/theme.liquid
+  has already emitted @font-face rules for (300/400/500/600/700). That removes
+  the third-party request entirely, so there is no cross-origin stylesheet left
+  to block or swap late - the strongest version of the same fix.
 {%- endcomment -%}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
->
 
 <style>
   h1 {
@@ -46,7 +43,7 @@
   /* ── RESET ── */
   .ab2 *, .ab2 *::before, .ab2 *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .ab2 {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body-family, 'Outfit', sans-serif);
     font-size: 17px; line-height: 1.65;
     color: #1c1c19; background: #fff;
     -webkit-font-smoothing: antialiased;
@@ -87,10 +84,10 @@
 
   /* ── TYPOGRAPHY ── */
   .ab2-serif {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
   }
   .ab2-eyebrow {
-    display: inline-block; font-family: 'DM Sans', sans-serif;
+    display: inline-block; font-family: var(--font-body-family, 'Outfit', sans-serif);
     font-size: 11px; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--green); margin-bottom: 14px;
@@ -98,30 +95,34 @@
   .ab2-eyebrow--light { color: rgba(255,255,255,0.5); }
 
   .ab2-h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(44px, 6.5vw, 80px);
-    line-height: 1.0; letter-spacing: -0.02em; color: #fff;
-    font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.05; letter-spacing: -0.03em; color: #fff;
+    font-weight: var(--font-weight-h1, 700);
     align-items: self-start;
   }
-  .ab2-h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
+  /* Outfit ships no italic here, so the emphasised line steps down in weight and
+     colour instead of leaning - a synthesised oblique would look broken at 62px. */
+  .ab2-h1 em { font-style: normal; font-weight: var(--font-weight-h3, 500); color: rgba(255,255,255,0.6); }
 
   .ab2-h2 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(30px, 4vw, 48px);
-    line-height: 1.1; color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(27px, 3.4vw, 42px);
+    line-height: 1.15; letter-spacing: -0.02em; color: var(--dark);
+    font-weight: var(--font-weight-h2, 600);
   }
   .ab2-h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(20px, 2.8vw, 30px);
-    line-height: 1.15; color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.2; letter-spacing: -0.01em; color: var(--dark);
+    font-weight: var(--font-weight-h2, 600);
   }
   .ab2-lead { font-size: clamp(16px, 1.8vw, 19px); color: var(--mid); line-height: 1.7; }
 
   /* ── BUTTONS ── */
   .ab2-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 15px;
+    font-family: var(--font-body-family, 'Outfit', sans-serif); font-weight: 600; font-size: 15px;
     letter-spacing: 0.01em; padding: 14px 28px;
     border-radius: 5px; border: 1.5px solid transparent;
     cursor: pointer; text-decoration: none;
@@ -227,9 +228,9 @@
     border-radius: var(--radius-lg); padding: 32px;
   }
   .ab2-hero__card-title {
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--font-body-family, 'Outfit', sans-serif);
     font-size: 15px; color: rgba(255,255,255,0.5);
-    margin-bottom: 20px; letter-spacing: 0.02em; font-weight: 400;
+    margin-bottom: 20px; letter-spacing: 0.02em; font-weight: 600;
     text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em;
   }
   .ab2-stat-list { display: flex; flex-direction: column; gap: 16px; }
@@ -240,8 +241,8 @@
   .ab2-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
   .ab2-stat-row__label { font-size: 13px; color: rgba(255,255,255,0.5); }
   .ab2-stat-row__val {
-    font-family: 'DM Serif Display', serif; font-size: 22px;
-    color: #fff; font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif); font-size: 20px; letter-spacing: -0.01em;
+    color: #fff; font-weight: 600;
   }
   .ab2-stat-row__val--green { color: #7ecfb5; }
 
@@ -264,8 +265,8 @@
     display: flex; align-items: center; gap: 10px;
   }
   .ab2-logos__tp-score {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px; color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 21px; color: var(--dark); font-weight: 700; letter-spacing: -0.01em;
   }
   .ab2-logos__tp-label { font-size: 12px; color: var(--muted); line-height: 1.3; }
   .ab2-logos__tp-stars { display: flex; gap: 2px; }
@@ -292,9 +293,9 @@
   .ab2-split-intro__label--red   { color: #b03a2e; }
   .ab2-split-intro__label--green { color: var(--green); }
   .ab2-split-intro__h {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(22px, 2.8vw, 30px); color: var(--dark);
-    margin-bottom: 20px; font-weight: 400; line-height: 1.2;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(21px, 2.6vw, 27px); color: var(--dark);
+    margin-bottom: 20px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em;
   }
   .ab2-split-intro__body { font-size: 15px; color: var(--mid); line-height: 1.7; margin-bottom: 24px; }
   .ab2-pain-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
@@ -328,10 +329,10 @@
     display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
   }
   .ab2-ctaband__text {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(18px, 2.5vw, 26px); color: #fff; font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(18px, 2.4vw, 24px); color: #fff; font-weight: 600; letter-spacing: -0.01em;
   }
-  .ab2-ctaband__text em { font-style: italic; opacity: 0.75; }
+  .ab2-ctaband__text em { font-style: normal; font-weight: 400; opacity: 0.75; }
   .ab2-ctaband__sub { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 4px; }
   .ab2-ctaband__btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
@@ -385,8 +386,8 @@
     background: #fff; padding: 28px 24px;
   }
   .ab2-spec__num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 38px; color: var(--green); font-weight: 400; line-height: 1;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 36px; color: var(--green); font-weight: 700; line-height: 1; letter-spacing: -0.03em;
     margin-bottom: 6px;
   }
   .ab2-spec__label { font-weight: 600; font-size: 15px; color: var(--dark); margin-bottom: 6px; }
@@ -401,8 +402,9 @@
     display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
   }
   .ab2-tp-score-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 64px; line-height: 1; color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 58px; line-height: 1; letter-spacing: -0.03em;
+    color: var(--dark); font-weight: 700;
   }
   .ab2-tp-stars-row { display: flex; gap: 4px; }
   .ab2-tp-star-icon {
@@ -488,8 +490,8 @@
   .ab2-step-h__num {
     width: 56px; height: 56px; border-radius: 50%;
     background: var(--green); color: #fff;
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px; font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 19px; font-weight: 600;
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 16px;
     box-shadow: 0 0 0 4px #fff, 0 0 0 6px rgba(57,105,88,0.2);
@@ -551,9 +553,9 @@
     text-transform: uppercase; opacity: 0.55; color: #fff; margin-bottom: 14px;
   }
   .ab2-decide__card__h {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(20px, 2.5vw, 27px); color: #fff; font-weight: 400;
-    line-height: 1.2; margin-bottom: 16px;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(19px, 2.3vw, 25px); color: #fff; font-weight: 600;
+    line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 16px;
   }
   .ab2-decide__card__body { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.65; flex: 1; margin-bottom: 28px; }
   .ab2-decide__card__micro { font-size: 12px; color: rgba(255,255,255,0.38); margin-top: 12px; }
@@ -561,7 +563,7 @@
   .ab2-decide__btn-a {
     display: inline-flex; align-items: center; gap: 10px;
     background: #fff; color: var(--green);
-    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px;
+    font-family: var(--font-body-family, 'Outfit', sans-serif); font-weight: 700; font-size: 15px;
     padding: 14px 24px; border-radius: 5px;
     text-decoration: none; transition: transform 0.15s, background 0.15s;
   }
@@ -570,7 +572,7 @@
   .ab2-decide__btn-b {
     display: inline-flex; align-items: center; gap: 10px;
     background: var(--blue); color: #fff;
-    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px;
+    font-family: var(--font-body-family, 'Outfit', sans-serif); font-weight: 700; font-size: 15px;
     padding: 14px 24px; border-radius: 5px;
     text-decoration: none;
     box-shadow: 0 4px 16px rgba(65,119,173,0.35);
@@ -1546,7 +1548,7 @@
     <div class="ab2-close__grad"></div>
     <div class="ab2-wrap ab2-close__inner">
       <span class="ab2-eyebrow ab2-eyebrow--light ab2-anim">Your backyard is waiting</span>
-      <h2 class="ab2-h2 ab2-anim" style="font-family:'DM Serif Display',serif; font-weight:400;">
+      <h2 class="ab2-h2 ab2-anim" style="font-family:var(--font-heading-family, 'Outfit', sans-serif); font-weight:var(--font-weight-h2, 600);">
         A year from now, you will wish<br>
         you had started this weekend.
       </h2>
