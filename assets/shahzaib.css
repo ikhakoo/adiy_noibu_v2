@@ -1031,7 +1031,11 @@
 .template-page-how-to-build-a-deck .announcement-bar-section,
 .template-page-how-to-build-a-deck .section-header,  
 .template-page-how-to-build-a-deck .shopify-section-group-footer-group,
-.template-page-how-to-build-a-deck footer{
+.template-page-how-to-build-a-deck footer,
+.template-page-why-customers-choose-adiy .announcement-bar-section,
+.template-page-why-customers-choose-adiy .section-header,
+.template-page-why-customers-choose-adiy .shopify-section-group-footer-group,
+.template-page-why-customers-choose-adiy footer{
     display:none !important;
 }
 .template-page-how-to-build-a-deck .page-width{

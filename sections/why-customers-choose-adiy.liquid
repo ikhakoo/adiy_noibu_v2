@@ -1,0 +1,1240 @@
+{%- comment -%}
+  "Why Do Customers Choose A-DIY" landing page.
+
+  Ported from the pre-refresh version of this page, which lived as a 45KB
+  `custom_liquid` string inside templates/page.why-customers-choose-adiy.json and
+  carried its own off-brand design system (Barlow Condensed, #F5A623 yellow,
+  emoji CTAs). The narrative is unchanged; the design language, voice and claims
+  now match sections/how-to-build-deck.liquid, which is the same argument in the
+  current brand.
+
+  Everything here is scoped under `.wcc`. Deliberately NOT copied from
+  how-to-build-deck.liquid: its unscoped `h1`, `p` and `ol, ul` rules, which
+  escape the section and restyle the whole document.
+
+  Typography is the theme's own Outfit, taken from --font-heading-family /
+  --font-body-family and the weights layout/theme.liquid has already emitted
+  @font-face rules for (300/400/500/600/700). The sibling LP loads DM Serif
+  Display + DM Sans from Google Fonts; this page deliberately does not, so it
+  matches the site and adds no third-party font request at all.
+{%- endcomment -%}
+<style>
+  /* ── RESET ── */
+  .wcc *, .wcc *::before, .wcc *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .wcc {
+    font-family: var(--font-body-family, 'Outfit', sans-serif);
+    font-size: 17px; line-height: 1.65;
+    color: #1c1c19; background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── TOKENS (value-identical to sections/how-to-build-deck.liquid) ── */
+  .wcc {
+    --green:        #396958;
+    --green-dark:   #2b5244;
+    --green-light:  #eaf3ef;
+    --green-mid:    #c2ddd6;
+    --blue:         #4177AD;
+    --blue-dark:    #305d8a;
+    --blue-light:   #e8f0f8;
+    --bg:           #F6F4F2;
+    --bg-dark:      #1c2620;
+    --bg-ink:       #111810;
+    --dark:         #1c1c19;
+    --mid:          #4c4c47;
+    --muted:        #7c7c74;
+    --border:       #e0deda;
+    --border-strong:#c8c4be;
+    --tp-green:     #00b67a;
+    --radius:       8px;
+    --radius-lg:    14px;
+    --shadow-sm:    0 1px 8px rgba(0,0,0,0.06);
+    --shadow:       0 3px 18px rgba(0,0,0,0.08);
+    --shadow-lg:    0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  /* ── LAYOUT ── */
+  .wcc-wrap        { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .wcc-wrap--mid   { max-width: 900px;  margin: 0 auto; padding: 0 24px; }
+  .wcc-wrap--narrow{ max-width: 720px;  margin: 0 auto; padding: 0 24px; }
+
+  /* ── TYPOGRAPHY ── */
+  .wcc-eyebrow {
+    display: inline-block; font-family: var(--font-body-family, 'Outfit', sans-serif);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 14px;
+  }
+  .wcc-eyebrow--light { color: rgba(255,255,255,0.5); }
+
+  .wcc-h1 {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.05; letter-spacing: -0.03em; color: #fff;
+    font-weight: var(--font-weight-h1, 700);
+  }
+  /* Outfit ships no italic here, so the emphasised line steps down in weight and
+     colour instead of leaning - a synthesised oblique would look broken at 62px. */
+  .wcc-h1 em { font-style: normal; font-weight: var(--font-weight-h3, 500); color: rgba(255,255,255,0.6); }
+
+  .wcc-h2 {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(27px, 3.4vw, 42px);
+    line-height: 1.15; letter-spacing: -0.02em; color: var(--dark);
+    font-weight: var(--font-weight-h2, 600);
+  }
+  .wcc-h3 {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.2; letter-spacing: -0.01em; color: var(--dark);
+    font-weight: var(--font-weight-h2, 600);
+  }
+  .wcc-lead { font-size: clamp(16px, 1.8vw, 19px); color: var(--mid); line-height: 1.7; }
+  .wcc-body { font-size: 15px; color: var(--mid); line-height: 1.7; }
+
+  /* ── BUTTONS ── */
+  .wcc-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-body-family, 'Outfit', sans-serif); font-weight: 600; font-size: 15px;
+    letter-spacing: 0.01em; padding: 14px 28px;
+    border-radius: 5px; border: 1.5px solid transparent;
+    cursor: pointer; text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s, border-color 0.15s;
+    white-space: nowrap; line-height: 1;
+  }
+  .wcc-btn:hover  { transform: translateY(-2px); }
+  .wcc-btn:active { transform: translateY(0); }
+
+  .wcc-btn--primary {
+    background: var(--green); color: #fff;
+    box-shadow: 0 3px 16px rgba(57,105,88,0.3);
+  }
+  .wcc-btn--primary:hover { background: var(--green-dark); box-shadow: 0 5px 24px rgba(57,105,88,0.4); }
+
+  .wcc-btn--blue {
+    background: var(--blue); color: #fff;
+    box-shadow: 0 3px 16px rgba(65,119,173,0.28);
+  }
+  .wcc-btn--blue:hover { background: var(--blue-dark); box-shadow: 0 5px 24px rgba(65,119,173,0.38); }
+
+  .wcc-btn--ghost {
+    background: transparent; color: var(--dark);
+    border-color: var(--border-strong);
+  }
+  .wcc-btn--ghost:hover { border-color: var(--dark); background: var(--bg); }
+
+  .wcc-btn--ghost-white {
+    background: transparent; color: #fff;
+    border-color: rgba(255,255,255,0.4);
+  }
+  .wcc-btn--ghost-white:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+  .wcc-btn--lg { padding: 17px 36px; font-size: 17px; }
+
+  .wcc-btn__arrow { display: inline-block; transition: transform 0.15s; }
+  .wcc-btn:hover .wcc-btn__arrow { transform: translateX(3px); }
+
+  .wcc-cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+  /* ── SECTIONS ── */
+  .wcc-section     { padding: 88px 0; }
+  .wcc-section--sm { padding: 56px 0; }
+  .wcc-section--bg { background: var(--bg); }
+
+  /* ── TRUST BAR ── */
+  .wcc-trustbar {
+    background: var(--bg-ink); padding: 10px 24px;
+    text-align: center; font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.03em;
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    flex-wrap: wrap;
+  }
+  .wcc-trustbar__item { display: flex; align-items: center; gap: 7px; }
+  .wcc-trustbar__dot  { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+
+  /* ── HERO ── */
+  .wcc-hero { background: var(--bg-dark); position: relative; overflow: hidden; }
+  .wcc-hero__bg {
+    position: absolute; inset: 0;
+    background-image: url('https://a-diy.com/cdn/shop/files/pressure-treated-kiln-dried-wood-deck-kit-648657.jpg?width=1200');
+    background-size: cover; background-position: center 45%;
+    opacity: 0.22;
+  }
+  .wcc-hero__grad {
+    position: absolute; inset: 0;
+    background: linear-gradient(115deg, rgba(28,38,32,0.97) 0%, rgba(28,38,32,0.75) 50%, rgba(28,38,32,0.5) 100%);
+  }
+  .wcc-hero__inner {
+    position: relative; z-index: 1;
+    padding: 96px 0 88px;
+    display: grid; grid-template-columns: 1fr 420px;
+    gap: 60px; align-items: center;
+  }
+  .wcc-hero__tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.18); border-radius: 40px;
+    padding: 7px 14px; font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.7); margin-bottom: 24px;
+  }
+  .wcc-hero__tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--tp-green); flex-shrink: 0; }
+  .wcc-hero__sub {
+    font-size: clamp(16px, 1.9vw, 19px); color: rgba(255,255,255,0.7);
+    max-width: 540px; margin: 22px 0 36px; line-height: 1.65;
+  }
+  .wcc-hero__sub strong { color: #fff; font-weight: 600; }
+  .wcc-hero__micro { margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.35); letter-spacing: 0.02em; }
+
+  .wcc-hero__card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-lg); padding: 32px;
+  }
+  .wcc-hero__card-title {
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    margin-bottom: 20px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .wcc-stat-list { display: flex; flex-direction: column; gap: 16px; }
+  .wcc-stat-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .wcc-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .wcc-stat-row__label { font-size: 13px; color: rgba(255,255,255,0.5); }
+  .wcc-stat-row__val {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif); font-size: 20px;
+    color: #fff; font-weight: 600; text-align: right; letter-spacing: -0.01em;
+  }
+  .wcc-stat-row__val--green { color: #7ecfb5; }
+
+  /* ── SPEC BAND (replaces the old yellow stat band) ── */
+  .wcc-band { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .wcc-band__grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .wcc-band__cell { padding: 32px 20px; text-align: center; border-right: 1px solid var(--border); }
+  .wcc-band__cell:last-child { border-right: none; }
+  .wcc-band__num {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 36px; line-height: 1; letter-spacing: -0.03em;
+    color: var(--green); font-weight: 700; margin-bottom: 8px;
+  }
+  .wcc-band__label { font-size: 13px; color: var(--muted); letter-spacing: 0.02em; }
+
+  /* ── SPLIT INTRO (contractor vs traditional DIY) ── */
+  .wcc-split-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .wcc-split-intro__panel { padding: 56px 48px; position: relative; }
+  .wcc-split-intro__panel--left  { background: #fff; border-right: 1px solid var(--border); }
+  .wcc-split-intro__panel--right { background: var(--bg); }
+  .wcc-split-intro__label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 16px; display: block;
+    color: #b03a2e;
+  }
+  .wcc-split-intro__h {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(21px, 2.6vw, 27px); color: var(--dark);
+    margin-bottom: 14px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em;
+  }
+  .wcc-split-intro__body { font-size: 15px; color: var(--mid); line-height: 1.7; margin-bottom: 24px; }
+  .wcc-pain-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .wcc-pain-list li { display: flex; gap: 12px; align-items: flex-start; }
+  .wcc-pain-list__x {
+    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    background: #fee; border: 1px solid #f5c0bc; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #b03a2e;
+  }
+  .wcc-pain-list__title { display: block; font-weight: 600; font-size: 15px; color: var(--dark); margin-bottom: 3px; }
+  .wcc-pain-list__body  { display: block; font-size: 14px; color: var(--mid); line-height: 1.6; }
+
+  /* ── PULL STATEMENT ── */
+  .wcc-pull {
+    background: var(--green-light); border-left: 3px solid var(--green);
+    padding: 32px 36px; border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .wcc-pull p {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(18px, 2vw, 23px); line-height: 1.45;
+    color: var(--dark); font-weight: 500; letter-spacing: -0.01em;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .wcc-tablewrap { overflow-x: auto; margin-top: 44px; border-radius: var(--radius-lg); border: 1px solid var(--border); }
+  .wcc-comparison { width: 100%; border-collapse: collapse; min-width: 660px; background: #fff; font-size: 14px; }
+  .wcc-comparison th, .wcc-comparison td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+  .wcc-comparison thead th {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+  .wcc-comparison thead th.wcc-col--winner { background: var(--green); color: #fff; }
+  .wcc-comparison td.wcc-col--winner { background: var(--green-light); color: var(--green-dark); font-weight: 600; }
+  .wcc-comparison td.wcc-col--bad { color: var(--muted); }
+  .wcc-comparison tbody tr:last-child th, .wcc-comparison tbody tr:last-child td { border-bottom: none; }
+  .wcc-comparison tbody th { font-weight: 600; color: var(--dark); }
+
+  /* ── INLINE CTA BAND ── */
+  .wcc-ctaband { background: var(--green); padding: 28px 0; }
+  .wcc-ctaband__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .wcc-ctaband__text {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(18px, 2.4vw, 24px); color: #fff; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .wcc-ctaband__text em { font-style: normal; font-weight: 400; opacity: 0.75; }
+  .wcc-ctaband__sub { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+
+  /* ── STEPS ── */
+  .wcc-steps { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 48px; position: relative; }
+  .wcc-steps::before {
+    content: ''; position: absolute;
+    top: 28px; left: 56px; right: 56px; height: 2px;
+    background: linear-gradient(to right, var(--green), var(--blue));
+    z-index: 0;
+  }
+  .wcc-step { text-align: center; padding: 0 12px; position: relative; z-index: 1; }
+  .wcc-step__num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--green); color: #fff;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 19px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    /* The ring is the section background punching through the connector line. */
+    box-shadow: 0 0 0 4px #fff, 0 0 0 6px rgba(57,105,88,0.2);
+  }
+  .wcc-step__title { font-weight: 700; font-size: 14px; color: var(--dark); margin-bottom: 6px; }
+  .wcc-step__body  { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* ── BENEFIT GRID ── */
+  .wcc-specs__grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+    margin-top: 48px;
+  }
+  .wcc-spec { background: #fff; padding: 28px 24px; }
+  .wcc-spec__label { font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 8px; line-height: 1.3; }
+  .wcc-spec__desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── REVIEWS ── */
+  .wcc-tp-header { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+  .wcc-tp-score-block { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .wcc-tp-score-num {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 58px; line-height: 1; letter-spacing: -0.03em;
+    color: var(--dark); font-weight: 700;
+  }
+  .wcc-tp-stars-row { display: flex; gap: 4px; }
+  .wcc-tp-star-icon {
+    width: 28px; height: 28px; border-radius: 3px;
+    background: var(--tp-green);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wcc-tp-star-icon svg { width: 16px; height: 16px; fill: #fff; }
+  .wcc-tp-star-icon--half { background: linear-gradient(to right, var(--tp-green) 50%, #ccc 50%); }
+  .wcc-tp-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .wcc-tp-divider { width: 1px; height: 80px; background: var(--border); }
+  .wcc-tp-breakdown { flex: 1; min-width: 200px; }
+  .wcc-tp-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .wcc-tp-bar-label { font-size: 12px; color: var(--muted); width: 32px; text-align: right; flex-shrink: 0; }
+  .wcc-tp-bar-track { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .wcc-tp-bar-fill  { display: block; height: 100%; background: var(--tp-green); border-radius: 4px; }
+  .wcc-tp-bar-pct   { font-size: 12px; color: var(--muted); width: 30px; flex-shrink: 0; }
+
+  .wcc-tp-quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .wcc-tp-quote {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 28px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .wcc-tp-quote:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+  .wcc-tp-quote__stars { display: flex; gap: 3px; }
+  .wcc-tp-quote__star {
+    width: 18px; height: 18px; border-radius: 2px;
+    background: var(--tp-green);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wcc-tp-quote__star svg { width: 11px; height: 11px; fill: #fff; }
+  .wcc-tp-quote__title { font-weight: 700; font-size: 15px; color: var(--dark); }
+  .wcc-tp-quote__text  { font-size: 14px; color: var(--mid); line-height: 1.65; flex: 1; }
+  .wcc-tp-quote__name  { font-weight: 600; font-size: 13px; color: var(--dark); }
+  .wcc-tp-quote__source{ font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .wcc-badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 44px; }
+  .wcc-badge {
+    background: #fff; border: 1px solid var(--border); border-radius: 40px;
+    padding: 9px 18px; font-size: 13px; font-weight: 500; color: var(--mid);
+  }
+
+  /* ── DECISION SPLIT ── */
+  .wcc-decide { background: var(--bg-ink); padding: 88px 0; }
+  .wcc-decide__header { text-align: center; margin-bottom: 48px; }
+  .wcc-decide__header .wcc-h2 { color: #fff; }
+  .wcc-decide__header p { font-size: 17px; color: rgba(255,255,255,0.55); margin-top: 12px; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .wcc-decide__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .wcc-decide__card { border-radius: var(--radius-lg); padding: 40px 36px; display: flex; flex-direction: column; }
+  .wcc-decide__card--a { background: var(--green); }
+  .wcc-decide__card--b { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); }
+  .wcc-decide__card__tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; opacity: 0.55; color: #fff; margin-bottom: 14px;
+  }
+  .wcc-decide__card__h {
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(19px, 2.3vw, 25px); color: #fff; font-weight: 600;
+    line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 16px;
+  }
+  .wcc-decide__card__body { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.65; flex: 1; margin-bottom: 28px; }
+  .wcc-decide__card__micro { font-size: 12px; color: rgba(255,255,255,0.38); margin-top: 12px; }
+  .wcc-decide__btn-a, .wcc-decide__btn-b {
+    display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
+    font-family: var(--font-body-family, 'Outfit', sans-serif); font-weight: 700; font-size: 15px;
+    padding: 14px 24px; border-radius: 5px;
+    text-decoration: none; transition: transform 0.15s, background 0.15s;
+  }
+  .wcc-decide__btn-a { background: #fff; color: var(--green); }
+  .wcc-decide__btn-a:hover { background: #f0f8f5; transform: translateY(-2px); }
+  .wcc-decide__btn-b { background: var(--blue); color: #fff; box-shadow: 0 4px 16px rgba(65,119,173,0.35); }
+  .wcc-decide__btn-b:hover { background: var(--blue-dark); transform: translateY(-2px); }
+
+  /* ── FAQ ── */
+  .wcc-faq {
+    display: flex; flex-direction: column;
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    overflow: hidden; margin-top: 48px;
+  }
+  .wcc-faq__item { border-bottom: 1px solid var(--border); }
+  .wcc-faq__item:last-child { border-bottom: none; }
+  .wcc-faq__q {
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; text-align: left; gap: 16px;
+    padding: 20px 24px; cursor: pointer; background: #fff;
+    border: 0; font-family: inherit; font-weight: 600; font-size: 16px; color: var(--dark);
+    transition: background 0.15s;
+  }
+  .wcc-faq__q:hover { background: var(--bg); }
+  .wcc-faq__q:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
+  .wcc-faq__q::after { content: '+'; font-size: 22px; font-weight: 300; color: var(--green); flex-shrink: 0; line-height: 1; }
+  .wcc-faq__q[aria-expanded='true'] { background: var(--bg); }
+  .wcc-faq__q[aria-expanded='true']::after { content: '−'; }
+  .wcc-faq__a { padding: 4px 24px 22px; font-size: 15px; color: var(--mid); line-height: 1.7; background: var(--bg); }
+  .wcc-faq__a[hidden] { display: none; }
+
+  /* ── FINAL CTA ── */
+  .wcc-close { background: var(--bg-dark); padding: 100px 0; text-align: center; position: relative; overflow: hidden; }
+  .wcc-close__img {
+    position: absolute; inset: 0;
+    background-image: url('https://a-diy.com/cdn/shop/files/pressure-treated-kiln-dried-wood-deck-kit-719820.jpg?width=1200');
+    background-size: cover; background-position: center;
+    opacity: 0.1;
+  }
+  .wcc-close__grad {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(28,38,32,0.95) 0%, rgba(28,38,32,0.7) 100%);
+  }
+  .wcc-close__inner { position: relative; z-index: 1; }
+  .wcc-close .wcc-h2 { color: #fff; max-width: 700px; margin: 0 auto 18px; }
+  .wcc-close__sub { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 540px; margin: 0 auto 40px; line-height: 1.7; }
+  .wcc-close .wcc-cta-row { justify-content: center; }
+  .wcc-close__trust { margin-top: 28px; font-size: 13px; color: rgba(255,255,255,0.35); }
+
+  /* ── SCROLL ANIM ──
+     opacity:0 is applied only when the section's own script has run (.wcc-js)
+     and only when the visitor has not asked for reduced motion, so a blocked or
+     failed script can never leave the page blank. */
+  @keyframes wcc-rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .wcc-js .wcc-anim { opacity: 0; }
+    .wcc-js .wcc-anim.in { animation: wcc-rise 0.6s ease forwards; }
+    .wcc-js .wcc-anim-d1 { animation-delay: 0.05s; }
+    .wcc-js .wcc-anim-d2 { animation-delay: 0.15s; }
+    .wcc-js .wcc-anim-d3 { animation-delay: 0.28s; }
+    .wcc-js .wcc-anim-d4 { animation-delay: 0.4s; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1000px) {
+    .wcc-hero__inner { grid-template-columns: 1fr; gap: 40px; }
+    .wcc-hero__card { max-width: 480px; }
+    .wcc-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .wcc-steps::before { display: none; }
+    .wcc-specs__grid { grid-template-columns: repeat(2, 1fr); }
+    .wcc-tp-quotes { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 780px) {
+    .wcc-section { padding: 56px 0; }
+    .wcc-hero__inner { padding: 64px 0 56px; }
+    .wcc-split-intro { grid-template-columns: 1fr; }
+    .wcc-split-intro__panel { padding: 40px 28px; }
+    .wcc-split-intro__panel--left { border-right: none; border-bottom: 1px solid var(--border); }
+    .wcc-band__grid { grid-template-columns: 1fr 1fr; }
+    .wcc-band__cell { border-bottom: 1px solid var(--border); }
+    .wcc-band__cell:nth-child(2n) { border-right: none; }
+    .wcc-band__cell:nth-last-child(-n+2) { border-bottom: none; }
+    .wcc-tp-divider { display: none; }
+    .wcc-tp-quotes { grid-template-columns: 1fr; }
+    .wcc-decide__grid { grid-template-columns: 1fr; }
+    .wcc-steps { grid-template-columns: 1fr; }
+    .wcc-tp-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .wcc-pull { padding: 26px 24px; }
+  }
+  @media (max-width: 480px) {
+    .wcc-specs__grid { grid-template-columns: 1fr; }
+    .wcc-cta-row { flex-direction: column; align-items: stretch; }
+    .wcc-cta-row .wcc-btn { justify-content: center; }
+    /* At 390px the large CTA label is wider than the viewport, and `nowrap`
+       turns that into horizontal overflow for the whole section. */
+    .wcc-btn { white-space: normal; text-align: center; }
+    .wcc-btn--lg { padding: 15px 20px; font-size: 15px; }
+    .wcc-close { padding: 64px 0; }
+    .wcc-close .wcc-btn { width: 100%; max-width: 340px; justify-content: center; }
+    .wcc-ctaband__inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<script>
+  document.documentElement.classList.add('wcc-js');
+</script>
+
+<div class="wcc">
+  {%- comment -%} ── TRUST BAR ── {%- endcomment -%}
+  <div class="wcc-trustbar">
+    <div class="wcc-trustbar__item">
+      <span>Rated 4.8 out of 5 on Trustpilot</span>
+    </div>
+    <div class="wcc-trustbar__dot"></div>
+    <div class="wcc-trustbar__item">
+      <span><span class="dynamic-review-count-global"></span> verified reviews</span>
+    </div>
+    <div class="wcc-trustbar__dot"></div>
+    <div class="wcc-trustbar__item">
+      <span>Ships Across All USA · 30-Day Returns · 5-Year Structural Warranty</span>
+    </div>
+  </div>
+
+  {%- comment -%} ── HERO ── {%- endcomment -%}
+  <section class="wcc-hero">
+    <div class="wcc-hero__bg"></div>
+    <div class="wcc-hero__grad"></div>
+    <div class="wcc-wrap">
+      <div class="wcc-hero__inner">
+        <div>
+          <div class="wcc-hero__tag wcc-anim wcc-anim-d1">
+            <span class="wcc-hero__tag-dot"></span>
+            Rated Excellent on Trustpilot • 5,000+ Decks Built
+          </div>
+          <h1 class="wcc-h1 wcc-anim wcc-anim-d2">
+            Decks Built by<br>
+            the People<br>
+            <em>Who Own Them.</em>
+          </h1>
+          <p class="wcc-hero__sub wcc-anim wcc-anim-d3">
+            A-DIY deck kits arrive <strong>pre-cut, pre-measured and labeled</strong> — so a homeowner with a power
+            drill can assemble a professional-quality deck in 8 to 16 hours, for 30–50% less than hiring a contractor.
+          </p>
+          <div class="wcc-cta-row wcc-anim wcc-anim-d4">
+            <a
+              href="https://a-diy.com/pages/design-consultation"
+              class="wcc-btn wcc-btn--primary wcc-btn--lg book-btn-call"
+            >
+              Book a Free Design Consultation <span class="wcc-btn__arrow">→</span>
+            </a>
+            <a
+              href="https://a-diy.com/products/pressure-treated-kiln-dried-wood-deck-kit"
+              class="wcc-btn wcc-btn--ghost-white wcc-btn--lg"
+            >
+              Browse Deck Kits
+            </a>
+          </div>
+          <p class="wcc-hero__micro wcc-anim wcc-anim-d4">Free · 15 minutes · No obligation</p>
+        </div>
+        <div class="wcc-hero__card wcc-anim wcc-anim-d3">
+          <div class="wcc-hero__card-title">At a Glance</div>
+          <div class="wcc-stat-list">
+            <div class="wcc-stat-row">
+              <span class="wcc-stat-row__label">vs. Contractor cost</span>
+              <span class="wcc-stat-row__val wcc-stat-row__val--green">30–50% less</span>
+            </div>
+            <div class="wcc-stat-row">
+              <span class="wcc-stat-row__label">Time to build</span>
+              <span class="wcc-stat-row__val">8–16 hrs</span>
+            </div>
+            <div class="wcc-stat-row">
+              <span class="wcc-stat-row__label">Tools required</span>
+              <span class="wcc-stat-row__val">One drill</span>
+            </div>
+            <div class="wcc-stat-row">
+              <span class="wcc-stat-row__label">Structural warranty</span>
+              <span class="wcc-stat-row__val">5 years</span>
+            </div>
+            <div class="wcc-stat-row">
+              <span class="wcc-stat-row__label">Delivery</span>
+              <span class="wcc-stat-row__val">10–14 days</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── SPEC BAND ── {%- endcomment -%}
+  <div class="wcc-band">
+    <div class="wcc-wrap">
+      <div class="wcc-band__grid">
+        <div class="wcc-band__cell">
+          <div class="wcc-band__num">5,000+</div>
+          <div class="wcc-band__label">Decks built by homeowners</div>
+        </div>
+        <div class="wcc-band__cell">
+          <div class="wcc-band__num">30–50%</div>
+          <div class="wcc-band__label">Saved versus a contractor</div>
+        </div>
+        <div class="wcc-band__cell">
+          <div class="wcc-band__num">8–16</div>
+          <div class="wcc-band__label">Hours to assemble</div>
+        </div>
+        <div class="wcc-band__cell">
+          <div class="wcc-band__num">4.8</div>
+          <div class="wcc-band__label">Average verified rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── THE TWO USUAL OPTIONS ── {%- endcomment -%}
+  <section class="wcc-section wcc-section--sm">
+    <div class="wcc-wrap wcc-anim" style="text-align:center; max-width:660px;">
+      <span class="wcc-eyebrow">Where most homeowners start</span>
+      <h2 class="wcc-h2">Two Options. Both Cost More Than They Should.</h2>
+    </div>
+  </section>
+
+  <div class="wcc-split-intro wcc-anim">
+    <div class="wcc-split-intro__panel wcc-split-intro__panel--left">
+      <span class="wcc-split-intro__label">Option one</span>
+      <h3 class="wcc-split-intro__h">Hiring a Contractor</h3>
+      <p class="wcc-split-intro__body">
+        "Show up Monday, deck is done Friday." The reality is usually different.
+      </p>
+      <ul class="wcc-pain-list">
+        <li>
+          <span class="wcc-pain-list__x" aria-hidden="true">✗</span>
+          <span>
+            <span class="wcc-pain-list__title">Quotes that land higher than expected</span>
+            <span class="wcc-pain-list__body">
+              Most homeowners see estimates 2–3× what they budgeted. Labor accounts for 50–60% of a typical invoice —
+              often more than the entire kit.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="wcc-pain-list__x" aria-hidden="true">✗</span>
+          <span>
+            <span class="wcc-pain-list__title">A timeline you do not control</span>
+            <span class="wcc-pain-list__body">
+              Between scheduling, delays and weather, two weeks routinely becomes two months.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="wcc-pain-list__x" aria-hidden="true">✗</span>
+          <span>
+            <span class="wcc-pain-list__title">Someone else built your backyard</span>
+            <span class="wcc-pain-list__body">
+              You hand over the budget and the space, and wait to see what comes back.
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div class="wcc-split-intro__panel wcc-split-intro__panel--right">
+      <span class="wcc-split-intro__label">Option two</span>
+      <h3 class="wcc-split-intro__h">Traditional DIY</h3>
+      <p class="wcc-split-intro__body">
+        "Save money, feel proud, done in a weekend." Also not how it tends to go.
+      </p>
+      <ul class="wcc-pain-list">
+        <li>
+          <span class="wcc-pain-list__x" aria-hidden="true">✗</span>
+          <span>
+            <span class="wcc-pain-list__title">The project starts before the build does</span>
+            <span class="wcc-pain-list__body">
+              Lumber calculations, structural planning, material lists — a part-time job before a single board is cut.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="wcc-pain-list__x" aria-hidden="true">✗</span>
+          <span>
+            <span class="wcc-pain-list__title">Tools and costs you did not plan for</span>
+            <span class="wcc-pain-list__body">
+              Circular saw, miter saw, level, post-hole digger. Rental fees and re-cuts add up quickly.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="wcc-pain-list__x" aria-hidden="true">✗</span>
+          <span>
+            <span class="wcc-pain-list__title">Weekends that keep getting spent</span>
+            <span class="wcc-pain-list__body">
+              Traditional builds stretch across months, and family weekends become work weekends.
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {%- comment -%} ── THE THIRD OPTION + COMPARISON ── {%- endcomment -%}
+  <section class="wcc-section wcc-section--bg">
+    <div class="wcc-wrap">
+      <div class="wcc-anim" style="max-width:660px;">
+        <span class="wcc-eyebrow">The third option</span>
+        <h2 class="wcc-h2">Engineered Kits You Assemble Yourself</h2>
+      </div>
+      <div class="wcc-anim" style="max-width:720px; margin-top:20px;">
+        <p class="wcc-lead">
+          A-DIY kits are designed for homeowners, not for crews. The structural design, the cut list and the hardware
+          are worked out before the pallet leaves the warehouse, so what arrives is a deck to assemble rather than a
+          pile of lumber to figure out.
+        </p>
+        <p class="wcc-body" style="margin-top:16px;">
+          This is not traditional DIY, and it is not hiring out. It is the option that produces a deck built to
+          residential code standards at a fraction of the cost — with the part you actually wanted left in.
+        </p>
+      </div>
+
+      <div class="wcc-anim" style="margin-top:36px;">
+        <div class="wcc-pull">
+          <p>Labor accounts for 50–60% of a typical contractor invoice. With a kit, you are paying for materials and
+          engineering — not for someone else's schedule.</p>
+        </div>
+      </div>
+
+      <div class="wcc-tablewrap wcc-anim">
+        <table class="wcc-comparison">
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col" class="wcc-col--bad">Contractor</th>
+              <th scope="col" class="wcc-col--bad">Traditional DIY</th>
+              <th scope="col" class="wcc-col--winner">A-DIY Kit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Cost</th>
+              <td class="wcc-col--bad">$15,000–$30,000+</td>
+              <td class="wcc-col--bad">Varies — hidden costs add up</td>
+              <td class="wcc-col--winner">30–50% less than a contractor</td>
+            </tr>
+            <tr>
+              <th scope="row">Time to build</th>
+              <td class="wcc-col--bad">2–8 weeks with delays</td>
+              <td class="wcc-col--bad">Months of weekends</td>
+              <td class="wcc-col--winner">8 to 16 hours</td>
+            </tr>
+            <tr>
+              <th scope="row">Tools required</th>
+              <td class="wcc-col--bad">The crew brings their own</td>
+              <td class="wcc-col--bad">Saws, levels, and more</td>
+              <td class="wcc-col--winner">A power drill</td>
+            </tr>
+            <tr>
+              <th scope="row">Skill level</th>
+              <td class="wcc-col--bad">None, but you pay for theirs</td>
+              <td class="wcc-col--bad">Intermediate to advanced</td>
+              <td class="wcc-col--winner">First-time builder</td>
+            </tr>
+            <tr>
+              <th scope="row">What can go wrong</th>
+              <td class="wcc-col--bad">Scheduling and invoices</td>
+              <td class="wcc-col--bad">Mistakes and re-cuts</td>
+              <td class="wcc-col--winner">Everything arrives prepared</td>
+            </tr>
+            <tr>
+              <th scope="row">Structure</th>
+              <td class="wcc-col--bad">Built to code on site</td>
+              <td class="wcc-col--bad">Depends on the builder</td>
+              <td class="wcc-col--winner">Engineered for 15,000+ lbs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── INLINE CTA BAND ── {%- endcomment -%}
+  <div class="wcc-ctaband">
+    <div class="wcc-wrap">
+      <div class="wcc-ctaband__inner">
+        <div>
+          <div class="wcc-ctaband__text">Not sure which size fits your yard? <em>We will tell you in 15 minutes.</em></div>
+          <div class="wcc-ctaband__sub">Free design consultation — no commitment, no pressure.</div>
+        </div>
+        <a href="https://a-diy.com/pages/design-consultation" class="wcc-decide__btn-a book-btn-call">
+          Book a Free Consultation <span class="wcc-btn__arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── HOW IT WORKS ── {%- endcomment -%}
+  <section class="wcc-section">
+    <div class="wcc-wrap">
+      <div class="wcc-anim" style="text-align:center; max-width:620px; margin:0 auto;">
+        <span class="wcc-eyebrow">How it works</span>
+        <h2 class="wcc-h2">From Order to Finished Deck in Five Steps</h2>
+      </div>
+      <div class="wcc-steps wcc-anim">
+        <div class="wcc-step">
+          <div class="wcc-step__num">1</div>
+          <div class="wcc-step__title">Size the deck</div>
+          <div class="wcc-step__body">
+            Book a free 15-minute consultation or browse standard sizes. We match the kit to your yard, your grade and
+            your budget.
+          </div>
+        </div>
+        <div class="wcc-step">
+          <div class="wcc-step__num">2</div>
+          <div class="wcc-step__title">The crate arrives</div>
+          <div class="wcc-step__body">
+            Pre-cut lumber, hardware, screws and a drill bit ship together, typically within 10 to 14 business days.
+          </div>
+        </div>
+        <div class="wcc-step">
+          <div class="wcc-step__num">3</div>
+          <div class="wcc-step__title">Set the foundation</div>
+          <div class="wcc-step__body">
+            Deck blocks with no digging, sono tubes, or helical piles for elevated builds. We tell you which one your
+            yard needs.
+          </div>
+        </div>
+        <div class="wcc-step">
+          <div class="wcc-step__num">4</div>
+          <div class="wcc-step__title">Assemble it</div>
+          <div class="wcc-step__body">
+            Follow the 3D visual instructions. Boards connect in sequence, and a standard build takes 8 to 16 hours.
+          </div>
+        </div>
+        <div class="wcc-step">
+          <div class="wcc-step__num">5</div>
+          <div class="wcc-step__title">Use the backyard</div>
+          <div class="wcc-step__body">
+            Add railings, stairs or a pergola, then sit down on something you built. That part is the point.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── WHAT IS INCLUDED ── {%- endcomment -%}
+  <section class="wcc-section wcc-section--bg">
+    <div class="wcc-wrap">
+      <div class="wcc-anim" style="max-width:660px;">
+        <span class="wcc-eyebrow">What is included</span>
+        <h2 class="wcc-h2">Everything in One Crate. Nothing Left to Figure Out.</h2>
+      </div>
+      <div class="wcc-specs__grid wcc-anim">
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">30–50% less than a contractor</div>
+          <div class="wcc-spec__desc">
+            Most customers save $8,000–$15,000 against the lowest quote they were given.
+          </div>
+        </div>
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">Assembles in 8 to 16 hours</div>
+          <div class="wcc-spec__desc">
+            A standard build is a single day's work, not a run of lost weekends.
+          </div>
+        </div>
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">One tool: a power drill</div>
+          <div class="wcc-spec__desc">
+            No circular saw, no miter saw, no measuring tape. The drill bit is in the crate.
+          </div>
+        </div>
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">Pre-cut, pre-measured, labeled</div>
+          <div class="wcc-spec__desc">
+            Every component is prepared in advance. Your job is to follow the steps, not to work them out.
+          </div>
+        </div>
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">Engineered for 15,000+ lbs</div>
+          <div class="wcc-spec__desc">
+            Grade 1, kiln-dried, pressure-treated lumber built to residential code standards.
+          </div>
+        </div>
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">Sized to your space</div>
+          <div class="wcc-spec__desc">
+            Choose the footprint, the foundation method, railings and stairs. Wood or composite.
+          </div>
+        </div>
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">5-year structural warranty</div>
+          <div class="wcc-spec__desc">
+            Composite kits carry 25 years, covering the structure as well as staining and fading.
+          </div>
+        </div>
+        <div class="wcc-spec">
+          <div class="wcc-spec__label">Support through the build</div>
+          <div class="wcc-spec__desc">
+            Our team is reachable by phone and email from design to assembly. Most questions are answered the same day.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── REVIEWS ── {%- endcomment -%}
+  <section class="wcc-section">
+    <div class="wcc-wrap">
+      <div class="wcc-anim" style="max-width:660px;">
+        <span class="wcc-eyebrow">Verified reviews</span>
+        <h2 class="wcc-h2">Rated Excellent by Verified Buyers</h2>
+      </div>
+
+      <div class="wcc-tp-header wcc-anim" style="margin-top:36px;">
+        <div class="wcc-tp-score-block">
+          <div class="wcc-tp-score-num">4.8</div>
+          <div class="wcc-tp-stars-row" role="img" aria-label="Rated 4.8 out of 5">
+            <span class="wcc-tp-star-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-star-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-star-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-star-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-star-icon wcc-tp-star-icon--half"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+          </div>
+          <div class="wcc-tp-meta">Based on <span class="dynamic-review-count-global"></span> verified reviews</div>
+        </div>
+
+        <div class="wcc-tp-divider"></div>
+
+        <div class="wcc-tp-breakdown">
+          <div class="wcc-tp-bar-row">
+            <span class="wcc-tp-bar-label">5 star</span>
+            <span class="wcc-tp-bar-track"><span class="wcc-tp-bar-fill" style="width:84%;"></span></span>
+            <span class="wcc-tp-bar-pct">84%</span>
+          </div>
+          <div class="wcc-tp-bar-row">
+            <span class="wcc-tp-bar-label">4 star</span>
+            <span class="wcc-tp-bar-track"><span class="wcc-tp-bar-fill" style="width:7%;"></span></span>
+            <span class="wcc-tp-bar-pct">7%</span>
+          </div>
+          <div class="wcc-tp-bar-row">
+            <span class="wcc-tp-bar-label">3 star</span>
+            <span class="wcc-tp-bar-track"><span class="wcc-tp-bar-fill" style="width:7%;"></span></span>
+            <span class="wcc-tp-bar-pct">7%</span>
+          </div>
+          <div class="wcc-tp-bar-row">
+            <span class="wcc-tp-bar-label">2 star</span>
+            <span class="wcc-tp-bar-track"><span class="wcc-tp-bar-fill" style="width:2%;"></span></span>
+            <span class="wcc-tp-bar-pct">2%</span>
+          </div>
+          <div class="wcc-tp-bar-row">
+            <span class="wcc-tp-bar-label">1 star</span>
+            <span class="wcc-tp-bar-track"><span class="wcc-tp-bar-fill" style="width:0%;"></span></span>
+            <span class="wcc-tp-bar-pct">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wcc-tp-quotes wcc-anim">
+        <div class="wcc-tp-quote">
+          <div class="wcc-tp-quote__stars" role="img" aria-label="5 out of 5">
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+          </div>
+          <div class="wcc-tp-quote__title">Saved thousands</div>
+          <div class="wcc-tp-quote__text">
+            "I called three contractors. The lowest quote was $16,500. My A-DIY deck cost a fraction of that, and I put
+            it together myself over a Saturday. It looks like a professional built it — because the system practically
+            builds itself."
+          </div>
+          <div>
+            <div class="wcc-tp-quote__name">Lori M.</div>
+            <div class="wcc-tp-quote__source">Verified buyer</div>
+          </div>
+        </div>
+
+        <div class="wcc-tp-quote">
+          <div class="wcc-tp-quote__stars" role="img" aria-label="5 out of 5">
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+          </div>
+          <div class="wcc-tp-quote__title">Not a builder</div>
+          <div class="wcc-tp-quote__text">
+            "I'm not the handiest person — I'll say it plainly. But the instructions were so clear and every piece was
+            so carefully labeled that I had the whole deck assembled in a day. My neighbours still don't believe I did
+            it myself."
+          </div>
+          <div>
+            <div class="wcc-tp-quote__name">Steve J.</div>
+            <div class="wcc-tp-quote__source">Verified buyer</div>
+          </div>
+        </div>
+
+        <div class="wcc-tp-quote">
+          <div class="wcc-tp-quote__stars" role="img" aria-label="5 out of 5">
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+            <span class="wcc-tp-quote__star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></span>
+          </div>
+          <div class="wcc-tp-quote__title">Pro-grade engineering</div>
+          <div class="wcc-tp-quote__text">
+            "I've been in construction for 20 years, and I'm genuinely impressed by the engineering. The modular design
+            is smart. The tolerances are tight. My colleagues keep asking who built it — and I enjoy telling them I
+            did."
+          </div>
+          <div>
+            <div class="wcc-tp-quote__name">Matthew R.</div>
+            <div class="wcc-tp-quote__source">Verified buyer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wcc-badges wcc-anim">
+        <span class="wcc-badge">5,000+ decks built</span>
+        <span class="wcc-badge">4.8 / 5 from <span class="dynamic-review-count-global"></span> reviews</span>
+        <span class="wcc-badge">Ships across all USA</span>
+        <span class="wcc-badge">5-year structural warranty</span>
+        <span class="wcc-badge">Pay over 24 months with Affirm</span>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── TWO PATHS ── {%- endcomment -%}
+  <div class="wcc-decide">
+    <div class="wcc-wrap">
+      <div class="wcc-decide__header wcc-anim">
+        <span class="wcc-eyebrow wcc-eyebrow--light">Where are you right now?</span>
+        <h2 class="wcc-h2">Two Paths. One Great Deck.</h2>
+        <p>Tell us where you are and we will point you in the right direction.</p>
+      </div>
+      <div class="wcc-decide__grid wcc-anim">
+        <div class="wcc-decide__card wcc-decide__card--a">
+          <div class="wcc-decide__card__tag">Option A</div>
+          <div class="wcc-decide__card__h">"I want a deck, but I am not sure what size or configuration is right."</div>
+          <div class="wcc-decide__card__body">
+            Questions about size, foundation options, building on a slope, or budget? That is what the free design
+            consultation is for. A deck specialist works through it with you — no sales pressure, just answers.
+          </div>
+          <a href="https://a-diy.com/pages/design-consultation" class="wcc-decide__btn-a book-btn-call">
+            Book My Free Consultation <span class="wcc-btn__arrow">→</span>
+          </a>
+          <div class="wcc-decide__card__micro">Free · 15 minutes · No commitment</div>
+        </div>
+        <div class="wcc-decide__card wcc-decide__card--b">
+          <div class="wcc-decide__card__tag">Option B</div>
+          <div class="wcc-decide__card__h">"I know my yard. I am ready to order and start building."</div>
+          <div class="wcc-decide__card__body">
+            You have done the research and you know the size. Browse the full lineup — pressure-treated or composite,
+            ground-level or elevated — and configure the deck you want. Everything ships to your door.
+          </div>
+          <a href="https://a-diy.com/products/pressure-treated-kiln-dried-wood-deck-kit" class="wcc-decide__btn-b">
+            Browse Deck Kits <span class="wcc-btn__arrow">→</span>
+          </a>
+          <div class="wcc-decide__card__micro">Ships in 10 to 14 business days · Everything included · Pay over 24 months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── FAQ ── {%- endcomment -%}
+  <section class="wcc-section wcc-section--bg">
+    <div class="wcc-wrap--narrow">
+      <div class="wcc-anim" style="text-align:center;">
+        <span class="wcc-eyebrow">Common questions</span>
+        <h2 class="wcc-h2">Everything You Need to Know Before You Order</h2>
+      </div>
+      <div class="wcc-faq wcc-anim">
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q1" aria-expanded="false" aria-controls="wcc-faq-a1">
+            <span>Do I need any special tools or equipment?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a1" role="region" aria-labelledby="wcc-faq-q1" hidden>
+            A standard residential power drill, which most homeowners already own. The drill bit, the screws and every
+            piece of hardware ship in the crate. No circular saw, no miter saw, no measuring tape.
+          </div>
+        </div>
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q2" aria-expanded="false" aria-controls="wcc-faq-a2">
+            <span>How long does the build actually take?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a2" role="region" aria-labelledby="wcc-faq-q2" hidden>
+            A standard build takes 8 to 16 hours, so most customers finish in a single day. Larger or elevated
+            configurations sit at the upper end of that range. There is no multi-week project here.
+          </div>
+        </div>
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q3" aria-expanded="false" aria-controls="wcc-faq-a3">
+            <span>I have never built anything before. Can I really do this?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a3" role="region" aria-labelledby="wcc-faq-q3" hidden>
+            Yes, and we hear the question constantly from customers who were sure they could not. The system was
+            designed for first-time builders. The 3D visual instructions cover every connection in order. If you can
+            follow directions, you can build this deck.
+          </div>
+        </div>
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q4" aria-expanded="false" aria-controls="wcc-faq-a4">
+            <span>What exactly comes in the kit?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a4" role="region" aria-labelledby="wcc-faq-q4" hidden>
+            Everything. Pre-cut and labeled lumber, all screws and hardware, a drill bit, and a full set of 3D assembly
+            instructions. You will not need a lumber yard or hardware store run. If anything is missing, we make it
+            right.
+          </div>
+        </div>
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q5" aria-expanded="false" aria-controls="wcc-faq-a5">
+            <span>Can I customize the size, height or features?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a5" role="region" aria-labelledby="wcc-faq-q5" hidden>
+            Yes. Kits come in multiple sizes and configurations. You choose the foundation type — deck blocks for
+            ground level, sono tubes or helical piles for elevated builds — and add railings, stairs and finishing
+            options. Book a free consultation and we will spec it out with you.
+          </div>
+        </div>
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q6" aria-expanded="false" aria-controls="wcc-faq-a6">
+            <span>Is the quality as good as a contractor-built deck?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a6" role="region" aria-labelledby="wcc-faq-q6" hidden>
+            The materials and engineering are professional grade. The lumber is Grade 1, kiln-dried and
+            pressure-treated, the structure is engineered for 15,000+ lbs and built to residential code standards, and
+            wood kits carry a 5-year structural warranty — 25 years on composite. The difference is that you are paying
+            for materials, not for contractor markup and labor.
+          </div>
+        </div>
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q7" aria-expanded="false" aria-controls="wcc-faq-a7">
+            <span>What happens if I get stuck during the build?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a7" role="region" aria-labelledby="wcc-faq-q7" hidden>
+            Our expert team is available by phone and email throughout the build, and replacement parts ship fast. We
+            have helped thousands of customers through assembly, and most issues are resolved the same day. You are
+            never left on your own.
+          </div>
+        </div>
+        <div class="wcc-faq__item">
+          <button class="wcc-faq__q" type="button" id="wcc-faq-q8" aria-expanded="false" aria-controls="wcc-faq-a8">
+            <span>How does the free design consultation work?</span>
+          </button>
+          <div class="wcc-faq__a" id="wcc-faq-a8" role="region" aria-labelledby="wcc-faq-q8" hidden>
+            It is a 15-minute call with one of our deck specialists. You describe your space, your goals and your
+            budget, and we recommend the right kit and configuration. No pressure and no obligation — just honest
+            guidance so you can decide.
+          </div>
+        </div>
+      </div>
+      <div class="wcc-anim" style="text-align:center; margin-top:32px;">
+        <a href="https://a-diy.com/pages/design-consultation" class="wcc-btn wcc-btn--primary book-btn-call">
+          Still have questions? Book a free call <span class="wcc-btn__arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── CLOSING CTA ── {%- endcomment -%}
+  <section class="wcc-close">
+    <div class="wcc-close__img"></div>
+    <div class="wcc-close__grad"></div>
+    <div class="wcc-wrap wcc-close__inner">
+      <div class="wcc-anim">
+        <span class="wcc-eyebrow wcc-eyebrow--light">Your backyard is waiting</span>
+        <h2 class="wcc-h2">A year from now, you will wish you had started this weekend.</h2>
+        <p class="wcc-close__sub">
+          Right now your backyard is just a yard. This time next summer it could be the place your family actually
+          lives in — mornings, evenings, every weekend. You do not need a contractor. You do not need experience. You
+          just need the right system.
+        </p>
+        <div class="wcc-cta-row">
+          <a
+            href="https://a-diy.com/pages/design-consultation"
+            class="wcc-btn wcc-btn--primary wcc-btn--lg book-btn-call"
+          >
+            Book My Free Design Consultation <span class="wcc-btn__arrow">→</span>
+          </a>
+          <a
+            href="https://a-diy.com/products/pressure-treated-kiln-dried-wood-deck-kit"
+            class="wcc-btn wcc-btn--ghost-white wcc-btn--lg"
+          >
+            Browse Deck Kits
+          </a>
+        </div>
+        <p class="wcc-close__trust">
+          Rated Excellent on Trustpilot · 5,000+ homeowners · Ships across all USA · Expert support included
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var elems = document.querySelectorAll('.wcc-anim');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              obs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 }
+      );
+      elems.forEach(function (el) {
+        obs.observe(el);
+      });
+    } else {
+      elems.forEach(function (el) {
+        el.classList.add('in');
+      });
+    }
+
+    // Single-open accordion. The trigger is a real <button>, so keyboard
+    // activation and screen-reader state come for free via aria-expanded.
+    var questions = document.querySelectorAll('.wcc-faq__q');
+    questions.forEach(function (q) {
+      q.addEventListener('click', function () {
+        var wasOpen = q.getAttribute('aria-expanded') === 'true';
+        questions.forEach(function (other) {
+          other.setAttribute('aria-expanded', 'false');
+          var panel = document.getElementById(other.getAttribute('aria-controls'));
+          if (panel) panel.hidden = true;
+        });
+        if (!wasOpen) {
+          q.setAttribute('aria-expanded', 'true');
+          var own = document.getElementById(q.getAttribute('aria-controls'));
+          if (own) own.hidden = false;
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Why Choose A-DIY",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Why Choose A-DIY"
+    }
+  ]
+}
+{% endschema %}
