@@ -1,13 +1,22 @@
 {% comment %}
   Ultra Smooth Sticky-to-Inline Promo Banner with Dynamic Blocks & Countdown
+
+  Layout note: the bar renders in normal flow (no `is-fixed` in the markup).
+  The inline script below runs during parsing - before first paint - measures
+  the bar while it is still in flow, hands its height to the spacer and flips
+  the bar to fixed in the same task. The browser never paints the intermediate
+  state, so the swap costs no layout shift. Shipping `is-fixed` in the markup
+  and expanding the spacer later (the previous approach) inserted a full
+  bar-height block into the page after paint.
 {% endcomment %}
 
 <div id="sticky-promo-wrapper-{{ section.id }}" class="promo-section-wrapper">
-  <!-- Layout jump/jerk fix karne ke liye reserved height -->
+  <!-- Reserves the bar's space while it is pinned to the viewport. Height is
+       set by the script below, in the same task that pins the bar. -->
   <div id="promo-placeholder-{{ section.id }}" class="promo-placeholder"></div>
 
   <!-- Actual Sticky Bar -->
-  <div id="promo-banner-{{ section.id }}" class="sticky-promo-bar is-fixed">
+  <div id="promo-banner-{{ section.id }}" class="sticky-promo-bar">
     <div class="sticky-promo-content">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -57,14 +66,15 @@
     visibility: hidden;
   }
 
-  /* Base Styles */
+  /* Base Styles — this is also the first-paint state, and is identical in
+     geometry to .is-static below. */
   .sticky-promo-bar {
+    position: relative;
     width: 100%;
     background-color: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
     padding: 12px 20px;
     box-sizing: border-box;
-    will-change: transform, position;
     transition: background-color 0.3s ease, opacity 0.2s ease-in-out;
   }
 
@@ -76,7 +86,10 @@
     right: 0 !important;
     z-index: 1 !important;
     box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.12);
-    transform: translateZ(0); /* Hardware Acceleration for smooth render */
+    /* Promoted only while pinned — a permanent will-change on a full-width
+       element keeps a compositor layer alive for the life of the page. */
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   /* State 2: Seamlessly fitted into Normal Flow */
@@ -87,6 +100,7 @@
     right: auto !important;
     box-shadow: none !important;
     z-index: 2 !important;
+    will-change: auto;
     transform: none !important;
   }
 
@@ -145,103 +159,115 @@
 
 <script>
   (function() {
-    function initUltraSmoothBanner() {
-      const wrapper = document.getElementById('sticky-promo-wrapper-{{ section.id }}');
-      const banner = document.getElementById('promo-banner-{{ section.id }}');
-      const placeholder = document.getElementById('promo-placeholder-{{ section.id }}');
+    var wrapper = document.getElementById('sticky-promo-wrapper-{{ section.id }}');
+    var banner = document.getElementById('promo-banner-{{ section.id }}');
+    var placeholder = document.getElementById('promo-placeholder-{{ section.id }}');
 
-      if (!wrapper || !banner || !placeholder) return;
+    if (!wrapper || !banner || !placeholder) return;
 
-      let ticking = false;
+    var ticking = false;
+    var bannerHeight = 0;
 
-      function updatePosition() {
-        const wrapperRect = wrapper.getBoundingClientRect();
-        const bannerHeight = banner.offsetHeight;
-        const viewportHeight = window.innerHeight;
+    // Measures the bar in normal flow. Called on init, on resize, and once
+    // webfonts settle — never from the scroll handler, which used to read
+    // offsetHeight and getBoundingClientRect() on every frame and force a
+    // synchronous layout each time.
+    function measure() {
+      var wasFixed = banner.classList.contains('is-fixed');
+      if (wasFixed) banner.classList.remove('is-fixed');
 
-        // Threshold calculate karein
-        const targetScrollTrigger = viewportHeight - bannerHeight;
+      bannerHeight = banner.offsetHeight;
 
-        if (wrapperRect.top <= targetScrollTrigger) {
-          // Normal position me perfectly attach ho jaye bina jhatke ke
-          if (!banner.classList.contains('is-static')) {
-            banner.classList.remove('is-fixed');
-            banner.classList.add('is-static');
-            placeholder.style.display = 'none';
-          }
-        } else {
-          // Frame sync sticky state
-          if (!banner.classList.contains('is-fixed')) {
-            placeholder.style.height = bannerHeight + 'px';
-            placeholder.style.display = 'block';
-            banner.classList.add('is-fixed');
-            banner.classList.remove('is-static');
-          }
-        }
-
-        ticking = false;
+      if (wasFixed) {
+        placeholder.style.height = bannerHeight + 'px';
+        banner.classList.add('is-fixed');
       }
+    }
 
-      function onScroll() {
-        if (!ticking) {
-          // Browser render cycle ke sath heavy layout recalculation sync karna
-          window.requestAnimationFrame(updatePosition);
-          ticking = true;
+    function updatePosition() {
+      ticking = false;
+
+      var wrapperTop = wrapper.getBoundingClientRect().top;
+      var targetScrollTrigger = window.innerHeight - bannerHeight;
+
+      if (wrapperTop <= targetScrollTrigger) {
+        // The bar's resting place has scrolled into view — drop it into flow.
+        if (!banner.classList.contains('is-static')) {
+          banner.classList.remove('is-fixed');
+          banner.classList.add('is-static');
+          placeholder.style.display = 'none';
         }
-      }
-
-      // Intersection Observer se extra smooth scroll start handle karna
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            updatePosition();
-          });
-        },
-        { threshold: [0, 0.25, 0.5, 0.75, 1] }
-      );
-
-      observer.observe(wrapper);
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', updatePosition);
-      
-      // Page load / refresh par calculation Sync
-      updatePosition();
-
-      // Countdown Timer Functionality
-      const timerElement = document.getElementById('countdown-timer-{{ section.id }}');
-      if (timerElement) {
-        const targetDateStr = timerElement.getAttribute('data-date');
-        const targetDate = new Date(targetDateStr).getTime();
-
-        if (!isNaN(targetDate)) {
-          const updateTimer = () => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            if (distance < 0) {
-              timerElement.innerHTML = "Ended";
-              return;
-            }
-
-            const days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            const hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            const minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            const seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
-
-            timerElement.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-          };
-
-          updateTimer();
-          setInterval(updateTimer, 1000);
+      } else {
+        // Pin to the viewport, with the spacer holding the vacated space.
+        if (!banner.classList.contains('is-fixed')) {
+          placeholder.style.height = bannerHeight + 'px';
+          placeholder.style.display = 'block';
+          banner.classList.add('is-fixed');
+          banner.classList.remove('is-static');
         }
       }
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initUltraSmoothBanner);
-    } else {
-      initUltraSmoothBanner();
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updatePosition);
+        ticking = true;
+      }
+    }
+
+    function remeasureAndUpdate() {
+      measure();
+      updatePosition();
+    }
+
+    // Synchronous init. This script sits directly after the markup, so both
+    // run during parsing and the measure-then-pin swap lands before the first
+    // paint — the whole point of the change.
+    measure();
+    updatePosition();
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', remeasureAndUpdate);
+
+    // Webfonts can change the wrapped line count, and therefore the bar's
+    // height, after init. Re-measure once they are ready.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(remeasureAndUpdate).catch(function () {});
+    }
+    window.addEventListener('load', remeasureAndUpdate);
+
+    // Countdown Timer Functionality
+    var timerElement = document.getElementById('countdown-timer-{{ section.id }}');
+    if (timerElement) {
+      var targetDateStr = timerElement.getAttribute('data-date');
+      var targetDate = new Date(targetDateStr).getTime();
+
+      if (!isNaN(targetDate)) {
+        var timerId = null;
+
+        // textContent, not innerHTML — this runs once a second and the value
+        // is plain text. .timer-display is tabular-nums so the digits do not
+        // reflow as they tick.
+        var updateTimer = function () {
+          var distance = targetDate - new Date().getTime();
+
+          if (distance < 0) {
+            timerElement.textContent = 'Ended';
+            if (timerId) clearInterval(timerId);
+            return;
+          }
+
+          var days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+          var hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+          var minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+          var seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+
+          timerElement.textContent = days + 'd : ' + hours + 'h : ' + minutes + 'm : ' + seconds + 's';
+        };
+
+        updateTimer();
+        timerId = setInterval(updateTimer, 1000);
+      }
     }
   })();
 </script>

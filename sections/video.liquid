@@ -54,6 +54,41 @@
     }
   }
 
+  /* Click-to-play facade. The poster fills the same box the iframe will,
+     so swapping one for the other on click costs no layout shift. */
+  .custom-iframe-wrapper deferred-media {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .custom-iframe-wrapper .deferred-media__poster {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: #000;
+  }
+
+  .custom-iframe-wrapper .deferred-media__poster img {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+
   .section-text {
     margin-top: 1rem;
     margin-bottom: 2rem;
@@ -64,7 +99,7 @@
   .vid-btn {
     margin-top: 3rem;
   }
-  
+
   .vid-btn .video-button {
     color: #fff;
     border: 1px solid #fff;
@@ -75,11 +110,11 @@
     display: inline-block;
     transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease;
   }
-  
+
   .vid-btn .video-button:hover {
     background: #fff;
-    box-shadow: 0 0 10px #2b4f42, 
-                0 0 2px #000, 
+    box-shadow: 0 0 10px #2b4f42,
+                0 0 2px #000,
                 0 0 30px rgba(43, 79, 66, 0.6);
     transform: translateY(-2px);
     color: #000;
@@ -112,7 +147,7 @@
       font-size: 14px;
     }
   }
-  
+
 
 @media screen and (max-width: 749px) {
 
@@ -163,25 +198,67 @@
               assign video_frame_title = shop.name | append: ' video'
             endif
           -%}
-          {%- if section.settings.video_url.type == 'youtube' -%}
-            <iframe
-              src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=0&mute=1&muted=1&controls=1{{ loop }}"
-              class="js-youtube"
-              allow="encrypted-media"
-              allowfullscreen
-              title="{{ video_frame_title | escape }}"
-              loading="lazy"
-            ></iframe>
-          {%- else -%}
-            <iframe
-              src="https://player.vimeo.com/video/{{ video_id }}?autoplay=0&muted=1&autopause=0{{ loop }}"
-              class="js-vimeo"
-              allow="encrypted-media"
-              allowfullscreen
-              title="{{ video_frame_title | escape }}"
-              loading="lazy"
-            ></iframe>
-          {%- endif -%}
+          {%- comment -%}
+            The player itself lives inside <template>, so the browser never fetches
+            youtube.com/embed until DeferredMedia clones it on click. Until then the
+            shopper sees a poster image plus a play button.
+          {%- endcomment -%}
+          <deferred-media class="deferred-media">
+            <button
+              id="Deferred-Poster-{{ section.id }}"
+              class="deferred-media__poster"
+              type="button"
+              aria-label="{{ 'sections.video.load_video' | t: description: video_frame_title }}"
+            >
+              <span class="deferred-media__poster-button motion-reduce">
+                <span class="svg-wrapper">{{ 'icon-play.svg' | inline_asset_content }}</span>
+              </span>
+              {%- if section.settings.cover_image != blank -%}
+                {{
+                  section.settings.cover_image
+                  | image_url: width: 1920
+                  | image_tag:
+                    widths: '480, 660, 750, 900, 1100, 1500, 1920',
+                    sizes: '(min-width: 750px) min(100vw, 120rem), 100vw',
+                    loading: 'lazy',
+                    alt: ''
+                }}
+              {%- elsif section.settings.video_url.type == 'youtube' -%}
+                {%- comment -%}
+                  Fallback when no cover image is set. maxresdefault is 1280x720 but
+                  is missing on some videos, so drop to hqdefault if it 404s.
+                {%- endcomment -%}
+                <img
+                  src="https://i.ytimg.com/vi/{{ video_id }}/maxresdefault.jpg"
+                  onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/{{ video_id }}/hqdefault.jpg';"
+                  width="1280"
+                  height="720"
+                  loading="lazy"
+                  decoding="async"
+                  alt=""
+                >
+              {%- endif -%}
+            </button>
+            <template>
+              {%- if section.settings.video_url.type == 'youtube' -%}
+                <iframe
+                  src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=1&playsinline=1&controls=1{{ loop }}"
+                  class="js-youtube"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowfullscreen
+                  title="{{ video_frame_title | escape }}"
+                ></iframe>
+              {%- else -%}
+                <iframe
+                  src="https://player.vimeo.com/video/{{ video_id }}?autoplay=1&playsinline=1&autopause=0{{ loop }}"
+                  class="js-vimeo"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowfullscreen
+                  title="{{ video_frame_title | escape }}"
+                ></iframe>
+              {%- endif -%}
+            </template>
+          </deferred-media>
         </div>
       {%- else -%}
         {{
@@ -262,6 +339,12 @@
       "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
       "label": "t:sections.video.settings.video_url.label",
       "info": "t:sections.video.settings.video_url.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Cover image",
+      "info": "Shown until the shopper presses play. Use a 16:9 image, 1280 x 720 or larger. Leave blank to use YouTube's own thumbnail (works, but it is a slower third-party request and is not resized for the device)."
     },
     {
       "type": "text",

@@ -169,6 +169,58 @@
   width: 100%;
 }
 
+/* ---------------------------------------------------------------------------
+   Mobile hero slider
+
+   A CSS scroll-snap track. This replaced Swiper, which cost 151KB of JS plus
+   an 18KB stylesheet to run a three-slide hero whose pagination dots the
+   section hid anyway. Swiping, snapping and momentum are native browser
+   scrolling; the section's inline script only auto-advances.
+
+   Because the track's layout lives here - in a stylesheet that already blocks
+   render - the slides are laid out correctly on the first frame. The earlier
+   CLS regression came from that layout arriving in an async stylesheet that
+   raced first paint, which is no longer possible.
+   --------------------------------------------------------------------------- */
+.mobile-banner-media.hero-slider {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  /* The track is swiped, not scrollbar-dragged. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-banner-media.hero-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-banner-media .hero-slider__track {
+  display: flex;
+}
+
+.mobile-banner-media .hero-slider__slide {
+  /* Overrides `.banner__media { position: absolute }` above (0,2,0 beats 0,1,0).
+     Without it every slide leaves the flow, the track computes to zero height
+     and the hero collapses. The slide keeps its .banner__media class so the
+     section's `::before` aspect-ratio padding still gives it height. */
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-banner-media.hero-slider {
+    scroll-behavior: auto;
+  }
+}
+
 .banner__media-half {
   width: 50%;
 }
