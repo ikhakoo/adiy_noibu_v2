@@ -12,23 +12,17 @@
   how-to-build-deck.liquid: its unscoped `h1`, `p` and `ol, ul` rules, which
   escape the section and restyle the whole document.
 
-  CLS: the Google Fonts stylesheet is declared as a real <link> in markup rather
-  than injected by script at the bottom of the section, so the preload scanner
-  starts the request with the rest of the document and the `display=swap` lands
-  at or before first paint instead of re-flowing the page mid-scroll.
+  Typography is the theme's own Outfit, taken from --font-heading-family /
+  --font-body-family and the weights layout/theme.liquid has already emitted
+  @font-face rules for (300/400/500/600/700). The sibling LP loads DM Serif
+  Display + DM Sans from Google Fonts; this page deliberately does not, so it
+  matches the site and adds no third-party font request at all.
 {%- endcomment -%}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap"
->
-
 <style>
   /* ── RESET ── */
   .wcc *, .wcc *::before, .wcc *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .wcc {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body-family, 'Outfit', sans-serif);
     font-size: 17px; line-height: 1.65;
     color: #1c1c19; background: #fff;
     -webkit-font-smoothing: antialiased;
@@ -66,7 +60,7 @@
 
   /* ── TYPOGRAPHY ── */
   .wcc-eyebrow {
-    display: inline-block; font-family: 'DM Sans', sans-serif;
+    display: inline-block; font-family: var(--font-body-family, 'Outfit', sans-serif);
     font-size: 11px; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--green); margin-bottom: 14px;
@@ -74,22 +68,26 @@
   .wcc-eyebrow--light { color: rgba(255,255,255,0.5); }
 
   .wcc-h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(44px, 6.5vw, 80px);
-    line-height: 1.0; letter-spacing: -0.02em; color: #fff;
-    font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.05; letter-spacing: -0.03em; color: #fff;
+    font-weight: var(--font-weight-h1, 700);
   }
-  .wcc-h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
+  /* Outfit ships no italic here, so the emphasised line steps down in weight and
+     colour instead of leaning - a synthesised oblique would look broken at 62px. */
+  .wcc-h1 em { font-style: normal; font-weight: var(--font-weight-h3, 500); color: rgba(255,255,255,0.6); }
 
   .wcc-h2 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(30px, 4vw, 48px);
-    line-height: 1.1; color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(27px, 3.4vw, 42px);
+    line-height: 1.15; letter-spacing: -0.02em; color: var(--dark);
+    font-weight: var(--font-weight-h2, 600);
   }
   .wcc-h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(20px, 2.8vw, 30px);
-    line-height: 1.15; color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.2; letter-spacing: -0.01em; color: var(--dark);
+    font-weight: var(--font-weight-h2, 600);
   }
   .wcc-lead { font-size: clamp(16px, 1.8vw, 19px); color: var(--mid); line-height: 1.7; }
   .wcc-body { font-size: 15px; color: var(--mid); line-height: 1.7; }
@@ -97,7 +95,7 @@
   /* ── BUTTONS ── */
   .wcc-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 15px;
+    font-family: var(--font-body-family, 'Outfit', sans-serif); font-weight: 600; font-size: 15px;
     letter-spacing: 0.01em; padding: 14px 28px;
     border-radius: 5px; border: 1.5px solid transparent;
     cursor: pointer; text-decoration: none;
@@ -204,8 +202,8 @@
   .wcc-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
   .wcc-stat-row__label { font-size: 13px; color: rgba(255,255,255,0.5); }
   .wcc-stat-row__val {
-    font-family: 'DM Serif Display', Georgia, serif; font-size: 22px;
-    color: #fff; font-weight: 400; text-align: right;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif); font-size: 20px;
+    color: #fff; font-weight: 600; text-align: right; letter-spacing: -0.01em;
   }
   .wcc-stat-row__val--green { color: #7ecfb5; }
 
@@ -215,8 +213,9 @@
   .wcc-band__cell { padding: 32px 20px; text-align: center; border-right: 1px solid var(--border); }
   .wcc-band__cell:last-child { border-right: none; }
   .wcc-band__num {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 38px; line-height: 1; color: var(--green); font-weight: 400; margin-bottom: 8px;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 36px; line-height: 1; letter-spacing: -0.03em;
+    color: var(--green); font-weight: 700; margin-bottom: 8px;
   }
   .wcc-band__label { font-size: 13px; color: var(--muted); letter-spacing: 0.02em; }
 
@@ -231,9 +230,9 @@
     color: #b03a2e;
   }
   .wcc-split-intro__h {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(22px, 2.8vw, 30px); color: var(--dark);
-    margin-bottom: 14px; font-weight: 400; line-height: 1.2;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(21px, 2.6vw, 27px); color: var(--dark);
+    margin-bottom: 14px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em;
   }
   .wcc-split-intro__body { font-size: 15px; color: var(--mid); line-height: 1.7; margin-bottom: 24px; }
   .wcc-pain-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
@@ -253,9 +252,9 @@
     padding: 32px 36px; border-radius: 0 var(--radius) var(--radius) 0;
   }
   .wcc-pull p {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(19px, 2.2vw, 25px); line-height: 1.35;
-    color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(18px, 2vw, 23px); line-height: 1.45;
+    color: var(--dark); font-weight: 500; letter-spacing: -0.01em;
   }
 
   /* ── COMPARISON TABLE ── */
@@ -276,10 +275,10 @@
   .wcc-ctaband { background: var(--green); padding: 28px 0; }
   .wcc-ctaband__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
   .wcc-ctaband__text {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(18px, 2.5vw, 26px); color: #fff; font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(18px, 2.4vw, 24px); color: #fff; font-weight: 600; letter-spacing: -0.01em;
   }
-  .wcc-ctaband__text em { font-style: italic; opacity: 0.75; }
+  .wcc-ctaband__text em { font-style: normal; font-weight: 400; opacity: 0.75; }
   .wcc-ctaband__sub { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 4px; }
 
   /* ── STEPS ── */
@@ -294,8 +293,8 @@
   .wcc-step__num {
     width: 56px; height: 56px; border-radius: 50%;
     background: var(--green); color: #fff;
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 20px; font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 19px; font-weight: 600;
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 16px;
     /* The ring is the section background punching through the connector line. */
@@ -319,8 +318,9 @@
   .wcc-tp-header { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
   .wcc-tp-score-block { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
   .wcc-tp-score-num {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 64px; line-height: 1; color: var(--dark); font-weight: 400;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: 58px; line-height: 1; letter-spacing: -0.03em;
+    color: var(--dark); font-weight: 700;
   }
   .wcc-tp-stars-row { display: flex; gap: 4px; }
   .wcc-tp-star-icon {
@@ -379,15 +379,15 @@
     text-transform: uppercase; opacity: 0.55; color: #fff; margin-bottom: 14px;
   }
   .wcc-decide__card__h {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(20px, 2.5vw, 27px); color: #fff; font-weight: 400;
-    line-height: 1.2; margin-bottom: 16px;
+    font-family: var(--font-heading-family, 'Outfit', sans-serif);
+    font-size: clamp(19px, 2.3vw, 25px); color: #fff; font-weight: 600;
+    line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 16px;
   }
   .wcc-decide__card__body { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.65; flex: 1; margin-bottom: 28px; }
   .wcc-decide__card__micro { font-size: 12px; color: rgba(255,255,255,0.38); margin-top: 12px; }
   .wcc-decide__btn-a, .wcc-decide__btn-b {
     display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
-    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px;
+    font-family: var(--font-body-family, 'Outfit', sans-serif); font-weight: 700; font-size: 15px;
     padding: 14px 24px; border-radius: 5px;
     text-decoration: none; transition: transform 0.15s, background 0.15s;
   }
