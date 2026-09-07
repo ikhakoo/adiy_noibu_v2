@@ -663,6 +663,16 @@
             "col_labor": "[ADD HERE]"
           }
         },
+        "table_row_fT3fYG": {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×16 composite",
+            "col_diy": "[ADD HERE]",
+            "col_sitework": "[ADD HERE]",
+            "col_permit": "[ADD HERE]",
+            "col_labor": "[ADD HERE]"
+          }
+        },
         "requirement_item_wwXkjw": {
           "type": "requirement_item",
           "settings": {
@@ -689,6 +699,7 @@
         "factor_item_qMwMTn",
         "table_row_CKUYRt",
         "table_row_tgfHRJ",
+        "table_row_fT3fYG",
         "requirement_item_wwXkjw",
         "requirement_item_yhL6qM"
       ],
