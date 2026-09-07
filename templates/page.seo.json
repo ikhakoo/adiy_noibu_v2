@@ -744,9 +744,9 @@
         "req_title": "Every published estimate must identify:",
         "sub_note": "Property-specific pricing will vary.",
         "btn1_text": "READ THE COMPLETE NEW YORK DECK-COST GUIDE",
-        "btn1_url": "",
+        "btn1_url": "shopify://pages/free-design-consultation",
         "btn2_text": "VIEW CURRENT SIZES AND PRICES",
-        "btn2_url": ""
+        "btn2_url": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
       }
     }
   },
