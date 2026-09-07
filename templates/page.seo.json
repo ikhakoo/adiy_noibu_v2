@@ -527,8 +527,9 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "image": "shopify://shop_images/magnific_need-three-image-in-this-_LwgdZlLswO_1-1.png",
+            "title": "Backyard Deck",
+            "text": "",
             "link_label": "",
             "link": ""
           }
@@ -537,8 +538,9 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "image": "shopify://shop_images/magnific_need-three-image-in-this-_LwgdZlLswO_1-2.png",
+            "title": "Hot Tub Deck",
+            "text": "",
             "link_label": "",
             "link": ""
           }
