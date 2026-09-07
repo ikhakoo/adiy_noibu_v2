@@ -587,6 +587,62 @@
             "text": "Pressure-treated wood and composite have different purchase and maintenance costs."
           }
         },
+        "factor_item_cgXRc9": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Deck height",
+            "text": "Elevated decks may require longer posts, bracing, stairs and railings."
+          }
+        },
+        "factor_item_KqhqHx": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Foundations",
+            "text": "The appropriate footing system depends on the site and local approval."
+          }
+        },
+        "factor_item_MmBHzP": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Site conditions",
+            "text": "Slopes, rocks, drainage and restricted access may increase labor."
+          }
+        },
+        "factor_item_nrgYAD": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Attached or freestanding",
+            "text": "Attachment details can affect design and permitting."
+          }
+        },
+        "factor_item_LiCHqy": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Permits and plans",
+            "text": "Fees and documentation requirements vary by municipality."
+          }
+        },
+        "factor_item_E8QmtY": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Labor",
+            "text": "Full-service custom construction generally costs more than assembly-only help."
+          }
+        },
+        "factor_item_pVA4C4": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Custom features",
+            "text": "Multiple levels, unusual shapes and built-ins add complexity."
+          }
+        },
+        "factor_item_qMwMTn": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Demolition",
+            "text": "Removing and disposing of an existing structure adds work."
+          }
+        },
         "table_row_CKUYRt": {
           "type": "table_row",
           "settings": {
@@ -623,6 +679,14 @@
       "block_order": [
         "factor_item_giKm8X",
         "factor_item_AJiGrd",
+        "factor_item_cgXRc9",
+        "factor_item_KqhqHx",
+        "factor_item_MmBHzP",
+        "factor_item_nrgYAD",
+        "factor_item_LiCHqy",
+        "factor_item_E8QmtY",
+        "factor_item_pVA4C4",
+        "factor_item_qMwMTn",
         "table_row_CKUYRt",
         "table_row_tgfHRJ",
         "requirement_item_wwXkjw",
