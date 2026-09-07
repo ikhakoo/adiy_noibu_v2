@@ -1,0 +1,528 @@
+{%- style -%}
+  .steps-with-video-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .steps-with-video-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .steps-with-video-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .steps-with-video-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media screen and (min-width: 990px) {
+    .steps-with-video-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+  }
+
+  /* Left Content */
+  .steps-with-video-main-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    line-height: 1.2;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.01em;
+  }
+
+  @media screen and (min-width: 750px) {
+    .steps-with-video-main-title {
+      font-size: 2.6rem;
+    }
+  }
+
+  .steps-with-video-subtitle {
+    font-size: 14px;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 2.5rem 0;
+    opacity: 0.9;
+  }
+
+  /* Steps List */
+  .steps-with-video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .steps-with-video-step-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .steps-with-video-step-number {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1;
+    color: {{ section.settings.accent_color }};
+    font-weight: 400;
+    padding-top: 2px;
+  }
+
+  .steps-with-video-step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+  }
+
+  .steps-with-video-step-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+    opacity: 0.85;
+  }
+
+  /* Right Media Column */
+  .steps-with-video-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000000;
+    aspect-ratio: 16 / 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .steps-with-video-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .steps-with-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.2) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .steps-with-video-text {
+    position: absolute;
+    top: 24px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+
+  .steps-with-video-play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid {{ section.settings.accent_color }};
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ section.settings.accent_color }};
+    transition: transform 0.25s ease, background-color 0.25s ease;
+  }
+
+  .steps-with-video-wrapper:hover .steps-with-video-play-btn {
+    transform: scale(1.08);
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .steps-with-video-play-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    margin-left: 3px;
+  }
+
+  /* Modal Video Styling */
+  .swv-video-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .swv-video-modal.is-open {
+    display: flex;
+  }
+
+  .swv-video-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .swv-video-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: #fff;
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .swv-video-modal iframe,
+  .swv-video-modal video {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+{%- endstyle -%}
+
+<div class="steps-with-video-{{ section.id }}">
+  <div class="steps-with-video-container page-width">
+    <div class="steps-with-video-grid">
+      
+      <!-- Left Column: Process Steps -->
+      <div class="steps-with-video-content">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="steps-with-video-main-title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.subtitle != blank -%}
+          <p class="steps-with-video-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+
+        <div class="steps-with-video-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'step' -%}
+              <div class="steps-with-video-step-item" {{ block.shopify_attributes }}>
+                <div class="steps-with-video-step-number">
+                  {%- if block.settings.custom_number != blank -%}
+                    {{ block.settings.custom_number }}
+                  {%- else -%}
+                    {% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}
+                  {%- endif -%}
+                </div>
+                <div class="steps-with-video-step-text">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="steps-with-video-step-title">{{ block.settings.title }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.description != blank -%}
+                    <p class="steps-with-video-step-desc">{{ block.settings.description }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- Right Column: Video Block -->
+      <div class="steps-with-video-media">
+        <div class="steps-with-video-wrapper">
+          {%- if section.settings.cover_image != blank -%}
+            {{ section.settings.cover_image 
+              | image_url: width: 1200 
+              | image_tag: loading: 'lazy', class: 'steps-with-video-cover', alt: section.settings.heading 
+            }}
+          {%- else -%}
+            <div style="width:100%;height:100%;background:#222;"></div>
+          {%- endif -%}
+
+          <div class="steps-with-video-overlay" id="VideoTrigger-{{ section.id }}">
+            {%- if section.settings.video_overlay_text != blank -%}
+              <span class="steps-with-video-text">{{ section.settings.video_overlay_text }}</span>
+            {%- endif -%}
+
+            <div class="steps-with-video-play-btn">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal Video Container -->
+<div class="swv-video-modal" id="VideoModal-{{ section.id }}">
+  <div class="swv-video-modal-content">
+    <button class="swv-video-modal-close" id="VideoModalClose-{{ section.id }}">&times;</button>
+    <div id="VideoPlayerContainer-{{ section.id }}"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const trigger = document.getElementById('VideoTrigger-{{ section.id }}');
+    const modal = document.getElementById('VideoModal-{{ section.id }}');
+    const closeBtn = document.getElementById('VideoModalClose-{{ section.id }}');
+    const playerContainer = document.getElementById('VideoPlayerContainer-{{ section.id }}');
+
+    const videoUrl = "{{ section.settings.video_url }}";
+    const shopifyVideo = "{% if section.settings.video != blank %}{{ section.settings.video.sources[0].url }}{% endif %}";
+
+    if(trigger && modal) {
+      trigger.addEventListener('click', function() {
+        modal.classList.add('is-open');
+        
+        if (shopifyVideo) {
+          playerContainer.innerHTML = `<video src="${shopifyVideo}" controls autoplay style="width:100%;height:100%;"></video>`;
+        } else if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+          let embedUrl = videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/');
+          playerContainer.innerHTML = `<iframe src="${embedUrl}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        } else if (videoUrl.includes('vimeo.com')) {
+          let vimeoId = videoUrl.split('/').pop();
+          playerContainer.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        }
+      });
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        playerContainer.innerHTML = '';
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function(e) {
+        if(e.target === modal) closeModal();
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Steps with Video",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How Does A-DIY Work?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "A streamlined journey from conceptual design to structural completion"
+    },
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Video Cover Image"
+    },
+    {
+      "type": "text",
+      "id": "video_overlay_text",
+      "label": "Overlay Text",
+      "default": "WATCH: HOW DOES A-DIY WORK"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Shopify Hosted Video (MP4)"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "External Video Link",
+      "accept": ["youtube", "vimeo"],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "info": "Used if Shopify hosted video is not selected"
+    },
+    {
+      "type": "header",
+      "content": "Color Options"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1a1a18"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color (Numbers & Play Icon)",
+      "default": "#cba068"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Bottom",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Process Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "custom_number",
+          "label": "Custom Number (e.g. 01)",
+          "info": "Leave blank for automatic numbering"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Step Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step Description",
+          "default": "Description of the step."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Steps with Video",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "custom_number": "01",
+            "title": "Choose the Size and Material",
+            "description": "Select an available deck size, pressure-treated or composite surface and applicable options."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "custom_number": "02",
+            "title": "Review the Property",
+            "description": "Confirm the available space, ground conditions, slope, proposed height, drainage and delivery access."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "custom_number": "03",
+            "title": "Confirm Permits and Foundations",
+            "description": "Contact the local building department and select a suitable foundation system for the property."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "custom_number": "04",
+            "title": "Receive the Deck System",
+            "description": "The coordinated components are delivered to the property."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "custom_number": "05",
+            "title": "Assemble It or Hire Local Help",
+            "description": "Complete the assembly yourself or hire a local handyman, carpenter or contractor."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "custom_number": "06",
+            "title": "Complete Required Inspections",
+            "description": "Arrange any inspections or final approvals required by the municipality"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
