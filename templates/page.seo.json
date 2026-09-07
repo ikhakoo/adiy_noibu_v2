@@ -418,6 +418,42 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "rich_text_gEgHFN": {
+      "type": "rich-text",
+      "blocks": {
+        "text_cpct7n": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A traditional contractor may be the right choice for a multilevel deck, complex house attachment, rooftop deck, integrated outdoor kitchen, unusual structural span or project outside A-DIY’s supported configurations.<br/><br/>A-DIY may be the better choice when you want a standardized design, transparent materials, a known system price, less cutting and measuring at the property and the option to assemble it yourself or hire local help.<br/><br/>A-DIY is not a New York deck contractor, contractor directory or local installation company. A-DIY supplies the deck system.<br/><br/></p>"
+          }
+        },
+        "button_qWR6A6": {
+          "type": "button",
+          "settings": {
+            "button_label": "COMPARE A-DIY DECK OPTIONS",
+            "button_link": "shopify://pages/free-design-consultation",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "text_cpct7n",
+        "button_qWR6A6"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "seo-page-sec-text",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
@@ -426,6 +462,7 @@
     "featured_icon_scrolling_kF3ffz",
     "navigation_tabs_PhVK3p",
     "multicolumn_TGXkFF",
-    "old_comparison_table_3NMcRn"
+    "old_comparison_table_3NMcRn",
+    "rich_text_gEgHFN"
   ]
 }
