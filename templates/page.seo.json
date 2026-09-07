@@ -1014,10 +1014,53 @@
             "title": "Supported Elevation"
           }
         },
+        "text_bHKfBY": {
+          "type": "text",
+          "settings": {
+            "text": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.",
+            "is_bold": false
+          }
+        },
+        "text_A7ewND": {
+          "type": "text",
+          "settings": {
+            "text": "Depending on the height and configuration, the project may also require:",
+            "is_bold": true
+          }
+        },
         "list_dcFftc": {
           "type": "list",
           "settings": {
             "list_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval"
+          }
+        },
+        "feature_header_DQnKHX": {
+          "type": "feature_header",
+          "settings": {
+            "icon_type": "image",
+            "custom_svg": "",
+            "icon_image": "shopify://shop_images/Frame_2147260100.png",
+            "title": "Foundation and Footing Options"
+          }
+        },
+        "text_8Cenrf": {
+          "type": "text",
+          "settings": {
+            "text": "Depending on the property, configuration and local approval, suitable systems may include:",
+            "is_bold": false
+          }
+        },
+        "list_qictj8": {
+          "type": "list",
+          "settings": {
+            "list_items": "Sonotubes\nHelical piles\nGround screws\nIn-ground posts\nApproved surface footing systems\nOther site-specific foundations"
+          }
+        },
+        "text_XAr8Y8": {
+          "type": "text",
+          "settings": {
+            "text": "Not every foundation is suitable or accepted for every project. The correct method depends on structural loads, soil, frost conditions, drainage and local requirements. Specialized foundations may need to be sourced and installed separately.",
+            "is_bold": false
           }
         }
       },
@@ -1025,7 +1068,13 @@
         "heading_xkYdDt",
         "text_JwNNbD",
         "feature_header_ryHDVc",
-        "list_dcFftc"
+        "text_bHKfBY",
+        "text_A7ewND",
+        "list_dcFftc",
+        "feature_header_DQnKHX",
+        "text_8Cenrf",
+        "list_qictj8",
+        "text_XAr8Y8"
       ],
       "name": "Double Image Text",
       "settings": {
