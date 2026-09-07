@@ -1066,3 +1066,26 @@
         padding: 28px
     }
 }
+
+
+/******************************** Seo Page *******************************/
+
+.seo-page-sec1.multicolumn  .title{
+    text-align: center;
+    width: 100%;
+    position: relative;
+    padding-bottom: 15px; /* Text aur line ke beech space */
+}
+.seo-page-sec1.multicolumn  .title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px; /* Line ki width */
+    height: 3px; /* Line ki thickness */
+    background-color: #c4a482; /* Image ka tan/brown color */
+    border-radius: 2px;
+}
+
+/********************* end *******************/
