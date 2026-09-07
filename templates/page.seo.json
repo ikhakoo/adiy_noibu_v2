@@ -938,9 +938,9 @@
             "image": "shopify://shop_images/Classic_wood_deck_texture..png",
             "tag": "THE CLASSIC",
             "title": "Pressure-Treated Wood",
-            "features": "Generally lower\nNatural wood grain and variation\nMay require cleaning, staining or sealing\nMay develop over time",
+            "features": "Generally lower\n\nNatural wood grain and variation\n\nMay require cleaning, staining or sealing\n\nMay develop over time\n\nMay check, crack or change color\n\nCan be stained or refinished\n\nDepends on stain, color and exposure\n\nBoards can often be replaced or refinished\n\nLower initial cost and natural appearance\n\nSubject to material and A-DIY terms",
             "btn_text": "SHOP CLASSIC",
-            "btn_link": "",
+            "btn_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
             "card_bg": "#ffffff",
             "text_color": "#1a1a1a",
             "btn_bg": "rgba(0,0,0,0)",
@@ -952,16 +952,16 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/Modern_composite_deck..png",
-            "tag": "THE CLASSIC",
-            "title": "Pressure-Treated Wood",
-            "features": "Generally lower\nNatural wood grain and variation\nMay require cleaning, staining or sealing\nMay develop over time",
+            "tag": "THE MODERNIST",
+            "title": "Advanced Composite",
+            "features": "Generally higher\n\nModern and more consistent finish\n\nDoes not require routine staining or sealing\n\nDesigned to resist splintering\n\nDesigned to resist common surface cracking and splintering\n\nAvailable in manufactured colors and finishes\n\nDarker colors may become warmer\n\nBoards can be replaced, but refinishing is limited\n\nModern appearance and reduced maintenance\n\nSubject to manufacturer and A-DIY terms",
             "btn_text": "SHOP CLASSIC",
-            "btn_link": "",
-            "card_bg": "#ffffff",
-            "text_color": "#1a1a1a",
-            "btn_bg": "rgba(0,0,0,0)",
-            "btn_text_color": "#1a1a1a",
-            "btn_border_color": "#1a1a1a"
+            "btn_link": "shopify://products/a-diy-composite-deck-kit",
+            "card_bg": "#000000",
+            "text_color": "#FFFFFF",
+            "btn_bg": "#194636",
+            "btn_text_color": "#FFFFFF",
+            "btn_border_color": "#194636"
           }
         }
       },
@@ -972,8 +972,8 @@
       "name": "Wood vs Composite",
       "settings": {
         "main_title": "Pressure-Treated Wood vs. Composite Decking",
-        "subtitle": "The best deck material depends on your budget, preferred appearance and maintenance expectations.",
-        "description": "New York decks may experience rain, snow, ice, humidity, summer heat, freeze-and-thaw cycles and coastal moisture. Neither pressure-treated wood nor composite is automatically best for every property.",
+        "subtitle": "",
+        "description": "The best deck material depends on your budget, preferred appearance and maintenance expectations.\n<br><br>\nNew York decks may experience rain, snow, ice, humidity, summer heat, freeze-and-thaw cycles and coastal moisture. Neither pressure-treated wood nor composite is automatically best for every property.",
         "sum_1_title": "Choose Pressure-Treated Wood When:",
         "sum_1_desc": "You want a lower initial cost, natural wood appearance and the ability to stain or refinish the surface. It generally requires more routine care as it ages.",
         "sum_1_btn_text": "Explore Pressure-Treated Options",
