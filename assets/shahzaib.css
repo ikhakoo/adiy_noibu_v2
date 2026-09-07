@@ -988,6 +988,15 @@
 .about-us .main-body.banner__text{
     margin-top: 2rem;
 }
+@media screen and (max-width:768px){
+    .shopify-section.section .consultant-page.about-us.banner .banner__content {
+        max-width: 100%;
+        justify-content: center;
+    }
+    .about-us .banner__box .banner__heading:after{
+        left: 50%;
+    }
+}
 /********************* end *******************/
 
 
