@@ -279,42 +279,142 @@
         "row_eTni9D": {
           "type": "row",
           "settings": {
-            "feature_name": "Total Cost",
-            "col_2_val": "Middle Ground",
-            "col_3_val": "Highest (Labor + Markup)",
-            "col_4_val": "Lowest Upfront"
+            "feature_name": "Design",
+            "col_2_val": "",
+            "col_3_val": "Customized for the property",
+            "col_4_val": "Standardized sizes and supported configurations"
           }
         },
-        "row_KQN8tb": {
+        "row_zdAywh": {
           "type": "row",
           "settings": {
-            "feature_name": "Design Precision",
-            "col_2_val": "Professional CAD Engineering",
-            "col_3_val": "Varies by Contractor",
-            "col_4_val": "Manual Calculations"
+            "feature_name": "Project management",
+            "col_2_val": "",
+            "col_3_val": "Contractor may manage the complete project",
+            "col_4_val": "Homeowner manages the project or hires local help"
           }
         },
-        "row_mMGLxV": {
+        "row_YVAxni": {
           "type": "row",
           "settings": {
-            "feature_name": "Long-term Warranty",
-            "col_2_val": "25-Year Structural",
-            "col_3_val": "1-5 Year Workmanship",
-            "col_4_val": "Limited Manufacturer Only"
+            "feature_name": "Materials",
+            "col_2_val": "",
+            "col_3_val": "Selected and sourced by the contractor",
+            "col_4_val": "Coordinated with the selected system"
+          }
+        },
+        "row_J9Ekdr": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Cutting and measuring",
+            "col_2_val": "",
+            "col_3_val": "Completed during construction",
+            "col_4_val": "Components are prepared for assembly"
+          }
+        },
+        "row_EKidBA": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Materials",
+            "col_2_val": "",
+            "col_3_val": "Contractor and crew perform the work",
+            "col_4_val": "Homeowner or locally hired person completes assembly"
+          }
+        },
+        "row_UDYjiP": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Labor",
+            "col_2_val": "",
+            "col_3_val": "Selected and sourced by the contractor",
+            "col_4_val": "Coordinated with the selected system"
+          }
+        },
+        "row_PzYHWW": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Pricing",
+            "col_2_val": "",
+            "col_3_val": "Based on custom scope and labor",
+            "col_4_val": "Kit price is known before local site work"
+          }
+        },
+        "row_jeiHQR": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Permits",
+            "col_2_val": "",
+            "col_3_val": "Depends on the contractor agreement",
+            "col_4_val": "Homeowner remains responsible; diagrams are available"
+          }
+        },
+        "row_ncVaP6": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Foundations",
+            "col_2_val": "",
+            "col_3_val": "Designed and installed for the property",
+            "col_4_val": "Compatible with suitable locally approved systems"
+          }
+        },
+        "row_N7HrkC": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Customization",
+            "col_2_val": "",
+            "col_3_val": "Suitable for complex and custom projects",
+            "col_4_val": "Best for supported sizes and configurations"
+          }
+        },
+        "row_HELj9q": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Structural transparency",
+            "col_2_val": "",
+            "col_3_val": "Depends on the written proposal",
+            "col_4_val": "Materials and structure can be reviewed before purchase"
+          }
+        },
+        "row_baahPP": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Warranty",
+            "col_2_val": "",
+            "col_3_val": "Depends on contractor and materials",
+            "col_4_val": "Five-year structural warranty, subject to terms"
+          }
+        },
+        "row_DwWqqW": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Best use",
+            "col_2_val": "",
+            "col_3_val": "Fully managed or highly customized projects",
+            "col_4_val": "Standardized projects with predictable components"
           }
         }
       },
       "block_order": [
         "row_eTni9D",
-        "row_KQN8tb",
-        "row_mMGLxV"
+        "row_zdAywh",
+        "row_YVAxni",
+        "row_J9Ekdr",
+        "row_EKidBA",
+        "row_UDYjiP",
+        "row_PzYHWW",
+        "row_jeiHQR",
+        "row_ncVaP6",
+        "row_N7HrkC",
+        "row_HELj9q",
+        "row_baahPP",
+        "row_DwWqqW"
       ],
       "name": "Comparison Table",
       "settings": {
-        "heading": "How We Compare",
+        "heading": "Traditional Deck Contractor vs. A-DIY",
         "col_1_heading": "FEATURE",
         "col_3_heading": "TRADITIONAL CONTRACTOR",
-        "col_4_heading": "BIG BOX DIY",
+        "col_4_heading": "A-DIY deck system",
         "padding_top": 40,
         "padding_bottom": 40
       }
