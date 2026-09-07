@@ -1,0 +1,628 @@
+{% comment %}
+  Section: Contractor Guide / Comparison Section
+  Includes: Responsive slider, custom draggable scrollbar, schema controls
+{% endcomment %}
+
+{%- style -%}
+  .comp-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .comp-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  /* Header Styles */
+  .comp-header-{{ section.id }} {
+    text-align: {{ section.settings.text_alignment }};
+    margin-bottom: 2rem;
+  }
+
+  .comp-subheading-{{ section.id }} {
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: {{ section.settings.subheading_color }};
+    margin-bottom: 0.5rem;
+  }
+
+  .comp-heading-{{ section.id }} {
+    font-size: 2rem;
+    line-height: 1.2;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 1rem 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .comp-heading-{{ section.id }} {
+      font-size: 2.75rem;
+    }
+  }
+
+  .comp-description-{{ section.id }} {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: {{ section.settings.text_color }};
+    max-width: 600px;
+    {% if section.settings.text_alignment == 'center' %}
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+  }
+
+  /* Slider & Grid Layout */
+  .comp-grid-wrapper-{{ section.id }} {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    padding-bottom: 8px;
+  }
+
+  .comp-grid-wrapper-{{ section.id }}::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  .comp-grid-{{ section.id }} {
+    display: flex;
+    gap: 16px;
+    padding: 0 1rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    .comp-grid-wrapper-{{ section.id }} {
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+    .comp-grid-{{ section.id }} {
+      display: grid;
+      grid-template-columns: repeat({{ section.blocks.size | default: 3 }}, minmax(0, 1fr));
+      gap: 24px;
+      padding: 0;
+    }
+  }
+
+  /* Card Styling */
+  .comp-card-{{ section.id }} {
+    flex: 0 0 85%;
+    max-width: 85%;
+    scroll-snap-align: start;
+    background: {{ section.settings.card_bg_color }};
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 576px) and (max-width: 991px) {
+    .comp-card-{{ section.id }} {
+      flex: 0 0 45%;
+      max-width: 45%;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .comp-card-{{ section.id }} {
+      flex: initial;
+      max-width: 100%;
+    }
+  }
+
+  .comp-card-highlight {
+    border: 2px solid {{ section.settings.highlight_bg_color }};
+    position: relative;
+  }
+
+  .comp-card-badge {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background-color: {{ section.settings.highlight_bg_color }};
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .comp-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 8px 0;
+  }
+
+  .comp-card-subtitle {
+    font-size: 0.875rem;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 16px;
+  }
+
+  /* Features List */
+  .comp-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px 0;
+  }
+
+  .comp-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.938rem;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 12px;
+  }
+
+  .comp-feature-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Custom Scrollbar Navigation */
+  .scrollbar-navigation-{{ section.id }} {
+    display: flex;
+    margin-top: 2rem;
+    padding: 0 1rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    .scrollbar-navigation-{{ section.id }} {
+      display: none;
+    }
+  }
+
+  .scrollbar-track-wrapper-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background-color: {{ section.settings.scrollbar_track_color }};
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .scrollbar-thumb-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 30px;
+    background-color: {{ section.settings.highlight_bg_color }};
+    border-radius: 9999px;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+  }
+
+  .scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -15px;
+    bottom: -15px;
+    left: 0;
+    right: 0;
+  }
+{%- endstyle -%}
+
+<div class="comp-section-{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="comp-header-{{ section.id }}">
+        {%- if section.settings.subheading != blank -%}
+          <div class="comp-subheading-{{ section.id }}">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="comp-heading-{{ section.id }}">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="comp-description-{{ section.id }}">{{ section.settings.description }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="comp-grid-wrapper-{{ section.id }} js-comp-grid-wrapper-{{ section.id }}">
+      <div class="comp-grid-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          <div
+            class="comp-card-{{ section.id }} {% if block.settings.is_featured %}comp-card-highlight{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.is_featured and block.settings.badge_text != blank -%}
+              <span class="comp-card-badge">{{ block.settings.badge_text }}</span>
+            {%- endif -%}
+
+            <div>
+              {%- if block.settings.title != blank -%}
+                <h3 class="comp-card-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="comp-card-subtitle">{{ block.settings.subtitle }}</p>
+              {%- endif -%}
+
+              {%- assign features = block.settings.features_list | newline_to_br | split: '<br />' -%}
+              {%- if features.size > 0 -%}
+                <ul class="comp-features-list">
+                  {%- for feature in features -%}
+                    {%- assign clean_feature = feature | strip -%}
+                    {%- if clean_feature != blank -%}
+                      <li class="comp-feature-item">
+                        <svg class="comp-feature-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="10" cy="10" r="10" fill="{{ section.settings.highlight_bg_color }}" fill-opacity="0.15"/>
+                          <path d="M6 10L9 13L14 7" stroke="{{ section.settings.highlight_bg_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>{{ clean_feature }}</span>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.button_label != blank -%}
+              <a
+                href="{{ block.settings.button_link | default: '#' }}"
+                class="button {% if block.settings.is_featured %}button--primary{% else %}button--secondary{% endif %}"
+                style="width: 100%; text-align: center; margin-top: 16px;"
+              >
+                {{ block.settings.button_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="scrollbar-navigation-{{ section.id }}">
+      <div class="scrollbar-track-wrapper-{{ section.id }} js-scroll-bar-{{ section.id }}">
+        <div class="scrollbar-thumb-{{ section.id }} js-scroll-thumb-{{ section.id }}">
+          <div class="scrollbar-thumb-hitbox"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.comp-section-{{ section.id }}');
+    if (!sectionContainer) return;
+
+    const trackWrapper = sectionContainer.querySelector('.js-comp-grid-wrapper-{{ section.id }}');
+    const scrollBarTrack = sectionContainer.querySelector('.js-scroll-bar-{{ section.id }}');
+    const scrollThumb = sectionContainer.querySelector('.js-scroll-thumb-{{ section.id }}');
+
+    if (!trackWrapper || !scrollBarTrack || !scrollThumb) return;
+
+    let isThumbDragging = false;
+    let dragStartX = 0;
+    let initialScrollLeft = 0;
+    let rAFId = null;
+
+    function updateThumbUI() {
+      const scrollWidth = trackWrapper.scrollWidth;
+      const clientWidth = trackWrapper.clientWidth;
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (maxScrollLeft <= 0) {
+        scrollThumb.style.width = '100%';
+        scrollThumb.style.left = '0%';
+        return;
+      }
+
+      const thumbWidthRatio = clientWidth / scrollWidth;
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 15);
+      const maxThumbLeftPercent = 100 - thumbWidthPercent;
+      
+      const currentScrollRatio = trackWrapper.scrollLeft / maxScrollLeft;
+      const currentLeftPercent = Math.min(Math.max(currentScrollRatio * maxThumbLeftPercent, 0), maxThumbLeftPercent);
+
+      scrollThumb.style.width = thumbWidthPercent + '%';
+      scrollThumb.style.left = currentLeftPercent + '%';
+    }
+
+    trackWrapper.addEventListener('scroll', function() {
+      if (!isThumbDragging) {
+        if (rAFId) cancelAnimationFrame(rAFId);
+        rAFId = requestAnimationFrame(updateThumbUI);
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', updateThumbUI);
+    updateThumbUI();
+
+    scrollThumb.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      isThumbDragging = true;
+      dragStartX = e.clientX;
+      initialScrollLeft = trackWrapper.scrollLeft;
+
+      trackWrapper.style.scrollSnapType = 'none';
+      trackWrapper.style.scrollBehavior = 'auto';
+      scrollThumb.setPointerCapture(e.pointerId);
+    });
+
+    scrollThumb.addEventListener('pointermove', (e) => {
+      if (!isThumbDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const trackWidth = scrollBarTrack.clientWidth;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      if (maxThumbMove > 0) {
+        const scrollDelta = (deltaX / maxThumbMove) * maxContainerScroll;
+        trackWrapper.scrollLeft = initialScrollLeft + scrollDelta;
+        updateThumbUI();
+      }
+    });
+
+    const releasePointer = (e) => {
+      if (isThumbDragging) {
+        isThumbDragging = false;
+        trackWrapper.style.scrollSnapType = 'x mandatory';
+        trackWrapper.style.scrollBehavior = 'smooth';
+
+        try {
+          scrollThumb.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+      }
+    };
+
+    scrollThumb.addEventListener('pointerup', releasePointer);
+    scrollThumb.addEventListener('pointercancel', releasePointer);
+
+    scrollBarTrack.addEventListener('click', (e) => {
+      if (e.target.closest('.js-scroll-thumb-{{ section.id }}')) return;
+
+      const trackRect = scrollBarTrack.getBoundingClientRect();
+      const clickX = e.clientX - trackRect.left;
+      const thumbWidth = scrollThumb.offsetWidth;
+      
+      let targetLeft = clickX - (thumbWidth / 2);
+      const maxThumbMove = trackRect.width - thumbWidth;
+
+      if (targetLeft < 0) targetLeft = 0;
+      if (targetLeft > maxThumbMove) targetLeft = maxThumbMove;
+
+      const clickRatio = targetLeft / maxThumbMove;
+      const maxContainerScroll = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+
+      trackWrapper.style.scrollBehavior = 'smooth';
+      trackWrapper.scrollTo({
+        left: clickRatio * maxContainerScroll,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Contractor Guide Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Comparison Guide"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose the Right Solution"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Compare features and options to find the best fit for your projects.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Color Options"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#F9FAFB"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#111827"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#059669"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#4B5563"
+    },
+    {
+      "type": "color",
+      "id": "highlight_bg_color",
+      "label": "Featured Highlight / Scrollbar",
+      "default": "#059669"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_track_color",
+      "label": "Scrollbar Track Color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Bottom",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Option Card",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_featured",
+          "label": "Highlight as Featured",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Featured Badge Text",
+          "default": "Most Popular"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Standard Plan"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "For individual contractors"
+        },
+        {
+          "type": "textarea",
+          "id": "features_list",
+          "label": "Features List (One per line)",
+          "default": "Feature 1\nFeature 2\nFeature 3"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Select Plan"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contractor Guide Grid",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Basic Option",
+            "subtitle": "Essential setup"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "is_featured": true,
+            "badge_text": "Recommended",
+            "title": "Pro Contractor",
+            "subtitle": "Most popular choice"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Enterprise",
+            "subtitle": "Full scale coverage"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
