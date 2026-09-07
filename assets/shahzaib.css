@@ -808,6 +808,9 @@
 .template-page-why-a-diy .why-a-diy-hero.banner--desktop-transparent .banner__box{
     align-items: flex-start;
 }
+.template-page-about-us .why-a-diy-hero .main-body.banner__text {
+    color:#000;
+}
 @media screen and (min-width: 750px){
     .contact-hero.banner--desktop-transparent .banner__box{
         max-width: 100%;
