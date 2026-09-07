@@ -56,7 +56,11 @@
       "settings": {
         "custom_class": "consultant-page why-a-diy-hero about-us",
         "image": "shopify://shop_images/About_Us.png",
-        "mobile_image": "shopify://shop_images/Hero_Section_1.png",
+        "mobile_image_1": "shopify://shop_images/Frame_2147260190.png",
+        "mobile_image_2": "shopify://shop_images/Frame_2147260190.png",
+        "mobile_image_3": "shopify://shop_images/Frame_2147260190.png",
+        "enable_autorotate": false,
+        "autorotate_speed": 5,
         "image_overlay_opacity": 0,
         "image_height": "large",
         "image_behavior": "none",
