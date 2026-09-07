@@ -1,0 +1,527 @@
+{% comment %}
+  Section: Cost Breakdown & Project Examples
+  Compatible with Shopify Dawn Theme
+{% endcomment %}
+
+{{ 'section-cost-guide.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .cost-guide-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+  }
+  .cost-guide-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  @media (min-width: 990px) {
+    .cost-guide-container {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
+    }
+  }
+  /* Left Column */
+  .cost-guide-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #121212;
+  }
+  .cost-guide-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #4a4a4a;
+    margin-bottom: 1.5rem;
+  }
+  .cost-factors-card {
+    background-color: #f2ede4;
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  .cost-factors-title {
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin-bottom: 1.5rem;
+  }
+  .factor-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .factor-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid #a28b68;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #a28b68;
+    font-size: 12px;
+  }
+  .factor-content {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  .factor-title {
+    font-weight: 700;
+    color: #121212;
+  }
+  .factor-text {
+    color: #5e5e5e;
+  }
+  .cost-footer-note {
+    font-size: 0.85rem;
+    color: #6a6a6a;
+    margin-top: 1.5rem;
+    line-height: 1.4;
+  }
+
+  /* Right Column */
+  .table-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .table-header {
+    background-color: #1e241e;
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .table-wrapper {
+    overflow-x: auto;
+    padding: 1rem;
+  }
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+  .custom-table th, .custom-table td {
+    padding: 0.75rem 0.4rem;
+    border-bottom: 1px solid #eef0f2;
+  }
+  .custom-table th {
+    font-weight: 700;
+    color: #121212;
+  }
+  .custom-table td {
+    color: #6a6a6a;
+  }
+  .custom-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .requirement-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #121212;
+  }
+  .requirement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+  }
+  .requirement-list li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #4a4a4a;
+  }
+  .requirement-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    color: #121212;
+  }
+  .sub-note {
+    font-size: 0.9rem;
+    color: #6a6a6a;
+    margin-bottom: 1.5rem;
+  }
+  .btn-primary-custom {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #355e4e;
+    color: #ffffff;
+    padding: 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    transition: background 0.3s;
+  }
+  .btn-primary-custom:hover {
+    background-color: #27463a;
+  }
+  .btn-secondary-custom {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    color: #121212;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #b5b5b5;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: border-color 0.3s;
+  }
+  .btn-secondary-custom:hover {
+    border-color: #121212;
+  }
+</style>
+
+<div class="cost-guide-{{ section.id }}">
+  <div class="cost-guide-container page-width">
+    
+    {% comment %} Left Column {% endcomment %}
+    <div class="cost-guide-left">
+      {% if section.settings.main_heading != blank %}
+        <h2 class="cost-guide-title">{{ section.settings.main_heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.main_description != blank %}
+        <div class="cost-guide-desc">{{ section.settings.main_description }}</div>
+      {% endif %}
+
+      <div class="cost-factors-card">
+        {% if section.settings.card_title != blank %}
+          <div class="cost-factors-title">{{ section.settings.card_title }}</div>
+        {% endif %}
+
+        {% for block in section.blocks %}
+          {% if block.type == 'factor_item' %}
+            <div class="factor-item" {{ block.shopify_attributes }}>
+              <div class="factor-icon">&#10003;</div>
+              <div class="factor-content">
+                <span class="factor-title">{{ block.settings.title }}:</span>
+                <span class="factor-text">{{ block.settings.text }}</span>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.footer_note != blank %}
+        <p class="cost-footer-note">{{ section.settings.footer_note }}</p>
+      {% endif %}
+    </div>
+
+    {% comment %} Right Column {% endcomment %}
+    <div class="cost-guide-right">
+      <div class="table-card">
+        {% if section.settings.table_header_title != blank %}
+          <div class="table-header">{{ section.settings.table_header_title }}</div>
+        {% endif %}
+        
+        <div class="table-wrapper">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Design</th>
+                <th>A-DIY system</th>
+                <th>Site work and footings</th>
+                <th>Permit-related costs</th>
+                <th>Assembly labor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for block in section.blocks %}
+                {% if block.type == 'table_row' %}
+                  <tr {{ block.shopify_attributes }}>
+                    <td><strong>{{ block.settings.col_design }}</strong></td>
+                    <td>{{ block.settings.col_diy }}</td>
+                    <td>{{ block.settings.col_sitework }}</td>
+                    <td>{{ block.settings.col_permit }}</td>
+                    <td>{{ block.settings.col_labor }}</td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {% if section.settings.req_title != blank %}
+        <h3 class="requirement-title">{{ section.settings.req_title }}</h3>
+      {% endif %}
+
+      <ul class="requirement-list">
+        {% for block in section.blocks %}
+          {% if block.type == 'requirement_item' %}
+            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% if section.settings.sub_note != blank %}
+        <p class="sub-note">{{ section.settings.sub_note }}</p>
+      {% endif %}
+
+      {% if section.settings.btn1_text != blank %}
+        <a href="{{ section.settings.btn1_url }}" class="btn-primary-custom">
+          {{ section.settings.btn1_text }}
+        </a>
+      {% endif %}
+
+      {% if section.settings.btn2_text != blank %}
+        <a href="{{ section.settings.btn2_url }}" class="btn-secondary-custom">
+          {{ section.settings.btn2_text }}
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SEO Cost Guide Section",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Left Column Settings"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "How Much Does It Cost?"
+    },
+    {
+      "type": "textarea",
+      "id": "main_description",
+      "label": "Main Description",
+      "default": "There is no single accurate statewide price. The final cost depends on the design, material, height, foundations, permits, labor and conditions at the property."
+    },
+    {
+      "type": "text",
+      "id": "card_title",
+      "label": "Factors Card Title",
+      "default": "PRIMARY COST FACTORS"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_note",
+      "label": "Footer Note",
+      "default": "A complete project budget may include the deck system or raw materials, delivery, site preparation, footings, permit fees, surveys, engineering, assembly labor, stairs, railings, demolition and cleanup."
+    },
+    {
+      "type": "header",
+      "content": "Right Column Settings"
+    },
+    {
+      "type": "text",
+      "id": "table_header_title",
+      "label": "Table Header Title",
+      "default": "VERIFIED NY PROJECT EXAMPLES"
+    },
+    {
+      "type": "text",
+      "id": "req_title",
+      "label": "Requirements Title",
+      "default": "Every published estimate must identify:"
+    },
+    {
+      "type": "text",
+      "id": "sub_note",
+      "label": "Sub Note",
+      "default": "Property-specific pricing will vary."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "btn1_text",
+      "label": "Primary Button Text",
+      "default": "READ THE COMPLETE NEW YORK DECK-COST GUIDE"
+    },
+    {
+      "type": "url",
+      "id": "btn1_url",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "btn2_text",
+      "label": "Secondary Button Text",
+      "default": "VIEW CURRENT SIZES AND PRICES"
+    },
+    {
+      "type": "url",
+      "id": "btn2_url",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "factor_item",
+      "name": "Cost Factor Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Factor Title",
+          "default": "Deck size"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Factor Description",
+          "default": "Larger decks require more structure, decking and hardware."
+        }
+      ]
+    },
+    {
+      "type": "table_row",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "col_design",
+          "label": "Design Name",
+          "default": "12×12 pressure-treated"
+        },
+        {
+          "type": "text",
+          "id": "col_diy",
+          "label": "DIY System",
+          "default": "[ADD HERE]"
+        },
+        {
+          "type": "text",
+          "id": "col_sitework",
+          "label": "Site work",
+          "default": "[ADD HERE]"
+        },
+        {
+          "type": "text",
+          "id": "col_permit",
+          "label": "Permit costs",
+          "default": "[ADD HERE]"
+        },
+        {
+          "type": "text",
+          "id": "col_labor",
+          "label": "Assembly labor",
+          "default": "[ADD HERE]"
+        }
+      ]
+    },
+    {
+      "type": "requirement_item",
+      "name": "Requirement Bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Bullet Point Text",
+          "default": "Date reviewed"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEO Cost Guide Section",
+      "blocks": [
+        {
+          "type": "factor_item",
+          "settings": {
+            "title": "Deck size",
+            "text": "Larger decks require more structure, decking and hardware."
+          }
+        },
+        {
+          "type": "factor_item",
+          "settings": {
+            "title": "Surface material",
+            "text": "Pressure-treated wood and composite have different purchase and maintenance costs."
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×12 pressure-treated"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×16 pressure-treated"
+          }
+        },
+        {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Date reviewed"
+          }
+        },
+        {
+          "type": "requirement_item",
+          "settings": {
+            "text": "New York region used"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
