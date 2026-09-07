@@ -454,6 +454,60 @@
         "padding_top": 0,
         "padding_bottom": 52
       }
+    },
+    "outdoor_moments_cbeyy9": {
+      "type": "outdoor-moments",
+      "blocks": {
+        "card_44PTHV": {
+          "type": "card",
+          "settings": {
+            "video": "shopify://files/videos/202606280055 (1).mp4",
+            "image": "shopify://shop_images/image_13.png",
+            "title": "Your Backyard Retreat",
+            "description": "A calm, beautiful space for sauna nights, cold rinses, deep breaths, and doing absolutely nothing."
+          }
+        },
+        "card_EEQAGi": {
+          "type": "card",
+          "settings": {
+            "video": "shopify://files/videos/202606280055.mp4",
+            "image": "shopify://shop_images/image_14.png",
+            "title": "Made for Gathering",
+            "description": "The kind of space where the fire stays on, the chairs fill up, and the night lasts a little longer."
+          }
+        },
+        "card_XPgDC7": {
+          "type": "card",
+          "settings": {
+            "video": "shopify://files/videos/IMG_2698 2.MOV",
+            "image": "shopify://shop_images/image_15.png",
+            "title": "Room to Reset",
+            "description": "A simple outdoor space for stretching, breathing, moving, and beginning the day outside."
+          }
+        }
+      },
+      "block_order": [
+        "card_44PTHV",
+        "card_EEQAGi",
+        "card_XPgDC7"
+      ],
+      "name": "Outdoor Moments",
+      "settings": {
+        "heading": "Outside feels different now.",
+        "subheading": "Your backyard was always part of your home. Now it finally feels like it.",
+        "columns_desktop": "3",
+        "bg_color": "#f7f9fa",
+        "title_color": "#20221d",
+        "subtitle_color": "#5a5a5a",
+        "card_bg": "#ffffff",
+        "card_border": "#ffffff",
+        "card_title_color": "#20221d",
+        "card_text_color": "#6b6b6b",
+        "padding_top": 70,
+        "padding_bottom": 70,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     }
   },
   "order": [
@@ -463,6 +517,7 @@
     "navigation_tabs_PhVK3p",
     "multicolumn_TGXkFF",
     "old_comparison_table_3NMcRn",
-    "rich_text_gEgHFN"
+    "rich_text_gEgHFN",
+    "outdoor_moments_cbeyy9"
   ]
 }
