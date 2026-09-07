@@ -27,10 +27,11 @@
     }
   }
 
-  /* Left Column Content with Full Height Accent Line */
-  .deck-permits-content-{{ section.id }} {
-    border-left: 2px solid {{ section.settings.accent_border_color }};
-    padding-left: 24px;
+  /* Top Content Block with Accent Border */
+  .deck-permits-top-block-{{ section.id }} {
+    border-left: 3px solid {{ section.settings.accent_border_color }};
+    padding-left: 20px;
+    margin-bottom: 2rem;
   }
 
   .deck-permits-title-{{ section.id }} {
@@ -51,7 +52,6 @@
     font-size: 13.5px;
     line-height: 1.6;
     color: #555555;
-    margin-bottom: 1.75rem;
   }
 
   .deck-permits-text-{{ section.id }} p {
@@ -60,6 +60,11 @@
 
   .deck-permits-text-{{ section.id }} p:last-child {
     margin-bottom: 0;
+  }
+
+  /* Questions List Block (Outside Border) */
+  .deck-permits-questions-block-{{ section.id }} {
+    padding-left: 0;
   }
 
   .deck-permits-subtitle-{{ section.id }} {
@@ -92,7 +97,7 @@
     color: #666666;
   }
 
-  /* Right Column Visuals */
+  /* Right Column Visuals & Note Card */
   .deck-permits-media-{{ section.id }} {
     display: flex;
     flex-direction: column;
@@ -144,31 +149,39 @@
       
       {%- comment -%} Left Column Content {%- endcomment -%}
       <div class="deck-permits-content-{{ section.id }}">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="deck-permits-title-{{ section.id }}">{{ section.settings.heading }}</h2>
-        {%- endif -%}
+        
+        {%- comment -%} Top Block with Left Accent Border {%- endcomment -%}
+        <div class="deck-permits-top-block-{{ section.id }}">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="deck-permits-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+          {%- endif -%}
 
-        {%- if section.settings.body_text != blank -%}
-          <div class="deck-permits-text-{{ section.id }}">
-            {{ section.settings.body_text }}
-          </div>
-        {%- endif -%}
+          {%- if section.settings.body_text != blank -%}
+            <div class="deck-permits-text-{{ section.id }}">
+              {{ section.settings.body_text }}
+            </div>
+          {%- endif -%}
+        </div>
 
-        {%- if section.settings.questions_heading != blank -%}
-          <h3 class="deck-permits-subtitle-{{ section.id }}">{{ section.settings.questions_heading }}</h3>
-        {%- endif -%}
+        {%- comment -%} Bottom Questions List (No Border) {%- endcomment -%}
+        <div class="deck-permits-questions-block-{{ section.id }}">
+          {%- if section.settings.questions_heading != blank -%}
+            <h3 class="deck-permits-subtitle-{{ section.id }}">{{ section.settings.questions_heading }}</h3>
+          {%- endif -%}
 
-        {%- assign questions = section.settings.questions_list | newline_to_br | split: '<br />' -%}
-        {%- if questions.size > 0 -%}
-          <ul class="deck-permits-list-{{ section.id }}">
-            {%- for question in questions -%}
-              {%- assign clean_question = question | strip -%}
-              {%- if clean_question != blank -%}
-                <li class="deck-permits-list-item-{{ section.id }}">{{ clean_question }}</li>
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
+          {%- assign questions = section.settings.questions_list | newline_to_br | split: '<br />' -%}
+          {%- if questions.size > 0 -%}
+            <ul class="deck-permits-list-{{ section.id }}">
+              {%- for question in questions -%}
+                {%- assign clean_question = question | strip -%}
+                {%- if clean_question != blank -%}
+                  <li class="deck-permits-list-item-{{ section.id }}">{{ clean_question }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
       </div>
 
       {%- comment -%} Right Column Media & Note {%- endcomment -%}
