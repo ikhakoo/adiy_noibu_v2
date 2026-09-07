@@ -826,6 +826,7 @@
     }
     .template-page-about-us .why-a-diy-hero.banner--desktop-transparent .banner__box{
         align-items: flex-start;
+        max-width: 50%;
     }
     .template-page-about-us .why-a-diy-hero .main-body.banner__text{
         max-width: 100%;
