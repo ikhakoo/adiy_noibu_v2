@@ -569,6 +569,82 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "cost_guide_section_xgJCGN": {
+      "type": "cost-guide-section",
+      "blocks": {
+        "factor_item_giKm8X": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Deck size",
+            "text": "Larger decks require more structure, decking and hardware."
+          }
+        },
+        "factor_item_AJiGrd": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Surface material",
+            "text": "Pressure-treated wood and composite have different purchase and maintenance costs."
+          }
+        },
+        "table_row_CKUYRt": {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×12 pressure-treated",
+            "col_diy": "[ADD HERE]",
+            "col_sitework": "[ADD HERE]",
+            "col_permit": "[ADD HERE]",
+            "col_labor": "[ADD HERE]"
+          }
+        },
+        "table_row_tgfHRJ": {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×16 pressure-treated",
+            "col_diy": "[ADD HERE]",
+            "col_sitework": "[ADD HERE]",
+            "col_permit": "[ADD HERE]",
+            "col_labor": "[ADD HERE]"
+          }
+        },
+        "requirement_item_wwXkjw": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Date reviewed"
+          }
+        },
+        "requirement_item_yhL6qM": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "New York region used"
+          }
+        }
+      },
+      "block_order": [
+        "factor_item_giKm8X",
+        "factor_item_AJiGrd",
+        "table_row_CKUYRt",
+        "table_row_tgfHRJ",
+        "requirement_item_wwXkjw",
+        "requirement_item_yhL6qM"
+      ],
+      "name": "SEO Cost Guide Section",
+      "settings": {
+        "bg_color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "main_heading": "How Much Does It Cost?",
+        "main_description": "There is no single accurate statewide price. The final cost depends on the design, material, height, foundations, permits, labor and conditions at the property.",
+        "card_title": "PRIMARY COST FACTORS",
+        "footer_note": "A complete project budget may include the deck system or raw materials, delivery, site preparation, footings, permit fees, surveys, engineering, assembly labor, stairs, railings, demolition and cleanup.",
+        "table_header_title": "VERIFIED NY PROJECT EXAMPLES",
+        "req_title": "Every published estimate must identify:",
+        "sub_note": "Property-specific pricing will vary.",
+        "btn1_text": "READ THE COMPLETE NEW YORK DECK-COST GUIDE",
+        "btn1_url": "",
+        "btn2_text": "VIEW CURRENT SIZES AND PRICES",
+        "btn2_url": ""
+      }
     }
   },
   "order": [
@@ -580,6 +656,7 @@
     "old_comparison_table_3NMcRn",
     "rich_text_gEgHFN",
     "outdoor_moments_cbeyy9",
-    "multicolumn_r3rrTE"
+    "multicolumn_r3rrTE",
+    "cost_guide_section_xgJCGN"
   ]
 }
