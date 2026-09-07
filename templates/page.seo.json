@@ -912,6 +912,22 @@
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
+    },
+    "engineering_diagrams_zHUnjj": {
+      "type": "engineering-diagrams",
+      "name": "Engineering Diagrams",
+      "settings": {
+        "heading": "What Do A-DIY Engineering Diagrams Show?",
+        "image": "shopify://shop_images/Product-img-removebg-preview_1_6cddae38-6e96-4116-b94b-d6c29b439bde.png",
+        "list_heading": "Diagrams for an applicable A-DIY configuration may show:",
+        "list_items": "Overall dimensions and structural layout\nBeam and joist locations\nPost locations\nLumber dimensions\nMajor connections\nAssembly configuration",
+        "body_text": "<p>The building department may still request property-specific information, such as a survey, site plan, setbacks, foundation details, stairs, railings, attachment details or professionally stamped documents.</p><p>Requirements vary by municipality, and the local building department has final authority. A-DIY diagrams can support a permit application but do not guarantee approval.</p>",
+        "section_bg": "#f5f5f3",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
@@ -927,6 +943,7 @@
     "cost_guide_section_xgJCGN",
     "contractor_guide_section_iBTLG6",
     "faq_accordion_tUDpHR",
-    "deck_permits_engineering_4C48gw"
+    "deck_permits_engineering_4C48gw",
+    "engineering_diagrams_zHUnjj"
   ]
 }
