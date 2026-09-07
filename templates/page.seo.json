@@ -684,6 +684,30 @@
           "settings": {
             "text": "New York region used"
           }
+        },
+        "requirement_item_xhzY3t": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Project assumptions"
+          }
+        },
+        "requirement_item_N7XcBR": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Included and excluded work"
+          }
+        },
+        "requirement_item_zMxhbp": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Source of labor estimates"
+          }
+        },
+        "requirement_item_3NHWWi": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Whether delivery and tax are included"
+          }
         }
       },
       "block_order": [
@@ -701,7 +725,11 @@
         "table_row_tgfHRJ",
         "table_row_fT3fYG",
         "requirement_item_wwXkjw",
-        "requirement_item_yhL6qM"
+        "requirement_item_yhL6qM",
+        "requirement_item_xhzY3t",
+        "requirement_item_N7XcBR",
+        "requirement_item_zMxhbp",
+        "requirement_item_3NHWWi"
       ],
       "name": "SEO Cost Guide Section",
       "settings": {
