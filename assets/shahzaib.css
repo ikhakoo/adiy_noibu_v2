@@ -1076,7 +1076,7 @@
     position: relative;
     padding-bottom: 15px; /* Text aur line ke beech space */
 }
-.seo-page-sec1.multicolumn  .title::after {
+.seo-page-sec1.multicolumn .title::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -1086,6 +1086,15 @@
     height: 3px; /* Line ki thickness */
     background-color: #c4a482; /* Image ka tan/brown color */
     border-radius: 2px;
+}
+.seo-page-sec1.multicolumn .multicolumn-card .multicolumn-card__image-wrapper {
+    width: 30px;
+}
+.seo-page-sec1.multicolumn .multicolumn-card__info .inline-richtext{
+    font-size: 22px;
+}
+.seo-page-sec1.multicolumn .multicolumn-card__info .rte{
+    font-size: 16px;
 }
 
 /********************* end *******************/
