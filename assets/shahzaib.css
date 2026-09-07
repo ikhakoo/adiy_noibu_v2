@@ -1102,4 +1102,12 @@
 .template-page-seo .comparison-table .col-highlight{
     display: none;
 }
+.seo-page-sec-text .rich-text__blocks {
+    max-width: 100%;
+}
+.seo-page-sec-text .rich-text__text{
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px 10px 0;
+}
 /********************* end *******************/
