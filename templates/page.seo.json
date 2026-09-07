@@ -748,6 +748,55 @@
         "btn2_text": "VIEW CURRENT SIZES AND PRICES",
         "btn2_url": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
       }
+    },
+    "contractor_guide_section_iBTLG6": {
+      "type": "contractor-guide-section",
+      "blocks": {
+        "guide_card_6N9wTf": {
+          "type": "guide_card",
+          "settings": {
+            "is_dark": false,
+            "title": "Prepare a short written description containing:",
+            "checklist_items": "Approximate deck dimensions\nPreferred material\nProposed height\nAttached or freestanding design\nStairs and railings\nExisting deck removal\nSite conditions\nPermit responsibility",
+            "notice_text": "Then collect multiple written estimates and compare the same scope. The New York Attorney General recommends obtaining multiple estimates, checking references, confirming insurance and understanding permit responsibilities before hiring a home-improvement contractor."
+          }
+        },
+        "guide_card_MYdnk8": {
+          "type": "guide_card",
+          "settings": {
+            "is_dark": false,
+            "title": "What Should You Verify?",
+            "checklist_items": "Business identity and address\nRequired license or registration\nLiability and workers' compensation coverage\nRecent references and completed projects\nWritten project scope\nPayment schedule\nWarranty terms\nExpected start and completion dates",
+            "notice_text": "Home-improvement contractor licensing requirements apply in certain New York jurisdictions, including New York City and several counties and municipalities. Confirm current requirements with the applicable local authority."
+          }
+        },
+        "guide_card_b9ECRh": {
+          "type": "guide_card",
+          "settings": {
+            "is_dark": true,
+            "title": "What Should a Written Deck Quote Include?",
+            "checklist_items": "Deck dimensions and layout\nLumber grade and framing dimensions\nSurface material and brand\nHardware and connectors\nFootings, posts and bracing\nStairs and railings\nPermit and engineering responsibility\nDemolition, disposal and cleanup\nSchedule, payments and warranty\nAll exclusions and allowances",
+            "notice_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "guide_card_6N9wTf",
+        "guide_card_MYdnk8",
+        "guide_card_b9ECRh"
+      ],
+      "name": "Contractor Guide Section",
+      "settings": {
+        "heading": "How Do You Find and Hire a Deck Contractor in New York?",
+        "subtitle": "Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work.",
+        "button_label": "VIEW THE COMPLETE CONTRACTOR-HIRING CHECKLIST",
+        "button_link": "",
+        "section_bg": "#F0EEE9",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
@@ -760,6 +809,7 @@
     "rich_text_gEgHFN",
     "outdoor_moments_cbeyy9",
     "multicolumn_r3rrTE",
-    "cost_guide_section_xgJCGN"
+    "cost_guide_section_xgJCGN",
+    "contractor_guide_section_iBTLG6"
   ]
 }
