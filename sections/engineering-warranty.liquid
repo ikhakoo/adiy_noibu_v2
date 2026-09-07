@@ -1,0 +1,426 @@
+{%- style -%}
+  .engineering-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    color: {{ section.settings.text_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .engineering-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .engineering-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .engineering-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  @media screen and (min-width: 990px) {
+    .engineering-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* Left Column Media Card */
+  .engineering-left-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  }
+
+  .engineering-image-wrapper {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    aspect-ratio: 16 / 10;
+    background-color: #f0f0f0;
+  }
+
+  .engineering-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .engineering-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .engineering-btn-primary {
+    display: inline-block;
+    background-color: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_text_color }};
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .engineering-btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .engineering-btn-secondary {
+    display: inline-block;
+    color: {{ section.settings.secondary_link_color }};
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 2px solid {{ section.settings.secondary_link_color }};
+    padding-bottom: 2px;
+    transition: opacity 0.3s ease;
+  }
+
+  .engineering-btn-secondary:hover {
+    opacity: 0.7;
+  }
+
+  /* Right Column Content */
+  .engineering-right-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .engineering-header-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .engineering-header-subtitle {
+    font-size: 14px;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 12px 0;
+    opacity: 0.85;
+  }
+
+  /* Cards List */
+  .engineering-info-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 28px 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .engineering-info-card.has-border {
+    border-left: 4px solid {{ section.settings.accent_border_color }};
+  }
+
+  .engineering-card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: {{ section.settings.card_heading_color }};
+  }
+
+  .engineering-info-card.has-border .engineering-card-title {
+    color: {{ section.settings.accent_border_color }};
+  }
+
+  .engineering-card-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .engineering-card-text p {
+    margin: 0 0 12px 0;
+  }
+
+  .engineering-card-text p:last-child {
+    margin-bottom: 0;
+  }
+{%- endstyle -%}
+
+<div class="engineering-section-{{ section.id }}">
+  <div class="engineering-container">
+    <div class="engineering-grid">
+      
+      <!-- Left Column -->
+      <div class="engineering-left-card">
+        <div class="engineering-image-wrapper">
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.heading }}
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        <div class="engineering-actions">
+          {%- if section.settings.btn_primary_text != blank -%}
+            <a href="{{ section.settings.btn_primary_link }}" class="engineering-btn-primary">
+              {{ section.settings.btn_primary_text }}
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.btn_secondary_text != blank -%}
+            <a href="{{ section.settings.btn_secondary_link }}" class="engineering-btn-secondary">
+              {{ section.settings.btn_secondary_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="engineering-right-content">
+        <div class="engineering-header">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="engineering-header-title">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.subtitle != blank -%}
+            <p class="engineering-header-subtitle">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'info_card' -%}
+            <div class="engineering-info-card {% if block.settings.enable_left_border %}has-border{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h3 class="engineering-card-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.content != blank -%}
+                <div class="engineering-card-text">
+                  {{ block.settings.content }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Engineering & Warranty",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Engineering, Strength and Warranty"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Applicable A-DIY deck configurations are professionally engineered."
+    },
+    {
+      "type": "header",
+      "content": "Left Card Media & Buttons"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Card Image"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_text",
+      "label": "Primary Button Text",
+      "default": "Watch Load Test"
+    },
+    {
+      "type": "url",
+      "id": "btn_primary_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_text",
+      "label": "Secondary Link Text",
+      "default": "Review Warranty"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_link",
+      "label": "Secondary Link"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#f4f3ef"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Main Heading Color",
+      "default": "#1a1a18"
+    },
+    {
+      "type": "color",
+      "id": "card_heading_color",
+      "label": "Card Heading Color",
+      "default": "#1a1a18"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body Text Color",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Primary Button BG",
+      "default": "#bd9b79"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Primary Button Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "secondary_link_color",
+      "label": "Secondary Link Color",
+      "default": "#1a1a18"
+    },
+    {
+      "type": "color",
+      "id": "accent_border_color",
+      "label": "Card Highlight Border Color",
+      "default": "#376250"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Bottom",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_card",
+      "name": "Info Card",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_left_border",
+          "label": "Enable Accent Left Border",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Card Description",
+          "default": "<p>Add card content details here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Engineering & Warranty",
+      "blocks": [
+        {
+          "type": "info_card",
+          "settings": {
+            "title": "Verified Structural Rating",
+            "content": "<p>Applicable A-DIY deck configurations are engineered to hold up to 15,000 pounds when properly assembled, supported and installed according to the applicable specifications.</p><p>Structural performance depends on correct assembly, the selected configuration, suitable foundations, footing installation, site conditions, post height, bracing, connections and compliance with applicable engineering information.</p>",
+            "enable_left_border": false
+          }
+        },
+        {
+          "type": "info_card",
+          "settings": {
+            "title": "Five-Year Structural Warranty",
+            "content": "<p>A-DIY deck systems include a five-year structural warranty, subject to the written terms, approved uses, correct installation, limitations and exclusions.</p><p>Composite surface boards may carry a separate manufacturer warranty.</p>",
+            "enable_left_border": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
