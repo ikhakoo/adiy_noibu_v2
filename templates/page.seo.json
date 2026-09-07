@@ -256,7 +256,7 @@
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "custom_class": "",
+        "custom_class": "seo-page-sec1",
         "title": "Three Ways to Build a Deck in New York",
         "title_content": "",
         "image_width": "third",
