@@ -96,7 +96,7 @@
     opacity: 0.85;
   }
 
-  /* Right Media Column */
+  /* Right Media Column - Inline Video Player */
   .steps-with-video-wrapper {
     position: relative;
     width: 100%;
@@ -124,6 +124,8 @@
     justify-content: center;
     text-decoration: none;
     cursor: pointer;
+    z-index: 2;
+    transition: opacity 0.3s ease;
   }
 
   .steps-with-video-text {
@@ -163,51 +165,23 @@
     margin-left: 3px;
   }
 
-  /* Modal Video Styling */
-  .swv-video-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    background: rgba(0, 0, 0, 0.85);
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .swv-video-modal.is-open {
-    display: flex;
-  }
-
-  .swv-video-modal-content {
-    position: relative;
+  .steps-with-video-player-container {
     width: 100%;
-    max-width: 900px;
-    aspect-ratio: 16 / 9;
-    background: #000;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .swv-video-modal-close {
+    height: 100%;
     position: absolute;
-    top: -40px;
-    right: 0;
-    color: #fff;
-    font-size: 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
+    inset: 0;
+    z-index: 1;
   }
 
-  .swv-video-modal iframe,
-  .swv-video-modal video {
+  .steps-with-video-player-container iframe,
+  .steps-with-video-player-container video {
     width: 100%;
     height: 100%;
     border: none;
   }
 {%- endstyle -%}
+
+{%- assign video_id = section.settings.video_url.id -%}
 
 <div class="steps-with-video-{{ section.id }}">
   <div class="steps-with-video-container page-width">
@@ -248,19 +222,28 @@
         </div>
       </div>
 
-      <!-- Right Column: Video Block -->
+      <!-- Right Column: Video Block (Inline Auto-Cover) -->
       <div class="steps-with-video-media">
-        <div class="steps-with-video-wrapper">
-          {%- if section.settings.cover_image != blank -%}
-            {{ section.settings.cover_image 
-              | image_url: width: 1200 
-              | image_tag: loading: 'lazy', class: 'steps-with-video-cover', alt: section.settings.heading 
-            }}
-          {%- else -%}
-            <div style="width:100%;height:100%;background:#222;"></div>
-          {%- endif -%}
-
+        <div class="steps-with-video-wrapper" id="VideoWrapper-{{ section.id }}">
+          
+          <!-- Overlay Poster & Play Button -->
           <div class="steps-with-video-overlay" id="VideoTrigger-{{ section.id }}">
+            {%- if section.settings.cover_image != blank -%}
+              {{ section.settings.cover_image 
+                | image_url: width: 1200 
+                | image_tag: loading: 'lazy', class: 'steps-with-video-cover', alt: section.settings.heading 
+              }}
+            {%- elsif video_id != blank -%}
+              <img 
+                src="https://img.youtube.com/vi/{{ video_id }}/maxresdefault.jpg" 
+                alt="{{ section.settings.heading }}" 
+                loading="lazy" 
+                class="steps-with-video-cover"
+              >
+            {%- else -%}
+              <div style="width:100%;height:100%;background:#222;"></div>
+            {%- endif -%}
+
             {%- if section.settings.video_overlay_text != blank -%}
               <span class="steps-with-video-text">{{ section.settings.video_overlay_text }}</span>
             {%- endif -%}
@@ -271,6 +254,10 @@
               </svg>
             </div>
           </div>
+
+          <!-- Inline Player Container -->
+          <div class="steps-with-video-player-container" id="PlayerContainer-{{ section.id }}"></div>
+
         </div>
       </div>
 
@@ -278,47 +265,27 @@
   </div>
 </div>
 
-<!-- Modal Video Container -->
-<div class="swv-video-modal" id="VideoModal-{{ section.id }}">
-  <div class="swv-video-modal-content">
-    <button class="swv-video-modal-close" id="VideoModalClose-{{ section.id }}">&times;</button>
-    <div id="VideoPlayerContainer-{{ section.id }}"></div>
-  </div>
-</div>
-
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const trigger = document.getElementById('VideoTrigger-{{ section.id }}');
-    const modal = document.getElementById('VideoModal-{{ section.id }}');
-    const closeBtn = document.getElementById('VideoModalClose-{{ section.id }}');
-    const playerContainer = document.getElementById('VideoPlayerContainer-{{ section.id }}');
+    const playerContainer = document.getElementById('PlayerContainer-{{ section.id }}');
 
     const videoUrl = "{{ section.settings.video_url }}";
+    const videoId = "{{ video_id }}";
     const shopifyVideo = "{% if section.settings.video != blank %}{{ section.settings.video.sources[0].url }}{% endif %}";
 
-    if(trigger && modal) {
+    if(trigger && playerContainer) {
       trigger.addEventListener('click', function() {
-        modal.classList.add('is-open');
+        trigger.style.display = 'none'; // Hide overlay on click
         
         if (shopifyVideo) {
-          playerContainer.innerHTML = `<video src="${shopifyVideo}" controls autoplay style="width:100%;height:100%;"></video>`;
-        } else if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-          let embedUrl = videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/');
-          playerContainer.innerHTML = `<iframe src="${embedUrl}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+          playerContainer.innerHTML = `<video src="${shopifyVideo}" controls autoplay style="width:100%;height:100%;object-fit:cover;"></video>`;
+        } else if (videoId) {
+          playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
         } else if (videoUrl.includes('vimeo.com')) {
           let vimeoId = videoUrl.split('/').pop();
           playerContainer.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
         }
-      });
-
-      function closeModal() {
-        modal.classList.remove('is-open');
-        playerContainer.innerHTML = '';
-      }
-
-      closeBtn.addEventListener('click', closeModal);
-      modal.addEventListener('click', function(e) {
-        if(e.target === modal) closeModal();
       });
     }
   });
@@ -349,7 +316,8 @@
     {
       "type": "image_picker",
       "id": "cover_image",
-      "label": "Video Cover Image"
+      "label": "Custom Cover Image",
+      "info": "Leave empty to auto-detect YouTube cover image"
     },
     {
       "type": "text",
@@ -367,7 +335,7 @@
       "id": "video_url",
       "label": "External Video Link",
       "accept": ["youtube", "vimeo"],
-      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "default": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",
       "info": "Used if Shopify hosted video is not selected"
     },
     {
