@@ -1,0 +1,573 @@
+{%- style -%}
+  .wood-vs-comp-{{ section.id }} {
+    background-color: {{ section.settings.section_bg }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .wood-vs-comp-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  /* Header Section */
+  .wood-vs-comp-header-{{ section.id }} {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 2.5rem auto;
+  }
+
+  .wood-vs-comp-main-title-{{ section.id }} {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.25;
+    margin: 0 0 1rem 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .wood-vs-comp-main-title-{{ section.id }} {
+      font-size: 2.25rem;
+    }
+  }
+
+  .wood-vs-comp-subhead-{{ section.id }} {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 0.75rem;
+  }
+
+  .wood-vs-comp-desc-{{ section.id }} {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555555;
+    margin: 0;
+  }
+
+  /* Cards Slider Container (Mobile Drag/Scroll & Desktop Grid) */
+  .wood-vs-comp-cards-{{ section.id }} {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+    margin-bottom: 2.5rem;
+  }
+
+  .wood-vs-comp-cards-{{ section.id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media screen and (min-width: 850px) {
+    .wood-vs-comp-cards-{{ section.id }} {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      overflow-x: visible;
+      padding-bottom: 0;
+    }
+  }
+
+  /* Card Item */
+  .wood-vs-comp-card-{{ section.id }} {
+    flex: 0 0 85%;
+    max-width: 85%;
+    scroll-snap-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  @media screen and (min-width: 850px) {
+    .wood-vs-comp-card-{{ section.id }} {
+      flex: 1 1 auto;
+      max-width: 100%;
+    }
+  }
+
+  /* Card Image */
+  .wood-vs-comp-card-media-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background-color: #e0e0e0;
+  }
+
+  .wood-vs-comp-card-img-{{ section.id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Card Body */
+  .wood-vs-comp-card-body-{{ section.id }} {
+    padding: 24px 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .wood-vs-comp-card-body-{{ section.id }}.classic {
+    background-color: #ffffff;
+    color: #1a1a1a;
+  }
+
+  .wood-vs-comp-card-body-{{ section.id }}.modernist {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  .wood-vs-comp-card-tag-{{ section.id }} {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.75;
+  }
+
+  .wood-vs-comp-card-title-{{ section.id }} {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+  }
+
+  .classic .wood-vs-comp-card-title-{{ section.id }} { color: #1a1a1a; }
+  .modernist .wood-vs-comp-card-title-{{ section.id }} { color: #ffffff; }
+
+  /* Feature Lines */
+  .wood-vs-comp-features-{{ section.id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    width: 100%;
+  }
+
+  .wood-vs-comp-feature-item-{{ section.id }} {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    opacity: 0.85;
+  }
+
+  .wood-vs-comp-card-btn-{{ section.id }} {
+    margin-top: auto;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s ease;
+    display: inline-block;
+  }
+
+  .classic .wood-vs-comp-card-btn-{{ section.id }} {
+    border: 1px solid #1a1a1a;
+    color: #1a1a1a;
+    background: transparent;
+  }
+
+  .modernist .wood-vs-comp-card-btn-{{ section.id }} {
+    border: 1px solid #1c4b37;
+    background-color: #1c4b37;
+    color: #ffffff;
+  }
+
+  /* Bottom Summary Block */
+  .wood-vs-comp-summary-{{ section.id }} {
+    max-width: 850px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .wood-vs-comp-summary-item-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wood-vs-comp-summary-title-{{ section.id }} {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 6px 0;
+  }
+
+  .wood-vs-comp-summary-desc-{{ section.id }} {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555555;
+    margin: 0 0 12px 0;
+  }
+
+  .wood-vs-comp-summary-btn-{{ section.id }} {
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .wood-vs-comp-summary-btn-outline {
+    border: 1px solid #1a1a1a;
+    color: #1a1a1a;
+    background: transparent;
+  }
+
+  .wood-vs-comp-summary-btn-solid {
+    background-color: #1c4b37;
+    color: #ffffff;
+    border: 1px solid #1c4b37;
+  }
+{%- endstyle -%}
+
+<div class="wood-vs-comp-{{ section.id }}">
+  <div class="page-width">
+    
+    {%- comment -%} Section Header {%- endcomment -%}
+    <div class="wood-vs-comp-header-{{ section.id }}">
+      {%- if section.settings.main_title != blank -%}
+        <h2 class="wood-vs-comp-main-title-{{ section.id }}">{{ section.settings.main_title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <div class="wood-vs-comp-subhead-{{ section.id }}">{{ section.settings.subtitle }}</div>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <p class="wood-vs-comp-desc-{{ section.id }}">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Cards Container (Grid / Horizontal Drag) {%- endcomment -%}
+    <div class="wood-vs-comp-cards-{{ section.id }}">
+      
+      {%- comment -%} Card 1: Pressure-Treated Wood {%- endcomment -%}
+      <div class="wood-vs-comp-card-{{ section.id }}">
+        <div class="wood-vs-comp-card-media-{{ section.id }}">
+          {%- if section.settings.card_1_image != blank -%}
+            {%- assign img_class = 'wood-vs-comp-card-img-' | append: section.id -%}
+            {{ section.settings.card_1_image 
+              | image_url: width: 800 
+              | image_tag: loading: 'lazy', class: img_class, alt: section.settings.card_1_title 
+            }}
+          {%- endif -%}
+        </div>
+        <div class="wood-vs-comp-card-body-{{ section.id }} classic">
+          <span class="wood-vs-comp-card-tag-{{ section.id }}">{{ section.settings.card_1_tag }}</span>
+          <h3 class="wood-vs-comp-card-title-{{ section.id }}">{{ section.settings.card_1_title }}</h3>
+          
+          {%- assign card_1_features = section.settings.card_1_features | newline_to_br | split: '<br />' -%}
+          <ul class="wood-vs-comp-features-{{ section.id }}">
+            {%- for feat in card_1_features -%}
+              {%- assign clean_feat = feat | strip -%}
+              {%- if clean_feat != blank -%}
+                <li class="wood-vs-comp-feature-item-{{ section.id }}">{{ clean_feat }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- if section.settings.card_1_btn_text != blank -%}
+            <a href="{{ section.settings.card_1_btn_link }}" class="wood-vs-comp-card-btn-{{ section.id }}">
+              {{ section.settings.card_1_btn_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Card 2: Advanced Composite {%- endcomment -%}
+      <div class="wood-vs-comp-card-{{ section.id }}">
+        <div class="wood-vs-comp-card-media-{{ section.id }}">
+          {%- if section.settings.card_2_image != blank -%}
+            {%- assign img_class = 'wood-vs-comp-card-img-' | append: section.id -%}
+            {{ section.settings.card_2_image 
+              | image_url: width: 800 
+              | image_tag: loading: 'lazy', class: img_class, alt: section.settings.card_2_title 
+            }}
+          {%- endif -%}
+        </div>
+        <div class="wood-vs-comp-card-body-{{ section.id }} modernist">
+          <span class="wood-vs-comp-card-tag-{{ section.id }}">{{ section.settings.card_2_tag }}</span>
+          <h3 class="wood-vs-comp-card-title-{{ section.id }}">{{ section.settings.card_2_title }}</h3>
+          
+          {%- assign card_2_features = section.settings.card_2_features | newline_to_br | split: '<br />' -%}
+          <ul class="wood-vs-comp-features-{{ section.id }}">
+            {%- for feat in card_2_features -%}
+              {%- assign clean_feat = feat | strip -%}
+              {%- if clean_feat != blank -%}
+                <li class="wood-vs-comp-feature-item-{{ section.id }}">{{ clean_feat }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- if section.settings.card_2_btn_text != blank -%}
+            <a href="{{ section.settings.card_2_btn_link }}" class="wood-vs-comp-card-btn-{{ section.id }}">
+              {{ section.settings.card_2_btn_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+
+    {%- comment -%} Bottom Summary Section {%- endcomment -%}
+    <div class="wood-vs-comp-summary-{{ section.id }}">
+      
+      {%- comment -%} Summary Item 1 {%- endcomment -%}
+      <div class="wood-vs-comp-summary-item-{{ section.id }}">
+        <h4 class="wood-vs-comp-summary-title-{{ section.id }}">{{ section.settings.sum_1_title }}</h4>
+        <p class="wood-vs-comp-summary-desc-{{ section.id }}">{{ section.settings.sum_1_desc }}</p>
+        {%- if section.settings.sum_1_btn_text != blank -%}
+          <a href="{{ section.settings.sum_1_btn_link }}" class="wood-vs-comp-summary-btn-{{ section.id }} wood-vs-comp-summary-btn-outline">
+            {{ section.settings.sum_1_btn_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Summary Item 2 {%- endcomment -%}
+      <div class="wood-vs-comp-summary-item-{{ section.id }}">
+        <h4 class="wood-vs-comp-summary-title-{{ section.id }}">{{ section.settings.sum_2_title }}</h4>
+        <p class="wood-vs-comp-summary-desc-{{ section.id }}">{{ section.settings.sum_2_desc }}</p>
+        {%- if section.settings.sum_2_btn_text != blank -%}
+          <a href="{{ section.settings.sum_2_btn_link }}" class="wood-vs-comp-summary-btn-{{ section.id }} wood-vs-comp-summary-btn-solid">
+            {{ section.settings.sum_2_btn_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wood vs Composite",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Main Heading",
+      "default": "Pressure-Treated Wood vs. Composite Decking"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "The best deck material depends on your budget, preferred appearance and maintenance expectations."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "New York decks may experience rain, snow, ice, humidity, summer heat, freeze-and-thaw cycles and coastal moisture. Neither pressure-treated wood nor composite is automatically best for every property."
+    },
+    {
+      "type": "header",
+      "content": "Card 1: Pressure-Treated Wood"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Card 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "card_1_tag",
+      "label": "Card 1 Tagline",
+      "default": "The Classic"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Card 1 Title",
+      "default": "Pressure-Treated Wood"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_features",
+      "label": "Card 1 Features (One per line)",
+      "default": "Generally lower\nNatural wood grain and variation\nMay require cleaning, staining or sealing\nMay develop over time\nMay check, crack or change color\nCan be stained or refinished\nDepends on stain, color and exposure\nBoards can often be replaced or refinished\nLower initial cost and natural appearance\nSubject to material and A-DIY terms"
+    },
+    {
+      "type": "text",
+      "id": "card_1_btn_text",
+      "label": "Card 1 Button Text",
+      "default": "Shop Classic"
+    },
+    {
+      "type": "url",
+      "id": "card_1_btn_link",
+      "label": "Card 1 Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Card 2: Advanced Composite"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Card 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "card_2_tag",
+      "label": "Card 2 Tagline",
+      "default": "The Modernist"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Card 2 Title",
+      "default": "Advanced Composite"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_features",
+      "label": "Card 2 Features (One per line)",
+      "default": "Generally higher\nModern and more consistent finish\nDoes not require routine staining or sealing\nDesigned to resist splintering\nDesigned to resist common surface cracking and splintering\nAvailable in manufactured colors and finishes\nDarker colors may become warmer\nBoards can be replaced, but refinishing is limited\nModern appearance and reduced maintenance\nSubject to manufacturer and A-DIY terms"
+    },
+    {
+      "type": "text",
+      "id": "card_2_btn_text",
+      "label": "Card 2 Button Text",
+      "default": "Shop Composite"
+    },
+    {
+      "type": "url",
+      "id": "card_2_btn_link",
+      "label": "Card 2 Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Summary - Wood"
+    },
+    {
+      "type": "text",
+      "id": "sum_1_title",
+      "label": "Summary 1 Title",
+      "default": "Choose Pressure-Treated Wood When:"
+    },
+    {
+      "type": "textarea",
+      "id": "sum_1_desc",
+      "label": "Summary 1 Text",
+      "default": "You want a lower initial cost, natural wood appearance and the ability to stain or refinish the surface. It generally requires more routine care as it ages."
+    },
+    {
+      "type": "text",
+      "id": "sum_1_btn_text",
+      "label": "Summary 1 Button Text",
+      "default": "Explore Pressure-Treated Options"
+    },
+    {
+      "type": "url",
+      "id": "sum_1_btn_link",
+      "label": "Summary 1 Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Summary - Composite"
+    },
+    {
+      "type": "text",
+      "id": "sum_2_title",
+      "label": "Summary 2 Title",
+      "default": "Choose Composite When:"
+    },
+    {
+      "type": "textarea",
+      "id": "sum_2_desc",
+      "label": "Summary 2 Text",
+      "default": "You want a modern, consistent surface with less routine maintenance and no regular staining or sealing. Composite generally has a higher initial cost."
+    },
+    {
+      "type": "text",
+      "id": "sum_2_btn_text",
+      "label": "Summary 2 Button Text",
+      "default": "Explore Composite Options"
+    },
+    {
+      "type": "url",
+      "id": "sum_2_btn_link",
+      "label": "Summary 2 Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Styling"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background Color",
+      "default": "#f5f5f3"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop Padding Bottom",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Padding Bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wood vs Composite"
+    }
+  ]
+}
+{% endschema %}
