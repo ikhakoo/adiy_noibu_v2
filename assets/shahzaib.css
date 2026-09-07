@@ -1127,5 +1127,16 @@
     color:#fff;
 
 }
+.seo-img-title.multicolumn .multicolumn-list .multicolumn-card {
+    background: #fff;
+}
+@media screen and (min-width: 990px) {
+    .seo-img-title .multicolumn-list{
+        gap: 3rem;
+    }
+    .seo-img-title .grid--3-col-desktop .grid__item {
+        width: 31.33%;
+    }
+}
 
 /********************* end *******************/
