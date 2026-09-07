@@ -273,6 +273,52 @@
         "padding_bottom": 36
       }
     },
+    "old_comparison_table_3NMcRn": {
+      "type": "old-comparison-table",
+      "blocks": {
+        "row_eTni9D": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Total Cost",
+            "col_2_val": "Middle Ground",
+            "col_3_val": "Highest (Labor + Markup)",
+            "col_4_val": "Lowest Upfront"
+          }
+        },
+        "row_KQN8tb": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Design Precision",
+            "col_2_val": "Professional CAD Engineering",
+            "col_3_val": "Varies by Contractor",
+            "col_4_val": "Manual Calculations"
+          }
+        },
+        "row_mMGLxV": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Long-term Warranty",
+            "col_2_val": "25-Year Structural",
+            "col_3_val": "1-5 Year Workmanship",
+            "col_4_val": "Limited Manufacturer Only"
+          }
+        }
+      },
+      "block_order": [
+        "row_eTni9D",
+        "row_KQN8tb",
+        "row_mMGLxV"
+      ],
+      "name": "Comparison Table",
+      "settings": {
+        "heading": "How We Compare",
+        "col_1_heading": "FEATURE",
+        "col_3_heading": "TRADITIONAL CONTRACTOR",
+        "col_4_heading": "BIG BOX DIY",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
     "buying": {
       "type": "multicolumn",
       "blocks": {
@@ -338,6 +384,7 @@
     "featured_icon_scrolling_kF3ffz",
     "navigation_tabs_PhVK3p",
     "multicolumn_TGXkFF",
+    "old_comparison_table_3NMcRn",
     "buying"
   ]
 }
