@@ -144,13 +144,14 @@
     height: 64px;
     border-radius: 50%;
     border: 2px solid {{ section.settings.accent_color }};
-    background: rgba(0, 0, 0, 0.35);
+    background: rgb(0 0 0 / 0%);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     color: {{ section.settings.accent_color }};
     transition: transform 0.25s ease, background-color 0.25s ease;
+    position: absolute;
   }
 
   .steps-with-video-wrapper:hover .steps-with-video-play-btn {
