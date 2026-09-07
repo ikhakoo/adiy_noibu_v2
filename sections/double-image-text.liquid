@@ -32,7 +32,7 @@
     }
   }
 
-  /* Left Content Column */
+  /* Content Column */
   .uneven-foundation-content {
     display: flex;
     flex-direction: column;
@@ -61,7 +61,7 @@
     margin: 0 0 1.25rem 0;
   }
 
-  /* Section Sub-blocks */
+  /* Repeatable Feature Block Styles */
   .uneven-foundation-block {
     margin-top: 1.5rem;
   }
@@ -74,10 +74,19 @@
   }
 
   .uneven-foundation-icon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     flex-shrink: 0;
-    color: #666666;
+    color: #8c7653; /* Warm accent icon color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .uneven-foundation-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
   }
 
   .uneven-foundation-block-title {
@@ -129,7 +138,7 @@
     font-size: 14px;
     line-height: 1.6;
     color: #555555;
-    margin-top: 1.25rem;
+    margin-top: 0.5rem;
   }
 
   /* Right Media Column */
@@ -170,7 +179,7 @@
   <div class="uneven-foundation-container page-width">
     <div class="uneven-foundation-grid">
       
-      <!-- Left Column: Content -->
+      <!-- Left Column: Content & Blocks -->
       <div class="uneven-foundation-content">
         {%- if section.settings.heading != blank -%}
           <h2 class="uneven-foundation-main-title">{{ section.settings.heading }}</h2>
@@ -184,81 +193,58 @@
           <p class="uneven-foundation-body-text">{{ section.settings.body_text }}</p>
         {%- endif -%}
 
-        <!-- Supported Elevation Block -->
-        <div class="uneven-foundation-block">
-          {%- if section.settings.elevation_title != blank -%}
-            <div class="uneven-foundation-block-header">
-              <svg class="uneven-foundation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                <path d="M2 17l10 5 10-5"></path>
-                <path d="M2 12l10 5 10-5"></path>
-              </svg>
-              <h3 class="uneven-foundation-block-title">{{ section.settings.elevation_title }}</h3>
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.elevation_desc != blank -%}
-            <p class="uneven-foundation-body-text">{{ section.settings.elevation_desc }}</p>
-          {%- endif -%}
-
-          {%- if section.settings.elevation_list_intro != blank -%}
-            <p class="uneven-foundation-list-bold-intro">{{ section.settings.elevation_list_intro }}</p>
-          {%- endif -%}
-
-          {%- assign elev_items = section.settings.elevation_list_items | newline_to_br | split: '<br />' -%}
-          {%- if elev_items.size > 0 -%}
-            <ul class="uneven-foundation-list">
-              {%- for item in elev_items -%}
-                {%- assign clean_item = item | strip -%}
-                {%- if clean_item != blank -%}
-                  <li class="uneven-foundation-list-item">{{ clean_item }}</li>
+        <!-- Dynamic Blocks Loop -->
+        {%- for block in section.blocks -%}
+          <div class="uneven-foundation-block" {{ block.shopify_attributes }}>
+            
+            {%- if block.settings.title != blank or block.settings.custom_svg != blank -%}
+              <div class="uneven-foundation-block-header">
+                {%- if block.settings.custom_svg != blank -%}
+                  <div class="uneven-foundation-icon">
+                    {{ block.settings.custom_svg }}
+                  </div>
                 {%- endif -%}
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
 
-          {%- if section.settings.elevation_note != blank -%}
-            <p class="uneven-foundation-note">{{ section.settings.elevation_note }}</p>
-          {%- endif -%}
-        </div>
-
-        <!-- Foundation & Footing Options Block -->
-        <div class="uneven-foundation-block">
-          {%- if section.settings.foundation_title != blank -%}
-            <div class="uneven-foundation-block-header">
-              <svg class="uneven-foundation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="3" y1="9" x2="21" y2="9"></line>
-                <line x1="9" y1="21" x2="9" y2="9"></line>
-              </svg>
-              <h3 class="uneven-foundation-block-title">{{ section.settings.foundation_title }}</h3>
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.foundation_list_intro != blank -%}
-            <p class="uneven-foundation-body-text">{{ section.settings.foundation_list_intro }}</p>
-          {%- endif -%}
-
-          {%- assign found_items = section.settings.foundation_list_items | newline_to_br | split: '<br />' -%}
-          {%- if found_items.size > 0 -%}
-            <ul class="uneven-foundation-list">
-              {%- for item in found_items -%}
-                {%- assign clean_item = item | strip -%}
-                {%- if clean_item != blank -%}
-                  <li class="uneven-foundation-list-item">{{ clean_item }}</li>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="uneven-foundation-block-title">{{ block.settings.title }}</h3>
                 {%- endif -%}
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
+              </div>
+            {%- endif -%}
 
-          {%- if section.settings.foundation_footer_text != blank -%}
-            <p class="uneven-foundation-footer-note">{{ section.settings.foundation_footer_text }}</p>
-          {%- endif -%}
-        </div>
+            {%- if block.settings.description != blank -%}
+              <p class="uneven-foundation-body-text">{{ block.settings.description }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.list_intro != blank -%}
+              <p class="uneven-foundation-list-bold-intro">{{ block.settings.list_intro }}</p>
+            {%- endif -%}
+
+            {%- assign list_items = block.settings.list_items | newline_to_br | split: '<br />' -%}
+            {%- if list_items.size > 0 -%}
+              <ul class="uneven-foundation-list">
+                {%- for item in list_items -%}
+                  {%- assign clean_item = item | strip -%}
+                  {%- if clean_item != blank -%}
+                    <li class="uneven-foundation-list-item">{{ clean_item }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- if block.settings.note_text != blank -%}
+              <p class="uneven-foundation-note">{{ block.settings.note_text }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.footer_text != blank -%}
+              <p class="uneven-foundation-footer-note">{{ block.settings.footer_text }}</p>
+            {%- endif -%}
+
+          </div>
+        {%- endfor -%}
 
       </div>
 
-      <!-- Right Column: Images -->
+      <!-- Right Column: Fixed/Configurable Images -->
       <div class="uneven-foundation-media">
         <div class="uneven-foundation-image-wrapper">
           {%- if section.settings.image_1 != blank -%}
@@ -313,69 +299,7 @@
     },
     {
       "type": "header",
-      "content": "Supported Elevation Block"
-    },
-    {
-      "type": "text",
-      "id": "elevation_title",
-      "label": "Elevation Block Title",
-      "default": "Supported Elevation"
-    },
-    {
-      "type": "textarea",
-      "id": "elevation_desc",
-      "label": "Elevation Block Description",
-      "default": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing."
-    },
-    {
-      "type": "text",
-      "id": "elevation_list_intro",
-      "label": "Elevation List Intro Text",
-      "default": "Depending on the height and configuration, the project may also require:"
-    },
-    {
-      "type": "textarea",
-      "id": "elevation_list_items",
-      "label": "Elevation List Items (One per line)",
-      "default": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval"
-    },
-    {
-      "type": "text",
-      "id": "elevation_note",
-      "label": "Elevation Bottom Note",
-      "default": "Confirm the proposed height before purchasing."
-    },
-    {
-      "type": "header",
-      "content": "Foundation & Footing Options Block"
-    },
-    {
-      "type": "text",
-      "id": "foundation_title",
-      "label": "Foundation Block Title",
-      "default": "Foundation and Footing Options"
-    },
-    {
-      "type": "textarea",
-      "id": "foundation_list_intro",
-      "label": "Foundation List Intro Text",
-      "default": "Depending on the property, configuration and local approval, suitable systems may include:"
-    },
-    {
-      "type": "textarea",
-      "id": "foundation_list_items",
-      "label": "Foundation List Items (One per line)",
-      "default": "Sonotubes\nHelical piles\nGround screws\nIn-ground posts\nApproved surface footing systems\nOther site-specific foundations"
-    },
-    {
-      "type": "textarea",
-      "id": "foundation_footer_text",
-      "label": "Foundation Bottom Disclaimer",
-      "default": "Not every foundation is suitable or accepted for every project. The correct method depends on structural loads, soil, frost conditions, drainage and local requirements. Specialized foundations may need to be sourced and installed separately."
-    },
-    {
-      "type": "header",
-      "content": "Images"
+      "content": "Right Column Images"
     },
     {
       "type": "image_picker",
@@ -438,9 +362,84 @@
       "default": 40
     }
   ],
+  "blocks": [
+    {
+      "type": "feature_info",
+      "name": "Feature Block",
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "Custom SVG Icon Code",
+          "info": "Paste inline <svg> code here"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Block Title",
+          "default": "Supported Elevation"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Block Description",
+          "default": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing."
+        },
+        {
+          "type": "text",
+          "id": "list_intro",
+          "label": "List Bold Intro",
+          "default": "Depending on the height and configuration, the project may also require:"
+        },
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List Items (One per line)",
+          "default": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval"
+        },
+        {
+          "type": "text",
+          "id": "note_text",
+          "label": "Note Text",
+          "default": "Confirm the proposed height before purchasing."
+        },
+        {
+          "type": "textarea",
+          "id": "footer_text",
+          "label": "Bottom Footer Disclaimer"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Double Image Text"
+      "name": "Double Image Text",
+      "blocks": [
+        {
+          "type": "feature_info",
+          "settings": {
+            "custom_svg": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M12 2L2 7l10 5 10-5-10-5z'/><path d='M2 17l10 5 10-5'/><path d='M2 12l10 5 10-5'/></svg>",
+            "title": "Supported Elevation",
+            "description": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.",
+            "list_intro": "Depending on the height and configuration, the project may also require:",
+            "list_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval",
+            "note_text": "Confirm the proposed height before purchasing.",
+            "footer_text": ""
+          }
+        },
+        {
+          "type": "feature_info",
+          "settings": {
+            "custom_svg": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='3' y='3' width='18' height='18' rx='2'/><line x1='3' y1='9' x2='21' y2='9'/><line x1='9' y1='21' x2='9' y2='9'/></svg>",
+            "title": "Foundation and Footing Options",
+            "description": "Depending on the property, configuration and local approval, suitable systems may include:",
+            "list_intro": "",
+            "list_items": "Sonotubes\nHelical piles\nGround screws\nIn-ground posts\nApproved surface footing systems\nOther site-specific foundations",
+            "note_text": "",
+            "footer_text": "Not every foundation is suitable or accepted for every project. The correct method depends on structural loads, soil, frost conditions, drainage and local requirements. Specialized foundations may need to be sourced and installed separately."
+          }
+        }
+      ]
     }
   ]
 }
