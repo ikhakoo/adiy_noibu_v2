@@ -565,7 +565,7 @@
         "background_style": "primary",
         "color_scheme": "scheme-5",
         "columns_mobile": "1",
-        "swipe_on_mobile": false,
+        "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -791,7 +791,7 @@
         "subtitle": "Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work.",
         "button_label": "VIEW THE COMPLETE CONTRACTOR-HIRING CHECKLIST",
         "button_link": "",
-        "section_bg": "#F0EEE9",
+        "section_bg": "#f0eee9",
         "padding_top_desktop": 64,
         "padding_bottom_desktop": 64,
         "padding_top_mobile": 40,
