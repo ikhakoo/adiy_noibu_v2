@@ -887,8 +887,27 @@
       "name": "FAQ Accordion",
       "settings": {
         "heading": "Essential Questions to Ask",
-        "section_bg": "#F0EEE9",
+        "section_bg": "#f0eee9",
         "padding_top_desktop": 0,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "deck_permits_engineering_4C48gw": {
+      "type": "deck-permits-engineering",
+      "name": "Deck Permits/Engineering",
+      "settings": {
+        "heading": "New York Deck Permits and A-DIY Engineering Information",
+        "body_text": "<p>A permit may be required depending on the deck's dimensions, height, location, attachment method and local rules.</p><p>The New York State Uniform Code establishes minimum construction standards throughout the state except New York City. Local cities, towns, villages and counties generally administer and enforce the applicable codes. New York City maintains its own construction-code and permit system.</p><p>Requirements may differ between neighboring municipalities.</p>",
+        "questions_heading": "Questions to Ask the Building Department",
+        "questions_list": "Does the proposed deck require a permit?\nIs zoning approval, a site plan or a survey required?\nWhat setbacks apply?\nAre stamped plans required?\nWhat footing information must be submitted?\nWhat inspections are required?\nAre stairs or railings required at the proposed height?\nCan the homeowner perform the work?",
+        "image": "shopify://shop_images/Frame_2147260189.png",
+        "note_title": "New York City",
+        "note_text": "New York City homeowners must follow current Department of Buildings requirements. The city may require approved plans and design work completed by a New York State licensed professional engineer or registered architect.",
+        "section_bg": "#ffffff",
+        "accent_border_color": "#c67d3e",
+        "padding_top_desktop": 64,
         "padding_bottom_desktop": 64,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
@@ -907,6 +926,7 @@
     "multicolumn_r3rrTE",
     "cost_guide_section_xgJCGN",
     "contractor_guide_section_iBTLG6",
-    "faq_accordion_tUDpHR"
+    "faq_accordion_tUDpHR",
+    "deck_permits_engineering_4C48gw"
   ]
 }
