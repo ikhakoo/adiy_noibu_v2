@@ -991,20 +991,28 @@
     },
     "double_image_text_p6xnEW": {
       "type": "double-image-text",
+      "blocks": {
+        "feature_info_EUHEPQ": {
+          "type": "feature_info",
+          "settings": {
+            "custom_svg": "",
+            "title": "Supported Elevation",
+            "description": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.",
+            "list_intro": "Depending on the height and configuration, the project may also require:",
+            "list_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval",
+            "note_text": "Confirm the proposed height before purchasing.",
+            "footer_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_info_EUHEPQ"
+      ],
       "name": "Double Image Text",
       "settings": {
         "heading": "Uneven Ground, Elevated Decks and Foundation Options",
         "lead_text": "An A-DIY deck may be installed over sloped or uneven ground by adjusting the supporting post heights to establish a level deck surface.",
         "body_text": "The installation area must still be evaluated for drainage, soil stability, foundation placement and bracing",
-        "elevation_title": "Supported Elevation",
-        "elevation_desc": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.",
-        "elevation_list_intro": "Depending on the height and configuration, the project may also require:",
-        "elevation_list_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval",
-        "elevation_note": "Confirm the proposed height before purchasing.",
-        "foundation_title": "Foundation and Footing Options",
-        "foundation_list_intro": "Depending on the property, configuration and local approval, suitable systems may include:",
-        "foundation_list_items": "Sonotubes\nHelical piles\nGround screws\nIn-ground posts\nApproved surface footing systems\nOther site-specific foundations",
-        "foundation_footer_text": "Not every foundation is suitable or accepted for every project. The correct method depends on structural loads, soil, frost conditions, drainage and local requirements. Specialized foundations may need to be sourced and installed separately.",
         "image_1": "shopify://shop_images/image_8346_a8e953d8-e917-48e0-82ea-ebe2a5de1ff4.png",
         "image_2": "shopify://shop_images/image_8579.png",
         "section_bg": "#ffffff",
