@@ -971,16 +971,15 @@
     background: #F6F4F2;
 }
 .about-us .banner__box .banner__heading:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 10%;
-    transform: translate(-50%);
+        left: 10%;
     width: 20%;
     height: 5px;
     background-color: #111;
-    border-radius: 10px;
-    top: 12.5rem;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    transform: translate(-50%);
+    border-radius: 2px;
 }
 .about-us .main-body.banner__text{
     margin-top: 2rem;
