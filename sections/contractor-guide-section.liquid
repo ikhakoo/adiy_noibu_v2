@@ -12,6 +12,12 @@
     }
   }
 
+  .contractor-guide-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
   /* Header Styles */
   .contractor-guide-header {
     text-align: center;
@@ -40,22 +46,45 @@
     margin: 0;
   }
 
-  /* Cards Grid */
+  /* Mobile Slider & Desktop Grid */
+  .contractor-cards-wrapper-{{ section.id }} {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    padding-bottom: 8px;
+  }
+
+  .contractor-cards-wrapper-{{ section.id }}::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
   .contractor-cards-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    align-items: stretch;
+    display: flex;
+    gap: 16px;
   }
 
   @media screen and (min-width: 990px) {
+    .contractor-cards-wrapper-{{ section.id }} {
+      overflow: visible;
+      scroll-snap-type: none;
+    }
     .contractor-cards-grid {
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
     }
   }
 
   /* Card Styling */
   .contractor-card {
+    flex: 0 0 85%;
+    max-width: 85%;
+    scroll-snap-align: center;
     background-color: #ffffff;
     border-radius: 12px;
     padding: 28px 24px;
@@ -64,6 +93,22 @@
     flex-direction: column;
     justify-content: space-between;
     border: 1px solid rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 576px) and (max-width: 989px) {
+    .contractor-card {
+      flex: 0 0 55%;
+      max-width: 55%;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .contractor-card {
+      flex: initial;
+      max-width: 100%;
+      scroll-snap-align: none;
+    }
   }
 
   .contractor-card.is-dark {
@@ -81,7 +126,7 @@
   }
 
   .contractor-card.is-dark .contractor-card-title {
-    color: #dfd3b7; /* Soft gold/tan accent matching image */
+    color: #dfd3b7; /* Soft gold/tan accent */
   }
 
   /* Checklist Items */
@@ -110,7 +155,6 @@
     flex-shrink: 0;
     width: 18px;
     height: 18px;
-    margin-top: 2px;
   }
 
   .contractor-card:not(.is-dark) .contractor-check-icon circle {
@@ -138,6 +182,51 @@
     margin-top: auto;
   }
 
+  /* Mobile Custom Scrollbar Indicator */
+  .contractor-scrollbar-nav-{{ section.id }} {
+    display: flex;
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .contractor-scrollbar-nav-{{ section.id }} {
+      display: none;
+    }
+  }
+
+  .contractor-scrollbar-track-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .contractor-scrollbar-thumb-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 35px;
+    background-color: #2b4f42;
+    border-radius: 9999px;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+  }
+
+  .contractor-scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -15px;
+    bottom: -15px;
+    left: 0;
+    right: 0;
+  }
+
   /* Bottom CTA Button Container */
   .contractor-cta-wrapper {
     text-align: center;
@@ -145,12 +234,12 @@
   }
 
   .contractor-cta-button {
+    display: inline-block;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 16px 32px;
     text-decoration: none;
     box-shadow: 0 4px 12px rgba(53, 82, 67, 0.2);
-
     background: #2b4f42;
     color: #fff;
     border-radius: 8px;
@@ -165,7 +254,7 @@
                 0 0 2px #000, 
                 0 0 30px rgba(43, 79, 66, 0.6);
     transform: translateY(-2px);
-    color:#fff;
+    color: #fff;
   }
 {%- endstyle -%}
 
@@ -183,40 +272,51 @@
       </div>
     {%- endif -%}
 
-    <div class="contractor-cards-grid">
-      {%- for block in section.blocks -%}
-        <div class="contractor-card {% if block.settings.is_dark %}is-dark{% endif %}" {{ block.shopify_attributes }}>
-          <div>
-            {%- if block.settings.title != blank -%}
-              <h3 class="contractor-card-title">{{ block.settings.title }}</h3>
-            {%- endif -%}
+    <div class="contractor-cards-wrapper-{{ section.id }} js-contractor-cards-wrapper-{{ section.id }}">
+      <div class="contractor-cards-grid">
+        {%- for block in section.blocks -%}
+          <div class="contractor-card {% if block.settings.is_dark %}is-dark{% endif %}" {{ block.shopify_attributes }}>
+            <div>
+              {%- if block.settings.title != blank -%}
+                <h3 class="contractor-card-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
 
-            {%- assign items = block.settings.checklist_items | newline_to_br | split: '<br />' -%}
-            {%- if items.size > 0 -%}
-              <ul class="contractor-checklist">
-                {%- for item in items -%}
-                  {%- assign clean_item = item | strip -%}
-                  {%- if clean_item != blank -%}
-                    <li class="contractor-check-item">
-                      <svg class="contractor-check-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="10" cy="10" r="10"/>
-                        <path d="M6 10L9 13L14 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      <span>{{ clean_item }}</span>
-                    </li>
-                  {%- endif -%}
-                {%- endfor -%}
-              </ul>
+              {%- assign items = block.settings.checklist_items | newline_to_br | split: '<br />' -%}
+              {%- if items.size > 0 -%}
+                <ul class="contractor-checklist">
+                  {%- for item in items -%}
+                    {%- assign clean_item = item | strip -%}
+                    {%- if clean_item != blank -%}
+                      <li class="contractor-check-item">
+                        <svg class="contractor-check-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="10" cy="10" r="10"/>
+                          <path d="M6 10L9 13L14 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>{{ clean_item }}</span>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.notice_text != blank -%}
+              <div class="contractor-notice-box">
+                {{ block.settings.notice_text }}
+              </div>
             {%- endif -%}
           </div>
+        {%- endfor -%}
+      </div>
+    </div>
 
-          {%- if block.settings.notice_text != blank -%}
-            <div class="contractor-notice-box">
-              {{ block.settings.notice_text }}
-            </div>
-          {%- endif -%}
+    <!-- Scrollbar Navigation for Mobile -->
+    <div class="contractor-scrollbar-nav-{{ section.id }}">
+      <div class="contractor-scrollbar-track-{{ section.id }} js-scroll-track-{{ section.id }}">
+        <div class="contractor-scrollbar-thumb-{{ section.id }} js-scroll-thumb-{{ section.id }}">
+          <div class="contractor-scrollbar-thumb-hitbox"></div>
         </div>
-      {%- endfor -%}
+      </div>
     </div>
 
     {%- if section.settings.button_label != blank -%}
@@ -229,6 +329,125 @@
 
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('.contractor-guide-{{ section.id }}');
+    if (!sectionContainer) return;
+
+    const cardsWrapper = sectionContainer.querySelector('.js-contractor-cards-wrapper-{{ section.id }}');
+    const scrollTrack = sectionContainer.querySelector('.js-scroll-track-{{ section.id }}');
+    const scrollThumb = sectionContainer.querySelector('.js-scroll-thumb-{{ section.id }}');
+
+    if (!cardsWrapper || !scrollTrack || !scrollThumb) return;
+
+    let isThumbDragging = false;
+    let dragStartX = 0;
+    let initialScrollLeft = 0;
+    let rAFId = null;
+
+    function updateThumbUI() {
+      const scrollWidth = cardsWrapper.scrollWidth;
+      const clientWidth = cardsWrapper.clientWidth;
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (maxScrollLeft <= 0) {
+        scrollThumb.style.width = '100%';
+        scrollThumb.style.left = '0%';
+        return;
+      }
+
+      const thumbWidthRatio = clientWidth / scrollWidth;
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 20);
+      const maxThumbLeftPercent = 100 - thumbWidthPercent;
+      
+      const currentScrollRatio = cardsWrapper.scrollLeft / maxScrollLeft;
+      const currentLeftPercent = Math.min(Math.max(currentScrollRatio * maxThumbLeftPercent, 0), maxThumbLeftPercent);
+
+      scrollThumb.style.width = thumbWidthPercent + '%';
+      scrollThumb.style.left = currentLeftPercent + '%';
+    }
+
+    cardsWrapper.addEventListener('scroll', function() {
+      if (!isThumbDragging) {
+        if (rAFId) cancelAnimationFrame(rAFId);
+        rAFId = requestAnimationFrame(updateThumbUI);
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', updateThumbUI);
+    updateThumbUI();
+
+    /* Dragging Logic */
+    scrollThumb.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      isThumbDragging = true;
+      dragStartX = e.clientX;
+      initialScrollLeft = cardsWrapper.scrollLeft;
+
+      cardsWrapper.style.scrollSnapType = 'none';
+      cardsWrapper.style.scrollBehavior = 'auto';
+      scrollThumb.setPointerCapture(e.pointerId);
+    });
+
+    scrollThumb.addEventListener('pointermove', (e) => {
+      if (!isThumbDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const trackWidth = scrollTrack.clientWidth;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const maxContainerScroll = cardsWrapper.scrollWidth - cardsWrapper.clientWidth;
+
+      if (maxThumbMove > 0) {
+        const scrollDelta = (deltaX / maxThumbMove) * maxContainerScroll;
+        cardsWrapper.scrollLeft = initialScrollLeft + scrollDelta;
+        updateThumbUI();
+      }
+    });
+
+    const releasePointer = (e) => {
+      if (isThumbDragging) {
+        isThumbDragging = false;
+        cardsWrapper.style.scrollSnapType = 'x mandatory';
+        cardsWrapper.style.scrollBehavior = 'smooth';
+
+        try {
+          scrollThumb.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+      }
+    };
+
+    scrollThumb.addEventListener('pointerup', releasePointer);
+    scrollThumb.addEventListener('pointercancel', releasePointer);
+
+    /* Track Click Navigation */
+    scrollTrack.addEventListener('click', (e) => {
+      if (e.target.closest('.js-scroll-thumb-{{ section.id }}')) return;
+
+      const trackRect = scrollTrack.getBoundingClientRect();
+      const clickX = e.clientX - trackRect.left;
+      const thumbWidth = scrollThumb.offsetWidth;
+      
+      let targetLeft = clickX - (thumbWidth / 2);
+      const maxThumbMove = trackRect.width - thumbWidth;
+
+      if (targetLeft < 0) targetLeft = 0;
+      if (targetLeft > maxThumbMove) targetLeft = maxThumbMove;
+
+      const clickRatio = targetLeft / maxThumbMove;
+      const maxContainerScroll = cardsWrapper.scrollWidth - cardsWrapper.clientWidth;
+
+      cardsWrapper.style.scrollBehavior = 'smooth';
+      cardsWrapper.scrollTo({
+        left: clickRatio * maxContainerScroll,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
