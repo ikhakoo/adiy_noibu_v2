@@ -970,8 +970,14 @@
 .template-page-about-us .shopify-section.section {
     background: #F6F4F2;
 }
+.about-us .banner__box .banner__heading{
+    text-align: center;
+    width: 100%;
+    position: relative;
+    padding-bottom: 30px;
+}
 .about-us .banner__box .banner__heading:after {
-        left: 10%;
+    left: 10%;
     width: 20%;
     height: 5px;
     background-color: #111;
