@@ -553,7 +553,7 @@
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "custom_class": "",
+        "custom_class": "seo-img-title",
         "title": "",
         "title_content": "",
         "image_width": "half",
