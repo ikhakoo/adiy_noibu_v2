@@ -992,27 +992,43 @@
     "double_image_text_p6xnEW": {
       "type": "double-image-text",
       "blocks": {
-        "feature_info_EUHEPQ": {
-          "type": "feature_info",
+        "heading_xkYdDt": {
+          "type": "heading",
           "settings": {
+            "title": "Uneven Ground, Elevated Decks and Foundation Options"
+          }
+        },
+        "text_JwNNbD": {
+          "type": "text",
+          "settings": {
+            "text": "An A-DIY deck may be installed over sloped or uneven ground by adjusting the supporting post heights to establish a level deck surface.\n<br><br>\nThe installation area must still be evaluated for drainage, soil stability, foundation placement and bracing",
+            "is_bold": false
+          }
+        },
+        "feature_header_ryHDVc": {
+          "type": "feature_header",
+          "settings": {
+            "icon_type": "image",
             "custom_svg": "",
-            "title": "Supported Elevation",
-            "description": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.",
-            "list_intro": "Depending on the height and configuration, the project may also require:",
-            "list_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval",
-            "note_text": "Confirm the proposed height before purchasing.",
-            "footer_text": ""
+            "icon_image": "shopify://shop_images/Frame_2147260101.png",
+            "title": "Supported Elevation"
+          }
+        },
+        "list_dcFftc": {
+          "type": "list",
+          "settings": {
+            "list_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval"
           }
         }
       },
       "block_order": [
-        "feature_info_EUHEPQ"
+        "heading_xkYdDt",
+        "text_JwNNbD",
+        "feature_header_ryHDVc",
+        "list_dcFftc"
       ],
       "name": "Double Image Text",
       "settings": {
-        "heading": "Uneven Ground, Elevated Decks and Foundation Options",
-        "lead_text": "An A-DIY deck may be installed over sloped or uneven ground by adjusting the supporting post heights to establish a level deck surface.",
-        "body_text": "The installation area must still be evaluated for drainage, soil stability, foundation placement and bracing",
         "image_1": "shopify://shop_images/image_8346_a8e953d8-e917-48e0-82ea-ebe2a5de1ff4.png",
         "image_2": "shopify://shop_images/image_8579.png",
         "section_bg": "#ffffff",
