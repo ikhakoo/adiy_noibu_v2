@@ -1162,6 +1162,53 @@
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
+    },
+    "engineering_warranty_DzqEAP": {
+      "type": "engineering-warranty",
+      "blocks": {
+        "info_card_f6AbVn": {
+          "type": "info_card",
+          "settings": {
+            "enable_left_border": false,
+            "title": "Verified Structural Rating",
+            "content": "<p>Applicable A-DIY deck configurations are engineered to hold up to 15,000 pounds when properly assembled, supported and installed according to the applicable specifications.</p><p>Structural performance depends on correct assembly, the selected configuration, suitable foundations, footing installation, site conditions, post height, bracing, connections and compliance with applicable engineering information.</p>"
+          }
+        },
+        "info_card_kKqd8T": {
+          "type": "info_card",
+          "settings": {
+            "enable_left_border": true,
+            "title": "Five-Year Structural Warranty",
+            "content": "<p>A-DIY deck systems include a five-year structural warranty, subject to the written terms, approved uses, correct installation, limitations and exclusions.</p><p>Composite surface boards may carry a separate manufacturer warranty.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "info_card_f6AbVn",
+        "info_card_kKqd8T"
+      ],
+      "name": "Engineering & Warranty",
+      "settings": {
+        "heading": "Engineering, Strength and Warranty",
+        "subtitle": "Applicable A-DIY deck configurations are professionally engineered.",
+        "image": "shopify://shop_images/image_8349_84885c85-edf0-430b-b8c7-0093fcb7a9fb.png",
+        "btn_primary_text": "Watch Load Test",
+        "btn_primary_link": "",
+        "btn_secondary_text": "Review Warranty",
+        "btn_secondary_link": "shopify://pages/reviews",
+        "bg_color": "#f4f3ef",
+        "heading_color": "#1a1a18",
+        "card_heading_color": "#1a1a18",
+        "text_color": "#4a4a4a",
+        "btn_bg_color": "#bd9b79",
+        "btn_text_color": "#ffffff",
+        "secondary_link_color": "#1a1a18",
+        "accent_border_color": "#376250",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
@@ -1181,6 +1228,7 @@
     "engineering_diagrams_zHUnjj",
     "wood_vs_composite_GVhp6t",
     "double_image_text_p6xnEW",
-    "steps_with_video_YXnUxD"
+    "steps_with_video_YXnUxD",
+    "engineering_warranty_DzqEAP"
   ]
 }
