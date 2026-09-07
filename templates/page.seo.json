@@ -1086,6 +1086,82 @@
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
+    },
+    "steps_with_video_YXnUxD": {
+      "type": "steps-with-video",
+      "blocks": {
+        "step_n8f7Nk": {
+          "type": "step",
+          "settings": {
+            "custom_number": "01",
+            "title": "Choose the Size and Material",
+            "description": "Select an available deck size, pressure-treated or composite surface and applicable options."
+          }
+        },
+        "step_edLN9p": {
+          "type": "step",
+          "settings": {
+            "custom_number": "02",
+            "title": "Review the Property",
+            "description": "Confirm the available space, ground conditions, slope, proposed height, drainage and delivery access."
+          }
+        },
+        "step_pPgPUT": {
+          "type": "step",
+          "settings": {
+            "custom_number": "03",
+            "title": "Confirm Permits and Foundations",
+            "description": "Contact the local building department and select a suitable foundation system for the property."
+          }
+        },
+        "step_9dw34T": {
+          "type": "step",
+          "settings": {
+            "custom_number": "04",
+            "title": "Receive the Deck System",
+            "description": "The coordinated components are delivered to the property."
+          }
+        },
+        "step_g4ryKn": {
+          "type": "step",
+          "settings": {
+            "custom_number": "05",
+            "title": "Assemble It or Hire Local Help",
+            "description": "Complete the assembly yourself or hire a local handyman, carpenter or contractor."
+          }
+        },
+        "step_pT9Wfy": {
+          "type": "step",
+          "settings": {
+            "custom_number": "06",
+            "title": "Complete Required Inspections",
+            "description": "Arrange any inspections or final approvals required by the municipality"
+          }
+        }
+      },
+      "block_order": [
+        "step_n8f7Nk",
+        "step_edLN9p",
+        "step_pPgPUT",
+        "step_9dw34T",
+        "step_g4ryKn",
+        "step_pT9Wfy"
+      ],
+      "name": "Steps with Video",
+      "settings": {
+        "heading": "How Does A-DIY Work?",
+        "subtitle": "A streamlined journey from conceptual design to structural completion",
+        "video_overlay_text": "WATCH: HOW DOES A-DIY WORK",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "bg_color": "#1a1a18",
+        "heading_color": "#ffffff",
+        "text_color": "#cccccc",
+        "accent_color": "#cba068",
+        "padding_top_desktop": 72,
+        "padding_bottom_desktop": 72,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
     }
   },
   "order": [
@@ -1104,6 +1180,7 @@
     "deck_permits_engineering_4C48gw",
     "engineering_diagrams_zHUnjj",
     "wood_vs_composite_GVhp6t",
-    "double_image_text_p6xnEW"
+    "double_image_text_p6xnEW",
+    "steps_with_video_YXnUxD"
   ]
 }
