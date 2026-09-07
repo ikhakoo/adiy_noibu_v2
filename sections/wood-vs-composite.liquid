@@ -12,15 +12,21 @@
     }
   }
 
-  /* Header Section */
-  .wood-vs-comp-header-{{ section.id }} {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 2.5rem auto;
+  .wood-vs-comp-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
 
-  .wood-vs-comp-main-title-{{ section.id }} {
-    font-size: 1.85rem;
+  /* Header Section */
+  .wood-vs-comp-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+  }
+
+  .wood-vs-comp-main-title {
+    font-size: 1.75rem;
     font-weight: 700;
     color: #1a1a1a;
     line-height: 1.25;
@@ -28,52 +34,61 @@
   }
 
   @media screen and (min-width: 750px) {
-    .wood-vs-comp-main-title-{{ section.id }} {
+    .wood-vs-comp-main-title {
       font-size: 2.25rem;
     }
   }
 
-  .wood-vs-comp-subhead-{{ section.id }} {
+  .wood-vs-comp-subhead {
     font-size: 14px;
     font-weight: 600;
-    color: #333333;
+    color: #1a1a1a;
     margin-bottom: 0.75rem;
   }
 
-  .wood-vs-comp-desc-{{ section.id }} {
+  .wood-vs-comp-desc {
     font-size: 14px;
     line-height: 1.6;
     color: #555555;
     margin: 0;
   }
 
-  /* Cards Wrapper (Mobile Drag & Desktop Dynamic Grid) */
-  .wood-vs-comp-cards-{{ section.id }} {
-    display: flex;
-    gap: 20px;
+  /* Cards Wrapper & Mobile Slider */
+  .wood-vs-comp-cards-wrapper-{{ section.id }} {
+    width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 12px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 8px;
   }
 
-  .wood-vs-comp-cards-{{ section.id }}::-webkit-scrollbar {
+  .wood-vs-comp-cards-wrapper-{{ section.id }}::-webkit-scrollbar {
     display: none;
   }
 
+  .wood-vs-comp-cards-grid {
+    display: flex;
+    gap: 16px;
+  }
+
   @media screen and (min-width: 850px) {
-    .wood-vs-comp-cards-{{ section.id }} {
+    .wood-vs-comp-cards-wrapper-{{ section.id }} {
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+    .wood-vs-comp-cards-grid {
       display: grid;
       grid-template-columns: repeat({{ section.blocks.size | default: 2 }}, minmax(0, 1fr));
       gap: 24px;
-      overflow-x: visible;
-      padding-bottom: 0;
+      align-items: stretch;
     }
   }
 
   /* Card Item */
-  .wood-vs-comp-card-{{ section.id }} {
+  .wood-vs-comp-card {
     flex: 0 0 85%;
     max-width: 85%;
     scroll-snap-align: center;
@@ -82,24 +97,33 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 576px) and (max-width: 849px) {
+    .wood-vs-comp-card {
+      flex: 0 0 65%;
+      max-width: 65%;
+    }
   }
 
   @media screen and (min-width: 850px) {
-    .wood-vs-comp-card-{{ section.id }} {
-      flex: 1 1 auto;
+    .wood-vs-comp-card {
+      flex: initial;
       max-width: 100%;
+      scroll-snap-align: none;
     }
   }
 
   /* Card Image */
-  .wood-vs-comp-card-media-{{ section.id }} {
+  .wood-vs-comp-card-media {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 10;
     background-color: #e0e0e0;
   }
 
-  .wood-vs-comp-card-img-{{ section.id }} {
+  .wood-vs-comp-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -107,8 +131,8 @@
   }
 
   /* Card Body */
-  .wood-vs-comp-card-body-{{ section.id }} {
-    padding: 24px 20px;
+  .wood-vs-comp-card-body {
+    padding: 28px 24px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -116,40 +140,41 @@
     text-align: center;
   }
 
-  .wood-vs-comp-card-tag-{{ section.id }} {
+  .wood-vs-comp-card-tag {
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin-bottom: 8px;
-    opacity: 0.8;
+    opacity: 0.85;
   }
 
-  .wood-vs-comp-card-title-{{ section.id }} {
+  .wood-vs-comp-card-title {
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0 0 20px 0;
     line-height: 1.3;
   }
 
-  .wood-vs-comp-features-{{ section.id }} {
+  .wood-vs-comp-features {
     list-style: none;
     padding: 0;
     margin: 0 0 24px 0;
     width: 100%;
+    flex-grow: 1;
   }
 
-  .wood-vs-comp-feature-item-{{ section.id }} {
+  .wood-vs-comp-feature-item {
     font-size: 14px;
     line-height: 1.5;
     margin-bottom: 10px;
     opacity: 0.85;
   }
 
-  .wood-vs-comp-card-btn-{{ section.id }} {
+  .wood-vs-comp-card-btn {
     margin-top: auto;
     width: 100%;
-    padding: 12px 20px;
+    padding: 14px 20px;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -159,65 +184,87 @@
     text-align: center;
     transition: all 0.2s ease;
     display: inline-block;
+    box-sizing: border-box;
   }
 
-  /* Custom Scrollbar for Mobile */
-  .wood-vs-comp-scroll-track-{{ section.id }} {
-    width: 200px;
-    height: 4px;
-    background-color: #e0e0e0;
-    border-radius: 2px;
-    margin: 20px auto 2.5rem auto;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .wood-vs-comp-scroll-bar-{{ section.id }} {
-    height: 100%;
-    width: 50%;
-    background-color: #1c4b37;
-    border-radius: 2px;
-    transition: transform 0.1s ease-out;
+  /* Mobile Custom Scrollbar Indicator */
+  .wood-vs-comp-scrollbar-nav-{{ section.id }} {
+    display: flex;
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
   }
 
   @media screen and (min-width: 850px) {
-    .wood-vs-comp-scroll-track-{{ section.id }} {
+    .wood-vs-comp-scrollbar-nav-{{ section.id }} {
       display: none;
     }
   }
 
+  .wood-vs-comp-scrollbar-track-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .wood-vs-comp-scrollbar-thumb-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-width: 35px;
+    background-color: #2b4f42;
+    border-radius: 9999px;
+    border: none;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+  }
+
+  .wood-vs-comp-scrollbar-thumb-hitbox {
+    position: absolute;
+    top: -15px;
+    bottom: -15px;
+    left: 0;
+    right: 0;
+  }
+
   /* Bottom Summary Block */
-  .wood-vs-comp-summary-{{ section.id }} {
+  .wood-vs-comp-summary {
     max-width: 850px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     text-align: center;
   }
 
-  .wood-vs-comp-summary-item-{{ section.id }} {
+  .wood-vs-comp-summary-item {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .wood-vs-comp-summary-title-{{ section.id }} {
+  .wood-vs-comp-summary-title {
     font-size: 14px;
     font-weight: 700;
     color: #1a1a1a;
     margin: 0 0 6px 0;
   }
 
-  .wood-vs-comp-summary-desc-{{ section.id }} {
+  .wood-vs-comp-summary-desc {
     font-size: 14px;
     line-height: 1.6;
     color: #555555;
     margin: 0 0 12px 0;
   }
 
-  .wood-vs-comp-summary-btn-{{ section.id }} {
-    padding: 10px 24px;
+  .wood-vs-comp-summary-btn {
+    padding: 12px 28px;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -241,111 +288,228 @@
 {%- endstyle -%}
 
 <div class="wood-vs-comp-{{ section.id }}">
-  <div class="page-width">
+  <div class="wood-vs-comp-container page-width">
     
     {%- comment -%} Header {%- endcomment -%}
-    <div class="wood-vs-comp-header-{{ section.id }}">
-      {%- if section.settings.main_title != blank -%}
-        <h2 class="wood-vs-comp-main-title-{{ section.id }}">{{ section.settings.main_title }}</h2>
-      {%- endif -%}
-      {%- if section.settings.subtitle != blank -%}
-        <div class="wood-vs-comp-subhead-{{ section.id }}">{{ section.settings.subtitle }}</div>
-      {%- endif -%}
-      {%- if section.settings.description != blank -%}
-        <p class="wood-vs-comp-desc-{{ section.id }}">{{ section.settings.description }}</p>
-      {%- endif -%}
+    {%- if section.settings.main_title != blank or section.settings.subtitle != blank or section.settings.description != blank -%}
+      <div class="wood-vs-comp-header">
+        {%- if section.settings.main_title != blank -%}
+          <h2 class="wood-vs-comp-main-title">{{ section.settings.main_title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <div class="wood-vs-comp-subhead">{{ section.settings.subtitle }}</div>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="wood-vs-comp-desc">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Mobile Cards Slider & Grid {%- endcomment -%}
+    <div class="wood-vs-comp-cards-wrapper-{{ section.id }} js-wood-cards-wrapper-{{ section.id }}">
+      <div class="wood-vs-comp-cards-grid">
+        {%- for block in section.blocks -%}
+          <div class="wood-vs-comp-card" {{ block.shopify_attributes }}>
+            
+            <div class="wood-vs-comp-card-media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image 
+                  | image_url: width: 800 
+                  | image_tag: loading: 'lazy', class: 'wood-vs-comp-card-img', alt: block.settings.title 
+                }}
+              {%- endif -%}
+            </div>
+
+            <div class="wood-vs-comp-card-body" style="background-color: {{ block.settings.card_bg }}; color: {{ block.settings.text_color }};">
+              {%- if block.settings.tag != blank -%}
+                <span class="wood-vs-comp-card-tag">{{ block.settings.tag }}</span>
+              {%- endif -%}
+              
+              {%- if block.settings.title != blank -%}
+                <h3 class="wood-vs-comp-card-title" style="color: {{ block.settings.text_color }};">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              
+              {%- assign features = block.settings.features | newline_to_br | split: '<br />' -%}
+              {%- if features.size > 0 -%}
+                <ul class="wood-vs-comp-features">
+                  {%- for feat in features -%}
+                    {%- assign clean_feat = feat | strip -%}
+                    {%- if clean_feat != blank -%}
+                      <li class="wood-vs-comp-feature-item">{{ clean_feat }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+              {%- if block.settings.btn_text != blank -%}
+                <a href="{{ block.settings.btn_link }}" class="wood-vs-comp-card-btn" style="background-color: {{ block.settings.btn_bg }}; color: {{ block.settings.btn_text_color }}; border: 1px solid {{ block.settings.btn_border_color }};">
+                  {{ block.settings.btn_text }}
+                </a>
+              {%- endif -%}
+            </div>
+
+          </div>
+        {%- endfor -%}
+      </div>
     </div>
 
-    {%- comment -%} Dynamic Blocks Loop {%- endcomment -%}
-    <div class="wood-vs-comp-cards-{{ section.id }}" id="CardSlider-{{ section.id }}">
-      {%- for block in section.blocks -%}
-        <div class="wood-vs-comp-card-{{ section.id }}" {{ block.shopify_attributes }}>
-          
-          <div class="wood-vs-comp-card-media-{{ section.id }}">
-            {%- if block.settings.image != blank -%}
-              {%- assign img_class = 'wood-vs-comp-card-img-' | append: section.id -%}
-              {{ block.settings.image 
-                | image_url: width: 800 
-                | image_tag: loading: 'lazy', class: img_class, alt: block.settings.title 
-              }}
-            {%- endif -%}
-          </div>
-
-          <div class="wood-vs-comp-card-body-{{ section.id }}" style="background-color: {{ block.settings.card_bg }}; color: {{ block.settings.text_color }};">
-            {%- if block.settings.tag != blank -%}
-              <span class="wood-vs-comp-card-tag-{{ section.id }}">{{ block.settings.tag }}</span>
-            {%- endif -%}
-            
-            {%- if block.settings.title != blank -%}
-              <h3 class="wood-vs-comp-card-title-{{ section.id }}" style="color: {{ block.settings.text_color }};">{{ block.settings.title }}</h3>
-            {%- endif -%}
-            
-            {%- assign features = block.settings.features | newline_to_br | split: '<br />' -%}
-            <ul class="wood-vs-comp-features-{{ section.id }}">
-              {%- for feat in features -%}
-                {%- assign clean_feat = feat | strip -%}
-                {%- if clean_feat != blank -%}
-                  <li class="wood-vs-comp-feature-item-{{ section.id }}">{{ clean_feat }}</li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
-
-            {%- if block.settings.btn_text != blank -%}
-              <a href="{{ block.settings.btn_link }}" class="wood-vs-comp-card-btn-{{ section.id }}" style="background-color: {{ block.settings.btn_bg }}; color: {{ block.settings.btn_text_color }}; border: 1px solid {{ block.settings.btn_border_color }};">
-                {{ block.settings.btn_text }}
-              </a>
-            {%- endif -%}
-          </div>
-
+    {%- comment -%} Custom Scrollbar Navigation for Mobile {%- endcomment -%}
+    <div class="wood-vs-comp-scrollbar-nav-{{ section.id }}">
+      <div class="wood-vs-comp-scrollbar-track-{{ section.id }} js-scroll-track-{{ section.id }}">
+        <div class="wood-vs-comp-scrollbar-thumb-{{ section.id }} js-scroll-thumb-{{ section.id }}">
+          <div class="wood-vs-comp-scrollbar-thumb-hitbox"></div>
         </div>
-      {%- endfor -%}
-    </div>
-
-    {%- comment -%} Mobile Custom Scroll Bar {%- endcomment -%}
-    <div class="wood-vs-comp-scroll-track-{{ section.id }}">
-      <div class="wood-vs-comp-scroll-bar-{{ section.id }}" id="ScrollBar-{{ section.id }}"></div>
+      </div>
     </div>
 
     {%- comment -%} Bottom Summary Section {%- endcomment -%}
-    <div class="wood-vs-comp-summary-{{ section.id }}">
-      <div class="wood-vs-comp-summary-item-{{ section.id }}">
-        <h4 class="wood-vs-comp-summary-title-{{ section.id }}">{{ section.settings.sum_1_title }}</h4>
-        <p class="wood-vs-comp-summary-desc-{{ section.id }}">{{ section.settings.sum_1_desc }}</p>
-        {%- if section.settings.sum_1_btn_text != blank -%}
-          <a href="{{ section.settings.sum_1_btn_link }}" class="wood-vs-comp-summary-btn-{{ section.id }} wood-vs-comp-summary-btn-outline">
-            {{ section.settings.sum_1_btn_text }}
-          </a>
+    {%- if section.settings.sum_1_title != blank or section.settings.sum_2_title != blank -%}
+      <div class="wood-vs-comp-summary">
+        {%- if section.settings.sum_1_title != blank -%}
+          <div class="wood-vs-comp-summary-item">
+            <h4 class="wood-vs-comp-summary-title">{{ section.settings.sum_1_title }}</h4>
+            <p class="wood-vs-comp-summary-desc">{{ section.settings.sum_1_desc }}</p>
+            {%- if section.settings.sum_1_btn_text != blank -%}
+              <a href="{{ section.settings.sum_1_btn_link }}" class="wood-vs-comp-summary-btn wood-vs-comp-summary-btn-outline">
+                {{ section.settings.sum_1_btn_text }}
+              </a>
+            {%- endif -%}
+          </div>
         {%- endif -%}
-      </div>
 
-      <div class="wood-vs-comp-summary-item-{{ section.id }}">
-        <h4 class="wood-vs-comp-summary-title-{{ section.id }}">{{ section.settings.sum_2_title }}</h4>
-        <p class="wood-vs-comp-summary-desc-{{ section.id }}">{{ section.settings.sum_2_desc }}</p>
-        {%- if section.settings.sum_2_btn_text != blank -%}
-          <a href="{{ section.settings.sum_2_btn_link }}" class="wood-vs-comp-summary-btn-{{ section.id }} wood-vs-comp-summary-btn-solid">
-            {{ section.settings.sum_2_btn_text }}
-          </a>
+        {%- if section.settings.sum_2_title != blank -%}
+          <div class="wood-vs-comp-summary-item">
+            <h4 class="wood-vs-comp-summary-title">{{ section.settings.sum_2_title }}</h4>
+            <p class="wood-vs-comp-summary-desc">{{ section.settings.sum_2_desc }}</p>
+            {%- if section.settings.sum_2_btn_text != blank -%}
+              <a href="{{ section.settings.sum_2_btn_link }}" class="wood-vs-comp-summary-btn wood-vs-comp-summary-btn-solid">
+                {{ section.settings.sum_2_btn_text }}
+              </a>
+            {%- endif -%}
+          </div>
         {%- endif -%}
       </div>
-    </div>
+    {%- endif -%}
 
   </div>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const slider = document.getElementById('CardSlider-{{ section.id }}');
-    const scrollBar = document.getElementById('ScrollBar-{{ section.id }}');
+    const sectionContainer = document.querySelector('.wood-vs-comp-{{ section.id }}');
+    if (!sectionContainer) return;
 
-    if (slider && scrollBar) {
-      slider.addEventListener('scroll', function() {
-        const maxScroll = slider.scrollWidth - slider.clientWidth;
-        if (maxScroll > 0) {
-          const percentage = (slider.scrollLeft / maxScroll) * 50; // 50% max movement range for bar width
-          scrollBar.style.transform = `translateX(${percentage * 2}%)`;
-        }
-      });
+    const cardsWrapper = sectionContainer.querySelector('.js-wood-cards-wrapper-{{ section.id }}');
+    const scrollTrack = sectionContainer.querySelector('.js-scroll-track-{{ section.id }}');
+    const scrollThumb = sectionContainer.querySelector('.js-scroll-thumb-{{ section.id }}');
+
+    if (!cardsWrapper || !scrollTrack || !scrollThumb) return;
+
+    let isThumbDragging = false;
+    let dragStartX = 0;
+    let initialScrollLeft = 0;
+    let rAFId = null;
+
+    function updateThumbUI() {
+      const scrollWidth = cardsWrapper.scrollWidth;
+      const clientWidth = cardsWrapper.clientWidth;
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (maxScrollLeft <= 0) {
+        scrollThumb.style.width = '100%';
+        scrollThumb.style.left = '0%';
+        return;
+      }
+
+      const thumbWidthRatio = clientWidth / scrollWidth;
+      const thumbWidthPercent = Math.max(thumbWidthRatio * 100, 20);
+      const maxThumbLeftPercent = 100 - thumbWidthPercent;
+      
+      const currentScrollRatio = cardsWrapper.scrollLeft / maxScrollLeft;
+      const currentLeftPercent = Math.min(Math.max(currentScrollRatio * maxThumbLeftPercent, 0), maxThumbLeftPercent);
+
+      scrollThumb.style.width = thumbWidthPercent + '%';
+      scrollThumb.style.left = currentLeftPercent + '%';
     }
+
+    cardsWrapper.addEventListener('scroll', function() {
+      if (!isThumbDragging) {
+        if (rAFId) cancelAnimationFrame(rAFId);
+        rAFId = requestAnimationFrame(updateThumbUI);
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', updateThumbUI);
+    updateThumbUI();
+
+    /* Dragging Logic */
+    scrollThumb.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      isThumbDragging = true;
+      dragStartX = e.clientX;
+      initialScrollLeft = cardsWrapper.scrollLeft;
+
+      cardsWrapper.style.scrollSnapType = 'none';
+      cardsWrapper.style.scrollBehavior = 'auto';
+      scrollThumb.setPointerCapture(e.pointerId);
+    });
+
+    scrollThumb.addEventListener('pointermove', (e) => {
+      if (!isThumbDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const trackWidth = scrollTrack.clientWidth;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const maxContainerScroll = cardsWrapper.scrollWidth - cardsWrapper.clientWidth;
+
+      if (maxThumbMove > 0) {
+        const scrollDelta = (deltaX / maxThumbMove) * maxContainerScroll;
+        cardsWrapper.scrollLeft = initialScrollLeft + scrollDelta;
+        updateThumbUI();
+      }
+    });
+
+    const releasePointer = (e) => {
+      if (isThumbDragging) {
+        isThumbDragging = false;
+        cardsWrapper.style.scrollSnapType = 'x mandatory';
+        cardsWrapper.style.scrollBehavior = 'smooth';
+
+        try {
+          scrollThumb.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+      }
+    };
+
+    scrollThumb.addEventListener('pointerup', releasePointer);
+    scrollThumb.addEventListener('pointercancel', releasePointer);
+
+    /* Track Click Navigation */
+    scrollTrack.addEventListener('click', (e) => {
+      if (e.target.closest('.js-scroll-thumb-{{ section.id }}')) return;
+
+      const trackRect = scrollTrack.getBoundingClientRect();
+      const clickX = e.clientX - trackRect.left;
+      const thumbWidth = scrollThumb.offsetWidth;
+      
+      let targetLeft = clickX - (thumbWidth / 2);
+      const maxThumbMove = trackRect.width - thumbWidth;
+
+      if (targetLeft < 0) targetLeft = 0;
+      if (targetLeft > maxThumbMove) targetLeft = maxThumbMove;
+
+      const clickRatio = targetLeft / maxThumbMove;
+      const maxContainerScroll = cardsWrapper.scrollWidth - cardsWrapper.clientWidth;
+
+      cardsWrapper.style.scrollBehavior = 'smooth';
+      cardsWrapper.scrollTo({
+        left: clickRatio * maxContainerScroll,
+        behavior: 'smooth'
+      });
+    });
   });
 </script>
 
