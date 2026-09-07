@@ -318,64 +318,6 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
-    },
-    "buying": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_buying_1": {
-          "type": "column",
-          "settings": {
-            "enable_autoplay": false,
-            "title": "Delivery",
-            "text": "<p>Kits ship via LTL ground freight anywhere in the United States, typically arriving within 10 to 14 business days. The carrier contacts you to schedule curbside delivery.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_buying_2": {
-          "type": "column",
-          "settings": {
-            "enable_autoplay": false,
-            "title": "Warranty",
-            "text": "<p>Wood kits carry a 5-year structural warranty. Composite kits carry a 25-year warranty that covers the structure as well as staining and fading on the boards.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_buying_3": {
-          "type": "column",
-          "settings": {
-            "enable_autoplay": false,
-            "title": "Paying over time",
-            "text": "<p>Financing is available through Affirm, Klarna and Shop Pay, with $0 down and 0% interest options over terms of up to 24 months. Financing is subject to credit approval; terms and conditions apply.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_buying_1",
-        "column_buying_2",
-        "column_buying_3"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "custom_class": "",
-        "title": "Delivery, warranty and payment",
-        "title_content": "",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     }
   },
   "order": [
@@ -384,7 +326,6 @@
     "featured_icon_scrolling_kF3ffz",
     "navigation_tabs_PhVK3p",
     "multicolumn_TGXkFF",
-    "old_comparison_table_3NMcRn",
-    "buying"
+    "old_comparison_table_3NMcRn"
   ]
 }
