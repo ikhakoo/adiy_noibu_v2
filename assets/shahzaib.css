@@ -1096,6 +1096,9 @@
 .seo-page-sec1.multicolumn .multicolumn-card__info .rte p{
     font-size: 16px;
 }
+.template-page-seo .comparison-table{
+    background-color: #ffffff;
+}
 .template-page-seo .comparison-table .col-highlight{
     display: none;
 }
