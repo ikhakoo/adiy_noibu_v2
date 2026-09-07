@@ -12,12 +12,6 @@
     }
   }
 
-  .contractor-guide-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
   /* Header Styles */
   .contractor-guide-header {
     text-align: center;
@@ -172,7 +166,7 @@
 {%- endstyle -%}
 
 <div class="contractor-guide-{{ section.id }}">
-  <div class="contractor-guide-container">
+  <div class="contractor-guide-container page-width">
     
     {%- if section.settings.heading != blank or section.settings.subtitle != blank -%}
       <div class="contractor-guide-header">
