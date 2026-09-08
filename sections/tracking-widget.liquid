@@ -587,7 +587,7 @@
 <script>
   let currentActiveOrder = null;
 
-  // Helper: Calculate working days excluding Saturdays and Sundays
+  // Helper: Calculate working business days (Excluding Saturday/Sunday)
   function calculateWorkingDays(startDate, endDate) {
     let count = 0;
     let curDate = new Date(startDate.getTime());
@@ -606,7 +606,15 @@
     return count;
   }
 
-  // Helper: Set UI Checkbox status
+  // Helper: Date format into "Sep 8, 2026, 04:02 AM"
+  function formatOrderDate(isoString) {
+    if (!isoString) return 'N/A';
+    const d = new Date(isoString);
+    const options = { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+    return d.toLocaleString('en-US', options);
+  }
+
+  // Helper: Set UI Checkbox Status
   function setChecked(elementId, isChecked) {
     const el = document.getElementById(elementId);
     if (!el) return;
@@ -620,54 +628,92 @@
     }
   }
 
-  // 1. Execute Search Action
-  function executeOrderSearch() {
-    const orderNum = document.getElementById('order-search-input').value.trim();
-    if (!orderNum) {
-      alert('Please enter a valid order number');
+  // Handle Response directly from API
+  function handleApiResponse(apiResponse) {
+    if (!apiResponse || !apiResponse.success || !apiResponse.order) {
+      alert("Order not found or invalid response!");
       return;
     }
 
-    // Mock/Fetched JSON Object (Representing Image 1)
+    const order = apiResponse.order;
+
+    // Parse API Data into normalized object
     currentActiveOrder = {
-      order_number: orderNum,
-      created_at: "2026-09-08T04:02:00Z", // Can be replaced by live API JSON Date
-      formatted_date: "Sep 8, 2026, 04:02 AM",
-      financial_status: "PENDING",
-      fulfillment_status: "UNFULFILLED",
-      delivery: "N/A",
-      cancelled: "No",
-      tags: "louie"
+      raw_json: apiResponse,
+      order_number: order.number || 'N/A',
+      created_at: order.date || new Date().toISOString(),
+      formatted_date: formatOrderDate(order.date),
+      financial_status: order.financialStatus ? order.financialStatus.replace('_', ' ') : 'N/A',
+      fulfillment_status: order.fulfillmentStatus ? order.fulfillmentStatus.replace('_', ' ') : 'UNFULFILLED',
+      delivery: apiResponse.delivery ? apiResponse.delivery : 'N/A',
+      cancelled: order.cancelled ? 'Yes' : 'No',
+      tags: Array.isArray(order.tags) ? order.tags.join(', ') : (order.tags || 'N/A')
     };
 
-    // Store data in window object and localStorage for next steps
+    // Store in global window variable & LocalStorage for next steps
     window.lastFetchedOrder = currentActiveOrder;
     try {
       localStorage.setItem('lastFetchedOrderData', JSON.stringify(currentActiveOrder));
     } catch(e) {
-      console.warn('Storage unavailable', e);
+      console.warn('Storage error', e);
     }
 
-    // Render Search Result Card
+    // Populate Search Card UI elements
     document.getElementById('card-order-id').innerText = `Order #${currentActiveOrder.order_number}`;
     document.getElementById('card-order-date').innerText = currentActiveOrder.formatted_date;
     document.getElementById('card-financial-status').innerText = currentActiveOrder.financial_status;
     document.getElementById('card-fulfillment-status').innerText = currentActiveOrder.fulfillment_status;
+    document.getElementById('card-fulfillment-badge').innerText = currentActiveOrder.fulfillment_status;
     document.getElementById('card-delivery').innerText = currentActiveOrder.delivery;
     document.getElementById('card-cancelled').innerText = currentActiveOrder.cancelled;
     document.getElementById('card-tags').innerText = currentActiveOrder.tags;
 
+    // Display the Order card
     document.getElementById('search-result-card').style.display = 'block';
   }
 
-  // 2. Hide Search & Display Dynamic Stage Progress
+  // 1. Search Action Handler
+  function executeOrderSearch() {
+    const orderNum = document.getElementById('order-search-input').value.trim();
+    if (!orderNum) {
+      alert('Please enter an order number');
+      return;
+    }
+
+    /* 
+       Aapki API Fetch Request Yahan aayegi:
+       fetch(`/api/order-tracking?number=${orderNum}`)
+         .then(res => res.json())
+         .then(data => handleApiResponse(data));
+    */
+
+    // Test JSON (Matching Image 2 exact structure)
+    const mockApiResponse = {
+      "success": true,
+      "order": {
+        "number": orderNum,
+        "date": "2026-09-04T17:49:58Z",
+        "fulfillmentStatus": "IN_PROGRESS",
+        "financialStatus": "PAID",
+        "cancelled": false,
+        "cancelledAt": null,
+        "tags": ["JV"]
+      },
+      "shipment": null,
+      "delivery": null
+    };
+
+    handleApiResponse(mockApiResponse);
+  }
+
+  // 2. Hide Search & Display Stage 1 Progress Flow
   function showNextProgressStage() {
     if (!currentActiveOrder) return;
 
-    // Hide search card container
+    // Hide Search View
     document.getElementById('tracking-search-container').style.display = 'none';
 
-    // Show dynamic stage container
+    // Show Stage Progress View
     const stageContainer = document.getElementById('dynamic-tracking-stage');
     stageContainer.style.display = 'block';
 
@@ -690,19 +736,16 @@
     let checkedItems = [];
     let activeStep = 1;
 
-    // Dynamic Business Days Rules
+    // Dynamic Business Days Logic
     if (workingDays <= 1) {
-      // Day 1: 22% Progress Bar -> Order confirmed, Materials selected, Components in production
       progress = 22;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
       activeStep = 1;
     } else if (workingDays === 2) {
-      // Day 2: 40% Progress Bar -> Checks previous + Hardware preparation
       progress = 40;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
       activeStep = 1;
     } else if (workingDays === 3) {
-      // Day 3: 80% Progress Bar -> Checks previous + Your deck comes together, Everything lines up
       progress = 80;
       checkedItems = [
         'chk-order-confirmed', 
@@ -714,13 +757,12 @@
       ];
       activeStep = 2;
     } else {
-      // End of Day 3 / Day 4+: 100% Progress Bar -> Checks all including Every connection is checked
       progress = 100;
       checkedItems = [...allCheckboxes];
       activeStep = 2;
     }
 
-    // Update Percentage Bar
+    // Update Progress percentage
     document.getElementById('track-percent-val').innerText = progress + '%';
     document.getElementById('track-progress-fill').style.width = progress + '%';
 
@@ -736,7 +778,7 @@
       }
     }
 
-    // Apply Checkbox updates
+    // Apply Checkboxes
     allCheckboxes.forEach(id => {
       setChecked(id, checkedItems.includes(id));
     });
