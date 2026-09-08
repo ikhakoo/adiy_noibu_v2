@@ -1343,9 +1343,9 @@
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "custom_class": "",
-        "title": "Multicolumn",
-        "title_content": "",
+        "custom_class": "seo-cities",
+        "title": "Building a Deck Across New York",
+        "title_content": "From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography.",
         "image_width": "full",
         "image_ratio": "portrait",
         "button_label": "Button label",
