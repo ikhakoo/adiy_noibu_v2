@@ -1236,6 +1236,9 @@
     .seo-hero-sec .image-with-text__buttons .button{
         width: 100%;
     }
+    .seo-page-sec-text .rich-text__wrapper {
+        padding:0;
+    }
 }
 
 /********************* end *******************/
