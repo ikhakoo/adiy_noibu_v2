@@ -1329,9 +1329,9 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/Rectangle_672.png",
+            "image": "shopify://shop_images/Rectangle_672-1.png",
             "title": "",
-            "text": "<p>NYC →</p>",
+            "text": "<p>BUFFALO →</p>",
             "link_label": "",
             "link": ""
           }
@@ -1340,9 +1340,9 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/Rectangle_672.png",
+            "image": "shopify://shop_images/Rectangle_672-2.png",
             "title": "",
-            "text": "<p>NYC →</p>",
+            "text": "<p>ROCHESTER →</p>",
             "link_label": "",
             "link": ""
           }
@@ -1351,9 +1351,9 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/Rectangle_672.png",
+            "image": "shopify://shop_images/Rectangle_672-3.png",
             "title": "",
-            "text": "<p>NYC →</p>",
+            "text": "<p>YONKERS →</p>",
             "link_label": "",
             "link": ""
           }
@@ -1362,9 +1362,9 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/Rectangle_672.png",
+            "image": "shopify://shop_images/Rectangle_672-4.png",
             "title": "",
-            "text": "<p>NYC →</p>",
+            "text": "<p>SYRACUSE →</p>",
             "link_label": "",
             "link": ""
           }
