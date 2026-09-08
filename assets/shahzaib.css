@@ -1223,4 +1223,19 @@
     max-width: 75%;
     font-weight: 400;
 }
+
+
+@media screen and (max-width:768px){
+    .seo-hero-sec .image-with-text__content{
+        padding: 3rem 10px 0;
+    }
+    .image-with-text__buttons{
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .seo-hero-sec .image-with-text__buttons .button{
+        width: 100%;
+    }
+}
+
 /********************* end *******************/
