@@ -1212,7 +1212,15 @@
 .seo-cities.multicolumn .multicolumn-card__info {
     padding: 1.5rem 0 0;
 }
-.seo-cities.multicolumn 
-.seo-cities.multicolumn 
-.seo-cities.multicolumn 
+.seo-cities.multicolumn .multicolumn__title{
+    justify-content: center;
+}
+.seo-cities.multicolumn .title{
+    font-size: 36px;
+}
+.seo-cities.multicolumn .title-content{
+    text-align: center;
+    max-width: 75%;
+    font-weight: 400;
+}
 /********************* end *******************/
