@@ -1239,6 +1239,10 @@
     .seo-page-sec-text .rich-text__wrapper {
         padding:0;
     }
+    .seo-page-sec-text .button {
+        font-size: 15px;
+        font-weight: 400;
+    }
 }
 
 /********************* end *******************/

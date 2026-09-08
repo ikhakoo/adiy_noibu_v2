@@ -415,7 +415,7 @@
         "col_1_heading": "FEATURE",
         "col_3_heading": "TRADITIONAL CONTRACTOR",
         "col_4_heading": "A-DIY deck system",
-        "padding_top": 40,
+        "padding_top": 0,
         "padding_bottom": 40
       }
     },
@@ -1455,6 +1455,102 @@
         "padding_top": 72,
         "padding_bottom": 72
       }
+    },
+    "faq_accordion_aF8bAw": {
+      "type": "faq-accordion",
+      "blocks": {
+        "faq_item_CUGYbY": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Have you completed similar decks in this city or county?",
+            "answer": "<p>Yes, we have completed numerous deck installations in this area and are fully familiar with local zoning and structural codes.</p>"
+          }
+        },
+        "faq_item_iKzBMG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are you licensed or registered where required?",
+            "answer": "<p>Yes, we maintain all required state and municipal contractor licenses and registrations.</p>"
+          }
+        },
+        "faq_item_j73dMQ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you provide current proof of insurance?",
+            "answer": "<p>We carry full general liability and workers' compensation insurance. Certificates can be provided directly upon request.</p>"
+          }
+        },
+        "faq_item_qrJrXG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What lumber, framing dimensions and decking product are included?",
+            "answer": "<p>Our detailed written quotes specify all lumber grades, post dimensions, joist spacing, and exact decking brand/line selected.</p>"
+          }
+        },
+        "faq_item_HNYfQq": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What foundation system is proposed?",
+            "answer": "<p>Depending on soil conditions and deck height, we utilize concrete footings poured below frost depth or helical screw piles.</p>"
+          }
+        },
+        "faq_item_Y6END8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Who handles permits, plans and inspections?",
+            "answer": "<p>We manage the entire permit process from architectural drafting/engineering submission to scheduling final municipal inspections.</p>"
+          }
+        },
+        "faq_item_4MV6HW": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are stairs, railings, demolition and cleanup included?",
+            "answer": "<p>Yes, all specified components including old deck removal, site preparation, stairs, code-compliant railings, and site cleanup are detailed in our proposals.</p>"
+          }
+        },
+        "faq_item_Tmem3c": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How are changes and unexpected work priced?",
+            "answer": "<p>Any scope modifications or unforeseen site conditions are documented in a formal written change order before work proceeds.</p>"
+          }
+        },
+        "faq_item_NRaCXG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the payment schedule?",
+            "answer": "<p>We follow a structured milestone payment schedule linked to project stages (e.g., initial deposit, framing completion, final walkthrough).</p>"
+          }
+        },
+        "faq_item_nB7HMA": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What workmanship and material warranties apply?",
+            "answer": "<p>We provide a comprehensive craftsmanship warranty along with manufacturer warranties on decking materials and hardware.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_CUGYbY",
+        "faq_item_iKzBMG",
+        "faq_item_j73dMQ",
+        "faq_item_qrJrXG",
+        "faq_item_HNYfQq",
+        "faq_item_Y6END8",
+        "faq_item_4MV6HW",
+        "faq_item_Tmem3c",
+        "faq_item_NRaCXG",
+        "faq_item_nB7HMA"
+      ],
+      "name": "FAQ Accordion",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "section_bg": "#FFFFFF",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
@@ -1478,6 +1574,7 @@
     "engineering_warranty_DzqEAP",
     "wood_vs_composite_88yXDd",
     "rich_text_UaxDwK",
-    "multicolumn_kcGV87"
+    "multicolumn_kcGV87",
+    "faq_accordion_aF8bAw"
   ]
 }
