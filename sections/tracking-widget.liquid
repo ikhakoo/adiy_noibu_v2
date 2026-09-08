@@ -55,7 +55,7 @@
   .tracking-widget__form {
     width: 100%;
     max-width: 520px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   }
 
   .tracking-widget__input-group {
@@ -122,28 +122,104 @@
     margin: 0;
   }
 
-  /* Stage Sections Show/Hide Logic */
-  .stage-1-section,
-  .stage-2-section,
-  .stage-3-section,
-  .stage-section-wrapper {
-    display: none !important;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Result Container Styling */
+  .tracking-result-container {
+    display: none;
+    max-width: 680px;
+    margin: 30px auto 0 auto;
+    text-align: left;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   }
 
-  .stage-1-section.show-stage,
-  .stage-2-section.show-stage,
-  .stage-3-section.show-stage,
-  .stage-section-wrapper.show-stage {
-    display: block !important;
-    opacity: 1;
-    transform: translateY(0);
+  .tracking-result-container.active {
+    display: block;
   }
 
-  .tracking-widget-container.hide-widget {
-    display: none !important;
+  .tracking-status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #002B49;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .tracking-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .tracking-detail-item {
+    font-size: 14px;
+  }
+
+  .tracking-detail-item strong {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .tracking-error-msg {
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 16px;
+    font-size: 14px;
+    display: none;
+  }
+
+  /* Timeline Styles */
+  .tracking-timeline {
+    margin-top: 20px;
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid #e5e7eb;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #002B49;
+  }
+
+  .timeline-item .time {
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .timeline-item .status-text {
+    font-weight: 600;
+    font-size: 14px;
+    color: #111827;
+  }
+
+  .timeline-item .location {
+    font-size: 13px;
+    color: #4b5563;
   }
 
   /* Fixed Corner Back Button */
@@ -230,6 +306,40 @@
         </div>
       </form>
 
+      <div id="trackingErrorMsg" class="tracking-error-msg"></div>
+
+      <!-- Result Card Container -->
+      <div id="trackingResultContainer" class="tracking-result-container">
+        <div id="trackingStatusBadge" class="tracking-status-badge"></div>
+        
+        <div class="tracking-details-grid">
+          <div class="tracking-detail-item">
+            <strong>ORDER NUMBER</strong>
+            <span id="resOrderNum">-</span>
+          </div>
+          <div class="tracking-detail-item">
+            <strong>CARRIER</strong>
+            <span id="resCarrier">-</span>
+          </div>
+          <div class="tracking-detail-item">
+            <strong>TRACKING NUMBER</strong>
+            <span id="resTrackingNum">-</span>
+          </div>
+          <div class="tracking-detail-item">
+            <strong>ESTIMATED DELIVERY</strong>
+            <span id="resEstDelivery">-</span>
+          </div>
+        </div>
+
+        <div id="resItemsContainer" style="margin-bottom: 20px; font-size: 14px;">
+          <strong>Order Items:</strong>
+          <ul id="resItemList" style="margin: 6px 0; padding-left: 20px;"></ul>
+        </div>
+
+        <h4 style="margin: 0 0 12px 0; font-size: 16px; color: #111827;">Tracking History</h4>
+        <div id="trackingTimeline" class="tracking-timeline"></div>
+      </div>
+
       {%- if section.settings.footer_text != blank -%}
         <div class="tracking-widget__footer-text">
           {{ section.settings.footer_text }}
@@ -248,100 +358,125 @@
 
     const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
     const btnElement = document.getElementById('trackSubmitBtn');
+    const errorMsg = document.getElementById('trackingErrorMsg');
+    const resultContainer = document.getElementById('trackingResultContainer');
+
     const rawValue = inputElement ? inputElement.value.trim() : '';
     if (!rawValue) return false;
 
     const cleanOrderNum = rawValue.replace('#', '');
+    
+    // UI Reset
     btnElement.innerText = "Searching...";
+    btnElement.disabled = true;
+    errorMsg.style.display = 'none';
+    resultContainer.classList.remove('active');
 
     try {
-      // Step 1: App Proxy try karein
-      const proxyUrl = `/apps/order-tracker/api/track-order?order=${encodeURIComponent(cleanOrderNum)}`;
-      const response = await fetch(proxyUrl);
-
-      if (response.ok) {
-        const data = await response.json();
-        
-        // Agar App response me order date / stage de rahi hai
-        if (data.success && (data.createdAt || data.created_at || data.daysOld !== undefined || data.stage)) {
-          let stage = calculateStageFromData(data);
-          displayStage(stage);
-          btnElement.innerText = "{{ section.settings.button_text }}";
-          return false;
-        }
+      // Direct Worker API Endpoint Call
+      const apiUrl = `https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(cleanOrderNum)}`;
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error("Order not found or network issue.");
       }
+
+      const data = await response.json();
+
+      if (data.error || (data.success === false)) {
+        showError(data.error || "Order not found. Please check your order number.");
+      } else {
+        renderTrackingData(data, cleanOrderNum);
+      }
+
     } catch(e) {
-      console.log("Proxy endpoint active nahi hai, switching to direct order date parser.");
+      console.error(e);
+      showError("Unable to fetch tracking details right now. Please try again later.");
+    } finally {
+      btnElement.innerText = "{{ section.settings.button_text }}";
+      btnElement.disabled = false;
     }
 
-    // Step 2: Fallback logic agar app proxy error de ya dates compute na kare
-    fetchDirectOrderDate(cleanOrderNum);
-    btnElement.innerText = "{{ section.settings.button_text }}";
     return false;
   }
 
-  function calculateStageFromData(data) {
-    if (data.stage) return parseInt(data.stage, 10);
-    
-    let days = 0;
-    if (data.daysOld !== undefined) {
-      days = parseInt(data.daysOld, 10);
-    } else if (data.createdAt || data.created_at) {
-      const orderDate = new Date(data.createdAt || data.created_at);
-      const diffTime = Math.abs(new Date() - orderDate);
-      days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    }
-
-    if (days > 14) return 3;
-    if (days > 7) return 2;
-    return 1;
-  }
-
-  function fetchDirectOrderDate(orderNumber) {
-    // Demo calculation test rule (agar real backend connected na ho)
-    const num = parseInt(orderNumber, 10);
-    let stage = 1;
-
-    if (!isNaN(num)) {
-      const lastDigit = num % 10;
-      if (lastDigit >= 7) stage = 3;       // 14+ days old demo
-      else if (lastDigit >= 4) stage = 2;  // 7-14 days old demo
-      else stage = 1;                      // 0-7 days old demo
-    }
-
-    displayStage(stage);
-  }
-
-  function displayStage(stageNumber) {
-    const trackingWidget = document.getElementById('trackingWidgetContainer');
-    if (trackingWidget) trackingWidget.classList.add('hide-widget');
-
+  function renderTrackingData(data, searchNum) {
+    const resultContainer = document.getElementById('trackingResultContainer');
     const backBtn = document.getElementById('stageBackBtn');
-    if (backBtn) backBtn.style.display = 'inline-flex';
 
-    document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
-      .forEach(s => s.classList.remove('show-stage'));
+    // Basic Data Mapping (Flexible for various JSON formats)
+    const orderNumber = data.order_number || data.orderNumber || searchNum;
+    const status = data.status || data.order_status || "In Transit";
+    const carrier = data.carrier || data.courier || "N/A";
+    const trackingNum = data.tracking_number || data.trackingNumber || "N/A";
+    const estDelivery = data.estimated_delivery || data.delivery_date || "Pending";
 
-    let targetStage = document.querySelector(`.stage-${stageNumber}-section`) || document.querySelector(`.stage-${stageNumber}`);
+    // Set Header/Details Text
+    document.getElementById('trackingStatusBadge').innerText = status;
+    document.getElementById('resOrderNum').innerText = '#' + orderNumber;
+    document.getElementById('resCarrier').innerText = carrier;
+    document.getElementById('resTrackingNum').innerText = trackingNum;
+    document.getElementById('resEstDelivery').innerText = estDelivery;
 
-    if (targetStage) {
-      targetStage.classList.add('show-stage');
-      targetStage.scrollIntoView({ behavior: 'smooth' });
+    // Render Items
+    const itemList = document.getElementById('resItemList');
+    itemList.innerHTML = '';
+    const items = data.items || data.line_items || [];
+    if (items.length > 0) {
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.innerText = typeof item === 'string' ? item : `${item.title || item.name} (x${item.quantity || 1})`;
+        itemList.appendChild(li);
+      });
+      document.getElementById('resItemsContainer').style.display = 'block';
     } else {
-      alert(`Stage ${stageNumber} section is missing in Page Customizer.`);
-      resetTrackingView();
+      document.getElementById('resItemsContainer').style.display = 'none';
     }
+
+    // Render Timeline Updates
+    const timeline = document.getElementById('trackingTimeline');
+    timeline.innerHTML = '';
+    const checkpoints = data.checkpoints || data.timeline || data.updates || [];
+
+    if (checkpoints.length > 0) {
+      checkpoints.forEach(cp => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+        item.innerHTML = `
+          <div class="time">${cp.date || cp.timestamp || ''}</div>
+          <div class="status-text">${cp.status || cp.message || ''}</div>
+          <div class="location">${cp.location || ''}</div>
+        `;
+        timeline.appendChild(item);
+      });
+    } else {
+      timeline.innerHTML = '<div style="font-size: 13px; color: #666;">No tracking timeline updates available yet.</div>';
+    }
+
+    // Show Results & Back Button
+    resultContainer.classList.add('active');
+    if (backBtn) backBtn.style.display = 'inline-flex';
+    resultContainer.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function showError(msg) {
+    const errorMsg = document.getElementById('trackingErrorMsg');
+    errorMsg.innerText = msg;
+    errorMsg.style.display = 'block';
   }
 
   function resetTrackingView() {
-    document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
-      .forEach(stage => stage.classList.remove('show-stage'));
-
+    const resultContainer = document.getElementById('trackingResultContainer');
     const backBtn = document.getElementById('stageBackBtn');
-    if (backBtn) backBtn.style.display = 'none';
+    const errorMsg = document.getElementById('trackingErrorMsg');
+    const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
 
-    const trackingWidget = document.getElementById('trackingWidgetContainer');
-    if (trackingWidget) trackingWidget.classList.remove('hide-widget');
+    if (resultContainer) resultContainer.classList.remove('active');
+    if (errorMsg) errorMsg.style.display = 'none';
+    if (backBtn) backBtn.style.display = 'none';
+    if (inputElement) inputElement.value = '';
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
 
