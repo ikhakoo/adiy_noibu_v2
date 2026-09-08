@@ -315,10 +315,11 @@ async function handleTrackingSubmit(event) {
         <div class="tracking-result-grid">
           <div><strong>Date:</strong> ${formattedDate}</div>
           <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
-          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
-          <div><strong>Tags:</strong> ${tagsText}</div>
           <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
           <div><strong>Delivery:</strong> ${deliveryText}</div>
+          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
+          <div><strong>Tags:</strong> ${tagsText}</div>
+          
         </div>
       `;
       
