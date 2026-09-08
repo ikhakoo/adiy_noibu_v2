@@ -1190,5 +1190,8 @@
     font-weight: 400;
     letter-spacing: 3px;
 }
+.seo-page-quotes .rich-text.content-container {
+    background: #fff;
+}
 
 /********************* end *******************/
