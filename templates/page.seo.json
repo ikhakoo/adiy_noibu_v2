@@ -1269,16 +1269,23 @@
         "padding_top_desktop": 64,
         "padding_bottom_desktop": 32,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 32
       }
     },
     "rich_text_UaxDwK": {
       "type": "rich-text",
       "blocks": {
+        "heading_rMnWj7": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"</strong>",
+            "class_heading": ""
+          }
+        },
         "text_a9zQTk": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"</strong></p>"
+            "text": ""
           }
         },
         "text_pY7ypn": {
@@ -1289,6 +1296,7 @@
         }
       },
       "block_order": [
+        "heading_rMnWj7",
         "text_a9zQTk",
         "text_pY7ypn"
       ],
