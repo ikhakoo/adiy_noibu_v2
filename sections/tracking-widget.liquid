@@ -55,7 +55,7 @@
   .tracking-widget__form {
     width: 100%;
     max-width: 520px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .tracking-widget__input-group {
@@ -85,6 +85,10 @@
     box-shadow: 0 0 0 1px #002B49;
   }
 
+  .tracking-widget__input::placeholder {
+    color: #666666;
+  }
+
   .tracking-widget__button {
     height: 44px;
     padding: 0 28px;
@@ -96,10 +100,14 @@
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .tracking-widget__button:hover {
+    opacity: 0.92;
   }
 
   .tracking-widget__button:disabled {
@@ -107,114 +115,84 @@
     cursor: not-allowed;
   }
 
-  /* Result Container Styling */
-  .tracking-results-card {
+  /* Result Box Styles */
+  .tracking-result-card {
+    display: none;
     width: 100%;
-    max-width: 600px;
+    max-width: 520px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: left;
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 24px;
-    margin-top: 20px;
-    text-align: left;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    display: none;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
   }
 
-  .tracking-results-header {
-    border-bottom: 1px solid #f3f4f6;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
+  .tracking-result-header {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .tracking-results-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #111827;
-    margin: 0 0 6px 0;
-  }
-
-  .tracking-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    background-color: #e0f2fe;
-    color: #0369a1;
-  }
-
-  .tracking-info-grid {
+  .tracking-result-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    font-size: 14px;
+    color: #333333;
   }
 
-  .tracking-info-item label {
-    display: block;
+  .status-badge {
     font-size: 12px;
-    color: #6b7280;
+    font-weight: 700;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 10px;
+    border-radius: 20px;
     text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 4px;
   }
 
-  .tracking-info-item span {
+  .tracking-widget__footer-text {
     font-size: 14px;
-    color: #1f2937;
-    font-weight: 500;
-  }
-
-  /* Progress Timeline */
-  .tracking-timeline {
+    line-height: 1.5;
+    color: #555555;
+    max-width: 600px;
     margin-top: 20px;
-    position: relative;
-    padding-left: 20px;
-    border-left: 2px solid #e5e7eb;
   }
 
-  .tracking-timeline-item {
-    position: relative;
-    margin-bottom: 20px;
+  .tracking-widget__footer-text p {
+    margin: 0;
   }
 
-  .tracking-timeline-item:last-child {
-    margin-bottom: 0;
-  }
-
-  .tracking-timeline-dot {
-    position: absolute;
-    left: -26px;
-    top: 2px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #002B49;
-    border: 2px solid #ffffff;
-  }
-
-  .tracking-timeline-date {
-    font-size: 12px;
-    color: #9ca3af;
-  }
-
-  .tracking-timeline-status {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-
-  .tracking-error {
-    color: #dc2626;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    padding: 12px;
-    border-radius: 6px;
-    margin-top: 16px;
+  .stage-back-btn {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 99999;
+    background: #ffffff;
+    color: #111827;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
     display: none;
-    font-size: 14px;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .stage-back-btn:hover {
+    background: #f3f4f6;
+    transform: translateY(-2px);
   }
 
   @media screen and (max-width: 480px) {
@@ -226,13 +204,20 @@
     .tracking-widget__button {
       width: 100%;
     }
-    .tracking-info-grid {
+    .tracking-result-grid {
       grid-template-columns: 1fr;
     }
   }
 {%- endstyle -%}
 
-<div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding">
+<button id="stageBackBtn" class="stage-back-btn" type="button" onclick="resetTrackingView()">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <path d="M19 12H5M12 19l-7-7 7-7"/>
+  </svg>
+  Back to Search
+</button>
+
+<div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding tracking-widget-container">
   <div class="page-width page-width--narrow">
     <div class="tracking-widget__container">
       {%- if section.settings.logo != blank -%}
@@ -255,7 +240,7 @@
         </div>
       {%- endif -%}
 
-      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" onsubmit="handleTrackingSubmit(event); return false;">
+      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="handleTrackingSubmit(event); return false;">
         <div class="tracking-widget__input-group">
           <input
             type="text"
@@ -271,41 +256,8 @@
         </div>
       </form>
 
-      <div id="trackingError" class="tracking-error"></div>
-
-      <!-- Results Display Container -->
-      <div id="trackingResults" class="tracking-results-card">
-        <div class="tracking-results-header">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h3 class="tracking-results-title">Order #<span id="resOrderNum"></span></h3>
-            <span id="resStatusBadge" class="tracking-badge"></span>
-          </div>
-        </div>
-
-        <div class="tracking-info-grid">
-          <div class="tracking-info-item">
-            <label>Carrier</label>
-            <span id="resCarrier">N/A</span>
-          </div>
-          <div class="tracking-info-item">
-            <label>Tracking Code</label>
-            <span id="resTrackingNum">N/A</span>
-          </div>
-          <div class="tracking-info-item">
-            <label>Estimated Delivery</label>
-            <span id="resEstDelivery">N/A</span>
-          </div>
-          <div class="tracking-info-item">
-            <label>Destination</label>
-            <span id="resDestination">N/A</span>
-          </div>
-        </div>
-
-        <div id="trackingTimelineWrapper">
-          <h4 style="font-size: 14px; margin-bottom: 12px; color: #374151;">Tracking Updates</h4>
-          <div id="trackingTimeline" class="tracking-timeline"></div>
-        </div>
-      </div>
+      <!-- Dynamic JSON API Result Box -->
+      <div id="trackingResultContainer" class="tracking-result-card"></div>
 
       {%- if section.settings.footer_text != blank -%}
         <div class="tracking-widget__footer-text">
@@ -317,80 +269,82 @@
 </div>
 
 <script>
-  async function handleTrackingSubmit(event) {
-    if (event) event.preventDefault();
+async function handleTrackingSubmit(event) {
+  event.preventDefault();
+  
+  const sectionId = "{{ section.id }}";
+  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
+  const submitBtn = document.getElementById("trackSubmitBtn");
+  const resultContainer = document.getElementById("trackingResultContainer");
+  const backBtn = document.getElementById("stageBackBtn");
+  const orderNumber = inputEl.value.trim();
 
-    const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
-    const btnElement = document.getElementById('trackSubmitBtn');
-    const resultsCard = document.getElementById('trackingResults');
-    const errorCard = document.getElementById('trackingError');
-    
-    const rawValue = inputElement ? inputElement.value.trim() : '';
-    if (!rawValue) return;
+  if (!orderNumber) return;
 
-    const cleanOrderNum = rawValue.replace('#', '');
+  const originalBtnText = submitBtn.innerText;
+  submitBtn.innerText = "Searching...";
+  submitBtn.disabled = true;
+  resultContainer.style.display = "none";
 
-    // UI Reset
-    errorCard.style.display = 'none';
-    resultsCard.style.display = 'none';
-    btnElement.disabled = true;
-    btnElement.innerText = "Searching...";
+  try {
+    const response = await fetch(`https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(orderNumber)}`);
+    const data = await response.json();
 
-    try {
-      // Direct API Call to Cloudflare Worker
-      const apiUrl = `https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(cleanOrderNum)}`;
-      const response = await fetch(apiUrl);
+    if (data.success && data.order) {
+      const order = data.order;
       
-      if (!response.ok) {
-        throw new Error(`Order not found or server error (${response.status})`);
-      }
-
-      const data = await response.json();
-      renderTrackingDetails(cleanOrderNum, data);
-
-    } catch (error) {
-      errorCard.innerText = error.message || "Unable to fetch tracking info. Please check your order number.";
-      errorCard.style.display = 'block';
-    } finally {
-      btnElement.disabled = false;
-      btnElement.innerText = "{{ section.settings.button_text }}";
-    }
-  }
-
-  function renderTrackingDetails(orderNum, data) {
-    const resultsCard = document.getElementById('trackingResults');
-
-    // Header info mapping
-    document.getElementById('resOrderNum').innerText = orderNum;
-    document.getElementById('resStatusBadge').innerText = data.status || data.state || 'In Transit';
-    document.getElementById('resCarrier').innerText = data.carrier || data.courier || 'Standard Courier';
-    document.getElementById('resTrackingNum').innerText = data.tracking_number || data.tracking_id || orderNum;
-    document.getElementById('resEstDelivery').innerText = data.estimated_delivery || data.edd || 'Pending';
-    document.getElementById('resDestination').innerText = data.destination || data.address || 'N/A';
-
-    // Steps or Checkpoints Array Parsing
-    const timelineContainer = document.getElementById('trackingTimeline');
-    timelineContainer.innerHTML = '';
-
-    const checkpoints = data.checkpoints || data.events || data.history || [];
-
-    if (checkpoints.length > 0) {
-      checkpoints.forEach(item => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'tracking-timeline-item';
-        itemEl.innerHTML = `
-          <div class="tracking-timeline-dot"></div>
-          <div class="tracking-timeline-status">${item.status || item.message || item.description}</div>
-          <div class="tracking-timeline-date">${item.timestamp || item.date || ''} - ${item.location || ''}</div>
-        `;
-        timelineContainer.appendChild(itemEl);
+      // Formatting Date
+      const formattedDate = new Date(order.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
       });
-    } else {
-      timelineContainer.innerHTML = '<div style="font-size: 13px; color: #6b7280;">No detailed checkpoints available yet.</div>';
-    }
 
-    resultsCard.style.display = 'block';
+      // Tags display
+      const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
+
+      resultContainer.innerHTML = `
+        <div class="tracking-result-header">
+          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
+          <span class="status-badge">${order.fulfillmentStatus.replace('_', ' ')}</span>
+        </div>
+        <div class="tracking-result-grid">
+          <div><strong>Date:</strong> ${formattedDate}</div>
+          <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
+          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
+          <div><strong>Tags:</strong> ${tagsText}</div>
+        </div>
+      `;
+      
+      resultContainer.style.display = "block";
+      if (backBtn) backBtn.style.display = "inline-flex";
+
+    } else {
+      resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
+      resultContainer.style.display = "block";
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Failed to fetch order details. Please try again.</p>`;
+    resultContainer.style.display = "block";
+  } finally {
+    submitBtn.innerText = originalBtnText;
+    submitBtn.disabled = false;
   }
+}
+
+function resetTrackingView() {
+  const sectionId = "{{ section.id }}";
+  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
+  const resultContainer = document.getElementById("trackingResultContainer");
+  const backBtn = document.getElementById("stageBackBtn");
+
+  if (inputEl) inputEl.value = "";
+  if (resultContainer) resultContainer.style.display = "none";
+  if (backBtn) backBtn.style.display = "none";
+}
 </script>
 
 {% schema %}
