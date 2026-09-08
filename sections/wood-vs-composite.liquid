@@ -302,7 +302,7 @@
     <div class="wood-vs-comp-cards-wrapper-{{ section.id }} js-wood-cards-wrapper-{{ section.id }}">
       <div class="wood-vs-comp-cards-grid">
         {%- for block in section.blocks -%}
-          <div class="wood-vs-comp-card" {{ block.shopify_attributes }}>
+          <div class="wood-vs-comp-card" {{ block.shopify_attributes }} style="background-color: {{ block.settings.card_bg }}">
             
             <div class="wood-vs-comp-card-media">
               {%- if block.settings.image != blank -%}
