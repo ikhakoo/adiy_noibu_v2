@@ -1335,11 +1335,107 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "column_AQQLEw": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_iQMfDT": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_XNGAn9": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_Mc7eD7": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_kpgT4X": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_HDUdnD": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_CGt4cY": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_rjYLDW": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NYC →</p>",
+            "link_label": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
         "column_THCnnQ",
-        "column_cppRgJ"
+        "column_cppRgJ",
+        "column_AQQLEw",
+        "column_iQMfDT",
+        "column_XNGAn9",
+        "column_Mc7eD7",
+        "column_kpgT4X",
+        "column_HDUdnD",
+        "column_CGt4cY",
+        "column_rjYLDW"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
@@ -1348,13 +1444,13 @@
         "title_content": "From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography.",
         "image_width": "full",
         "image_ratio": "portrait",
-        "button_label": "Button label",
+        "button_label": "",
         "button_link": "",
-        "columns_desktop": 6,
+        "columns_desktop": 5,
         "column_alignment": "center",
         "background_style": "primary",
         "color_scheme": "scheme-5",
-        "columns_mobile": "1",
+        "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
