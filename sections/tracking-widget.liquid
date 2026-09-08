@@ -293,7 +293,6 @@ async function handleTrackingSubmit(event) {
     if (data.success && data.order) {
       const order = data.order;
       
-      // Formatting Date
       const formattedDate = new Date(order.date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
@@ -302,19 +301,24 @@ async function handleTrackingSubmit(event) {
         minute: '2-digit'
       });
 
-      // Tags display
       const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
+      
+      // Formatting added fields
+      const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
+      const deliveryText = data.delivery ? (typeof data.delivery === 'object' ? JSON.stringify(data.delivery) : data.delivery) : 'N/A';
 
       resultContainer.innerHTML = `
         <div class="tracking-result-header">
           <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
-          <span class="status-badge">${order.fulfillmentStatus.replace('_', ' ')}</span>
+          <span class="status-badge">${fulfillmentText}</span>
         </div>
         <div class="tracking-result-grid">
           <div><strong>Date:</strong> ${formattedDate}</div>
           <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
           <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
           <div><strong>Tags:</strong> ${tagsText}</div>
+          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
+          <div><strong>Delivery:</strong> ${deliveryText}</div>
         </div>
       `;
       
