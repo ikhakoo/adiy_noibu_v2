@@ -1271,6 +1271,37 @@
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
+    },
+    "rich_text_UaxDwK": {
+      "type": "rich-text",
+      "blocks": {
+        "text_a9zQTk": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"</strong></p>"
+          }
+        },
+        "text_pY7ypn": {
+          "type": "text",
+          "settings": {
+            "text": "<p>— DAVID MILLER, SCARSDALE</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_a9zQTk",
+        "text_pY7ypn"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
@@ -1292,6 +1323,7 @@
     "double_image_text_p6xnEW",
     "steps_with_video_YXnUxD",
     "engineering_warranty_DzqEAP",
-    "wood_vs_composite_88yXDd"
+    "wood_vs_composite_88yXDd",
+    "rich_text_UaxDwK"
   ]
 }
