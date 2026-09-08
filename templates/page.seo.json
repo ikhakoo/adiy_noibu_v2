@@ -1373,9 +1373,9 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/Rectangle_672.png",
+            "image": "shopify://shop_images/Rectangle_672-5.png",
             "title": "",
-            "text": "<p>NYC →</p>",
+            "text": "<p>ALBANY →</p>",
             "link_label": "",
             "link": ""
           }
