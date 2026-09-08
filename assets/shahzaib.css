@@ -1193,5 +1193,8 @@
 .seo-page-quotes .rich-text.content-container {
     background: #fff;
 }
+.seo-page-quotes .rich-text__heading{
+    font-size: 23px;
+}
 
 /********************* end *******************/
