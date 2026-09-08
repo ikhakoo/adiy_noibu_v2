@@ -1181,5 +1181,14 @@
 .seo-homeowner-sec .wood-vs-comp-card-body{
     padding: 28px 10px 0;
 }
+.seo-homeowner-sec .wood-vs-comp-header{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.seo-homeowner-sec .wood-vs-comp-subhead {
+    color: #C4A484;
+    font-weight: 400;
+    letter-spacing: 3px;
+}
 
 /********************* end *******************/
