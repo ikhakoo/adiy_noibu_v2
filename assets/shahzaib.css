@@ -1231,7 +1231,7 @@
     }
     .image-with-text__buttons{
         flex-direction: column;
-        gap: 1rem;
+        gap: 1rem !important;
     }
     .seo-hero-sec .image-with-text__buttons .button{
         width: 100%;
