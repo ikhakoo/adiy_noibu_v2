@@ -971,6 +971,7 @@
       ],
       "name": "Wood vs Composite",
       "settings": {
+        "unique_class": "",
         "main_title": "Pressure-Treated Wood vs. Composite Decking",
         "subtitle": "",
         "description": "The best deck material depends on your budget, preferred appearance and maintenance expectations.\n<br><br>\nNew York decks may experience rain, snow, ice, humidity, summer heat, freeze-and-thaw cycles and coastal moisture. Neither pressure-treated wood nor composite is automatically best for every property.",
@@ -1252,6 +1253,7 @@
       ],
       "name": "Wood vs Composite",
       "settings": {
+        "unique_class": "seo-homeowner-sec",
         "main_title": "Built by a Real New York Homeowner",
         "subtitle": "CASE STUDY",
         "description": "",
