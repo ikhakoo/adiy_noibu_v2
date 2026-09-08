@@ -267,8 +267,90 @@
     </div>
   </div>
 </div>
-
 <script>
+// JSON data ko global memory ya localStorage me save karne ke liye helper
+let currentOrderData = null;
+
+// Business Days (Exclude Saturday & Sunday) calculate karne ka function
+function calculateBusinessDays(orderDate) {
+  const start = new Date(orderDate);
+  const now = new Date();
+  
+  // Time components clear karke direct days compare karne ke liye
+  start.setHours(0, 0, 0, 0);
+  now.setHours(0, 0, 0, 0);
+
+  if (now < start) return 1; // Fallback for edge cases
+
+  let count = 0;
+  let cur = new Date(start);
+
+  while (cur <= now) {
+    const dayOfWeek = cur.getDay();
+    // 0 = Sunday, 6 = Saturday (skip weekends)
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      count++;
+    }
+    cur.setDate(cur.getDate() + 1);
+  }
+
+  return count; // Returns 1 for Day 1, 2 for Day 2, etc.
+}
+
+// Stage aur Timeline calculate karke update karne ka logic
+function updateOrderProgress(orderDate) {
+  const businessDays = calculateBusinessDays(orderDate);
+
+  let progressPercent = 0;
+  let checkedItems = {
+    orderConfirmed: false,
+    materialsSelected: false,
+    componentsProduction: false,
+    hardwareProduction: false,
+    deckComesTogether: false,
+    everythingLinesUp: false,
+    everyConnection: false
+  };
+
+  // Days-based logic mapping
+  if (businessDays <= 1) {
+    progressPercent = 22;
+    checkedItems.orderConfirmed = true;
+    checkedItems.materialsSelected = true;
+    checkedItems.componentsProduction = true;
+  } else if (businessDays === 2) {
+    progressPercent = 40;
+    checkedItems.orderConfirmed = true;
+    checkedItems.materialsSelected = true;
+    checkedItems.componentsProduction = true;
+    checkedItems.hardwareProduction = true;
+  } else if (businessDays === 3) {
+    progressPercent = 80;
+    checkedItems.orderConfirmed = true;
+    checkedItems.materialsSelected = true;
+    checkedItems.componentsProduction = true;
+    checkedItems.hardwareProduction = true;
+    checkedItems.deckComesTogether = true;
+    checkedItems.everythingLinesUp = true;
+  } else {
+    // 3 Working Days ya usse ziada (End of Day 3 onwards)
+    progressPercent = 100;
+    checkedItems.orderConfirmed = true;
+    checkedItems.materialsSelected = true;
+    checkedItems.componentsProduction = true;
+    checkedItems.hardwareProduction = true;
+    checkedItems.deckComesTogether = true;
+    checkedItems.everythingLinesUp = true;
+    checkedItems.everyConnection = true;
+  }
+
+  return {
+    day: Math.min(businessDays, 3),
+    percent: progressPercent,
+    checks: checkedItems
+  };
+}
+
 async function handleTrackingSubmit(event) {
   event.preventDefault();
   
@@ -276,7 +358,10 @@ async function handleTrackingSubmit(event) {
   const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
   const submitBtn = document.getElementById("trackSubmitBtn");
   const resultContainer = document.getElementById("trackingResultContainer");
+  const widgetContainer = document.getElementById("trackingWidgetContainer");
   const backBtn = document.getElementById("stageBackBtn");
+  
+  const stage1Section = document.querySelector(".stage-1-section"); // Aapki next stage div
   const orderNumber = inputEl.value.trim();
 
   if (!orderNumber) return;
@@ -284,70 +369,59 @@ async function handleTrackingSubmit(event) {
   const originalBtnText = submitBtn.innerText;
   submitBtn.innerText = "Searching...";
   submitBtn.disabled = true;
-  resultContainer.style.display = "none";
 
   try {
     const response = await fetch(`https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(orderNumber)}`);
     const data = await response.json();
 
     if (data.success && data.order) {
-      const order = data.order;
-      
-      const formattedDate = new Date(order.date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      // 1. Data Store kar liya (Global Window & LocalStorage me)
+      currentOrderData = data;
+      localStorage.setItem("cachedOrderData", JSON.stringify(data));
 
-      const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
-      
-      // Formatting added fields
-      const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
-      const deliveryText = data.delivery ? (typeof data.delivery === 'object' ? JSON.stringify(data.delivery) : data.delivery) : 'N/A';
+      // 2. Timeline Progress Calculate karna
+      const timelineProgress = updateOrderProgress(data.order.date);
+      currentOrderData.timeline = timelineProgress;
 
-      resultContainer.innerHTML = `
-        <div class="tracking-result-header">
-          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
-          <span class="status-badge">${fulfillmentText}</span>
-        </div>
-        <div class="tracking-result-grid">
-          <div><strong>Date:</strong> ${formattedDate}</div>
-          <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
-          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
-          <div><strong>Delivery:</strong> ${deliveryText}</div>
-          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
-          <div><strong>Tags:</strong> ${tagsText}</div>
-          
-        </div>
-      `;
-      
-      resultContainer.style.display = "block";
+      // 3. Purana Search View Hide aur Naya Stage View Show karna
+      if (widgetContainer) widgetContainer.classList.add("hide-widget");
+      if (stage1Section) stage1Section.classList.add("show-stage");
       if (backBtn) backBtn.style.display = "inline-flex";
 
+      // 4. Aglay step ke UI elements Update karne ke liye custom event fire karna
+      window.dispatchEvent(new CustomEvent('orderDataLoaded', { detail: currentOrderData }));
+
     } else {
-      resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
-      resultContainer.style.display = "block";
+      if (resultContainer) {
+        resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
+        resultContainer.style.display = "block";
+      }
     }
   } catch (error) {
     console.error("Error:", error);
-    resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Failed to fetch order details. Please try again.</p>`;
-    resultContainer.style.display = "block";
+    if (resultContainer) {
+      resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Failed to fetch order details. Please try again.</p>`;
+      resultContainer.style.display = "block";
+    }
   } finally {
     submitBtn.innerText = originalBtnText;
     submitBtn.disabled = false;
   }
 }
 
+// Reset / Back Button Handler
 function resetTrackingView() {
   const sectionId = "{{ section.id }}";
   const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
   const resultContainer = document.getElementById("trackingResultContainer");
+  const widgetContainer = document.getElementById("trackingWidgetContainer");
+  const stage1Section = document.querySelector(".stage-1-section");
   const backBtn = document.getElementById("stageBackBtn");
 
   if (inputEl) inputEl.value = "";
   if (resultContainer) resultContainer.style.display = "none";
+  if (widgetContainer) widgetContainer.classList.remove("hide-widget");
+  if (stage1Section) stage1Section.classList.remove("show-stage");
   if (backBtn) backBtn.style.display = "none";
 }
 </script>
