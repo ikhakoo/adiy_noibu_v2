@@ -55,7 +55,7 @@
   .tracking-widget__form {
     width: 100%;
     max-width: 520px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 
   .tracking-widget__input-group {
@@ -85,10 +85,6 @@
     box-shadow: 0 0 0 1px #002B49;
   }
 
-  .tracking-widget__input::placeholder {
-    color: #666666;
-  }
-
   .tracking-widget__button {
     height: 44px;
     padding: 0 28px;
@@ -100,89 +96,78 @@
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
 
-  .tracking-widget__button:hover {
-    opacity: 0.92;
-  }
-
-  .tracking-widget__footer-text {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #555555;
-    max-width: 600px;
-    margin-top: 20px;
-  }
-
-  .tracking-widget__footer-text p {
-    margin: 0;
+  .tracking-widget__button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   /* Result Container Styling */
-  .tracking-result-container {
-    display: none;
-    max-width: 680px;
-    margin: 30px auto 0 auto;
-    text-align: left;
+  .tracking-results-card {
+    width: 100%;
+    max-width: 600px;
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-top: 20px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: none;
   }
 
-  .tracking-result-container.active {
-    display: block;
-  }
-
-  .tracking-status-badge {
-    display: inline-block;
-    padding: 6px 12px;
-    background: #002B49;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 4px;
-    font-size: 13px;
-    text-transform: uppercase;
+  .tracking-results-header {
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 16px;
     margin-bottom: 16px;
   }
 
-  .tracking-details-grid {
+  .tracking-results-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 6px 0;
+  }
+
+  .tracking-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .tracking-info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #f0f0f0;
   }
 
-  .tracking-detail-item {
-    font-size: 14px;
-  }
-
-  .tracking-detail-item strong {
+  .tracking-info-item label {
     display: block;
-    color: #666;
     font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: 600;
     margin-bottom: 4px;
   }
 
-  .tracking-error-msg {
-    color: #dc2626;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    padding: 12px;
-    border-radius: 6px;
-    margin-top: 16px;
+  .tracking-info-item span {
     font-size: 14px;
-    display: none;
+    color: #1f2937;
+    font-weight: 500;
   }
 
-  /* Timeline Styles */
+  /* Progress Timeline */
   .tracking-timeline {
     margin-top: 20px;
     position: relative;
@@ -190,62 +175,46 @@
     border-left: 2px solid #e5e7eb;
   }
 
-  .timeline-item {
+  .tracking-timeline-item {
     position: relative;
     margin-bottom: 20px;
   }
 
-  .timeline-item::before {
-    content: '';
+  .tracking-timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .tracking-timeline-dot {
     position: absolute;
     left: -26px;
-    top: 4px;
+    top: 2px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #002B49;
+    background-color: #002B49;
+    border: 2px solid #ffffff;
   }
 
-  .timeline-item .time {
+  .tracking-timeline-date {
     font-size: 12px;
-    color: #6b7280;
+    color: #9ca3af;
   }
 
-  .timeline-item .status-text {
-    font-weight: 600;
+  .tracking-timeline-status {
     font-size: 14px;
-    color: #111827;
+    font-weight: 600;
+    color: #1f2937;
   }
 
-  .timeline-item .location {
-    font-size: 13px;
-    color: #4b5563;
-  }
-
-  /* Fixed Corner Back Button */
-  .stage-back-btn {
-    position: fixed;
-    top: 24px;
-    left: 24px;
-    z-index: 99999;
-    background: #ffffff;
-    color: #111827;
-    border: 1px solid #d1d5db;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
+  .tracking-error {
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 16px;
     display: none;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-  }
-
-  .stage-back-btn:hover {
-    background: #f3f4f6;
-    transform: translateY(-2px);
+    font-size: 14px;
   }
 
   @media screen and (max-width: 480px) {
@@ -257,17 +226,13 @@
     .tracking-widget__button {
       width: 100%;
     }
+    .tracking-info-grid {
+      grid-template-columns: 1fr;
+    }
   }
 {%- endstyle -%}
 
-<button id="stageBackBtn" class="stage-back-btn" type="button" onclick="resetTrackingView()">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-    <path d="M19 12H5M12 19l-7-7 7-7"/>
-  </svg>
-  Back to Search
-</button>
-
-<div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding tracking-widget-container">
+<div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding">
   <div class="page-width page-width--narrow">
     <div class="tracking-widget__container">
       {%- if section.settings.logo != blank -%}
@@ -290,7 +255,7 @@
         </div>
       {%- endif -%}
 
-      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="handleTrackingSubmit(event); return false;">
+      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" onsubmit="handleTrackingSubmit(event); return false;">
         <div class="tracking-widget__input-group">
           <input
             type="text"
@@ -306,38 +271,40 @@
         </div>
       </form>
 
-      <div id="trackingErrorMsg" class="tracking-error-msg"></div>
+      <div id="trackingError" class="tracking-error"></div>
 
-      <!-- Result Card Container -->
-      <div id="trackingResultContainer" class="tracking-result-container">
-        <div id="trackingStatusBadge" class="tracking-status-badge"></div>
-        
-        <div class="tracking-details-grid">
-          <div class="tracking-detail-item">
-            <strong>ORDER NUMBER</strong>
-            <span id="resOrderNum">-</span>
-          </div>
-          <div class="tracking-detail-item">
-            <strong>CARRIER</strong>
-            <span id="resCarrier">-</span>
-          </div>
-          <div class="tracking-detail-item">
-            <strong>TRACKING NUMBER</strong>
-            <span id="resTrackingNum">-</span>
-          </div>
-          <div class="tracking-detail-item">
-            <strong>ESTIMATED DELIVERY</strong>
-            <span id="resEstDelivery">-</span>
+      <!-- Results Display Container -->
+      <div id="trackingResults" class="tracking-results-card">
+        <div class="tracking-results-header">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="tracking-results-title">Order #<span id="resOrderNum"></span></h3>
+            <span id="resStatusBadge" class="tracking-badge"></span>
           </div>
         </div>
 
-        <div id="resItemsContainer" style="margin-bottom: 20px; font-size: 14px;">
-          <strong>Order Items:</strong>
-          <ul id="resItemList" style="margin: 6px 0; padding-left: 20px;"></ul>
+        <div class="tracking-info-grid">
+          <div class="tracking-info-item">
+            <label>Carrier</label>
+            <span id="resCarrier">N/A</span>
+          </div>
+          <div class="tracking-info-item">
+            <label>Tracking Code</label>
+            <span id="resTrackingNum">N/A</span>
+          </div>
+          <div class="tracking-info-item">
+            <label>Estimated Delivery</label>
+            <span id="resEstDelivery">N/A</span>
+          </div>
+          <div class="tracking-info-item">
+            <label>Destination</label>
+            <span id="resDestination">N/A</span>
+          </div>
         </div>
 
-        <h4 style="margin: 0 0 12px 0; font-size: 16px; color: #111827;">Tracking History</h4>
-        <div id="trackingTimeline" class="tracking-timeline"></div>
+        <div id="trackingTimelineWrapper">
+          <h4 style="font-size: 14px; margin-bottom: 12px; color: #374151;">Tracking Updates</h4>
+          <div id="trackingTimeline" class="tracking-timeline"></div>
+        </div>
       </div>
 
       {%- if section.settings.footer_text != blank -%}
@@ -351,132 +318,78 @@
 
 <script>
   async function handleTrackingSubmit(event) {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    if (event) event.preventDefault();
 
     const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
     const btnElement = document.getElementById('trackSubmitBtn');
-    const errorMsg = document.getElementById('trackingErrorMsg');
-    const resultContainer = document.getElementById('trackingResultContainer');
-
+    const resultsCard = document.getElementById('trackingResults');
+    const errorCard = document.getElementById('trackingError');
+    
     const rawValue = inputElement ? inputElement.value.trim() : '';
-    if (!rawValue) return false;
+    if (!rawValue) return;
 
     const cleanOrderNum = rawValue.replace('#', '');
-    
+
     // UI Reset
-    btnElement.innerText = "Searching...";
+    errorCard.style.display = 'none';
+    resultsCard.style.display = 'none';
     btnElement.disabled = true;
-    errorMsg.style.display = 'none';
-    resultContainer.classList.remove('active');
+    btnElement.innerText = "Searching...";
 
     try {
-      // Direct Worker API Endpoint Call
+      // Direct API Call to Cloudflare Worker
       const apiUrl = `https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(cleanOrderNum)}`;
       const response = await fetch(apiUrl);
       
       if (!response.ok) {
-        throw new Error("Order not found or network issue.");
+        throw new Error(`Order not found or server error (${response.status})`);
       }
 
       const data = await response.json();
+      renderTrackingDetails(cleanOrderNum, data);
 
-      if (data.error || (data.success === false)) {
-        showError(data.error || "Order not found. Please check your order number.");
-      } else {
-        renderTrackingData(data, cleanOrderNum);
-      }
-
-    } catch(e) {
-      console.error(e);
-      showError("Unable to fetch tracking details right now. Please try again later.");
+    } catch (error) {
+      errorCard.innerText = error.message || "Unable to fetch tracking info. Please check your order number.";
+      errorCard.style.display = 'block';
     } finally {
-      btnElement.innerText = "{{ section.settings.button_text }}";
       btnElement.disabled = false;
+      btnElement.innerText = "{{ section.settings.button_text }}";
     }
-
-    return false;
   }
 
-  function renderTrackingData(data, searchNum) {
-    const resultContainer = document.getElementById('trackingResultContainer');
-    const backBtn = document.getElementById('stageBackBtn');
+  function renderTrackingDetails(orderNum, data) {
+    const resultsCard = document.getElementById('trackingResults');
 
-    // Basic Data Mapping (Flexible for various JSON formats)
-    const orderNumber = data.order_number || data.orderNumber || searchNum;
-    const status = data.status || data.order_status || "In Transit";
-    const carrier = data.carrier || data.courier || "N/A";
-    const trackingNum = data.tracking_number || data.trackingNumber || "N/A";
-    const estDelivery = data.estimated_delivery || data.delivery_date || "Pending";
+    // Header info mapping
+    document.getElementById('resOrderNum').innerText = orderNum;
+    document.getElementById('resStatusBadge').innerText = data.status || data.state || 'In Transit';
+    document.getElementById('resCarrier').innerText = data.carrier || data.courier || 'Standard Courier';
+    document.getElementById('resTrackingNum').innerText = data.tracking_number || data.tracking_id || orderNum;
+    document.getElementById('resEstDelivery').innerText = data.estimated_delivery || data.edd || 'Pending';
+    document.getElementById('resDestination').innerText = data.destination || data.address || 'N/A';
 
-    // Set Header/Details Text
-    document.getElementById('trackingStatusBadge').innerText = status;
-    document.getElementById('resOrderNum').innerText = '#' + orderNumber;
-    document.getElementById('resCarrier').innerText = carrier;
-    document.getElementById('resTrackingNum').innerText = trackingNum;
-    document.getElementById('resEstDelivery').innerText = estDelivery;
+    // Steps or Checkpoints Array Parsing
+    const timelineContainer = document.getElementById('trackingTimeline');
+    timelineContainer.innerHTML = '';
 
-    // Render Items
-    const itemList = document.getElementById('resItemList');
-    itemList.innerHTML = '';
-    const items = data.items || data.line_items || [];
-    if (items.length > 0) {
-      items.forEach(item => {
-        const li = document.createElement('li');
-        li.innerText = typeof item === 'string' ? item : `${item.title || item.name} (x${item.quantity || 1})`;
-        itemList.appendChild(li);
-      });
-      document.getElementById('resItemsContainer').style.display = 'block';
-    } else {
-      document.getElementById('resItemsContainer').style.display = 'none';
-    }
-
-    // Render Timeline Updates
-    const timeline = document.getElementById('trackingTimeline');
-    timeline.innerHTML = '';
-    const checkpoints = data.checkpoints || data.timeline || data.updates || [];
+    const checkpoints = data.checkpoints || data.events || data.history || [];
 
     if (checkpoints.length > 0) {
-      checkpoints.forEach(cp => {
-        const item = document.createElement('div');
-        item.className = 'timeline-item';
-        item.innerHTML = `
-          <div class="time">${cp.date || cp.timestamp || ''}</div>
-          <div class="status-text">${cp.status || cp.message || ''}</div>
-          <div class="location">${cp.location || ''}</div>
+      checkpoints.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'tracking-timeline-item';
+        itemEl.innerHTML = `
+          <div class="tracking-timeline-dot"></div>
+          <div class="tracking-timeline-status">${item.status || item.message || item.description}</div>
+          <div class="tracking-timeline-date">${item.timestamp || item.date || ''} - ${item.location || ''}</div>
         `;
-        timeline.appendChild(item);
+        timelineContainer.appendChild(itemEl);
       });
     } else {
-      timeline.innerHTML = '<div style="font-size: 13px; color: #666;">No tracking timeline updates available yet.</div>';
+      timelineContainer.innerHTML = '<div style="font-size: 13px; color: #6b7280;">No detailed checkpoints available yet.</div>';
     }
 
-    // Show Results & Back Button
-    resultContainer.classList.add('active');
-    if (backBtn) backBtn.style.display = 'inline-flex';
-    resultContainer.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function showError(msg) {
-    const errorMsg = document.getElementById('trackingErrorMsg');
-    errorMsg.innerText = msg;
-    errorMsg.style.display = 'block';
-  }
-
-  function resetTrackingView() {
-    const resultContainer = document.getElementById('trackingResultContainer');
-    const backBtn = document.getElementById('stageBackBtn');
-    const errorMsg = document.getElementById('trackingErrorMsg');
-    const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
-
-    if (resultContainer) resultContainer.classList.remove('active');
-    if (errorMsg) errorMsg.style.display = 'none';
-    if (backBtn) backBtn.style.display = 'none';
-    if (inputElement) inputElement.value = '';
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    resultsCard.style.display = 'block';
   }
 </script>
 
