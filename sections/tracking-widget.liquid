@@ -25,6 +25,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
 
   .tracking-widget__logo-wrapper {
@@ -48,9 +49,7 @@
     max-width: 500px;
   }
 
-  .tracking-widget__subtext p {
-    margin: 0;
-  }
+  .tracking-widget__subtext p { margin: 0; }
 
   .tracking-widget__form {
     width: 100%;
@@ -85,9 +84,7 @@
     box-shadow: 0 0 0 1px #002B49;
   }
 
-  .tracking-widget__input::placeholder {
-    color: #666666;
-  }
+  .tracking-widget__input::placeholder { color: #666666; }
 
   .tracking-widget__button {
     height: 44px;
@@ -106,57 +103,8 @@
     justify-content: center;
   }
 
-  .tracking-widget__button:hover {
-    opacity: 0.92;
-  }
-
-  .tracking-widget__button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  /* Result Box Styles */
-  .tracking-result-card {
-    display: none;
-    width: 100%;
-    max-width: 520px;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    text-align: left;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    box-sizing: border-box;
-  }
-
-  .tracking-result-header {
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 12px;
-    margin-bottom: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .tracking-result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    font-size: 14px;
-    color: #333333;
-  }
-
-  .status-badge {
-    font-size: 12px;
-    font-weight: 700;
-    background: #e0f2fe;
-    color: #0369a1;
-    padding: 4px 10px;
-    border-radius: 20px;
-    text-transform: uppercase;
-  }
+  .tracking-widget__button:hover { opacity: 0.92; }
+  .tracking-widget__button:disabled { opacity: 0.6; cursor: not-allowed; }
 
   .tracking-widget__footer-text {
     font-size: 14px;
@@ -166,14 +114,12 @@
     margin-top: 20px;
   }
 
-  .tracking-widget__footer-text p {
-    margin: 0;
-  }
+  .tracking-widget__footer-text p { margin: 0; }
 
   .stage-back-btn {
     position: absolute;
-    top: 24px;
-    left: 24px;
+    top: 0;
+    left: 0;
     z-index: 2;
     background: #ffffff;
     color: #111827;
@@ -188,168 +134,493 @@
     align-items: center;
     gap: 8px;
     transition: all 0.2s ease;
+    margin-bottom: 24px;
+    align-self: flex-start;
   }
 
-  .stage-back-btn:hover {
+  .stage-back-btn:hover { background: #f3f4f6; transform: translateY(-2px); }
+
+  .tracking-error-box {
+    width: 100%;
+    max-width: 520px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 20px;
+    color: #b91c1c;
+    text-align: center;
+  }
+
+  /* --- Production tracker stage --- */
+  .prod-stage { width: 100%; text-align: center; }
+
+  .prod-step-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin-bottom: 6px;
+  }
+
+  .prod-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 6px 0;
+  }
+
+  .prod-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 0 14px 0;
+  }
+
+  .prod-badge {
+    display: inline-block;
+    background: #ecfdf5;
+    color: #047857;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+  }
+
+  .prod-progress-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 24px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    margin-bottom: 24px;
+    text-align: left;
+  }
+
+  .prod-progress-headline {
+    font-size: 22px;
+    font-weight: 700;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
+  .prod-progress-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #e5e7eb;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+
+  .prod-progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: {{ section.settings.accent_color }};
+    transition: width 0.4s ease;
+  }
+
+  .prod-icons-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .prod-icon-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .prod-icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
     background: #f3f4f6;
-    transform: translateY(-2px);
+    color: #9ca3af;
+    border: 2px solid #e5e7eb;
+  }
+
+  .prod-icon-circle.is-active {
+    background: {{ section.settings.highlight_color }};
+    border-color: {{ section.settings.highlight_color }};
+    color: #ffffff;
+  }
+
+  .prod-icon-circle.is-complete {
+    background: {{ section.settings.accent_color }};
+    border-color: {{ section.settings.accent_color }};
+    color: #ffffff;
+  }
+
+  .prod-icon-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+  }
+
+  .prod-icon-col.is-current .prod-icon-label,
+  .prod-icon-col.is-done .prod-icon-label { color: {{ section.settings.text_color }}; }
+
+  .prod-notify-text {
+    font-size: 13px;
+    color: #9ca3af;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .prod-phase-card {
+    width: 100%;
+    background: #f9fafb;
+    border: 1px solid #eef0f2;
+    border-radius: 10px;
+    padding: 20px 22px;
+    box-sizing: border-box;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+
+  .prod-phase-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 4px;
+  }
+
+  .prod-phase-caption {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 14px;
+  }
+
+  .prod-check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid #eef0f2;
+  }
+
+  .prod-check-item:first-of-type { border-top: none; }
+
+  .prod-check-icon {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #d1d5db;
+    background: #ffffff;
+  }
+
+  .prod-check-item.is-checked .prod-check-icon {
+    background: {{ section.settings.accent_color }};
+    border-color: {{ section.settings.accent_color }};
+  }
+
+  .prod-check-text-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 2px;
+  }
+
+  .prod-check-item:not(.is-checked) .prod-check-text-title,
+  .prod-check-item:not(.is-checked) .prod-check-text-desc { opacity: 0.5; }
+
+  .prod-check-text-desc {
+    font-size: 13px;
+    color: #6b7280;
   }
 
   @media screen and (max-width: 480px) {
-    .tracking-widget__input-group {
-      flex-direction: column;
-      gap: 10px;
-    }
-    .tracking-widget__input,
-    .tracking-widget__button {
-      width: 100%;
-    }
-    .tracking-result-grid {
-      grid-template-columns: 1fr;
-    }
+    .tracking-widget__input-group { flex-direction: column; gap: 10px; }
+    .tracking-widget__input, .tracking-widget__button { width: 100%; }
+    .prod-icons-row { gap: 2px; }
+    .prod-icon-label { font-size: 10px; }
   }
 {%- endstyle -%}
-
-<button id="stageBackBtn" class="stage-back-btn" type="button" onclick="resetTrackingView()">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-    <path d="M19 12H5M12 19l-7-7 7-7"/>
-  </svg>
-  Back to Search
-</button>
 
 <div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding tracking-widget-container">
   <div class="page-width page-width--narrow">
     <div class="tracking-widget__container">
-      {%- if section.settings.logo != blank -%}
-        <div class="tracking-widget__logo-wrapper">
-          <img
-            src="{{ section.settings.logo | image_url: width: 600 }}"
-            alt="{{ section.settings.logo.alt | escape }}"
-            loading="lazy"
-            width="{{ section.settings.logo_width }}"
-            height="auto"
-            class="tracking-widget__logo"
-            style="max-width: {{ section.settings.logo_width }}px;"
-          >
-        </div>
-      {%- endif -%}
 
-      {%- if section.settings.subtext != blank -%}
-        <div class="tracking-widget__subtext">
-          {{ section.settings.subtext }}
-        </div>
-      {%- endif -%}
+      <button id="stageBackBtn-{{ section.id }}" class="stage-back-btn" type="button" onclick="resetTrackingView_{{ section.id }}()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Search
+      </button>
 
-      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="handleTrackingSubmit(event); return false;">
-        <div class="tracking-widget__input-group">
-          <input
-            type="text"
-            id="TrackingInput-{{ section.id }}"
-            class="tracking-widget__input"
-            placeholder="{{ section.settings.placeholder_text }}"
-            required
-            aria-label="{{ section.settings.placeholder_text }}"
-          >
-          <button type="submit" id="trackSubmitBtn" class="tracking-widget__button">
-            {{ section.settings.button_text }}
-          </button>
-        </div>
-      </form>
+      <!-- STAGE 1: search -->
+      <div id="stageSearch-{{ section.id }}" class="tracking-stage">
+        {%- if section.settings.logo != blank -%}
+          <div class="tracking-widget__logo-wrapper">
+            <img
+              src="{{ section.settings.logo | image_url: width: 600 }}"
+              alt="{{ section.settings.logo.alt | escape }}"
+              loading="lazy"
+              width="{{ section.settings.logo_width }}"
+              height="auto"
+              class="tracking-widget__logo"
+              style="max-width: {{ section.settings.logo_width }}px;"
+            >
+          </div>
+        {%- endif -%}
 
-      <!-- Dynamic JSON API Result Box -->
-      <div id="trackingResultContainer" class="tracking-result-card"></div>
+        {%- if section.settings.subtext != blank -%}
+          <div class="tracking-widget__subtext">{{ section.settings.subtext }}</div>
+        {%- endif -%}
 
-      {%- if section.settings.footer_text != blank -%}
-        <div class="tracking-widget__footer-text">
-          {{ section.settings.footer_text }}
-        </div>
-      {%- endif -%}
+        <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="handleTrackingSubmit_{{ section.id }}(event); return false;">
+          <div class="tracking-widget__input-group">
+            <input
+              type="text"
+              id="TrackingInput-{{ section.id }}"
+              class="tracking-widget__input"
+              placeholder="{{ section.settings.placeholder_text }}"
+              required
+              aria-label="{{ section.settings.placeholder_text }}"
+            >
+            <button type="submit" id="trackSubmitBtn-{{ section.id }}" class="tracking-widget__button">
+              {{ section.settings.button_text }}
+            </button>
+          </div>
+        </form>
+
+        {%- if section.settings.footer_text != blank -%}
+          <div class="tracking-widget__footer-text">{{ section.settings.footer_text }}</div>
+        {%- endif -%}
+      </div>
+
+      <!-- STAGE 2: production tracker (populated by JS) -->
+      <div id="stageProgress-{{ section.id }}" class="tracking-stage prod-stage" style="display:none;" aria-live="polite"></div>
+
+      <!-- STAGE 3: error / not found -->
+      <div id="stageError-{{ section.id }}" class="tracking-stage" style="display:none;">
+        <div class="tracking-error-box" id="stageErrorText-{{ section.id }}"></div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-async function handleTrackingSubmit(event) {
-  event.preventDefault();
-  
-  const sectionId = "{{ section.id }}";
-  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
-  const submitBtn = document.getElementById("trackSubmitBtn");
-  const resultContainer = document.getElementById("trackingResultContainer");
-  const backBtn = document.getElementById("stageBackBtn");
-  const orderNumber = inputEl.value.trim();
+  (function () {
+    var SECTION_ID = "{{ section.id }}";
 
-  if (!orderNumber) return;
+    window["handleTrackingSubmit_" + SECTION_ID] = async function (event) {
+      event.preventDefault();
 
-  const originalBtnText = submitBtn.innerText;
-  submitBtn.innerText = "Searching...";
-  submitBtn.disabled = true;
-  resultContainer.style.display = "none";
+      var inputEl = document.getElementById("TrackingInput-" + SECTION_ID);
+      var submitBtn = document.getElementById("trackSubmitBtn-" + SECTION_ID);
+      var stageSearch = document.getElementById("stageSearch-" + SECTION_ID);
+      var stageProgress = document.getElementById("stageProgress-" + SECTION_ID);
+      var stageError = document.getElementById("stageError-" + SECTION_ID);
+      var stageErrorText = document.getElementById("stageErrorText-" + SECTION_ID);
+      var backBtn = document.getElementById("stageBackBtn-" + SECTION_ID);
 
-  try {
-    const response = await fetch(`https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(orderNumber)}`);
-    const data = await response.json();
+      var orderNumber = inputEl.value.trim();
+      if (!orderNumber) return;
 
-    if (data.success && data.order) {
-      const order = data.order;
-      
-      const formattedDate = new Date(order.date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+      var originalBtnText = submitBtn.innerText;
+      submitBtn.innerText = "Searching...";
+      submitBtn.disabled = true;
+      stageError.style.display = "none";
+
+      try {
+        var response = await fetch("https://adiy-order-tracker.a-diy.workers.dev/track?order=" + encodeURIComponent(orderNumber));
+        var data = await response.json();
+
+        if (data.success && data.order) {
+          window.__adiyRenderProgress(data.order, data.delivery);
+
+          try {
+            localStorage.setItem("adiy_order_" + orderNumber, JSON.stringify({
+              data: data,
+              fetchedAt: new Date().toISOString()
+            }));
+          } catch (e) {
+            console.warn("Could not cache order data:", e);
+          }
+
+          stageSearch.style.display = "none";
+          stageProgress.style.display = "block";
+          stageError.style.display = "none";
+          backBtn.style.display = "inline-flex";
+        } else {
+          stageErrorText.innerText = "Order not found. Please check your order number.";
+          stageError.style.display = "block";
+          stageProgress.style.display = "none";
+        }
+      } catch (err) {
+        console.error("Tracking error:", err);
+        stageErrorText.innerText = "Failed to fetch order details. Please try again.";
+        stageError.style.display = "block";
+        stageProgress.style.display = "none";
+      } finally {
+        submitBtn.innerText = originalBtnText;
+        submitBtn.disabled = false;
+      }
+    };
+
+    window["resetTrackingView_" + SECTION_ID] = function () {
+      var inputEl = document.getElementById("TrackingInput-" + SECTION_ID);
+      var stageSearch = document.getElementById("stageSearch-" + SECTION_ID);
+      var stageProgress = document.getElementById("stageProgress-" + SECTION_ID);
+      var stageError = document.getElementById("stageError-" + SECTION_ID);
+      var backBtn = document.getElementById("stageBackBtn-" + SECTION_ID);
+
+      if (inputEl) inputEl.value = "";
+      stageSearch.style.display = "block";
+      stageProgress.style.display = "none";
+      stageError.style.display = "none";
+      backBtn.style.display = "none";
+    };
+
+    // --- Production tracker rendering (working-day based) ---
+
+    var CHECKLIST_ITEMS = {
+      order_confirmed:          { phase: "manufacturing", title: "Order confirmed",           desc: "Your order specifications are finalized and sent to production." },
+      materials_selected:       { phase: "manufacturing", title: "Materials selected",         desc: "Your materials are selected and quality checked." },
+      components_production:    { phase: "manufacturing", title: "Components in production",   desc: "Your deck is taking shape. Every component is now in production." },
+      hardware_preparation:     { phase: "manufacturing", title: "Hardware preparation",        desc: "Your blocks, brackets and fasteners are being prepared for your kit." },
+      deck_comes_together:      { phase: "assembly",      title: "Your deck comes together",    desc: "We assemble the complete frame to make sure every component fits as intended." },
+      everything_lines_up:      { phase: "assembly",      title: "Everything lines up",         desc: "We check the deck for square, level and proper alignment." },
+      every_connection_checked: { phase: "assembly",      title: "Every connection is checked",  desc: "Brackets and connections are secured and the assembled deck is tested for stability." }
+    };
+
+    // day1 -> 22%, day2 -> 40%, day3 -> 80%, day4+ -> 100% (working days only, Sat/Sun skipped)
+    var STAGE_CONFIG = [
+      { minDay: 1, maxDay: 1, percent: 22,  checklist: ["order_confirmed", "materials_selected", "components_production"] },
+      { minDay: 2, maxDay: 2, percent: 40,  checklist: ["order_confirmed", "materials_selected", "components_production", "hardware_preparation"] },
+      { minDay: 3, maxDay: 3, percent: 80,  checklist: ["order_confirmed", "materials_selected", "components_production", "hardware_preparation", "deck_comes_together", "everything_lines_up"] },
+      { minDay: 4, maxDay: Infinity, percent: 100, checklist: ["order_confirmed", "materials_selected", "components_production", "hardware_preparation", "deck_comes_together", "everything_lines_up", "every_connection_checked"] }
+    ];
+
+    function isWeekend(d) {
+      var day = d.getDay();
+      return day === 0 || day === 6;
+    }
+
+    function countWorkingDays(fromDate, toDate) {
+      var start = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+      var end = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+      var count = 0;
+      var cur = new Date(start);
+      while (cur <= end) {
+        if (!isWeekend(cur)) count++;
+        cur.setDate(cur.getDate() + 1);
+      }
+      return count;
+    }
+
+    function getStageForWorkingDay(workingDay) {
+      var wd = Math.max(1, workingDay);
+      for (var i = 0; i < STAGE_CONFIG.length; i++) {
+        if (wd >= STAGE_CONFIG[i].minDay && wd <= STAGE_CONFIG[i].maxDay) return STAGE_CONFIG[i];
+      }
+      return STAGE_CONFIG[STAGE_CONFIG.length - 1];
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement("div");
+      div.innerText = str == null ? "" : String(str);
+      return div.innerHTML;
+    }
+
+    function buildPhaseCardHtml(phaseKey, phaseTitle, caption, checklist) {
+      var itemsHtml = "";
+      Object.keys(CHECKLIST_ITEMS).forEach(function (key) {
+        var item = CHECKLIST_ITEMS[key];
+        if (item.phase !== phaseKey) return;
+        var checked = checklist.indexOf(key) !== -1;
+        itemsHtml += ""
+          + '<div class="prod-check-item' + (checked ? " is-checked" : "") + '">'
+          + '<span class="prod-check-icon">'
+          + (checked ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>' : "")
+          + '</span>'
+          + '<div>'
+          + '<div class="prod-check-text-title">' + item.title + '</div>'
+          + '<div class="prod-check-text-desc">' + item.desc + '</div>'
+          + '</div>'
+          + '</div>';
       });
 
-      const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
-      
-      // Formatting added fields
-      const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
-      const deliveryText = data.delivery ? (typeof data.delivery === 'object' ? JSON.stringify(data.delivery) : data.delivery) : 'N/A';
-
-      resultContainer.innerHTML = `
-        <div class="tracking-result-header">
-          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
-          <span class="status-badge">${fulfillmentText}</span>
-        </div>
-        <div class="tracking-result-grid">
-          <div><strong>Date:</strong> ${formattedDate}</div>
-          <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
-          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
-          <div><strong>Delivery:</strong> ${deliveryText}</div>
-          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
-          <div><strong>Tags:</strong> ${tagsText}</div>
-          
-        </div>
-      `;
-      
-      resultContainer.style.display = "block";
-      if (backBtn) backBtn.style.display = "inline-flex";
-
-    } else {
-      resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
-      resultContainer.style.display = "block";
+      return ""
+        + '<div class="prod-phase-card">'
+        + '<div class="prod-phase-title">What&#39;s happening right now ( ' + phaseTitle + ' )</div>'
+        + (caption ? '<div class="prod-phase-caption">' + caption + '</div>' : "")
+        + itemsHtml
+        + '</div>';
     }
-  } catch (error) {
-    console.error("Error:", error);
-    resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Failed to fetch order details. Please try again.</p>`;
-    resultContainer.style.display = "block";
-  } finally {
-    submitBtn.innerText = originalBtnText;
-    submitBtn.disabled = false;
-  }
-}
 
-function resetTrackingView() {
-  const sectionId = "{{ section.id }}";
-  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
-  const resultContainer = document.getElementById("trackingResultContainer");
-  const backBtn = document.getElementById("stageBackBtn");
+    function buildIconColHtml(label, state) {
+      var circleClass = state === "active" ? "is-active" : state === "complete" ? "is-complete" : "";
+      var colClass = state === "pending" ? "" : "is-current";
+      var iconInner = state === "complete"
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>'
+        : "";
+      return ""
+        + '<div class="prod-icon-col ' + colClass + '">'
+        + '<div class="prod-icon-circle ' + circleClass + '">' + iconInner + '</div>'
+        + '<div class="prod-icon-label">' + label + '</div>'
+        + '</div>';
+    }
 
-  if (inputEl) inputEl.value = "";
-  if (resultContainer) resultContainer.style.display = "none";
-  if (backBtn) backBtn.style.display = "none";
-}
+    window.__adiyRenderProgress = function (order, delivery) {
+      var orderDate = new Date(order.date);
+      var today = new Date();
+      var workingDay = countWorkingDays(orderDate, today);
+      var stage = getStageForWorkingDay(workingDay);
+
+      var manufacturingDone = stage.checklist.indexOf("hardware_preparation") !== -1;
+      var assemblyStarted = stage.checklist.indexOf("deck_comes_together") !== -1;
+      var assemblyDone = stage.checklist.indexOf("every_connection_checked") !== -1;
+
+      var manufacturingState = manufacturingDone ? "complete" : "active";
+      var assemblyState = assemblyDone ? "complete" : (assemblyStarted ? "active" : "pending");
+      var stepNumber = assemblyStarted ? 2 : 1;
+
+      var iconsHtml = ""
+        + buildIconColHtml("Manufacturing", manufacturingState)
+        + buildIconColHtml("Assembly", assemblyState)
+        + buildIconColHtml("Packing", "pending")
+        + buildIconColHtml("On the way", "pending");
+
+      var manufacturingCard = buildPhaseCardHtml("manufacturing", "Manufacturing", "", stage.checklist);
+      var assemblyCard = buildPhaseCardHtml("assembly", "Assembly", "Nothing leaves here until all four pass.", stage.checklist);
+
+      var html = ""
+        + '<div class="prod-step-label">Step ' + stepNumber + ' of 4</div>'
+        + '<div class="prod-title">' + escapeHtml("{{ section.settings.prod_title }}") + '</div>'
+        + '<div class="prod-subtitle">' + escapeHtml("{{ section.settings.prod_subtitle }}") + '</div>'
+        + '<div class="prod-badge">' + escapeHtml("{{ section.settings.estimated_text }}") + '</div>'
+        + '<div class="prod-progress-card">'
+        + '<div class="prod-progress-headline">' + stage.percent + '% of step ' + stepNumber + ' is complete.</div>'
+        + '<div class="prod-progress-track"><div class="prod-progress-fill" style="width:' + stage.percent + '%;"></div></div>'
+        + '<div class="prod-icons-row">' + iconsHtml + '</div>'
+        + '</div>'
+        + '<div class="prod-notify-text">' + escapeHtml("{{ section.settings.notify_text }}") + '</div>'
+        + manufacturingCard
+        + assemblyCard;
+
+      document.getElementById("stageProgress-" + SECTION_ID).innerHTML = html;
+    };
+  })();
 </script>
 
 {% schema %}
@@ -358,102 +629,28 @@ function resetTrackingView() {
   "tag": "section",
   "class": "section",
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Logo Image"
-    },
-    {
-      "type": "range",
-      "id": "logo_width",
-      "min": 100,
-      "max": 400,
-      "step": 10,
-      "default": 260,
-      "unit": "px",
-      "label": "Logo Width"
-    },
-    {
-      "type": "richtext",
-      "id": "subtext",
-      "label": "Subtext",
-      "default": "<p>To view the most up-to-date status of your shipment, enter your tracking number below.</p>"
-    },
-    {
-      "type": "text",
-      "id": "placeholder_text",
-      "label": "Input Placeholder",
-      "default": "enter tracking number"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "Track"
-    },
-    {
-      "type": "richtext",
-      "id": "footer_text",
-      "label": "Footer Text",
-      "default": "<p>For any questions, call A-DIY Control Tower at +1 (786) 358-2872 or email us at updates@a-diy.com</p>"
-    },
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#002B49"
-    },
-    {
-      "type": "color",
-      "id": "btn_bg_color",
-      "label": "Button Background",
-      "default": "#002B49"
-    },
-    {
-      "type": "color",
-      "id": "btn_text_color",
-      "label": "Button Text Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "Section Padding"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Top Padding",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Bottom Padding",
-      "default": 60
-    }
+    { "type": "image_picker", "id": "logo", "label": "Logo Image" },
+    { "type": "range", "id": "logo_width", "min": 100, "max": 400, "step": 10, "default": 260, "unit": "px", "label": "Logo Width" },
+    { "type": "richtext", "id": "subtext", "label": "Subtext", "default": "<p>To view the most up-to-date status of your shipment, enter your tracking number below.</p>" },
+    { "type": "text", "id": "placeholder_text", "label": "Input Placeholder", "default": "enter tracking number" },
+    { "type": "text", "id": "button_text", "label": "Button Text", "default": "Track" },
+    { "type": "richtext", "id": "footer_text", "label": "Footer Text", "default": "<p>For any questions, call A-DIY Control Tower at +1 (786) 358-2872 or email us at updates@a-diy.com</p>" },
+    { "type": "header", "content": "Production Tracker" },
+    { "type": "text", "id": "prod_title", "label": "Tracker Title", "default": "Your deck is now in production." },
+    { "type": "text", "id": "prod_subtitle", "label": "Tracker Subtitle", "default": "Every A-DIY deck is made just for you, nothing sits in a warehouse." },
+    { "type": "text", "id": "estimated_text", "label": "Estimated Time Badge", "default": "Estimated: 7 business days" },
+    { "type": "text", "id": "notify_text", "label": "Notify Text (below progress card)", "default": "We'll email you as soon as your deck moves to the next step." },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background Color", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "Text Color", "default": "#002B49" },
+    { "type": "color", "id": "btn_bg_color", "label": "Button Background", "default": "#002B49" },
+    { "type": "color", "id": "btn_text_color", "label": "Button Text Color", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "Progress / Checkmark Color", "default": "#16a34a" },
+    { "type": "color", "id": "highlight_color", "label": "Active Step Highlight Color", "default": "#f5b731" },
+    { "type": "header", "content": "Section Padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top Padding", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom Padding", "default": 60 }
   ],
-  "presets": [
-    {
-      "name": "Tracking Widget"
-    }
-  ]
+  "presets": [ { "name": "Tracking Widget" } ]
 }
 {% endschema %}
