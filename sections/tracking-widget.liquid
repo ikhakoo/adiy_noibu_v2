@@ -115,47 +115,12 @@
     cursor: not-allowed;
   }
 
-  /* Result Box Styles */
-  .tracking-result-card {
+  .tracking-error-msg {
     display: none;
-    width: 100%;
-    max-width: 520px;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    text-align: left;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    box-sizing: border-box;
-  }
-
-  .tracking-result-header {
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 12px;
-    margin-bottom: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .tracking-result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    margin-top: 15px;
+    color: #dc2626;
     font-size: 14px;
-    color: #333333;
-  }
-
-  .status-badge {
-    font-size: 12px;
-    font-weight: 700;
-    background: #e0f2fe;
-    color: #0369a1;
-    padding: 4px 10px;
-    border-radius: 20px;
-    text-transform: uppercase;
+    font-weight: 500;
   }
 
   .tracking-widget__footer-text {
@@ -170,11 +135,25 @@
     margin: 0;
   }
 
+  /* Section Toggle Classes */
+  .tracking-widget-container.hide-widget {
+    display: none !important;
+  }
+
+  .stage-1-section {
+    display: none;
+  }
+
+  .stage-1-section.show-stage {
+    display: block !important;
+  }
+
+  /* Fixed Back Button */
   .stage-back-btn {
-    position: absolute;
+    position: fixed;
     top: 24px;
     left: 24px;
-    z-index: 2;
+    z-index: 99999;
     background: #ffffff;
     color: #111827;
     border: 1px solid #d1d5db;
@@ -204,12 +183,16 @@
     .tracking-widget__button {
       width: 100%;
     }
-    .tracking-result-grid {
-      grid-template-columns: 1fr;
+    .stage-back-btn {
+      top: 12px;
+      left: 12px;
+      padding: 8px 14px;
+      font-size: 12px;
     }
   }
 {%- endstyle -%}
 
+<!-- Floating Back Button -->
 <button id="stageBackBtn" class="stage-back-btn" type="button" onclick="resetTrackingView()">
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
     <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -254,10 +237,8 @@
             {{ section.settings.button_text }}
           </button>
         </div>
+        <div id="trackingErrorMsg" class="tracking-error-msg"></div>
       </form>
-
-      <!-- Dynamic JSON API Result Box -->
-      <div id="trackingResultContainer" class="tracking-result-card"></div>
 
       {%- if section.settings.footer_text != blank -%}
         <div class="tracking-widget__footer-text">
@@ -267,141 +248,54 @@
     </div>
   </div>
 </div>
+
 <script>
-// JSON data ko global memory ya localStorage me save karne ke liye helper
-let currentOrderData = null;
-
-// Business Days (Exclude Saturday & Sunday) calculate karne ka function
-function calculateBusinessDays(orderDate) {
-  const start = new Date(orderDate);
-  const now = new Date();
-  
-  // Time components clear karke direct days compare karne ke liye
-  start.setHours(0, 0, 0, 0);
-  now.setHours(0, 0, 0, 0);
-
-  if (now < start) return 1; // Fallback for edge cases
-
-  let count = 0;
-  let cur = new Date(start);
-
-  while (cur <= now) {
-    const dayOfWeek = cur.getDay();
-    // 0 = Sunday, 6 = Saturday (skip weekends)
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      count++;
-    }
-    cur.setDate(cur.getDate() + 1);
-  }
-
-  return count; // Returns 1 for Day 1, 2 for Day 2, etc.
-}
-
-// Stage aur Timeline calculate karke update karne ka logic
-function updateOrderProgress(orderDate) {
-  const businessDays = calculateBusinessDays(orderDate);
-
-  let progressPercent = 0;
-  let checkedItems = {
-    orderConfirmed: false,
-    materialsSelected: false,
-    componentsProduction: false,
-    hardwareProduction: false,
-    deckComesTogether: false,
-    everythingLinesUp: false,
-    everyConnection: false
-  };
-
-  // Days-based logic mapping
-  if (businessDays <= 1) {
-    progressPercent = 22;
-    checkedItems.orderConfirmed = true;
-    checkedItems.materialsSelected = true;
-    checkedItems.componentsProduction = true;
-  } else if (businessDays === 2) {
-    progressPercent = 40;
-    checkedItems.orderConfirmed = true;
-    checkedItems.materialsSelected = true;
-    checkedItems.componentsProduction = true;
-    checkedItems.hardwareProduction = true;
-  } else if (businessDays === 3) {
-    progressPercent = 80;
-    checkedItems.orderConfirmed = true;
-    checkedItems.materialsSelected = true;
-    checkedItems.componentsProduction = true;
-    checkedItems.hardwareProduction = true;
-    checkedItems.deckComesTogether = true;
-    checkedItems.everythingLinesUp = true;
-  } else {
-    // 3 Working Days ya usse ziada (End of Day 3 onwards)
-    progressPercent = 100;
-    checkedItems.orderConfirmed = true;
-    checkedItems.materialsSelected = true;
-    checkedItems.componentsProduction = true;
-    checkedItems.hardwareProduction = true;
-    checkedItems.deckComesTogether = true;
-    checkedItems.everythingLinesUp = true;
-    checkedItems.everyConnection = true;
-  }
-
-  return {
-    day: Math.min(businessDays, 3),
-    percent: progressPercent,
-    checks: checkedItems
-  };
-}
-
 async function handleTrackingSubmit(event) {
   event.preventDefault();
   
   const sectionId = "{{ section.id }}";
   const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
   const submitBtn = document.getElementById("trackSubmitBtn");
-  const resultContainer = document.getElementById("trackingResultContainer");
+  const errorMsg = document.getElementById("trackingErrorMsg");
   const widgetContainer = document.getElementById("trackingWidgetContainer");
+  const stage1Section = document.querySelector(".stage-1-section");
   const backBtn = document.getElementById("stageBackBtn");
   
-  const stage1Section = document.querySelector(".stage-1-section"); // Aapki next stage div
   const orderNumber = inputEl.value.trim();
-
   if (!orderNumber) return;
 
   const originalBtnText = submitBtn.innerText;
   submitBtn.innerText = "Searching...";
   submitBtn.disabled = true;
+  if (errorMsg) errorMsg.style.display = "none";
 
   try {
     const response = await fetch(`https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(orderNumber)}`);
     const data = await response.json();
 
     if (data.success && data.order) {
-      // 1. Data Store kar liya (Global Window & LocalStorage me)
-      currentOrderData = data;
+      // Data local storage me save karna
       localStorage.setItem("cachedOrderData", JSON.stringify(data));
 
-      // 2. Timeline Progress Calculate karna
-      const timelineProgress = updateOrderProgress(data.order.date);
-      currentOrderData.timeline = timelineProgress;
+      // Event trigger karna dynamic calculations ke liye
+      window.dispatchEvent(new CustomEvent('orderDataLoaded', { detail: data }));
 
-      // 3. Purana Search View Hide aur Naya Stage View Show karna
+      // Current section hide karna aur Stage 1 show karna
       if (widgetContainer) widgetContainer.classList.add("hide-widget");
       if (stage1Section) stage1Section.classList.add("show-stage");
       if (backBtn) backBtn.style.display = "inline-flex";
 
-      // 4. Aglay step ke UI elements Update karne ke liye custom event fire karna
-      window.dispatchEvent(new CustomEvent('orderDataLoaded', { detail: currentOrderData }));
-
     } else {
-      if (resultContainer) {
-        resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
-        resultContainer.style.display = "block";
+      if (errorMsg) {
+        errorMsg.innerText = "Order not found. Please check your order number.";
+        errorMsg.style.display = "block";
       }
     }
   } catch (error) {
     console.error("Error:", error);
-    if (resultContainer) {
-      resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Failed to fetch order details. Please try again.</p>`;
-      resultContainer.style.display = "block";
+    if (errorMsg) {
+      errorMsg.innerText = "Failed to fetch order status. Please try again.";
+      errorMsg.style.display = "block";
     }
   } finally {
     submitBtn.innerText = originalBtnText;
@@ -409,17 +303,17 @@ async function handleTrackingSubmit(event) {
   }
 }
 
-// Reset / Back Button Handler
+// Reset Function (Search Widget dobara lane ke liye)
 function resetTrackingView() {
   const sectionId = "{{ section.id }}";
   const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
-  const resultContainer = document.getElementById("trackingResultContainer");
+  const errorMsg = document.getElementById("trackingErrorMsg");
   const widgetContainer = document.getElementById("trackingWidgetContainer");
   const stage1Section = document.querySelector(".stage-1-section");
   const backBtn = document.getElementById("stageBackBtn");
 
   if (inputEl) inputEl.value = "";
-  if (resultContainer) resultContainer.style.display = "none";
+  if (errorMsg) errorMsg.style.display = "none";
   if (widgetContainer) widgetContainer.classList.remove("hide-widget");
   if (stage1Section) stage1Section.classList.remove("show-stage");
   if (backBtn) backBtn.style.display = "none";
