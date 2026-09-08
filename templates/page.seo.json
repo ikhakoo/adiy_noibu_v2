@@ -1209,6 +1209,66 @@
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
+    },
+    "wood_vs_composite_88yXDd": {
+      "type": "wood-vs-composite",
+      "blocks": {
+        "card_y4ngdj": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Classic_wood_deck_texture..png",
+            "tag": "THE CLASSIC",
+            "title": "Pressure-Treated Wood",
+            "features": "Generally lower\n\nNatural wood grain and variation\n\nMay require cleaning, staining or sealing\n\nMay develop over time\n\nMay check, crack or change color\n\nCan be stained or refinished\n\nDepends on stain, color and exposure\n\nBoards can often be replaced or refinished\n\nLower initial cost and natural appearance\n\nSubject to material and A-DIY terms",
+            "btn_text": "SHOP CLASSIC",
+            "btn_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+            "card_bg": "#ffffff",
+            "text_color": "#1a1a1a",
+            "btn_bg": "rgba(0,0,0,0)",
+            "btn_text_color": "#1a1a1a",
+            "btn_border_color": "#1a1a1a"
+          }
+        },
+        "card_DLztkP": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Modern_composite_deck..png",
+            "tag": "THE MODERNIST",
+            "title": "Advanced Composite",
+            "features": "Generally higher\n\nModern and more consistent finish\n\nDoes not require routine staining or sealing\n\nDesigned to resist splintering\n\nDesigned to resist common surface cracking and splintering\n\nAvailable in manufactured colors and finishes\n\nDarker colors may become warmer\n\nBoards can be replaced, but refinishing is limited\n\nModern appearance and reduced maintenance\n\nSubject to manufacturer and A-DIY terms",
+            "btn_text": "SHOP CLASSIC",
+            "btn_link": "shopify://products/a-diy-composite-deck-kit",
+            "card_bg": "#000000",
+            "text_color": "#ffffff",
+            "btn_bg": "#194636",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#194636"
+          }
+        }
+      },
+      "block_order": [
+        "card_y4ngdj",
+        "card_DLztkP"
+      ],
+      "name": "Wood vs Composite",
+      "settings": {
+        "main_title": "Built by a Real New York Homeowner",
+        "subtitle": "CASE STUDY",
+        "description": "",
+        "sum_1_title": "Choose Pressure-Treated Wood When:",
+        "sum_1_desc": "You want a lower initial cost, natural wood appearance and the ability to stain or refinish the surface. It generally requires more routine care as it ages.",
+        "sum_1_btn_text": "Explore Pressure-Treated Options",
+        "sum_1_btn_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+        "sum_2_title": "Choose Composite When:",
+        "sum_2_desc": "You want a modern, consistent surface with less routine maintenance and no regular staining or sealing. Composite generally has a higher initial cost.",
+        "sum_2_btn_text": "Explore Composite Options",
+        "sum_2_btn_link": "shopify://products/a-diy-composite-deck-kit",
+        "section_bg": "#ecebeb",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
@@ -1229,6 +1289,7 @@
     "wood_vs_composite_GVhp6t",
     "double_image_text_p6xnEW",
     "steps_with_video_YXnUxD",
-    "engineering_warranty_DzqEAP"
+    "engineering_warranty_DzqEAP",
+    "wood_vs_composite_88yXDd"
   ]
 }

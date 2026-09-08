@@ -280,7 +280,7 @@
   }
 {%- endstyle -%}
 
-<div class="wood-vs-comp-{{ section.id }}">
+<div class="wood-vs-comp-{{ section.id }} {{ section.settings.unique_class }}">
   <div class="wood-vs-comp-container page-width">
     
     {%- comment -%} Header {%- endcomment -%}
@@ -512,6 +512,11 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+       "id": "unique_class",
+       "label": "Add Unique Class"
+    },
     {
       "type": "text",
       "id": "main_title",
