@@ -1,0 +1,27 @@
+name = "adiy-order-tracker"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Expose at https://adiy-order-tracker.a-diy.workers.dev
+workers_dev = true
+
+# No versioned preview hostnames - this endpoint needs exactly one public URL.
+preview_urls = false
+
+[vars]
+# Admin API host. NOTE: the legacy myshopify domain, not "a-diy.myshopify.com".
+# ("lacoo-decks" is the current admin handle; both alias the same store.)
+SHOP_DOMAIN = "moderne-beautyshop.myshopify.com"
+
+# Matches the api_version on the installed Order Tracker app.
+API_VERSION = "2026-07"
+
+# Client ID of the "Order Tracker" app (order-tracker-2) in the A-DIY Dev Dashboard.
+# Not a secret - it identifies the app, it doesn't authorise anything on its own.
+SHOPIFY_CLIENT_ID = "8b5723bb084fd3480b5c55786ebc88ae"
+
+# Only these origins get an Access-Control-Allow-Origin header back.
+ALLOWED_ORIGINS = "https://a-diy.com,https://www.a-diy.com"
+
+# SHOPIFY_CLIENT_SECRET is a SECRET and is deliberately not listed here:
+#   npx wrangler secret put SHOPIFY_CLIENT_SECRET

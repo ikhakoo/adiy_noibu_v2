@@ -1,0 +1,4 @@
+# Copy to `.dev.vars` and fill in the real value, then run `npx wrangler dev`.
+# Secret lives at: Dev Dashboard > Order Tracker > App settings > Credentials > Secret
+# `.dev.vars` is gitignored. Everything else comes from wrangler.toml.
+SHOPIFY_CLIENT_SECRET=shpss_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
