@@ -8,6 +8,12 @@ readable in view-source.
 GET /track?order=212481808
 ```
 
+> **Repo note.** This folder is a deployable service living inside a Shopify-synced theme repo.
+> It is deliberately **not** merged into `development` — when front-end work merges, drop
+> `order-tracker-worker/` from that merge so the theme branch stays a theme. Shopify's GitHub
+> sync only touches the seven theme directories, so it never overwrites this folder on branches
+> that do carry it.
+
 ## What it does
 
 Merges two upstreams:
