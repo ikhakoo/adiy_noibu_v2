@@ -1294,12 +1294,12 @@
       ],
       "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "custom_class": "",
+        "custom_class": "seo-page-quotes",
         "desktop_content_position": "center",
         "content_alignment": "center",
         "color_scheme": "scheme-1",
         "full_width": true,
-        "padding_top": 40,
+        "padding_top": 0,
         "padding_bottom": 52
       }
     }
