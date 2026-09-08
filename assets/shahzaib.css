@@ -1201,5 +1201,18 @@
     color: #C4A484;
     font-weight: 400;
 }
-
+.seo-cities.multicolumn {
+    background: #F5F3EE;
+}
+.seo-cities.multicolumn .multicolumn-card.content-container{
+    background: #fff;
+    padding: 10px;
+    border-radius: 15px;
+}
+.seo-cities.multicolumn .multicolumn-card__info {
+    padding: 1.5rem 0 0;
+}
+.seo-cities.multicolumn 
+.seo-cities.multicolumn 
+.seo-cities.multicolumn 
 /********************* end *******************/
