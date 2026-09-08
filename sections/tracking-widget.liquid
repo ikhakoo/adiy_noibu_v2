@@ -795,7 +795,8 @@ function showLiveProgressStage() {
   if (fillEl) fillEl.style.width = progress + '%';
 
   // Highlight icons based on progress thresholds
-  const stepThresholds = [22, 50, 80, 100];
+  const stepThresholds = [1, 35, 70, 95];
+
   for (let i = 1; i <= 4; i++) {
     const stepEl = document.getElementById(`flow-step-${i}`);
     if (stepEl) {
@@ -805,7 +806,6 @@ function showLiveProgressStage() {
         stepEl.classList.remove('active');
       }
     }
-  }
 
   allCheckboxes.forEach(id => {
     setChecked(id, checkedItems.includes(id));
