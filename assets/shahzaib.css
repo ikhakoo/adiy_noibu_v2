@@ -1154,5 +1154,23 @@
         width: 31.33%;
     }
 }
+.seo-homeowner-sec .wood-vs-comp-card-body {
+    align-items: flex-start;
+}
+.seo-homeowner-sec .wood-vs-comp-card-body .wood-vs-comp-feature-item{
+    text-align: start;
+}
+.seo-homeowner-sec .wood-vs-comp-card-body .wood-vs-comp-card-tag {
+    font-weight: 400;
+    margin-bottom: 0;
+    opacity: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    font-size: 18px;
+}
+.seo-homeowner-sec .wood-vs-comp-card-body .wood-vs-comp-card-title{
+    font-size: 16px;
+    font-weight: 400;
+}
 
 /********************* end *******************/
