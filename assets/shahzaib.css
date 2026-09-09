@@ -25,7 +25,9 @@
     background: transparent!important;
     margin-top: 1rem;
 }
-
+.main-page-title{
+    text-align: center;
+}
 
 
 #menu-drawer .menu-drawer__inner-container{
