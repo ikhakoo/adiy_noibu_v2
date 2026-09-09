@@ -22,11 +22,8 @@
 <div class="stage-1 stage-1-section stage-1-{{ section.id }} section-{{ section.id }}-padding">
   <div class="page-width page-width--narrow">
 
-    {%- comment -%} ========================================== {%- endcomment -%}
-    {%- comment -%} 1. ORDER SEARCH CONTAINER (Matching Image 2) {%- endcomment -%}
-    {%- comment -%} ========================================== {%- endcomment -%}
+    <!-- 1. SEARCH CONTAINER -->
     <div id="tracking-search-container" class="stage-1__search-card">
-      
       {%- if section.settings.logo_image != blank -%}
         <div class="stage-1__search-logo-wrap">
           <img src="{{ section.settings.logo_image | image_url: width: 300 }}" alt="{{ shop.name }}" loading="lazy" class="stage-1__search-logo">
@@ -41,9 +38,7 @@
 
       <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
         <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="enter tracking number" required />
-        <button type="submit" id="trackSubmitBtn" class="stage-1__btn">
-          Track
-        </button>
+        <button type="submit" id="trackSubmitBtn" class="stage-1__btn">Track</button>
       </form>
 
       <div class="stage-1__search-footer">
@@ -53,40 +48,30 @@
       <div id="trackingResultContainer" class="stage-1__order-card" style="display: none;"></div>
     </div>
 
-    {%- comment -%} ========================================== {%- endcomment -%}
-    {%- comment -%} 2. STAGE 1 PROGRESS TRACKING (Next View) {%- endcomment -%}
-    {%- comment -%} ========================================== {%- endcomment -%}
+    <!-- MAIN TRACKING DISPLAY (STAGES 1 & 2) -->
     <div id="dynamic-tracking-stage" style="display: none;">
       
       <button type="button" id="stageBackBtn" class="stage-1__back-btn" onclick="resetTrackingView()">
         &larr; Back to Search
       </button>
 
-      {%- comment -%} Header Section {%- endcomment -%}
+      <!-- Dynamic Header -->
       <div class="stage-1__header">
-        {%- if section.settings.step_pill != blank -%}
-          <span class="stage-1__step-pill">{{ section.settings.step_pill }}</span>
-        {%- endif -%}
+        <span class="stage-1__step-pill" id="dynamic-step-pill">Step 1 of 3</span>
+        <h1 class="stage-1__main-heading" id="dynamic-main-heading">Your deck is now in production.</h1>
+        <p class="stage-1__subheading" id="dynamic-subheading">Every A-DIY deck is made just for you, nothing sits in a warehouse.</p>
 
-        <h1 class="stage-1__main-heading">{{ section.settings.main_heading }}</h1>
-
-        {%- if section.settings.subheading != blank -%}
-          <p class="stage-1__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.eta_badge != blank -%}
-          <div class="stage-1__eta-badge">
-            <span class="stage-1__eta-dot"></span>
-            {{ section.settings.eta_badge }}
-          </div>
-        {%- endif -%}
+        <div class="stage-1__eta-badge" id="dynamic-eta-badge">
+          <span class="stage-1__eta-dot"></span>
+          <span id="dynamic-eta-text">Estimated: 7 business days</span>
+        </div>
       </div>
 
-      {%- comment -%} Status Card Section {%- endcomment -%}
+      <!-- Unified Progress Card -->
       <div class="stage-1__card">
         <div class="stage-1__percentage-row">
           <span class="stage-1__percent" id="track-percent-val">22%</span>
-          <span class="stage-1__percent-text">{{ section.settings.progress_text }}</span>
+          <span class="stage-1__percent-text" id="track-percent-label">of step 1 is complete.</span>
         </div>
 
         <div class="stage-1__progress-bar-container">
@@ -96,134 +81,195 @@
         <div class="stage-1__steps-flow">
           <div class="stage-1__flow-item active" id="flow-step-1">
             <div class="stage-1__icon-box">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-              </svg>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
             </div>
             <span>Manufacturing</span>
           </div>
 
-          <div class="stage-1__flow-line"></div>
+          <div class="stage-1__flow-line" id="flow-line-1"></div>
 
           <div class="stage-1__flow-item" id="flow-step-2">
             <div class="stage-1__icon-box">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
             </div>
             <span>Assembly</span>
           </div>
 
-          <div class="stage-1__flow-line"></div>
+          <div class="stage-1__flow-line" id="flow-line-2"></div>
 
           <div class="stage-1__flow-item" id="flow-step-3">
             <div class="stage-1__icon-box">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-              </svg>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             </div>
             <span>Packing</span>
           </div>
 
-          <div class="stage-1__flow-line"></div>
+          <div class="stage-1__flow-line" id="flow-line-3"></div>
 
           <div class="stage-1__flow-item" id="flow-step-4">
             <div class="stage-1__icon-box">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="1" y="3" width="15" height="13"></rect>
-                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                <circle cx="18.5" cy="18.5" r="2.5"></circle>
-              </svg>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
             </div>
             <span>On the way</span>
           </div>
         </div>
 
         {%- if section.settings.card_note != blank -%}
-          <div class="stage-1__card-note">
+          <div class="stage-1__card-note" id="dynamic-card-note">
             {{ section.settings.card_note }}
           </div>
         {%- endif -%}
       </div>
 
-      {%- comment -%} Manufacturing Checklist Section {%- endcomment -%}
-      <div class="stage-1__checklist-container">
-        <h2 class="stage-1__checklist-title">What's happening right now ( Manufacturing )</h2>
-        <div class="stage-1__checklist">
-          
-          <div class="stage-1__check-item" id="chk-order-confirmed">
-            <div class="stage-1__check-icon"></div>
-            <div class="stage-1__check-content">
-              <h3 class="stage-1__check-title h4">Order confirmed</h3>
-              <p class="stage-1__check-desc">Your deck specifications are finalized and sent to production.</p>
+      <!-- ========================================== -->
+      <!-- STAGE 1 CONTENT (Checklists)              -->
+      <!-- ========================================== -->
+      <div id="stage-1-details-block">
+        <div class="stage-1__checklist-container">
+          <h2 class="stage-1__checklist-title">What's happening right now ( Manufacturing )</h2>
+          <div class="stage-1__checklist">
+            <div class="stage-1__check-item" id="chk-order-confirmed">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Order confirmed</h3>
+                <p class="stage-1__check-desc">Your deck specifications are finalized and sent to production.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-materials-selected">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Materials selected</h3>
+                <p class="stage-1__check-desc">Your materials are selected and quality checked.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-components-production">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Components in production</h3>
+                <p class="stage-1__check-desc">Your deck is taking shape. Every component is now in production.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-hardware-prep">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Hardware preparation</h3>
+                <p class="stage-1__check-desc">Your blocks, brackets and fasteners are being prepared for your kit.</p>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="stage-1__check-item" id="chk-materials-selected">
-            <div class="stage-1__check-icon"></div>
-            <div class="stage-1__check-content">
-              <h3 class="stage-1__check-title h4">Materials selected</h3>
-              <p class="stage-1__check-desc">Your materials are selected and quality checked.</p>
+        <div class="stage-1__checklist-container" style="margin-top: 2.5rem;">
+          <h2 class="stage-1__checklist-title">What's happening right now ( Assembly )</h2>
+          <p class="stage-1__check-desc" style="margin-bottom: 1rem;">Nothing leaves here until all four pass.</p>
+          <div class="stage-1__checklist">
+            <div class="stage-1__check-item" id="chk-deck-together">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Your deck comes together</h3>
+                <p class="stage-1__check-desc">We assemble the complete frame to make sure every component fits as intended.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-lines-up">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Everything lines up</h3>
+                <p class="stage-1__check-desc">We check the deck for square, level and proper alignment.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-connection-checked">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Every connection is checked</h3>
+                <p class="stage-1__check-desc">Brackets and connections are secured and the assembled deck is tested for stability.</p>
+              </div>
             </div>
           </div>
-
-          <div class="stage-1__check-item" id="chk-components-production">
-            <div class="stage-1__check-icon"></div>
-            <div class="stage-1__check-content">
-              <h3 class="stage-1__check-title h4">Components in production</h3>
-              <p class="stage-1__check-desc">Your deck is taking shape. Every component is now in production.</p>
-            </div>
-          </div>
-
-          <div class="stage-1__check-item" id="chk-hardware-prep">
-            <div class="stage-1__check-icon"></div>
-            <div class="stage-1__check-content">
-              <h3 class="stage-1__check-title h4">Hardware preparation</h3>
-              <p class="stage-1__check-desc">Your blocks, brackets and fasteners are being prepared for your kit.</p>
-            </div>
-          </div>
-
         </div>
       </div>
 
-      {%- comment -%} Assembly Checklist Section {%- endcomment -%}
-      <div class="stage-1__checklist-container" style="margin-top: 2.5rem;">
-        <h2 class="stage-1__checklist-title">What's happening right now ( Assembly )</h2>
-        <p class="stage-1__check-desc" style="margin-bottom: 1rem;">Nothing leaves here until all four pass.</p>
+      <!-- ========================================== -->
+      <!-- STAGE 2 CONTENT (Upsell & Delivery Info)   -->
+      <!-- ========================================== -->
+      <div id="stage-2-details-block" style="display: none;">
         
-        <div class="stage-1__checklist">
-          
-          <div class="stage-1__check-item" id="chk-deck-together">
-            <div class="stage-1__check-icon"></div>
-            <div class="stage-1__check-content">
-              <h3 class="stage-1__check-title h4">Your deck comes together</h3>
-              <p class="stage-1__check-desc">We assemble the complete frame to make sure every component fits as intended.</p>
-            </div>
+        <!-- Red Callout Box / Add-ons -->
+        <div class="stage-2__upsell-card">
+          <div class="stage-2__upsell-badge-pill">
+            <span class="stage-2__dot-red"></span> Last chance - leaves in a few days
           </div>
 
-          <div class="stage-1__check-item" id="chk-lines-up">
-            <div class="stage-1__check-icon"></div>
-            <div class="stage-1__check-content">
-              <h3 class="stage-1__check-title h4">Everything lines up</h3>
-              <p class="stage-1__check-desc">We check the deck for square, level and proper alignment.</p>
+          <div class="stage-2__upsell-header">
+            <div>
+              <h2 class="stage-2__upsell-title">Last chance to add steps & railings.</h2>
             </div>
+            <div class="stage-2__lightning-icon">⚡</div>
           </div>
 
-          <div class="stage-1__check-item" id="chk-connection-checked">
-            <div class="stage-1__check-icon"></div>
-            <div class="stage-1__check-content">
-              <h3 class="stage-1__check-title h4">Every connection is checked</h3>
-              <p class="stage-1__check-desc">Brackets and connections are secured and the assembled deck is tested for stability.</p>
-            </div>
+          <p class="stage-2__upsell-desc">
+            Your deck is being packed for shipment. This is the final point where we can add steps or railings and send everything together at no additional shipping cost.
+          </p>
+
+          <p class="stage-2__upsell-subdesc">
+            Once your deck is picked up, anything added later will need to ship separately with a separate delivery charge.
+          </p>
+
+          <div class="stage-2__warning-pill">
+            ⏱️ This is the last step where adding is free. After pickup it's a separate delivery, with its own shipping charge.
           </div>
 
+          <div class="stage-2__cta-container">
+            <div class="stage-2__cta-label">GET IN TOUCH WITH OUR TEAM TO ADD RAILINGS AND/OR STEPS</div>
+            <a href="javascript:void(0)" onclick="if(window.GorgiasAPI){GorgiasAPI.open()}else{alert('Contacting support...');}" class="stage-2__chat-btn">CHAT NOW</a>
+          </div>
         </div>
+
+        <!-- Delivery Steps List -->
+        <div class="stage-2__delivery-container">
+          <h2 class="stage-2__delivery-title">Get ready for delivery day</h2>
+          <p class="stage-2__delivery-sub">Your deck ships by LTL freight. Here's what to expect once it's on the way.</p>
+
+          <div class="stage-2__delivery-steps">
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">01</div>
+              <div class="stage-2__step-info">
+                <h3>Track it live</h3>
+                <p>Follow your shipment and delivery progress from the moment it leaves our facility.</p>
+              </div>
+            </div>
+
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">02</div>
+              <div class="stage-2__step-info">
+                <h3>The carrier will call you</h3>
+                <p>Once your deck reaches the local terminal, the delivery team will contact you to schedule a delivery time. They should arrive with the equipment needed to unload your order. If they don't, do not arrange equipment yourself. Contact us and we'll coordinate a safe delivery.</p>
+              </div>
+            </div>
+
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">03</div>
+              <div class="stage-2__step-info">
+                <h3>Delivered curbside</h3>
+                <p>Your deck will be delivered to the curb or driveway at your property.</p>
+              </div>
+            </div>
+
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">04</div>
+              <div class="stage-2__step-info">
+                <h3>Check everything within 14 days</h3>
+                <p>Once delivered, please make sure all parts arrived safely and nothing is missing. If you need more than 14 days to inspect your order, just let our team know.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Box -->
+        <div class="stage-2__support-card">
+          <p><strong>GOT A QUESTION?</strong></p>
+          <button type="button" class="stage-2__support-btn" onclick="if(window.GorgiasAPI){GorgiasAPI.open()}">💬 MESSAGE US</button>
+        </div>
+
       </div>
 
     </div>
@@ -232,399 +278,90 @@
 </div>
 
 <style>
-  .stage-1 {
-    background-color: var(--bg-main);
-    color: var(--text-color);
-    font-family: inherit;
-  }
+  .stage-1 { background-color: var(--bg-main); color: var(--text-color); font-family: inherit; }
+  .stage-1__back-btn { background: transparent; border: none; color: var(--accent-color); font-weight: 600; cursor: pointer; font-size: 1.4rem; margin-bottom: 1.5rem; padding: 0; }
+  
+  .stage-1__search-card { background-color: transparent; padding: 3rem 1rem 2rem; margin-bottom: 2rem; text-align: center; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .stage-1__search-logo-wrap { margin-bottom: 1.8rem; }
+  .stage-1__search-logo { max-width: 180px; height: auto; display: inline-block; }
+  .stage-1__search-logo-text { font-size: 4rem; font-weight: 900; letter-spacing: -1px; color: #121212; margin-bottom: 1.5rem; font-style: italic; }
+  .stage-1__search-desc { font-size: 1.6rem; color: #2b3834; line-height: 1.45; margin-bottom: 2.2rem; font-weight: 500; }
+  .stage-1__search-form { display: flex; gap: 12px; justify-content: center; align-items: center; max-width: 480px; margin: 0 auto 3.5rem; }
+  .stage-1__input { flex: 1; padding: 12px 18px; border: 1px solid #7c938d; border-radius: 6px; font-size: 1.4rem; color: #333; outline: none; background: #fff; }
+  .stage-1__btn { background-color: var(--accent-color); color: #fff; border: none; border-radius: 6px; padding: 12px 32px; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+  .stage-1__search-footer { font-size: 1.45rem; color: #4f5f5b; line-height: 1.5; margin-top: 2rem; }
+  
+  .stage-1__order-card { border: 1px solid #e2e2e2; border-radius: 10px; padding: 2rem; text-align: left; max-width: 600px; margin: 2rem auto 0; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+  .tracking-result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px; margin-bottom: 16px; }
+  .status-badge { background-color: #e3f2fd; color: #0288d1; font-size: 1.1rem; font-weight: 700; padding: 4px 12px; border-radius: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .tracking-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 1.3rem; color: #333; margin-bottom: 2rem; }
+  .stage-1__view-progress-btn { width: 100%; background-color: var(--accent-color); color: #fff; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 1.4rem; }
 
-  .stage-1__back-btn {
-    background: transparent;
-    border: none;
-    color: var(--accent-color);
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    padding: 0;
-  }
+  .stage-1__header { text-align: center; margin-bottom: 2.5rem; }
+  .stage-1__step-pill { display: inline-block; border: 1px dashed #a0a0a0; border-radius: 20px; padding: 3px 12px; font-size: 1.2rem; font-weight: 500; margin-bottom: 1.2rem; }
+  .stage-1__main-heading { margin: 0 0 0.8rem 0; color: var(--text-color); line-height: 1.1; font-size: 2.8rem; font-weight: 800; }
+  .stage-1__subheading { font-size: 1.5rem; color: #555; margin: 0 0 1.5rem 0; }
+  .stage-1__eta-badge { display: inline-flex; align-items: center; gap: 6px; background-color: #1e4d3b; color: #ffffff; font-size: 1.2rem; font-weight: 600; padding: 4px 14px; border-radius: 20px; }
+  .stage-1__eta-dot { width: 6px; height: 6px; background-color: #ffffff; border-radius: 50%; }
 
-  /* Search Container Styles - Styled to match Image 2 */
-  .stage-1__search-card {
-    background-color: transparent;
-    padding: 3rem 1rem 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    max-width: 680px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  .stage-1__card { background-color: var(--card-bg); border: 1px solid #e2e2e2; border-radius: 12px; padding: 2.5rem 2rem 1.5rem; margin-bottom: 3rem; }
+  .stage-1__percentage-row { margin-bottom: 1rem; display: flex; align-items: baseline; gap: 8px; }
+  .stage-1__percent { font-size: 3rem; font-weight: 700; color: var(--text-color); }
+  .stage-1__percent-text { font-size: 1.6rem; color: #444; }
+  .stage-1__progress-bar-container { width: 100%; height: 6px; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; margin-bottom: 2.5rem; }
+  .stage-1__progress-bar-fill { height: 100%; background-color: #1e4d3b; border-radius: 4px; transition: width 0.4s ease; display: block !important; }
 
-  .stage-1__search-logo-wrap {
-    margin-bottom: 1.8rem;
-  }
+  .stage-1__steps-flow { display: flex; align-items: center; justify-content: space-between; padding-bottom: 2rem; border-bottom: 1px solid #eaeaea; }
+  .stage-1__flow-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 700; color: #999; }
+  .stage-1__flow-item.active { color: #000; }
+  .stage-1__icon-box { width: 44px; height: 44px; border-radius: 10px; border: 1px solid #dcdcdc; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center; color: #888; }
+  .stage-1__flow-item.active .stage-1__icon-box { border-color: #e2c044; background-color: #fcf8e3; color: #a88400; }
+  .stage-1__flow-line { flex: 1; height: 2px; background-color: #dcdcdc; margin: 0 10px 20px 10px; }
+  .stage-1__flow-line.active { background-color: #e2c044; }
 
-  .stage-1__search-logo {
-    max-width: 180px;
-    height: auto;
-    display: inline-block;
-  }
+  .stage-1__checklist-container { background-color: var(--card-bg); border: 1px solid #e2e2e2; border-radius: 12px; padding: 2rem; }
+  .stage-1__checklist-title { margin-bottom: 0.5rem; color: var(--text-color); font-size: 1.8rem; font-weight: 700; }
+  .stage-1__checklist { display: flex; flex-direction: column; }
+  .stage-1__check-item { display: flex; align-items: flex-start; gap: 16px; padding: 1.2rem 0; border-bottom: 1px solid #e8e8e8; }
+  .stage-1__check-item:last-child { border-bottom: none; }
+  .stage-1__check-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; border: 1px solid #ccc; background-color: #fff; }
+  .stage-1__check-icon.completed { background-color: var(--accent-color); border-color: var(--accent-color); color: #ffffff; }
+  .stage-1__unchecked-circle { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #ccc; }
+  .stage-1__check-title { font-size: 1.5rem; font-weight: 700; margin: 0 0 4px 0; color: var(--text-color); }
+  .stage-1__check-desc { font-size: 1.3rem; color: #666; margin: 0; }
 
-  .stage-1__search-logo-text {
-    font-size: 4rem;
-    font-weight: 900;
-    letter-spacing: -1px;
-    color: #121212;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
+  /* Stage 2 Custom Styles */
+  .stage-2__upsell-card { border: 2px solid #f87171; background-color: #fff5f5; border-radius: 12px; padding: 2.5rem; margin-bottom: 2.5rem; }
+  .stage-2__upsell-badge-pill { display: inline-flex; align-items: center; gap: 6px; background-color: #dc2626; color: #fff; font-size: 1.2rem; font-weight: 700; padding: 4px 12px; border-radius: 16px; margin-bottom: 1.5rem; }
+  .stage-2__dot-red { width: 6px; height: 6px; background-color: #fff; border-radius: 50%; }
+  .stage-2__upsell-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .stage-2__upsell-title { font-size: 2.2rem; font-weight: 800; color: #111; margin: 0 0 1rem 0; }
+  .stage-2__lightning-icon { font-size: 2rem; color: #eab308; }
+  .stage-2__upsell-desc { font-size: 1.45rem; color: #333; line-height: 1.5; margin-bottom: 1.2rem; }
+  .stage-2__upsell-subdesc { font-size: 1.35rem; color: #555; line-height: 1.5; margin-bottom: 1.5rem; }
+  .stage-2__warning-pill { border: 1px solid #fca5a5; background-color: #ffe4e6; color: #991b1b; padding: 8px 14px; border-radius: 20px; font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; display: inline-block; }
+  .stage-2__cta-container { text-align: center; }
+  .stage-2__cta-label { font-size: 1.2rem; font-weight: 800; color: #222; margin-bottom: 1rem; letter-spacing: 0.5px; }
+  .stage-2__chat-btn { display: block; width: 100%; background-color: #121212; color: #fff; text-align: center; padding: 14px; font-weight: 700; border-radius: 6px; text-decoration: none; font-size: 1.4rem; letter-spacing: 1px; }
 
-  .stage-1__search-desc {
-    font-size: 1.6rem;
-    color: #2b3834;
-    line-height: 1.45;
-    margin-bottom: 2.2rem;
-    font-weight: 500;
-  }
+  .stage-2__delivery-container { background-color: var(--card-bg); border: 1px solid #e2e2e2; border-radius: 12px; padding: 2.5rem; margin-bottom: 2.5rem; }
+  .stage-2__delivery-title { font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #111; }
+  .stage-2__delivery-sub { font-size: 1.4rem; color: #555; margin-bottom: 2rem; }
+  .stage-2__step-row { display: flex; gap: 20px; border-bottom: 1px solid #eee; padding: 1.8rem 0; }
+  .stage-2__step-row:last-child { border-bottom: none; }
+  .stage-2__step-num { font-size: 2rem; font-weight: 800; color: #d97706; }
+  .stage-2__step-info h3 { font-size: 1.6rem; font-weight: 700; margin: 0 0 6px 0; color: #111; }
+  .stage-2__step-info p { font-size: 1.3rem; color: #555; margin: 0; line-height: 1.5; }
 
-  .stage-1__search-form {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    max-width: 480px;
-    margin: 0 auto 3.5rem;
-  }
-
-  .stage-1__input {
-    flex: 1;
-    padding: 12px 18px;
-    border: 1px solid #7c938d;
-    border-radius: 6px;
-    font-size: 1.4rem;
-    color: #333;
-    outline: none;
-    background: #fff;
-  }
-
-  .stage-1__input::placeholder {
-    color: #8fa19c;
-  }
-
-  .stage-1__btn {
-    background-color: var(--accent-color);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 32px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-
-  .stage-1__btn:hover {
-    opacity: 0.9;
-  }
-
-  .stage-1__search-footer {
-    font-size: 1.45rem;
-    color: #4f5f5b;
-    line-height: 1.5;
-    margin-top: 2rem;
-  }
-
-  .stage-1__search-footer a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
-  /* Result Card Styling */
-  .stage-1__order-card {
-    border: 1px solid #e2e2e2;
-    border-radius: 10px;
-    padding: 2rem;
-    text-align: left;
-    max-width: 600px;
-    margin: 2rem auto 0;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-  }
-
-  .tracking-result-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 12px;
-    margin-bottom: 16px;
-  }
-
-  .status-badge {
-    background-color: #e3f2fd;
-    color: #0288d1;
-    font-size: 1.1rem;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 12px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .tracking-result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    font-size: 1.3rem;
-    color: #333;
-    margin-bottom: 2rem;
-  }
-
-  .stage-1__view-progress-btn {
-    width: 100%;
-    background-color: var(--accent-color);
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1.4rem;
-  }
-
-  .stage-1__header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .stage-1__step-pill {
-    display: inline-block;
-    border: 1px dashed #a0a0a0;
-    border-radius: 20px;
-    padding: 3px 12px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 1.2rem;
-  }
-
-  .stage-1__main-heading {
-    margin: 0 0 0.8rem 0;
-    color: var(--text-color);
-    line-height: 1.1;
-  }
-
-  .stage-1__subheading {
-    font-size: 1.5rem;
-    color: #555;
-    margin: 0 0 1.5rem 0;
-  }
-
-  .stage-1__eta-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background-color: var(--accent-color);
-    color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding: 4px 14px;
-    border-radius: 20px;
-  }
-
-  .stage-1__eta-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #ffffff;
-    border-radius: 50%;
-  }
-
-  .stage-1__card {
-    background-color: var(--card-bg);
-    border: 1px solid #e2e2e2;
-    border-radius: 12px;
-    padding: 2.5rem 2rem 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .stage-1__percentage-row {
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-
-  .stage-1__percent {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--text-color);
-  }
-
-  .stage-1__percent-text {
-    font-size: 1.6rem;
-    color: #444;
-  }
-
-  .stage-1__progress-bar-container {
-    width: 100%;
-    height: 6px;
-    background-color: #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-
-  .stage-1__progress-bar-fill {
-    height: 100%;
-    background-color: var(--accent-color);
-    border-radius: 4px;
-    transition: width 0.4s ease;
-    display: block !important;
-  }
-
-  .stage-1__steps-flow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #eaeaea;
-  }
-
-  .stage-1__flow-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #999;
-  }
-
-  .stage-1__flow-item.active {
-    color: #000;
-  }
-
-  .stage-1__icon-box {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    border: 1px solid #dcdcdc;
-    background-color: #f5f5f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #888;
-  }
-
-  .stage-1__flow-item.active .stage-1__icon-box {
-    border-color: #e2c044;
-    background-color: #fcf8e3;
-    color: #a88400;
-  }
-
-  .stage-1__flow-line {
-    flex: 1;
-    height: 2px;
-    background-color: #dcdcdc;
-    margin: 0 10px;
-    margin-bottom: 20px;
-  }
-
-  .stage-1__card-note {
-    text-align: center;
-    padding-top: 1.5rem;
-    font-size: 1.4rem;
-    color: #444;
-  }
-
-  .stage-1__checklist-container {
-    background-color: var(--card-bg);
-    border: 1px solid #e2e2e2;
-    border-radius: 12px;
-    padding: 2rem;
-  }
-
-  .stage-1__checklist-title {
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-    font-size: 1.8rem;
-    font-weight: 700;
-  }
-
-  .stage-1__checklist {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .stage-1__check-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 1.2rem 0;
-    border-bottom: 1px solid #e8e8e8;
-  }
-
-  .stage-1__check-item:last-child {
-    border-bottom: none;
-  }
-
-  .stage-1__check-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-  }
-
-  .stage-1__check-icon.completed {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
-    color: #ffffff;
-  }
-
-  .stage-1__unchecked-circle {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-  }
-
-  .stage-1__check-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 4px 0;
-    color: var(--text-color);
-  }
-
-  .stage-1__check-desc {
-    font-size: 1.3rem;
-    color: #666;
-    margin: 0;
-  }
+  .stage-2__support-card { background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 1.5rem; text-align: center; }
+  .stage-2__support-card p { margin: 0 0 1rem 0; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .stage-2__support-btn { background: #fff; border: 1px solid #d1d5db; border-radius: 6px; padding: 10px 20px; font-weight: 700; cursor: pointer; font-size: 1.3rem; width: 100%; max-width: 300px; }
 
   @media screen and (max-width: 600px) {
-    .stage-1__search-form {
-      flex-direction: column;
-      gap: 10px;
-    }
-    .stage-1__btn {
-      width: 100%;
-    }
-    .stage-1__steps-flow {
-      overflow-x: auto;
-      justify-content: flex-start;
-      gap: 15px;
-    }
-    .stage-1__flow-line {
-      min-width: 20px;
-    }
-    .stage-1__order-details-grid {
-      grid-template-columns: 1fr;
-    }
+    .stage-1__search-form { flex-direction: column; gap: 10px; }
+    .stage-1__btn { width: 100%; }
+    .stage-1__steps-flow { overflow-x: auto; justify-content: flex-start; gap: 15px; }
+    .stage-1__flow-line { min-width: 20px; }
   }
 </style>
 
@@ -753,61 +490,126 @@ function showLiveProgressStage() {
   const currentDate = new Date();
   const workingDays = calculateWorkingDays(orderDate, currentDate);
 
-  const allCheckboxes = [
-    'chk-order-confirmed',
-    'chk-materials-selected',
-    'chk-components-production',
-    'chk-hardware-prep',
-    'chk-deck-together',
-    'chk-lines-up',
-    'chk-connection-checked'
-  ];
+  // Fulfillment status normalization
+  const fulfillmentStatus = order.fulfillmentStatus ? order.fulfillmentStatus.toUpperCase() : 'UNFULFILLED';
+  const isFulfillmentActive = (fulfillmentStatus === 'IN_PROGRESS' || fulfillmentStatus === 'FULFILLED' || fulfillmentStatus === 'PARTIALLY_FULFILLED');
 
-  let progress = 22;
-  let checkedItems = [];
+  // STAGE ROUTING DETERMINATION
+  let isStage2 = false;
 
-  if (workingDays <= 1) {
-    progress = 22;
-    checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
-  } else if (workingDays === 2) {
-    progress = 40;
-    checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
-  } else if (workingDays === 3) {
-    progress = 80;
-    checkedItems = [
-      'chk-order-confirmed', 
-      'chk-materials-selected', 
-      'chk-components-production', 
-      'chk-hardware-prep',
-      'chk-deck-together',
-      'chk-lines-up'
-    ];
-  } else {
-    progress = 100;
-    checkedItems = [...allCheckboxes];
+  if (workingDays > 3 && isFulfillmentActive) {
+    isStage2 = true;
   }
 
+  // DOM Elements
+  const stepPill = document.getElementById('dynamic-step-pill');
+  const mainHeading = document.getElementById('dynamic-main-heading');
+  const subheading = document.getElementById('dynamic-subheading');
+  const etaText = document.getElementById('dynamic-eta-text');
   const percentEl = document.getElementById('track-percent-val');
+  const percentLabel = document.getElementById('track-percent-label');
   const fillEl = document.getElementById('track-progress-fill');
-  if (percentEl) percentEl.innerText = progress + '%';
-  if (fillEl) fillEl.style.width = progress + '%';
+  
+  const stage1Block = document.getElementById('stage-1-details-block');
+  const stage2Block = document.getElementById('stage-2-details-block');
 
-  // Highlight icons based on progress thresholds
-  const stepThresholds = [22, 35, 80, 100];
-  for (let i = 1; i <= 4; i++) {
-    const stepEl = document.getElementById(`flow-step-${i}`);
-    if (stepEl) {
-      if (progress >= stepThresholds[i - 1]) {
-        stepEl.classList.add('active');
-      } else {
-        stepEl.classList.remove('active');
+  let progress = 22;
+
+  if (!isStage2) {
+    // ------------------------------------
+    // STAGE 1 VIEW (Production Phase)
+    // ------------------------------------
+    stage1Block.style.display = 'block';
+    stage2Block.style.display = 'none';
+
+    stepPill.innerText = "Step 1 of 3";
+    mainHeading.innerText = "Your deck is now in production.";
+    subheading.innerText = "Every A-DIY deck is made just for you, nothing sits in a warehouse.";
+    etaText.innerText = "Estimated: 7 business days";
+    percentLabel.innerText = "of step 1 is complete.";
+
+    const allCheckboxes = [
+      'chk-order-confirmed', 'chk-materials-selected', 'chk-components-production',
+      'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up', 'chk-connection-checked'
+    ];
+
+    let checkedItems = [];
+
+    if (workingDays <= 1) {
+      progress = 22;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
+    } else if (workingDays === 2) {
+      progress = 40;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
+    } else if (workingDays === 3) {
+      progress = 80;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
+    } else {
+      // Days > 3 but status still UNFULFILLED: Stay on Stage 1 at 100%
+      progress = 100;
+      checkedItems = [...allCheckboxes];
+    }
+
+    // Step active icons (Stage 1 thresholds)
+    const stepThresholds = [22, 35, 80, 100];
+    for (let i = 1; i <= 4; i++) {
+      const stepEl = document.getElementById(`flow-step-${i}`);
+      if (stepEl) {
+        if (progress >= stepThresholds[i - 1]) {
+          stepEl.classList.add('active');
+        } else {
+          stepEl.classList.remove('active');
+        }
+      }
+    }
+
+    allCheckboxes.forEach(id => {
+      setChecked(id, checkedItems.includes(id));
+    });
+
+  } else {
+    // ------------------------------------
+    // STAGE 2 VIEW (Getting Ready to Ship / Packing)
+    // ------------------------------------
+    stage1Block.style.display = 'none';
+    stage2Block.style.display = 'block';
+
+    stepPill.innerText = "Step 2 of 3";
+    mainHeading.innerText = "Getting your deck ready to ship.";
+    subheading.innerText = "We're packing and securing everything for its trip to you.";
+    etaText.innerText = "Estimate: 3 to 4 business days";
+    percentLabel.innerText = "of step 2 is complete.";
+
+    // Stage 2 Progress progression based on days passed since Stage 1
+    const stage2WorkingDays = workingDays - 3; // Days counter inside Stage 2
+
+    if (stage2WorkingDays <= 1) {
+      progress = 22;
+    } else if (stage2WorkingDays === 2) {
+      progress = 40;
+    } else if (stage2WorkingDays === 3) {
+      progress = 80;
+    } else {
+      progress = 100;
+    }
+
+    // In Stage 2: Manufacturing, Assembly, and Packing (steps 1, 2, 3) are all active/completed
+    const activeStepsCount = (progress >= 100) ? 4 : 3;
+    for (let i = 1; i <= 4; i++) {
+      const stepEl = document.getElementById(`flow-step-${i}`);
+      if (stepEl) {
+        if (i <= activeStepsCount) {
+          stepEl.classList.add('active');
+        } else {
+          stepEl.classList.remove('active');
+        }
       }
     }
   }
 
-  allCheckboxes.forEach(id => {
-    setChecked(id, checkedItems.includes(id));
-  });
+  // Update progress text & bar length
+  if (percentEl) percentEl.innerText = progress + '%';
+  if (fillEl) fillEl.style.width = progress + '%';
 }
 
 function resetTrackingView() {
@@ -823,69 +625,38 @@ function resetTrackingView() {
   if (searchCardContainer) searchCardContainer.style.display = "block";
 }
 </script>
-
 {% schema %}
 {
-  "name": "Tracking Widget",
-  "tag": "section",
-  "class": "section",
+  "name": "Live Order Tracking",
   "settings": [
     {
       "type": "image_picker",
       "id": "logo_image",
-      "label": "Logo Image"
+      "label": "Search Card Logo"
     },
     {
-      "type": "html",
+      "type": "text",
       "id": "search_desc",
-      "label": "Description"
+      "label": "Search Description",
+      "default": "Enter your order number below to track the live status of your custom deck build."
     },
     {
       "type": "richtext",
       "id": "search_footer",
-      "label": "Below input field text"
+      "label": "Search Card Footer Text",
+      "default": "<p>Need help finding your order number? Check your order confirmation email or contact support.</p>"
     },
     {
-      "type": "text",
-      "id": "step_pill",
-      "label": "Top Pill Text",
-      "default": "Step 1 of 4"
-    },
-    {
-      "type": "text",
-      "id": "main_heading",
-      "label": "Main Heading",
-      "default": "Your deck is now in production."
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Every A-DIY deck is made just for you, nothing sits in a warehouse."
-    },
-    {
-      "type": "text",
-      "id": "eta_badge",
-      "label": "ETA Badge Text",
-      "default": "Estimated: 7 business days"
-    },
-    {
-      "type": "text",
-      "id": "progress_text",
-      "label": "Progress Label",
-      "default": "of step 1 is complete."
-    },
-    {
-      "type": "text",
-      "id": "card_note",
-      "label": "Card Bottom Note",
-      "default": "We'll email you as soon as your deck moves to the next step."
+      "type": "color",
+      "id": "accent_color",
+      "label": "Primary Accent Color",
+      "default": "#1e4d3b"
     },
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background Color",
-      "default": "#ffffff"
+      "label": "Section Background Color",
+      "default": "#f9fafb"
     },
     {
       "type": "color",
@@ -895,15 +666,15 @@ function resetTrackingView() {
     },
     {
       "type": "color",
-      "id": "accent_color",
-      "label": "Accent Color (Green)",
-      "default": "#1e4d3b"
-    },
-    {
-      "type": "color",
       "id": "text_color",
       "label": "Text Color",
       "default": "#121212"
+    },
+    {
+      "type": "richtext",
+      "id": "card_note",
+      "label": "Progress Card Bottom Note",
+      "default": "<p><strong>Note:</strong> Timelines are estimates based on standard production cycles.</p>"
     },
     {
       "type": "range",
@@ -913,7 +684,7 @@ function resetTrackingView() {
       "step": 4,
       "unit": "px",
       "label": "Top Padding",
-      "default": 40
+      "default": 36
     },
     {
       "type": "range",
@@ -923,12 +694,12 @@ function resetTrackingView() {
       "step": 4,
       "unit": "px",
       "label": "Bottom Padding",
-      "default": 40
+      "default": 36
     }
   ],
   "presets": [
     {
-      "name": "Tracking Widget"
+      "name": "Live Order Tracking"
     }
   ]
 }
