@@ -1,0 +1,1580 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "image_with_text_JjwmnC": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_8gjqmi": {
+          "type": "heading",
+          "settings": {
+            "sub_heading": "",
+            "sub_heading_tag": "h2",
+            "class_sub_heading": "",
+            "sub_font_size_desktop": "",
+            "sub_font_size_mobile": "",
+            "heading": "Building a Deck in New Jersey: Contractors, Costs, Permits and Deck-Kit Options",
+            "heading_tag": "auto",
+            "class_heading": "",
+            "font_size_desktop": "36",
+            "font_size_mobile": "22"
+          }
+        },
+        "text_rBz8q3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Planning a deck in New Jersey usually begins with a few big questions: Should you hire a deck builder, purchase the materials yourself or use a professionally engineered system that arrives prepared for assembly?<br/><br/>This guide explains the main options, what affects the cost, how permits work under the New Jersey Uniform Construction Code, what to ask a contractor and how to choose between pressure-treated wood and composite decking.<br/><br/>A-DIY offers a third way to complete the project: a professionally engineered deck system delivered with coordinated components prepared for assembly. You can build it yourself or hire a local handyman, carpenter or contractor to help.<br/><br/></p>",
+            "text_style": "body"
+          }
+        },
+        "button_6jfzcR": {
+          "type": "button",
+          "settings": {
+            "button_label": "EXPLORE DECK OPTIONS",
+            "button_link": "shopify://collections/deck-kits",
+            "button_style_secondary": false,
+            "button_label_2": "SEE HOW A-DIY WORKS",
+            "button_link_2": "shopify://pages/design-consultation",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_8gjqmi",
+        "text_rBz8q3",
+        "button_6jfzcR"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "custom_class": "seo-hero-sec",
+        "image": "shopify://shop_images/image_8336.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_icon_scrolling_kF3ffz": {
+      "type": "featured-icon-scrolling",
+      "blocks": {
+        "marquee_item_NmY9PP": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/Container_95d85787-b286-405e-8996-6ee70a5e3ef6.png",
+            "custom_svg": "",
+            "text": "Professionally engineered system"
+          }
+        },
+        "marquee_item_8FAXcA": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/fi_9873586_48848def-7bc6-4b8c-8750-57f4c50582ae.png",
+            "custom_svg": "",
+            "text": "Pressure-treated and composite options"
+          }
+        },
+        "marquee_item_WTz4Tc": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/fi_13549226_ba99fb80-a8a7-4269-9abf-0776f2484fac.png",
+            "custom_svg": "",
+            "text": "Engineering diagrams available"
+          }
+        },
+        "marquee_item_aRqU7J": {
+          "type": "marquee_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/fi_10428795_8ccdc71c-d87a-44ec-9a9f-8bbdf916aa6e.png",
+            "custom_svg": "",
+            "text": "Five-year structural warranty"
+          }
+        }
+      },
+      "block_order": [
+        "marquee_item_NmY9PP",
+        "marquee_item_8FAXcA",
+        "marquee_item_WTz4Tc",
+        "marquee_item_aRqU7J"
+      ],
+      "name": "Icon Scrolling Marquee",
+      "settings": {
+        "bg_color": "#f5f3ee",
+        "text_color": "#4a554a",
+        "speed": 30,
+        "pause_on_hover": true,
+        "item_gap": 50,
+        "font_size": 14,
+        "font_weight": "600",
+        "icon_size": 28,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "navigation_tabs_PhVK3p": {
+      "type": "navigation-tabs",
+      "blocks": {
+        "tab_MN3iwg": {
+          "type": "tab",
+          "settings": {
+            "title": "Overview",
+            "link": "",
+            "is_active": true
+          }
+        },
+        "tab_Cxa63j": {
+          "type": "tab",
+          "settings": {
+            "title": "Costs",
+            "link": "",
+            "is_active": false
+          }
+        },
+        "tab_886NzG": {
+          "type": "tab",
+          "settings": {
+            "title": "Contractors",
+            "link": "",
+            "is_active": false
+          }
+        },
+        "tab_rtYP9N": {
+          "type": "tab",
+          "settings": {
+            "title": "Permits",
+            "link": "",
+            "is_active": false
+          }
+        },
+        "tab_gyrwxM": {
+          "type": "tab",
+          "settings": {
+            "title": "Materials",
+            "link": "",
+            "is_active": false
+          }
+        },
+        "tab_jagEfn": {
+          "type": "tab",
+          "settings": {
+            "title": "A-DIY",
+            "link": "",
+            "is_active": false
+          }
+        }
+      },
+      "block_order": [
+        "tab_MN3iwg",
+        "tab_Cxa63j",
+        "tab_886NzG",
+        "tab_rtYP9N",
+        "tab_gyrwxM",
+        "tab_jagEfn"
+      ],
+      "disabled": true,
+      "name": "Navigation Tabs Menu",
+      "settings": {
+        "bg_color": "#ffffff",
+        "alignment": "center",
+        "gap": 12,
+        "text_color": "#333333",
+        "btn_bg": "#ffffff",
+        "border_color": "#e0e0e0",
+        "active_text_color": "#000000",
+        "active_bg_color": "#ece8e4",
+        "active_border_color": "#194636",
+        "font_size": 16,
+        "font_weight": "400",
+        "border_radius": 10,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "multicolumn_TGXkFF": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_c6Pngj": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Frame_2147260129.png",
+            "title": "Hire a Full-Service Deck Contractor",
+            "text": "<p>A deck builder can manage design, materials, permits, foundations, construction, inspections and cleanup. This is often the best choice when the project is highly customized or the homeowner wants one company to manage the entire job.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_YgDGfW": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Frame_2147260130.png",
+            "title": "Build From Raw Materials",
+            "text": "<p>The homeowner or builder purchases lumber, hardware and decking separately, then handles the design, measurements, cuts, structural layout and assembly. This approach offers flexibility but requires more planning and construction knowledge.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_69ahGQ": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Frame_2147260131.png",
+            "title": "Use a Professionally Engineered Deck System",
+            "text": "<p>A ready-to-assemble system uses a standardized design and coordinated components prepared for assembly. A-DIY is designed for homeowners who want a real structural deck without beginning with a loose pile of raw materials or completing every cut at the property.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_c6Pngj",
+        "column_YgDGfW",
+        "column_69ahGQ"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "custom_class": "seo-page-sec1",
+        "title": "Three Ways to Build a Deck in New Jersey",
+        "title_content": "",
+        "image_width": "third",
+        "image_ratio": "portrait",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "old_comparison_table_3NMcRn": {
+      "type": "old-comparison-table",
+      "blocks": {
+        "row_eTni9D": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Design",
+            "col_2_val": "",
+            "col_3_val": "Customized for the property",
+            "col_4_val": "Standardized sizes and supported configurations"
+          }
+        },
+        "row_zdAywh": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Project management",
+            "col_2_val": "",
+            "col_3_val": "Contractor may manage the complete project",
+            "col_4_val": "Homeowner manages the project or hires local help"
+          }
+        },
+        "row_YVAxni": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Materials",
+            "col_2_val": "",
+            "col_3_val": "Selected and sourced by the contractor",
+            "col_4_val": "Coordinated with the selected system"
+          }
+        },
+        "row_J9Ekdr": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Cutting and measuring",
+            "col_2_val": "",
+            "col_3_val": "Completed during construction",
+            "col_4_val": "Components are prepared for assembly"
+          }
+        },
+        "row_EKidBA": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Materials",
+            "col_2_val": "",
+            "col_3_val": "Contractor and crew perform the work",
+            "col_4_val": "Homeowner or locally hired person completes assembly"
+          }
+        },
+        "row_UDYjiP": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Labor",
+            "col_2_val": "",
+            "col_3_val": "Selected and sourced by the contractor",
+            "col_4_val": "Coordinated with the selected system"
+          }
+        },
+        "row_PzYHWW": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Pricing",
+            "col_2_val": "",
+            "col_3_val": "Based on custom scope and labor",
+            "col_4_val": "Kit price is known before local site work"
+          }
+        },
+        "row_jeiHQR": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Permits",
+            "col_2_val": "",
+            "col_3_val": "Depends on the contractor agreement",
+            "col_4_val": "Homeowner remains responsible; diagrams are available"
+          }
+        },
+        "row_ncVaP6": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Foundations",
+            "col_2_val": "",
+            "col_3_val": "Designed and installed for the property",
+            "col_4_val": "Compatible with suitable locally approved systems"
+          }
+        },
+        "row_N7HrkC": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Customization",
+            "col_2_val": "",
+            "col_3_val": "Suitable for complex and custom projects",
+            "col_4_val": "Best for supported sizes and configurations"
+          }
+        },
+        "row_HELj9q": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Structural transparency",
+            "col_2_val": "",
+            "col_3_val": "Depends on the written proposal",
+            "col_4_val": "Materials and structure can be reviewed before purchase"
+          }
+        },
+        "row_baahPP": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Warranty",
+            "col_2_val": "",
+            "col_3_val": "Depends on contractor and materials",
+            "col_4_val": "Five-year structural warranty, subject to terms"
+          }
+        },
+        "row_DwWqqW": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Best use",
+            "col_2_val": "",
+            "col_3_val": "Fully managed or highly customized projects",
+            "col_4_val": "Standardized projects with predictable components"
+          }
+        }
+      },
+      "block_order": [
+        "row_eTni9D",
+        "row_zdAywh",
+        "row_YVAxni",
+        "row_J9Ekdr",
+        "row_EKidBA",
+        "row_UDYjiP",
+        "row_PzYHWW",
+        "row_jeiHQR",
+        "row_ncVaP6",
+        "row_N7HrkC",
+        "row_HELj9q",
+        "row_baahPP",
+        "row_DwWqqW"
+      ],
+      "name": "Comparison Table",
+      "settings": {
+        "heading": "Traditional Deck Contractor vs. A-DIY",
+        "col_1_heading": "FEATURE",
+        "col_3_heading": "TRADITIONAL CONTRACTOR",
+        "col_4_heading": "A-DIY deck system",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
+    "rich_text_gEgHFN": {
+      "type": "rich-text",
+      "blocks": {
+        "text_cpct7n": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A traditional contractor may be the right choice for a multilevel deck, complex house attachment, rooftop deck, integrated outdoor kitchen, unusual structural span or project outside A-DIY’s supported configurations.<br/><br/>A-DIY may be the better choice when you want a standardized design, transparent materials, a known system price, less cutting and measuring at the property and the option to assemble it yourself or hire local help.<br/><br/>A-DIY is not a New Jersey deck contractor, contractor directory or local installation company. A-DIY supplies the deck system.<br/><br/></p>"
+          }
+        },
+        "button_qWR6A6": {
+          "type": "button",
+          "settings": {
+            "button_label": "COMPARE A-DIY DECK OPTIONS",
+            "button_link": "shopify://pages/free-design-consultation",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "text_cpct7n",
+        "button_qWR6A6"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "seo-page-sec-text",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 52
+      }
+    },
+    "outdoor_moments_cbeyy9": {
+      "type": "outdoor-moments",
+      "blocks": {
+        "card_44PTHV": {
+          "type": "card",
+          "settings": {
+            "video": "shopify://files/videos/202606280055 (1).mp4",
+            "image": "shopify://shop_images/image_13.png",
+            "title": "Your Backyard Retreat",
+            "description": "A calm, beautiful space for sauna nights, cold rinses, deep breaths, and doing absolutely nothing."
+          }
+        },
+        "card_EEQAGi": {
+          "type": "card",
+          "settings": {
+            "video": "shopify://files/videos/202606280055.mp4",
+            "image": "shopify://shop_images/image_14.png",
+            "title": "Made for Gathering",
+            "description": "The kind of space where the fire stays on, the chairs fill up, and the night lasts a little longer."
+          }
+        },
+        "card_XPgDC7": {
+          "type": "card",
+          "settings": {
+            "video": "shopify://files/videos/IMG_2698 2.MOV",
+            "image": "shopify://shop_images/image_15.png",
+            "title": "Room to Reset",
+            "description": "A simple outdoor space for stretching, breathing, moving, and beginning the day outside."
+          }
+        }
+      },
+      "block_order": [
+        "card_44PTHV",
+        "card_EEQAGi",
+        "card_XPgDC7"
+      ],
+      "name": "Outdoor Moments",
+      "settings": {
+        "heading": "Outside feels different now.",
+        "subheading": "Your backyard was always part of your home. Now it finally feels like it.",
+        "columns_desktop": "3",
+        "bg_color": "#20221d",
+        "title_color": "#ffffff",
+        "subtitle_color": "#ffffff",
+        "card_bg": "#20221d",
+        "card_border": "#20221d",
+        "card_title_color": "#ffffff",
+        "card_text_color": "#ffffff",
+        "padding_top": 70,
+        "padding_bottom": 70,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "multicolumn_r3rrTE": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_fNJcMh": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/magnific_need-three-image-in-this-_LwgdZlLswO_1.png",
+            "title": "RV Deck",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_3PnXbN": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/magnific_need-three-image-in-this-_LwgdZlLswO_1-1.png",
+            "title": "Backyard Deck",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_YcmWMr": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/magnific_need-three-image-in-this-_LwgdZlLswO_1-2.png",
+            "title": "Hot Tub Deck",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_fNJcMh",
+        "column_3PnXbN",
+        "column_YcmWMr"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "custom_class": "seo-img-title",
+        "title": "",
+        "title_content": "",
+        "image_width": "half",
+        "image_ratio": "portrait",
+        "button_label": "Button label",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "scheme-5",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "cost_guide_section_xgJCGN": {
+      "type": "cost-guide-section",
+      "blocks": {
+        "factor_item_giKm8X": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Deck size",
+            "text": "Larger decks require more structure, decking and hardware."
+          }
+        },
+        "factor_item_AJiGrd": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Surface material",
+            "text": "Pressure-treated wood and composite have different purchase and maintenance costs."
+          }
+        },
+        "factor_item_cgXRc9": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Deck height",
+            "text": "Elevated decks may require longer posts, bracing, stairs and railings."
+          }
+        },
+        "factor_item_KqhqHx": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Foundations",
+            "text": "The appropriate footing system depends on the site and local approval."
+          }
+        },
+        "factor_item_MmBHzP": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Site conditions",
+            "text": "Slopes, rocks, drainage and restricted access may increase labor."
+          }
+        },
+        "factor_item_nrgYAD": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Attached or freestanding",
+            "text": "Attachment details can affect design and permitting."
+          }
+        },
+        "factor_item_LiCHqy": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Permits and plans",
+            "text": "Fees and documentation requirements vary by municipality."
+          }
+        },
+        "factor_item_E8QmtY": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Labor",
+            "text": "Full-service custom construction generally costs more than assembly-only help."
+          }
+        },
+        "factor_item_pVA4C4": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Custom features",
+            "text": "Multiple levels, unusual shapes and built-ins add complexity."
+          }
+        },
+        "factor_item_qMwMTn": {
+          "type": "factor_item",
+          "settings": {
+            "title": "Demolition",
+            "text": "Removing and disposing of an existing structure adds work."
+          }
+        },
+        "table_row_CKUYRt": {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×12 pressure-treated",
+            "col_diy": "[ADD HERE]",
+            "col_sitework": "[ADD HERE]",
+            "col_permit": "[ADD HERE]",
+            "col_labor": "[ADD HERE]"
+          }
+        },
+        "table_row_tgfHRJ": {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×16 pressure-treated",
+            "col_diy": "[ADD HERE]",
+            "col_sitework": "[ADD HERE]",
+            "col_permit": "[ADD HERE]",
+            "col_labor": "[ADD HERE]"
+          }
+        },
+        "table_row_fT3fYG": {
+          "type": "table_row",
+          "settings": {
+            "col_design": "12×16 composite",
+            "col_diy": "[ADD HERE]",
+            "col_sitework": "[ADD HERE]",
+            "col_permit": "[ADD HERE]",
+            "col_labor": "[ADD HERE]"
+          }
+        },
+        "requirement_item_wwXkjw": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Date reviewed"
+          }
+        },
+        "requirement_item_yhL6qM": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "New Jersey region used"
+          }
+        },
+        "requirement_item_xhzY3t": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Project assumptions"
+          }
+        },
+        "requirement_item_N7XcBR": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Included and excluded work"
+          }
+        },
+        "requirement_item_zMxhbp": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Source of labor estimates"
+          }
+        },
+        "requirement_item_3NHWWi": {
+          "type": "requirement_item",
+          "settings": {
+            "text": "Whether delivery and tax are included"
+          }
+        }
+      },
+      "block_order": [
+        "factor_item_giKm8X",
+        "factor_item_AJiGrd",
+        "factor_item_cgXRc9",
+        "factor_item_KqhqHx",
+        "factor_item_MmBHzP",
+        "factor_item_nrgYAD",
+        "factor_item_LiCHqy",
+        "factor_item_E8QmtY",
+        "factor_item_pVA4C4",
+        "factor_item_qMwMTn",
+        "table_row_CKUYRt",
+        "table_row_tgfHRJ",
+        "table_row_fT3fYG",
+        "requirement_item_wwXkjw",
+        "requirement_item_yhL6qM",
+        "requirement_item_xhzY3t",
+        "requirement_item_N7XcBR",
+        "requirement_item_zMxhbp",
+        "requirement_item_3NHWWi"
+      ],
+      "name": "SEO Cost Guide Section",
+      "settings": {
+        "bg_color": "#f7f9fa",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "main_heading": "How Much Does It Cost?",
+        "main_description": "There is no single accurate statewide price. The final cost depends on the design, material, height, foundations, permits, labor and conditions at the property.",
+        "card_title": "PRIMARY COST FACTORS",
+        "footer_note": "A complete project budget may include the deck system or raw materials, delivery, site preparation, footings, permit fees, surveys, engineering, assembly labor, stairs, railings, demolition and cleanup.",
+        "table_header_title": "VERIFIED NJ PROJECT EXAMPLES",
+        "req_title": "Every published estimate must identify:",
+        "sub_note": "Property-specific pricing will vary.",
+        "btn1_text": "READ THE COMPLETE NEW JERSEY DECK-COST GUIDE",
+        "btn1_url": "shopify://pages/free-design-consultation",
+        "btn2_text": "VIEW CURRENT SIZES AND PRICES",
+        "btn2_url": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+      }
+    },
+    "contractor_guide_section_iBTLG6": {
+      "type": "contractor-guide-section",
+      "blocks": {
+        "guide_card_6N9wTf": {
+          "type": "guide_card",
+          "settings": {
+            "is_dark": false,
+            "title": "Prepare a short written description containing:",
+            "checklist_items": "Approximate deck dimensions\nPreferred material\nProposed height\nAttached or freestanding design\nStairs and railings\nExisting deck removal\nSite conditions\nPermit responsibility",
+            "notice_text": "Then collect multiple written estimates and compare the same scope. The New Jersey Division of Consumer Affairs recommends obtaining multiple estimates, checking references, confirming insurance and understanding permit responsibilities before hiring a home-improvement contractor."
+          }
+        },
+        "guide_card_MYdnk8": {
+          "type": "guide_card",
+          "settings": {
+            "is_dark": false,
+            "title": "What Should You Verify?",
+            "checklist_items": "Business identity and address\nRequired license or registration\nLiability and workers' compensation coverage\nRecent references and completed projects\nWritten project scope\nPayment schedule\nWarranty terms\nExpected start and completion dates",
+            "notice_text": "New Jersey requires every home-improvement contractor to register annually with the Division of Consumer Affairs, including contractors based outside the state. Registration requires commercial general liability insurance of at least $500,000 per occurrence, and registered contractors must display their registration number. Verify a contractor’s registration before signing anything."
+          }
+        },
+        "guide_card_b9ECRh": {
+          "type": "guide_card",
+          "settings": {
+            "is_dark": true,
+            "title": "What Should a Written Deck Quote Include?",
+            "checklist_items": "Deck dimensions and layout\nLumber grade and framing dimensions\nSurface material and brand\nHardware and connectors\nFootings, posts and bracing\nStairs and railings\nPermit and engineering responsibility\nDemolition, disposal and cleanup\nSchedule, payments and warranty\nAll exclusions and allowances",
+            "notice_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "guide_card_6N9wTf",
+        "guide_card_MYdnk8",
+        "guide_card_b9ECRh"
+      ],
+      "name": "Contractor Guide Section",
+      "settings": {
+        "heading": "How Do You Find and Hire a Deck Contractor in New Jersey?",
+        "subtitle": "Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work.",
+        "button_label": "VIEW THE COMPLETE CONTRACTOR-HIRING CHECKLIST",
+        "button_link": "",
+        "section_bg": "#f0eee9",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "faq_accordion_tUDpHR": {
+      "type": "faq-accordion",
+      "blocks": {
+        "faq_item_KicD3L": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Have you completed similar decks in this city or county?",
+            "answer": "<p>Yes, we have completed numerous deck installations in this area and are fully familiar with local zoning and structural codes.</p>"
+          }
+        },
+        "faq_item_HCdmhX": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are you registered with the New Jersey Division of Consumer Affairs?",
+            "answer": "<p>In New Jersey this is not optional. Every home-improvement contractor must register annually with the Division of Consumer Affairs, including contractors based outside the state, and must display the registration number. Ask for it and verify it before you sign.</p>"
+          }
+        },
+        "faq_item_JtQhCb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you provide current proof of insurance?",
+            "answer": "<p>We carry full general liability and workers' compensation insurance. Certificates can be provided directly upon request.</p>"
+          }
+        },
+        "faq_item_HJDY3c": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What lumber, framing dimensions and decking product are included?",
+            "answer": "<p>Our detailed written quotes specify all lumber grades, post dimensions, joist spacing, and exact decking brand/line selected.</p>"
+          }
+        },
+        "faq_item_aUwJRb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What foundation system is proposed?",
+            "answer": "<p>Depending on soil conditions and deck height, we utilize concrete footings poured below frost depth or helical screw piles.</p>"
+          }
+        },
+        "faq_item_RaPrhG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Who handles permits, plans and inspections?",
+            "answer": "<p>We manage the entire permit process from architectural drafting/engineering submission to scheduling final municipal inspections.</p>"
+          }
+        },
+        "faq_item_pXtewa": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are stairs, railings, demolition and cleanup included?",
+            "answer": "<p>Yes, all specified components including old deck removal, site preparation, stairs, code-compliant railings, and site cleanup are detailed in our proposals.</p>"
+          }
+        },
+        "faq_item_zjaLAk": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How are changes and unexpected work priced?",
+            "answer": "<p>Any scope modifications or unforeseen site conditions are documented in a formal written change order before work proceeds.</p>"
+          }
+        },
+        "faq_item_x6kxBh": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the payment schedule?",
+            "answer": "<p>We follow a structured milestone payment schedule linked to project stages (e.g., initial deposit, framing completion, final walkthrough).</p>"
+          }
+        },
+        "faq_item_88q8nb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What workmanship and material warranties apply?",
+            "answer": "<p>We provide a comprehensive craftsmanship warranty along with manufacturer warranties on decking materials and hardware.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_KicD3L",
+        "faq_item_HCdmhX",
+        "faq_item_JtQhCb",
+        "faq_item_HJDY3c",
+        "faq_item_aUwJRb",
+        "faq_item_RaPrhG",
+        "faq_item_pXtewa",
+        "faq_item_zjaLAk",
+        "faq_item_x6kxBh",
+        "faq_item_88q8nb"
+      ],
+      "name": "FAQ Accordion",
+      "settings": {
+        "heading": "Essential Questions to Ask",
+        "section_bg": "#f0eee9",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "deck_permits_engineering_4C48gw": {
+      "type": "deck-permits-engineering",
+      "name": "Deck Permits/Engineering",
+      "settings": {
+        "heading": "New Jersey Deck Permits and A-DIY Engineering Information",
+        "body_text": "<p>In New Jersey, building a new deck requires a construction permit. The rule is uniform statewide: the New Jersey Uniform Construction Code (N.J.A.C. 5:23) applies in every municipality and is administered by the Department of Community Affairs, Division of Codes and Standards.</p><p>Constructing a new deck, completely replacing one or expanding an existing deck each require a full construction permit. Replacing structural components such as posts, girders, joists or stair stringers also requires a permit. Replacing only non-structural elements such as decking boards, railings or stair treads is generally treated as ordinary maintenance and does not.</p><p>Your local construction official issues the permit and carries out inspections, so submission requirements, fees and scheduling still vary between municipalities.</p>",
+        "questions_heading": "Questions to Ask the Building Department",
+        "questions_list": "Does the proposed deck require a permit?\nIs zoning approval, a site plan or a survey required?\nWhat setbacks apply?\nAre stamped plans required?\nWhat footing information must be submitted?\nWhat inspections are required?\nAre stairs or railings required at the proposed height?\nCan the homeowner perform the work?",
+        "image": "shopify://shop_images/Frame_2147260189.png",
+        "note_title": "Footing depth and the 36-inch frost line",
+        "note_text": "New Jersey’s frost line is generally 36 inches, so deck footings normally must extend at least 36 inches below grade. A limited exemption applies to freestanding decks that rest on precast pier blocks at grade, do not exceed 200 square feet, and stay no more than 20 inches above grade within 36 inches of the edge. Some South Jersey coastal areas permit shallower frost-protected foundations. Confirm the requirement with your local construction official before you dig.",
+        "section_bg": "#ffffff",
+        "accent_border_color": "#c67d3e",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "engineering_diagrams_zHUnjj": {
+      "type": "engineering-diagrams",
+      "name": "Engineering Diagrams",
+      "settings": {
+        "heading": "What Do A-DIY Engineering Diagrams Show?",
+        "image": "shopify://shop_images/Product-img-removebg-preview_1_6cddae38-6e96-4116-b94b-d6c29b439bde.png",
+        "list_heading": "Diagrams for an applicable A-DIY configuration may show:",
+        "list_items": "Overall dimensions and structural layout\nBeam and joist locations\nPost locations\nLumber dimensions\nMajor connections\nAssembly configuration",
+        "body_text": "<p>The building department may still request property-specific information, such as a survey, site plan, setbacks, foundation details, stairs, railings, attachment details or professionally stamped documents.</p><p>Requirements vary by municipality, and the local building department has final authority. A-DIY diagrams can support a permit application but do not guarantee approval.</p>",
+        "section_bg": "#f5f3ee",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "wood_vs_composite_GVhp6t": {
+      "type": "wood-vs-composite",
+      "blocks": {
+        "card_brVjrA": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Classic_wood_deck_texture..png",
+            "tag": "THE CLASSIC",
+            "title": "Pressure-Treated Wood",
+            "features": "Generally lower\n\nNatural wood grain and variation\n\nMay require cleaning, staining or sealing\n\nMay develop over time\n\nMay check, crack or change color\n\nCan be stained or refinished\n\nDepends on stain, color and exposure\n\nBoards can often be replaced or refinished\n\nLower initial cost and natural appearance\n\nSubject to material and A-DIY terms",
+            "btn_text": "SHOP CLASSIC",
+            "btn_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+            "card_bg": "#ffffff",
+            "text_color": "#1a1a1a",
+            "btn_bg": "rgba(0,0,0,0)",
+            "btn_text_color": "#1a1a1a",
+            "btn_border_color": "#1a1a1a"
+          }
+        },
+        "card_rDpjaP": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Modern_composite_deck..png",
+            "tag": "THE MODERNIST",
+            "title": "Advanced Composite",
+            "features": "Generally higher\n\nModern and more consistent finish\n\nDoes not require routine staining or sealing\n\nDesigned to resist splintering\n\nDesigned to resist common surface cracking and splintering\n\nAvailable in manufactured colors and finishes\n\nDarker colors may become warmer\n\nBoards can be replaced, but refinishing is limited\n\nModern appearance and reduced maintenance\n\nSubject to manufacturer and A-DIY terms",
+            "btn_text": "SHOP CLASSIC",
+            "btn_link": "shopify://products/a-diy-composite-deck-kit",
+            "card_bg": "#000000",
+            "text_color": "#ffffff",
+            "btn_bg": "#194636",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#194636"
+          }
+        }
+      },
+      "block_order": [
+        "card_brVjrA",
+        "card_rDpjaP"
+      ],
+      "name": "Wood vs Composite",
+      "settings": {
+        "unique_class": "",
+        "main_title": "Pressure-Treated Wood vs. Composite Decking",
+        "subtitle": "",
+        "description": "The best deck material depends on your budget, preferred appearance and maintenance expectations.\n<br><br>\nNew Jersey decks may experience rain, snow, ice, humidity, summer heat, freeze-and-thaw cycles and salt air along the Shore. Neither pressure-treated wood nor composite is automatically best for every property.",
+        "sum_1_title": "Choose Pressure-Treated Wood When:",
+        "sum_1_desc": "You want a lower initial cost, natural wood appearance and the ability to stain or refinish the surface. It generally requires more routine care as it ages.",
+        "sum_1_btn_text": "Explore Pressure-Treated Options",
+        "sum_1_btn_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+        "sum_2_title": "Choose Composite When:",
+        "sum_2_desc": "You want a modern, consistent surface with less routine maintenance and no regular staining or sealing. Composite generally has a higher initial cost.",
+        "sum_2_btn_text": "Explore Composite Options",
+        "sum_2_btn_link": "shopify://products/a-diy-composite-deck-kit",
+        "section_bg": "#ecebeb",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "double_image_text_p6xnEW": {
+      "type": "double-image-text",
+      "blocks": {
+        "heading_xkYdDt": {
+          "type": "heading",
+          "settings": {
+            "title": "Uneven Ground, Elevated Decks and Foundation Options"
+          }
+        },
+        "text_JwNNbD": {
+          "type": "text",
+          "settings": {
+            "text": "An A-DIY deck may be installed over sloped or uneven ground by adjusting the supporting post heights to establish a level deck surface.\n<br><br>\nThe installation area must still be evaluated for drainage, soil stability, foundation placement and bracing",
+            "is_bold": false
+          }
+        },
+        "feature_header_ryHDVc": {
+          "type": "feature_header",
+          "settings": {
+            "icon_type": "image",
+            "custom_svg": "",
+            "icon_image": "shopify://shop_images/Frame_2147260101.png",
+            "title": "Supported Elevation"
+          }
+        },
+        "text_bHKfBY": {
+          "type": "text",
+          "settings": {
+            "text": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.",
+            "is_bold": false
+          }
+        },
+        "text_A7ewND": {
+          "type": "text",
+          "settings": {
+            "text": "Depending on the height and configuration, the project may also require:",
+            "is_bold": true
+          }
+        },
+        "list_dcFftc": {
+          "type": "list",
+          "settings": {
+            "list_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval"
+          }
+        },
+        "feature_header_DQnKHX": {
+          "type": "feature_header",
+          "settings": {
+            "icon_type": "image",
+            "custom_svg": "",
+            "icon_image": "shopify://shop_images/Frame_2147260100.png",
+            "title": "Foundation and Footing Options"
+          }
+        },
+        "text_8Cenrf": {
+          "type": "text",
+          "settings": {
+            "text": "Depending on the property, configuration and local approval, suitable systems may include:",
+            "is_bold": false
+          }
+        },
+        "list_qictj8": {
+          "type": "list",
+          "settings": {
+            "list_items": "Sonotubes\nHelical piles\nGround screws\nIn-ground posts\nApproved surface footing systems\nOther site-specific foundations"
+          }
+        },
+        "text_XAr8Y8": {
+          "type": "text",
+          "settings": {
+            "text": "Not every foundation is suitable or accepted for every project. The correct method depends on structural loads, soil, frost conditions, drainage and local requirements. Specialized foundations may need to be sourced and installed separately.",
+            "is_bold": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xkYdDt",
+        "text_JwNNbD",
+        "feature_header_ryHDVc",
+        "text_bHKfBY",
+        "text_A7ewND",
+        "list_dcFftc",
+        "feature_header_DQnKHX",
+        "text_8Cenrf",
+        "list_qictj8",
+        "text_XAr8Y8"
+      ],
+      "name": "Double Image Text",
+      "settings": {
+        "image_1": "shopify://shop_images/image_8346_a8e953d8-e917-48e0-82ea-ebe2a5de1ff4.png",
+        "image_2": "shopify://shop_images/image_8579.png",
+        "section_bg": "#ffffff",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "steps_with_video_YXnUxD": {
+      "type": "steps-with-video",
+      "blocks": {
+        "step_n8f7Nk": {
+          "type": "step",
+          "settings": {
+            "custom_number": "01",
+            "title": "Choose the Size and Material",
+            "description": "Select an available deck size, pressure-treated or composite surface and applicable options."
+          }
+        },
+        "step_edLN9p": {
+          "type": "step",
+          "settings": {
+            "custom_number": "02",
+            "title": "Review the Property",
+            "description": "Confirm the available space, ground conditions, slope, proposed height, drainage and delivery access."
+          }
+        },
+        "step_pPgPUT": {
+          "type": "step",
+          "settings": {
+            "custom_number": "03",
+            "title": "Confirm Permits and Foundations",
+            "description": "Contact the local building department and select a suitable foundation system for the property."
+          }
+        },
+        "step_9dw34T": {
+          "type": "step",
+          "settings": {
+            "custom_number": "04",
+            "title": "Receive the Deck System",
+            "description": "The coordinated components are delivered to the property."
+          }
+        },
+        "step_g4ryKn": {
+          "type": "step",
+          "settings": {
+            "custom_number": "05",
+            "title": "Assemble It or Hire Local Help",
+            "description": "Complete the assembly yourself or hire a local handyman, carpenter or contractor."
+          }
+        },
+        "step_pT9Wfy": {
+          "type": "step",
+          "settings": {
+            "custom_number": "06",
+            "title": "Complete Required Inspections",
+            "description": "Arrange any inspections or final approvals required by the municipality"
+          }
+        }
+      },
+      "block_order": [
+        "step_n8f7Nk",
+        "step_edLN9p",
+        "step_pPgPUT",
+        "step_9dw34T",
+        "step_g4ryKn",
+        "step_pT9Wfy"
+      ],
+      "name": "Steps with Video",
+      "settings": {
+        "heading": "How Does A-DIY Work?",
+        "subtitle": "A streamlined journey from conceptual design to structural completion",
+        "video_overlay_text": "WATCH: HOW DOES A-DIY WORK",
+        "video_url": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",
+        "bg_color": "#1a1a18",
+        "heading_color": "#ffffff",
+        "text_color": "#cccccc",
+        "accent_color": "#cba068",
+        "padding_top_desktop": 72,
+        "padding_bottom_desktop": 72,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "engineering_warranty_DzqEAP": {
+      "type": "engineering-warranty",
+      "blocks": {
+        "info_card_f6AbVn": {
+          "type": "info_card",
+          "settings": {
+            "enable_left_border": false,
+            "title": "Verified Structural Rating",
+            "content": "<p>Applicable A-DIY deck configurations are engineered to hold up to 15,000 pounds when properly assembled, supported and installed according to the applicable specifications.</p><p>Structural performance depends on correct assembly, the selected configuration, suitable foundations, footing installation, site conditions, post height, bracing, connections and compliance with applicable engineering information.</p>"
+          }
+        },
+        "info_card_kKqd8T": {
+          "type": "info_card",
+          "settings": {
+            "enable_left_border": true,
+            "title": "Five-Year Structural Warranty",
+            "content": "<p>A-DIY deck systems include a five-year structural warranty, subject to the written terms, approved uses, correct installation, limitations and exclusions.</p><p>Composite surface boards may carry a separate manufacturer warranty.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "info_card_f6AbVn",
+        "info_card_kKqd8T"
+      ],
+      "name": "Engineering & Warranty",
+      "settings": {
+        "heading": "Engineering, Strength and Warranty",
+        "subtitle": "Applicable A-DIY deck configurations are professionally engineered.",
+        "image": "shopify://shop_images/image_8349_84885c85-edf0-430b-b8c7-0093fcb7a9fb.png",
+        "btn_primary_text": "Watch Load Test",
+        "btn_primary_link": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",
+        "btn_secondary_text": "Review Warranty",
+        "btn_secondary_link": "shopify://pages/reviews",
+        "bg_color": "#f4f3ef",
+        "heading_color": "#1a1a18",
+        "card_heading_color": "#1a1a18",
+        "text_color": "#4a4a4a",
+        "btn_bg_color": "#bd9b79",
+        "btn_text_color": "#ffffff",
+        "secondary_link_color": "#1a1a18",
+        "accent_border_color": "#376250",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "wood_vs_composite_88yXDd": {
+      "type": "wood-vs-composite",
+      "blocks": {
+        "card_y4ngdj": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_464_97084393-b380-4a9c-a35f-40aeb4c412c6.png",
+            "tag": "Scarsdale, NY",
+            "title": "Westchester County",
+            "features": "<b>Location:</b> [ADD COUNTY OR GENERAL REGION]\n<b>Deck size:</b> [ADD VERIFIED SIZE]\n<b>Material:</b> [ADD VERIFIED MATERIAL]\n<b>Ground condition:</b> [ADD LEVEL, SLOPED OR UNEVEN]\n<b>Foundation:</b> [ADD VERIFIED FOUNDATION]\n<b>Assembly completed by:</b> [ADD HOMEOWNER, HANDYMAN OR CONTRACTOR]\n<b>Permit experience:</b> [ADD VERIFIED INFORMATION]",
+            "btn_text": "",
+            "btn_link": "",
+            "card_bg": "#f0eee9",
+            "text_color": "#000000",
+            "btn_bg": "rgba(0,0,0,0)",
+            "btn_text_color": "#1a1a1a",
+            "btn_border_color": "#1a1a1a"
+          }
+        },
+        "card_DLztkP": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/magnific_use-the-uploaded-wooden-d_l7b1OYxgv9_2_0b361408-35bd-4d3a-9ac2-3c33c035e1fe.png",
+            "tag": "Scarsdale, NY",
+            "title": "Westchester County",
+            "features": "<b>Location:</b> [ADD COUNTY OR GENERAL REGION]\n<b>Deck size:</b> [ADD VERIFIED SIZE]\n<b>Material:</b> [ADD VERIFIED MATERIAL]\n<b>Ground condition:</b> [ADD LEVEL, SLOPED OR UNEVEN]\n<b>Foundation:</b> [ADD VERIFIED FOUNDATION]\n<b>Assembly completed by:</b> [ADD HOMEOWNER, HANDYMAN OR CONTRACTOR]\n<b>Permit experience:</b> [ADD VERIFIED INFORMATION]",
+            "btn_text": "",
+            "btn_link": "",
+            "card_bg": "#f0eee9",
+            "text_color": "#000000",
+            "btn_bg": "#194636",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#194636"
+          }
+        }
+      },
+      "block_order": [
+        "card_y4ngdj",
+        "card_DLztkP"
+      ],
+      "name": "Wood vs Composite",
+      "settings": {
+        "unique_class": "seo-homeowner-sec",
+        "main_title": "Built by a Real New York Homeowner",
+        "subtitle": "CASE STUDY",
+        "description": "",
+        "sum_1_title": "",
+        "sum_1_desc": "",
+        "sum_1_btn_text": "",
+        "sum_1_btn_link": "",
+        "sum_2_title": "",
+        "sum_2_desc": "",
+        "sum_2_btn_text": "",
+        "sum_2_btn_link": "",
+        "section_bg": "#FFFFFF",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 32,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "rich_text_UaxDwK": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_rMnWj7": {
+          "type": "heading",
+          "settings": {
+            "heading": "\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"",
+            "class_heading": ""
+          }
+        },
+        "text_a9zQTk": {
+          "type": "text",
+          "settings": {
+            "text": ""
+          }
+        },
+        "text_pY7ypn": {
+          "type": "text",
+          "settings": {
+            "text": "<p>— DAVID MILLER, SCARSDALE</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rMnWj7",
+        "text_a9zQTk",
+        "text_pY7ypn"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "seo-page-quotes",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 52
+      }
+    },
+    "multicolumn_kcGV87": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_THCnnQ": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672.png",
+            "title": "",
+            "text": "<p>NEWARK →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_cppRgJ": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-1.png",
+            "title": "",
+            "text": "<p>JERSEY CITY →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_AQQLEw": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-2.png",
+            "title": "",
+            "text": "<p>PATERSON →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_iQMfDT": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-3.png",
+            "title": "",
+            "text": "<p>ELIZABETH →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_XNGAn9": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-4.png",
+            "title": "",
+            "text": "<p>LAKEWOOD →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_Mc7eD7": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-5.png",
+            "title": "",
+            "text": "<p>EDISON →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_kpgT4X": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-6.png",
+            "title": "",
+            "text": "<p>WOODBRIDGE →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_HDUdnD": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-7.png",
+            "title": "",
+            "text": "<p>TOMS RIVER →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_CGt4cY": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-8.png",
+            "title": "",
+            "text": "<p>HAMILTON →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_rjYLDW": {
+          "type": "column",
+          "settings": {
+            "enable_autoplay": false,
+            "image": "shopify://shop_images/Rectangle_672-9.png",
+            "title": "",
+            "text": "<p>TRENTON →</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_THCnnQ",
+        "column_cppRgJ",
+        "column_AQQLEw",
+        "column_iQMfDT",
+        "column_XNGAn9",
+        "column_Mc7eD7",
+        "column_kpgT4X",
+        "column_HDUdnD",
+        "column_CGt4cY",
+        "column_rjYLDW"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "custom_class": "seo-cities",
+        "title": "Building a Deck Across New Jersey",
+        "title_content": "From dense permit review in Hudson and Essex counties to the salt air and shallow-foundation rules of the Jersey Shore, our kits are engineered for the specific demands of New Jersey geography.",
+        "image_width": "full",
+        "image_ratio": "square",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 5,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "scheme-5",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "faq_accordion_aF8bAw": {
+      "type": "faq-accordion",
+      "blocks": {
+        "faq_item_CUGYbY": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need a permit to build a deck in New Jersey?",
+            "answer": "<p>Yes. Building a new deck, completely replacing one or expanding an existing deck each require a full construction permit under the New Jersey Uniform Construction Code (N.J.A.C. 5:23). The code applies in every municipality in the state.</p>"
+          }
+        },
+        "faq_item_iKzBMG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How deep do deck footings have to go in New Jersey?",
+            "answer": "<p>New Jersey's frost line is generally 36 inches, so footings normally must extend at least 36 inches below grade. Footing diameter is sized from the tributary load, joist and girder spans and soil bearing capacity. Some South Jersey coastal areas permit shallower frost-protected foundations.</p>"
+          }
+        },
+        "faq_item_j73dMQ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there any deck I can build without digging 36-inch footings?",
+            "answer": "<p>A limited exemption applies to freestanding decks that rest on precast concrete pier blocks at grade, do not exceed 200 square feet, and stay no more than 20 inches above grade within 36 inches of the edge. That describes a low freestanding platform rather than an attached deck. Confirm it with your local construction official before you build.</p>"
+          }
+        },
+        "faq_item_qrJrXG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I replace my deck boards without pulling a permit?",
+            "answer": "<p>Replacing only non-structural elements such as decking boards, railings or stair treads is generally treated as ordinary maintenance and does not require a permit. Replacing structural components such as posts, girders, joists or stair stringers does.</p>"
+          }
+        },
+        "faq_item_HNYfQq": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Who actually issues the permit?",
+            "answer": "<p>Your local construction official issues permits and performs inspections. The Department of Community Affairs, Division of Codes and Standards administers the code statewide, which is why the technical requirements do not change when you cross a town line.</p>"
+          }
+        },
+        "faq_item_Y6END8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "If the code is statewide, why do neighbouring towns feel different?",
+            "answer": "<p>The code itself is uniform, but each municipality runs its own construction office. Submission requirements, fee schedules, plan-review turnaround and inspection scheduling all vary locally, so the paperwork and timeline differ even where the structural requirements do not.</p>"
+          }
+        },
+        "faq_item_4MV6HW": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does my contractor have to be registered in New Jersey?",
+            "answer": "<p>Yes. Home-improvement contractors must register annually with the Division of Consumer Affairs, including out-of-state contractors. Registration requires commercial general liability insurance of at least $500,000 per occurrence. Contractors who fail to register face civil penalties of up to $10,000 for a first offence.</p>"
+          }
+        },
+        "faq_item_Tmem3c": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does A-DIY pull the permit for me?",
+            "answer": "<p>No. A-DIY supplies the engineered deck system, not local installation or permitting services. Your permit application is filed with your own municipality, by you or by whoever you hire to assemble the kit. A-DIY provides engineering diagrams to support that application.</p>"
+          }
+        },
+        "faq_item_NRaCXG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should I consider for a deck near the Jersey Shore?",
+            "answer": "<p>Coastal properties add salt air and moisture exposure to the usual freeze-and-thaw cycle, which affects fastener and material choice more than it affects framing. Some coastal areas also allow frost-protected shallow foundations rather than full-depth footings.</p>"
+          }
+        },
+        "faq_item_nB7HMA": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How far in advance should I start?",
+            "answer": "<p>Work backwards from the permit. Plan review and inspection scheduling are handled by your municipal construction office and are the least predictable part of the timeline, so it is worth contacting them before ordering materials.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_CUGYbY",
+        "faq_item_iKzBMG",
+        "faq_item_j73dMQ",
+        "faq_item_qrJrXG",
+        "faq_item_HNYfQq",
+        "faq_item_Y6END8",
+        "faq_item_4MV6HW",
+        "faq_item_Tmem3c",
+        "faq_item_NRaCXG",
+        "faq_item_nB7HMA"
+      ],
+      "name": "FAQ Accordion",
+      "settings": {
+        "heading": "New Jersey Deck Questions",
+        "section_bg": "#FFFFFF",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_with_text_JjwmnC",
+    "featured_icon_scrolling_kF3ffz",
+    "navigation_tabs_PhVK3p",
+    "multicolumn_TGXkFF",
+    "old_comparison_table_3NMcRn",
+    "rich_text_gEgHFN",
+    "outdoor_moments_cbeyy9",
+    "multicolumn_r3rrTE",
+    "cost_guide_section_xgJCGN",
+    "contractor_guide_section_iBTLG6",
+    "faq_accordion_tUDpHR",
+    "deck_permits_engineering_4C48gw",
+    "engineering_diagrams_zHUnjj",
+    "wood_vs_composite_GVhp6t",
+    "double_image_text_p6xnEW",
+    "steps_with_video_YXnUxD",
+    "engineering_warranty_DzqEAP",
+    "wood_vs_composite_88yXDd",
+    "rich_text_UaxDwK",
+    "multicolumn_kcGV87",
+    "faq_accordion_aF8bAw"
+  ]
+}
