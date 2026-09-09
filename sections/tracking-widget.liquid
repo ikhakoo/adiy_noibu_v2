@@ -440,6 +440,10 @@ async function handleTrackingSubmit(event) {
       const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
       const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
       const deliveryText = data.delivery ? (typeof data.delivery === 'object' ? JSON.stringify(data.delivery) : data.delivery) : 'N/A';
+      // Customer details extract kar rahe hain safely
+      const customerName = data.customer && data.customer.name ? data.customer.name : 'N/A';
+      const customerEmail = data.customer && data.customer.email ? data.customer.email : 'N/A';
+      const customerPhone = data.customer && data.customer.phone ? data.customer.phone : 'N/A';
 
       resultContainer.innerHTML = `
         <div class="tracking-result-header">
@@ -447,6 +451,9 @@ async function handleTrackingSubmit(event) {
           <span class="status-badge">${fulfillmentText}</span>
         </div>
         <div class="tracking-result-grid">
+          <div><strong>Customer Name:</strong> ${customerName}</div>
+          <div><strong>Email:</strong> ${customerEmail}</div>
+          <div><strong>Phone:</strong> ${customerPhone}</div>
           <div><strong>Date:</strong> ${formattedDate}</div>
           <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
           <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
