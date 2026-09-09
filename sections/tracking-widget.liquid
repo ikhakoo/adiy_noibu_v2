@@ -545,28 +545,20 @@ function showLiveProgressStage() {
       progress = 80;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
     } else {
+      // Days > 3 but status still UNFULFILLED: Stay on Stage 1 at 100%
       progress = 100;
       checkedItems = [...allCheckboxes];
     }
 
     // Step active icons (Stage 1 thresholds)
-    const stepThresholds = [22, 40, 80, 100];
+    const stepThresholds = [22, 35, 80, 100];
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
-      const lineEl = document.getElementById(`flow-line-${i}`);
-      
       if (stepEl) {
         if (progress >= stepThresholds[i - 1]) {
           stepEl.classList.add('active');
         } else {
           stepEl.classList.remove('active');
-        }
-      }
-      if (lineEl) {
-        if (progress >= stepThresholds[i]) {
-          lineEl.classList.add('active');
-        } else {
-          lineEl.classList.remove('active');
         }
       }
     }
@@ -588,7 +580,8 @@ function showLiveProgressStage() {
     etaText.innerText = "Estimate: 3 to 4 business days";
     percentLabel.innerText = "of step 2 is complete.";
 
-    const stage2WorkingDays = workingDays - 3;
+    // Stage 2 Progress progression based on days passed since Stage 1
+    const stage2WorkingDays = workingDays - 3; // Days counter inside Stage 2
 
     if (stage2WorkingDays <= 1) {
       progress = 22;
@@ -600,30 +593,15 @@ function showLiveProgressStage() {
       progress = 100;
     }
 
-    // Stage 2 dynamic icon highlight logic matching reference layout:
-    // Step 1 (Manufacturing): Always Active
-    // Step 2 (Assembly): Always Active
-    // Step 3 (Packing): Active from 22% upwards
-    // Step 4 (On the way): Active at 100%
+    // In Stage 2: Manufacturing, Assembly, and Packing (steps 1, 2, 3) are all active/completed
     const activeStepsCount = (progress >= 100) ? 4 : 3;
-
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
-      const lineEl = document.getElementById(`flow-line-${i}`);
-
       if (stepEl) {
         if (i <= activeStepsCount) {
           stepEl.classList.add('active');
         } else {
           stepEl.classList.remove('active');
-        }
-      }
-
-      if (lineEl) {
-        if (i < activeStepsCount) {
-          lineEl.classList.add('active');
-        } else {
-          lineEl.classList.remove('active');
         }
       }
     }
