@@ -495,8 +495,8 @@ function showLiveProgressStage() {
   const isFulfillmentActive = (fulfillmentStatus === 'IN_PROGRESS' || fulfillmentStatus === 'FULFILLED' || fulfillmentStatus === 'PARTIALLY_FULFILLED');
 
   // STAGE ROUTING DETERMINATION
+  // Working days > 3 (yaani 85% reach) aur fulfillment status active hone par hi Stage 2 trigger hoga
   let isStage2 = false;
-
   if (workingDays > 3 && isFulfillmentActive) {
     isStage2 = true;
   }
@@ -517,7 +517,7 @@ function showLiveProgressStage() {
 
   if (!isStage2) {
     // ------------------------------------
-    // STAGE 1 VIEW (Production Phase)
+    // STAGE 1 VIEW (Max 85% Cap)
     // ------------------------------------
     stage1Block.style.display = 'block';
     stage2Block.style.display = 'none';
@@ -545,20 +545,30 @@ function showLiveProgressStage() {
       progress = 50;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
     } else {
-      // Days > 3 but status still UNFULFILLED: Stay on Stage 1 at 100%
+      // Days > 3 but status still UNFULFILLED: Cap at 85%
       progress = 85;
       checkedItems = [...allCheckboxes];
     }
 
-    // Step active icons (Stage 1 thresholds)
-    const stepThresholds = [22, 35, 50, 85];
+    // Step active icons (Stage 1 thresholds: Max 3 steps, 4th "On the way" will NEVER active in Stage 1)
+    const stepThresholds = [22, 35, 50]; 
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
+      const lineEl = document.getElementById(`flow-line-${i}`);
+
       if (stepEl) {
-        if (progress >= stepThresholds[i - 1]) {
+        if (i <= 3 && progress >= stepThresholds[i - 1]) {
           stepEl.classList.add('active');
         } else {
           stepEl.classList.remove('active');
+        }
+      }
+
+      if (lineEl) {
+        if (i < 3 && progress >= stepThresholds[i]) {
+          lineEl.classList.add('active');
+        } else {
+          lineEl.classList.remove('active');
         }
       }
     }
@@ -569,7 +579,7 @@ function showLiveProgressStage() {
 
   } else {
     // ------------------------------------
-    // STAGE 2 VIEW (Getting Ready to Ship / Packing)
+    // STAGE 2 VIEW (Starts from 85% to 100%)
     // ------------------------------------
     stage1Block.style.display = 'none';
     stage2Block.style.display = 'block';
@@ -580,8 +590,7 @@ function showLiveProgressStage() {
     etaText.innerText = "Estimate: 3 to 4 business days";
     percentLabel.innerText = "of step 2 is complete.";
 
-    // Stage 2 Progress progression based on days passed since Stage 1
-    const stage2WorkingDays = workingDays - 3; // Days counter inside Stage 2
+    const stage2WorkingDays = workingDays - 3; // Days count inside Stage 2
 
     if (stage2WorkingDays <= 1) {
       progress = 85;
@@ -593,15 +602,28 @@ function showLiveProgressStage() {
       progress = 100;
     }
 
-    // In Stage 2: Manufacturing, Assembly, and Packing (steps 1, 2, 3) are all active/completed
+    // Icons Logic Stage 2:
+    // Steps 1, 2, 3 (Manufacturing, Assembly, Packing) are ALWAYS ACTIVE
+    // Step 4 (On the way) activates ONLY when progress hits 100%
     const activeStepsCount = (progress >= 100) ? 4 : 3;
+
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
+      const lineEl = document.getElementById(`flow-line-${i}`);
+
       if (stepEl) {
         if (i <= activeStepsCount) {
           stepEl.classList.add('active');
         } else {
           stepEl.classList.remove('active');
+        }
+      }
+
+      if (lineEl) {
+        if (i < activeStepsCount) {
+          lineEl.classList.add('active');
+        } else {
+          lineEl.classList.remove('active');
         }
       }
     }
