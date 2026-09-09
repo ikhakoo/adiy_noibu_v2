@@ -584,6 +584,19 @@ function showLiveProgressStage() {
     // ------------------------------------
     // STAGE 2 VIEW (Starts from 85% to 100%)
     // ------------------------------------
+    
+    // IMMEDIATE REDIRECTION CHECK:
+    // Agar status FULFILLED hai toh foran external carrier site par redirect kar do
+    if (fulfillmentStatus === 'FULFILLED') {
+      const cleanOrderNumber = order.number.toString().replace(/[^0-9]/g, '');
+      const redirectUrl = `https://efwtrack.com/track/${cleanOrderNumber}`;
+      
+      window.location.href = redirectUrl;
+      return; // Aage ka UI update run karne ki zaroorat nahi
+    }
+
+    // AGAR STATUS FULFILLED NAHI HAI:
+    // Normal Stage 2 UI load hoga aur day 1, day 2, day 3 progress chalega
     stage1Block.style.display = 'none';
     stage2Block.style.display = 'block';
 
@@ -595,6 +608,7 @@ function showLiveProgressStage() {
 
     const stage2WorkingDays = workingDays - 3;
 
+    // Days ke hisab se progress cap (Max 100% tak ruk jayega status FULFILLED hone tak)
     if (stage2WorkingDays <= 1) {
       progress = 85;
     } else if (stage2WorkingDays === 2) {
@@ -632,10 +646,12 @@ function showLiveProgressStage() {
     }
   }
 
-  // Force DOM Updates First
+  // DOM Updates
   if (percentEl) percentEl.innerText = progress + '%';
   if (fillEl) fillEl.style.width = progress + '%';
 
+  // Purana end-level redirection block yahan se remove kar diya gaya hai.
+{% comment %} 
   // SAFELY DELAYED REDIRECTION LOGIC
   // Progress 100% aur FULFILLED status evaluate hone ke baad UI pehle render hoti hai, then redirect hota hai
   if (isStage2 && progress >= 100 && fulfillmentStatus === 'FULFILLED') {
@@ -645,7 +661,7 @@ function showLiveProgressStage() {
     setTimeout(() => {
       window.location.href = redirectUrl;
     }, 150);
-  }
+  } {% endcomment %}
 }
 
 // Browser Back Button Cache Refresh Fix
