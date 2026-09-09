@@ -28,6 +28,25 @@ function runAfterPaint(fn) {
 //============================ # INP helper End ==========================
 
 
+//============================ # event target helper ==========================
+
+/*
+ * `closest()` lives on Element. An event target is NOT always an element --
+ * `document` is a common one, and mouse events can also land on non-element
+ * nodes. Calling event.target.closest() directly therefore throws
+ * "event.target.closest is not a function" (Noibu #441).
+ *
+ * Returns null instead of throwing when there is nothing sensible to match.
+ */
+function closestFromEvent(event, selector) {
+  const target = event && event.target;
+  if (!target || typeof target.closest !== 'function') return null;
+  return target.closest(selector);
+}
+
+//============================ # event target helper End ==========================
+
+
 //============================ # smooth scroll ==========================
 
 /*
@@ -39,7 +58,7 @@ function runAfterPaint(fn) {
  * the old version silently missed.
  */
 document.addEventListener('click', function(e) {
-  const link = e.target.closest('a[href*="#"]');
+  const link = closestFromEvent(e, 'a[href*="#"]');
   if (!link) return;
 
   const href = link.getAttribute('href');
@@ -106,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', () => {
   // Quantity Selector Plus/Minus Logic
   document.addEventListener('click', (e) => {
-    const qtyBtn = e.target.closest('.js-qty-btn');
+    const qtyBtn = closestFromEvent(e, '.js-qty-btn');
     if (!qtyBtn) return;
 
     const card = qtyBtn.closest('.js-accessory-card');
@@ -122,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // AJAX Add To Cart Logic (Empty Cart Fix Included)
   document.addEventListener('click', async (e) => {
-    const addBtn = e.target.closest('.js-acc-add-to-cart');
+    const addBtn = closestFromEvent(e, '.js-acc-add-to-cart');
     if (!addBtn) return;
 
     const card = addBtn.closest('.js-accessory-card');
@@ -275,20 +294,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+//============================ # desktop nav hover ==========================
 
-  document.addEventListener('mouseover', (event) => {
-    const li = event.target.closest('.header-menu-right li');
-    if (li) {
-      li.classList.add('active');
-    }
-  });
+/*
+ * These two run on every pointer move across every page, so they need to be
+ * cheap and they must not throw. The previous version called
+ * event.target.closest() directly, which threw whenever the pointer target was
+ * not an element (Noibu #441).
+ *
+ * Behaviour is unchanged: hovering a `.header-menu-right li` adds `active`,
+ * leaving it removes `active`. If the `.active` styles turn out to be a plain
+ * hover state, both listeners can be deleted entirely in favour of a
+ * `.header-menu-right li:hover` rule -- that is the better fix, but it needs
+ * the stylesheet checked first.
+ */
+function setHeaderMenuActive(event, isActive) {
+  const li = closestFromEvent(event, '.header-menu-right li');
+  if (li) li.classList.toggle('active', isActive);
+}
 
-  document.addEventListener('mouseout', (event) => {
-    const li = event.target.closest('.header-menu-right li');
-    if (li) {
-      li.classList.remove('active');
-    }
-  });
+document.addEventListener('mouseover', (event) => setHeaderMenuActive(event, true));
+document.addEventListener('mouseout', (event) => setHeaderMenuActive(event, false));
+
+//============================ # desktop nav hover End ==========================
 
 
 
@@ -377,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener("DOMContentLoaded", function () {
   // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
   document.addEventListener("click", function (event) {
-    const linkTarget = event.target.closest('a[href*="#affirm"]');
+    const linkTarget = closestFromEvent(event, 'a[href*="#affirm"]');
 
     if (linkTarget) {
       event.preventDefault(); // Default anchor anchor jump ko rokega -- must stay synchronous
@@ -439,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Pure page par check karega jis link/button ke href me "#klarna" ho
   document.body.addEventListener('click', function (e) {
-    const trigger = e.target.closest('a[href*="#klarna"], button[href*="#klarna"], [data-href*="#klarna"]');
+    const trigger = closestFromEvent(e, 'a[href*="#klarna"], button[href*="#klarna"], [data-href*="#klarna"]');
     if (trigger) {
       e.preventDefault();
       openModal();
