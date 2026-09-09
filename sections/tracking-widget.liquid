@@ -543,17 +543,17 @@ function showLiveProgressStage() {
       progress = 22;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
     } else if (workingDays === 2) {
-      progress = 35;
+      progress = 45;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
     } else if (workingDays === 3) {
-      progress = 50;
+      progress = 60;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
     } else {
       progress = 85;
       checkedItems = [...allCheckboxes];
     }
 
-    const stepThresholds = [22, 40, 70]; 
+    const stepThresholds = [22, 35, 70]; 
 
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
