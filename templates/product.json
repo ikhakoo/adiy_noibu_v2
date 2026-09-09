@@ -549,6 +549,15 @@
     "video_carousel_Fe9ewP": {
       "type": "video-carousel",
       "blocks": {
+        "video_card_ahYgct": {
+          "type": "video_card",
+          "settings": {
+            "external_video_url": "https://cdn.shopify.com/videos/c/o/v/8da1c0c9e7844c41b194c3f72f5bba72.mp4",
+            "video_title": "Built solo in about six hours, six weeks postpartum",
+            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
+            "video_upload_date": ""
+          }
+        },
         "video_card_jBfw7r": {
           "type": "video_card",
           "settings": {
@@ -701,6 +710,7 @@
         }
       },
       "block_order": [
+        "video_card_ahYgct",
         "video_card_jBfw7r",
         "video_card_xtzmkU",
         "video_card_BpVMTz",
