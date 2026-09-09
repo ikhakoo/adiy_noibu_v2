@@ -23,6 +23,7 @@
       "settings": {
         "logo_image": "shopify://shop_images/a-diy-logo.png",
         "search_desc": "To view the most up-to-date status of your shipment,<br>enter your tracking number below.",
+        "search_footer": "<p>For any questions, call <em>A-DIY Control Tower </em><a href=\"tel:+17863582872\" title=\"tel:+17863582872\"><strong>+1 (786) 358-2872</strong></a><strong> </strong>or email us at <a href=\"mailto:updates@a-diy.com\" title=\"mailto:updates@a-diy.com\"><strong>updates@a-diy.com</strong></a></p>",
         "step_pill": "Step 1 of 3",
         "main_heading": "Your deck is now in production.",
         "subheading": "Every A-DIY deck is made just for you, nothing sits in a warehouse.",
