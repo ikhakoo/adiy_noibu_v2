@@ -292,54 +292,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  document.addEventListener('DOMContentLoaded', () => {
-  const cartDrawer = document.querySelector('cart-drawer');
-
-  document.addEventListener('change', (event) => {
-    if (event.target.classList.contains('quantity__input')) {
-      const input = event.target;
-      const lineKey = input.dataset.key || input.dataset.index;
-      const newQuantity = parseInt(input.value, 10);
-
-      updateCartQuantity(lineKey, newQuantity);
-    }
-  });
-
-  function updateCartQuantity(lineKey, quantity) {
-    const body = JSON.stringify({
-      id: lineKey,
-      quantity: quantity,
-      sections: cartDrawer ? cartDrawer.getSectionsToRender().map((section) => section.id) : []
-    });
-
-    fetch(`${routes.cart_change_url}.js`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: body
-    })
-    .then((response) => response.json())
-    .then((parsedState) => {
-      if (parsedState.errors) {
-        alert(parsedState.errors);
-        return;
-      }
-
-      // If using standard Shopify Dawn cart-drawer component
-      if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
-        cartDrawer.renderContents(parsedState);
-      } else {
-        // Fallback: Reload page or trigger Shopify cart update events
-        window.location.reload();
-      }
-    })
-    .catch((error) => {
-      console.error('Error updating cart:', error);
-    });
-  }
-});
+// ============================ cart quantity updates ============================
+//
+// A delegated `change` listener used to live here. It watched every
+// `.quantity__input` on the page and POSTed to /cart/change.js as:
+//
+//     { id: input.dataset.key || input.dataset.index, quantity: n }
+//
+// `data-index` is the line NUMBER ("1", "2", ...). Shopify's `id` parameter
+// expects a variant id or a line item key, so that request always failed:
+//
+//     422  {"status":422,"message":"Cart Error","description":"Cannot find variant"}
+//
+// Because assets/cart.js also listens for the same change event and sends the
+// correct `{ line: "2", quantity: 3 }`, the update did go through -- but every
+// single quantity change in the drawer fired a wasted 422 alongside it. That is
+// Noibu issue #379 ("422 Unprocessable Entity", 422-a-diy.com/cart/change.js),
+// which carries rage-click, refresh and back-button symptoms.
+//
+// Removed rather than repaired: CartItems / CartDrawerItems in assets/cart.js
+// already own quantity changes for the drawer, including rejection handling,
+// live-region announcements and focus management. Two handlers on one event was
+// the underlying problem.
+//
+// ============================ end ============================
 
 
 
