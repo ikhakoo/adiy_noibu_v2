@@ -490,18 +490,14 @@ function showLiveProgressStage() {
   const currentDate = new Date();
   const workingDays = calculateWorkingDays(orderDate, currentDate);
 
-  // Fulfillment status normalization
   const fulfillmentStatus = order.fulfillmentStatus ? order.fulfillmentStatus.toUpperCase() : 'UNFULFILLED';
   const isFulfillmentActive = (fulfillmentStatus === 'IN_PROGRESS' || fulfillmentStatus === 'FULFILLED' || fulfillmentStatus === 'PARTIALLY_FULFILLED');
 
-  // STAGE ROUTING DETERMINATION
-  // Working days > 3 (yaani 85% reach) aur fulfillment status active hone par hi Stage 2 trigger hoga
   let isStage2 = false;
   if (workingDays > 3 && isFulfillmentActive) {
     isStage2 = true;
   }
 
-  // DOM Elements
   const stepPill = document.getElementById('dynamic-step-pill');
   const mainHeading = document.getElementById('dynamic-main-heading');
   const subheading = document.getElementById('dynamic-subheading');
@@ -517,7 +513,7 @@ function showLiveProgressStage() {
 
   if (!isStage2) {
     // ------------------------------------
-    // STAGE 1 VIEW (Max 85% Cap)
+    // STAGE 1 VIEW
     // ------------------------------------
     stage1Block.style.display = 'block';
     stage2Block.style.display = 'none';
@@ -545,13 +541,17 @@ function showLiveProgressStage() {
       progress = 50;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
     } else {
-      // Days > 3 but status still UNFULFILLED: Cap at 85%
       progress = 85;
       checkedItems = [...allCheckboxes];
     }
 
-    // Step active icons (Stage 1 thresholds: Max 3 steps, 4th "On the way" will NEVER active in Stage 1)
-    const stepThresholds = [22, 35, 50]; 
+    // Fixed Icon Thresholds for Stage 1:
+    // Icon 1 (Manufacturing): >= 22%
+    // Icon 2 (Assembly): >= 35%
+    // Icon 3 (Packing): >= 70% (50% par highlight NOHI hoga)
+    // Icon 4 (On the way): NEVER in Stage 1
+    const stepThresholds = [22, 35, 70]; 
+
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
@@ -579,7 +579,7 @@ function showLiveProgressStage() {
 
   } else {
     // ------------------------------------
-    // STAGE 2 VIEW (Starts from 85% to 100%)
+    // STAGE 2 VIEW
     // ------------------------------------
     stage1Block.style.display = 'none';
     stage2Block.style.display = 'block';
@@ -590,7 +590,7 @@ function showLiveProgressStage() {
     etaText.innerText = "Estimate: 3 to 4 business days";
     percentLabel.innerText = "of step 2 is complete.";
 
-    const stage2WorkingDays = workingDays - 3; // Days count inside Stage 2
+    const stage2WorkingDays = workingDays - 3;
 
     if (stage2WorkingDays <= 1) {
       progress = 85;
@@ -602,17 +602,19 @@ function showLiveProgressStage() {
       progress = 100;
     }
 
-    // Icons Logic Stage 2:
-    // Steps 1, 2, 3 (Manufacturing, Assembly, Packing) are ALWAYS ACTIVE
-    // Step 4 (On the way) activates ONLY when progress hits 100%
-    const activeStepsCount = (progress >= 100) ? 4 : 3;
-
+    // Stage 2 Thresholds:
+    // Icons 1, 2, 3 (Packing tak) >= 70% (85% par teeno active rahen ge)
+    // Icon 4 (On the way) sirf 100% par active hoga
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
 
+      let isActive = false;
+      if (i <= 3 && progress >= 70) isActive = true;
+      if (i === 4 && progress >= 100) isActive = true;
+
       if (stepEl) {
-        if (i <= activeStepsCount) {
+        if (isActive) {
           stepEl.classList.add('active');
         } else {
           stepEl.classList.remove('active');
@@ -620,7 +622,7 @@ function showLiveProgressStage() {
       }
 
       if (lineEl) {
-        if (i < activeStepsCount) {
+        if (i < 3 || (i === 3 && progress >= 100)) {
           lineEl.classList.add('active');
         } else {
           lineEl.classList.remove('active');
@@ -629,7 +631,6 @@ function showLiveProgressStage() {
     }
   }
 
-  // Update progress text & bar length
   if (percentEl) percentEl.innerText = progress + '%';
   if (fillEl) fillEl.style.width = progress + '%';
 }
