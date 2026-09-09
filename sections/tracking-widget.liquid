@@ -11,416 +11,693 @@
     }
   }
 
-  .tracking-widget-{{ section.id }} {
-    background-color: {{ section.settings.bg_color }};
-    color: {{ section.settings.text_color }};
-    font-family: inherit;
-    text-align: center;
-  }
-
-  .tracking-widget__container {
-    max-width: 680px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .tracking-widget__logo-wrapper {
-    margin-bottom: 24px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .tracking-widget__logo {
-    display: block;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .tracking-widget__subtext {
-    font-size: 15px;
-    line-height: 1.4;
-    color: {{ section.settings.text_color }};
-    margin-bottom: 28px;
-    max-width: 500px;
-  }
-
-  .tracking-widget__subtext p {
-    margin: 0;
-  }
-
-  .tracking-widget__form {
-    width: 100%;
-    max-width: 520px;
-    margin-bottom: 80px;
-  }
-
-  .tracking-widget__input-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .tracking-widget__input {
-    flex: 1;
-    height: 44px;
-    padding: 0 16px;
-    border: 1px solid #103254;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #333333;
-    outline: none;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    transition: border-color 0.2s ease;
-  }
-
-  .tracking-widget__input:focus {
-    border-color: #002B49;
-    box-shadow: 0 0 0 1px #002B49;
-  }
-
-  .tracking-widget__input::placeholder {
-    color: #666666;
-  }
-
-  .tracking-widget__button {
-    height: 44px;
-    padding: 0 28px;
-    background-color: {{ section.settings.btn_bg_color }};
-    color: {{ section.settings.btn_text_color }};
-    border: none;
-    border-radius: 6px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .tracking-widget__button:hover {
-    opacity: 0.92;
-  }
-
-  .tracking-widget__footer-text {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #555555;
-    max-width: 600px;
-    margin-top: 20px;
-  }
-
-  .tracking-widget__footer-text p {
-    margin: 0;
-  }
-
-  /* Stage Sections Show/Hide Logic */
-  .stage-1-section,
-  .stage-2-section,
-  .stage-3-section,
-  .stage-section-wrapper {
-    display: none !important;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .stage-1-section.show-stage,
-  .stage-2-section.show-stage,
-  .stage-3-section.show-stage,
-  .stage-section-wrapper.show-stage {
-    display: block !important;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .tracking-widget-container.hide-widget {
-    display: none !important;
-  }
-
-  /* Fixed Corner Back Button */
-  .stage-back-btn {
-    position: fixed;
-    top: 24px;
-    left: 24px;
-    z-index: 99999;
-    background: #ffffff;
-    color: #111827;
-    border: 1px solid #d1d5db;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-  }
-
-  .stage-back-btn:hover {
-    background: #f3f4f6;
-    transform: translateY(-2px);
-  }
-
-  @media screen and (max-width: 480px) {
-    .tracking-widget__input-group {
-      flex-direction: column;
-      gap: 10px;
-    }
-    .tracking-widget__input,
-    .tracking-widget__button {
-      width: 100%;
-    }
+  .stage-1-{{ section.id }} {
+    --accent-color: {{ section.settings.accent_color }};
+    --bg-main: {{ section.settings.bg_color }};
+    --card-bg: {{ section.settings.card_bg_color }};
+    --text-color: {{ section.settings.text_color }};
   }
 {%- endstyle -%}
 
-<button id="stageBackBtn" class="stage-back-btn" type="button" onclick="resetTrackingView()">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-    <path d="M19 12H5M12 19l-7-7 7-7"/>
-  </svg>
-  Back to Search
-</button>
-
-<div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding tracking-widget-container">
+<div class="stage-1 stage-1-section stage-1-{{ section.id }} section-{{ section.id }}-padding">
   <div class="page-width page-width--narrow">
-    <div class="tracking-widget__container">
-      {%- if section.settings.logo != blank -%}
-        <div class="tracking-widget__logo-wrapper">
-          <img
-            src="{{ section.settings.logo | image_url: width: 600 }}"
-            alt="{{ section.settings.logo.alt | escape }}"
-            loading="lazy"
-            width="{{ section.settings.logo_width }}"
-            height="auto"
-            class="tracking-widget__logo"
-            style="max-width: {{ section.settings.logo_width }}px;"
-          >
+
+    <!-- 1. SEARCH CONTAINER -->
+    <div id="tracking-search-container" class="stage-1__search-card">
+      {%- if section.settings.logo_image != blank -%}
+        <div class="stage-1__search-logo-wrap">
+          <img src="{{ section.settings.logo_image | image_url: width: 300 }}" alt="{{ shop.name }}" loading="lazy" class="stage-1__search-logo">
         </div>
+      {%- else -%}
+        <div class="stage-1__search-logo-text">A-DIY</div>
       {%- endif -%}
 
-      {%- if section.settings.subtext != blank -%}
-        <div class="tracking-widget__subtext">
-          {{ section.settings.subtext }}
-        </div>
-      {%- endif -%}
+      <div class="stage-1__search-header">
+        <div class="stage-1__search-desc">{{ section.settings.search_desc }}</div>
+      </div>
 
-      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="handleTrackingSubmit(event); return false;">
-        <div class="tracking-widget__input-group">
-          <input
-            type="text"
-            id="TrackingInput-{{ section.id }}"
-            class="tracking-widget__input"
-            placeholder="{{ section.settings.placeholder_text }}"
-            required
-            aria-label="{{ section.settings.placeholder_text }}"
-          >
-          <button type="submit" id="trackSubmitBtn" class="tracking-widget__button">
-            {{ section.settings.button_text }}
-          </button>
-        </div>
+      <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
+        <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="enter tracking number" required />
+        <button type="submit" id="trackSubmitBtn" class="stage-1__btn">Track</button>
       </form>
 
-      {%- if section.settings.footer_text != blank -%}
-        <div class="tracking-widget__footer-text">
-          {{ section.settings.footer_text }}
-        </div>
-      {%- endif -%}
+      <div class="stage-1__search-footer">
+        {{ section.settings.search_footer }}  
+      </div>
+
+      <div id="trackingResultContainer" class="stage-1__order-card" style="display: none;"></div>
     </div>
+
+    <!-- MAIN TRACKING DISPLAY (STAGES 1 & 2) -->
+    <div id="dynamic-tracking-stage" style="display: none;">
+      
+      <button type="button" id="stageBackBtn" class="stage-1__back-btn" onclick="resetTrackingView()">
+        &larr; Back to Search
+      </button>
+
+      <!-- Dynamic Header -->
+      <div class="stage-1__header">
+        <span class="stage-1__step-pill" id="dynamic-step-pill">Step 1 of 3</span>
+        <h1 class="stage-1__main-heading" id="dynamic-main-heading">Your deck is now in production.</h1>
+        <p class="stage-1__subheading" id="dynamic-subheading">Every A-DIY deck is made just for you, nothing sits in a warehouse.</p>
+
+        <div class="stage-1__eta-badge" id="dynamic-eta-badge">
+          <span class="stage-1__eta-dot"></span>
+          <span id="dynamic-eta-text">Estimated: 7 business days</span>
+        </div>
+      </div>
+
+      <!-- Unified Progress Card -->
+      <div class="stage-1__card">
+        <div class="stage-1__percentage-row">
+          <span class="stage-1__percent" id="track-percent-val">22%</span>
+          <span class="stage-1__percent-text" id="track-percent-label">of step 1 is complete.</span>
+        </div>
+
+        <div class="stage-1__progress-bar-container">
+          <div class="stage-1__progress-bar-fill" id="track-progress-fill" style="width: 22%;"></div>
+        </div>
+
+        <div class="stage-1__steps-flow">
+          <div class="stage-1__flow-item active" id="flow-step-1">
+            <div class="stage-1__icon-box">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            </div>
+            <span>Manufacturing</span>
+          </div>
+
+          <div class="stage-1__flow-line" id="flow-line-1"></div>
+
+          <div class="stage-1__flow-item" id="flow-step-2">
+            <div class="stage-1__icon-box">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <span>Assembly</span>
+          </div>
+
+          <div class="stage-1__flow-line" id="flow-line-2"></div>
+
+          <div class="stage-1__flow-item" id="flow-step-3">
+            <div class="stage-1__icon-box">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <span>Packing</span>
+          </div>
+
+          <div class="stage-1__flow-line" id="flow-line-3"></div>
+
+          <div class="stage-1__flow-item" id="flow-step-4">
+            <div class="stage-1__icon-box">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            </div>
+            <span>On the way</span>
+          </div>
+        </div>
+
+        {%- if section.settings.card_note != blank -%}
+          <div class="stage-1__card-note" id="dynamic-card-note">
+            {{ section.settings.card_note }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STAGE 1 CONTENT (Checklists)              -->
+      <!-- ========================================== -->
+      <div id="stage-1-details-block">
+        <div class="stage-1__checklist-container">
+          <h2 class="stage-1__checklist-title">What's happening right now ( Manufacturing )</h2>
+          <div class="stage-1__checklist">
+            <div class="stage-1__check-item" id="chk-order-confirmed">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Order confirmed</h3>
+                <p class="stage-1__check-desc">Your deck specifications are finalized and sent to production.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-materials-selected">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Materials selected</h3>
+                <p class="stage-1__check-desc">Your materials are selected and quality checked.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-components-production">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Components in production</h3>
+                <p class="stage-1__check-desc">Your deck is taking shape. Every component is now in production.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-hardware-prep">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Hardware preparation</h3>
+                <p class="stage-1__check-desc">Your blocks, brackets and fasteners are being prepared for your kit.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage-1__checklist-container" style="margin-top: 2.5rem;">
+          <h2 class="stage-1__checklist-title">What's happening right now ( Assembly )</h2>
+          <p class="stage-1__check-desc" style="margin-bottom: 1rem;">Nothing leaves here until all four pass.</p>
+          <div class="stage-1__checklist">
+            <div class="stage-1__check-item" id="chk-deck-together">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Your deck comes together</h3>
+                <p class="stage-1__check-desc">We assemble the complete frame to make sure every component fits as intended.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-lines-up">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Everything lines up</h3>
+                <p class="stage-1__check-desc">We check the deck for square, level and proper alignment.</p>
+              </div>
+            </div>
+            <div class="stage-1__check-item" id="chk-connection-checked">
+              <div class="stage-1__check-icon"></div>
+              <div class="stage-1__check-content">
+                <h3 class="stage-1__check-title h4">Every connection is checked</h3>
+                <p class="stage-1__check-desc">Brackets and connections are secured and the assembled deck is tested for stability.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STAGE 2 CONTENT (Upsell & Delivery Info)   -->
+      <!-- ========================================== -->
+      <div id="stage-2-details-block" style="display: none;">
+        
+        <!-- Red Callout Box / Add-ons -->
+        <div class="stage-2__upsell-card">
+          <div class="stage-2__upsell-badge-pill">
+            <span class="stage-2__dot-red"></span> Last chance - leaves in a few days
+          </div>
+
+          <div class="stage-2__upsell-header">
+            <div>
+              <h2 class="stage-2__upsell-title">Last chance to add steps & railings.</h2>
+            </div>
+            <div class="stage-2__lightning-icon">⚡</div>
+          </div>
+
+          <p class="stage-2__upsell-desc">
+            Your deck is being packed for shipment. This is the final point where we can add steps or railings and send everything together at no additional shipping cost.
+          </p>
+
+          <p class="stage-2__upsell-subdesc">
+            Once your deck is picked up, anything added later will need to ship separately with a separate delivery charge.
+          </p>
+
+          <div class="stage-2__warning-pill">
+            ⏱️ This is the last step where adding is free. After pickup it's a separate delivery, with its own shipping charge.
+          </div>
+
+          <div class="stage-2__cta-container">
+            <div class="stage-2__cta-label">GET IN TOUCH WITH OUR TEAM TO ADD RAILINGS AND/OR STEPS</div>
+            <a href="javascript:void(0)" onclick="if(window.GorgiasAPI){GorgiasAPI.open()}else{alert('Contacting support...');}" class="stage-2__chat-btn">CHAT NOW</a>
+          </div>
+        </div>
+
+        <!-- Delivery Steps List -->
+        <div class="stage-2__delivery-container">
+          <h2 class="stage-2__delivery-title">Get ready for delivery day</h2>
+          <p class="stage-2__delivery-sub">Your deck ships by LTL freight. Here's what to expect once it's on the way.</p>
+
+          <div class="stage-2__delivery-steps">
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">01</div>
+              <div class="stage-2__step-info">
+                <h3>Track it live</h3>
+                <p>Follow your shipment and delivery progress from the moment it leaves our facility.</p>
+              </div>
+            </div>
+
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">02</div>
+              <div class="stage-2__step-info">
+                <h3>The carrier will call you</h3>
+                <p>Once your deck reaches the local terminal, the delivery team will contact you to schedule a delivery time. They should arrive with the equipment needed to unload your order. If they don't, do not arrange equipment yourself. Contact us and we'll coordinate a safe delivery.</p>
+              </div>
+            </div>
+
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">03</div>
+              <div class="stage-2__step-info">
+                <h3>Delivered curbside</h3>
+                <p>Your deck will be delivered to the curb or driveway at your property.</p>
+              </div>
+            </div>
+
+            <div class="stage-2__step-row">
+              <div class="stage-2__step-num">04</div>
+              <div class="stage-2__step-info">
+                <h3>Check everything within 14 days</h3>
+                <p>Once delivered, please make sure all parts arrived safely and nothing is missing. If you need more than 14 days to inspect your order, just let our team know.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Box -->
+        <div class="stage-2__support-card">
+          <p><strong>GOT A QUESTION?</strong></p>
+          <button type="button" class="stage-2__support-btn" onclick="#chat">💬 MESSAGE US</button>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 </div>
 
+<style>
+  .stage-1 { background-color: var(--bg-main); color: var(--text-color); font-family: inherit; }
+  .stage-1__back-btn { background: transparent; border: none; color: var(--accent-color); font-weight: 600; cursor: pointer; font-size: 1.4rem; margin-bottom: 1.5rem; padding: 0; }
+  
+  .stage-1__search-card { background-color: transparent; padding: 3rem 1rem 2rem; margin-bottom: 2rem; text-align: center; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .stage-1__search-logo-wrap { margin-bottom: 1.8rem; }
+  .stage-1__search-logo { max-width: 180px; height: auto; display: inline-block; }
+  .stage-1__search-logo-text { font-size: 4rem; font-weight: 900; letter-spacing: -1px; color: #121212; margin-bottom: 1.5rem; font-style: italic; }
+  .stage-1__search-desc { font-size: 1.6rem; color: #2b3834; line-height: 1.45; margin-bottom: 2.2rem; font-weight: 500; }
+  .stage-1__search-form { display: flex; gap: 12px; justify-content: center; align-items: center; max-width: 480px; margin: 0 auto 3.5rem; }
+  .stage-1__input { flex: 1; padding: 12px 18px; border: 1px solid #7c938d; border-radius: 6px; font-size: 1.4rem; color: #333; outline: none; background: #fff; }
+  .stage-1__btn { background-color: var(--accent-color); color: #fff; border: none; border-radius: 6px; padding: 12px 32px; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+  .stage-1__search-footer { font-size: 1.45rem; color: #4f5f5b; line-height: 1.5; margin-top: 2rem; }
+  
+  .stage-1__order-card { border: 1px solid #e2e2e2; border-radius: 10px; padding: 2rem; text-align: left; max-width: 600px; margin: 2rem auto 0; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+  .tracking-result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px; margin-bottom: 16px; }
+  .status-badge { background-color: #e3f2fd; color: #0288d1; font-size: 1.1rem; font-weight: 700; padding: 4px 12px; border-radius: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .tracking-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 1.3rem; color: #333; margin-bottom: 2rem; }
+  .stage-1__view-progress-btn { width: 100%; background-color: var(--accent-color); color: #fff; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 1.4rem; }
+
+  .stage-1__header { text-align: center; margin-bottom: 2.5rem; }
+  .stage-1__step-pill { display: inline-block; border: 1px dashed #a0a0a0; border-radius: 20px; padding: 3px 12px; font-size: 1.2rem; font-weight: 500; margin-bottom: 1.2rem; }
+  .stage-1__main-heading { margin: 0 0 0.8rem 0; color: var(--text-color); line-height: 1.1; font-size: 2.8rem; font-weight: 800; }
+  .stage-1__subheading { font-size: 1.5rem; color: #555; margin: 0 0 1.5rem 0; }
+  .stage-1__eta-badge { display: inline-flex; align-items: center; gap: 6px; background-color: #1e4d3b; color: #ffffff; font-size: 1.2rem; font-weight: 600; padding: 4px 14px; border-radius: 20px; }
+  .stage-1__eta-dot { width: 6px; height: 6px; background-color: #ffffff; border-radius: 50%; }
+
+  .stage-1__card { background-color: var(--card-bg); border: 1px solid #e2e2e2; border-radius: 12px; padding: 2.5rem 2rem 1.5rem; margin-bottom: 3rem; }
+  .stage-1__percentage-row { margin-bottom: 1rem; display: flex; align-items: baseline; gap: 8px; }
+  .stage-1__percent { font-size: 3rem; font-weight: 700; color: var(--text-color); }
+  .stage-1__percent-text { font-size: 1.6rem; color: #444; }
+  .stage-1__progress-bar-container { width: 100%; height: 6px; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; margin-bottom: 2.5rem; }
+  .stage-1__progress-bar-fill { height: 100%; background-color: #1e4d3b; border-radius: 4px; transition: width 0.4s ease; display: block !important; }
+
+  .stage-1__steps-flow { display: flex; align-items: center; justify-content: space-between; padding-bottom: 2rem; border-bottom: 1px solid #eaeaea; }
+  .stage-1__flow-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 700; color: #999; }
+  .stage-1__flow-item.active { color: #000; }
+  .stage-1__icon-box { width: 44px; height: 44px; border-radius: 10px; border: 1px solid #dcdcdc; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center; color: #888; }
+  .stage-1__flow-item.active .stage-1__icon-box { border-color: #e2c044; background-color: #fcf8e3; color: #a88400; }
+  .stage-1__flow-line { flex: 1; height: 2px; background-color: #dcdcdc; margin: 0 10px 20px 10px; }
+  .stage-1__flow-line.active { background-color: #e2c044; }
+
+  .stage-1__checklist-container { background-color: var(--card-bg); border: 1px solid #e2e2e2; border-radius: 12px; padding: 2rem; }
+  .stage-1__checklist-title { margin-bottom: 0.5rem; color: var(--text-color); font-size: 1.8rem; font-weight: 700; }
+  .stage-1__checklist { display: flex; flex-direction: column; }
+  .stage-1__check-item { display: flex; align-items: flex-start; gap: 16px; padding: 1.2rem 0; border-bottom: 1px solid #e8e8e8; }
+  .stage-1__check-item:last-child { border-bottom: none; }
+  .stage-1__check-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; border: 1px solid #ccc; background-color: #fff; }
+  .stage-1__check-icon.completed { background-color: var(--accent-color); border-color: var(--accent-color); color: #ffffff; }
+  .stage-1__unchecked-circle { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #ccc; }
+  .stage-1__check-title { font-size: 1.5rem; font-weight: 700; margin: 0 0 4px 0; color: var(--text-color); }
+  .stage-1__check-desc { font-size: 1.3rem; color: #666; margin: 0; }
+
+  /* Stage 2 Custom Styles */
+  .stage-2__upsell-card { border: 2px solid #f87171; background-color: #fff5f5; border-radius: 12px; padding: 2.5rem; margin-bottom: 2.5rem; }
+  .stage-2__upsell-badge-pill { display: inline-flex; align-items: center; gap: 6px; background-color: #dc2626; color: #fff; font-size: 1.2rem; font-weight: 700; padding: 4px 12px; border-radius: 16px; margin-bottom: 1.5rem; }
+  .stage-2__dot-red { width: 6px; height: 6px; background-color: #fff; border-radius: 50%; }
+  .stage-2__upsell-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .stage-2__upsell-title { font-size: 2.2rem; font-weight: 800; color: #111; margin: 0 0 1rem 0; }
+  .stage-2__lightning-icon { font-size: 2rem; color: #eab308; }
+  .stage-2__upsell-desc { font-size: 1.45rem; color: #333; line-height: 1.5; margin-bottom: 1.2rem; }
+  .stage-2__upsell-subdesc { font-size: 1.35rem; color: #555; line-height: 1.5; margin-bottom: 1.5rem; }
+  .stage-2__warning-pill { border: 1px solid #fca5a5; background-color: #ffe4e6; color: #991b1b; padding: 8px 14px; border-radius: 20px; font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; display: inline-block; }
+  .stage-2__cta-container { text-align: center; }
+  .stage-2__cta-label { font-size: 1.2rem; font-weight: 800; color: #222; margin-bottom: 1rem; letter-spacing: 0.5px; }
+  .stage-2__chat-btn { display: block; width: 100%; background-color: #121212; color: #fff; text-align: center; padding: 14px; font-weight: 700; border-radius: 6px; text-decoration: none; font-size: 1.4rem; letter-spacing: 1px; }
+
+  .stage-2__delivery-container { background-color: var(--card-bg); border: 1px solid #e2e2e2; border-radius: 12px; padding: 2.5rem; margin-bottom: 2.5rem; }
+  .stage-2__delivery-title { font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #111; }
+  .stage-2__delivery-sub { font-size: 1.4rem; color: #555; margin-bottom: 2rem; }
+  .stage-2__step-row { display: flex; gap: 20px; border-bottom: 1px solid #eee; padding: 1.8rem 0; }
+  .stage-2__step-row:last-child { border-bottom: none; }
+  .stage-2__step-num { font-size: 2rem; font-weight: 800; color: #d97706; }
+  .stage-2__step-info h3 { font-size: 1.6rem; font-weight: 700; margin: 0 0 6px 0; color: #111; }
+  .stage-2__step-info p { font-size: 1.3rem; color: #555; margin: 0; line-height: 1.5; }
+
+  .stage-2__support-card { background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 1.5rem; text-align: center; }
+  .stage-2__support-card p { margin: 0 0 1rem 0; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .stage-2__support-btn { background: #fff; border: 1px solid #d1d5db; border-radius: 6px; padding: 10px 20px; font-weight: 700; cursor: pointer; font-size: 1.3rem; width: 100%; max-width: 300px; }
+
+  @media screen and (max-width: 600px) {
+    .stage-1__search-form { flex-direction: column; gap: 10px; }
+    .stage-1__btn { width: 100%; }
+    .stage-1__steps-flow { overflow-x: auto; justify-content: flex-start; gap: 15px; }
+    .stage-1__flow-line { min-width: 20px; }
+  }
+</style>
+
 <script>
-  async function handleTrackingSubmit(event) {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
+window.currentActiveOrderData = null;
+
+function calculateWorkingDays(startDate, endDate) {
+  let count = 0;
+  let curDate = new Date(startDate.getTime());
+  curDate.setHours(0,0,0,0);
+  
+  let targetDate = new Date(endDate.getTime());
+  targetDate.setHours(0,0,0,0);
+
+  while (curDate <= targetDate) {
+    const dayOfWeek = curDate.getDay();
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      count++;
+    }
+    curDate.setDate(curDate.getDate() + 1);
+  }
+  return count;
+}
+
+function setChecked(elementId, isChecked) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const iconContainer = el.querySelector('.stage-1__check-icon');
+  if (isChecked) {
+    iconContainer.classList.add('completed');
+    iconContainer.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+  } else {
+    iconContainer.classList.remove('completed');
+    iconContainer.innerHTML = `<span class="stage-1__unchecked-circle"></span>`;
+  }
+}
+
+async function handleTrackingSubmit(event) {
+  event.preventDefault();
+  
+  const sectionId = "{{ section.id }}";
+  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
+  const submitBtn = document.getElementById("trackSubmitBtn");
+  const resultContainer = document.getElementById("trackingResultContainer");
+  const orderNumber = inputEl.value.trim();
+
+  if (!orderNumber) return;
+
+  const originalBtnText = submitBtn.innerText;
+  submitBtn.innerText = "Searching...";
+  submitBtn.disabled = true;
+  resultContainer.style.display = "none";
+
+  try {
+    const response = await fetch(`https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(orderNumber)}`);
+    const data = await response.json();
+
+    if (data.success && data.order) {
+      const order = data.order;
+      
+      window.currentActiveOrderData = { order: order, delivery: data.delivery };
+      try {
+        localStorage.setItem('lastFetchedOrderData', JSON.stringify(window.currentActiveOrderData));
+      } catch (e) {
+        console.warn('LocalStorage error', e);
+      }
+
+      const formattedDate = new Date(order.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
+      const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
+      const deliveryText = data.delivery ? (typeof data.delivery === 'object' ? JSON.stringify(data.delivery) : data.delivery) : 'N/A';
+
+      resultContainer.innerHTML = `
+        <div class="tracking-result-header">
+          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
+          <span class="status-badge">${fulfillmentText}</span>
+        </div>
+        <div class="tracking-result-grid">
+          <div><strong>Date:</strong> ${formattedDate}</div>
+          <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
+          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
+          <div><strong>Delivery:</strong> ${deliveryText}</div>
+          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
+          <div><strong>Tags:</strong> ${tagsText}</div>
+        </div>
+        <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
+          View Live Progress &rarr;
+        </button>
+      `;
+      
+      resultContainer.style.display = "block";
+
+    } else {
+      resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
+      resultContainer.style.display = "block";
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Failed to fetch order details. Please try again.</p>`;
+    resultContainer.style.display = "block";
+  } finally {
+    submitBtn.innerText = originalBtnText;
+    submitBtn.disabled = false;
+  }
+}
+
+function showLiveProgressStage() {
+  if (!window.currentActiveOrderData || !window.currentActiveOrderData.order) return;
+
+  const order = window.currentActiveOrderData.order;
+
+  const searchCardContainer = document.getElementById('tracking-search-container');
+  if (searchCardContainer) searchCardContainer.style.display = 'none';
+
+  const stageContainer = document.getElementById('dynamic-tracking-stage');
+  if (stageContainer) stageContainer.style.display = 'block';
+
+  const orderDate = new Date(order.date);
+  const currentDate = new Date();
+  const workingDays = calculateWorkingDays(orderDate, currentDate);
+
+  const fulfillmentStatus = order.fulfillmentStatus ? order.fulfillmentStatus.toUpperCase() : 'UNFULFILLED';
+  const isFulfillmentActive = (fulfillmentStatus === 'IN_PROGRESS' || fulfillmentStatus === 'FULFILLED' || fulfillmentStatus === 'PARTIALLY_FULFILLED');
+
+  let isStage2 = false;
+  if (workingDays > 3 && isFulfillmentActive) {
+    isStage2 = true;
+  }
+
+  const stepPill = document.getElementById('dynamic-step-pill');
+  const mainHeading = document.getElementById('dynamic-main-heading');
+  const subheading = document.getElementById('dynamic-subheading');
+  const etaText = document.getElementById('dynamic-eta-text');
+  const percentEl = document.getElementById('track-percent-val');
+  const percentLabel = document.getElementById('track-percent-label');
+  const fillEl = document.getElementById('track-progress-fill');
+  
+  const stage1Block = document.getElementById('stage-1-details-block');
+  const stage2Block = document.getElementById('stage-2-details-block');
+
+  let progress = 22;
+
+  if (!isStage2) {
+    // ------------------------------------
+    // STAGE 1 VIEW
+    // ------------------------------------
+    stage1Block.style.display = 'block';
+    stage2Block.style.display = 'none';
+
+    stepPill.innerText = "Step 1 of 3";
+    mainHeading.innerText = "Your deck is now in production.";
+    subheading.innerText = "Every A-DIY deck is made just for you, nothing sits in a warehouse.";
+    etaText.innerText = "Estimated: 7 business days";
+    percentLabel.innerText = "of step 1 is complete.";
+
+    const allCheckboxes = [
+      'chk-order-confirmed', 'chk-materials-selected', 'chk-components-production',
+      'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up', 'chk-connection-checked'
+    ];
+
+    let checkedItems = [];
+
+    if (workingDays <= 1) {
+      progress = 22;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
+    } else if (workingDays === 2) {
+      progress = 40;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
+    } else if (workingDays === 3) {
+      progress = 50;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
+    } else {
+      progress = 85;
+      checkedItems = [...allCheckboxes];
     }
 
-    const inputElement = document.getElementById('TrackingInput-{{ section.id }}');
-    const btnElement = document.getElementById('trackSubmitBtn');
-    const rawValue = inputElement ? inputElement.value.trim() : '';
-    if (!rawValue) return false;
+    // Fixed Icon Thresholds for Stage 1:
+    // Icon 1 (Manufacturing): >= 22%
+    // Icon 2 (Assembly): >= 35%
+    // Icon 3 (Packing): >= 70% (50% par highlight NOHI hoga)
+    // Icon 4 (On the way): NEVER in Stage 1
+    const stepThresholds = [22, 35, 70]; 
 
-    const cleanOrderNum = rawValue.replace('#', '');
-    btnElement.innerText = "Searching...";
+    for (let i = 1; i <= 4; i++) {
+      const stepEl = document.getElementById(`flow-step-${i}`);
+      const lineEl = document.getElementById(`flow-line-${i}`);
 
-    try {
-      // Step 1: App Proxy try karein
-      const proxyUrl = `/apps/order-tracker/api/track-order?order=${encodeURIComponent(cleanOrderNum)}`;
-      const response = await fetch(proxyUrl);
-
-      if (response.ok) {
-        const data = await response.json();
-        
-        // Agar App response me order date / stage de rahi hai
-        if (data.success && (data.createdAt || data.created_at || data.daysOld !== undefined || data.stage)) {
-          let stage = calculateStageFromData(data);
-          displayStage(stage);
-          btnElement.innerText = "{{ section.settings.button_text }}";
-          return false;
+      if (stepEl) {
+        if (i <= 3 && progress >= stepThresholds[i - 1]) {
+          stepEl.classList.add('active');
+        } else {
+          stepEl.classList.remove('active');
         }
       }
-    } catch(e) {
-      console.log("Proxy endpoint active nahi hai, switching to direct order date parser.");
+
+      if (lineEl) {
+        if (i < 3 && progress >= stepThresholds[i]) {
+          lineEl.classList.add('active');
+        } else {
+          lineEl.classList.remove('active');
+        }
+      }
     }
 
-    // Step 2: Fallback logic agar app proxy error de ya dates compute na kare
-    fetchDirectOrderDate(cleanOrderNum);
-    btnElement.innerText = "{{ section.settings.button_text }}";
-    return false;
-  }
+    allCheckboxes.forEach(id => {
+      setChecked(id, checkedItems.includes(id));
+    });
 
-  function calculateStageFromData(data) {
-    if (data.stage) return parseInt(data.stage, 10);
-    
-    let days = 0;
-    if (data.daysOld !== undefined) {
-      days = parseInt(data.daysOld, 10);
-    } else if (data.createdAt || data.created_at) {
-      const orderDate = new Date(data.createdAt || data.created_at);
-      const diffTime = Math.abs(new Date() - orderDate);
-      days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    }
+  } else {
+    // ------------------------------------
+    // STAGE 2 VIEW
+    // ------------------------------------
+    stage1Block.style.display = 'none';
+    stage2Block.style.display = 'block';
 
-    if (days > 14) return 3;
-    if (days > 7) return 2;
-    return 1;
-  }
+    stepPill.innerText = "Step 2 of 3";
+    mainHeading.innerText = "Getting your deck ready to ship.";
+    subheading.innerText = "We're packing and securing everything for its trip to you.";
+    etaText.innerText = "Estimate: 3 to 4 business days";
+    percentLabel.innerText = "of step 2 is complete.";
 
-  function fetchDirectOrderDate(orderNumber) {
-    // Demo calculation test rule (agar real backend connected na ho)
-    const num = parseInt(orderNumber, 10);
-    let stage = 1;
+    const stage2WorkingDays = workingDays - 3;
 
-    if (!isNaN(num)) {
-      const lastDigit = num % 10;
-      if (lastDigit >= 7) stage = 3;       // 14+ days old demo
-      else if (lastDigit >= 4) stage = 2;  // 7-14 days old demo
-      else stage = 1;                      // 0-7 days old demo
-    }
-
-    displayStage(stage);
-  }
-
-  function displayStage(stageNumber) {
-    const trackingWidget = document.getElementById('trackingWidgetContainer');
-    if (trackingWidget) trackingWidget.classList.add('hide-widget');
-
-    const backBtn = document.getElementById('stageBackBtn');
-    if (backBtn) backBtn.style.display = 'inline-flex';
-
-    document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
-      .forEach(s => s.classList.remove('show-stage'));
-
-    let targetStage = document.querySelector(`.stage-${stageNumber}-section`) || document.querySelector(`.stage-${stageNumber}`);
-
-    if (targetStage) {
-      targetStage.classList.add('show-stage');
-      targetStage.scrollIntoView({ behavior: 'smooth' });
+    if (stage2WorkingDays <= 1) {
+      progress = 85;
+    } else if (stage2WorkingDays === 2) {
+      progress = 90;
+    } else if (stage2WorkingDays === 3) {
+      progress = 95;
     } else {
-      alert(`Stage ${stageNumber} section is missing in Page Customizer.`);
-      resetTrackingView();
+      progress = 100;
+    }
+
+    // Stage 2 Thresholds:
+    // Icons 1, 2, 3 (Packing tak) >= 70% (85% par teeno active rahen ge)
+    // Icon 4 (On the way) sirf 100% par active hoga
+    for (let i = 1; i <= 4; i++) {
+      const stepEl = document.getElementById(`flow-step-${i}`);
+      const lineEl = document.getElementById(`flow-line-${i}`);
+
+      let isActive = false;
+      if (i <= 3 && progress >= 70) isActive = true;
+      if (i === 4 && progress >= 100) isActive = true;
+
+      if (stepEl) {
+        if (isActive) {
+          stepEl.classList.add('active');
+        } else {
+          stepEl.classList.remove('active');
+        }
+      }
+
+      if (lineEl) {
+        if (i < 3 || (i === 3 && progress >= 100)) {
+          lineEl.classList.add('active');
+        } else {
+          lineEl.classList.remove('active');
+        }
+      }
     }
   }
 
-  function resetTrackingView() {
-    document.querySelectorAll('.stage-1-section, .stage-2-section, .stage-3-section, .stage-section-wrapper')
-      .forEach(stage => stage.classList.remove('show-stage'));
+  if (percentEl) percentEl.innerText = progress + '%';
+  if (fillEl) fillEl.style.width = progress + '%';
+}
 
-    const backBtn = document.getElementById('stageBackBtn');
-    if (backBtn) backBtn.style.display = 'none';
+function resetTrackingView() {
+  const sectionId = "{{ section.id }}";
+  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
+  const resultContainer = document.getElementById("trackingResultContainer");
+  const stageContainer = document.getElementById("dynamic-tracking-stage");
+  const searchCardContainer = document.getElementById("tracking-search-container");
 
-    const trackingWidget = document.getElementById('trackingWidgetContainer');
-    if (trackingWidget) trackingWidget.classList.remove('hide-widget');
-  }
+  if (inputEl) inputEl.value = "";
+  if (resultContainer) resultContainer.style.display = "none";
+  if (stageContainer) stageContainer.style.display = "none";
+  if (searchCardContainer) searchCardContainer.style.display = "block";
+}
 </script>
-
 {% schema %}
 {
-  "name": "Tracking Widget",
-  "tag": "section",
-  "class": "section",
+  "name": "Live Order Tracking",
   "settings": [
     {
       "type": "image_picker",
-      "id": "logo",
-      "label": "Logo Image"
-    },
-    {
-      "type": "range",
-      "id": "logo_width",
-      "min": 100,
-      "max": 400,
-      "step": 10,
-      "default": 260,
-      "unit": "px",
-      "label": "Logo Width"
-    },
-    {
-      "type": "richtext",
-      "id": "subtext",
-      "label": "Subtext",
-      "default": "<p>To view the most up-to-date status of your shipment, enter your tracking number below.</p>"
+      "id": "logo_image",
+      "label": "Search Card Logo"
     },
     {
       "type": "text",
-      "id": "placeholder_text",
-      "label": "Input Placeholder",
-      "default": "enter tracking number"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "Track"
+      "id": "search_desc",
+      "label": "Search Description",
+      "default": "Enter your order number below to track the live status of your custom deck build."
     },
     {
       "type": "richtext",
-      "id": "footer_text",
-      "label": "Footer Text",
-      "default": "<p>For any questions, call A-DIY Control Tower at +1 (786) 358-2872 or email us at updates@a-diy.com</p>"
+      "id": "search_footer",
+      "label": "Search Card Footer Text",
+      "default": "<p>Need help finding your order number? Check your order confirmation email or contact support.</p>"
     },
     {
-      "type": "header",
-      "content": "Colors"
+      "type": "color",
+      "id": "accent_color",
+      "label": "Primary Accent Color",
+      "default": "#1e4d3b"
     },
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background Color",
+      "label": "Section Background Color",
+      "default": "#f9fafb"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
       "default": "#ffffff"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#002B49"
+      "default": "#121212"
     },
     {
-      "type": "color",
-      "id": "btn_bg_color",
-      "label": "Button Background",
-      "default": "#002B49"
-    },
-    {
-      "type": "color",
-      "id": "btn_text_color",
-      "label": "Button Text Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "Section Padding"
+      "type": "richtext",
+      "id": "card_note",
+      "label": "Progress Card Bottom Note",
+      "default": "<p><strong>Note:</strong> Timelines are estimates based on standard production cycles.</p>"
     },
     {
       "type": "range",
@@ -430,7 +707,7 @@
       "step": 4,
       "unit": "px",
       "label": "Top Padding",
-      "default": 60
+      "default": 36
     },
     {
       "type": "range",
@@ -440,12 +717,12 @@
       "step": 4,
       "unit": "px",
       "label": "Bottom Padding",
-      "default": 60
+      "default": 36
     }
   ],
   "presets": [
     {
-      "name": "Tracking Widget"
+      "name": "Live Order Tracking"
     }
   ]
 }

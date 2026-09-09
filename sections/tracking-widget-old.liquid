@@ -1,0 +1,459 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .tracking-widget-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: inherit;
+    text-align: center;
+  }
+
+  .tracking-widget__container {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tracking-widget__logo-wrapper {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .tracking-widget__logo {
+    display: block;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .tracking-widget__subtext {
+    font-size: 15px;
+    line-height: 1.4;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 28px;
+    max-width: 500px;
+  }
+
+  .tracking-widget__subtext p {
+    margin: 0;
+  }
+
+  .tracking-widget__form {
+    width: 100%;
+    max-width: 520px;
+    margin-bottom: 20px;
+  }
+
+  .tracking-widget__input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .tracking-widget__input {
+    flex: 1;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid #103254;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+  }
+
+  .tracking-widget__input:focus {
+    border-color: #002B49;
+    box-shadow: 0 0 0 1px #002B49;
+  }
+
+  .tracking-widget__input::placeholder {
+    color: #666666;
+  }
+
+  .tracking-widget__button {
+    height: 44px;
+    padding: 0 28px;
+    background-color: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_text_color }};
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tracking-widget__button:hover {
+    opacity: 0.92;
+  }
+
+  .tracking-widget__button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Result Box Styles */
+  .tracking-result-card {
+    display: none;
+    width: 100%;
+    max-width: 520px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+
+  .tracking-result-header {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tracking-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    font-size: 14px;
+    color: #333333;
+  }
+
+  .status-badge {
+    font-size: 12px;
+    font-weight: 700;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .tracking-widget__footer-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555555;
+    max-width: 600px;
+    margin-top: 20px;
+  }
+
+  .tracking-widget__footer-text p {
+    margin: 0;
+  }
+
+  .stage-back-btn {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 2;
+    background: #ffffff;
+    color: #111827;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .stage-back-btn:hover {
+    background: #f3f4f6;
+    transform: translateY(-2px);
+  }
+
+  @media screen and (max-width: 480px) {
+    .tracking-widget__input-group {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tracking-widget__input,
+    .tracking-widget__button {
+      width: 100%;
+    }
+    .tracking-result-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<button id="stageBackBtn" class="stage-back-btn" type="button" onclick="resetTrackingView()">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <path d="M19 12H5M12 19l-7-7 7-7"/>
+  </svg>
+  Back to Search
+</button>
+
+<div id="trackingWidgetContainer" class="tracking-widget tracking-widget-{{ section.id }} section-{{ section.id }}-padding tracking-widget-container">
+  <div class="page-width page-width--narrow">
+    <div class="tracking-widget__container">
+      {%- if section.settings.logo != blank -%}
+        <div class="tracking-widget__logo-wrapper">
+          <img
+            src="{{ section.settings.logo | image_url: width: 600 }}"
+            alt="{{ section.settings.logo.alt | escape }}"
+            loading="lazy"
+            width="{{ section.settings.logo_width }}"
+            height="auto"
+            class="tracking-widget__logo"
+            style="max-width: {{ section.settings.logo_width }}px;"
+          >
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.subtext != blank -%}
+        <div class="tracking-widget__subtext">
+          {{ section.settings.subtext }}
+        </div>
+      {%- endif -%}
+
+      <form id="TrackingForm-{{ section.id }}" class="tracking-widget__form" action="javascript:void(0);" onsubmit="handleTrackingSubmit(event); return false;">
+        <div class="tracking-widget__input-group">
+          <input
+            type="text"
+            id="TrackingInput-{{ section.id }}"
+            class="tracking-widget__input"
+            placeholder="{{ section.settings.placeholder_text }}"
+            required
+            aria-label="{{ section.settings.placeholder_text }}"
+          >
+          <button type="submit" id="trackSubmitBtn" class="tracking-widget__button">
+            {{ section.settings.button_text }}
+          </button>
+        </div>
+      </form>
+
+      <!-- Dynamic JSON API Result Box -->
+      <div id="trackingResultContainer" class="tracking-result-card"></div>
+
+      {%- if section.settings.footer_text != blank -%}
+        <div class="tracking-widget__footer-text">
+          {{ section.settings.footer_text }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+async function handleTrackingSubmit(event) {
+  event.preventDefault();
+  
+  const sectionId = "{{ section.id }}";
+  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
+  const submitBtn = document.getElementById("trackSubmitBtn");
+  const resultContainer = document.getElementById("trackingResultContainer");
+  const backBtn = document.getElementById("stageBackBtn");
+  const orderNumber = inputEl.value.trim();
+
+  if (!orderNumber) return;
+
+  const originalBtnText = submitBtn.innerText;
+  submitBtn.innerText = "Searching...";
+  submitBtn.disabled = true;
+  resultContainer.style.display = "none";
+
+  try {
+    const response = await fetch(`https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(orderNumber)}`);
+    const data = await response.json();
+
+    if (data.success && data.order) {
+      const order = data.order;
+      
+      const formattedDate = new Date(order.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
+      
+      // Formatting added fields
+      const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
+      const deliveryText = data.delivery ? (typeof data.delivery === 'object' ? JSON.stringify(data.delivery) : data.delivery) : 'N/A';
+
+      resultContainer.innerHTML = `
+        <div class="tracking-result-header">
+          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
+          <span class="status-badge">${fulfillmentText}</span>
+        </div>
+        <div class="tracking-result-grid">
+          <div><strong>Date:</strong> ${formattedDate}</div>
+          <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
+          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
+          <div><strong>Delivery:</strong> ${deliveryText}</div>
+          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
+          <div><strong>Tags:</strong> ${tagsText}</div>
+          
+        </div>
+      `;
+      
+      resultContainer.style.display = "block";
+      if (backBtn) backBtn.style.display = "inline-flex";
+
+    } else {
+      resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
+      resultContainer.style.display = "block";
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Failed to fetch order details. Please try again.</p>`;
+    resultContainer.style.display = "block";
+  } finally {
+    submitBtn.innerText = originalBtnText;
+    submitBtn.disabled = false;
+  }
+}
+
+function resetTrackingView() {
+  const sectionId = "{{ section.id }}";
+  const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
+  const resultContainer = document.getElementById("trackingResultContainer");
+  const backBtn = document.getElementById("stageBackBtn");
+
+  if (inputEl) inputEl.value = "";
+  if (resultContainer) resultContainer.style.display = "none";
+  if (backBtn) backBtn.style.display = "none";
+}
+</script>
+
+{% schema %}
+{
+  "name": "Tracking Widget",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 100,
+      "max": 400,
+      "step": 10,
+      "default": 260,
+      "unit": "px",
+      "label": "Logo Width"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>To view the most up-to-date status of your shipment, enter your tracking number below.</p>"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Input Placeholder",
+      "default": "enter tracking number"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Track"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "<p>For any questions, call A-DIY Control Tower at +1 (786) 358-2872 or email us at updates@a-diy.com</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#002B49"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#002B49"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tracking Widget"
+    }
+  ]
+}
+{% endschema %}
