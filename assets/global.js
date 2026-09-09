@@ -87,6 +87,18 @@ document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
 const trapFocusHandlers = {};
 
 function trapFocus(container, elementToFocus = container) {
+  // Callers can hand us null for either argument. MenuDrawer.onSummaryClick
+  // passes `detailsElement.querySelector('button')`, which is null for a
+  // submenu with no button — the Shop submenu in this theme's header drawer has
+  // none. ModalDialog.show and cart.js can pass null the same way.
+  //
+  // The `elementToFocus = container` default does NOT cover this: a default
+  // parameter only applies to `undefined`, never to an explicit `null`. So
+  // `elementToFocus.focus()` threw "null is not an object (evaluating
+  // elementToFocus.focus)" and the drawer was left half-open with no trap
+  // installed.
+  if (!container) return;
+
   var elements = getFocusableElements(container);
   var first = elements[0];
   var last = elements[elements.length - 1];
@@ -121,14 +133,19 @@ function trapFocus(container, elementToFocus = container) {
   document.addEventListener('focusout', trapFocusHandlers.focusout);
   document.addEventListener('focusin', trapFocusHandlers.focusin);
 
-  elementToFocus.focus();
+  // Trap is installed above regardless; only the initial focus move needs a
+  // real element. Fall back to the container so focus still lands inside.
+  const focusTarget = elementToFocus || container;
+  if (!focusTarget || typeof focusTarget.focus !== 'function') return;
+
+  focusTarget.focus();
 
   if (
-    elementToFocus.tagName === 'INPUT' &&
-    ['search', 'text', 'email', 'url'].includes(elementToFocus.type) &&
-    elementToFocus.value
+    focusTarget.tagName === 'INPUT' &&
+    ['search', 'text', 'email', 'url'].includes(focusTarget.type) &&
+    focusTarget.value
   ) {
-    elementToFocus.setSelectionRange(0, elementToFocus.value.length);
+    focusTarget.setSelectionRange(0, focusTarget.value.length);
   }
 }
 
@@ -458,8 +475,16 @@ class MenuDrawer extends HTMLElement {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function addTrapFocus() {
-      trapFocus(summaryElement.nextElementSibling, detailsElement.querySelector('button'));
-      summaryElement.nextElementSibling.removeEventListener('transitionend', addTrapFocus);
+      // The submenu panel is the summary's next sibling; bail if the markup
+      // doesn't have one rather than throwing on removeEventListener below.
+      const submenu = summaryElement.nextElementSibling;
+      if (!submenu) return;
+
+      // `detailsElement.querySelector('button')` is null for a submenu with no
+      // button (this theme's Shop submenu). trapFocus now falls back to the
+      // container, but pass it explicitly so the intent is visible here too.
+      trapFocus(submenu, detailsElement.querySelector('button') || submenu);
+      submenu.removeEventListener('transitionend', addTrapFocus);
     }
 
     if (detailsElement === this.mainDetailsToggle) {
