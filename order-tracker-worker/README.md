@@ -104,6 +104,21 @@ Reload is automatic on save. Press `x` to quit, `d` to open devtools.
     "cancelled": false,
     "tags": ["Ali"]
   },
+  "customer": {
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "phone": "+15551234567",
+    "shippingAddress": {
+      "name": "Jane Smith",
+      "address1": "12 Example Rd",
+      "address2": null,
+      "city": "Toms River",
+      "province": "NJ",
+      "zip": "08753",
+      "country": "US",
+      "phone": "+15551234567"
+    }
+  },
   "shipment": {
     "carrier": "EFW",
     "trackingNumber": "8947328",
@@ -150,11 +165,23 @@ because those two were indistinguishable.
 - **EFW is undocumented and unauthenticated.** It can change or start requiring `ConZip` without
   notice. Any failure degrades to `delivery.available: false` rather than failing the request.
 
-## Data exposure
+## ⚠️ Data exposure — gate this before public use
 
-The endpoint is public and order numbers are sequential, so anyone who tries adjacent numbers can
-read an order's tags (which are internal rep names — `Ali`, `ian`, `JV`, `louie`, `Consio`), its
-freight contents, and the name of whoever signed for delivery. This was an accepted trade-off.
+The endpoint is public, unauthenticated, and keyed by a **sequential** order number. The CORS
+allow-list constrains browsers, not `curl`. Anyone who walks `212481800…212481850` can currently
+read, for every order:
 
-To tighten it later, the cheapest lever is EFW's own `ConZip` gate — their API already supports
-requiring the delivery ZIP. Filtering tags is a one-line change in `buildResponse`.
+- **customer name, shipping address, email and phone** (`customer`)
+- internal rep names in `tags` (`Ali`, `ian`, `JV`, `louie`, `Consio`)
+- freight contents, and the name of whoever signed for delivery
+
+The `customer` block was added deliberately for dev-site testing, with the gate deferred. It
+makes the customer list harvestable, which is a different order of risk from a stage number —
+so it should not front a public page in this state.
+
+**The fix is small.** Accept an `email` query param, compare it to the order's email, and return
+`customer` only on a match — the same shape as Shopify's own guest order lookup. Everything
+needed is already in `buildCustomer()`; it just needs a caller-supplied value to check against.
+EFW's `ConZip` parameter offers the same gate keyed on ZIP if that suits the form better.
+
+Filtering `tags` is a one-line change in `buildResponse`.

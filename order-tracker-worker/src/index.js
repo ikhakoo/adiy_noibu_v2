@@ -15,6 +15,13 @@
  *                              URL, so Shopify never receives carrier scans. Every shipped order
  *                              reads FULFILLED with zero fulfillment events.
  *
+ * !! UNAUTHENTICATED PII !!
+ * The `customer` block carries name, shipping address, email and phone, and nothing gates this
+ * endpoint. Order names are sequential, so anyone can walk them and harvest the customer list.
+ * Deliberate for now - dev-site testing - and to be gated before any public use. The fix is
+ * small: accept an `email` query param and return `customer` only when it matches the order,
+ * which is how Shopify's own guest order lookup behaves. See buildCustomer().
+ *
  * Always answers HTTP 200 with a JSON body for both hits and misses. Non-200 is reserved for
  * genuine faults, so the front end can tell "order not found" from "backend unreachable" - the
  * exact distinction whose absence hid the original bug on the tracking page.
@@ -52,6 +59,27 @@ const ORDER_QUERY = `
           displayFulfillmentStatus
           displayFinancialStatus
           cancelledAt
+          email
+          phone
+          customer {
+            displayName
+            firstName
+            lastName
+            email
+            phone
+          }
+          shippingAddress {
+            name
+            address1
+            address2
+            city
+            province
+            provinceCode
+            zip
+            country
+            countryCodeV2
+            phone
+          }
           fulfillments(first: 10) {
             status
             createdAt
@@ -306,6 +334,40 @@ function mapDelivery(payload) {
   };
 }
 
+/* --------------------------------------------------------------- customer */
+
+/**
+ * Customer identity and destination. Every field is optional: guest checkouts carry no `customer`
+ * record, and an order can reach here before a shipping address exists.
+ *
+ * UNGATED - read the PII note at the top of this file before this goes anywhere public.
+ */
+function buildCustomer(order) {
+  const c = order.customer;
+  const a = order.shippingAddress;
+  if (!c && !a && !order.email && !order.phone) return null;
+
+  const joined = c ? [c.firstName, c.lastName].filter(Boolean).join(' ') : '';
+
+  return {
+    name: trimOrNull(a?.name) || trimOrNull(c?.displayName) || trimOrNull(joined),
+    email: trimOrNull(order.email) || trimOrNull(c?.email),
+    phone: trimOrNull(order.phone) || trimOrNull(a?.phone) || trimOrNull(c?.phone),
+    shippingAddress: a
+      ? {
+          name: trimOrNull(a.name),
+          address1: trimOrNull(a.address1),
+          address2: trimOrNull(a.address2),
+          city: trimOrNull(a.city),
+          province: trimOrNull(a.provinceCode) || trimOrNull(a.province),
+          zip: trimOrNull(a.zip),
+          country: trimOrNull(a.countryCodeV2) || trimOrNull(a.country),
+          phone: trimOrNull(a.phone),
+        }
+      : null,
+  };
+}
+
 /* ----------------------------------------------------------------- output */
 
 function buildResponse(order, shipment, delivery) {
@@ -322,6 +384,7 @@ function buildResponse(order, shipment, delivery) {
       cancelledAt: order.cancelledAt ?? null,
       tags: order.tags ?? [],
     },
+    customer: buildCustomer(order),
     shipment: shipment
       ? {
           carrier: 'EFW',
