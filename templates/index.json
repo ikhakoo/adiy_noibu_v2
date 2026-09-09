@@ -508,6 +508,7 @@
           "type": "video_card",
           "settings": {
             "external_video_url": "https://cdn.shopify.com/videos/c/o/v/8da1c0c9e7844c41b194c3f72f5bba72.mp4",
+            "poster_image": "shopify://shop_images/truck_ss.png",
             "video_title": "Built solo in about six hours, six weeks postpartum",
             "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
             "video_upload_date": ""
