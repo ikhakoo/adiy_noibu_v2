@@ -36,9 +36,7 @@
       {%- endif -%}
 
       <div class="stage-1__search-header">
-        <p class="stage-1__search-desc">
-          To view the most up-to-date status of your shipment,<br>enter your tracking number below.
-        </p>
+        <div class="stage-1__search-desc"> {{ section.settings.search_desc }}</div>
       </div>
 
       <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
