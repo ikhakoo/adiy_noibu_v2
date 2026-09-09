@@ -605,15 +605,6 @@ function showLiveProgressStage() {
       progress = 100;
     }
 
-    // REDIRECTION LOGIC:
-    // Jab progress 100% ho jaye aur fulfillmentStatus strictly "FULFILLED" ho, tab efwtrack URL par redirect kare
-    if (progress >= 100 && fulfillmentStatus === 'FULFILLED') {
-      const cleanOrderNumber = order.number.toString().replace(/[^0-9]/g, ''); // Extract numeric order ID
-      const redirectUrl = `https://efwtrack.com/track/${cleanOrderNumber}`;
-      window.location.href = redirectUrl;
-      return;
-    }
-
     // Stage 2 Active Icons Logic
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
@@ -641,9 +632,28 @@ function showLiveProgressStage() {
     }
   }
 
+  // Force DOM Updates First
   if (percentEl) percentEl.innerText = progress + '%';
   if (fillEl) fillEl.style.width = progress + '%';
+
+  // SAFELY DELAYED REDIRECTION LOGIC
+  // Progress 100% aur FULFILLED status evaluate hone ke baad UI pehle render hoti hai, then redirect hota hai
+  if (isStage2 && progress >= 100 && fulfillmentStatus === 'FULFILLED') {
+    const cleanOrderNumber = order.number.toString().replace(/[^0-9]/g, '');
+    const redirectUrl = `https://efwtrack.com/track/${cleanOrderNumber}`;
+    
+    setTimeout(() => {
+      window.location.href = redirectUrl;
+    }, 150);
+  }
 }
+
+// Browser Back Button Cache Refresh Fix
+window.addEventListener('pageshow', function (event) {
+  if (event.persisted && window.currentActiveOrderData) {
+    showLiveProgressStage();
+  }
+});
 
 function resetTrackingView() {
   const sectionId = "{{ section.id }}";
