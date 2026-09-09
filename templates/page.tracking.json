@@ -22,18 +22,13 @@
       "name": "Tracking Widget",
       "settings": {
         "logo_image": "shopify://shop_images/a-diy-logo.png",
-        "search_desc": "To view the most up-to-date status of your shipment,<br>enter your tracking number below.",
-        "search_footer": "<p>For any questions, call <em>A-DIY Control Tower </em><a href=\"tel:+17863582872\" title=\"tel:+17863582872\"><strong>+1 (786) 358-2872</strong></a><strong> </strong>or email us at <a href=\"mailto:updates@a-diy.com\" title=\"mailto:updates@a-diy.com\"><strong>updates@a-diy.com</strong></a></p>",
-        "step_pill": "Step 1 of 3",
-        "main_heading": "Your deck is now in production.",
-        "subheading": "Every A-DIY deck is made just for you, nothing sits in a warehouse.",
-        "eta_badge": "Estimated: 7 business days",
-        "progress_text": "of step 1 is complete.",
-        "card_note": "We'll email you as soon as your deck moves to the next step.",
+        "search_desc": "To view the most up-to-date status of your shipment,enter your tracking number below.",
+        "search_footer": "<p>For any questions, call <em>A-DIY Control Tower </em><a href=\"tel:+17863582872\" title=\"tel:+17863582872\">+1 (786) 358-2872</a><strong> </strong>or email us at <a href=\"mailto:updates@a-diy.com\" title=\"mailto:updates@a-diy.com\">updates@a-diy.com</a></p>",
+        "accent_color": "#1e4d3b",
         "bg_color": "#ffffff",
         "card_bg_color": "#ffffff",
-        "accent_color": "#1e4d3b",
         "text_color": "#002b49",
+        "card_note": "<p>We'll email you as soon as your deck moves to the next step.</p>",
         "padding_top": 100,
         "padding_bottom": 100
       }
