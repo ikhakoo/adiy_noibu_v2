@@ -36,7 +36,7 @@
       {%- endif -%}
 
       <div class="stage-1__search-header">
-        <div class="stage-1__search-desc"> {{ section.settings.search_desc }}</div>
+        <div class="stage-1__search-desc">{{ section.settings.search_desc }}</div>
       </div>
 
       <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
@@ -47,7 +47,7 @@
       </form>
 
       <div class="stage-1__search-footer">
-        For any questions, call <em>A-DIY Control Tower</em> at <a href="tel:+17863582872">+1 (786) 358-2872</a> or email us at <a href="mailto:updates@a-diy.com">updates@a-diy.com</a>
+        {{ section.settings.search_footer }}  
       </div>
 
       <div id="trackingResultContainer" class="stage-1__order-card" style="display: none;"></div>
@@ -839,6 +839,11 @@ function resetTrackingView() {
       "type": "html",
       "id": "search_desc",
       "label": "Description"
+    },
+    {
+      "type": "richtext",
+      "id": "search_footer",
+      "label": "Below input field text"
     },
     {
       "type": "text",
