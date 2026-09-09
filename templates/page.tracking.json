@@ -22,6 +22,7 @@
       "name": "Tracking Widget",
       "settings": {
         "logo_image": "shopify://shop_images/a-diy-logo.png",
+        "search_desc": "To view the most up-to-date status of your shipment,<br>enter your tracking number below.",
         "step_pill": "Step 1 of 3",
         "main_heading": "Your deck is now in production.",
         "subheading": "Every A-DIY deck is made just for you, nothing sits in a warehouse.",
