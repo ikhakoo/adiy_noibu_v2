@@ -651,7 +651,7 @@ function showLiveProgressStage() {
   if (fillEl) fillEl.style.width = progress + '%';
 
   // Purana end-level redirection block yahan se remove kar diya gaya hai.
-{% comment %} 
+
   // SAFELY DELAYED REDIRECTION LOGIC
   // Progress 100% aur FULFILLED status evaluate hone ke baad UI pehle render hoti hai, then redirect hota hai
   if (isStage2 && progress >= 100 && fulfillmentStatus === 'FULFILLED') {
@@ -661,7 +661,7 @@ function showLiveProgressStage() {
     setTimeout(() => {
       window.location.href = redirectUrl;
     }, 150);
-  } {% endcomment %}
+  }
 }
 
 // Browser Back Button Cache Refresh Fix
