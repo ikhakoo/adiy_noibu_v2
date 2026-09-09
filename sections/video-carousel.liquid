@@ -134,7 +134,7 @@
                     loading: 'lazy'
                 }}
               {%- endif -%}
-            {%- elsif block.settings.external_video_url != blank -%}
+            {% comment %} {%- elsif block.settings.external_video_url != blank -%}
               <video 
                 src="{{ block.settings.external_video_url }}" 
 
@@ -145,6 +145,30 @@
                 webkit-playsinline
                 preload="none"
               ></video>
+            {%- endif -%} {% endcomment %}
+             {%- elsif block.settings.external_video_url != blank -%}
+              <video 
+                src="{{ block.settings.external_video_url }}" 
+                class="pb-video-card__video js-pb-video" 
+                loop 
+                muted 
+                playsinline
+                webkit-playsinline
+                preload="metadata"
+                {% if custom_poster != blank %}poster="{{ custom_poster }}"{% endif %}
+              ></video>
+              {%- if poster_source -%}
+                {{
+                  poster_source
+                  | image_url: width: 930
+                  | image_tag:
+                    class: 'pb-video-card__poster',
+                    widths: '270, 310, 540, 620, 810, 930',
+                    sizes: '(min-width: 750px) 310px, 270px',
+                    alt: '',
+                    loading: 'lazy'
+                }}
+              {%- endif -%}
             {%- endif -%}
 
             {%- if block.settings.video_title != blank or block.settings.video_description != blank -%}
