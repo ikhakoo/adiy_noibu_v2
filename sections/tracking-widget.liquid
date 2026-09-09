@@ -521,7 +521,7 @@ function showLiveProgressStage() {
 
   if (!isStage2) {
     // ------------------------------------
-    // STAGE 1 VIEW
+    // STAGE 1 VIEW (Max 85% Cap)
     // ------------------------------------
     stage1Block.style.display = 'block';
     stage2Block.style.display = 'none';
@@ -543,7 +543,7 @@ function showLiveProgressStage() {
       progress = 22;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
     } else if (workingDays === 2) {
-      progress = 40;
+      progress = 35;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
     } else if (workingDays === 3) {
       progress = 50;
@@ -553,11 +553,6 @@ function showLiveProgressStage() {
       checkedItems = [...allCheckboxes];
     }
 
-    // Fixed Icon Thresholds for Stage 1:
-    // Icon 1 (Manufacturing): >= 22%
-    // Icon 2 (Assembly): >= 35%
-    // Icon 3 (Packing): >= 70% (50% par highlight NOHI hoga)
-    // Icon 4 (On the way): NEVER in Stage 1
     const stepThresholds = [22, 35, 70]; 
 
     for (let i = 1; i <= 4; i++) {
@@ -587,7 +582,7 @@ function showLiveProgressStage() {
 
   } else {
     // ------------------------------------
-    // STAGE 2 VIEW
+    // STAGE 2 VIEW (Starts from 85% to 100%)
     // ------------------------------------
     stage1Block.style.display = 'none';
     stage2Block.style.display = 'block';
@@ -610,9 +605,16 @@ function showLiveProgressStage() {
       progress = 100;
     }
 
-    // Stage 2 Thresholds:
-    // Icons 1, 2, 3 (Packing tak) >= 70% (85% par teeno active rahen ge)
-    // Icon 4 (On the way) sirf 100% par active hoga
+    // REDIRECTION LOGIC:
+    // Jab progress 100% ho jaye aur fulfillmentStatus strictly "FULFILLED" ho, tab efwtrack URL par redirect kare
+    if (progress >= 100 && fulfillmentStatus === 'FULFILLED') {
+      const cleanOrderNumber = order.number.toString().replace(/[^0-9]/g, ''); // Extract numeric order ID
+      const redirectUrl = `https://efwtrack.com/track/${cleanOrderNumber}`;
+      window.location.href = redirectUrl;
+      return;
+    }
+
+    // Stage 2 Active Icons Logic
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
