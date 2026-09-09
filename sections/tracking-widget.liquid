@@ -539,19 +539,19 @@ function showLiveProgressStage() {
       progress = 22;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
     } else if (workingDays === 2) {
-      progress = 40;
+      progress = 35;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
     } else if (workingDays === 3) {
-      progress = 80;
+      progress = 50;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
     } else {
       // Days > 3 but status still UNFULFILLED: Stay on Stage 1 at 100%
-      progress = 100;
+      progress = 85;
       checkedItems = [...allCheckboxes];
     }
 
     // Step active icons (Stage 1 thresholds)
-    const stepThresholds = [22, 35, 80, 100];
+    const stepThresholds = [22, 35, 50, 85];
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       if (stepEl) {
