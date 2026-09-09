@@ -457,9 +457,9 @@ async function handleTrackingSubmit(event) {
           <div><strong>Order Date:</strong> ${formattedDate}</div>
           <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
           <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
-          <div><strong>Delivery:</strong> ${deliveryText}</div>
+          {% comment %} <div><strong>Delivery:</strong> ${deliveryText}</div>
           <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
-          <div><strong>Tags:</strong> ${tagsText}</div>
+          <div><strong>Tags:</strong> ${tagsText}</div> {% endcomment %}
         </div>
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
