@@ -37,7 +37,7 @@
       </div>
 
       <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
-        <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="enter tracking number" required />
+        <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="Enter Tracking Number" required />
         <button type="submit" id="trackSubmitBtn" class="stage-1__btn">Track</button>
       </form>
 
@@ -71,7 +71,7 @@
       <div class="stage-1__card">
         <div class="stage-1__percentage-row">
           <span class="stage-1__percent" id="track-percent-val">22%</span>
-          <span class="stage-1__percent-text" id="track-percent-label">of step 1 is complete.</span>
+          <span class="stage-1__percent-text" id="track-percent-label">of your deck is completed.</span>
         </div>
 
         <div class="stage-1__progress-bar-container">
@@ -125,6 +125,34 @@
       <!-- STAGE 1 CONTENT (Checklists)              -->
       <!-- ========================================== -->
       <div id="stage-1-details-block">
+        <div class="stage-2__upsell-card">
+          <div class="stage-2__upsell-badge-pill">
+            <span class="stage-2__dot-red"></span> Last chance - leaves in a few days
+          </div>
+
+          <div class="stage-2__upsell-header">
+            <div>
+              <h2 class="stage-2__upsell-title">Thinking about steps & railings? Now is the time.</h2>
+            </div>
+          </div>
+
+          <p class="stage-2__upsell-desc">
+            Your deck is still in production, which means we can add them to the same shipment at no additional shipping cost.
+          </p>
+
+          <p class="stage-2__upsell-subdesc" style="font-weight:600">
+            Once your deck leaves our facility, steps and railings become a separate shipment and shipping them on their own can be significantly more expensive.
+          </p>
+          
+          <p class="stage-2__upsell-subdesc">
+            Add them now and everything arrives together.
+          </p>
+
+          <div class="stage-2__cta-container">
+            <div class="stage-2__cta-label">GET IN TOUCH WITH OUR TEAM TO ADD RAILINGS AND/OR STEPS</div>
+            <a href="#chat" class="stage-2__chat-btn">CHAT NOW</a>
+          </div>
+        </div>
         <div class="stage-1__checklist-container">
           <h2 class="stage-1__checklist-title">What's happening right now ( Manufacturing )</h2>
           <div class="stage-1__checklist">
@@ -186,6 +214,10 @@
             </div>
           </div>
         </div>
+        
+        <div class="stage-1__checklist-container" style="margin-top: 2.5rem; padding: 0; border: 0;">
+          <iframe style="border-radius: 12px;" width="100%" height="400" src="https://www.youtube.com/embed/zWPayGdRQFE?si=wePOU2PH2I2JjHYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- ========================================== -->
@@ -203,7 +235,6 @@
             <div>
               <h2 class="stage-2__upsell-title">Last chance to add steps & railings.</h2>
             </div>
-            <div class="stage-2__lightning-icon">⚡</div>
           </div>
 
           <p class="stage-2__upsell-desc">
@@ -337,7 +368,7 @@
   .stage-2__dot-red { width: 6px; height: 6px; background-color: #fff; border-radius: 50%; }
   .stage-2__upsell-header { display: flex; justify-content: space-between; align-items: flex-start; }
   .stage-2__upsell-title { font-size: 2.2rem; font-weight: 800; color: #111; margin: 0 0 1rem 0; }
-  .stage-2__lightning-icon { font-size: 2rem; color: #eab308; }
+  {% comment %} .stage-2__lightning-icon { font-size: 2rem; color: #eab308; } {% endcomment %}
   .stage-2__upsell-desc { font-size: 1.45rem; color: #333; line-height: 1.5; margin-bottom: 1.2rem; }
   .stage-2__upsell-subdesc { font-size: 1.35rem; color: #555; line-height: 1.5; margin-bottom: 1.5rem; }
   .stage-2__warning-pill { border: 1px solid #fca5a5; background-color: #ffe4e6; color: #991b1b; padding: 8px 14px; border-radius: 20px; font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; display: inline-block; }
@@ -440,8 +471,6 @@ async function handleTrackingSubmit(event) {
 
       const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
       const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
-      const deliveryText = data.delivery ? (typeof data.delivery === 'object' ? JSON.stringify(data.delivery) : data.delivery) : 'N/A';
-      // Customer details extract kar rahe hain safely
       const customerName = data.customer && data.customer.name ? data.customer.name : 'N/A';
       const customerEmail = data.customer && data.customer.email ? data.customer.email : 'N/A';
       const customerPhone = data.customer && data.customer.phone ? data.customer.phone : 'N/A';
@@ -458,9 +487,6 @@ async function handleTrackingSubmit(event) {
           <div><strong>Order Date:</strong> ${formattedDate}</div>
           <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
           <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
-          {% comment %} <div><strong>Delivery:</strong> ${deliveryText}</div>
-          <div><strong>Cancelled:</strong> ${order.cancelled ? 'Yes' : 'No'}</div>
-          <div><strong>Tags:</strong> ${tagsText}</div> {% endcomment %}
         </div>
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
@@ -502,7 +528,7 @@ function showLiveProgressStage() {
   const isFulfillmentActive = (fulfillmentStatus === 'IN_PROGRESS' || fulfillmentStatus === 'FULFILLED' || fulfillmentStatus === 'PARTIALLY_FULFILLED');
 
   let isStage2 = false;
-  if (workingDays > 3 && isFulfillmentActive) {
+  if (workingDays > 4 && isFulfillmentActive) {
     isStage2 = true;
   }
 
@@ -519,9 +545,14 @@ function showLiveProgressStage() {
 
   let progress = 22;
 
+  const allCheckboxes = [
+    'chk-order-confirmed', 'chk-materials-selected', 'chk-components-production',
+    'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up', 'chk-connection-checked'
+  ];
+
   if (!isStage2) {
     // ------------------------------------
-    // STAGE 1 VIEW (Max 85% Cap)
+    // STAGE 1 VIEW (Max 62% Cap)
     // ------------------------------------
     stage1Block.style.display = 'block';
     stage2Block.style.display = 'none';
@@ -530,12 +561,7 @@ function showLiveProgressStage() {
     mainHeading.innerText = "Your deck is now in production.";
     subheading.innerText = "Every A-DIY deck is made just for you, nothing sits in a warehouse.";
     etaText.innerText = "Estimated: 7 business days";
-    percentLabel.innerText = "of step 1 is complete.";
-
-    const allCheckboxes = [
-      'chk-order-confirmed', 'chk-materials-selected', 'chk-components-production',
-      'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up', 'chk-connection-checked'
-    ];
+    percentLabel.innerText = "of your deck is completed.";
 
     let checkedItems = [];
 
@@ -549,18 +575,17 @@ function showLiveProgressStage() {
       progress = 60;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
     } else {
-      progress = 85;
+      progress = 62;
       checkedItems = [...allCheckboxes];
     }
 
-    const stepThresholds = [22, 35, 70]; 
-
+    // Stage 1 Icon Highlight Logic (Only first 2 icons highlighted)
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
 
       if (stepEl) {
-        if (i <= 3 && progress >= stepThresholds[i - 1]) {
+        if (i <= 2) {
           stepEl.classList.add('active');
         } else {
           stepEl.classList.remove('active');
@@ -568,7 +593,7 @@ function showLiveProgressStage() {
       }
 
       if (lineEl) {
-        if (i < 3 && progress >= stepThresholds[i]) {
+        if (i === 1) {
           lineEl.classList.add('active');
         } else {
           lineEl.classList.remove('active');
@@ -582,21 +607,16 @@ function showLiveProgressStage() {
 
   } else {
     // ------------------------------------
-    // STAGE 2 VIEW (Starts from 85% to 100%)
+    // STAGE 2 VIEW (Starts from 71% to 100%)
     // ------------------------------------
     
-    // IMMEDIATE REDIRECTION CHECK:
-    // Agar status FULFILLED hai toh foran external carrier site par redirect kar do
     if (fulfillmentStatus === 'FULFILLED') {
       const cleanOrderNumber = order.number.toString().replace(/[^0-9]/g, '');
       const redirectUrl = `https://efwtrack.com/track/${cleanOrderNumber}`;
-      
       window.location.href = redirectUrl;
-      return; // Aage ka UI update run karne ki zaroorat nahi
+      return;
     }
 
-    // AGAR STATUS FULFILLED NAHI HAI:
-    // Normal Stage 2 UI load hoga aur day 1, day 2, day 3 progress chalega
     stage1Block.style.display = 'none';
     stage2Block.style.display = 'block';
 
@@ -604,29 +624,28 @@ function showLiveProgressStage() {
     mainHeading.innerText = "Getting your deck ready to ship.";
     subheading.innerText = "We're packing and securing everything for its trip to you.";
     etaText.innerText = "Estimate: 3 to 4 business days";
-    percentLabel.innerText = "of step 2 is complete.";
+    percentLabel.innerText = "of your deck is completed.";
 
-    const stage2WorkingDays = workingDays - 3;
+    const stage2WorkingDays = workingDays - 4;
 
-    // Days ke hisab se progress cap (Max 100% tak ruk jayega status FULFILLED hone tak)
     if (stage2WorkingDays <= 1) {
-      progress = 85;
+      progress = 71;
     } else if (stage2WorkingDays === 2) {
-      progress = 90;
+      progress = 85;
     } else if (stage2WorkingDays === 3) {
       progress = 95;
     } else {
       progress = 100;
     }
 
-    // Stage 2 Active Icons Logic
+    // Stage 2 Icon Highlight Logic (3rd icon active at start, 4th icon active after 95%)
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
 
       let isActive = false;
-      if (i <= 3 && progress >= 70) isActive = true;
-      if (i === 4 && progress >= 100) isActive = true;
+      if (i <= 3 && progress >= 71) isActive = true;
+      if (i === 4 && progress >= 95) isActive = true;
 
       if (stepEl) {
         if (isActive) {
@@ -637,7 +656,7 @@ function showLiveProgressStage() {
       }
 
       if (lineEl) {
-        if (i < 3 || (i === 3 && progress >= 100)) {
+        if (i < 3 || (i === 3 && progress >= 95)) {
           lineEl.classList.add('active');
         } else {
           lineEl.classList.remove('active');
@@ -646,14 +665,9 @@ function showLiveProgressStage() {
     }
   }
 
-  // DOM Updates
   if (percentEl) percentEl.innerText = progress + '%';
   if (fillEl) fillEl.style.width = progress + '%';
 
-  // Purana end-level redirection block yahan se remove kar diya gaya hai.
-
-  // SAFELY DELAYED REDIRECTION LOGIC
-  // Progress 100% aur FULFILLED status evaluate hone ke baad UI pehle render hoti hai, then redirect hota hai
   if (isStage2 && progress >= 100 && fulfillmentStatus === 'FULFILLED') {
     const cleanOrderNumber = order.number.toString().replace(/[^0-9]/g, '');
     const redirectUrl = `https://efwtrack.com/track/${cleanOrderNumber}`;
@@ -664,7 +678,6 @@ function showLiveProgressStage() {
   }
 }
 
-// Browser Back Button Cache Refresh Fix
 window.addEventListener('pageshow', function (event) {
   if (event.persisted && window.currentActiveOrderData) {
     showLiveProgressStage();
