@@ -1,5 +1,6 @@
 #chat-button,
-#chat-window{
+#chat-window,
+#chat-campaigns{
     z-index:8;
 }
 #CartDrawer{
