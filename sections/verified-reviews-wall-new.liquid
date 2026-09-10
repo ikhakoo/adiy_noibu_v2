@@ -976,6 +976,31 @@
       }
     });
   });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const reviewWrappers = document.querySelectorAll('.review-wrapper');
+
+    reviewWrappers.forEach(wrapper => {
+      const textElement = wrapper.querySelector('.review-text');
+      const btn = wrapper.querySelector('.read-more-btn');
+
+      // Check karein ke text 4 lines se zyada lamba hai ya nahi
+      // scrollHeight > clientHeight yeh batata hai ke text overflow ho raha hai
+      if (textElement.scrollHeight > textElement.clientHeight) {
+        btn.style.display = 'inline-block';
+      }
+
+      btn.addEventListener('click', function() {
+        textElement.classList.toggle('expanded');
+        
+        if (textElement.classList.contains('expanded')) {
+          btn.textContent = 'Read Less';
+        } else {
+          btn.textContent = 'Read More';
+        }
+      });
+    });
+  });
 </script>
 
 {% schema %}
