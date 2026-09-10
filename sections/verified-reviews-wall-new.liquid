@@ -477,6 +477,34 @@
   .reviews-wall-scroll-{{ section.id }} .card-stars { color: #000; font-size: 18px; letter-spacing: 1px; }
   .reviews-wall-scroll-{{ section.id }} .review-headline { font-size: 15px; font-weight: 500; margin-bottom: 4px; color: #111; }
   .reviews-wall-scroll-{{ section.id }} .review-text { color: #444; line-height: 1.5; margin: 0; }
+  .reviews-wall-scroll-{{ section.id }} .review-wrapper { position: relative; }
+  .reviews-wall-scroll-{{ section.id }} .review-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Sirf 4 lines show hongi */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+  }
+
+  /* Jab text expand ho jaye */
+  .reviews-wall-scroll-{{ section.id }} .review-text.expanded {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .read-more-btn {
+    background: none;
+    border: none;
+    color: #000; /* Apni theme ke mutabiq color set kar lein */
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    font-size: 14px;
+    margin-top: 4px;
+  }
 
   @media screen and (max-width: 767px) {
     .reviews-wall-scroll-{{ section.id }} .grid-sizer,
