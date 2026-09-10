@@ -806,12 +806,13 @@
                     {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                     {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                     {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
+                    {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
                     {%- if block.settings.review_text != blank -%}
-  <div class="review-text-wrapper">
-    <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
-    <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
-  </div>
-{%- endif -%}
+                      <div class="review-text-wrapper">
+                        <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
+                        <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
+                      </div>
+                    {%- endif -%}
                   </div>
                 {%- endif -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
@@ -863,12 +864,13 @@
                   {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                   {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                   {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
+                  {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
                   {%- if block.settings.review_text != blank -%}
-  <div class="review-text-wrapper">
-    <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
-    <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
-  </div>
-{%- endif -%}
+                    <div class="review-text-wrapper">
+                      <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
+                      <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
+                    </div>
+                  {%- endif -%}
                 </div>
             {%- endcase -%}
           </div>
