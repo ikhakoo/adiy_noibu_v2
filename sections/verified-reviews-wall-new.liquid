@@ -297,21 +297,7 @@
     width: calc((100% / {{ section.settings.columns_desktop }}) - 14px);
   }
 
-  {%- comment -%}
-    The clamp sits on a dedicated clip layer around the grid - not on the grid
-    itself and not on the wrapper.
 
-    Not the grid: a max-height on a multi-column box does not clip it, it fragments
-    the overflow into extra columns off to the right, so the tail of the wall ended
-    up beside the grid instead of below the fold.
-
-    Not the wrapper: the wrapper also holds the fade overlay and the read-more
-    button, and that button is position:absolute; bottom:-3rem - it hangs below the
-    overlay on purpose - so overflow:hidden there cut it in half.
-
-    .reviews-clip is a plain block box, so it clips normally, and the overlay and
-    button stay outside it in the unclipped wrapper.
-  {%- endcomment -%}
   .reviews-wall-scroll-{{ section.id }} .reviews-clip {
     transition: max-height 0.4s ease;
   }
@@ -507,33 +493,6 @@
     height: 44px;
   }
 }
-  /* ==========================================
-     CLS: reserve the packed height before Isotope runs
-     ==========================================
-     Noibu RUM, 30 days to 2026-09-02: /pages/reviews CLS p75 is 0.39 on
-     desktop and 0.07 on mobile. This grid is that asymmetry.
-
-     Isotope is initialised lazily (IntersectionObserver, below). Until it
-     runs, every .card-box is an ordinary block-level box at
-     calc(100% / columns_desktop - 14px) wide, so all of the cards stack in ONE
-     very tall column. When Isotope packs them, the grid collapses to roughly
-     1 / columns_desktop of that height and everything after it jumps up by
-     thousands of pixels. On mobile columns_mobile is 1, so the unpacked stack
-     already matches the packed layout and nothing moves - which is exactly the
-     desktop-only signature in the data.
-
-     Fix: before JS runs, flow the cards through the same number of CSS columns
-     Isotope will use, so the height the browser reserves is already about the
-     packed height. .reviews-grid-prejs is removed synchronously in the same
-     task as `new Isotope(...)` (Isotope lays out in its constructor), so the
-     unpacked stack is never painted. If Isotope never loads at all, the class
-     simply stays and the wall degrades to a readable multi-column layout
-     instead of one tall strip.
-
-     CSS columns fill top-to-bottom per column rather than shortest-column
-     first, so the card ORDER differs from the packed result - that is fine
-     here, this is a pre-paint placeholder, not the final layout.
-  */
   .reviews-wall-scroll-{{ section.id }} .reviews-isotope-grid.reviews-grid-prejs {
     column-count: {{ section.settings.columns_desktop }};
     column-gap: 14px;
@@ -557,22 +516,40 @@
       column-gap: 2px;
     }
   }
+
+
+  /* ==========================================
+     Individual Review Text Read More / Collapse
+     ========================================== */
+  .reviews-wall-scroll-{{ section.id }} .review-text-wrapper {
+    position: relative;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .review-text.is-truncated-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Sirf 4 lines dikhaye ga */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .card-read-more-btn {
+    background: none;
+    border: none;
+    color: #1e4d3b; /* Apni brand ke mutabiq color rakh lein */
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 0 0;
+    margin-top: 6px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .card-read-more-btn:hover {
+    text-decoration: underline;
+  }
 {%- endstyle -%}
 
-{%- comment -%}
-  Isotope gives this wall its shortest-column masonry packing - CSS cannot do that
-  (multi-column fills top-to-bottom per column, which reshuffles the cards), so the
-  library stays.
-
-  What changed is how it loads. These used to be two parser-blocking <script> tags
-  pointing at unpkg.com, mid-body, for a section eight screens down - every page
-  view stopped parsing for a third-party DNS + TLS + download. Now they are
-  self-hosted and deferred, and Isotope is initialised only when the section nears
-  the viewport (see below). That matters for more than the scripts: Isotope stacks
-  every card at top:0 until it lays out, so initialising it eagerly made the
-  browser treat all ~120 images as in-viewport and fetch them at once. Deferring
-  init leaves the cards in normal flow, where loading="lazy" works.
-{%- endcomment -%}
 <script src="{{ 'imagesloaded.pkgd.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'isotope.pkgd.min.js' | asset_url }}" defer="defer"></script>
 
@@ -584,12 +561,6 @@
       
       <!-- HEADER STYLE 1 -->
       <div class="wall-header header-style-1">
-        {%- comment -%}
-          Page heading rule: the first section rendered in a template owns the page h1,
-          everything below it is h2. section.index counts only enabled sections, and is nil
-          in the theme editor and the Section Rendering API - those fall through to h2,
-          which looks identical because the size is pinned by a heading_size class.
-        {%- endcomment -%}
         {%- if section.index == 1 and section.location == 'template' -%}
           {%- assign page_heading_tag = 'h1' -%}
         {%- else -%}
@@ -667,12 +638,6 @@
 
       <!-- HEADER STYLE 2 -->
       <div class="wall-header header-style-2">
-        {%- comment -%}
-          Page heading rule: the first section rendered in a template owns the page h1,
-          everything below it is h2. section.index counts only enabled sections, and is nil
-          in the theme editor and the Section Rendering API - those fall through to h2,
-          which looks identical because the size is pinned by a heading_size class.
-        {%- endcomment -%}
         {%- if section.index == 1 and section.location == 'template' -%}
           {%- assign page_heading_tag = 'h1' -%}
         {%- else -%}
@@ -784,11 +749,6 @@
                   {%- capture rw_video_markup -%}
                     {{ block.settings.video | video_tag: image_size: '600x', loop: true, muted: true, playsinline: true, preload: 'none' }}
                   {%- endcapture -%}
-                  {%- comment -%}
-                    Strip video_tag's own poster (it downloads eagerly, ~145KB x 21)
-                    and its fallback <img> (never displayed by any browser that
-                    supports <video>, but downloaded by all of them).
-                  {%- endcomment -%}
                   {{ rw_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
                   {%- if block.settings.video.preview_image != blank -%}
                     <img
@@ -846,7 +806,13 @@
                     {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                     {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                     {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
-                    {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%}
+                    {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
+                    {%- if block.settings.review_text != blank -%}
+                      <div class="review-text-wrapper">
+                        <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
+                        <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
+                      </div>
+                    {%- endif -%}
                   </div>
                 {%- endif -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
@@ -898,7 +864,13 @@
                   {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                   {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                   {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
-                  {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%}
+                  {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
+                  {%- if block.settings.review_text != blank -%}
+                    <div class="review-text-wrapper">
+                      <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
+                      <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
+                    </div>
+                  {%- endif -%}
                 </div>
             {%- endcase -%}
           </div>
@@ -935,8 +907,7 @@
     const expandBtn = sectionContainer.querySelector('.js-expand-reviews');
     let iso;
 
-    // Isotope is deferred, so it may not have parsed yet when this runs. Wait for
-    // it rather than bailing out, otherwise the wall silently stays unpacked.
+    
     const whenReady = (cb) => {
       if (typeof Isotope !== 'undefined' && typeof imagesLoaded !== 'undefined') return cb();
       let tries = 0;
@@ -949,23 +920,18 @@
     const initMasonry = () => {
       if (iso || !gridElem) return;
       whenReady(() => {
-        // Drop the pre-JS column fallback in the SAME task as the constructor.
-        // Isotope lays out synchronously, so the browser never gets a frame in
-        // which the cards are an unpacked single-column stack, and no layout
-        // shift is recorded for the handover.
+        
         gridElem.classList.remove('reviews-grid-prejs');
         iso = new Isotope(gridElem, {
           itemSelector: '.card-box',
           percentPosition: true,
           masonry: { columnWidth: '.grid-sizer', gutter: 14 }
         });
-        // Cards are lazy, so they gain height as they load - relayout when they do.
+        
         imagesLoaded(gridElem, () => iso && iso.layout());
       });
     };
 
-    // Only pack once the wall isnear the viewport. Initialising eagerly stacks every
-    // card at top:0, which makes the browser fetch all ~120 images at once.
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries, obs) => {
         entries.forEach(e => { if (e.isIntersecting) { obs.disconnect(); initMasonry(); } });
@@ -991,9 +957,7 @@
       if (!video) return;
 
       wrapper.addEventListener('mouseenter', function() {
-        // Reveal the video underneath only once it is actually showing frames,
-        // otherwise the poster is swapped for a black box while it buffers.
-        video.play().then(() => wrapper.classList.add('is-playing')).catch(() => {});
+       video.play().then(() => wrapper.classList.add('is-playing')).catch(() => {});
       });
 
       wrapper.addEventListener('mouseleave', function() {
@@ -1014,6 +978,36 @@
           }
         });
       }
+    });
+
+    // Individual Card Read More Toggle
+    const reviewTextWrappers = sectionContainer.querySelectorAll('.review-text-wrapper');
+    reviewTextWrappers.forEach(wrapper => {
+      const textP = wrapper.querySelector('.review-text');
+      const btn = wrapper.querySelector('.js-card-read-more');
+      if (!textP || !btn) return;
+
+      // Check karein ke text waqai 4 lines se lamba hai ya nahi
+      // scrollHeight clientHeight se barhi ho toh matlab text truncate ho raha hai
+      setTimeout(() => {
+        if (textP.scrollHeight > textP.clientHeight) {
+          btn.style.display = 'inline-block';
+        }
+      }, 200);
+
+      btn.addEventListener('click', function() {
+        if (textP.classList.contains('is-truncated-text')) {
+          textP.classList.remove('is-truncated-text');
+          btn.textContent = 'Read Less';
+        } else {
+          textP.classList.add('is-truncated-text');
+          btn.textContent = 'Read More';
+        }
+        // Agar Isotope grid use ho rahi hai toh layout refresh karein
+        if (iso) {
+          setTimeout(() => iso.layout(), 100);
+        }
+      });
     });
   });
 </script>
