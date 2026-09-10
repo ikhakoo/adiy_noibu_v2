@@ -516,6 +516,38 @@
       column-gap: 2px;
     }
   }
+
+
+  /* ==========================================
+     Individual Review Text Read More / Collapse
+     ========================================== */
+  .reviews-wall-scroll-{{ section.id }} .review-text-wrapper {
+    position: relative;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .review-text.is-truncated-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Sirf 4 lines dikhaye ga */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .card-read-more-btn {
+    background: none;
+    border: none;
+    color: #1e4d3b; /* Apni brand ke mutabiq color rakh lein */
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 0 0;
+    margin-top: 6px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .card-read-more-btn:hover {
+    text-decoration: underline;
+  }
 {%- endstyle -%}
 
 <script src="{{ 'imagesloaded.pkgd.min.js' | asset_url }}" defer="defer"></script>
@@ -774,7 +806,12 @@
                     {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                     {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                     {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
-                    {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%}
+                    {%- if block.settings.review_text != blank -%}
+  <div class="review-text-wrapper">
+    <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
+    <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
+  </div>
+{%- endif -%}
                   </div>
                 {%- endif -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
@@ -826,7 +863,12 @@
                   {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                   {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                   {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
-                  {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%}
+                  {%- if block.settings.review_text != blank -%}
+  <div class="review-text-wrapper">
+    <p class="review-text is-truncated-text">{{ block.settings.review_text }}</p>
+    <button type="button" class="card-read-more-btn js-card-read-more" style="display: none;">Read More</button>
+  </div>
+{%- endif -%}
                 </div>
             {%- endcase -%}
           </div>
@@ -934,6 +976,36 @@
           }
         });
       }
+    });
+
+    // Individual Card Read More Toggle
+    const reviewTextWrappers = sectionContainer.querySelectorAll('.review-text-wrapper');
+    reviewTextWrappers.forEach(wrapper => {
+      const textP = wrapper.querySelector('.review-text');
+      const btn = wrapper.querySelector('.js-card-read-more');
+      if (!textP || !btn) return;
+
+      // Check karein ke text waqai 4 lines se lamba hai ya nahi
+      // scrollHeight clientHeight se barhi ho toh matlab text truncate ho raha hai
+      setTimeout(() => {
+        if (textP.scrollHeight > textP.clientHeight) {
+          btn.style.display = 'inline-block';
+        }
+      }, 200);
+
+      btn.addEventListener('click', function() {
+        if (textP.classList.contains('is-truncated-text')) {
+          textP.classList.remove('is-truncated-text');
+          btn.textContent = 'Read Less';
+        } else {
+          textP.classList.add('is-truncated-text');
+          btn.textContent = 'Read More';
+        }
+        // Agar Isotope grid use ho rahi hai toh layout refresh karein
+        if (iso) {
+          setTimeout(() => iso.layout(), 100);
+        }
+      });
     });
   });
 </script>
