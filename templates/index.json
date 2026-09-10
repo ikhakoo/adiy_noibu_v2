@@ -116,7 +116,7 @@
           "type": "countdown",
           "settings": {
             "label": "Ends in",
-            "end_date": "2026-09-09",
+            "end_date": "2026-09-13",
             "end_time": "23:59"
           }
         }
