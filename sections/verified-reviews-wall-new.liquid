@@ -479,32 +479,23 @@
   .reviews-wall-scroll-{{ section.id }} .review-text { color: #444; line-height: 1.5; margin: 0; }
   .reviews-wall-scroll-{{ section.id }} .review-wrapper { position: relative; }
   .reviews-wall-scroll-{{ section.id }} .review-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 4; /* Sirf 4 lines show hongi */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 6px;
-    transition: all 0.3s ease;
+    margin-bottom: 0;
+    line-height: 1.5;
   }
 
-  /* Jab text expand ho jaye */
-  .reviews-wall-scroll-{{ section.id }} .review-text.expanded {
-    -webkit-line-clamp: unset;
-    overflow: visible;
-  }
-
-  .reviews-wall-scroll-{{ section.id }} .read-more-btn {
+  .reviews-wall-scroll-{{ section.id }} .inline-read-btn {
     background: none;
     border: none;
-    color: #000; /* Apni theme ke mutabiq color set kar lein */
+    color: #000; /* Apni theme ke mutabiq color set karein */
     font-weight: 600;
     cursor: pointer;
     padding: 0;
+    margin-left: 4px;
+    display: inline;
+    font-size: inherit;
     text-decoration: underline;
-    font-size: 14px;
-    margin-top: 4px;
   }
+
 
   @media screen and (max-width: 767px) {
     .reviews-wall-scroll-{{ section.id }} .grid-sizer,
@@ -981,26 +972,31 @@
 
   document.addEventListener("DOMContentLoaded", function() {
     const reviewWrappers = document.querySelectorAll('.review-wrapper');
+    const characterLimit = 135; // Aap apni screen ke hisaab se ise kam ya zyada kar sakte hain
 
     reviewWrappers.forEach(wrapper => {
-      const textElement = wrapper.querySelector('.review-text');
-      const btn = wrapper.querySelector('.read-more-btn');
+      const p = wrapper.querySelector('.review-text');
+      const fullText = p.getAttribute('data-full-text');
 
-      // Check karein ke text 4 lines se zyada lamba hai ya nahi
-      // scrollHeight > clientHeight yeh batata hai ke text overflow ho raha hai
-      if (textElement.scrollHeight > textElement.clientHeight) {
-        btn.style.display = 'inline-block';
-      }
-
-      btn.addEventListener('click', function() {
-        textElement.classList.toggle('expanded');
+      if (fullText.length > characterLimit) {
+        const truncatedText = fullText.substring(0, characterLimit) + '... ';
         
-        if (textElement.classList.contains('expanded')) {
-          btn.textContent = 'Read Less';
-        } else {
-          btn.textContent = 'Read More';
-        }
-      });
+        // Initial state: Truncated text + Read More button
+        p.innerHTML = truncatedText + '<button type="button" class="inline-read-btn">Read More</button>';
+
+        const btn = p.querySelector('.inline-read-btn');
+        
+        btn.addEventListener('click', function() {
+          if (btn.textContent === 'Read More') {
+            p.innerHTML = fullText + ' <button type="button" class="inline-read-btn">Read Less</button>';
+          } else {
+            p.innerHTML = truncatedText + ' <button type="button" class="inline-read-btn">Read More</button>';
+          }
+          
+          // Re-attach event listener to the newly generated button
+          p.querySelector('.inline-read-btn').addEventListener('click', arguments.callee);
+        });
+      }
     });
   });
 </script>
