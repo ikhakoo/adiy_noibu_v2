@@ -477,34 +477,6 @@
   .reviews-wall-scroll-{{ section.id }} .card-stars { color: #000; font-size: 18px; letter-spacing: 1px; }
   .reviews-wall-scroll-{{ section.id }} .review-headline { font-size: 15px; font-weight: 500; margin-bottom: 4px; color: #111; }
   .reviews-wall-scroll-{{ section.id }} .review-text { color: #444; line-height: 1.5; margin: 0; }
-  .reviews-wall-scroll-{{ section.id }} .review-wrapper { position: relative; }
-  .reviews-wall-scroll-{{ section.id }} .review-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 4; /* Sirf 4 lines show hongi */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 6px;
-    transition: all 0.3s ease;
-  }
-
-  /* Jab text expand ho jaye */
-  .reviews-wall-scroll-{{ section.id }} .review-text.expanded {
-    -webkit-line-clamp: unset;
-    overflow: visible;
-  }
-
-  .reviews-wall-scroll-{{ section.id }} .read-more-btn {
-    background: none;
-    border: none;
-    color: #000; /* Apni theme ke mutabiq color set kar lein */
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-    text-decoration: underline;
-    font-size: 14px;
-    margin-top: 4px;
-  }
 
   @media screen and (max-width: 767px) {
     .reviews-wall-scroll-{{ section.id }} .grid-sizer,
@@ -802,13 +774,7 @@
                     {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                     {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                     {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
-                    {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
-                    {%- if block.settings.review_text != blank -%}
-                      <div class="review-wrapper" {{ block.shopify_attributes }}>
-                        <p class="review-text">{{ block.settings.review_text }}</p>
-                        <button type="button" class="read-more-btn" style="display: none;">Read More</button>
-                      </div>
-                    {%- endif -%}
+                    {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%}
                   </div>
                 {%- endif -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
@@ -860,13 +826,7 @@
                   {%- if block.settings.is_4_star -%}<div class="card-stars">★★★★</div>{%- endif -%}
                   {%- if block.settings.is_3_star -%}<div class="card-stars">★★★</div>{%- endif -%}
                   {%- if block.settings.headline != blank -%}<div class="review-headline">{{ block.settings.headline }}</div>{%- endif -%}
-                  {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
-                  {%- if block.settings.review_text != blank -%}
-                    <div class="review-wrapper" {{ block.shopify_attributes }}>
-                      <p class="review-text">{{ block.settings.review_text }}</p>
-                      <button type="button" class="read-more-btn" style="display: none;">Read More</button>
-                    </div>
-                  {%- endif -%}
+                  {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%}
                 </div>
             {%- endcase -%}
           </div>
@@ -974,31 +934,6 @@
           }
         });
       }
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const reviewWrappers = document.querySelectorAll('.review-wrapper');
-
-    reviewWrappers.forEach(wrapper => {
-      const textElement = wrapper.querySelector('.review-text');
-      const btn = wrapper.querySelector('.read-more-btn');
-
-      // Check karein ke text 4 lines se zyada lamba hai ya nahi
-      // scrollHeight > clientHeight yeh batata hai ke text overflow ho raha hai
-      if (textElement.scrollHeight > textElement.clientHeight) {
-        btn.style.display = 'inline-block';
-      }
-
-      btn.addEventListener('click', function() {
-        textElement.classList.toggle('expanded');
-        
-        if (textElement.classList.contains('expanded')) {
-          btn.textContent = 'Read Less';
-        } else {
-          btn.textContent = 'Read More';
-        }
-      });
     });
   });
 </script>
