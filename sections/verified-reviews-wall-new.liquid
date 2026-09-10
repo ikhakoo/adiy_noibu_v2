@@ -479,23 +479,32 @@
   .reviews-wall-scroll-{{ section.id }} .review-text { color: #444; line-height: 1.5; margin: 0; }
   .reviews-wall-scroll-{{ section.id }} .review-wrapper { position: relative; }
   .reviews-wall-scroll-{{ section.id }} .review-text {
-    margin-bottom: 0;
-    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Sirf 4 lines show hongi */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
   }
 
-  .reviews-wall-scroll-{{ section.id }} .inline-read-btn {
+  /* Jab text expand ho jaye */
+  .reviews-wall-scroll-{{ section.id }} .review-text.expanded {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+
+  .reviews-wall-scroll-{{ section.id }} .read-more-btn {
     background: none;
     border: none;
-    color: #000; /* Apni theme ke mutabiq color set karein */
+    color: #000; /* Apni theme ke mutabiq color set kar lein */
     font-weight: 600;
     cursor: pointer;
     padding: 0;
-    margin-left: 4px;
-    display: inline;
-    font-size: inherit;
     text-decoration: underline;
+    font-size: 14px;
+    margin-top: 4px;
   }
-
 
   @media screen and (max-width: 767px) {
     .reviews-wall-scroll-{{ section.id }} .grid-sizer,
@@ -796,9 +805,8 @@
                     {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
                     {%- if block.settings.review_text != blank -%}
                       <div class="review-wrapper" {{ block.shopify_attributes }}>
-                        <p class="review-text" data-full-text="{{ block.settings.review_text | escape }}">
-                          {{ block.settings.review_text }}
-                        </p>
+                        <p class="review-text">{{ block.settings.review_text }}</p>
+                        <button type="button" class="read-more-btn" style="display: none;">Read More</button>
                       </div>
                     {%- endif -%}
                   </div>
@@ -855,9 +863,8 @@
                   {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
                   {%- if block.settings.review_text != blank -%}
                     <div class="review-wrapper" {{ block.shopify_attributes }}>
-                      <p class="review-text" data-full-text="{{ block.settings.review_text | escape }}">
-                        {{ block.settings.review_text }}
-                      </p>
+                      <p class="review-text">{{ block.settings.review_text }}</p>
+                      <button type="button" class="read-more-btn" style="display: none;">Read More</button>
                     </div>
                   {%- endif -%}
                 </div>
@@ -972,31 +979,26 @@
 
   document.addEventListener("DOMContentLoaded", function() {
     const reviewWrappers = document.querySelectorAll('.review-wrapper');
-    const characterLimit = 135; // Aap apni screen ke hisaab se ise kam ya zyada kar sakte hain
 
     reviewWrappers.forEach(wrapper => {
-      const p = wrapper.querySelector('.review-text');
-      const fullText = p.getAttribute('data-full-text');
+      const textElement = wrapper.querySelector('.review-text');
+      const btn = wrapper.querySelector('.read-more-btn');
 
-      if (fullText.length > characterLimit) {
-        const truncatedText = fullText.substring(0, characterLimit) + '... ';
-        
-        // Initial state: Truncated text + Read More button
-        p.innerHTML = truncatedText + '<button type="button" class="inline-read-btn">Read More</button>';
-
-        const btn = p.querySelector('.inline-read-btn');
-        
-        btn.addEventListener('click', function() {
-          if (btn.textContent === 'Read More') {
-            p.innerHTML = fullText + ' <button type="button" class="inline-read-btn">Read Less</button>';
-          } else {
-            p.innerHTML = truncatedText + ' <button type="button" class="inline-read-btn">Read More</button>';
-          }
-          
-          // Re-attach event listener to the newly generated button
-          p.querySelector('.inline-read-btn').addEventListener('click', arguments.callee);
-        });
+      // Check karein ke text 4 lines se zyada lamba hai ya nahi
+      // scrollHeight > clientHeight yeh batata hai ke text overflow ho raha hai
+      if (textElement.scrollHeight > textElement.clientHeight) {
+        btn.style.display = 'inline-block';
       }
+
+      btn.addEventListener('click', function() {
+        textElement.classList.toggle('expanded');
+        
+        if (textElement.classList.contains('expanded')) {
+          btn.textContent = 'Read Less';
+        } else {
+          btn.textContent = 'Read More';
+        }
+      });
     });
   });
 </script>
