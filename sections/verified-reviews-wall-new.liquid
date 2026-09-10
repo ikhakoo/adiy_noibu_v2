@@ -805,8 +805,9 @@
                     {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
                     {%- if block.settings.review_text != blank -%}
                       <div class="review-wrapper" {{ block.shopify_attributes }}>
-                        <p class="review-text">{{ block.settings.review_text }}</p>
-                        <button type="button" class="read-more-btn" style="display: none;">Read More</button>
+                        <p class="review-text" data-full-text="{{ block.settings.review_text | escape }}">
+                          {{ block.settings.review_text }}
+                        </p>
                       </div>
                     {%- endif -%}
                   </div>
@@ -863,8 +864,9 @@
                   {% comment %} {%- if block.settings.review_text != blank -%}<p class="review-text">{{ block.settings.review_text }}</p>{%- endif -%} {% endcomment %}
                   {%- if block.settings.review_text != blank -%}
                     <div class="review-wrapper" {{ block.shopify_attributes }}>
-                      <p class="review-text">{{ block.settings.review_text }}</p>
-                      <button type="button" class="read-more-btn" style="display: none;">Read More</button>
+                      <p class="review-text" data-full-text="{{ block.settings.review_text | escape }}">
+                        {{ block.settings.review_text }}
+                      </p>
                     </div>
                   {%- endif -%}
                 </div>
