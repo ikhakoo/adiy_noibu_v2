@@ -131,7 +131,7 @@
           "type": "countdown_timer",
           "settings": {
             "heading": "Labor Day Sale Ends in:",
-            "end_date": "2026-09-10",
+            "end_date": "2026-09-13",
             "end_time": "23:59:59",
             "bg_color": "#a33429",
             "text_color": "#ffffff"
