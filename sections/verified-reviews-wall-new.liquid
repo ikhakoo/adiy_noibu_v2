@@ -1001,13 +1001,9 @@
           textP.classList.add('is-truncated-text');
           btn.textContent = 'Read More';
         }
-        
-        // Isotope ko batayein ke items ki height change ho gayi hai
+        // Agar Isotope grid use ho rahi hai toh layout refresh karein
         if (iso) {
-          // Thora sa timeout de kar layout trigger karein taake DOM render ho jaye
-          setTimeout(() => {
-            iso.arrange(); // Layout ko re-calculate karega
-          }, 50);
+          setTimeout(() => iso.layout(), 100);
         }
       });
     });
