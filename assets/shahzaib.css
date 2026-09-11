@@ -459,20 +459,20 @@
 .product-video-sec .multicolumn-card__info .rte{
     font-size: 14px;
 }
-.template-product .product .product__media-list{
+.product .product__media-list{
     margin-bottom:8px;
 }
-.template-product .product .product__media-list .product__media-item .product__media img{
+.product .product__media-list .product__media-item .product__media img{
     border-radius:12px;
 }
-.template-product .custom-gallery-hide{
+.custom-gallery-hide{
     display:none !important;
 }
 .custom-product-slider-wrapper{
     display:none;
 }
 
-.template-product .custom-product-slider-wrapper {
+.custom-product-slider-wrapper {
     width: 100%;
     margin: 0 ;
     padding: 0 ;
