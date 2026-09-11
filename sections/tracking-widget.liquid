@@ -114,11 +114,11 @@
           </div>
         </div>
 
-        {%- if section.settings.card_note != blank -%}
+        {% comment %} {%- if section.settings.card_note != blank -%}
           <div class="stage-1__card-note" id="dynamic-card-note">
             {{ section.settings.card_note }}
           </div>
-        {%- endif -%}
+        {%- endif -%} {% endcomment %}
       </div>
 
       <!-- ========================================== -->
