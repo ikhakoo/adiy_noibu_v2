@@ -22,8 +22,8 @@
       "name": "Tracking Widget",
       "settings": {
         "logo_image": "shopify://shop_images/a-diy-logo.png",
-        "search_desc": "To view the most up-to-date status of your shipment,enter your tracking number below.",
-        "search_footer": "<p>For any questions, call <em>A-DIY Control Tower </em><a href=\"tel:+17863582872\" title=\"tel:+17863582872\">+1 (786) 358-2872</a><strong> </strong>or email us at <a href=\"mailto:updates@a-diy.com\" title=\"mailto:updates@a-diy.com\">updates@a-diy.com</a></p>",
+        "search_desc": "To view the most up-to-date status of your shipment, enter your order number.",
+        "search_footer": "<p>For any questions, call <strong>A-DIY Support Team</strong> at <a href=\"tel:5512209220\" target=\"_blank\">(551) 220-9220</a> or email us at <a href=\"mailto:support@a-diy.com\" target=\"_blank\">support@a-diy.com</a></p>",
         "accent_color": "#1e4d3b",
         "bg_color": "#ffffff",
         "card_bg_color": "#ffffff",
