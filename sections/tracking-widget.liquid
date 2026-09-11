@@ -606,7 +606,14 @@ function showLiveProgressStage() {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
 
-      if (stepEl) {
+      let maxActiveIcons = 1;
+      if (workingDays === 2) {
+        maxActiveIcons = 2;
+      } else if (workingDays >= 3) {
+        maxActiveIcons = 3;
+      }
+
+      {% comment %} if (stepEl) {
         if (i <= 2) {
           stepEl.classList.add('active');
         } else {
@@ -616,6 +623,21 @@ function showLiveProgressStage() {
 
       if (lineEl) {
         if (i === 1) {
+          lineEl.classList.add('active');
+        } else {
+          lineEl.classList.remove('active');
+        }
+      } {% endcomment %}
+      if (stepEl) {
+        if (i <= maxActiveIcons) {
+          stepEl.classList.add('active');
+        } else {
+          stepEl.classList.remove('active');
+        }
+      }
+
+      if (lineEl) {
+        if (i < maxActiveIcons) {
           lineEl.classList.add('active');
         } else {
           lineEl.classList.remove('active');
