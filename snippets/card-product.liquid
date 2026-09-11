@@ -29,6 +29,11 @@
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 {%- if card_product and card_product != empty -%}
+  {%- if card_product.tags contains 'hidden' -%}
+    {%- break -%}
+  {%- endif -%}
+
+  
   {%- liquid
     assign ratio = 1
     if card_product.featured_media and media_aspect_ratio == 'portrait'
