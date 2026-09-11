@@ -394,34 +394,34 @@
     margin:0;
 }
 
-.template-product .product__info-wrapper .price__regular .price-item--regular{
+.product .product__info-wrapper .price__regular .price-item--regular{
     font-weight: 500;
     font-size: 30px;
 }
-.template-product .product__info-wrapper .title-top-text{
+.product .product__info-wrapper .title-top-text{
     background: #EEEEEB;
     width: fit-content;
     padding: 0 10px;
     border-radius: 5px;
     color: #000;
 }
-.template-product .product__info-wrapper .product__title{
+.product .product__info-wrapper .product__title{
     margin: 5px 0 0;
 }
-.template-product .product__info-wrapper .product__title h1{
+.product .product__info-wrapper .product__title h1{
     font-size: 36px;
     font-weight: 600;
 }
-.template-product .product__info-wrapper .product-price{
+.product .product__info-wrapper .product-price{
     margin: 5px 0;
 }
-.template-product .product__info-wrapper .product-price.custom-price-block{
+.product .product__info-wrapper .product-price.custom-price-block{
     margin-bottom: 15px;
 }
-.template-product .product__info-wrapper .accordion summary{
+.product .product__info-wrapper .accordion summary{
     padding: 2rem 0;
 }
-.template-product .product__info-wrapper .accordion__title{
+.product .product__info-wrapper .accordion__title{
     color: #000;
     font-size: 16px;
 }
