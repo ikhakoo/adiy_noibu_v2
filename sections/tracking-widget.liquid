@@ -577,7 +577,7 @@ function showLiveProgressStage() {
 
     let checkedItems = [];
 
-    if (workingDays <= 1) {
+    {% comment %} if (workingDays <= 1) {
       progress = 22;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
     } else if (workingDays === 2) {
@@ -586,6 +586,16 @@ function showLiveProgressStage() {
     } else if (workingDays === 3) {
       progress = 60;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
+    } else {
+      progress = 62;
+      checkedItems = [...allCheckboxes];
+    } {% endcomment %}
+    if (workingDays <= 1) {
+      progress = 22;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
+    } else if (workingDays === 2) {
+      progress = 45;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together'];
     } else {
       progress = 62;
       checkedItems = [...allCheckboxes];
