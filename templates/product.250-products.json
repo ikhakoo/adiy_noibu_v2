@@ -50,6 +50,7 @@
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
+          "disabled": true,
           "settings": {
             "prefix_text": "or",
             "middle_text": "with code",
@@ -58,6 +59,7 @@
         },
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
+          "disabled": true,
           "settings": {
             "logo_1": "shopify://shop_images/Untitled_design_32.png-2.png",
             "text_1": "Pay Month With Affirm",
