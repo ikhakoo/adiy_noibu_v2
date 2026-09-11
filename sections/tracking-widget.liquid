@@ -37,7 +37,7 @@
       </div>
 
       <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
-        <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="Enter Tracking Number" required />
+        <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="Enter your order number." required />
         <button type="submit" id="trackSubmitBtn" class="stage-1__btn">Track</button>
       </form>
 
@@ -485,8 +485,8 @@ async function handleTrackingSubmit(event) {
           <div><strong>Email:</strong> ${customerEmail}</div>
           <div><strong>Phone:</strong> ${customerPhone}</div>
           <div><strong>Order Date:</strong> ${formattedDate}</div>
-          <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
-          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div>
+          {% comment %} <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
+          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div> {% endcomment %}
         </div>
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
