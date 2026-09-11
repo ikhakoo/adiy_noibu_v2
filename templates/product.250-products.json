@@ -47,6 +47,11 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
+          "settings": {}
+        },
+        "custom_price_a6rzcR": {
+          "type": "custom_price",
           "settings": {}
         },
         "discount_promo_YW9Hge": {
@@ -241,6 +246,7 @@
         "title",
         "text_ifcgmB",
         "price",
+        "custom_price_a6rzcR",
         "discount_promo_YW9Hge",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
