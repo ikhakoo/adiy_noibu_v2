@@ -28,7 +28,7 @@
         "bg_color": "#ffffff",
         "card_bg_color": "#ffffff",
         "text_color": "#002b49",
-        "card_note": "<p><a href=\"https://a-diy.com/pages/shipping-policy\" target=\"_blank\">View Shipping Policy</a> & <a href=\"https://a-diy.com/pages/refund-policy\" target=\"_blank\">View Return, Cancellation & Refund Policy</a> </p>",
+        "card_note": "<p>View <a href=\"/pages/shipping-policy\" title=\"Shipping Policy\">Shipping Policy</a> & View <a href=\"/pages/refund-policy\" title=\"Refund Policy\">Return, Cancellation & Refund Policy</a> </p>",
         "padding_top": 100,
         "padding_bottom": 100
       }
