@@ -1187,13 +1187,20 @@
                 
                 {%- when 'custom_price' -%}
                   <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price">
-                    Reserve your deck for $250 today
-                    {%- render 'price',
-                      product: product,
-                      use_variant: true,
-                      show_badges: true,
-                      price_class: 'price--large'
-                    -%}
+                    <div class="custom-price-block"> 
+                      {% if block.settings.prefix_text_price != blank %}
+                        <span>{{ block.settings.prefix_text_price }}</span>
+                      {% endif %}
+                      {%- render 'price',
+                        product: product,
+                        use_variant: true,
+                        show_badges: true,
+                        price_class: 'price--large'
+                      -%}
+                      {% if block.settings.postfix_text_price != blank %}
+                        <span>{{ block.settings.postfix_text_price }}</span>
+                      {% endif %}
+                    </div>
                   </div>
                   {%- if product.quantity_price_breaks_configured? -%}
                     <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
@@ -2618,7 +2625,19 @@
     {
       "type": "custom_price",
       "name": "Custom Price",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "prefix_text_price",
+          "label": "Before Text",
+        },
+        {
+          "type": "text",
+          "id": "postfix_text_price",
+          "label": "After Text",
+        }
+      ]
     },
 
     {
