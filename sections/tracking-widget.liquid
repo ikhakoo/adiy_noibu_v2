@@ -593,7 +593,7 @@ function showLiveProgressStage() {
     // Stage 1 Icon Highlight Logic (Only first 2 icons highlighted)
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
-      {% comment %} const lineEl = document.getElementById(`flow-line-${i}`); {% endcomment %}
+      const lineEl = document.getElementById(`flow-line-${i}`);
 
       if (stepEl) {
         if (i <= 2) {
