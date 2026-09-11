@@ -38,6 +38,7 @@
         },
         "text_ifcgmB": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "custom_class": "product-sub-title",
             "text": "{{ product.metafields.custom.product_sub_title.value }}",
