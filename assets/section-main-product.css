@@ -1527,7 +1527,7 @@ a.product__text {
    where the regression is measured. The permanent fix belongs in
    sections/custom-announcement-bar.liquid - real width/height attributes, or
    an explicit aspect-ratio - and this block should be deleted when it lands. */
-.template-product .custom-annoucement-bar .announcement-bar .left-side img {
+.custom-annoucement-bar .announcement-bar .left-side img {
   aspect-ratio: auto;
 }
 
