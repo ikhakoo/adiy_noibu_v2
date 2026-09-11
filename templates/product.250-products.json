@@ -52,7 +52,10 @@
         },
         "custom_price_a6rzcR": {
           "type": "custom_price",
-          "settings": {}
+          "settings": {
+            "prefix_text_price": "Reserve your deck for",
+            "postfix_text_price": "today"
+          }
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
