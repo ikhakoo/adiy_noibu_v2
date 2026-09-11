@@ -2598,31 +2598,38 @@
       "name": "t:sections.main-product.blocks.price.name",
       "limit": 1
     },
+
     {
-  "type": "discount_promo",
-  "name": "Discount Promo Banner",
-  "limit": 1,
-  "settings": [
-    {
-      "type": "text",
-      "id": "prefix_text",
-      "label": "Prefix Text",
-      "default": "or"
+      "type": "custom_price",
+      "name": "Custom Price",
+      "limit": 1
     },
+
     {
-      "type": "text",
-      "id": "middle_text",
-      "label": "Middle Text",
-      "default": "with code"
+      "type": "discount_promo",
+      "name": "Discount Promo Banner",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "prefix_text",
+          "label": "Prefix Text",
+          "default": "or"
+        },
+        {
+          "type": "text",
+          "id": "middle_text",
+          "label": "Middle Text",
+          "default": "with code"
+        },
+        {
+          "type": "text",
+          "id": "promo_code",
+          "label": "Default Coupon Code",
+          "default": "LABOR"
+        }
+      ]
     },
-    {
-      "type": "text",
-      "id": "promo_code",
-      "label": "Default Coupon Code",
-      "default": "LABOR"
-    }
-  ]
-},
     {
       "type": "countdown_timer",
       "name": "Countdown Banner",
