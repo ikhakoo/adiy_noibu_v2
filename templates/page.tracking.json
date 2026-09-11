@@ -28,7 +28,7 @@
         "bg_color": "#ffffff",
         "card_bg_color": "#ffffff",
         "text_color": "#002b49",
-        "card_note": "<p>View <a href=\"/pages/shipping-policy\" title=\"Shipping Policy\">Shipping Policy</a> & View <a href=\"/pages/refund-policy\" title=\"Refund Policy\">Return, Cancellation & Refund Policy</a> </p>",
+        "card_note": "<p>View <a href=\"/pages/shipping-policy\" title=\"Shipping Policy\"><strong>Shipping Policy</strong></a><strong> </strong><br/>View <a href=\"/pages/refund-policy\" title=\"Refund Policy\"><strong>Return, Cancellation & Refund Policy</strong></a> </p>",
         "padding_top": 100,
         "padding_bottom": 100
       }
