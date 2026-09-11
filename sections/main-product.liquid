@@ -932,53 +932,59 @@
       }
     }
 
-    
+    .custom-price-block{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: #000;
+      flex-wrap: wrap;
+    }
     
   
-{%- comment -%}
-  Mobile readability floor. These selectors are declared once for all viewports,
-  so they are overridden here rather than edited - desktop keeps its current size.
-{%- endcomment -%}
-@media screen and (max-width: 749px) {
-    .financing-text-col { font-size: 11px; }
-    .financing-logo-col img{
-      max-width: 55px;
+    {%- comment -%}
+      Mobile readability floor. These selectors are declared once for all viewports,
+      so they are overridden here rather than edited - desktop keeps its current size.
+    {%- endcomment -%}
+    @media screen and (max-width: 749px) {
+        .financing-text-col { font-size: 11px; }
+        .financing-logo-col img{
+          max-width: 55px;
+        }
     }
-}
 
-@media screen and (max-width: 749px) {
+    @media screen and (max-width: 749px) {
 
-  .acc-variant-select,
-  .acc-qty-wrapper .qty-input,
-  .qty-input {
-    font-size: 16px;
-  }
-}
+      .acc-variant-select,
+      .acc-qty-wrapper .qty-input,
+      .qty-input {
+        font-size: 16px;
+      }
+    }
 
-@media screen and (max-width: 749px) {
+    @media screen and (max-width: 749px) {
 
-  .qty-btn {
-    min-width: 44px;
-    min-height: 44px;
-  }
-  .acc-variant-select {
-    min-height: 44px;
-  }
-  .financing-learn-btn,
-  .financing-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    /* min-height: 44px; */
-  }
-  .financing-learn-btn {
-    font-size: 9px;
-  }
-  .financing-row{
-    grid-template-columns: 60px 1fr auto;
+      .qty-btn {
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .acc-variant-select {
+        min-height: 44px;
+      }
+      .financing-learn-btn,
+      .financing-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        /* min-height: 44px; */
+      }
+      .financing-learn-btn {
+        font-size: 9px;
+      }
+      .financing-row{
+        grid-template-columns: 60px 1fr auto;
 
-  }
-}
-{%- endstyle -%}
+      }
+    }
+  {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
