@@ -1184,6 +1184,21 @@
                     {%- endform -%}
                   </div>
                   {% endcomment %}
+                
+                {%- when 'custom_price' -%}
+                  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price">
+                    {%- render 'price',
+                      product: product,
+                      use_variant: true,
+                      show_badges: true,
+                      price_class: 'price--large'
+                    -%}
+                  </div>
+                  {%- if product.quantity_price_breaks_configured? -%}
+                    <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
+                      <span>{{ 'products.product.volume_pricing.note' | t }}</span>
+                    </div>
+                  {%- endif -%}
 
                 {%- when 'discount_promo' -%}
                   {%- liquid
