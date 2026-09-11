@@ -38,6 +38,7 @@
         },
         "text_ifcgmB": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "custom_class": "product-sub-title",
             "text": "{{ product.metafields.custom.product_sub_title.value }}",
@@ -51,7 +52,6 @@
         },
         "custom_price_a6rzcR": {
           "type": "custom_price",
-          "disabled": true,
           "settings": {
             "prefix_text_price": "Reserve your deck for",
             "postfix_text_price": "today"
