@@ -540,7 +540,7 @@ function showLiveProgressStage() {
   const isFulfillmentActive = (fulfillmentStatus === 'IN_PROGRESS' || fulfillmentStatus === 'FULFILLED' || fulfillmentStatus === 'PARTIALLY_FULFILLED');
 
   let isStage2 = false;
-  if (workingDays > 4 && isFulfillmentActive) {
+  if (workingDays > 3 && isFulfillmentActive) {
     isStage2 = true;
   }
 
