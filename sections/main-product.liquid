@@ -1867,7 +1867,7 @@
                             <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery' }}</span>
                             <span class="dp-truck-icon">🚚</span>
                           </div>
-                          <div class="dp-input-wrapper">
+                          <div class="dp-input-wrapper" onclick="document.getElementById('EstimatedDeliveryDate').showPicker?.()">
                             <input 
                               type="date" 
                               id="EstimatedDeliveryDate" 
