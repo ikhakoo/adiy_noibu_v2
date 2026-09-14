@@ -1811,8 +1811,6 @@
 
 
                 {%- when 'estimated_price' -%}
-            
-
 <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
   {%- assign current_variant = product.selected_or_first_available_variant -%}
   
@@ -1825,18 +1823,18 @@
   <div class="dp-card dp-deck-card">
     <div class="dp-row main-deck-price-row">
       <span class="dp-label">Deck Price:</span>
-      <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money }}</span>
+      <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
     </div>
     
     <div class="dp-discount-badge-row">
       <span class="dp-badge-icon">✓</span>
       <span class="dp-badge-text">Discount Applied</span>
-      <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money }}</span>
+      <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
     </div>
 
     <div class="dp-row offered-price-row">
       <span class="dp-label">Offered Price</span>
-      <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money }}</span>
+      <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
     </div>
   </div>
 
@@ -1844,15 +1842,15 @@
   <div class="dp-card dp-due-card">
     <div class="dp-row">
       <span class="dp-label">Due Today</span>
-      <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money }}</span>
+      <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
     </div>
-    <div class="dp-subtext">Non-refundable Reservation Fee.</div>
+    <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
   </div>
 
   <!-- 3. Estimated Delivery Calendar Picker Box -->
   <div class="dp-card dp-delivery-card">
     <div class="dp-delivery-header">
-      <span class="dp-label">Estimated Delivery Date</span>
+      <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery' }}</span>
       <span class="dp-truck-icon">🚚</span>
     </div>
     <div class="dp-input-wrapper">
@@ -1865,8 +1863,24 @@
         required
       >
     </div>
-    <div class="dp-subtext" style="margin-top: 6px;">Select a date between 30 days from today and up to 6 months.</div>
+    {%- if block.settings.show_delivery_subtext -%}
+      <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext }}</div>
+    {%- endif -%}
   </div>
+
+  <!-- 4. Agreement Text & Additional Info Footer -->
+  {%- if block.settings.show_footer_agreement -%}
+    <div class="dp-agreement-footer">
+      <p class="dp-agreement-text">
+        {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
+      </p>
+      {%- if block.settings.info_link_text != blank -%}
+        <div class="dp-info-link-wrap">
+          <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 </div>
 
 <!-- Variant Metafield JSON Mapping for JavaScript -->
@@ -1892,12 +1906,15 @@
     font-family: inherit;
   }
   .dp-card {
-    background: #fdfdfd;
-    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
     border-radius: 12px;
-    padding: 16px 20px;
+    padding: 18px 20px;
     margin-bottom: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+  }
+  .dp-deck-card {
+    background: #fcfcfc;
   }
   .dp-row {
     display: flex;
@@ -1906,34 +1923,35 @@
   }
   .dp-label {
     font-weight: 600;
-    color: #111;
+    color: #1a1a1a;
     font-size: 15px;
   }
   .dp-value {
     font-weight: 600;
-    color: #111;
+    color: #1a1a1a;
     font-size: 16px;
   }
   .bold-price {
     font-size: 20px;
     font-weight: 700;
+    color: #1a1a1a;
   }
   .main-deck-price-row {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .dp-discount-badge-row {
     display: flex;
     align-items: center;
-    background: #f2f7f4;
+    background: #edf5f0;
     padding: 8px 12px;
     border-radius: 6px;
-    margin: 10px 0;
+    margin: 12px 0;
     font-size: 13px;
-    color: #2e6930;
+    color: #215626;
     font-weight: 500;
   }
   .dp-badge-icon {
-    background: #2e6930;
+    background: #215626;
     color: #fff;
     border-radius: 50%;
     width: 16px;
@@ -1941,8 +1959,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
-    margin-right: 6px;
+    font-size: 9px;
+    margin-right: 8px;
   }
   .dp-savings {
     margin-left: auto;
@@ -1952,6 +1970,7 @@
     font-size: 12px;
     color: #666;
     margin-top: 4px;
+    line-height: 1.4;
   }
   .dp-delivery-header {
     display: flex;
@@ -1968,7 +1987,7 @@
   .dp-date-input {
     width: 100%;
     padding: 12px 14px;
-    border: 1px solid #ccc;
+    border: 1px solid #d0d0d0;
     border-radius: 8px;
     background: #fff;
     font-size: 14px;
@@ -1980,19 +1999,50 @@
     outline: none;
     border-color: #111;
   }
+  .dp-agreement-footer {
+    margin-top: 16px;
+    text-align: center;
+    padding: 0 5px;
+  }
+  .dp-agreement-text {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0 0 8px 0;
+  }
+  .dp-agreement-text a {
+    color: #111;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  .dp-info-link-wrap {
+    margin-top: 6px;
+  }
+  .dp-info-link {
+    font-size: 13px;
+    color: #1e5fa6;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .dp-info-link:hover {
+    text-decoration: underline;
+  }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // 1. Setup Date Picker Bounds (30 days from today up to 6 months)
+    // 1. Setup Date Picker Bounds using dynamic settings from schema
     const dateInput = document.getElementById("EstimatedDeliveryDate");
     if (dateInput) {
       let today = new Date();
+      let minDays = parseInt("{{ block.settings.min_days_offset | default: 30 }}");
+      let maxMonths = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
+
       let minDate = new Date();
-      minDate.setDate(today.getDate() + 30);
+      minDate.setDate(today.getDate() + minDays);
       
       let maxDate = new Date();
-      maxDate.setMonth(today.getMonth() + 6);
+      maxDate.setMonth(today.getMonth() + maxMonths);
 
       function formatDate(d) {
         let month = '' + (d.getMonth() + 1);
@@ -2008,19 +2058,20 @@
       dateInput.value = formatDate(minDate);
     }
 
-    // 2. Format Money helper according to Shopify currency standards
+    // 2. Format Money helper
     function formatMoney(cents) {
-      return '$' + (cents / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // 3. Variant Change Listener for Dawn Theme
-    const metafieldsData = JSON.parse(document.getElementById("VariantMetafieldsJson-{{ section.id }}").innerHTML);
+    // 3. Variant Change Listener
+    const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
+    if (!metaJsonEl) return;
+    const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
 
     function updateBlockData(variantId) {
       const data = metafieldsData[variantId];
       if (!data) return;
 
-      // Update DOM elements
       const deckPriceEl = document.getElementById("DeckPriceVal");
       const savingsEl = document.getElementById("SavingsVal");
       const offeredPriceEl = document.getElementById("OfferedPriceVal");
@@ -2032,10 +2083,6 @@
       if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
     }
 
-    // Listen to Dawn theme variant change events (variantChange dispatches on variant-selects or main product)
-    const productSection = document.getElementById("DeckPricingBlock-{{ section.id }}").closest("section, product-info, main");
-    
-    // Fallback: observe URL changes or variant input changes
     function checkVariantUrl() {
       const urlParams = new URLSearchParams(window.location.search);
       const variantId = urlParams.get('variant');
@@ -2044,17 +2091,18 @@
       }
     }
 
-    // Dawn theme custom event listener
     document.addEventListener('change', function(e) {
       if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
         setTimeout(checkVariantUrl, 100);
       }
     });
 
-    // Also check on popstate (browser back/forward)
     window.addEventListener('popstate', checkVariantUrl);
   });
 </script>
+
+
+
                 {%- when 'estimated_delivery' -%}
                   {%- liquid
                     comment
@@ -3096,10 +3144,75 @@
     },
 
     {
-      "type": "estimated_price",
-      "name": "Estimated Price",
-      "limit": 1
+  "type": "estimated_price",
+  "name": "Estimated Price Block",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "due_today_subtext",
+      "label": "Due Today Subtext",
+      "default": "Non-refundable Reservation Fee."
     },
+    {
+      "type": "text",
+      "id": "delivery_title",
+      "label": "Delivery Title",
+      "default": "Estimated Delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery_subtext",
+      "label": "Show Delivery Subtext",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "delivery_subtext",
+      "label": "Delivery Subtext Text",
+      "default": "Select a date between 30 days from today and up to 6 months."
+    },
+    {
+      "type": "number",
+      "id": "min_days_offset",
+      "label": "Min Days From Today (Default: 30)",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "max_months_offset",
+      "label": "Max Months Limit (Default: 6)",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Footer Agreement & Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_footer_agreement",
+      "label": "Show Agreement Footer",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "agreement_text",
+      "label": "Agreement Text",
+      "default": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice."
+    },
+    {
+      "type": "text",
+      "id": "info_link_text",
+      "label": "Additional Link Text",
+      "default": "View additional information"
+    },
+    {
+      "type": "url",
+      "id": "info_link_url",
+      "label": "Additional Link URL"
+    }
+  ]
+},
     {
       "type": "estimated_delivery",
       "name": "Estimated Delivery",
