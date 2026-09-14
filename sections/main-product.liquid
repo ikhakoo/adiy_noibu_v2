@@ -1812,11 +1812,9 @@
 
                 {%- when 'estimated_price' -%}
              
-
 <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
   {%- assign current_variant = product.selected_or_first_available_variant -%}
   
-  {%- comment -%} Convert text metafields to numbers using times: 1 or plus: 0 {%- endcomment -%}
   {%- assign deck_price = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
   {%- assign discount_value = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
   {%- assign offered_price = deck_price | minus: discount_value -%}
@@ -1850,17 +1848,23 @@
     <div class="dp-subtext">Non-refundable Reservation Fee.</div>
   </div>
 
-  <!-- 3. Estimated Delivery Date Picker Box -->
+  <!-- 3. Estimated Delivery Calendar Picker Box -->
   <div class="dp-card dp-delivery-card">
     <div class="dp-delivery-header">
-      <span class="dp-label">Estimated Delivery</span>
+      <span class="dp-label">Estimated Delivery Date</span>
       <span class="dp-truck-icon">🚚</span>
     </div>
-    <div class="dp-select-wrapper">
-      <select id="EstimatedDeliverySelect" name="properties[Estimated Delivery]" form="{{ product.id }}" class="dp-select" required>
-        <option value="" disabled selected>Select preferred delivery week</option>
-      </select>
+    <div class="dp-input-wrapper">
+      <input 
+        type="date" 
+        id="EstimatedDeliveryDate" 
+        name="properties[Estimated Delivery]" 
+        form="{{ product.id }}" 
+        class="dp-date-input" 
+        required
+      >
     </div>
+    <div class="dp-subtext" style="margin-top: 6px;">Select a date between 30 days from today and up to 6 months.</div>
   </div>
 </div>
 
@@ -1940,10 +1944,10 @@
   .dp-truck-icon {
     font-size: 18px;
   }
-  .dp-select-wrapper {
+  .dp-input-wrapper {
     position: relative;
   }
-  .dp-select {
+  .dp-date-input {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #ccc;
@@ -1951,43 +1955,46 @@
     background: #fff;
     font-size: 14px;
     color: #333;
-    appearance: none;
+    font-family: inherit;
     cursor: pointer;
   }
-  .dp-select-wrapper::after {
-    content: "▼";
-    font-size: 10px;
-    color: #333;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+  .dp-date-input:focus {
+    outline: none;
+    border-color: #111;
   }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Delivery Date Dropdown: 30 days from current date up to 6 months
-    const selectEl = document.getElementById("EstimatedDeliverySelect");
-    if (selectEl) {
-      let currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() + 30); // 30 days after current date
+    const dateInput = document.getElementById("EstimatedDeliveryDate");
+    if (dateInput) {
+      let today = new Date();
 
-      let endDate = new Date();
-      endDate.setMonth(endDate.getMonth() + 6); // Up to 6 months
+      // Min Date: Current date + 30 days
+      let minDate = new Date();
+      minDate.setDate(today.getDate() + 30);
+      
+      // Max Date: Current date + 6 months
+      let maxDate = new Date();
+      maxDate.setMonth(today.getMonth() + 6);
 
-      while (currentDate <= endDate) {
-        let option = document.createElement("option");
-        let optionsDate = { month: 'short', day: 'numeric', year: 'numeric' };
-        let formattedDate = currentDate.toLocaleDateString('en-US', optionsDate);
-        
-        option.value = "Week of " + formattedDate;
-        option.textContent = "Week of " + formattedDate;
-        selectEl.appendChild(option);
+      // Format YYYY-MM-DD for HTML input min/max attributes
+      function formatDate(d) {
+        let month = '' + (d.getMonth() + 1);
+        let day = '' + d.getDate();
+        let year = d.getFullYear();
 
-        currentDate.setDate(currentDate.getDate() + 7); // 1 week interval
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
       }
+
+      dateInput.min = formatDate(minDate);
+      dateInput.max = formatDate(maxDate);
+      
+      // Optional: Set default value to minDate so user has a valid pre-selection
+      dateInput.value = formatDate(minDate);
     }
   });
 </script>
