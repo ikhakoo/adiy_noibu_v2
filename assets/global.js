@@ -87,11 +87,23 @@ document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
 const trapFocusHandlers = {};
 
 function trapFocus(container, elementToFocus = container) {
+  removeTrapFocus();
+
+  // `container` comes from things like `summaryElement.nextElementSibling`,
+  // which is null when a <summary> is the last child. Nothing to trap.
+  if (!container) return;
+
   var elements = getFocusableElements(container);
   var first = elements[0];
   var last = elements[elements.length - 1];
 
-  removeTrapFocus();
+  // Callers pass the result of a querySelector that can miss -- e.g.
+  // MenuDrawer.onSummaryClick passes `detailsElement.querySelector('button')`,
+  // which is null for a submenu that has no button. A default parameter only
+  // fills in for `undefined`, so an explicit null reached `.focus()` below and
+  // threw "null is not an object (evaluating 'elementToFocus.focus')".
+  // Fall back to the first focusable element, then to the container itself.
+  var focusTarget = elementToFocus || first || container;
 
   trapFocusHandlers.focusin = (event) => {
     if (event.target !== container && event.target !== last && event.target !== first) return;
@@ -121,14 +133,14 @@ function trapFocus(container, elementToFocus = container) {
   document.addEventListener('focusout', trapFocusHandlers.focusout);
   document.addEventListener('focusin', trapFocusHandlers.focusin);
 
-  elementToFocus.focus();
+  focusTarget.focus();
 
   if (
-    elementToFocus.tagName === 'INPUT' &&
-    ['search', 'text', 'email', 'url'].includes(elementToFocus.type) &&
-    elementToFocus.value
+    focusTarget.tagName === 'INPUT' &&
+    ['search', 'text', 'email', 'url'].includes(focusTarget.type) &&
+    focusTarget.value
   ) {
-    elementToFocus.setSelectionRange(0, elementToFocus.value.length);
+    focusTarget.setSelectionRange(0, focusTarget.value.length);
   }
 }
 
