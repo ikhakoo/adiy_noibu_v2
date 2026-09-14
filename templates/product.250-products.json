@@ -120,6 +120,10 @@
             "custom_liquid": "<hr>"
           }
         },
+        "estimated_price_7h8aib": {
+          "type": "estimated_price",
+          "settings": {}
+        },
         "estimated_delivery_HC9tbH": {
           "type": "estimated_delivery",
           "settings": {
@@ -258,6 +262,7 @@
         "custom_liquid_HmnBKa",
         "variant_picker",
         "custom_liquid_FnEVbe",
+        "estimated_price_7h8aib",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
         "countdown_timer_NM9Fxn",
