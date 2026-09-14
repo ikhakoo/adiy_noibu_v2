@@ -1823,27 +1823,28 @@
 
   {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
     
-    <!-- Hidden Variant ID input (Synced with theme variant pickers) -->
+    <!-- Hidden Variant ID input -->
     <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantIdInput-{{ section.id }}">
     
     <!-- Redirect straight to Checkout -->
     <input type="hidden" name="return_to" value="/checkout">
 
     <div class="price-wrapper">
-      <!-- 1. Deck Price & Discount Box -->
-      <div class="dp-card dp-deck-card">
+      <!-- 1. Deck Price & Discount Box (Hidden if deck_price is 0/blank) -->
+      <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
         <div class="dp-row main-deck-price-row">
           <span class="dp-label">Deck Price:</span>
           <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
         </div>
         
-        <div class="dp-discount-badge-row">
+        <!-- Discount Row (Hidden if discount_value is 0/blank) -->
+        <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
           <span class="dp-badge-icon">✓</span>
           <span class="dp-badge-text">Discount Applied</span>
           <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
         </div>
 
-        <hr style="margin: 10px 0;">
+        <hr style="margin: 10px 0; {% if discount_value == 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
 
         <div class="dp-row offered-price-row">
           <span class="dp-label">Offered Price</span>
@@ -1880,6 +1881,7 @@
         {%- endif -%}
       </div>
     </div>
+
     <!-- 4. Agreement Text & Additional Info Footer -->
     {%- if block.settings.show_footer_agreement -%}
       <div class="dp-agreement-footer">
@@ -1894,7 +1896,7 @@
       </div>
     {%- endif -%}
 
-    <!-- 5. Action Buttons (Reserve Your Deck & Dynamic Checkout G Pay / Apple Pay) -->
+    <!-- 5. Action Buttons -->
     <div class="dp-actions-container">
       <button type="submit" name="add" class="dp-reserve-btn" id="ReserveDeckBtn">
         <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
@@ -2058,8 +2060,6 @@
   .dp-info-link:hover {
     text-decoration: underline;
   }
-
-  /* Buttons Styling matching reference image */
   .dp-actions-container {
     margin-top: 16px;
   }
@@ -2131,7 +2131,7 @@
       return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // 3. Variant Change Listener & Dynamic Pricing
+    // 3. Variant Change Listener & Dynamic Pricing/Visibility
     const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
     if (!metaJsonEl) return;
     const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
@@ -2140,11 +2140,34 @@
       const data = metafieldsData[variantId];
       if (!data) return;
 
+      const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
+      const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
+      const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
       const deckPriceEl = document.getElementById("DeckPriceVal");
       const savingsEl = document.getElementById("SavingsVal");
       const offeredPriceEl = document.getElementById("OfferedPriceVal");
       const dueTodayEl = document.getElementById("DueTodayVal");
       const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
+
+      // Handle Deck Price Container Visibility
+      if (deckCardContainer) {
+        if (data.deckPrice > 0) {
+          deckCardContainer.style.display = "block";
+        } else {
+          deckCardContainer.style.display = "none";
+        }
+      }
+
+      // Handle Discount Row & Divider Visibility
+      if (discountRow && deckDivider) {
+        if (data.discountValue > 0) {
+          discountRow.style.display = "flex";
+          deckDivider.style.display = "block";
+        } else {
+          discountRow.style.display = "none";
+          deckDivider.style.display = "none";
+        }
+      }
 
       if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
       if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
@@ -2171,7 +2194,6 @@
     window.addEventListener('popstate', checkVariantUrl);
   });
 </script>
-
 
 
                 {%- when 'estimated_delivery' -%}
