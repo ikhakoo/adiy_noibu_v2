@@ -1,3 +1,29 @@
+//============================ # delegated-listener helper ==========================
+
+/*
+ * `event.target` is not guaranteed to be an Element.
+ *
+ * Third-party embeds on this store (Affirm, Gorgias, the Shopify web pixel
+ * manager) dispatch synthetic mouse events whose target is `document`, the
+ * window, or a text node -- none of which have a `closest` method. Every
+ * delegated listener below used to reach for that method on the raw target,
+ * so one of those synthetic events threw
+ *
+ *     TypeError: event.target.closest is not a function
+ *
+ * which aborted the listener for that event. That is Noibu issue #441.
+ *
+ * Routing every delegated lookup through this helper makes a non-Element
+ * target a no-op instead of a thrown error.
+ */
+function closestFrom(target, selector) {
+  if (!target || typeof target.closest !== 'function') return null;
+  return target.closest(selector);
+}
+
+//============================ # delegated-listener helper End ==========================
+
+
 //============================ # INP helper ==========================
 
 /*
@@ -39,7 +65,7 @@ function runAfterPaint(fn) {
  * the old version silently missed.
  */
 document.addEventListener('click', function(e) {
-  const link = e.target.closest('a[href*="#"]');
+  const link = closestFrom(e.target, 'a[href*="#"]');
   if (!link) return;
 
   const href = link.getAttribute('href');
@@ -106,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', () => {
   // Quantity Selector Plus/Minus Logic
   document.addEventListener('click', (e) => {
-    const qtyBtn = e.target.closest('.js-qty-btn');
+    const qtyBtn = closestFrom(e.target, '.js-qty-btn');
     if (!qtyBtn) return;
 
     const card = qtyBtn.closest('.js-accessory-card');
@@ -122,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // AJAX Add To Cart Logic (Empty Cart Fix Included)
   document.addEventListener('click', async (e) => {
-    const addBtn = e.target.closest('.js-acc-add-to-cart');
+    const addBtn = closestFrom(e.target, '.js-acc-add-to-cart');
     if (!addBtn) return;
 
     const card = addBtn.closest('.js-accessory-card');
@@ -277,14 +303,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   document.addEventListener('mouseover', (event) => {
-    const li = event.target.closest('.header-menu-right li');
+    const li = closestFrom(event.target, '.header-menu-right li');
     if (li) {
       li.classList.add('active');
     }
   });
 
   document.addEventListener('mouseout', (event) => {
-    const li = event.target.closest('.header-menu-right li');
+    const li = closestFrom(event.target, '.header-menu-right li');
     if (li) {
       li.classList.remove('active');
     }
@@ -377,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener("DOMContentLoaded", function () {
   // Puri website par kisi bhi link me jab '#affirm' Href aayega, us par click hone par popup trigger hoga
   document.addEventListener("click", function (event) {
-    const linkTarget = event.target.closest('a[href*="#affirm"]');
+    const linkTarget = closestFrom(event.target, 'a[href*="#affirm"]');
 
     if (linkTarget) {
       event.preventDefault(); // Default anchor anchor jump ko rokega -- must stay synchronous
@@ -439,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Pure page par check karega jis link/button ke href me "#klarna" ho
   document.body.addEventListener('click', function (e) {
-    const trigger = e.target.closest('a[href*="#klarna"], button[href*="#klarna"], [data-href*="#klarna"]');
+    const trigger = closestFrom(e.target, 'a[href*="#klarna"], button[href*="#klarna"], [data-href*="#klarna"]');
     if (trigger) {
       e.preventDefault();
       openModal();
