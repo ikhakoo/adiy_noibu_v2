@@ -125,7 +125,7 @@
           "settings": {
             "due_today_subtext": "Non-refundable Reservation Fee.",
             "delivery_title": "Estimated Delivery",
-            "show_delivery_subtext": true,
+            "show_delivery_subtext": false,
             "delivery_subtext": "Select a date between 30 days from today and up to 6 months.",
             "min_days_offset": 30,
             "max_months_offset": 6,
