@@ -1339,7 +1339,7 @@ class BulkAdd extends HTMLElement {
         line = { merchandiseId: variantId, quantity: nextQuantity };
       } else {
         const lineKey = this.querySelector(`[data-quantity-variant-id="${variantId}"]`)?.dataset.quantityLineKey;
-        // No AJAX line key on the row -- likely cached HTML rendered before this
+        // No AJAX line key on the row — likely cached HTML rendered before this
         // attribute landed. Skip rather than emit an event with id: ''.
         if (!lineKey) return groups;
         line = { id: lineKey, quantity: nextQuantity };
