@@ -116,7 +116,6 @@
         },
         "custom_liquid_FnEVbe": {
           "type": "custom_liquid",
-          "disabled": true,
           "settings": {
             "custom_liquid": "<hr>"
           }
