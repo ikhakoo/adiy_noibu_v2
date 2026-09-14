@@ -120,15 +120,15 @@
             "custom_liquid": "<hr>"
           }
         },
-        "estimated_price_7h8aib": {
-          "type": "estimated_price",
+        "estimated_price_cta_LrEKtH": {
+          "type": "estimated_price_cta",
           "settings": {
             "due_today_subtext": "Non-refundable Reservation Fee.",
             "delivery_title": "Estimated Delivery",
-            "show_delivery_subtext": false,
+            "show_delivery_subtext": true,
             "delivery_subtext": "Select a date between 30 days from today and up to 6 months.",
             "min_days_offset": 30,
-            "max_months_offset": 2,
+            "max_months_offset": 6,
             "show_footer_agreement": true,
             "agreement_text": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.",
             "info_link_text": "View additional information",
@@ -278,7 +278,7 @@
         "custom_liquid_HmnBKa",
         "variant_picker",
         "custom_liquid_FnEVbe",
-        "estimated_price_7h8aib",
+        "estimated_price_cta_LrEKtH",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
         "countdown_timer_NM9Fxn",
