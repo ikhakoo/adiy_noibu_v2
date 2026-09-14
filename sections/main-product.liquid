@@ -1844,9 +1844,9 @@
                             <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
 
-                          <hr style="margin: 10px 0;" id="DeckDivider-{{ section.id }}">
+                          <hr style="margin: 10px 0; {% if discount_value == 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
 
-                          <div class="dp-row offered-price-row">
+                          <div class="dp-row offered-price-row" id="OfferedPriceRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
                             <span class="dp-label">Offered Price</span>
                             <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
@@ -2143,6 +2143,7 @@
                         const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
                         const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
                         const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
+                        const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
                         const deckPriceEl = document.getElementById("DeckPriceVal");
                         const savingsEl = document.getElementById("SavingsVal");
                         const offeredPriceEl = document.getElementById("OfferedPriceVal");
@@ -2158,14 +2159,16 @@
                           }
                         }
 
-                        // Handle Discount Row & Divider Visibility
-                        if (discountRow && deckDivider) {
+                        // Handle Discount Row, Divider & Offered Price Visibility
+                        if (discountRow && deckDivider && offeredPriceRow) {
                           if (data.discountValue > 0) {
                             discountRow.style.display = "flex";
                             deckDivider.style.display = "block";
+                            offeredPriceRow.style.display = "flex";
                           } else {
                             discountRow.style.display = "none";
                             deckDivider.style.display = "none";
+                            offeredPriceRow.style.display = "none";
                           }
                         }
 
