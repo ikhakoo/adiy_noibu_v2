@@ -1811,12 +1811,14 @@
 
 
                 {%- when 'estimated_price' -%}
-              
+             
+
 <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
   {%- assign current_variant = product.selected_or_first_available_variant -%}
   
-  {%- assign deck_price = current_variant.metafields.custom.deck_price.value | default: 0 -%}
-  {%- assign discount_value = current_variant.metafields.custom.discount_value.value | default: 0 -%}
+  {%- comment -%} Convert text metafields to numbers using times: 1 or plus: 0 {%- endcomment -%}
+  {%- assign deck_price = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+  {%- assign discount_value = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
   {%- assign offered_price = deck_price | minus: discount_value -%}
   {%- assign due_today_price = current_variant.price -%}
 
@@ -1824,18 +1826,18 @@
   <div class="dp-card dp-deck-card">
     <div class="dp-row main-deck-price-row">
       <span class="dp-label">Deck Price:</span>
-      <span class="dp-value" id="DeckPriceVal">{{ deck_price | money }}</span>
+      <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money }}</span>
     </div>
     
     <div class="dp-discount-badge-row">
       <span class="dp-badge-icon">✓</span>
       <span class="dp-badge-text">Discount Applied</span>
-      <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | money }}</span>
+      <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money }}</span>
     </div>
 
     <div class="dp-row offered-price-row">
       <span class="dp-label">Offered Price</span>
-      <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | money }}</span>
+      <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money }}</span>
     </div>
   </div>
 
@@ -1857,7 +1859,6 @@
     <div class="dp-select-wrapper">
       <select id="EstimatedDeliverySelect" name="properties[Estimated Delivery]" form="{{ product.id }}" class="dp-select" required>
         <option value="" disabled selected>Select preferred delivery week</option>
-        <!-- JavaScript will dynamically generate options here: 30 days from now up to 6 months -->
       </select>
     </div>
   </div>
@@ -1967,22 +1968,17 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Generate Delivery Options: Starts 30 days from current date, goes up to 6 months
+    // Delivery Date Dropdown: 30 days from current date up to 6 months
     const selectEl = document.getElementById("EstimatedDeliverySelect");
     if (selectEl) {
       let currentDate = new Date();
-      // Add 30 days
-      currentDate.setDate(currentDate.getDate() + 30);
+      currentDate.setDate(currentDate.getDate() + 30); // 30 days after current date
 
-      // End date: 6 months from now
       let endDate = new Date();
-      endDate.setMonth(endDate.getMonth() + 6);
+      endDate.setMonth(endDate.getMonth() + 6); // Up to 6 months
 
-      // Loop to create weekly or bi-weekly blocks (let's do weekly intervals)
       while (currentDate <= endDate) {
         let option = document.createElement("option");
-        
-        // Format date string nicely e.g., "Week of Nov 14, 2026"
         let optionsDate = { month: 'short', day: 'numeric', year: 'numeric' };
         let formattedDate = currentDate.toLocaleDateString('en-US', optionsDate);
         
@@ -1990,15 +1986,8 @@
         option.textContent = "Week of " + formattedDate;
         selectEl.appendChild(option);
 
-        // Increment by 7 days (1 week)
-        currentDate.setDate(currentDate.getDate() + 7);
+        currentDate.setDate(currentDate.getDate() + 7); // 1 week interval
       }
-    }
-
-    // Variant change handler for Dawn theme to update prices dynamically if variants switch via JS
-    function updatePricesOnVariantChange() {
-      // Dawn theme updates URL parameters or dispatches custom events on variant change.
-      // Alternatively, observe variant changes or hook into Dawn's variant selection script.
     }
   });
 </script>
