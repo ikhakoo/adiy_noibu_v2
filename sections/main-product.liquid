@@ -1829,54 +1829,55 @@
     <!-- Redirect straight to Checkout -->
     <input type="hidden" name="return_to" value="/checkout">
 
-    <!-- 1. Deck Price & Discount Box -->
-    <div class="dp-card dp-deck-card">
-      <div class="dp-row main-deck-price-row">
-        <span class="dp-label">Deck Price:</span>
-        <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
-      </div>
-      
-      <div class="dp-discount-badge-row">
-        <span class="dp-badge-icon">✓</span>
-        <span class="dp-badge-text">Discount Applied</span>
-        <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
+    <div class="price-wrapper">
+      <!-- 1. Deck Price & Discount Box -->
+      <div class="dp-card dp-deck-card">
+        <div class="dp-row main-deck-price-row">
+          <span class="dp-label">Deck Price:</span>
+          <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
+        </div>
+        
+        <div class="dp-discount-badge-row">
+          <span class="dp-badge-icon">✓</span>
+          <span class="dp-badge-text">Discount Applied</span>
+          <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
+        </div>
+
+        <div class="dp-row offered-price-row">
+          <span class="dp-label">Offered Price</span>
+          <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
+        </div>
       </div>
 
-      <div class="dp-row offered-price-row">
-        <span class="dp-label">Offered Price</span>
-        <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
+      <!-- 2. Due Today Box -->
+      <div class="dp-card dp-due-card">
+        <div class="dp-row">
+          <span class="dp-label">Due Today</span>
+          <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
+        </div>
+        <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
+      </div>
+
+      <!-- 3. Estimated Delivery Calendar Picker Box -->
+      <div class="dp-card dp-delivery-card">
+        <div class="dp-delivery-header">
+          <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery' }}</span>
+          <span class="dp-truck-icon">🚚</span>
+        </div>
+        <div class="dp-input-wrapper">
+          <input 
+            type="date" 
+            id="EstimatedDeliveryDate" 
+            name="properties[Estimated Delivery]" 
+            class="dp-date-input" 
+            required
+          >
+        </div>
+        {%- if block.settings.show_delivery_subtext -%}
+          <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext }}</div>
+        {%- endif -%}
       </div>
     </div>
-
-    <!-- 2. Due Today Box -->
-    <div class="dp-card dp-due-card">
-      <div class="dp-row">
-        <span class="dp-label">Due Today</span>
-        <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
-      </div>
-      <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
-    </div>
-
-    <!-- 3. Estimated Delivery Calendar Picker Box -->
-    <div class="dp-card dp-delivery-card">
-      <div class="dp-delivery-header">
-        <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery' }}</span>
-        <span class="dp-truck-icon">🚚</span>
-      </div>
-      <div class="dp-input-wrapper">
-        <input 
-          type="date" 
-          id="EstimatedDeliveryDate" 
-          name="properties[Estimated Delivery]" 
-          class="dp-date-input" 
-          required
-        >
-      </div>
-      {%- if block.settings.show_delivery_subtext -%}
-        <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext }}</div>
-      {%- endif -%}
-    </div>
-
     <!-- 4. Agreement Text & Additional Info Footer -->
     {%- if block.settings.show_footer_agreement -%}
       <div class="dp-agreement-footer">
