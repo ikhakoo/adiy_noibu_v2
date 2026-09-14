@@ -122,10 +122,24 @@
         },
         "estimated_price_7h8aib": {
           "type": "estimated_price",
-          "settings": {}
+          "settings": {
+            "due_today_subtext": "Non-refundable Reservation Fee.",
+            "delivery_title": "Estimated Delivery",
+            "show_delivery_subtext": true,
+            "delivery_subtext": "Select a date between 30 days from today and up to 6 months.",
+            "min_days_offset": 30,
+            "max_months_offset": 6,
+            "show_footer_agreement": true,
+            "agreement_text": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.",
+            "info_link_text": "View additional information",
+            "info_link_url": "",
+            "show_dynamic_checkout": true,
+            "button_text": "Reserve Your Deck"
+          }
         },
         "estimated_delivery_HC9tbH": {
           "type": "estimated_delivery",
+          "disabled": true,
           "settings": {
             "heading_prefix": "Get it delivered by",
             "min_days": 10,
@@ -137,6 +151,7 @@
         },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
@@ -144,6 +159,7 @@
         },
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
+          "disabled": true,
           "settings": {
             "heading": "Labor Day Sale Ends in:",
             "end_date": "2026-09-13",
