@@ -1809,6 +1809,200 @@
                     </details>
                   </div>
 
+
+                {%- when 'estimated_price' -%}
+              
+<div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  
+  {%- assign deck_price = current_variant.metafields.custom.deck_price.value | default: 0 -%}
+  {%- assign discount_value = current_variant.metafields.custom.discount_value.value | default: 0 -%}
+  {%- assign offered_price = deck_price | minus: discount_value -%}
+  {%- assign due_today_price = current_variant.price -%}
+
+  <!-- 1. Deck Price & Discount Box -->
+  <div class="dp-card dp-deck-card">
+    <div class="dp-row main-deck-price-row">
+      <span class="dp-label">Deck Price:</span>
+      <span class="dp-value" id="DeckPriceVal">{{ deck_price | money }}</span>
+    </div>
+    
+    <div class="dp-discount-badge-row">
+      <span class="dp-badge-icon">✓</span>
+      <span class="dp-badge-text">Discount Applied</span>
+      <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | money }}</span>
+    </div>
+
+    <div class="dp-row offered-price-row">
+      <span class="dp-label">Offered Price</span>
+      <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | money }}</span>
+    </div>
+  </div>
+
+  <!-- 2. Due Today Box -->
+  <div class="dp-card dp-due-card">
+    <div class="dp-row">
+      <span class="dp-label">Due Today</span>
+      <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money }}</span>
+    </div>
+    <div class="dp-subtext">Non-refundable Reservation Fee.</div>
+  </div>
+
+  <!-- 3. Estimated Delivery Date Picker Box -->
+  <div class="dp-card dp-delivery-card">
+    <div class="dp-delivery-header">
+      <span class="dp-label">Estimated Delivery</span>
+      <span class="dp-truck-icon">🚚</span>
+    </div>
+    <div class="dp-select-wrapper">
+      <select id="EstimatedDeliverySelect" name="properties[Estimated Delivery]" form="{{ product.id }}" class="dp-select" required>
+        <option value="" disabled selected>Select preferred delivery week</option>
+        <!-- JavaScript will dynamically generate options here: 30 days from now up to 6 months -->
+      </select>
+    </div>
+  </div>
+</div>
+
+<style>
+  .deck-pricing-block {
+    margin: 20px 0;
+    font-family: inherit;
+  }
+  .dp-card {
+    background: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+  .dp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dp-label {
+    font-weight: 600;
+    color: #111;
+    font-size: 15px;
+  }
+  .dp-value {
+    font-weight: 600;
+    color: #111;
+    font-size: 16px;
+  }
+  .bold-price {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .main-deck-price-row {
+    margin-bottom: 8px;
+  }
+  .dp-discount-badge-row {
+    display: flex;
+    align-items: center;
+    background: #f2f7f4;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-size: 13px;
+    color: #2e6930;
+    font-weight: 500;
+  }
+  .dp-badge-icon {
+    background: #2e6930;
+    color: #fff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    margin-right: 6px;
+  }
+  .dp-savings {
+    margin-left: auto;
+    font-weight: 700;
+  }
+  .dp-subtext {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+  }
+  .dp-delivery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .dp-truck-icon {
+    font-size: 18px;
+  }
+  .dp-select-wrapper {
+    position: relative;
+  }
+  .dp-select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    color: #333;
+    appearance: none;
+    cursor: pointer;
+  }
+  .dp-select-wrapper::after {
+    content: "▼";
+    font-size: 10px;
+    color: #333;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Generate Delivery Options: Starts 30 days from current date, goes up to 6 months
+    const selectEl = document.getElementById("EstimatedDeliverySelect");
+    if (selectEl) {
+      let currentDate = new Date();
+      // Add 30 days
+      currentDate.setDate(currentDate.getDate() + 30);
+
+      // End date: 6 months from now
+      let endDate = new Date();
+      endDate.setMonth(endDate.getMonth() + 6);
+
+      // Loop to create weekly or bi-weekly blocks (let's do weekly intervals)
+      while (currentDate <= endDate) {
+        let option = document.createElement("option");
+        
+        // Format date string nicely e.g., "Week of Nov 14, 2026"
+        let optionsDate = { month: 'short', day: 'numeric', year: 'numeric' };
+        let formattedDate = currentDate.toLocaleDateString('en-US', optionsDate);
+        
+        option.value = "Week of " + formattedDate;
+        option.textContent = "Week of " + formattedDate;
+        selectEl.appendChild(option);
+
+        // Increment by 7 days (1 week)
+        currentDate.setDate(currentDate.getDate() + 7);
+      }
+    }
+
+    // Variant change handler for Dawn theme to update prices dynamically if variants switch via JS
+    function updatePricesOnVariantChange() {
+      // Dawn theme updates URL parameters or dispatches custom events on variant change.
+      // Alternatively, observe variant changes or hook into Dawn's variant selection script.
+    }
+  });
+</script>
+
                 {%- when 'estimated_delivery' -%}
                   {%- liquid
                     comment
