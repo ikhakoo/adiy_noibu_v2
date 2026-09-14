@@ -1814,15 +1814,10 @@
                   <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
                     {%- assign current_variant = product.selected_or_first_available_variant -%}
                     
-                    {% comment %} Safe parsing for text metafields with commas/decimals on initial load  {% endcomment %}
-                    {%- assign raw_deck_price = current_variant.metafields.custom.deck_price.value | default: '0' | append: '' | replace: ',', '' | strip -%}
-                    {%- assign raw_discount = current_variant.metafields.custom.discount_value.value | default: '0' | append: '' | replace: ',', '' | strip -%}
-
-                    {%- assign deck_price = raw_deck_price | plus: 0.0 -%}
-                    {%- assign discount_value = raw_discount | plus: 0.0 -%}
+                    {%- assign deck_price = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+                    {%- assign discount_value = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
                     {%- assign offered_price = deck_price | minus: discount_value -%}
                     {%- assign due_today_price = current_variant.price -%}
-                    
 
                     {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
@@ -1836,24 +1831,24 @@
 
                       <div class="price-wrapper">
                         <!-- 1. Deck Price & Discount Box (Hidden if deck_price is 0/blank) -->
-                        <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price <= 0 %}display: none;{% endif %}">
+                        <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
                           <div class="dp-row main-deck-price-row">
                             <span class="dp-label">Deck Price:</span>
-                            <span class="dp-value" id="DeckPriceVal">{{ deck_price | money_without_trailing_zeros }}</span>
+                            <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
                           
                           <!-- Discount Row (Hidden if discount_value is 0/blank) -->
-                          <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value <= 0 %}display: none;{% endif %}">
+                          <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
                             <span class="dp-badge-icon">✓</span>
                             <span class="dp-badge-text">Discount Applied</span>
-                            <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | money_without_trailing_zeros }}</span>
+                            <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
 
-                          <hr style="margin: 10px 0; {% if discount_value <= 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
+                          <hr style="margin: 10px 0; {% if discount_value == 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
 
-                          <div class="dp-row offered-price-row" id="OfferedPriceRow-{{ section.id }}" style="{% if discount_value <= 0 %}display: none;{% endif %}">
+                          <div class="dp-row offered-price-row" id="OfferedPriceRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
                             <span class="dp-label">Offered Price</span>
-                            <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | money_without_trailing_zeros }}</span>
+                            <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
                         </div>
 
@@ -1918,14 +1913,12 @@
                     {%- endform -%}
                   </div>
 
-                  <!-- Variant Metafield JSON Mapping for JavaScript (Cleaned Text Handling) -->
+                  <!-- Variant Metafield JSON Mapping for JavaScript -->
                   <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
                     {
                       {%- for variant in product.variants -%}
-                        {%- assign v_raw_deck = variant.metafields.custom.deck_price.value | default: '0' | replace: ',', '' -%}
-                        {%- assign v_raw_disc = variant.metafields.custom.discount_value.value | default: '0' | replace: ',', '' -%}
-                        {%- assign v_deck = v_raw_deck | times: 1.0 -%}
-                        {%- assign v_disc = v_raw_disc | times: 1.0 -%}
+                        {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+                        {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
                         {%- assign v_offered = v_deck | minus: v_disc -%}
                         "{{ variant.id }}": {
                           "deckPrice": {{ v_deck }},
@@ -2133,9 +2126,9 @@
                         }
                       }
 
-                      // 2. Format Currency helper (Exact Standard Dollar Formatting with decimals)
-                      function formatCurrency(amount) {
-                        return '$' + Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                      // 2. Format Money helper
+                      function formatMoney(cents) {
+                        return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                       }
 
                       // 3. Variant Change Listener & Dynamic Pricing/Visibility
@@ -2179,11 +2172,10 @@
                           }
                         }
 
-                        if (deckPriceEl) deckPriceEl.textContent = formatCurrency(data.deckPrice);
-                        if (savingsEl) savingsEl.textContent = "Savings -" + formatCurrency(data.discountValue);
-                        if (offeredPriceEl) alteredVal = data.offeredPrice >= 0 ? data.offeredPrice : 0;
-                        if (offeredPriceEl) offeredPriceEl.textContent = formatCurrency(alteredVal);
-                        if (dueTodayEl) dueTodayEl.textContent = formatCurrency(data.dueTodayPrice / 100); // Shopify prices are in cents
+                        if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
+                        if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
+                        if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
+                        if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
                         if (hiddenVariantInput) hiddenVariantInput.value = variantId;
                       }
 
