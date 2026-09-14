@@ -1819,68 +1819,93 @@
   {%- assign offered_price = deck_price | minus: discount_value -%}
   {%- assign due_today_price = current_variant.price -%}
 
-  <!-- 1. Deck Price & Discount Box -->
-  <div class="dp-card dp-deck-card">
-    <div class="dp-row main-deck-price-row">
-      <span class="dp-label">Deck Price:</span>
-      <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
-    </div>
+  {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+  {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
     
-    <div class="dp-discount-badge-row">
-      <span class="dp-badge-icon">✓</span>
-      <span class="dp-badge-text">Discount Applied</span>
-      <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
+    <!-- Hidden Variant ID input (Synced with theme variant pickers) -->
+    <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantIdInput-{{ section.id }}">
+    
+    <!-- Redirect straight to Checkout -->
+    <input type="hidden" name="return_to" value="/checkout">
+
+    <!-- 1. Deck Price & Discount Box -->
+    <div class="dp-card dp-deck-card">
+      <div class="dp-row main-deck-price-row">
+        <span class="dp-label">Deck Price:</span>
+        <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
+      </div>
+      
+      <div class="dp-discount-badge-row">
+        <span class="dp-badge-icon">✓</span>
+        <span class="dp-badge-text">Discount Applied</span>
+        <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
+      </div>
+
+      <div class="dp-row offered-price-row">
+        <span class="dp-label">Offered Price</span>
+        <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
+      </div>
     </div>
 
-    <div class="dp-row offered-price-row">
-      <span class="dp-label">Offered Price</span>
-      <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
+    <!-- 2. Due Today Box -->
+    <div class="dp-card dp-due-card">
+      <div class="dp-row">
+        <span class="dp-label">Due Today</span>
+        <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
+      </div>
+      <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
     </div>
-  </div>
 
-  <!-- 2. Due Today Box -->
-  <div class="dp-card dp-due-card">
-    <div class="dp-row">
-      <span class="dp-label">Due Today</span>
-      <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
+    <!-- 3. Estimated Delivery Calendar Picker Box -->
+    <div class="dp-card dp-delivery-card">
+      <div class="dp-delivery-header">
+        <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery' }}</span>
+        <span class="dp-truck-icon">🚚</span>
+      </div>
+      <div class="dp-input-wrapper">
+        <input 
+          type="date" 
+          id="EstimatedDeliveryDate" 
+          name="properties[Estimated Delivery]" 
+          class="dp-date-input" 
+          required
+        >
+      </div>
+      {%- if block.settings.show_delivery_subtext -%}
+        <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext }}</div>
+      {%- endif -%}
     </div>
-    <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
-  </div>
 
-  <!-- 3. Estimated Delivery Calendar Picker Box -->
-  <div class="dp-card dp-delivery-card">
-    <div class="dp-delivery-header">
-      <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery' }}</span>
-      <span class="dp-truck-icon">🚚</span>
-    </div>
-    <div class="dp-input-wrapper">
-      <input 
-        type="date" 
-        id="EstimatedDeliveryDate" 
-        name="properties[Estimated Delivery]" 
-        form="{{ product.id }}" 
-        class="dp-date-input" 
-        required
-      >
-    </div>
-    {%- if block.settings.show_delivery_subtext -%}
-      <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext }}</div>
+    <!-- 4. Agreement Text & Additional Info Footer -->
+    {%- if block.settings.show_footer_agreement -%}
+      <div class="dp-agreement-footer">
+        <p class="dp-agreement-text">
+          {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
+        </p>
+        {%- if block.settings.info_link_text != blank -%}
+          <div class="dp-info-link-wrap">
+            <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
+          </div>
+        {%- endif -%}
+      </div>
     {%- endif -%}
-  </div>
 
-  <!-- 4. Agreement Text & Additional Info Footer -->
-  {%- if block.settings.show_footer_agreement -%}
-    <div class="dp-agreement-footer">
-      <p class="dp-agreement-text">
-        {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
-      </p>
-      {%- if block.settings.info_link_text != blank -%}
-        <div class="dp-info-link-wrap">
-          <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
+    <!-- 5. Action Buttons (Reserve Your Deck & Dynamic Checkout G Pay / Apple Pay) -->
+    <div class="dp-actions-container">
+      <button type="submit" name="add" class="dp-reserve-btn" id="ReserveDeckBtn">
+        <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
+        <span class="dp-btn-arrow">→</span>
+      </button>
+
+      {%- if block.settings.show_dynamic_checkout -%}
+        <div class="dp-dynamic-checkout-wrap">
+          {{ form | payment_button }}
         </div>
       {%- endif -%}
     </div>
-  {%- endif -%}
+
+  {%- endform -%}
 </div>
 
 <!-- Variant Metafield JSON Mapping for JavaScript -->
@@ -2000,7 +2025,7 @@
     border-color: #111;
   }
   .dp-agreement-footer {
-    margin-top: 16px;
+    margin: 16px 0;
     text-align: center;
     padding: 0 5px;
   }
@@ -2008,7 +2033,7 @@
     font-size: 12px;
     color: #555;
     line-height: 1.5;
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
   }
   .dp-agreement-text a {
     color: #111;
@@ -2016,7 +2041,7 @@
     text-decoration: underline;
   }
   .dp-info-link-wrap {
-    margin-top: 6px;
+    margin-top: 4px;
   }
   .dp-info-link {
     font-size: 13px;
@@ -2027,11 +2052,46 @@
   .dp-info-link:hover {
     text-decoration: underline;
   }
+
+  /* Buttons Styling matching reference image */
+  .dp-actions-container {
+    margin-top: 16px;
+  }
+  .dp-reserve-btn {
+    display: flex;
+    width: 100%;
+    background-color: #1b4332;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .dp-reserve-btn:hover {
+    background-color: #143225;
+  }
+  .dp-btn-arrow {
+    margin-left: 8px;
+    font-size: 18px;
+  }
+  .dp-dynamic-checkout-wrap {
+    margin-top: 10px;
+  }
+  .dp-dynamic-checkout-wrap div[data-shopify="payment-button"] {
+    border-radius: 8px;
+    overflow: hidden;
+  }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // 1. Setup Date Picker Bounds using dynamic settings from schema
+    // 1. Setup Date Picker Bounds
     const dateInput = document.getElementById("EstimatedDeliveryDate");
     if (dateInput) {
       let today = new Date();
@@ -2055,7 +2115,9 @@
 
       dateInput.min = formatDate(minDate);
       dateInput.max = formatDate(maxDate);
-      dateInput.value = formatDate(minDate);
+      if (!dateInput.value) {
+        dateInput.value = formatDate(minDate);
+      }
     }
 
     // 2. Format Money helper
@@ -2063,7 +2125,7 @@
       return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // 3. Variant Change Listener
+    // 3. Variant Change Listener & Dynamic Pricing
     const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
     if (!metaJsonEl) return;
     const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
@@ -2076,11 +2138,13 @@
       const savingsEl = document.getElementById("SavingsVal");
       const offeredPriceEl = document.getElementById("OfferedPriceVal");
       const dueTodayEl = document.getElementById("DueTodayVal");
+      const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
 
       if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
       if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
       if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
       if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
+      if (hiddenVariantInput) hiddenVariantInput.value = variantId;
     }
 
     function checkVariantUrl() {
@@ -2091,6 +2155,7 @@
       }
     }
 
+    // Listen to theme variant switches
     document.addEventListener('change', function(e) {
       if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
         setTimeout(checkVariantUrl, 100);
@@ -3210,6 +3275,18 @@
       "type": "url",
       "id": "info_link_url",
       "label": "Additional Link URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show Dynamic Checkout Buttons (Apple Pay / GPay)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Reserve Button Text",
+      "default": "Reserve Your Deck"
     }
   ]
 },
