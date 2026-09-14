@@ -1834,21 +1834,21 @@
                         <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
                           <div class="dp-row main-deck-price-row">
                             <span class="dp-label">Deck Price:</span>
-                            <span class="dp-value" id="DeckPriceVal">{{ deck_price }}</span>
+                            <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
                           
                           <!-- Discount Row (Hidden if discount_value is 0/blank) -->
                           <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
                             <span class="dp-badge-icon">✓</span>
                             <span class="dp-badge-text">Discount Applied</span>
-                            <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value }}</span>
+                            <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
 
                           <hr style="margin: 10px 0;" id="DeckDivider-{{ section.id }}">
 
                           <div class="dp-row offered-price-row">
                             <span class="dp-label">Offered Price</span>
-                            <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price }}</span>
+                            <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
                           </div>
                         </div>
 
@@ -3318,7 +3318,7 @@
         }
       ]
     },
-
+    
     {
       "type": "estimated_delivery",
       "name": "Estimated Delivery",
