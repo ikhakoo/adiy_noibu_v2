@@ -1814,14 +1814,15 @@
                   <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
                     {%- assign current_variant = product.selected_or_first_available_variant -%}
                     
-                    {% comment %} segurança se string ko clean karna (commas remove karna) {% endcomment %}
-                    {%- assign raw_deck_price = current_variant.metafields.custom.deck_price.value | default: '0' | replace: ',', '' -%}
-                    {%- assign raw_discount = current_variant.metafields.custom.discount_value.value | default: '0' | replace: ',', '' -%}
-                    
-                    {%- assign deck_price = raw_deck_price | times: 1.0 -%}
-                    {%- assign discount_value = raw_discount | times: 1.0 -%}
+                    {% comment %} Safe parsing for text metafields with commas/decimals on initial load  {% endcomment %}
+                    {%- assign raw_deck_price = current_variant.metafields.custom.deck_price.value | default: '0' | append: '' | replace: ',', '' | strip -%}
+                    {%- assign raw_discount = current_variant.metafields.custom.discount_value.value | default: '0' | append: '' | replace: ',', '' | strip -%}
+
+                    {%- assign deck_price = raw_deck_price | plus: 0.0 -%}
+                    {%- assign discount_value = raw_discount | plus: 0.0 -%}
                     {%- assign offered_price = deck_price | minus: discount_value -%}
                     {%- assign due_today_price = current_variant.price -%}
+                    
 
                     {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
