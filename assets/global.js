@@ -470,8 +470,14 @@ class MenuDrawer extends HTMLElement {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function addTrapFocus() {
-      trapFocus(summaryElement.nextElementSibling, detailsElement.querySelector('button'));
-      summaryElement.nextElementSibling.removeEventListener('transitionend', addTrapFocus);
+      // The submenu panel is the summary's next sibling. When the markup has
+      // none, trapFocus now returns early -- but removeEventListener below was
+      // still dereferencing the same null and throwing in its place.
+      const submenu = summaryElement.nextElementSibling;
+      if (!submenu) return;
+
+      trapFocus(submenu, detailsElement.querySelector('button') || submenu);
+      submenu.removeEventListener('transitionend', addTrapFocus);
     }
 
     if (detailsElement === this.mainDetailsToggle) {
@@ -595,7 +601,16 @@ class HeaderDrawer extends MenuDrawer {
   closeMenuDrawer(event, elementToFocus) {
     if (!elementToFocus) return;
     super.closeMenuDrawer(event, elementToFocus);
-    this.header.classList.remove('menu-open');
+
+    // `this.header` is only assigned in openMenuDrawer, so any close that runs
+    // without a preceding open -- a drawer whose <details> is already `open` on
+    // first paint, so the first tap takes the close branch -- left it undefined
+    // and threw "undefined is not an object (evaluating 'this.header.classList')".
+    // Resolve it the same way openMenuDrawer does, and tolerate its absence, as
+    // onResize below already does.
+    this.header = this.header || document.querySelector('.section-header');
+    if (this.header) this.header.classList.remove('menu-open');
+
     window.removeEventListener('resize', this.onResize);
   }
 
