@@ -1811,7 +1811,8 @@
 
 
                 {%- when 'estimated_price' -%}
-             
+            
+
 <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
   {%- assign current_variant = product.selected_or_first_available_variant -%}
   
@@ -1867,6 +1868,23 @@
     <div class="dp-subtext" style="margin-top: 6px;">Select a date between 30 days from today and up to 6 months.</div>
   </div>
 </div>
+
+<!-- Variant Metafield JSON Mapping for JavaScript -->
+<script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
+  {
+    {%- for variant in product.variants -%}
+      {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+      {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+      {%- assign v_offered = v_deck | minus: v_disc -%}
+      "{{ variant.id }}": {
+        "deckPrice": {{ v_deck }},
+        "discountValue": {{ v_disc }},
+        "offeredPrice": {{ v_offered }},
+        "dueTodayPrice": {{ variant.price }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  }
+</script>
 
 <style>
   .deck-pricing-block {
@@ -1966,39 +1984,77 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+    // 1. Setup Date Picker Bounds (30 days from today up to 6 months)
     const dateInput = document.getElementById("EstimatedDeliveryDate");
     if (dateInput) {
       let today = new Date();
-
-      // Min Date: Current date + 30 days
       let minDate = new Date();
       minDate.setDate(today.getDate() + 30);
       
-      // Max Date: Current date + 6 months
       let maxDate = new Date();
       maxDate.setMonth(today.getMonth() + 6);
 
-      // Format YYYY-MM-DD for HTML input min/max attributes
       function formatDate(d) {
         let month = '' + (d.getMonth() + 1);
         let day = '' + d.getDate();
         let year = d.getFullYear();
-
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-
         return [year, month, day].join('-');
       }
 
       dateInput.min = formatDate(minDate);
       dateInput.max = formatDate(maxDate);
-      
-      // Optional: Set default value to minDate so user has a valid pre-selection
       dateInput.value = formatDate(minDate);
     }
+
+    // 2. Format Money helper according to Shopify currency standards
+    function formatMoney(cents) {
+      return '$' + (cents / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // 3. Variant Change Listener for Dawn Theme
+    const metafieldsData = JSON.parse(document.getElementById("VariantMetafieldsJson-{{ section.id }}").innerHTML);
+
+    function updateBlockData(variantId) {
+      const data = metafieldsData[variantId];
+      if (!data) return;
+
+      // Update DOM elements
+      const deckPriceEl = document.getElementById("DeckPriceVal");
+      const savingsEl = document.getElementById("SavingsVal");
+      const offeredPriceEl = document.getElementById("OfferedPriceVal");
+      const dueTodayEl = document.getElementById("DueTodayVal");
+
+      if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
+      if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
+      if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
+      if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
+    }
+
+    // Listen to Dawn theme variant change events (variantChange dispatches on variant-selects or main product)
+    const productSection = document.getElementById("DeckPricingBlock-{{ section.id }}").closest("section, product-info, main");
+    
+    // Fallback: observe URL changes or variant input changes
+    function checkVariantUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const variantId = urlParams.get('variant');
+      if (variantId && metafieldsData[variantId]) {
+        updateBlockData(variantId);
+      }
+    }
+
+    // Dawn theme custom event listener
+    document.addEventListener('change', function(e) {
+      if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
+        setTimeout(checkVariantUrl, 100);
+      }
+    });
+
+    // Also check on popstate (browser back/forward)
+    window.addEventListener('popstate', checkVariantUrl);
   });
 </script>
-
                 {%- when 'estimated_delivery' -%}
                   {%- liquid
                     comment
