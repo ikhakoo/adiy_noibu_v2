@@ -1875,6 +1875,12 @@
                               class="dp-date-input" 
                               required
                             >
+                            <input 
+                              type="hidden" 
+                              id="DeckPriceProperty" 
+                              name="properties[Deck Price]" 
+                              value=""
+                            >
                           </div>
                           {%- if block.settings.show_delivery_subtext -%}
                             <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext }}</div>
@@ -2182,6 +2188,13 @@
                         const variantId = urlParams.get('variant');
                         if (variantId && metafieldsData[variantId]) {
                           updateBlockData(variantId);
+                        }
+                      }
+
+                      function updateCartPriceProperty(formattedPrice) {
+                        const priceInput = document.getElementById('DeckPriceProperty');
+                        if (priceInput) {
+                          priceInput.value = formattedPrice; // Jaise: "$4,399"
                         }
                       }
 
