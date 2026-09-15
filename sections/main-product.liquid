@@ -1632,7 +1632,11 @@
                           </div>
                           {%- if block.settings.show_price -%}
                             <div class="material-card-price">
-                              {{ prod_1.price_min | money }}
+                              {%- if block.settings.custom_price_1 != blank -%}
+                                {{ block.settings.custom_price_1 }}
+                              {%- else -%}
+                                {{ prod_1.price_min | money }}
+                              {%- endif -%}
                             </div>
                           {%- endif -%}
                         </a>
@@ -1659,7 +1663,11 @@
                           </div>
                           {%- if block.settings.show_price -%}
                             <div class="material-card-price">
-                              {{ prod_2.price_min | money }}
+                              {%- if block.settings.custom_price_2 != blank -%}
+                                {{ block.settings.custom_price_2 }}
+                              {%- else -%}
+                                {{ prod_2.price_min | money }}
+                              {%- endif -%}
                             </div>
                           {%- endif -%}
                         </a>
@@ -3547,7 +3555,7 @@
     {
       "type": "checkbox",
       "id": "show_price",
-      "label": "Show lowest price",
+      "label": "Show Price",
       "default": true
     },
     {
@@ -3564,6 +3572,12 @@
       "id": "title_1",
       "label": "Custom Title 1",
       "info": "Leave empty for default product title"
+    },
+    {
+      "type": "text",
+      "id": "custom_price_1",
+      "label": "Custom Price 1",
+      "info": "e.g. From $50 or leave empty to use lowest product price"
     },
     {
       "type": "image_picker",
@@ -3584,6 +3598,12 @@
       "id": "title_2",
       "label": "Custom Title 2",
       "info": "Leave empty for default product title"
+    },
+    {
+      "type": "text",
+      "id": "custom_price_2",
+      "label": "Custom Price 2",
+      "info": "e.g. From $50 or leave empty to use lowest product price"
     },
     {
       "type": "image_picker",
