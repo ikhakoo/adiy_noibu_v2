@@ -1631,7 +1631,7 @@
                             {{ block.settings.title_1 | default: prod_1.title }}
                           </div>
                           {%- if block.settings.show_price -%}
-                            <div class="material-card-price">
+                            <div class="material-card-price" style="font-size: 16px;">
                               {%- if block.settings.custom_price_1 != blank -%}
                                 {{ block.settings.custom_price_1 }}
                               {%- else -%}
