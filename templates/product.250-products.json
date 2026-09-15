@@ -132,7 +132,7 @@
             "show_footer_agreement": true,
             "agreement_text": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.",
             "info_link_text": "View additional information",
-            "info_link_url": "",
+            "info_link_url": "shopify://policies/shipping-policy",
             "show_dynamic_checkout": true,
             "button_text": "Reserve Your Deck"
           }
