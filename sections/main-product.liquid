@@ -1630,6 +1630,11 @@
                           <div class="material-card-title">
                             {{ block.settings.title_1 | default: prod_1.title }}
                           </div>
+                          {%- if block.settings.show_price -%}
+                            <div class="material-card-price">
+                              {{ prod_1.price_min | money }}
+                            </div>
+                          {%- endif -%}
                         </a>
                       {%- endif -%}
 
@@ -1652,10 +1657,15 @@
                           <div class="material-card-title">
                             {{ block.settings.title_2 | default: prod_2.title }}
                           </div>
+                          {%- if block.settings.show_price -%}
+                            <div class="material-card-price">
+                              {{ prod_2.price_min | money }}
+                            </div>
+                          {%- endif -%}
                         </a>
                       {%- endif -%}
                     </div>
-                  </div> 
+                  </div>
 
                 {%- when 'accessories_block' -%}
                   <div class="product-accessories-widget" {{ block.shopify_attributes }}>
@@ -3524,58 +3534,64 @@
     },
 
     {
-      "type": "material_switcher",
-      "name": "Material Switcher",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Step 1: Choose Material"
-        },
-        {
-          "type": "header",
-          "content": "Material 1"
-        },
-        {
-          "type": "product",
-          "id": "product_1",
-          "label": "Select Product 1"
-        },
-        {
-          "type": "text",
-          "id": "title_1",
-          "label": "Custom Title 1",
-          "info": "Leave empty for default product title"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_1",
-          "label": "Custom Image 1"
-        },
-        {
-          "type": "header",
-          "content": "Material 2"
-        },
-        {
-          "type": "product",
-          "id": "product_2",
-          "label": "Select Product 2"
-        },
-        {
-          "type": "text",
-          "id": "title_2",
-          "label": "Custom Title 2",
-          "info": "Leave empty for default product title"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_2",
-          "label": "Custom Image 2"
-        }
-      ]
+  "type": "material_switcher",
+  "name": "Material Switcher",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Step 1: Choose Material"
     },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show lowest price",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Material 1"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Select Product 1"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Custom Title 1",
+      "info": "Leave empty for default product title"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Custom Image 1"
+    },
+    {
+      "type": "header",
+      "content": "Material 2"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Select Product 2"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Custom Title 2",
+      "info": "Leave empty for default product title"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Custom Image 2"
+    }
+  ]
+},
 
     {
       "type": "accessories_block",
