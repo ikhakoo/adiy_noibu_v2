@@ -2119,9 +2119,9 @@
 
                         dateInput.min = formatDate(minDate);
                         dateInput.max = formatDate(maxDate);
-                        if (!dateInput.value) {
+                        {% comment %} if (!dateInput.value) {
                           dateInput.value = formatDate(minDate);
-                        }
+                        } {% endcomment %}
                       }
 
                       // 2. Format Money helper
