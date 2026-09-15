@@ -91,11 +91,14 @@
           "type": "material_switcher",
           "settings": {
             "heading": "Step 1: Choose Material",
+            "show_price": true,
             "product_1": "250-pressure-treated-kiln-dried-wood-deck-kit",
             "title_1": "Pressure Treated",
+            "custom_price_1": "$4,399.00",
             "image_1": "shopify://shop_images/Group_1597879819.png",
             "product_2": "250-a-diy-composite-deck-kit",
             "title_2": "Composite",
+            "custom_price_2": "",
             "image_2": "shopify://shop_images/Group_1597879819_1.png"
           }
         },
