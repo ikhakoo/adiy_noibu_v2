@@ -127,6 +127,7 @@
         "text_item_VqJKwr",
         "countdown_XUQAMi"
       ],
+      "disabled": true,
       "name": "Sticky Promo Banner",
       "settings": {
         "bg_color": "#000000",
