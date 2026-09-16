@@ -50,6 +50,7 @@
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
+          "disabled": true,
           "settings": {
             "prefix_text": "or",
             "middle_text": "with code",
@@ -129,6 +130,7 @@
         },
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
+          "disabled": true,
           "settings": {
             "heading": "Labor Day Sale Ends in:",
             "end_date": "2026-09-15",
