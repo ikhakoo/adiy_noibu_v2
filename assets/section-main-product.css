@@ -1569,5 +1569,6 @@ media-gallery {
 @media screen and (max-width: 628px) {
   .product__info-container .affirm-promo-wrapper .affirm-as-low-as {
     min-height: 20px;
+    font-size: 11px !important;
   }
 }
