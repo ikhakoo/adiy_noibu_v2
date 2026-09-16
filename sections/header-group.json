@@ -29,7 +29,7 @@
         "middle_mPCh7k": {
           "type": "middle",
           "settings": {
-            "text": "<p>Our Deck Specialists Are Just a Call Away</p>",
+            "text": "<p>Our Deck Specialists Are Just a <a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Call Away</a></p>",
             "button_text": "",
             "button_link": "tel:+17863582872"
           }
