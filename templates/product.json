@@ -50,6 +50,7 @@
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
+          "disabled": true,
           "settings": {
             "prefix_text": "or",
             "middle_text": "with code",
@@ -80,11 +81,14 @@
           "type": "material_switcher",
           "settings": {
             "heading": "Step 1: Choose Material",
+            "show_price": true,
             "product_1": "pressure-treated-kiln-dried-wood-deck-kit",
             "title_1": "Pressure Treated",
+            "custom_price_1": "",
             "image_1": "shopify://shop_images/Group_1597879819.png",
             "product_2": "a-diy-composite-deck-kit",
             "title_2": "Composite",
+            "custom_price_2": "",
             "image_2": "shopify://shop_images/Group_1597879819_1.png"
           }
         },
@@ -129,6 +133,7 @@
         },
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
+          "disabled": true,
           "settings": {
             "heading": "Labor Day Sale Ends in:",
             "end_date": "2026-09-13",
