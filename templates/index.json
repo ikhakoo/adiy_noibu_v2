@@ -14,6 +14,7 @@
       "blocks": {
         "text_wgaDyW": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "class_text": "above-heading-subtitle",
             "text_html": "",
