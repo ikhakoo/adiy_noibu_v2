@@ -1663,9 +1663,9 @@
             <!-- Size display element -->
             <div class="material-card-size" style="font-size: 14px; opacity: 0.8;">
               {%- if is_active_1 -%}
-                {{ product.selected_or_first_available_variant.title }}
+                ({{ product.selected_or_first_available_variant.title }})
               {%- else -%}
-                {{ prod_1.selected_or_first_available_variant.title }}
+                ({{ prod_1.selected_or_first_available_variant.title }})
               {%- endif -%}
             </div>
           </div>
