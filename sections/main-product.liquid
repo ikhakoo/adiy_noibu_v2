@@ -1620,17 +1620,20 @@
         {%- assign is_active_1 = true -%}
       {%- endif -%}
 
-      {%- capture variant_deck_prices_1 -%}
+      {%- capture variant_data_1 -%}
         {
           {%- for variant in prod_1.variants -%}
-            "{{ variant.id }}": {{ variant.metafields.custom.deck_price.value | json | default: 'null' }}{% if forloop.last == false %},{% endif %}
+            "{{ variant.id }}": {
+              "price": {{ variant.metafields.custom.deck_price.value | json | default: 'null' }},
+              "title": {{ variant.title | json }}
+            }{% if forloop.last == false %},{% endif %}
           {%- endfor -%}
         }
       {%- endcapture -%}
 
       <a href="{{ prod_1.url }}" 
          class="material-card {% if is_active_1 %}active{% endif %}"
-         data-variant-prices='{{ variant_deck_prices_1 }}'>
+         data-variant-data='{{ variant_data_1 }}'>
          
         <div class="material-card-image">
           {%- if block.settings.image_1 != blank -%}
@@ -1645,16 +1648,26 @@
         </div>
 
         {%- if block.settings.show_price -%}
-          <div class="material-card-price" style="font-size: 16px;">
-            {%- if block.settings.custom_price_1 != blank -%}
-              {{ block.settings.custom_price_1 }}
-            {%- else -%}
-              {%- if is_active_1 and product.selected_or_first_available_variant.metafields.custom.deck_price != blank -%}
-                {{ product.selected_or_first_available_variant.metafields.custom.deck_price }}
+          <div class="material-card-price-container">
+            <div class="material-card-price" style="font-size: 16px;">
+              {%- if block.settings.custom_price_1 != blank -%}
+                {{ block.settings.custom_price_1 }}
               {%- else -%}
-                {{ prod_1.selected_or_first_available_variant.metafields.custom.deck_price | default: prod_1.price_min | money }}
+                {%- if is_active_1 and product.selected_or_first_available_variant.metafields.custom.deck_price != blank -%}
+                  {{ product.selected_or_first_available_variant.metafields.custom.deck_price }}
+                {%- else -%}
+                  {{ prod_1.selected_or_first_available_variant.metafields.custom.deck_price | default: prod_1.price_min | money }}
+                {%- endif -%}
               {%- endif -%}
-            {%- endif -%}
+            </div>
+            <!-- Size display element -->
+            <div class="material-card-size" style="font-size: 14px; opacity: 0.8;">
+              {%- if is_active_1 -%}
+                {{ product.selected_or_first_available_variant.title }}
+              {%- else -%}
+                {{ prod_1.selected_or_first_available_variant.title }}
+              {%- endif -%}
+            </div>
           </div>
         {%- endif -%}
       </a>
@@ -1668,17 +1681,20 @@
         {%- assign is_active_2 = true -%}
       {%- endif -%}
 
-      {%- capture variant_deck_prices_2 -%}
+      {%- capture variant_data_2 -%}
         {
           {%- for variant in prod_2.variants -%}
-            "{{ variant.id }}": {{ variant.metafields.custom.deck_price.value | json | default: 'null' }}{% if forloop.last == false %},{% endif %}
+            "{{ variant.id }}": {
+              "price": {{ variant.metafields.custom.deck_price.value | json | default: 'null' }},
+              "title": {{ variant.title | json }}
+            }{% if forloop.last == false %},{% endif %}
           {%- endfor -%}
         }
       {%- endcapture -%}
 
       <a href="{{ prod_2.url }}" 
          class="material-card {% if is_active_2 %}active{% endif %}"
-         data-variant-prices='{{ variant_deck_prices_2 }}'>
+         data-variant-data='{{ variant_data_2 }}'>
          
         <div class="material-card-image">
           {%- if block.settings.image_2 != blank -%}
@@ -1693,16 +1709,26 @@
         </div>
 
         {%- if block.settings.show_price -%}
-          <div class="material-card-price" style="font-size: 16px;">
-            {%- if block.settings.custom_price_2 != blank -%}
-              {{ block.settings.custom_price_2 }}
-            {%- else -%}
-              {%- if is_active_2 and product.selected_or_first_available_variant.metafields.custom.deck_price != blank -%}
-                {{ product.selected_or_first_available_variant.metafields.custom.deck_price }}
+          <div class="material-card-price-container">
+            <div class="material-card-price" style="font-size: 16px;">
+              {%- if block.settings.custom_price_2 != blank -%}
+                {{ block.settings.custom_price_2 }}
               {%- else -%}
-                {{ prod_2.selected_or_first_available_variant.metafields.custom.deck_price | default: prod_2.price_min | money }}
+                {%- if is_active_2 and product.selected_or_first_available_variant.metafields.custom.deck_price != blank -%}
+                  {{ product.selected_or_first_available_variant.metafields.custom.deck_price }}
+                {%- else -%}
+                  {{ prod_2.selected_or_first_available_variant.metafields.custom.deck_price | default: prod_2.price_min | money }}
+                {%- endif -%}
               {%- endif -%}
-            {%- endif -%}
+            </div>
+            <!-- Size display element -->
+            <div class="material-card-size" style="font-size: 14px; opacity: 0.8;">
+              {%- if is_active_2 -%}
+                {{ product.selected_or_first_available_variant.title }}
+              {%- else -%}
+                {{ prod_2.selected_or_first_available_variant.title }}
+              {%- endif -%}
+            </div>
           </div>
         {%- endif -%}
       </a>
@@ -1713,10 +1739,8 @@
 {%- comment -%} ================= Runtime Script for Dynamic Variant Change & Formatting ================= {%- endcomment -%}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Helper function to format raw numbers into currency style ($4,399.00)
     function formatPrice(val) {
       if (!val) return '';
-      // Agar already formatted hai ya koi text hai toh waisa hi return krdega
       let cleanVal = String(val).replace(/[^0-9.]/g, '');
       let num = parseFloat(cleanVal);
       if (isNaN(num)) return val;
@@ -1727,45 +1751,52 @@
       });
     }
 
-    // Format initial prices on page load
+    // Initial formatting on page load
     document.querySelectorAll('.material-card-price').forEach(priceEl => {
       let rawText = priceEl.textContent.trim();
-      // Sirf tab format karein agar yeh plain number jaisa lag raha ho
       if (/^\d+(\.\d+)?$/.test(rawText)) {
         priceEl.textContent = formatPrice(rawText);
       }
     });
 
-    function updateMaterialPrices() {
+    function updateMaterialData() {
       const urlParams = new URLSearchParams(window.location.search);
       const selectedVariantId = urlParams.get('variant');
       const cards = document.querySelectorAll('.material-card');
       
       cards.forEach(card => {
-        const pricesData = card.getAttribute('data-variant-prices');
-        if (!pricesData) return;
+        const dataAttr = card.getAttribute('data-variant-data');
+        if (!dataAttr) return;
 
         try {
-          const variantPrices = JSON.parse(pricesData);
+          const variantDataMap = JSON.parse(dataAttr);
           const priceElement = card.querySelector('.material-card-price');
-          if (!priceElement) return;
-
-          if (card.classList.contains('active') && selectedVariantId && variantPrices[selectedVariantId]) {
-            let newPrice = variantPrices[selectedVariantId];
-            priceElement.textContent = formatPrice(newPrice);
+          const sizeElement = card.querySelector('.material-card-size');
+          
+          if (card.classList.contains('active') && selectedVariantId && variantDataMap[selectedVariantId]) {
+            const variantInfo = variantDataMap[selectedVariantId];
+            
+            // Update Price if available
+            if (priceElement && variantInfo.price !== null) {
+              priceElement.textContent = formatPrice(variantInfo.price);
+            }
+            // Update Size/Variant Title
+            if (sizeElement && variantInfo.title) {
+              sizeElement.textContent = variantInfo.title;
+            }
           }
         } catch (e) {
-          console.error('Error parsing variant prices', e);
+          console.error('Error parsing variant data', e);
         }
       });
     }
 
-    updateMaterialPrices();
-    window.addEventListener('popstate', updateMaterialPrices);
+    updateMaterialData();
+    window.addEventListener('popstate', updateMaterialData);
 
     document.addEventListener('change', function(e) {
       if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
-        setTimeout(updateMaterialPrices, 150);
+        setTimeout(updateMaterialData, 150);
       }
     });
   });
