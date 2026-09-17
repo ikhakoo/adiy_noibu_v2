@@ -81,7 +81,7 @@
           "type": "material_switcher",
           "settings": {
             "heading": "Step 1: Choose Material",
-            "show_price": true,
+            "show_price": false,
             "product_1": "pressure-treated-kiln-dried-wood-deck-kit",
             "title_1": "Pressure Treated",
             "custom_price_1": "",
