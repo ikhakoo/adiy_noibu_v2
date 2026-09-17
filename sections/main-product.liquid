@@ -1606,90 +1606,75 @@
                   </div>
 
                 {%- when 'material_switcher' -%}
-  <div class="material-switcher-block" {{ block.shopify_attributes }}>
-    {%- if block.settings.heading != blank -%}
-      <div class="step-header">{{ block.settings.heading }}</div>
-    {%- endif -%}
+                  <div class="material-switcher-block" {{ block.shopify_attributes }}>
+                    {%- if block.settings.heading != blank -%}
+                      <div class="step-header">{{ block.settings.heading }}</div>
+                    {%- endif -%}
 
-    <div class="material-grid-container">
-      
-      {%- comment -%} --- CARD 1 --- {%- endcomment -%}
-      {%- assign prod_1 = block.settings.product_1 -%}
-      {%- if prod_1 != blank -%}
-        {%- assign is_active_1 = false -%}
-        {%- if prod_1.handle == product.handle -%}
-          {%- assign is_active_1 = true -%}
-        {%- endif -%}
+                    <div class="material-grid-container">
+                      {%- comment -%} Card 1 {%- endcomment -%}
+                      {%- assign prod_1 = block.settings.product_1 -%}
+                      {%- if prod_1 != blank -%}
+                        {%- assign is_active_1 = false -%}
+                        {%- if prod_1.handle == product.handle -%}
+                          {%- assign is_active_1 = true -%}
+                        {%- endif -%}
 
-        <a href="{{ prod_1.url }}" class="material-card {% if is_active_1 %}active{% endif %}" id="MaterialCard-1-{{ block.id }}">
-          <div class="material-card-image">
-            {%- if block.settings.image_1 != blank -%}
-              <img src="{{ block.settings.image_1 | image_url: width: 300 }}" alt="{{ block.settings.title_1 | escape }}" loading="lazy">
-            {%- elsif prod_1.featured_image -%}
-              <img src="{{ prod_1.featured_image | image_url: width: 300 }}" alt="{{ prod_1.title | escape }}" loading="lazy">
-            {%- endif -%}
-          </div>
-          <div class="material-card-title">
-            {{ block.settings.title_1 | default: prod_1.title }}
-          </div>
-          {%- if block.settings.show_price -%}
-            <div class="material-card-price" id="MaterialCardPrice-1-{{ block.id }}">
-              {%- assign current_v_1 = prod_1.selected_or_first_available_variant -%}
-              {%- comment -%} Yahan variant ka metafield fetch kiya ja raha hai (Apne namespace/key ke mutabiq change kar lein) {%- endcomment -%}
-              {%- assign meta_price_1 = current_v_1.metafields.custom.deck_price.value | default: current_v_1.price -%}
-              
-              <span class="js-card-price">
-                {%- if meta_price_1 contains '$' -%}
-                  {{ meta_price_1 }}
-                {%- else -%}
-                  {{ meta_price_1 | money }}
-                {%- endif -%}
-              </span> 
-              <span class="material-size-label">({{ current_v_1.title }})</span>
-            </div>
-          {%- endif -%}
-        </a>
-      {%- endif -%}
+                        <a href="{{ prod_1.url }}" class="material-card {% if is_active_1 %}active{% endif %}">
+                          <div class="material-card-image">
+                            {%- if block.settings.image_1 != blank -%}
+                              <img src="{{ block.settings.image_1 | image_url: width: 300 }}" alt="" loading="lazy">
+                            {%- elsif prod_1.featured_image -%}
+                              <img src="{{ prod_1.featured_image | image_url: width: 300 }}" alt="" loading="lazy">
+                            {%- endif -%}
+                          </div>
+                          <div class="material-card-title">
+                            {{ block.settings.title_1 | default: prod_1.title }}
+                          </div>
+                          {%- if block.settings.show_price -%}
+                            <div class="material-card-price" style="font-size: 16px;">
+                              {%- if block.settings.custom_price_1 != blank -%}
+                                {{ block.settings.custom_price_1 }}
+                              {%- else -%}
+                                {{ prod_1.price_min | money }}
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
 
-      {%- comment -%} --- CARD 2 --- {%- endcomment -%}
-      {%- assign prod_2 = block.settings.product_2 -%}
-      {%- if prod_2 != blank -%}
-        {%- assign is_active_2 = false -%}
-        {%- if prod_2.handle == product.handle -%}
-          {%- assign is_active_2 = true -%}
-        {%- endif -%}
+                      {%- comment -%} Card 2 {%- endcomment -%}
+                      {%- assign prod_2 = block.settings.product_2 -%}
+                      {%- if prod_2 != blank -%}
+                        {%- assign is_active_2 = false -%}
+                        {%- if prod_2.handle == product.handle -%}
+                          {%- assign is_active_2 = true -%}
+                        {%- endif -%}
 
-        <a href="{{ prod_2.url }}" class="material-card {% if is_active_2 %}active{% endif %}" id="MaterialCard-2-{{ block.id }}">
-          <div class="material-card-image">
-            {%- if block.settings.image_2 != blank -%}
-              <img src="{{ block.settings.image_2 | image_url: width: 300 }}" alt="{{ block.settings.title_2 | escape }}" loading="lazy">
-            {%- elsif prod_2.featured_image -%}
-              <img src="{{ prod_2.featured_image | image_url: width: 300 }}" alt="{{ prod_2.title | escape }}" loading="lazy">
-            {%- endif -%}
-          </div>
-          <div class="material-card-title">
-            {{ block.settings.title_2 | default: prod_2.title }}
-          </div>
-          {%- if block.settings.show_price -%}
-            <div class="material-card-price" id="MaterialCardPrice-2-{{ block.id }}">
-              {%- assign current_v_2 = prod_2.selected_or_first_available_variant -%}
-              {%- assign meta_price_2 = current_v_2.metafields.custom.deck_price.value | default: current_v_2.price -%}
-              
-              <span class="js-card-price">
-                {%- if meta_price_2 contains '$' -%}
-                  {{ meta_price_2 }}
-                {%- else -%}
-                  {{ meta_price_2 | money }}
-                {%- endif -%}
-              </span> 
-              <span class="material-size-label">({{ current_v_2.title }})</span>
-            </div>
-          {%- endif -%}
-        </a>
-      {%- endif -%}
-
-    </div>
-  </div>
+                        <a href="{{ prod_2.url }}" class="material-card {% if is_active_2 %}active{% endif %}">
+                          <div class="material-card-image">
+                            {%- if block.settings.image_2 != blank -%}
+                              <img src="{{ block.settings.image_2 | image_url: width: 300 }}" alt="" loading="lazy">
+                            {%- elsif prod_2.featured_image -%}
+                              <img src="{{ prod_2.featured_image | image_url: width: 300 }}" alt="" loading="lazy">
+                            {%- endif -%}
+                          </div>
+                          <div class="material-card-title">
+                            {{ block.settings.title_2 | default: prod_2.title }}
+                          </div>
+                          {%- if block.settings.show_price -%}
+                            <div class="material-card-price" style="font-size: 16px;">
+                              {%- if block.settings.custom_price_2 != blank -%}
+                                {{ block.settings.custom_price_2 }}
+                              {%- else -%}
+                                {{ prod_2.price_min | money }}
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </div>
 
                 {%- when 'accessories_block' -%}
                   <div class="product-accessories-widget" {{ block.shopify_attributes }}>
