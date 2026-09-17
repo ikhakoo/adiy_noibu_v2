@@ -1690,6 +1690,36 @@
 
     </div>
   </div>
+  {%- comment -%} Har product ke variants aur unka metafield JSON render karne ke liye {%- endcomment -%}
+<script>
+  window.materialProductsData = window.materialProductsData || {};
+  
+  {%- if prod_1 != blank -%}
+    window.materialProductsData["{{ prod_1.id }}"] = {
+      variants: {
+        {%- for variant in prod_1.variants -%}
+          "{{ variant.id }}": {
+            title: "{{ variant.title }}",
+            deckPrice: "{{ variant.metafields.custom.deck_price.value | default: variant.price | money }}"
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      }
+    };
+  {%- endif -%}
+
+  {%- if prod_2 != blank -%}
+    window.materialProductsData["{{ prod_2.id }}"] = {
+      variants: {
+        {%- for variant in prod_2.variants -%}
+          "{{ variant.id }}": {
+            title: "{{ variant.title }}",
+            deckPrice: "{{ variant.metafields.custom.deck_price.value | default: variant.price | money }}"
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      }
+    };
+  {%- endif -%}
+</script>
 
                 {%- when 'accessories_block' -%}
                   <div class="product-accessories-widget" {{ block.shopify_attributes }}>
