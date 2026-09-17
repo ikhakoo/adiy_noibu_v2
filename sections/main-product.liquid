@@ -2440,7 +2440,19 @@
                         const offeredPriceEl = document.getElementById("OfferedPriceVal");
                         const dueTodayEl = document.getElementById("DueTodayVal");
                         const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
+                        const selectedSizeEl = document.getElementById("SelectedSizeDisplay"); // Size element
 
+                        // --- Naya Code: Variant ka Title / Size yahan set hoga ---
+                        if (selectedSizeEl) {
+                          const variantTitles = {
+                            {%- for variant in product.variants -%}
+                              "{{ variant.id }}": "{{ variant.title }}",
+                            {%- endfor -%}
+                          };
+                          selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
+                        }
+                        // ---------------------------------------------------------
+                        // ... baqi ka purana code waisa hi rahega ...
                         if (deckCardContainer) {
                           deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
                         }
