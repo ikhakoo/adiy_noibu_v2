@@ -2005,37 +2005,40 @@
                             </div>
                             <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
                           </div>
-{% comment %} new code  {% endcomment %}
+
                           <!-- 3. Estimated Delivery Month/Year Picker Box -->
-<div class="dp-card dp-delivery-card">
-  <div class="dp-delivery-header">
-    <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
-    <span class="dp-truck-icon">🚚</span>
-  </div>
-  <div class="dp-input-wrapper" onclick="document.getElementById('EstimatedDeliveryDate').showPicker?.()">
-    <input 
-      type="month" 
-      id="EstimatedDeliveryDate" 
-      name="properties[Estimated Delivery Month]" 
-      class="dp-date-input" 
-      required
-    >
-    <input 
-      type="hidden" 
-      id="DeckPriceProperty" 
-      name="properties[Price]" 
-      value="{{ deck_price | times: 100 | money_without_trailing_zeros }}"
-    >
-    <input 
-      type="hidden" 
-      name="properties[_Order Type]" 
-      value="Deposit"
-    >
-  </div>
-  {%- if block.settings.show_delivery_subtext -%}
-    <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
-  {%- endif -%}
-</div>
+                          <div class="dp-card dp-delivery-card">
+                            <div class="dp-delivery-header">
+                              <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
+                              <span class="dp-truck-icon">🚚</span>
+                            </div>
+                            <div class="dp-input-wrapper" onclick="document.getElementById('EstimatedDeliveryDate').showPicker?.()">
+                              <!-- Changed type to 'month' for Month & Year selection -->
+                              <input 
+                                type="month" 
+                                id="EstimatedDeliveryDate" 
+                                name="properties[Estimated Delivery Month]" 
+                                class="dp-date-input" 
+                                required
+                              >
+                              <input 
+                                type="hidden" 
+                                id="DeckPriceProperty" 
+                                name="properties[Price]" 
+                                value="{{ deck_price | times: 100 | money_without_trailing_zeros }}"
+                              >
+                              <input 
+                                type="hidden" 
+                                name="properties[_Order Type]" 
+                                value="Deposit"
+                              >
+                            </div>
+                            {%- if block.settings.show_delivery_subtext -%}
+                              <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
+                            {%- endif -%}
+                          </div>
+                        </div>
+
                         <!-- 4. Agreement Text & Additional Info Footer -->
                         {%- if block.settings.show_footer_agreement -%}
                           <div class="dp-agreement-footer">
@@ -2249,119 +2252,119 @@
 
                   <script>
                     document.addEventListener("DOMContentLoaded", function() {
-  // 1. Flatpickr Month & Year Picker Initialization
-  document.addEventListener("DOMContentLoaded", function() {
-  const dateInput = document.getElementById("EstimatedDeliveryDate");
-  if (dateInput) {
-    let today = new Date();
-    
-    function formatMonthYear(d) {
-      let month = '' + (d.getMonth() + 1);
-      let year = d.getFullYear();
-      if (month.length < 2) month = '0' + month;
-      return [year, month].join('-');
-    }
+                      // 1. Setup Month Picker Bounds (YYYY-MM format)
+                      const dateInput = document.getElementById("EstimatedDeliveryDate");
+                      if (dateInput) {
+                        let today = new Date();
+                        
+                        function formatMonthYear(d) {
+                          let month = '' + (d.getMonth() + 1);
+                          let year = d.getFullYear();
+                          if (month.length < 2) month = '0' + month;
+                          return [year, month].join('-');
+                        }
 
-    let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-    let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
+                        let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
+                        let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
 
-    let minDate = new Date();
-    minDate.setMonth(today.getMonth() + minMonthsOffset);
-    
-    let maxDate = new Date();
-    maxDate.setMonth(today.getMonth() + maxMonthsOffset);
+                        let minDate = new Date();
+                        minDate.setMonth(today.getMonth() + minMonthsOffset);
+                        
+                        let maxDate = new Date();
+                        maxDate.setMonth(today.getMonth() + maxMonthsOffset);
 
-    dateInput.min = formatMonthYear(minDate);
-    dateInput.max = formatMonthYear(maxDate);
-  }
-});
+                        dateInput.min = formatMonthYear(minDate);
+                        dateInput.max = formatMonthYear(maxDate);
+                        
+                        
+                      }
 
-  // 2. Format Money helper
-  function formatMoney(cents) {
-    return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+                      // 2. Format Money helper
+                      function formatMoney(cents) {
+                        return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      }
 
-  function updateCartPriceProperty(formattedPrice) {
-    const priceInput = document.getElementById('DeckPriceProperty');
-    if (priceInput) {
-      priceInput.value = formattedPrice;
-    }
-  }
+                      function updateCartPriceProperty(formattedPrice) {
+                        const priceInput = document.getElementById('DeckPriceProperty');
+                        if (priceInput) {
+                          priceInput.value = formattedPrice;
+                        }
+                      }
 
-  // 3. Variant Change Listener & Dynamic Pricing/Visibility
-  const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
-  if (!metaJsonEl) return;
-  const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
+                      // 3. Variant Change Listener & Dynamic Pricing/Visibility
+                      const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
+                      if (!metaJsonEl) return;
+                      const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
 
-  function updateBlockData(variantId) {
-    const data = metafieldsData[variantId];
-    if (!data) return;
+                      function updateBlockData(variantId) {
+                        const data = metafieldsData[variantId];
+                        if (!data) return;
 
-    const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
-    const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
-    const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
-    const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
-    const deckPriceEl = document.getElementById("DeckPriceVal");
-    const savingsEl = document.getElementById("SavingsVal");
-    const offeredPriceEl = document.getElementById("OfferedPriceVal");
-    const dueTodayEl = document.getElementById("DueTodayVal");
-    const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
+                        const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
+                        const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
+                        const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
+                        const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
+                        const deckPriceEl = document.getElementById("DeckPriceVal");
+                        const savingsEl = document.getElementById("SavingsVal");
+                        const offeredPriceEl = document.getElementById("OfferedPriceVal");
+                        const dueTodayEl = document.getElementById("DueTodayVal");
+                        const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
 
-    // Handle Deck Price Container Visibility
-    if (deckCardContainer) {
-      if (data.deckPrice > 0) {
-        deckCardContainer.style.display = "block";
-      } else {
-        deckCardContainer.style.display = "none";
-      }
-    }
+                        // Handle Deck Price Container Visibility
+                        if (deckCardContainer) {
+                          if (data.deckPrice > 0) {
+                            deckCardContainer.style.display = "block";
+                          } else {
+                            deckCardContainer.style.display = "none";
+                          }
+                        }
 
-    // Handle Discount Row, Divider & Offered Price Visibility
-    if (discountRow && deckDivider && offeredPriceRow) {
-      if (data.discountValue > 0) {
-        discountRow.style.display = "flex";
-        deckDivider.style.display = "block";
-        offeredPriceRow.style.display = "flex";
-      } else {
-        discountRow.style.display = "none";
-        deckDivider.style.display = "none";
-        offeredPriceRow.style.display = "none";
-      }
-    }
+                        // Handle Discount Row, Divider & Offered Price Visibility
+                        if (discountRow && deckDivider && offeredPriceRow) {
+                          if (data.discountValue > 0) {
+                            discountRow.style.display = "flex";
+                            deckDivider.style.display = "block";
+                            offeredPriceRow.style.display = "flex";
+                          } else {
+                            discountRow.style.display = "none";
+                            deckDivider.style.display = "none";
+                            offeredPriceRow.style.display = "none";
+                          }
+                        }
 
-    if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
-    if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
-    if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
-    if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
-    if (hiddenVariantInput) hiddenVariantInput.value = variantId;
+                        if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
+                        if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
+                        if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
+                        if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
+                        if (hiddenVariantInput) hiddenVariantInput.value = variantId;
 
-    // Update line item property input value dynamically
-    updateCartPriceProperty(formatMoney(data.deckPrice * 100));
-  }
+                        // Update line item property input value dynamically
+                        updateCartPriceProperty(formatMoney(data.deckPrice * 100));
+                      }
 
-  function checkVariantUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const variantId = urlParams.get('variant');
-    if (variantId && metafieldsData[variantId]) {
-      updateBlockData(variantId);
-    }
-  }
+                      function checkVariantUrl() {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const variantId = urlParams.get('variant');
+                        if (variantId && metafieldsData[variantId]) {
+                          updateBlockData(variantId);
+                        }
+                      }
 
-  // Initial call for the default selected variant
-  const initialVariantId = "{{ current_variant.id }}";
-  if (metafieldsData[initialVariantId]) {
-    updateCartPriceProperty(formatMoney(metafieldsData[initialVariantId].deckPrice * 100));
-  }
+                      // Initial call for the default selected variant
+                      const initialVariantId = "{{ current_variant.id }}";
+                      if (metafieldsData[initialVariantId]) {
+                        updateCartPriceProperty(formatMoney(metafieldsData[initialVariantId].deckPrice * 100));
+                      }
 
-  // Listen to theme variant switches
-  document.addEventListener('change', function(e) {
-    if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
-      setTimeout(checkVariantUrl, 100);
-    }
-  });
+                      // Listen to theme variant switches
+                      document.addEventListener('change', function(e) {
+                        if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
+                          setTimeout(checkVariantUrl, 100);
+                        }
+                      });
 
-  window.addEventListener('popstate', checkVariantUrl);
-});
+                      window.addEventListener('popstate', checkVariantUrl);
+                    });
                   </script>
 
 
