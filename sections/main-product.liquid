@@ -1956,416 +1956,530 @@
 
 
                 {%- when 'estimated_price_cta' -%}
-                  <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
-                      {%- assign current_variant = product.selected_or_first_available_variant -%}
-                      
-                      {%- assign deck_price = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
-                      {%- assign discount_value = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
-                      {%- assign offered_price = deck_price | minus: discount_value -%}
-                      {%- assign due_today_price = current_variant.price -%}
+                <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
+                  {%- assign current_variant = product.selected_or_first_available_variant -%}
+                  
+                  {%- assign deck_price = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+                  {%- assign discount_value = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+                  {%- assign offered_price = deck_price | minus: discount_value -%}
+                  {%- assign due_today_price = current_variant.price -%}
 
-                      {%- assign product_form_id = 'product-form-' | append: section.id -%}
+                  {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-                      {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
+                  {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
+                    
+                    <!-- Hidden Variant ID input -->
+                    <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantIdInput-{{ section.id }}">
+                    
+                    <!-- Redirect straight to Checkout -->
+                    <input type="hidden" name="return_to" value="/checkout">
+
+                    <div class="price-wrapper">
+                      <!-- 1. Deck Price & Discount Box (Hidden if deck_price is 0/blank) -->
+                      <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
+                        <div class="dp-row main-deck-price-row">
+                          <span class="dp-label">Deck Price:</span>
+                          <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
+                        </div>
                         
-                        <!-- Hidden Variant ID input -->
-                        <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantIdInput-{{ section.id }}">
-                        
-                        <!-- Redirect straight to Checkout -->
-                        <input type="hidden" name="return_to" value="/checkout">
-
-                        <div class="price-wrapper">
-                          <!-- 1. Deck Price & Discount Box (Hidden if deck_price is 0/blank) -->
-                          <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
-                            <div class="dp-row main-deck-price-row">
-                              <span class="dp-label">Deck Price:</span>
-                              <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
-                            </div>
-                            
-                            <!-- Discount Row (Hidden if discount_value is 0/blank) -->
-                            <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
-                              <span class="dp-badge-icon">✓</span>
-                              <span class="dp-badge-text">Discount Applied</span>
-                              <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
-                            </div>
-
-                            <hr style="margin: 10px 0; {% if discount_value == 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
-
-                            <div class="dp-row offered-price-row" id="OfferedPriceRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
-                              <span class="dp-label">Offered Price</span>
-                              <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
-                            </div>
-                          </div>
-
-                          <!-- 2. Due Today Box -->
-                          <div class="dp-card dp-due-card">
-                            <div class="dp-row">
-                              <span class="dp-label">Due Today</span>
-                              <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
-                            </div>
-                            <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
-                          </div>
-
-                          <!-- 3. Estimated Delivery Month/Year Picker Box -->
-                          <div class="dp-card dp-delivery-card">
-                            <div class="dp-delivery-header">
-                              <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
-                              <span class="dp-truck-icon">🚚</span>
-                            </div>
-                            <div class="dp-input-wrapper" onclick="document.getElementById('EstimatedDeliveryDate').showPicker?.()">
-                              <!-- Changed type to 'month' for Month & Year selection -->
-                              <input 
-                                type="month" 
-                                id="EstimatedDeliveryDate" 
-                                name="properties[Estimated Delivery Month]" 
-                                class="dp-date-input" 
-                                required
-                              >
-                              <input 
-                                type="hidden" 
-                                id="DeckPriceProperty" 
-                                name="properties[Price]" 
-                                value="{{ deck_price | times: 100 | money_without_trailing_zeros }}"
-                              >
-                              <input 
-                                type="hidden" 
-                                name="properties[_Order Type]" 
-                                value="Deposit"
-                              >
-                            </div>
-                            {%- if block.settings.show_delivery_subtext -%}
-                              <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
-                            {%- endif -%}
-                          </div>
+                        <!-- Discount Row (Hidden if discount_value is 0/blank) -->
+                        <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
+                          <span class="dp-badge-icon">✓</span>
+                          <span class="dp-badge-text">Discount Applied</span>
+                          <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
                         </div>
 
-                        <!-- 4. Agreement Text & Additional Info Footer -->
-                        {%- if block.settings.show_footer_agreement -%}
-                          <div class="dp-agreement-footer">
-                            <p class="dp-agreement-text">
-                              {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
-                            </p>
-                            {%- if block.settings.info_link_text != blank -%}
-                              <div class="dp-info-link-wrap">
-                                <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
-                              </div>
-                            {%- endif -%}
+                        <hr style="margin: 10px 0; {% if discount_value == 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
+
+                        <div class="dp-row offered-price-row" id="OfferedPriceRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
+                          <span class="dp-label">Offered Price</span>
+                          <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
+                        </div>
+                      </div>
+
+                      <!-- 2. Due Today Box -->
+                      <div class="dp-card dp-due-card">
+                        <div class="dp-row">
+                          <span class="dp-label">Due Today</span>
+                          <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
+                        </div>
+                        <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
+                      </div>
+
+                      <!-- 3. Estimated Delivery Month/Year Picker Box (Direct Inline Calendar) -->
+                      <div class="dp-card dp-delivery-card">
+                        <div class="dp-delivery-header">
+                          <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
+                          <span class="dp-truck-icon">🚚</span>
+                        </div>
+                        
+                        <div class="dp-input-wrapper">
+                          <!-- Hidden input jo cart mein value pass karega (YYYY-MM format) -->
+                          <input 
+                            type="hidden" 
+                            id="EstimatedDeliveryDate" 
+                            name="properties[Estimated Delivery Month]" 
+                            required
+                          >
+                          
+                          <!-- Custom Inline Month/Year Picker UI -->
+                          <div class="dp-inline-picker" id="InlineMonthPicker">
+                            <div class="dp-picker-header">
+                              <button type="button" class="dp-prev-year" id="PrevYearBtn">&lt;</button>
+                              <span class="dp-current-year" id="CurrentYearLabel">2026</span>
+                              <button type="button" class="dp-next-year" id="NextYearBtn">&gt;</button>
+                            </div>
+                            <div class="dp-months-grid" id="MonthsGrid">
+                              <!-- JS se months dynamically generate honge -->
+                            </div>
+                          </div>
+
+                          <input 
+                            type="hidden" 
+                            id="DeckPriceProperty" 
+                            name="properties[Price]" 
+                            value="{{ deck_price | times: 100 | money_without_trailing_zeros }}"
+                          >
+                          <input 
+                            type="hidden" 
+                            name="properties[_Order Type]" 
+                            value="Deposit"
+                          >
+                        </div>
+
+                        {%- if block.settings.show_delivery_subtext -%}
+                          <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+
+                    <!-- 4. Agreement Text & Additional Info Footer -->
+                    {%- if block.settings.show_footer_agreement -%}
+                      <div class="dp-agreement-footer">
+                        <p class="dp-agreement-text">
+                          {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
+                        </p>
+                        {%- if block.settings.info_link_text != blank -%}
+                          <div class="dp-info-link-wrap">
+                            <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
                           </div>
                         {%- endif -%}
+                      </div>
+                    {%- endif -%}
 
-                        <!-- 5. Action Buttons -->
-                        <div class="dp-actions-container">
-                          <button type="submit" name="add" class="dp-reserve-btn" id="ReserveDeckBtn">
-                            <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
-                            <span class="dp-btn-arrow">→</span>
-                          </button>
+                    <!-- 5. Action Buttons -->
+                    <div class="dp-actions-container">
+                      <button type="submit" name="add" class="dp-reserve-btn" id="ReserveDeckBtn">
+                        <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
+                        <span class="dp-btn-arrow">→</span>
+                      </button>
 
-                          {%- if block.settings.show_dynamic_checkout -%}
-                            <div class="dp-dynamic-checkout-wrap">
-                              {{ form | payment_button }}
-                            </div>
-                          {%- endif -%}
+                      {%- if block.settings.show_dynamic_checkout -%}
+                        <div class="dp-dynamic-checkout-wrap">
+                          {{ form | payment_button }}
                         </div>
+                      {%- endif -%}
+                    </div>
 
-                      {%- endform -%}
-                  </div>
+                  {%- endform -%}
+                </div>
 
-                  <!-- Variant Metafile JSON Mapping for JavaScript -->
-                  <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
-                    {
-                      {%- for variant in product.variants -%}
-                        {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
-                        {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
-                        {%- assign v_offered = v_deck | minus: v_disc -%}
-                        "{{ variant.id }}": {
-                          "deckPrice": {{ v_deck }},
-                          "discountValue": {{ v_disc }},
-                          "offeredPrice": {{ v_offered }},
-                          "dueTodayPrice": {{ variant.price }}
-                        }{% unless forloop.last %},{% endunless %}
-                      {%- endfor -%}
-                    }
-                  </script>
+                <!-- Variant Metafile JSON Mapping for JavaScript -->
+                <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
+                  {
+                    {%- for variant in product.variants -%}
+                      {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+                      {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+                      {%- assign v_offered = v_deck | minus: v_disc -%}
+                      "{{ variant.id }}": {
+                        "deckPrice": {{ v_deck }},
+                        "discountValue": {{ v_disc }},
+                        "offeredPrice": {{ v_offered }},
+                        "dueTodayPrice": {{ variant.price }}
+                      }{% unless forloop.last %},{% endunless %}
+                    {%- endfor -%}
+                  }
+                </script>
 
-                  <style>
-                    .deck-pricing-block {
-                      margin: 20px 0;
-                      font-family: inherit;
-                    }
-                    .dp-card {
-                      background: #ffffff;
-                      border: 1px solid #e3e3e3;
-                      border-radius: 12px;
-                      padding: 18px 20px;
-                      margin-bottom: 12px;
-                      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
-                    }
-                    .dp-deck-card {
-                      background: #E9E9E9;
-                      border: 1px solid #26170c2e;
-                    }
-                    .dp-row {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                    }
-                    .price-wrapper{
-                      background: #F1F1F1;
-                      padding: 15px;
-                      border-radius: 15px;
-                      border: 1px solid #26170c33;
-                    }
-                    .dp-label {
-                      font-weight: 500;
-                      color: #1a1a1a;
-                      font-size: 18px;
-                    }
-                    .dp-value {
-                      font-weight: 500;
-                      color: #1a1a1a;
-                      font-size: 18px;
-                    }
-                    .bold-price {
-                      font-size: 20px;
-                      font-weight: 700;
-                      color: #1a1a1a;
-                    }
+                <style>
+                  .deck-pricing-block {
+                    margin: 20px 0;
+                    font-family: inherit;
+                  }
+                  .dp-card {
+                    background: #ffffff;
+                    border: 1px solid #e3e3e3;
+                    border-radius: 12px;
+                    padding: 18px 20px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+                  }
+                  .dp-deck-card {
+                    background: #E9E9E9;
+                    border: 1px solid #26170c2e;
+                  }
+                  .dp-row {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+                  .price-wrapper{
+                    background: #F1F1F1;
+                    padding: 15px;
+                    border-radius: 15px;
+                    border: 1px solid #26170c33;
+                  }
+                  .dp-label {
+                    font-weight: 500;
+                    color: #1a1a1a;
+                    font-size: 18px;
+                  }
+                  .dp-value {
+                    font-weight: 500;
+                    color: #1a1a1a;
+                    font-size: 18px;
+                  }
+                  .bold-price {
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: #1a1a1a;
+                  }
+                  
+                  .dp-discount-badge-row {
+                    display: flex;
+                    align-items: center;
+                    margin: 12px 0;
+                    font-size: 13px;
+                    color: #215626;
+                  }
+                  .dp-badge-icon {
+                    background: #215626;
+                    color: #fff;
+                    border-radius: 50%;
+                    width: 16px;
+                    height: 16px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 9px;
+                    margin-right: 8px;
+                  }
+                  .dp-savings {
+                    margin-left: auto;
+                    font-weight: 700;
+                  }
+                  .dp-subtext {
+                    font-size: 12px;
+                    color: #666;
+                    margin-top: 4px;
+                    line-height: 1.4;
+                  }
+                  .dp-delivery-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                  }
+                  .dp-truck-icon {
+                    font-size: 18px;
+                  }
+                  .dp-input-wrapper {
+                    position: relative;
+                  }
+
+                  /* Inline Month Picker Styling */
+                  .dp-inline-picker {
+                    background: #fff;
+                    border: 1px solid #d0d0d0;
+                    border-radius: 8px;
+                    padding: 12px;
+                    font-family: inherit;
+                  }
+                  .dp-picker-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                    font-weight: 600;
+                    font-size: 15px;
+                    color: #1a1a1a;
+                    padding: 0 4px;
+                  }
+                  .dp-picker-header button {
+                    background: none;
+                    border: 1px solid #d0d0d0;
+                    border-radius: 4px;
+                    width: 28px;
+                    height: 28px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  }
+                  .dp-picker-header button:hover {
+                    background: #f1f1f1;
+                  }
+                  .dp-months-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 8px;
+                  }
+                  .dp-month-cell {
+                    background: #f9f9f9;
+                    border: 1px solid #e3e3e3;
+                    border-radius: 6px;
+                    padding: 10px 0;
+                    text-align: center;
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #333;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                  }
+                  .dp-month-cell:hover:not(.disabled) {
+                    background: #eaeaea;
+                    border-color: #bbb;
+                  }
+                  .dp-month-cell.selected {
+                    background: #1b4332 !important;
+                    color: #fff !important;
+                    border-color: #1b4332 !important;
+                    font-weight: 600;
+                  }
+                  .dp-month-cell.disabled {
+                    background: #f5f5f5;
+                    color: #ccc;
+                    border-color: #eee;
+                    cursor: not-allowed;
+                    pointer-events: none;
+                  }
+
+                  .dp-agreement-footer {
+                    margin: 16px 0;
+                    text-align: center;
+                    padding: 0 5px;
+                  }
+                  .dp-agreement-text {
+                    font-size: 12px;
+                    color: #555;
+                    line-height: 1.5;
+                    margin: 0 0 6px 0;
+                  }
+                  .dp-agreement-text a {
+                    color: #111;
+                    font-weight: 600;
+                    text-decoration: underline;
+                  }
+                  .dp-info-link-wrap {
+                    margin-top: 4px;
+                  }
+                  .dp-info-link {
+                    font-size: 13px;
+                    color: #1e5fa6;
+                    font-weight: 600;
+                    text-decoration: none;
+                  }
+                  .dp-info-link:hover {
+                    text-decoration: underline;
+                  }
+                  .dp-actions-container {
+                    margin-top: 16px;
+                  }
+                  .dp-reserve-btn {
+                    display: flex;
+                    width: 100%;
+                    background-color: #1b4332;
+                    color: #ffffff;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 16px 20px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: background-color 0.2s ease;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                  }
+                  .dp-reserve-btn:hover {
+                    background-color: #143225;
+                  }
+                  .dp-btn-arrow {
+                    margin-left: 8px;
+                    font-size: 18px;
+                  }
+                  .dp-dynamic-checkout-wrap {
+                    margin-top: 10px;
+                  }
+                  .dp-dynamic-checkout-wrap div[data-shopify="payment-button"] {
+                    border-radius: 8px;
+                    overflow: hidden;
+                  }
+                </style>
+
+                <script>
+                  document.addEventListener("DOMContentLoaded", function() {
+                    // 1. Custom Inline Month Picker Setup & Bounds
+                    const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
+                    const yearLabel = document.getElementById("CurrentYearLabel");
+                    const monthsGrid = document.getElementById("MonthsGrid");
+                    const prevYearBtn = document.getElementById("PrevYearBtn");
+                    const nextYearBtn = document.getElementById("NextYearBtn");
+
+                    let today = new Date();
+                    let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
+                    let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
+
+                    let minDate = new Date();
+                    minDate.setMonth(today.getMonth() + minMonthsOffset);
                     
-                    .dp-discount-badge-row {
-                      display: flex;
-                      align-items: center;
-                      margin: 12px 0;
-                      font-size: 13px;
-                      color: #215626;
-                    }
-                    .dp-badge-icon {
-                      background: #215626;
-                      color: #fff;
-                      border-radius: 50%;
-                      width: 16px;
-                      height: 16px;
-                      display: inline-flex;
-                      align-items: center;
-                      justify-content: center;
-                      font-size: 9px;
-                      margin-right: 8px;
-                    }
-                    .dp-savings {
-                      margin-left: auto;
-                      font-weight: 700;
-                    }
-                    .dp-subtext {
-                      font-size: 12px;
-                      color: #666;
-                      margin-top: 4px;
-                      line-height: 1.4;
-                    }
-                    .dp-delivery-header {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      margin-bottom: 10px;
-                    }
-                    .dp-truck-icon {
-                      font-size: 18px;
-                    }
-                    .dp-input-wrapper {
-                      position: relative;
-                    }
-                    .dp-date-input {
-                      width: 100%;
-                      padding: 12px 14px;
-                      border: 1px solid #d0d0d0;
-                      border-radius: 8px;
-                      background: #fff;
-                      font-size: 14px;
-                      color: #333;
-                      font-family: inherit;
-                      cursor: pointer;
-                    }
-                    .dp-date-input:focus {
-                      outline: none;
-                      border-color: #111;
-                    }
-                    .dp-agreement-footer {
-                      margin: 16px 0;
-                      text-align: center;
-                      padding: 0 5px;
-                    }
-                    .dp-agreement-text {
-                      font-size: 12px;
-                      color: #555;
-                      line-height: 1.5;
-                      margin: 0 0 6px 0;
-                    }
-                    .dp-agreement-text a {
-                      color: #111;
-                      font-weight: 600;
-                      text-decoration: underline;
-                    }
-                    .dp-info-link-wrap {
-                      margin-top: 4px;
-                    }
-                    .dp-info-link {
-                      font-size: 13px;
-                      color: #1e5fa6;
-                      font-weight: 600;
-                      text-decoration: none;
-                    }
-                    .dp-info-link:hover {
-                      text-decoration: underline;
-                    }
-                    .dp-actions-container {
-                      margin-top: 16px;
-                    }
-                    .dp-reserve-btn {
-                      display: flex;
-                      width: 100%;
-                      background-color: #1b4332;
-                      color: #ffffff;
-                      border: none;
-                      border-radius: 8px;
-                      padding: 16px 20px;
-                      font-size: 16px;
-                      font-weight: 600;
-                      align-items: center;
-                      justify-content: center;
-                      cursor: pointer;
-                      transition: background-color 0.2s ease;
-                      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                    }
-                    .dp-reserve-btn:hover {
-                      background-color: #143225;
-                    }
-                    .dp-btn-arrow {
-                      margin-left: 8px;
-                      font-size: 18px;
-                    }
-                    .dp-dynamic-checkout-wrap {
-                      margin-top: 10px;
-                    }
-                    .dp-dynamic-checkout-wrap div[data-shopify="payment-button"] {
-                      border-radius: 8px;
-                      overflow: hidden;
-                    }
-                  </style>
+                    let maxDate = new Date();
+                    maxDate.setMonth(today.getMonth() + maxMonthsOffset);
 
-                  <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                      // 1. Setup Month Picker Bounds (YYYY-MM format)
-                      const dateInput = document.getElementById("EstimatedDeliveryDate");
-                      if (dateInput) {
-                        let today = new Date();
-                        
-                        function formatMonthYear(d) {
-                          let month = '' + (d.getMonth() + 1);
-                          let year = d.getFullYear();
-                          if (month.length < 2) month = '0' + month;
-                          return [year, month].join('-');
+                    let viewingYear = minDate.getFullYear();
+                    let selectedYear = minDate.getFullYear();
+                    let selectedMonth = minDate.getMonth();
+
+                    if (hiddenDateInput) {
+                      hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+                    }
+
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                    function renderCalendar() {
+                      if (yearLabel) yearLabel.textContent = viewingYear;
+                      if (monthsGrid) monthsGrid.innerHTML = '';
+
+                      monthNames.forEach((name, index) => {
+                        const cell = document.createElement('div');
+                        cell.className = 'dp-month-cell';
+                        cell.textContent = name;
+
+                        const cellDate = new Date(viewingYear, index, 1);
+                        const minLimitDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+                        const maxLimitDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+
+                        if (cellDate < minLimitDate || cellDate > maxLimitDate) {
+                          cell.classList.add('disabled');
                         }
 
-                        let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-                        let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
-
-                        let minDate = new Date();
-                        minDate.setMonth(today.getMonth() + minMonthsOffset);
-                        
-                        let maxDate = new Date();
-                        maxDate.setMonth(today.getMonth() + maxMonthsOffset);
-
-                        dateInput.min = formatMonthYear(minDate);
-                        dateInput.max = formatMonthYear(maxDate);
-                        
-                        
-                      }
-
-                      // 2. Format Money helper
-                      function formatMoney(cents) {
-                        return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                      }
-
-                      function updateCartPriceProperty(formattedPrice) {
-                        const priceInput = document.getElementById('DeckPriceProperty');
-                        if (priceInput) {
-                          priceInput.value = formattedPrice;
+                        if (viewingYear === selectedYear && index === selectedMonth) {
+                          cell.classList.add('selected');
                         }
-                      }
 
-                      // 3. Variant Change Listener & Dynamic Pricing/Visibility
-                      const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
-                      if (!metaJsonEl) return;
-                      const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
-
-                      function updateBlockData(variantId) {
-                        const data = metafieldsData[variantId];
-                        if (!data) return;
-
-                        const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
-                        const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
-                        const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
-                        const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
-                        const deckPriceEl = document.getElementById("DeckPriceVal");
-                        const savingsEl = document.getElementById("SavingsVal");
-                        const offeredPriceEl = document.getElementById("OfferedPriceVal");
-                        const dueTodayEl = document.getElementById("DueTodayVal");
-                        const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
-
-                        // Handle Deck Price Container Visibility
-                        if (deckCardContainer) {
-                          if (data.deckPrice > 0) {
-                            deckCardContainer.style.display = "block";
-                          } else {
-                            deckCardContainer.style.display = "none";
+                        cell.addEventListener('click', function() {
+                          if (cell.classList.contains('disabled')) return;
+                          selectedYear = viewingYear;
+                          selectedMonth = index;
+                          if (hiddenDateInput) {
+                            hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
                           }
-                        }
+                          renderCalendar();
+                        });
 
-                        // Handle Discount Row, Divider & Offered Price Visibility
-                        if (discountRow && deckDivider && offeredPriceRow) {
-                          if (data.discountValue > 0) {
-                            discountRow.style.display = "flex";
-                            deckDivider.style.display = "block";
-                            offeredPriceRow.style.display = "flex";
-                          } else {
-                            discountRow.style.display = "none";
-                            deckDivider.style.display = "none";
-                            offeredPriceRow.style.display = "none";
-                          }
-                        }
+                        if (monthsGrid) monthsGrid.appendChild(cell);
+                      });
+                    }
 
-                        if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
-                        if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
-                        if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
-                        if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
-                        if (hiddenVariantInput) hiddenVariantInput.value = variantId;
-
-                        // Update line item property input value dynamically
-                        updateCartPriceProperty(formatMoney(data.deckPrice * 100));
-                      }
-
-                      function checkVariantUrl() {
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const variantId = urlParams.get('variant');
-                        if (variantId && metafieldsData[variantId]) {
-                          updateBlockData(variantId);
-                        }
-                      }
-
-                      // Initial call for the default selected variant
-                      const initialVariantId = "{{ current_variant.id }}";
-                      if (metafieldsData[initialVariantId]) {
-                        updateCartPriceProperty(formatMoney(metafieldsData[initialVariantId].deckPrice * 100));
-                      }
-
-                      // Listen to theme variant switches
-                      document.addEventListener('change', function(e) {
-                        if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
-                          setTimeout(checkVariantUrl, 100);
+                    if (prevYearBtn) {
+                      prevYearBtn.addEventListener('click', () => {
+                        if (viewingYear > minDate.getFullYear()) {
+                          viewingYear--;
+                          renderCalendar();
                         }
                       });
+                    }
 
-                      window.addEventListener('popstate', checkVariantUrl);
+                    if (nextYearBtn) {
+                      nextYearBtn.addEventListener('click', () => {
+                        if (viewingYear < maxDate.getFullYear()) {
+                          viewingYear++;
+                          renderCalendar();
+                        }
+                      });
+                    }
+
+                    renderCalendar();
+
+                    // 2. Format Money helper
+                    function formatMoney(cents) {
+                      return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+
+                    function updateCartPriceProperty(formattedPrice) {
+                      const priceInput = document.getElementById('DeckPriceProperty');
+                      if (priceInput) {
+                        priceInput.value = formattedPrice;
+                      }
+                    }
+
+                    // 3. Variant Change Listener & Dynamic Pricing/Visibility
+                    const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
+                    if (!metaJsonEl) return;
+                    const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
+
+                    function updateBlockData(variantId) {
+                      const data = metafieldsData[variantId];
+                      if (!data) return;
+
+                      const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
+                      const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
+                      const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
+                      const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
+                      const deckPriceEl = document.getElementById("DeckPriceVal");
+                      const savingsEl = document.getElementById("SavingsVal");
+                      const offeredPriceEl = document.getElementById("OfferedPriceVal");
+                      const dueTodayEl = document.getElementById("DueTodayVal");
+                      const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
+
+                      if (deckCardContainer) {
+                        deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
+                      }
+
+                      if (discountRow && deckDivider && offeredPriceRow) {
+                        if (data.discountValue > 0) {
+                          discountRow.style.display = "flex";
+                          deckDivider.style.display = "block";
+                          offeredPriceRow.style.display = "flex";
+                        } else {
+                          discountRow.style.display = "none";
+                          deckDivider.style.display = "none";
+                          offeredPriceRow.style.display = "none";
+                        }
+                      }
+
+                      if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
+                      if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
+                      if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
+                      if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
+                      if (hiddenVariantInput) hiddenVariantInput.value = variantId;
+
+                      updateCartPriceProperty(formatMoney(data.deckPrice * 100));
+                    }
+
+                    function checkVariantUrl() {
+                      const urlParams = new URLSearchParams(window.location.search);
+                      const variantId = urlParams.get('variant');
+                      if (variantId && metafieldsData[variantId]) {
+                        updateBlockData(variantId);
+                      }
+                    }
+
+                    const initialVariantId = "{{ current_variant.id }}";
+                    if (metafieldsData[initialVariantId]) {
+                      updateCartPriceProperty(formatMoney(metafieldsData[initialVariantId].deckPrice * 100));
+                    }
+
+                    document.addEventListener('change', function(e) {
+                      if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
+                        setTimeout(checkVariantUrl, 100);
+                      }
                     });
-                  </script>
+
+                    window.addEventListener('popstate', checkVariantUrl);
+                  });
+                </script>
 
 
                 {%- when 'estimated_delivery' -%}
