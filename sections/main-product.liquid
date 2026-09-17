@@ -2012,15 +2012,12 @@
     <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
     <span class="dp-truck-icon">🚚</span>
   </div>
-  <div class="dp-input-wrapper">
-    <!-- Type text kar diya taake flatpickr easily apply ho jaye -->
+  <div class="dp-input-wrapper" onclick="document.getElementById('EstimatedDeliveryDate').showPicker?.()">
     <input 
-      type="text" 
+      type="month" 
       id="EstimatedDeliveryDate" 
       name="properties[Estimated Delivery Month]" 
       class="dp-date-input" 
-      placeholder="Select month & year"
-      readonly
       required
     >
     <input 
@@ -2039,7 +2036,6 @@
     <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
   {%- endif -%}
 </div>
-
                         <!-- 4. Agreement Text & Additional Info Footer -->
                         {%- if block.settings.show_footer_agreement -%}
                           <div class="dp-agreement-footer">
@@ -2254,10 +2250,18 @@
                   <script>
                     document.addEventListener("DOMContentLoaded", function() {
   // 1. Flatpickr Month & Year Picker Initialization
+  document.addEventListener("DOMContentLoaded", function() {
   const dateInput = document.getElementById("EstimatedDeliveryDate");
-  if (dateInput && typeof flatpickr !== 'undefined') {
+  if (dateInput) {
     let today = new Date();
     
+    function formatMonthYear(d) {
+      let month = '' + (d.getMonth() + 1);
+      let year = d.getFullYear();
+      if (month.length < 2) month = '0' + month;
+      return [year, month].join('-');
+    }
+
     let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
     let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
 
@@ -2267,15 +2271,10 @@
     let maxDate = new Date();
     maxDate.setMonth(today.getMonth() + maxMonthsOffset);
 
-    flatpickr("#EstimatedDeliveryDate", {
-      altInput: true,
-      altFormat: "F Y", // Example: September 2026
-      dateFormat: "Y-m", // Backend ke liye format (2026-09)
-      minDate: minDate,
-      maxDate: maxDate,
-      disableMobile: "true" // Custom clean UI ke liye
-    });
+    dateInput.min = formatMonthYear(minDate);
+    dateInput.max = formatMonthYear(maxDate);
   }
+});
 
   // 2. Format Money helper
   function formatMoney(cents) {
