@@ -14,6 +14,7 @@
       "blocks": {
         "text_wgaDyW": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "class_text": "above-heading-subtitle",
             "text_html": "",
@@ -116,7 +117,7 @@
           "type": "countdown",
           "settings": {
             "label": "Ends in",
-            "end_date": "2026-09-13",
+            "end_date": "2026-09-15",
             "end_time": "23:59"
           }
         }
@@ -127,6 +128,7 @@
         "text_item_VqJKwr",
         "countdown_XUQAMi"
       ],
+      "disabled": true,
       "name": "Sticky Promo Banner",
       "settings": {
         "bg_color": "#000000",
