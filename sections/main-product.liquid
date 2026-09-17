@@ -1635,7 +1635,16 @@
           {%- if block.settings.show_price -%}
             <div class="material-card-price" id="MaterialCardPrice-1-{{ block.id }}">
               {%- assign current_v_1 = prod_1.selected_or_first_available_variant -%}
-              <span class="js-card-price">{{ current_v_1.price | money }}</span> 
+              {%- comment -%} Yahan variant ka metafield fetch kiya ja raha hai (Apne namespace/key ke mutabiq change kar lein) {%- endcomment -%}
+              {%- assign meta_price_1 = current_v_1.metafields.custom.deck_price.value | default: current_v_1.price -%}
+              
+              <span class="js-card-price">
+                {%- if meta_price_1 contains '$' -%}
+                  {{ meta_price_1 }}
+                {%- else -%}
+                  {{ meta_price_1 | money }}
+                {%- endif -%}
+              </span> 
               <span class="material-size-label">({{ current_v_1.title }})</span>
             </div>
           {%- endif -%}
@@ -1664,7 +1673,15 @@
           {%- if block.settings.show_price -%}
             <div class="material-card-price" id="MaterialCardPrice-2-{{ block.id }}">
               {%- assign current_v_2 = prod_2.selected_or_first_available_variant -%}
-              <span class="js-card-price">{{ current_v_2.price | money }}</span> 
+              {%- assign meta_price_2 = current_v_2.metafields.custom.deck_price.value | default: current_v_2.price -%}
+              
+              <span class="js-card-price">
+                {%- if meta_price_2 contains '$' -%}
+                  {{ meta_price_2 }}
+                {%- else -%}
+                  {{ meta_price_2 | money }}
+                {%- endif -%}
+              </span> 
               <span class="material-size-label">({{ current_v_2.title }})</span>
             </div>
           {%- endif -%}
