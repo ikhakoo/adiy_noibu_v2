@@ -2328,177 +2328,185 @@
 
                   <script>
                     document.addEventListener("DOMContentLoaded", function() {
-                      // 1. Custom Inline Month Picker Setup & Bounds
-                      const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
-                      const yearLabel = document.getElementById("CurrentYearLabel");
-                      const monthsGrid = document.getElementById("MonthsGrid");
-                      const prevYearBtn = document.getElementById("PrevYearBtn");
-                      const nextYearBtn = document.getElementById("NextYearBtn");
+  // 1. Custom Inline Month Picker Setup & Bounds
+  const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
+  const yearLabel = document.getElementById("CurrentYearLabel");
+  const monthsGrid = document.getElementById("MonthsGrid");
+  const prevYearBtn = document.getElementById("PrevYearBtn");
+  const nextYearBtn = document.getElementById("NextYearBtn");
 
-                      let today = new Date();
-                      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-                      let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
+  let today = new Date();
+  let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
+  let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
 
-                      let minDate = new Date();
-                      minDate.setMonth(today.getMonth() + minMonthsOffset);
-                      
-                      let maxDate = new Date();
-                      maxDate.setMonth(today.getMonth() + maxMonthsOffset);
+  let minDate = new Date();
+  minDate.setMonth(today.getMonth() + minMonthsOffset);
+  
+  let maxDate = new Date();
+  maxDate.setMonth(today.getMonth() + maxMonthsOffset);
 
-                      let viewingYear = minDate.getFullYear();
-                      let selectedYear = minDate.getFullYear();
-                      let selectedMonth = minDate.getMonth();
+  let viewingYear = minDate.getFullYear();
+  let selectedYear = minDate.getFullYear();
+  let selectedMonth = minDate.getMonth();
 
-                      if (hiddenDateInput) {
-                        hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
-                      }
+  if (hiddenDateInput) {
+    hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+  }
 
-                      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-                      function renderCalendar() {
-                        if (yearLabel) yearLabel.textContent = viewingYear;
-                        if (monthsGrid) monthsGrid.innerHTML = '';
+  function renderCalendar() {
+    if (yearLabel) yearLabel.textContent = viewingYear;
+    if (monthsGrid) monthsGrid.innerHTML = '';
 
-                        monthNames.forEach((name, index) => {
-                          const cell = document.createElement('div');
-                          cell.className = 'dp-month-cell';
-                          cell.textContent = name;
+    monthNames.forEach((name, index) => {
+      const cell = document.createElement('div');
+      cell.className = 'dp-month-cell';
+      cell.textContent = name;
 
-                          const cellDate = new Date(viewingYear, index, 1);
-                          const minLimitDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-                          const maxLimitDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+      const cellDate = new Date(viewingYear, index, 1);
+      const minLimitDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+      const maxLimitDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
 
-                          if (cellDate < minLimitDate || cellDate > maxLimitDate) {
-                            cell.classList.add('disabled');
-                          }
+      if (cellDate < minLimitDate || cellDate > maxLimitDate) {
+        cell.classList.add('disabled');
+      }
 
-                          if (viewingYear === selectedYear && index === selectedMonth) {
-                            cell.classList.add('selected');
-                          }
+      if (viewingYear === selectedYear && index === selectedMonth) {
+        cell.classList.add('selected');
+      }
 
-                          cell.addEventListener('click', function() {
-                            if (cell.classList.contains('disabled')) return;
-                            selectedYear = viewingYear;
-                            selectedMonth = index;
-                            if (hiddenDateInput) {
-                              hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
-                            }
-                            renderCalendar();
-                          });
+      cell.addEventListener('click', function() {
+        if (cell.classList.contains('disabled')) return;
+        selectedYear = viewingYear;
+        selectedMonth = index;
+        if (hiddenDateInput) {
+          hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+        }
+        renderCalendar();
+      });
 
-                          if (monthsGrid) monthsGrid.appendChild(cell);
-                        });
-                      }
+      if (monthsGrid) monthsGrid.appendChild(cell);
+    });
+  }
 
-                      if (prevYearBtn) {
-                        prevYearBtn.addEventListener('click', () => {
-                          if (viewingYear > minDate.getFullYear()) {
-                            viewingYear--;
-                            renderCalendar();
-                          }
-                        });
-                      }
+  if (prevYearBtn) {
+    prevYearBtn.addEventListener('click', () => {
+      if (viewingYear > minDate.getFullYear()) {
+        viewingYear--;
+        renderCalendar();
+      }
+    });
+  }
 
-                      if (nextYearBtn) {
-                        nextYearBtn.addEventListener('click', () => {
-                          if (viewingYear < maxDate.getFullYear()) {
-                            viewingYear++;
-                            renderCalendar();
-                          }
-                        });
-                      }
+  if (nextYearBtn) {
+    nextYearBtn.addEventListener('click', () => {
+      if (viewingYear < maxDate.getFullYear()) {
+        viewingYear++;
+        renderCalendar();
+      }
+    });
+  }
 
-                      renderCalendar();
+  renderCalendar();
 
-                      // 2. Format Money helper
-                      function formatMoney(cents) {
-                        return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                      }
+  // 2. Format Money helper
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
-                      function updateCartPriceProperty(formattedPrice) {
-                        const priceInput = document.getElementById('DeckPriceProperty');
-                        if (priceInput) {
-                          priceInput.value = formattedPrice;
-                        }
-                      }
+  function updateCartPriceProperty(formattedPrice) {
+    const priceInput = document.getElementById('DeckPriceProperty');
+    if (priceInput) {
+      priceInput.value = formattedPrice;
+    }
+  }
 
-                      // 3. Variant Change Listener & Dynamic Pricing/Visibility
-                      const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
-                      if (!metaJsonEl) return;
-                      const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
+  // Variant Titles Map for JavaScript
+  const variantTitles = {
+    {%- for variant in product.variants -%}
+      "{{ variant.id }}": "{{ variant.title }}",
+    {%- endfor -%}
+  };
 
-                      function updateBlockData(variantId) {
-                        const data = metafieldsData[variantId];
-                        if (!data) return;
+  // 3. Variant Change Listener & Dynamic Pricing/Visibility
+  const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
+  if (!metaJsonEl) return;
+  const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
 
-                        const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
-                        const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
-                        const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
-                        const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
-                        const deckPriceEl = document.getElementById("DeckPriceVal");
-                        const savingsEl = document.getElementById("SavingsVal");
-                        const offeredPriceEl = document.getElementById("OfferedPriceVal");
-                        const dueTodayEl = document.getElementById("DueTodayVal");
-                        const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
-                        const selectedSizeEl = document.getElementById("SelectedSizeDisplay"); // Size element
+  function updateBlockData(variantId) {
+    const data = metafieldsData[variantId];
+    if (!data) return;
 
-                        // --- Naya Code: Variant ka Title / Size yahan set hoga ---
-                        if (selectedSizeEl) {
-                          const variantTitles = {
-                            {%- for variant in product.variants -%}
-                              "{{ variant.id }}": "{{ variant.title }}",
-                            {%- endfor -%}
-                          };
-                          selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
-                        }
-                        // ---------------------------------------------------------
-                        // ... baqi ka purana code waisa hi rahega ...
-                        if (deckCardContainer) {
-                          deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
-                        }
+    const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
+    const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
+    const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
+    const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
+    const deckPriceEl = document.getElementById("DeckPriceVal");
+    const savingsEl = document.getElementById("SavingsVal");
+    const offeredPriceEl = document.getElementById("OfferedPriceVal");
+    const dueTodayEl = document.getElementById("DueTodayVal");
+    const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
+    const selectedSizeEl = document.getElementById("SelectedSizeDisplay");
 
-                        if (discountRow && deckDivider && offeredPriceRow) {
-                          if (data.discountValue > 0) {
-                            discountRow.style.display = "flex";
-                            deckDivider.style.display = "block";
-                            offeredPriceRow.style.display = "flex";
-                          } else {
-                            discountRow.style.display = "none";
-                            deckDivider.style.display = "none";
-                            offeredPriceRow.style.display = "none";
-                          }
-                        }
+    // Update Size text immediately
+    if (selectedSizeEl) {
+      selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
+    }
 
-                        if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
-                        if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
-                        if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
-                        if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
-                        if (hiddenVariantInput) hiddenVariantInput.value = variantId;
+    if (deckCardContainer) {
+      deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
+    }
 
-                        updateCartPriceProperty(formatMoney(data.deckPrice * 100));
-                      }
+    if (discountRow && deckDivider && offeredPriceRow) {
+      if (data.discountValue > 0) {
+        discountRow.style.display = "flex";
+        deckDivider.style.display = "block";
+        offeredPriceRow.style.display = "flex";
+      } else {
+        discountRow.style.display = "none";
+        deckDivider.style.display = "none";
+        offeredPriceRow.style.display = "none";
+      }
+    }
 
-                      function checkVariantUrl() {
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const variantId = urlParams.get('variant');
-                        if (variantId && metafieldsData[variantId]) {
-                          updateBlockData(variantId);
-                        }
-                      }
+    if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
+    if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
+    if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
+    if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
+    if (hiddenVariantInput) hiddenVariantInput.value = variantId;
 
-                      const initialVariantId = "{{ current_variant.id }}";
-                      if (metafieldsData[initialVariantId]) {
-                        updateCartPriceProperty(formatMoney(metafieldsData[initialVariantId].deckPrice * 100));
-                      }
+    updateCartPriceProperty(formatMoney(data.deckPrice * 100));
+  }
 
-                      document.addEventListener('change', function(e) {
-                        if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
-                          setTimeout(checkVariantUrl, 100);
-                        }
-                      });
+  function getActiveVariantId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlVariant = urlParams.get('variant');
+    if (urlVariant && metafieldsData[urlVariant]) {
+      return urlVariant;
+    }
+    return "{{ current_variant.id }}";
+  }
 
-                      window.addEventListener('popstate', checkVariantUrl);
-                    });
+  // Initialize on page load
+  const initialVariantId = getActiveVariantId();
+  if (metafieldsData[initialVariantId]) {
+    updateBlockData(initialVariantId);
+  }
+
+  document.addEventListener('change', function(e) {
+    if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
+      setTimeout(() => {
+        const activeId = getActiveVariantId();
+        updateBlockData(activeId);
+      }, 100);
+    }
+  });
+
+  window.addEventListener('popstate', () => {
+    updateBlockData(getActiveVariantId());
+  });
+});
                   </script>
 
                 {%- when 'estimated_delivery' -%}
