@@ -1977,14 +1977,18 @@
                       <div class="price-wrapper">
                         <!-- 1. Deck Price & Discount Box (Hidden if deck_price is 0/blank) -->
                         <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
+                          {% comment %} <div class="dp-row main-deck-price-row">
+                            <span class="dp-label">Deck Price:</span>
+                            <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
+                          </div> {% endcomment %}
                           <div class="dp-row main-deck-price-row">
-  <div>
-    <span class="dp-label">Deck Price:</span>
-    <!-- Yeh span selected size show karega -->
-    <span class="dp-selected-size-subtext" id="SelectedSizeDisplay" style="display: block; font-size: 13px; color: #666; font-weight: normal;"></span>
-  </div>
-  <span class="dp-value" id="DeckPriceVal">...</span>
-</div>
+                            <div>
+                              <span class="dp-label">Deck Price:</span>
+                              <!-- Yeh span selected size show karega -->
+                              <span class="dp-selected-size-subtext" id="SelectedSizeDisplay" style="display: block; font-size: 13px; color: #666; font-weight: normal;"></span>
+                            </div>
+                            <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
+                          </div>
                           
                           <!-- Discount Row (Hidden if discount_value is 0/blank) -->
                           <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
