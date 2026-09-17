@@ -1709,7 +1709,7 @@
         </div>
 
         {%- if block.settings.show_price -%}
-          <div class="material-card-price-container">
+          <div class="material-card-price-container" style="text-align: center;">
             <div class="material-card-price" style="font-size: 16px;">
               {%- if block.settings.custom_price_2 != blank -%}
                 {{ block.settings.custom_price_2 }}
@@ -1724,9 +1724,9 @@
             <!-- Size display element -->
             <div class="material-card-size" style="font-size: 14px; opacity: 0.8;">
               {%- if is_active_2 -%}
-                {{ product.selected_or_first_available_variant.title }}
+                ({{ product.selected_or_first_available_variant.title }})
               {%- else -%}
-                {{ prod_2.selected_or_first_available_variant.title }}
+                ({{ prod_2.selected_or_first_available_variant.title }})
               {%- endif -%}
             </div>
           </div>
