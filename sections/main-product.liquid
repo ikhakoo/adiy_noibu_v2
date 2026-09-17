@@ -1886,15 +1886,55 @@
                             <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
                             <span class="dp-truck-icon">🚚</span>
                           </div>
-                          <div class="dp-input-wrapper" onclick="document.getElementById('EstimatedDeliveryDate').showPicker?.()">
-                            <!-- Changed type to 'month' for Month & Year selection -->
-                            <input 
-                              type="month" 
-                              id="EstimatedDeliveryDate" 
-                              name="properties[Estimated Delivery Month]" 
-                              class="dp-date-input" 
+                          {%- comment -%}
+                            Month choices are rendered server-side. <input type="month"> is only
+                            implemented in Chromium browsers; Safari and Firefox fall back to a
+                            plain text box with no format hint, so whatever the customer types is
+                            what reaches the order. A <select> behaves identically everywhere and
+                            can only ever emit a valid month.
+                          {%- endcomment -%}
+                          {%- liquid
+                            assign min_days = block.settings.min_days_offset | default: 30 | times: 1
+                            assign max_months = block.settings.max_months_offset | default: 6 | times: 1
+
+                            comment
+                              Keys are "months since year 0" (year * 12 + month - 1) so the range
+                              can be iterated directly without month/year rollover arithmetic.
+                            endcomment
+                            assign now_stamp = 'now' | date: '%s' | times: 1
+                            assign now_year = 'now' | date: '%Y' | times: 1
+                            assign now_month = 'now' | date: '%m' | times: 1
+                            assign start_key = now_year | times: 12 | plus: now_month | minus: 1
+
+                            assign earliest_stamp = min_days | times: 86400 | plus: now_stamp
+                            assign earliest_year = earliest_stamp | date: '%Y' | times: 1
+                            assign earliest_month = earliest_stamp | date: '%m' | times: 1
+                            assign earliest_key = earliest_year | times: 12 | plus: earliest_month | minus: 1
+
+                            assign last_key = start_key | plus: max_months | at_least: earliest_key
+                            assign month_names = 'January,February,March,April,May,June,July,August,September,October,November,December' | split: ','
+                          -%}
+                          <div class="dp-input-wrapper">
+                            <label class="visually-hidden" for="EstimatedDeliveryDate">
+                              {{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}
+                            </label>
+                            <select
+                              id="EstimatedDeliveryDate"
+                              name="properties[Estimated Delivery Month]"
+                              class="dp-date-input"
                               required
                             >
+                              <option value="">Select a month</option>
+                              {%- for month_key in (earliest_key..last_key) -%}
+                                {%- assign option_year = month_key | divided_by: 12 -%}
+                                {%- assign option_index = month_key | modulo: 12 -%}
+                                {%- assign option_number = option_index | plus: 1 -%}
+                                {%- if option_number < 10 -%}
+                                  {%- assign option_number = '0' | append: option_number -%}
+                                {%- endif -%}
+                                <option value="{{ option_year }}-{{ option_number }}">{{ month_names[option_index] }} {{ option_year }}</option>
+                              {%- endfor -%}
+                            </select>
                             <input 
                               type="hidden" 
                               id="DeckPriceProperty" 
@@ -2126,34 +2166,9 @@
 
                 <script>
                   document.addEventListener("DOMContentLoaded", function() {
-                    // 1. Setup Month Picker Bounds (YYYY-MM format)
-                    const dateInput = document.getElementById("EstimatedDeliveryDate");
-                    if (dateInput) {
-                      let today = new Date();
-                      
-                      function formatMonthYear(d) {
-                        let month = '' + (d.getMonth() + 1);
-                        let year = d.getFullYear();
-                        if (month.length < 2) month = '0' + month;
-                        return [year, month].join('-');
-                      }
+                    // Month bounds are rendered server-side on the <select>.
 
-                      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-                      let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
-
-                      let minDate = new Date();
-                      minDate.setMonth(today.getMonth() + minMonthsOffset);
-                      
-                      let maxDate = new Date();
-                      maxDate.setMonth(today.getMonth() + maxMonthsOffset);
-
-                      dateInput.min = formatMonthYear(minDate);
-                      dateInput.max = formatMonthYear(maxDate);
-                      
-                      
-                    }
-
-                    // 2. Format Money helper
+                    // 1. Format Money helper
                     function formatMoney(cents) {
                       return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
@@ -2165,7 +2180,7 @@
                       }
                     }
 
-                    // 3. Variant Change Listener & Dynamic Pricing/Visibility
+                    // 2. Variant Change Listener & Dynamic Pricing/Visibility
                     const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
                     if (!metaJsonEl) return;
                     const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
