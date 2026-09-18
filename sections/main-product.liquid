@@ -2435,9 +2435,9 @@
                           cell.className = 'dp-month-cell';
                           cell.textContent = monthNames[monthIndex];
 
-                          if (parseInt(year) === selectedYear && monthIndex === selectedMonth) {
+                          {% comment %} if (parseInt(year) === selectedYear && monthIndex === selectedMonth) {
                             cell.classList.add('selected');
-                          }
+                          } {% endcomment %}
 
                           cell.addEventListener('click', function() {
                             selectedYear = parseInt(year);
