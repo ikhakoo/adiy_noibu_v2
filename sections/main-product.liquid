@@ -2032,15 +2032,11 @@
                             
                             <!-- Custom Inline Month/Year Picker UI -->
                             <div class="dp-inline-picker" id="InlineMonthPicker">
-                              <div class="dp-picker-header">
-                                <button type="button" class="dp-prev-year" id="PrevYearBtn">&lt;</button>
-                                <span class="dp-current-year" id="CurrentYearLabel">2026</span>
-                                <button type="button" class="dp-next-year" id="NextYearBtn">&gt;</button>
-                              </div>
-                              <div class="dp-months-grid" id="MonthsGrid">
-                                <!-- JS se months dynamically generate honge -->
+                              <div class="dp-years-container" id="YearsContainer">
+                                <!-- JS se dynamically saal aur unke months ki groups generate hongi -->
                               </div>
                             </div>
+                            
 
                             <input 
                               type="hidden" 
@@ -2333,24 +2329,16 @@
 
                   <script>
                     document.addEventListener("DOMContentLoaded", function() {
-  // 1. Custom Inline Month Picker Setup & Bounds
   const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
-  const yearLabel = document.getElementById("CurrentYearLabel");
-  const monthsGrid = document.getElementById("MonthsGrid");
-  const prevYearBtn = document.getElementById("PrevYearBtn");
-  const nextYearBtn = document.getElementById("NextYearBtn");
+  const yearsContainer = document.getElementById("YearsContainer");
 
   let today = new Date();
   let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
   let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
 
-  let minDate = new Date();
-  minDate.setMonth(today.getMonth() + minMonthsOffset);
-  
-  let maxDate = new Date();
-  maxDate.setMonth(today.getMonth() + maxMonthsOffset);
+  let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
+  let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
 
-  let viewingYear = minDate.getFullYear();
   let selectedYear = minDate.getFullYear();
   let selectedMonth = minDate.getMonth();
 
@@ -2360,62 +2348,69 @@
 
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  function renderCalendar() {
-    if (yearLabel) yearLabel.textContent = viewingYear;
-    if (monthsGrid) monthsGrid.innerHTML = '';
+  function renderGroupedCalendar() {
+    if (!yearsContainer) return;
+    yearsContainer.innerHTML = '';
 
-    monthNames.forEach((name, index) => {
-      const cell = document.createElement('div');
-      cell.className = 'dp-month-cell';
-      cell.textContent = name;
+    // Saare months ko saal ke hisab se group karne ke liye ek map banayenge
+    let monthsByYear = {};
+    let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+    let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
 
-      const cellDate = new Date(viewingYear, index, 1);
-      const minLimitDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-      const maxLimitDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+    while (currIterDate <= endIterDate) {
+      let y = currIterDate.getFullYear();
+      let m = currIterDate.getMonth();
 
-      if (cellDate < minLimitDate || cellDate > maxLimitDate) {
-        cell.classList.add('disabled');
+      if (!monthsByYear[y]) {
+        monthsByYear[y] = [];
       }
+      monthsByYear[y].push(m);
 
-      if (viewingYear === selectedYear && index === selectedMonth) {
-        cell.classList.add('selected');
-      }
+      currIterDate.setMonth(currIterDate.getMonth() + 1);
+    }
 
-      cell.addEventListener('click', function() {
-        if (cell.classList.contains('disabled')) return;
-        selectedYear = viewingYear;
-        selectedMonth = index;
-        if (hiddenDateInput) {
-          hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+    // Har saal aur uske months ko render karna
+    Object.keys(monthsByYear).forEach(year => {
+      const yearGroup = document.createElement('div');
+      yearGroup.className = 'dp-year-group';
+
+      const yearTitle = document.createElement('div');
+      yearTitle.className = 'dp-year-title';
+      yearTitle.textContent = year;
+      yearGroup.appendChild(yearTitle);
+
+      const grid = document.createElement('div');
+      grid.className = 'dp-months-grid';
+
+      monthsByYear[year].forEach(monthIndex => {
+        const cell = document.createElement('div');
+        cell.className = 'dp-month-cell';
+        cell.textContent = monthNames[monthIndex]; // Sirf month name kyunke saal upar heading mein hoga
+
+        if (parseInt(year) === selectedYear && monthIndex === selectedMonth) {
+          cell.classList.add('selected');
         }
-        renderCalendar();
+
+        cell.addEventListener('click', function() {
+          selectedYear = parseInt(year);
+          selectedMonth = monthIndex;
+          if (hiddenDateInput) {
+            hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+          }
+          renderGroupedCalendar();
+        });
+
+        grid.appendChild(cell);
       });
 
-      if (monthsGrid) monthsGrid.appendChild(cell);
+      yearGroup.appendChild(grid);
+      yearsContainer.appendChild(yearGroup);
     });
   }
 
-  if (prevYearBtn) {
-    prevYearBtn.addEventListener('click', () => {
-      if (viewingYear > minDate.getFullYear()) {
-        viewingYear--;
-        renderCalendar();
-      }
-    });
-  }
+  renderGroupedCalendar();
 
-  if (nextYearBtn) {
-    nextYearBtn.addEventListener('click', () => {
-      if (viewingYear < maxDate.getFullYear()) {
-        viewingYear++;
-        renderCalendar();
-      }
-    });
-  }
-
-  renderCalendar();
-
-  // 2. Format Money helper
+  // --- Baqi aapka pricing aur variant wala JavaScript code waisa hi rahega ---
   function formatMoney(cents) {
     return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -2427,14 +2422,12 @@
     }
   }
 
-  // Variant Titles Map for JavaScript
   const variantTitles = {
     {%- for variant in product.variants -%}
       "{{ variant.id }}": "{{ variant.title }}",
     {%- endfor -%}
   };
 
-  // 3. Variant Change Listener & Dynamic Pricing/Visibility
   const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
   if (!metaJsonEl) return;
   const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
@@ -2454,7 +2447,6 @@
     const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
     const selectedSizeEl = document.getElementById("SelectedSizeDisplay");
 
-    // Update Size text immediately
     if (selectedSizeEl) {
       selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
     }
@@ -2493,7 +2485,6 @@
     return "{{ current_variant.id }}";
   }
 
-  // Initialize on page load
   const initialVariantId = getActiveVariantId();
   if (metafieldsData[initialVariantId]) {
     updateBlockData(initialVariantId);
