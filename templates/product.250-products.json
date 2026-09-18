@@ -132,6 +132,7 @@
             "delivery_subtext": "Select a date between 30 days from today and up to 6 months.",
             "min_days_offset": 30,
             "max_months_offset": 11,
+            "show_current_month": false,
             "show_footer_agreement": true,
             "agreement_text": "<p>By placing this order, I agree to the A-DIY $250 Order Deposit <a href=\"/pages/250-deck-deposite-terms-conditions\" title=\"$250 Order Deposit Terms & Conditions\">Terms & Conditions</a></p>",
             "info_link_text": "",
