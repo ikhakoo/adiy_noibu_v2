@@ -2032,10 +2032,9 @@
                             
                             <!-- Custom Inline Month/Year Picker UI -->
                             <div class="dp-inline-picker" id="InlineMonthPicker">
-                              <div class="dp-years-container" id="YearsContainer">
-                                <!-- JS se dynamically saal aur unke months ki groups generate hongi -->
-                              </div>
+                              <div class="dp-years-container" id="YearsContainer"></div>
                             </div>
+                            <div class="dp-error-message" id="CalendarErrorMsg">Please select an estimated delivery month.</div>
                             
 
                             <input 
@@ -2331,6 +2330,20 @@
                       border-radius: 8px;
                       overflow: hidden;
                     }
+                    .dp-inline-picker.has-error {
+                      border-color: #d9534f !important;
+                      box-shadow: 0 0 0 2px rgba(217, 83, 79, 0.2);
+                    }
+                    .dp-error-message {
+                      color: #d9534f;
+                      font-size: 12px;
+                      margin-top: 6px;
+                      display: none;
+                    }
+                    .dp-inline-picker.has-error + .dp-error-message,
+                    .dp-error-message.visible {
+                      display: block;
+                    }
                     .dp-year-title {
                       font-size: 14px;
                       font-weight: 700;
@@ -2370,9 +2383,10 @@
 
                   <script>
                     document.addEventListener("DOMContentLoaded", function() {
-  // 1. Custom Inline Month Picker Setup & Bounds
   const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
   const yearsContainer = document.getElementById("YearsContainer");
+  const inlinePicker = document.getElementById("InlineMonthPicker");
+  const errorMsg = document.getElementById("CalendarErrorMsg");
 
   let today = new Date();
   
@@ -2388,7 +2402,6 @@
   let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
   let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
 
-  // By default koi month select nahi hoga
   let selectedYear = null;
   let selectedMonth = null;
 
@@ -2445,6 +2458,11 @@
           if (hiddenDateInput) {
             hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
           }
+          
+          // Jaise hi user select kare, red border aur error hata dein
+          if (inlinePicker) inlinePicker.classList.remove('has-error');
+          if (errorMsg) errorMsg.classList.remove('visible');
+
           renderGroupedCalendar();
         });
 
@@ -2458,7 +2476,7 @@
 
   renderGroupedCalendar();
 
-  // 2. Format Money helper
+  // Format Money helper
   function formatMoney(cents) {
     return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -2470,14 +2488,12 @@
     }
   }
 
-  // Variant Titles Map for JavaScript
   const variantTitles = {
     {%- for variant in product.variants -%}
       "{{ variant.id }}": "{{ variant.title }}",
     {%- endfor -%}
   };
 
-  // 3. Variant Change Listener & Dynamic Pricing/Visibility
   const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
   if (!metaJsonEl) return;
   const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
@@ -2553,16 +2569,19 @@
     updateBlockData(getActiveVariantId());
   });
 
-  // 4. Delivery Month Validation before Submit/Checkout
+  // Validation on Submit / Checkout (Red Border instead of Alert)
   const productForm = hiddenDateInput ? hiddenDateInput.closest('form') : null;
   if (productForm) {
     productForm.addEventListener('submit', function(e) {
       if (!hiddenDateInput.value) {
         e.preventDefault();
-        alert("Please select an estimated delivery month before proceeding.");
-        const inlinePicker = document.getElementById("InlineMonthPicker");
+        
         if (inlinePicker) {
+          inlinePicker.classList.add('has-error');
           inlinePicker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (errorMsg) {
+          errorMsg.classList.add('visible');
         }
       }
     });
