@@ -2064,9 +2064,9 @@
                       <!-- 4. Agreement Text & Additional Info Footer -->
                       {%- if block.settings.show_footer_agreement -%}
                         <div class="dp-agreement-footer">
-                          <p class="dp-agreement-text">
+                          <div class="dp-agreement-text">
                             {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
-                          </p>
+                          </div>
                           {%- if block.settings.info_link_text != blank -%}
                             <div class="dp-info-link-wrap">
                               <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
@@ -3601,10 +3601,9 @@
           "default": true
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "agreement_text",
-          "label": "Agreement Text",
-          "default": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice."
+          "label": "Agreement Text"
         },
         {
           "type": "text",
