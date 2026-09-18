@@ -127,14 +127,14 @@
           "type": "estimated_price_cta",
           "settings": {
             "due_today_subtext": "Non-refundable Reservation Fee.",
-            "delivery_title": "Estimated Delivery",
+            "delivery_title": "Schedule Your Delivery",
             "show_delivery_subtext": false,
             "delivery_subtext": "Select a date between 30 days from today and up to 6 months.",
             "min_days_offset": 30,
             "max_months_offset": 11,
             "show_footer_agreement": true,
-            "agreement_text": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.",
-            "info_link_text": "View additional information",
+            "agreement_text": "By placing this order, I agree to the A-DIY $250 Order Deposit Terms & Conditions",
+            "info_link_text": "View Deposit Terms & Conditions",
             "info_link_url": "shopify://pages/250-deck-deposite-terms-conditions",
             "show_dynamic_checkout": true,
             "button_text": "Reserve Your Deck"
