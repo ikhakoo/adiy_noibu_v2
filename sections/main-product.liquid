@@ -1982,13 +1982,13 @@
                             <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
                           </div> {% endcomment %}
                           <div class="dp-row main-deck-price-row">
-    <div>
-      <span class="dp-label">Deck Price:</span>
-      <!-- Size display element -->
-      <span class="dp-selected-size-subtext" id="SelectedSizeDisplay" style="display: block; font-size: 13px; color: #666; font-weight: normal; margin-top: 2px;"></span>
-    </div>
-    <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
-  </div>
+                            <div>
+                              <span class="dp-label">Deck Price:</span>
+                              <!-- Size display element -->
+                              <span class="dp-selected-size-subtext" id="SelectedSizeDisplay" style="display: block; font-size: 13px; color: #666; font-weight: normal; margin-top: 2px;"></span>
+                            </div>
+                            <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
+                          </div>
                           
                           <!-- Discount Row (Hidden if discount_value is 0/blank) -->
                           <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
@@ -2032,11 +2032,6 @@
                             
                             <!-- Custom Inline Month/Year Picker UI -->
                             <div class="dp-inline-picker" id="InlineMonthPicker">
-                              <div class="dp-picker-header">
-                                <button type="button" class="dp-prev-year" id="PrevYearBtn">&lt;</button>
-                                <span class="dp-current-year" id="CurrentYearLabel">2026</span>
-                                <button type="button" class="dp-next-year" id="NextYearBtn">&gt;</button>
-                              </div>
                               <div class="dp-months-grid" id="MonthsGrid">
                                 <!-- JS se months dynamically generate honge -->
                               </div>
@@ -2332,25 +2327,18 @@
                   </style>
 
                   <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-  // 1. Custom Inline Month Picker Setup & Bounds
+                  document.addEventListener("DOMContentLoaded", function() {
+  // 1. Sequential Custom Inline Month Picker Setup & Bounds
   const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
-  const yearLabel = document.getElementById("CurrentYearLabel");
   const monthsGrid = document.getElementById("MonthsGrid");
-  const prevYearBtn = document.getElementById("PrevYearBtn");
-  const nextYearBtn = document.getElementById("NextYearBtn");
 
   let today = new Date();
   let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
   let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
 
-  let minDate = new Date();
-  minDate.setMonth(today.getMonth() + minMonthsOffset);
-  
-  let maxDate = new Date();
-  maxDate.setMonth(today.getMonth() + maxMonthsOffset);
+  let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
+  let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
 
-  let viewingYear = minDate.getFullYear();
   let selectedYear = minDate.getFullYear();
   let selectedMonth = minDate.getMonth();
 
@@ -2360,60 +2348,44 @@
 
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  function renderCalendar() {
-    if (yearLabel) yearLabel.textContent = viewingYear;
-    if (monthsGrid) monthsGrid.innerHTML = '';
+  function renderSequentialCalendar() {
+    if (!monthsGrid) return;
+    monthsGrid.innerHTML = '';
 
-    monthNames.forEach((name, index) => {
+    let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+    let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+
+    while (currIterDate <= endIterDate) {
+      let iterYear = currIterDate.getFullYear();
+      let iterMonth = currIterDate.getMonth();
+
       const cell = document.createElement('div');
       cell.className = 'dp-month-cell';
-      cell.textContent = name;
+      
+      // Agar mahina aur saal dono dikhane hain toh niche wala use karein (ya sirf monthNames[iterMonth] bhi rakh sakte hain)
+      cell.textContent = `${monthNames[iterMonth]} ${iterYear}`;
 
-      const cellDate = new Date(viewingYear, index, 1);
-      const minLimitDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-      const maxLimitDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
-
-      if (cellDate < minLimitDate || cellDate > maxLimitDate) {
-        cell.classList.add('disabled');
-      }
-
-      if (viewingYear === selectedYear && index === selectedMonth) {
+      if (iterYear === selectedYear && iterMonth === selectedMonth) {
         cell.classList.add('selected');
       }
 
       cell.addEventListener('click', function() {
-        if (cell.classList.contains('disabled')) return;
-        selectedYear = viewingYear;
-        selectedMonth = index;
+        selectedYear = iterYear;
+        selectedMonth = iterMonth;
         if (hiddenDateInput) {
           hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
         }
-        renderCalendar();
+        renderSequentialCalendar();
       });
 
-      if (monthsGrid) monthsGrid.appendChild(cell);
-    });
+      monthsGrid.appendChild(cell);
+
+      // Agle mahine par move karein
+      currIterDate.setMonth(currIterDate.getMonth() + 1);
+    }
   }
 
-  if (prevYearBtn) {
-    prevYearBtn.addEventListener('click', () => {
-      if (viewingYear > minDate.getFullYear()) {
-        viewingYear--;
-        renderCalendar();
-      }
-    });
-  }
-
-  if (nextYearBtn) {
-    nextYearBtn.addEventListener('click', () => {
-      if (viewingYear < maxDate.getFullYear()) {
-        viewingYear++;
-        renderCalendar();
-      }
-    });
-  }
-
-  renderCalendar();
+  renderSequentialCalendar();
 
   // 2. Format Money helper
   function formatMoney(cents) {
