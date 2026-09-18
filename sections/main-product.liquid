@@ -2383,210 +2383,210 @@
 
                   <script>
                     document.addEventListener("DOMContentLoaded", function() {
-  const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
-  const yearsContainer = document.getElementById("YearsContainer");
-  const inlinePicker = document.getElementById("InlineMonthPicker");
-  const errorMsg = document.getElementById("CalendarErrorMsg");
+                      const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
+                      const yearsContainer = document.getElementById("YearsContainer");
+                      const inlinePicker = document.getElementById("InlineMonthPicker");
+                      const errorMsg = document.getElementById("CalendarErrorMsg");
 
-  let today = new Date();
-  
-  let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
-  let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-  
-  if (!showCurrentMonth && minMonthsOffset === 0) {
-    minMonthsOffset = 1;
-  }
+                      let today = new Date();
+                      
+                      let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
+                      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
+                      
+                      if (!showCurrentMonth && minMonthsOffset === 0) {
+                        minMonthsOffset = 1;
+                      }
 
-  let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
+                      let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
 
-  let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
-  let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
+                      let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
+                      let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
 
-  let selectedYear = null;
-  let selectedMonth = null;
+                      let selectedYear = null;
+                      let selectedMonth = null;
 
-  if (hiddenDateInput) {
-    hiddenDateInput.value = '';
-  }
+                      if (hiddenDateInput) {
+                        hiddenDateInput.value = '';
+                      }
 
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  function renderGroupedCalendar() {
-    if (!yearsContainer) return;
-    yearsContainer.innerHTML = '';
+                      function renderGroupedCalendar() {
+                        if (!yearsContainer) return;
+                        yearsContainer.innerHTML = '';
 
-    let monthsByYear = {};
-    let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-    let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+                        let monthsByYear = {};
+                        let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+                        let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
 
-    while (currIterDate <= endIterDate) {
-      let y = currIterDate.getFullYear();
-      let m = currIterDate.getMonth();
+                        while (currIterDate <= endIterDate) {
+                          let y = currIterDate.getFullYear();
+                          let m = currIterDate.getMonth();
 
-      if (!monthsByYear[y]) {
-        monthsByYear[y] = [];
-      }
-      monthsByYear[y].push(m);
+                          if (!monthsByYear[y]) {
+                            monthsByYear[y] = [];
+                          }
+                          monthsByYear[y].push(m);
 
-      currIterDate.setMonth(currIterDate.getMonth() + 1);
-    }
+                          currIterDate.setMonth(currIterDate.getMonth() + 1);
+                        }
 
-    Object.keys(monthsByYear).forEach(year => {
-      const yearGroup = document.createElement('div');
-      yearGroup.className = 'dp-year-group';
+                        Object.keys(monthsByYear).forEach(year => {
+                          const yearGroup = document.createElement('div');
+                          yearGroup.className = 'dp-year-group';
 
-      const yearTitle = document.createElement('div');
-      yearTitle.className = 'dp-year-title';
-      yearTitle.textContent = year;
-      yearGroup.appendChild(yearTitle);
+                          const yearTitle = document.createElement('div');
+                          yearTitle.className = 'dp-year-title';
+                          yearTitle.textContent = year;
+                          yearGroup.appendChild(yearTitle);
 
-      const grid = document.createElement('div');
-      grid.className = 'dp-months-grid';
+                          const grid = document.createElement('div');
+                          grid.className = 'dp-months-grid';
 
-      monthsByYear[year].forEach(monthIndex => {
-        const cell = document.createElement('div');
-        cell.className = 'dp-month-cell';
-        cell.textContent = monthNames[monthIndex];
+                          monthsByYear[year].forEach(monthIndex => {
+                            const cell = document.createElement('div');
+                            cell.className = 'dp-month-cell';
+                            cell.textContent = monthNames[monthIndex];
 
-        if (selectedYear !== null && parseInt(year) === selectedYear && monthIndex === selectedMonth) {
-          cell.classList.add('selected');
-        }
+                            if (selectedYear !== null && parseInt(year) === selectedYear && monthIndex === selectedMonth) {
+                              cell.classList.add('selected');
+                            }
 
-        cell.addEventListener('click', function() {
-          selectedYear = parseInt(year);
-          selectedMonth = monthIndex;
-          if (hiddenDateInput) {
-            hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
-          }
-          
-          // Jaise hi user select kare, red border aur error hata dein
-          if (inlinePicker) inlinePicker.classList.remove('has-error');
-          if (errorMsg) errorMsg.classList.remove('visible');
+                            cell.addEventListener('click', function() {
+                              selectedYear = parseInt(year);
+                              selectedMonth = monthIndex;
+                              if (hiddenDateInput) {
+                                hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+                              }
+                              
+                              // Jaise hi user select kare, red border aur error hata dein
+                              if (inlinePicker) inlinePicker.classList.remove('has-error');
+                              if (errorMsg) errorMsg.classList.remove('visible');
 
-          renderGroupedCalendar();
-        });
+                              renderGroupedCalendar();
+                            });
 
-        grid.appendChild(cell);
-      });
+                            grid.appendChild(cell);
+                          });
 
-      yearGroup.appendChild(grid);
-      yearsContainer.appendChild(yearGroup);
-    });
-  }
+                          yearGroup.appendChild(grid);
+                          yearsContainer.appendChild(yearGroup);
+                        });
+                      }
 
-  renderGroupedCalendar();
+                      renderGroupedCalendar();
 
-  // Format Money helper
-  function formatMoney(cents) {
-    return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+                      // Format Money helper
+                      function formatMoney(cents) {
+                        return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      }
 
-  function updateCartPriceProperty(formattedPrice) {
-    const priceInput = document.getElementById('DeckPriceProperty');
-    if (priceInput) {
-      priceInput.value = formattedPrice;
-    }
-  }
+                      function updateCartPriceProperty(formattedPrice) {
+                        const priceInput = document.getElementById('DeckPriceProperty');
+                        if (priceInput) {
+                          priceInput.value = formattedPrice;
+                        }
+                      }
 
-  const variantTitles = {
-    {%- for variant in product.variants -%}
-      "{{ variant.id }}": "{{ variant.title }}",
-    {%- endfor -%}
-  };
+                      const variantTitles = {
+                        {%- for variant in product.variants -%}
+                          "{{ variant.id }}": "{{ variant.title }}",
+                        {%- endfor -%}
+                      };
 
-  const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
-  if (!metaJsonEl) return;
-  const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
+                      const metaJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
+                      if (!metaJsonEl) return;
+                      const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
 
-  function updateBlockData(variantId) {
-    const data = metafieldsData[variantId];
-    if (!data) return;
+                      function updateBlockData(variantId) {
+                        const data = metafieldsData[variantId];
+                        if (!data) return;
 
-    const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
-    const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
-    const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
-    const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
-    const deckPriceEl = document.getElementById("DeckPriceVal");
-    const savingsEl = document.getElementById("SavingsVal");
-    const offeredPriceEl = document.getElementById("OfferedPriceVal");
-    const dueTodayEl = document.getElementById("DueTodayVal");
-    const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
-    const selectedSizeEl = document.getElementById("SelectedSizeDisplay");
+                        const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
+                        const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
+                        const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
+                        const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
+                        const deckPriceEl = document.getElementById("DeckPriceVal");
+                        const savingsEl = document.getElementById("SavingsVal");
+                        const offeredPriceEl = document.getElementById("OfferedPriceVal");
+                        const dueTodayEl = document.getElementById("DueTodayVal");
+                        const hiddenVariantInput = document.getElementById("VariantIdInput-{{ section.id }}");
+                        const selectedSizeEl = document.getElementById("SelectedSizeDisplay");
 
-    if (selectedSizeEl) {
-      selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
-    }
+                        if (selectedSizeEl) {
+                          selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
+                        }
 
-    if (deckCardContainer) {
-      deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
-    }
+                        if (deckCardContainer) {
+                          deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
+                        }
 
-    if (discountRow && deckDivider && offeredPriceRow) {
-      if (data.discountValue > 0) {
-        discountRow.style.display = "flex";
-        deckDivider.style.display = "block";
-        offeredPriceRow.style.display = "flex";
-      } else {
-        discountRow.style.display = "none";
-        deckDivider.style.display = "none";
-        offeredPriceRow.style.display = "none";
-      }
-    }
+                        if (discountRow && deckDivider && offeredPriceRow) {
+                          if (data.discountValue > 0) {
+                            discountRow.style.display = "flex";
+                            deckDivider.style.display = "block";
+                            offeredPriceRow.style.display = "flex";
+                          } else {
+                            discountRow.style.display = "none";
+                            deckDivider.style.display = "none";
+                            offeredPriceRow.style.display = "none";
+                          }
+                        }
 
-    if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
-    if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
-    if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
-    if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
-    if (hiddenVariantInput) hiddenVariantInput.value = variantId;
+                        if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
+                        if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
+                        if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
+                        if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
+                        if (hiddenVariantInput) hiddenVariantInput.value = variantId;
 
-    updateCartPriceProperty(formatMoney(data.deckPrice * 100));
-  }
+                        updateCartPriceProperty(formatMoney(data.deckPrice * 100));
+                      }
 
-  function getActiveVariantId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlVariant = urlParams.get('variant');
-    if (urlVariant && metafieldsData[urlVariant]) {
-      return urlVariant;
-    }
-    return "{{ current_variant.id }}";
-  }
+                      function getActiveVariantId() {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const urlVariant = urlParams.get('variant');
+                        if (urlVariant && metafieldsData[urlVariant]) {
+                          return urlVariant;
+                        }
+                        return "{{ current_variant.id }}";
+                      }
 
-  const initialVariantId = getActiveVariantId();
-  if (metafieldsData[initialVariantId]) {
-    updateBlockData(initialVariantId);
-  }
+                      const initialVariantId = getActiveVariantId();
+                      if (metafieldsData[initialVariantId]) {
+                        updateBlockData(initialVariantId);
+                      }
 
-  document.addEventListener('change', function(e) {
-    if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
-      setTimeout(() => {
-        const activeId = getActiveVariantId();
-        updateBlockData(activeId);
-      }, 100);
-    }
-  });
+                      document.addEventListener('change', function(e) {
+                        if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
+                          setTimeout(() => {
+                            const activeId = getActiveVariantId();
+                            updateBlockData(activeId);
+                          }, 100);
+                        }
+                      });
 
-  window.addEventListener('popstate', () => {
-    updateBlockData(getActiveVariantId());
-  });
+                      window.addEventListener('popstate', () => {
+                        updateBlockData(getActiveVariantId());
+                      });
 
-  // Validation on Submit / Checkout (Red Border instead of Alert)
-  const productForm = hiddenDateInput ? hiddenDateInput.closest('form') : null;
-  if (productForm) {
-    productForm.addEventListener('submit', function(e) {
-      if (!hiddenDateInput.value) {
-        e.preventDefault();
-        
-        if (inlinePicker) {
-          inlinePicker.classList.add('has-error');
-          inlinePicker.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        if (errorMsg) {
-          errorMsg.classList.add('visible');
-        }
-      }
-    });
-  }
-});
+                      // Validation on Submit / Checkout (Red Border instead of Alert)
+                      const productForm = hiddenDateInput ? hiddenDateInput.closest('form') : null;
+                      if (productForm) {
+                        productForm.addEventListener('submit', function(e) {
+                          if (!hiddenDateInput.value) {
+                            e.preventDefault();
+                            
+                            if (inlinePicker) {
+                              inlinePicker.classList.add('has-error');
+                              inlinePicker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                            if (errorMsg) {
+                              errorMsg.classList.add('visible');
+                            }
+                          }
+                        });
+                      }
+                    });
                   </script>
 
                 {%- when 'estimated_delivery' -%}
