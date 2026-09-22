@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync)
+  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync with Deck Price Metafield)
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -15,6 +15,11 @@
       </span>
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
         {{ current_variant.price | money }}
+        {%- if current_variant.metafields.custom.deck_price.value -%}
+          <span class="mobile-sticky-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">
+            - Deck: {{ current_variant.metafields.custom.deck_price.value | money }}
+          </span>
+        {%- endif -%}
       </span>
     </div>
 
@@ -97,6 +102,11 @@
       color: #000;
       margin-top: 2px;
     }
+    
+    .mobile-sticky-deck-price {
+      font-size: 12px;
+      color: #666;
+    }
 
     .mobile-sticky-atc-btn {
       min-width: 130px;
@@ -106,6 +116,8 @@
       width: 100%;
       white-space: nowrap;
       background: #194636;
+      color: #fff;
+      border: none;
     }
   }
 </style>
@@ -115,6 +127,24 @@
     // Pass product JSON to JavaScript safely
     const productData = {{ product | json }};
     const moneyFormat = "{{ shop.money_format | escape }}";
+
+    // Inject variant metafields into productData array for JS access
+    {% if product.variants.size > 0 %}
+      const variantMetafields = {
+        {% for variant in product.variants %}
+          "{{ variant.id }}": {
+            "deck_price": {{ variant.metafields.custom.deck_price.value | json | default: 'null' }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      };
+      
+      productData.variants = productData.variants.map(v => {
+        if (variantMetafields[v.id]) {
+          v.deck_price = variantMetafields[v.id].deck_price;
+        }
+        return v;
+      });
+    {% endif %}
 
     function formatMoney(cents, format) {
       if (typeof cents === 'string') cents = cents.replace('.', '');
@@ -194,9 +224,16 @@
           variantTitleEl.textContent = variant.title !== 'Default Title' ? variant.title : '';
         }
 
-        // Update Price
+        // Update Price & Deck Metafield Price
         if (priceEl && variant.price) {
-          priceEl.innerHTML = formatMoney(variant.price, moneyFormat);
+          let priceHTML = formatMoney(variant.price, moneyFormat);
+          
+          if (variant.deck_price) {
+            const formattedDeckPrice = formatMoney(variant.deck_price, moneyFormat);
+            priceHTML += ` <span class="mobile-sticky-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">- Deck: ${formattedDeckPrice}</span>`;
+          }
+          
+          priceEl.innerHTML = priceHTML;
         }
 
         // Update Button Availability State
@@ -218,7 +255,7 @@
         }
       });
 
-      // 4. Fallback Observer: Track hidden ID input in main form (Dawn & modern themes)
+      // 4. Fallback Observer: Track hidden ID input in main form
       const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
       if (variantInput) {
         const observerVariantInput = new MutationObserver(() => {
