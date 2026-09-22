@@ -18,7 +18,7 @@
                 {% if variant == current_variant %}selected="selected"{% endif %}
                 {% unless variant.available %}disabled="disabled"{% endunless %}
               >
-                {{ variant.title }} - {{ variant.price | money }}
+                {{ variant.title }}
                 {%- unless variant.available %} (Sold Out){% endunless -%}
               </option>
             {%- endfor -%}
