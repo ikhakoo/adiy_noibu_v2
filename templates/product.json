@@ -153,16 +153,6 @@
             "price_selector": ""
           }
         },
-        "affirm_promo_bar_dgqQry": {
-          "type": "affirm_promo_bar",
-          "disabled": true,
-          "settings": {
-            "text_before": "Starting At $184/Mo Or 0% APR With",
-            "logo": "shopify://shop_images/Untitled_design_32_png_f393bc2c-1b8e-45f6-9e17-3bc9f47c23e7.png",
-            "link_text": "See If You Qualify",
-            "link_url": "#affirm"
-          }
-        },
         "need_assistance_block_rdEmyW": {
           "type": "need_assistance_block",
           "settings": {
@@ -254,7 +244,6 @@
         "buy_buttons",
         "countdown_timer_NM9Fxn",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
-        "affirm_promo_bar_dgqQry",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
         "accessories_block_TPUpnp",
