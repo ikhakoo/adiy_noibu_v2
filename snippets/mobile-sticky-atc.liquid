@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync & Full Design Match)
+  Mobile Sticky Add-to-Cart Bar (Fixed Real-time Price & Metafields Sync)
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -36,24 +36,22 @@
     <!-- Top Row: Prices & Save Badge -->
     <div class="mobile-sticky-atc-top-row">
       <div class="mobile-sticky-atc-price-wrap" id="MobileStickyATC-PriceWrap-{{ section.id }}">
-        {%- if current_v_deck > 0 and current_v_deck > current_v_offered -%}
-          <span class="mobile-sticky-atc-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">
-            {{ current_v_deck | money }}
-          </span>
-        {%- endif -%}
+        <span class="mobile-sticky-atc-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}" style="{%- unless current_v_deck > 0 and current_v_deck > current_v_offered -%}display: none;{%- endunless -%}">
+          {{ current_v_deck | money }}
+        </span>
         <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
           {{ current_v_offered | money }}
         </span>
       </div>
 
-      <div class="mobile-sticky-atc-save-badge-wrap" id="MobileStickyATC-SaveWrap-{{ section.id }}" {% unless current_save_amount > 0 %}style="display:none;"{% endunless %}>
+      <div class="mobile-sticky-atc-save-badge-wrap" id="MobileStickyATC-SaveWrap-{{ section.id }}" style="{%- unless current_save_amount > 0 -%}display: none;{%- endunless -%}">
         <span class="mobile-sticky-atc-save-badge" id="MobileStickyATC-SaveBadge-{{ section.id }}">
           Save {{ current_save_amount | money }}
         </span>
       </div>
     </div>
 
-    <!-- Middle Row: Trust Badges (Warranty & Money Back) -->
+    <!-- Middle Row: Trust Badges -->
     <div class="mobile-sticky-atc-trust-row">
       <div class="trust-badge-item">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -86,14 +84,12 @@
 </div>
 
 <style>
-  /* Hidden on Desktop (above 750px) */
   @media screen and (min-width: 751px) {
     .mobile-sticky-atc-wrapper {
       display: none !important;
     }
   }
 
-  /* Mobile Styles (750px and below) */
   @media screen and (max-width: 750px) {
     .mobile-sticky-atc-wrapper {
       position: fixed;
@@ -182,17 +178,13 @@
       font-size: 14px;
       font-weight: 600;
       border-radius: 6px;
-      background: #8b6f5d !important; /* Match brown style in screenshot */
+      background: #8b6f5d !important;
       color: #ffffff !important;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .mobile-sticky-atc-btn:hover {
-      opacity: 0.95;
     }
   }
 </style>
@@ -294,8 +286,8 @@
         let displaySaveAmount = 0;
 
         if (meta) {
-          displayPrice = meta.offeredPrice > 0 ? meta.offeredPrice : variant.price;
           displayDeckPrice = meta.deckPrice;
+          displayPrice = meta.offeredPrice > 0 ? meta.offeredPrice : variant.price;
           displaySaveAmount = meta.saveAmount;
         }
 
