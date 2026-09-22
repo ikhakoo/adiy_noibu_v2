@@ -2072,11 +2072,30 @@
 
                       <!-- 5. Action Buttons -->
                       <div class="dp-actions-container">
-                        <button type="submit" name="add" class="dp-reserve-btn" id="ReserveDeckBtn">
+                        {% comment %} <button type="submit" name="add" class="dp-reserve-btn product-form__submit button button--full-width" id="ReserveDeckBtn">
                           <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
                           <span class="dp-btn-arrow">→</span>
-                        </button>
+                        </button> {% endcomment %}
 
+                        
+
+                        <button
+                          id="ProductSubmitButton-{{ section_id }}"
+                          type="submit"
+                          name="add"
+                          class="dp-reserve-btn product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+                          {% if product.selected_or_first_available_variant.available == false
+                            or quantity_rule_soldout
+                            or product.selected_or_first_available_variant == null
+                          %}
+                            disabled
+                          {% endif %}
+                        >
+                          
+                          <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
+                          <span class="dp-btn-arrow">→</span>
+                          {%- render 'loading-spinner' -%}
+                        </button>
                         {%- if block.settings.show_dynamic_checkout -%}
                           <div class="dp-dynamic-checkout-wrap">
                             {{ form | payment_button }}
