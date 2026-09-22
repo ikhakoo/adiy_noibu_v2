@@ -182,7 +182,10 @@
         return dollars + cents;
       }
 
-      switch (formatString.match(placeholderRegex)[1]) {
+      const match = formatString.match(placeholderRegex);
+      if (!match) return value;
+
+      switch (match[1]) {
         case 'amount':
           value = formatWithDelimiters(cents, 2);
           break;
@@ -226,7 +229,7 @@
 
       observer.observe(mainSubmitBtn);
 
-      // 2. Real-Time Variant Sync Function (Updates UI when variant changes from anywhere)
+      // 2. Real-Time Variant Sync Function
       function updateStickyVariant(variant, triggerSource = '') {
         if (!variant) return;
 
@@ -270,11 +273,10 @@
             const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
             if (variantInput) {
               variantInput.value = selectedVariantId;
-              // Trigger change on main form inputs so theme JS updates main page too
               variantInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
-            // Also try updating select dropdowns on the main product form if they exist
+            // Update main product form select dropdowns
             const mainVariantSelects = mainForm.querySelectorAll('select[name*="id"], select[data-selected-variant]');
             mainVariantSelects.forEach(select => {
               select.value = selectedVariantId;
@@ -284,14 +286,30 @@
         });
       }
 
-      // 4. Listen to Theme Variant Change Events (External sync from main page selectors)
+      // 4. Listen to Multiple Theme Variant Change Events (Dawn, Global, Custom)
       document.addEventListener('variant:change', function(evt) {
         if (evt.detail && evt.detail.variant) {
           updateStickyVariant(evt.detail.variant, 'theme');
         }
       });
 
-      // 5. Fallback Observer: Track hidden ID input in main form
+      // Listen for custom Shopify theme events commonly used by Dawn/Sections
+      window.addEventListener('popstate', function() {
+        checkVariantFromURL();
+      });
+
+      function checkVariantFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const variantId = urlParams.get('variant');
+        if (variantId) {
+          const matchedVariant = productData.variants.find(v => v.id === parseInt(variantId));
+          if (matchedVariant) {
+            updateStickyVariant(matchedVariant, 'url');
+          }
+        }
+      }
+
+      // 5. Fallback Observer: Track hidden ID input & Select inputs in main form
       const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
       if (variantInput) {
         const observerVariantInput = new MutationObserver(() => {
@@ -302,6 +320,24 @@
           }
         });
         observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
+      }
+
+      // Listen to changes on main form variant selects or radio inputs (swatches)
+      if (mainForm) {
+        mainForm.addEventListener('change', function(e) {
+          const target = e.target;
+          if ((target.name && target.name.includes('id')) || target.matches('select, input[type="radio"]')) {
+            setTimeout(() => {
+              const currentInputId = mainForm.querySelector('input[name="id"]');
+              if (currentInputId) {
+                const matchedVariant = productData.variants.find(v => v.id === parseInt(currentInputId.value));
+                if (matchedVariant) {
+                  updateStickyVariant(matchedVariant, 'mainform');
+                }
+              }
+            }, 50);
+          }
+        });
       }
 
       // 6. Click Handler to submit original ATC form
