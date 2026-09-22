@@ -256,7 +256,7 @@
         }
       }
 
-      // 3. Dropdown Change Event: Force native page update
+      // 3. Dropdown Change Event: Trigger main page radio buttons / option value IDs
       if (variantSelect) {
         variantSelect.addEventListener('change', function() {
           const selectedVariantId = parseInt(this.value);
@@ -265,35 +265,37 @@
           if (matchedVariant) {
             updateStickyVariant(matchedVariant, 'dropdown');
 
-            // Update main form variant input
+            // Update main form hidden ID input
             const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
             if (variantInput) {
               variantInput.value = selectedVariantId;
               variantInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
-            // Update URL query parameters to force theme components to pick up the new variant
+            // Match option value IDs with radio inputs provided in HTML cards
+            if (matchedVariant.option1) {
+              const radios = mainForm ? mainForm.querySelectorAll('input[type="radio"]') : [];
+              radios.forEach(radio => {
+                const radioVal = radio.value.trim().toLowerCase();
+                const opt1 = matchedVariant.option1.trim().toLowerCase();
+                const opt2 = matchedVariant.option2 ? matchedVariant.option2.trim().toLowerCase() : '';
+                const opt3 = matchedVariant.option3 ? matchedVariant.option3.trim().toLowerCase() : '';
+
+                if (radioVal === opt1 || radioVal === opt2 || radioVal === opt3) {
+                  if (!radio.checked) {
+                    radio.checked = true;
+                    radio.dispatchEvent(new Event('change', { bubbles: true }));
+                    radio.dispatchEvent(new Event('click', { bubbles: true }));
+                  }
+                }
+              });
+            }
+
+            // Fallback URL update to force theme re-render
             const newUrl = new URL(window.location.href);
             newUrl.searchParams.set('variant', selectedVariantId);
             window.history.replaceState({}, '', newUrl);
-
-            // Dispatch global popstate/history events so theme scripts re-initialize
             window.dispatchEvent(new PopStateEvent('popstate'));
-            document.dispatchEvent(new CustomEvent('change', { bubbles: true }));
-
-            // Look for any native theme select elements inside the main form and update them
-            const mainSelects = mainForm.querySelectorAll('select');
-            mainSelects.forEach(sel => {
-              if (sel !== variantSelect) {
-                for (let i = 0; i < sel.options.length; i++) {
-                  if (sel.options[i].value == selectedVariantId || sel.options[i].text.includes(matchedVariant.title)) {
-                    sel.selectedIndex = i;
-                    sel.dispatchEvent(new Event('change', { bubbles: true }));
-                    break;
-                  }
-                }
-              }
-            });
           }
         });
       }
