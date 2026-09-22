@@ -45,14 +45,20 @@
 
 <style>
   /* Hidden on Desktop (above 750px) */
-  .mobile-sticky-atc-wrapper {
-    display: none !important;
+  
+  @media screen and (min-width: 751px) {
+    .mobile-sticky-atc-wrapper {
+      display: none !important;
+    }
   }
 
   /* Mobile Styles (750px and below) */
   @media screen and (max-width: 750px) {
+    .mobile-sticky-atc-wrapper {
+      display: none;
+    }
     .template-product-250-products .mobile-sticky-atc-wrapper {
-      position: fixed !important;
+      position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
