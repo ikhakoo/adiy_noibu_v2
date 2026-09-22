@@ -406,6 +406,9 @@
     .template-product-250-products .product__info-container .custom-gallery-badges-container {
         display:flex;
     }
+    .template-product-250-products .product__info-container .product-review-bar-block{
+        display:none;
+    }
 }
 
 .product .product__info-wrapper .price__regular .price-item--regular{
