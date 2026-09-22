@@ -1,18 +1,18 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar with Full Calendar Popup (No Scrolling)
+  Mobile Sticky Add-to-Cart Bar with Working Popup Calendar Selection
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
 <div id="MobileStickyATC-{{ section.id }}" class="mobile-sticky-atc-wrapper">
-  <!-- Popup Calendar Container inside Sticky Bar (No Scroll) -->
+  <!-- Popup Calendar Container inside Sticky Bar -->
   <div id="StickyCalendarPopup-{{ section.id }}" class="sticky-calendar-popup" style="display: none;">
     <div class="sticky-calendar-header">
       <span>Schedule Your Delivery</span>
       <button type="button" id="StickyCalendarClose-{{ section.id }}" class="sticky-calendar-close">&times;</button>
     </div>
     <div class="sticky-calendar-body" id="StickyCalendarBody-{{ section.id }}">
-      <!-- Calendar content will be loaded here -->
+      <!-- Calendar content will be loaded here safely -->
     </div>
   </div>
 
@@ -90,7 +90,6 @@
       transform: translateY(0);
     }
 
-    /* Popup Calendar Styling without Scroll */
     .sticky-calendar-popup {
       position: absolute;
       bottom: 100%;
@@ -125,7 +124,6 @@
       color: #666;
     }
 
-    /* Adjusting cloned calendar spacing inside popup to avoid scrolling */
     .sticky-calendar-body .dp-inline-picker,
     .sticky-calendar-body .dp-years-container {
       display: flex;
@@ -137,6 +135,8 @@
       padding: 6px 8px !important;
       margin: 2px !important;
       font-size: 11px !important;
+      cursor: pointer !important;
+      pointer-events: auto !important;
     }
 
     .mobile-sticky-atc-content {
@@ -272,11 +272,12 @@
 
       if (!mainSubmitBtn) return;
 
-      // Clone main page calendar into popup
+      // Clone main page calendar into popup safely
       const mainPicker = document.getElementById('InlineMonthPicker') || document.querySelector('.dp-inline-picker');
       if (mainPicker && calendarBody) {
         calendarBody.innerHTML = '';
-        calendarBody.appendChild(mainPicker.cloneNode(true));
+        const clonedPicker = mainPicker.cloneNode(true);
+        calendarBody.appendChild(clonedPicker);
       }
 
       if (calendarTrigger && calendarPopup) {
@@ -292,30 +293,38 @@
         });
       }
 
+      // Handle click on popup buttons and sync with main page buttons/inputs
       if (calendarBody) {
         calendarBody.addEventListener('click', function(e) {
           const btn = e.target.closest('button');
           if (!btn) return;
 
           const monthText = btn.textContent.trim();
-          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
           
+          // Find and trigger the original button on the main page
           const mainButtons = document.querySelectorAll('.dp-inline-picker button, #InlineMonthPicker button');
           mainButtons.forEach(mb => {
             if (mb.textContent.trim() === monthText) {
-              mb.click();
+              mb.click(); // Yeh original theme ka click event trigger karega jo hidden input update karta hai
             }
           });
 
-          if (mainHiddenInput && mainHiddenInput.value) {
-            stickyDeliveryText.textContent = "📅 Selected: " + mainHiddenInput.value;
-          } else {
+          // Fallback: Directly update main hidden input if theme uses data attributes
+          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
+          if (mainHiddenInput) {
+            // Agar button ke paas koi value attribute hai toh woh le lein, warna text
+            const valAttr = btn.getAttribute('data-value') || monthText;
+            mainHiddenInput.value = valAttr;
+            mainHiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+
+          if (stickyDeliveryText) {
             stickyDeliveryText.textContent = "📅 Selected: " + monthText;
           }
 
           setTimeout(() => {
             if (calendarPopup) calendarPopup.style.display = 'none';
-          }, 200);
+          }, 150);
         });
       }
 
