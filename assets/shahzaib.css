@@ -393,8 +393,16 @@
 .affirm-as-low-as{
     margin:0;
 }
-.product__info-container .custom-gallery-badges-container {
+.template-product-250-products .product__info-container .custom-gallery-badges-container {
     display:none;
+}
+@media screen and (max-width: 728px) {
+    .template-product-250-products .custom-gallery-badges-container {
+        display:none;
+    }
+    .template-product-250-products .product__info-container .custom-gallery-badges-container {
+        display:flex;
+    }
 }
 
 .product .product__info-wrapper .price__regular .price-item--regular{
