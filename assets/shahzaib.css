@@ -393,6 +393,9 @@
 .affirm-as-low-as{
     margin:0;
 }
+.product__info-container .custom-gallery-badges-container {
+    display:none;
+}
 
 .product .product__info-wrapper .price__regular .price-item--regular{
     font-weight: 500;
