@@ -7,7 +7,7 @@
 <div id="MobileStickyATC-{{ section.id }}" class="mobile-sticky-atc-wrapper">
   <div class="mobile-sticky-atc-content">
     <div class="mobile-sticky-atc-info">
-      <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span>
+      {% comment %} <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span> {% endcomment %}
       <span class="mobile-sticky-atc-variant" id="MobileStickyATC-Variant-{{ section.id }}">
         {%- unless product.has_only_default_variant -%}
           {{ current_variant.title }}
@@ -75,13 +75,16 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-direction: column;
       gap: 12px;
     }
 
     .mobile-sticky-atc-info {
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
       overflow: hidden;
+      width: 100%;
+      align-items: center;
     }
 
     .mobile-sticky-atc-title {
