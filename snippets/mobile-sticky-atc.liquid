@@ -15,7 +15,7 @@
             {%- for variant in product.variants -%}
               <option 
                 value="{{ variant.id }}" 
-                {% if variant == current_variant %}selected="selected"{% endif %}
+                {% if variant == current_variant %}selected="selected"grid{% endif %}
                 {% unless variant.available %}disabled="disabled"{% endunless %}
               >
                 {{ variant.title }}
@@ -26,10 +26,30 @@
         </div>
       {%- endunless -%}
 
-      <!-- Delivery Month Dropdown for Sticky Bar -->
+      <!-- Delivery Month Dropdown with Hardcoded Options -->
       <div class="mobile-sticky-atc-select-wrapper">
         <select id="MobileStickyATC-DeliveryMonth-{{ section.id }}" class="mobile-sticky-atc-select">
           <option value="" disabled selected>Schedule Delivery Month...</option>
+          <optgroup label="2026">
+            <option value="2026-09">Sep 2026</option>
+            <option value="2026-10">Oct 2026</option>
+            <option value="2026-11">Nov 2026</option>
+            <option value="2026-12">Dec 2026</option>
+          </optgroup>
+          <optgroup label="2027">
+            <option value="2027-01">Jan 2027</option>
+            <option value="2027-02">Feb 2027</option>
+            <option value="2027-03">Mar 2027</option>
+            <option value="2027-04">Apr 2027</option>
+            <option value="2027-05">May 2027</option>
+            <option value="2027-06">Jun 2027</option>
+            <option value="2027-07">Jul 2027</option>
+            <option value="2027-08">Aug 2027</option>
+            <option value="2027-09">Sep 2027</option>
+            <option value="2027-10">Oct 2027</option>
+            <option value="2027-11">Nov 2027</option>
+            <option value="2027-12">Dec 2027</option>
+          </optgroup>
         </select>
       </div>
 
@@ -193,33 +213,25 @@
 
       if (!mainSubmitBtn) return;
 
-      // Populate Delivery Month dropdown from main page picker buttons if available
-      const mainMonthButtons = document.querySelectorAll('.dp-inline-picker button, [data-month], .month-btn, #InlineMonthPicker button');
-      if (deliveryMonthSelect && mainMonthButtons.length > 0) {
-        mainMonthButtons.forEach(btn => {
-          const opt = document.createElement('option');
-          opt.value = btn.getAttribute('data-value') || btn.textContent.trim();
-          opt.textContent = btn.textContent.trim();
-          deliveryMonthSelect.appendChild(opt);
-        });
-      }
-
-      // Sync Delivery Month selection with main page picker
+      // Sync Delivery Month selection to main page hidden input & buttons
       if (deliveryMonthSelect) {
         deliveryMonthSelect.addEventListener('change', function() {
-          const selectedVal = this.value;
-          // Find and click corresponding button on main page
-          mainMonthButtons.forEach(btn => {
-            if (btn.textContent.trim() === selectedVal || btn.getAttribute('data-value') === selectedVal) {
+          const selectedVal = this.value; // e.g. "2026-09"
+          
+          // Update main page hidden input (EstimatedDeliveryDate)
+          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
+          if (mainHiddenInput) {
+            mainHiddenInput.value = selectedVal;
+            mainHiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+
+          // Try clicking matching button on main page if it exists
+          const mainButtons = document.querySelectorAll('.dp-inline-picker button, #InlineMonthPicker button');
+          mainButtons.forEach(btn => {
+            if (btn.textContent.trim().toLowerCase().includes(this.options[this.selectedIndex].text.split(' ')[0].toLowerCase())) {
               btn.click();
             }
           });
-          // Also update hidden input if present
-          const hiddenInput = document.getElementById('EstimatedDeliveryDate');
-          if (hiddenInput) {
-            hiddenInput.value = selectedVal;
-            hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
-          }
         });
       }
 
@@ -270,12 +282,18 @@
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          // Check if delivery month is required and selected
-          const hiddenInput = document.getElementById('EstimatedDeliveryDate');
-          if (hiddenInput && hiddenInput.hasAttribute('required') && !hiddenInput.value) {
+          
+          // Validation for Delivery Month
+          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
+          if (deliveryMonthSelect && !deliveryMonthSelect.value) {
             alert('Please select an estimated delivery month.');
+            deliveryMonthSelect.focus();
             return;
           }
+          if (mainHiddenInput && !mainHiddenInput.value && deliveryMonthSelect.value) {
+            mainHiddenInput.value = deliveryMonthSelect.value;
+          }
+
           if (mainSubmitBtn.disabled) return;
           mainSubmitBtn.click();
         });
