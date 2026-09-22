@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync)
+  Mobile Sticky Add-to-Cart Bar with Real-time Variant Sync & Selection Dropdown
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -8,11 +8,28 @@
   <div class="mobile-sticky-atc-content">
     <div class="mobile-sticky-atc-info">
       <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span>
-      <span class="mobile-sticky-atc-variant" id="MobileStickyATC-Variant-{{ section.id }}">
-        {%- unless product.has_only_default_variant -%}
+      
+      {%- unless product.has_only_default_variant -%}
+        <div class="mobile-sticky-atc-select-wrapper">
+          <select id="MobileStickyATC-Select-{{ section.id }}" class="mobile-sticky-atc-select">
+            {%- for variant in product.variants -%}
+              <option 
+                value="{{ variant.id }}" 
+                {% if variant == current_variant %}selected="selected"{% endif %}
+                {% unless variant.available %}disabled="disabled"{% endunless %}
+              >
+                {{ variant.title }} - {{ variant.price | money }}
+                {%- unless variant.available %} (Sold Out){% endunless -%}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- else -%}
+        <span class="mobile-sticky-atc-variant" id="MobileStickyATC-Variant-{{ section.id }}">
           {{ current_variant.title }}
-        {%- endunless -%}
-      </span>
+        </span>
+      {%- endunless -%}
+
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
         {{ current_variant.price | money }}
       </span>
@@ -53,7 +70,7 @@
       background: #ffffff;
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
       z-index: 999;
-      padding: 12px 16px;
+      padding: 10px 16px;
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
       border-top: 1px solid #e8e8e8;
@@ -67,22 +84,37 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
     }
 
     .mobile-sticky-atc-info {
       display: flex;
       flex-direction: column;
+      flex: 1;
       overflow: hidden;
     }
 
     .mobile-sticky-atc-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #000;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .mobile-sticky-atc-select-wrapper {
+      margin: 3px 0;
+    }
+
+    .mobile-sticky-atc-select {
+      width: 100%;
+      padding: 4px 8px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #f9f9f9;
+      color: #000;
     }
 
     .mobile-sticky-atc-variant {
@@ -92,27 +124,35 @@
     }
 
     .mobile-sticky-atc-price {
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 13px;
+      font-weight: 500;
       color: #000;
-      margin-top: 2px;
+    }
+
+    .mobile-sticky-atc-action {
+      flex-shrink: 0;
     }
 
     .mobile-sticky-atc-btn {
-      min-width: 130px;
-      padding: 10px 16px;
-      font-size: 14px;
+      min-width: 110px;
+      padding: 10px 14px;
+      font-size: 13px;
       border-radius: 4px;
-      width: 100%;
-      white-space: nowrap;
       background: #194636;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .mobile-sticky-atc-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
   }
 </style>
 
 <script>
   (function() {
-    // Pass product JSON to JavaScript safely
     const productData = {{ product | json }};
     const moneyFormat = "{{ shop.money_format | escape }}";
 
@@ -167,6 +207,7 @@
       const mainForm = document.querySelector('form[action*="/cart/add"]');
       const mainSubmitBtn = mainForm ? mainForm.querySelector('[type="submit"], [name="add"]') : null;
       const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
+      const variantSelect = document.getElementById('MobileStickyATC-Select-{{ section.id }}');
       const variantTitleEl = document.getElementById('MobileStickyATC-Variant-{{ section.id }}');
       const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
 
@@ -185,11 +226,16 @@
 
       observer.observe(mainSubmitBtn);
 
-      // 2. Real-Time Variant Sync Function
-      function updateStickyVariant(variant) {
+      // 2. Real-Time Variant Sync Function (Updates UI when variant changes from anywhere)
+      function updateStickyVariant(variant, triggerSource = '') {
         if (!variant) return;
 
-        // Update Variant Name
+        // Update Dropdown if changed externally
+        if (variantSelect && triggerSource !== 'dropdown' && variantSelect.value != variant.id) {
+          variantSelect.value = variant.id;
+        }
+
+        // Update Variant Title Text (if no dropdown)
         if (variantTitleEl) {
           variantTitleEl.textContent = variant.title !== 'Default Title' ? variant.title : '';
         }
@@ -211,40 +257,52 @@
         }
       }
 
-      // 3. Listen to Theme Variant Change Events
+      // 3. Dropdown Change Event: User selects variant from Sticky Bar
+      if (variantSelect) {
+        variantSelect.addEventListener('change', function() {
+          const selectedVariantId = parseInt(this.value);
+          const matchedVariant = productData.variants.find(v => v.id === selectedVariantId);
+          
+          if (matchedVariant) {
+            updateStickyVariant(matchedVariant, 'dropdown');
+
+            // Update Main Form Hidden Variant Input
+            const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
+            if (variantInput) {
+              variantInput.value = selectedVariantId;
+              // Trigger change on main form inputs so theme JS updates main page too
+              variantInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            // Also try updating select dropdowns on the main product form if they exist
+            const mainVariantSelects = mainForm.querySelectorAll('select[name*="id"], select[data-selected-variant]');
+            mainVariantSelects.forEach(select => {
+              select.value = selectedVariantId;
+              select.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+          }
+        });
+      }
+
+      // 4. Listen to Theme Variant Change Events (External sync from main page selectors)
       document.addEventListener('variant:change', function(evt) {
         if (evt.detail && evt.detail.variant) {
-          updateStickyVariant(evt.detail.variant);
+          updateStickyVariant(evt.detail.variant, 'theme');
         }
       });
 
-      // 4. Fallback Observer: Track hidden ID input in main form (Dawn & modern themes)
+      // 5. Fallback Observer: Track hidden ID input in main form
       const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
       if (variantInput) {
         const observerVariantInput = new MutationObserver(() => {
           const selectedVariantId = parseInt(variantInput.value);
           if (productData && productData.variants) {
             const matchedVariant = productData.variants.find(v => v.id === selectedVariantId);
-            if (matchedVariant) updateStickyVariant(matchedVariant);
+            if (matchedVariant) updateStickyVariant(matchedVariant, 'observer');
           }
         });
         observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
       }
-
-      // 5. Fallback Observer: Track URL parameter changes (?variant=123456)
-      let lastUrl = location.href;
-      new MutationObserver(() => {
-        const url = location.href;
-        if (url !== lastUrl) {
-          lastUrl = url;
-          const urlParams = new URLSearchParams(window.location.search);
-          const variantId = parseInt(urlParams.get('variant'));
-          if (variantId && productData && productData.variants) {
-            const matchedVariant = productData.variants.find(v => v.id === variantId);
-            if (matchedVariant) updateStickyVariant(matchedVariant);
-          }
-        }
-      }).observe(document, { subtree: true, childList: true });
 
       // 6. Click Handler to submit original ATC form
       if (stickyBtn) {
