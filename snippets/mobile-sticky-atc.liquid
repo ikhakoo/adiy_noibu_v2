@@ -1,8 +1,31 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync)
+  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync & Metafield Prices)
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
+
+{%- assign current_v_deck = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+{%- assign current_v_disc = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+{%- assign current_v_offered = current_v_deck | minus: current_v_disc -%}
+{%- if current_v_offered <= 0 -%}{%- assign current_v_offered = current_variant.price -%}{%- endif -%}
+
+{%- comment -%} Variant Metafile JSON Mapping for JavaScript {%- endcomment -%}
+<script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
+  {
+    {%- for variant in product.variants -%}
+      {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+      {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+      {%- assign v_offered = v_deck | minus: v_disc -%}
+      {%- if v_offered <= 0 -%}{%- assign v_offered = variant.price -%}{%- endif -%}
+      "{{ variant.id }}": {
+        "deckPrice": {{ v_deck }},
+        "discountValue": {{ v_disc }},
+        "offeredPrice": {{ v_offered }},
+        "dueTodayPrice": {{ variant.price }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  }
+</script>
 
 <div id="MobileStickyATC-{{ section.id }}" class="mobile-sticky-atc-wrapper">
   <div class="mobile-sticky-atc-content">
@@ -13,9 +36,16 @@
           {{ current_variant.title }}
         {%- endunless -%}
       </span>
-      <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
-        {{ current_variant.price | money }}
-      </span>
+      <div class="mobile-sticky-atc-price-wrap" id="MobileStickyATC-PriceWrap-{{ section.id }}">
+        {%- if current_v_deck > 0 and current_v_deck > current_v_offered -%}
+          <span class="mobile-sticky-atc-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">
+            {{ current_v_deck | money }}
+          </span>
+        {%- endif -%}
+        <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
+          {{ current_v_offered | money }}
+        </span>
+      </div>
     </div>
 
     <div class="mobile-sticky-atc-action">
@@ -87,15 +117,29 @@
 
     .mobile-sticky-atc-variant {
       font-size: 11px;
-      color: #000;
+      color: #666;
       font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .mobile-sticky-atc-price-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .mobile-sticky-atc-deck-price {
+      font-size: 13px;
+      color: #888;
+      text-decoration: line-through;
+      font-weight: 400;
     }
 
     .mobile-sticky-atc-price {
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 15px;
+      font-weight: 700;
       color: #000;
-      margin-top: 2px;
     }
 
     .mobile-sticky-atc-btn {
@@ -112,9 +156,19 @@
 
 <script>
   (function() {
-    // Pass product JSON to JavaScript safely
     const productData = {{ product | json }};
     const moneyFormat = "{{ shop.money_format | escape }}";
+    
+    // Parse Variant Metafields JSON safely
+    let variantMetafields = {};
+    try {
+      const metafieldsScript = document.getElementById('VariantMetafieldsJson-{{ section.id }}');
+      if (metafieldsScript) {
+        variantMetafields = JSON.parse(metafieldsScript.textContent);
+      }
+    } catch(e) {
+      console.error('Error parsing variant metafields JSON:', e);
+    }
 
     function formatMoney(cents, format) {
       if (typeof cents === 'string') cents = cents.replace('.', '');
@@ -142,7 +196,10 @@
         return dollars + cents;
       }
 
-      switch (formatString.match(placeholderRegex)[1]) {
+      const match = formatString.match(placeholderRegex);
+      if (!match) return formatString;
+
+      switch (match[1]) {
         case 'amount':
           value = formatWithDelimiters(cents, 2);
           break;
@@ -169,6 +226,7 @@
       const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
       const variantTitleEl = document.getElementById('MobileStickyATC-Variant-{{ section.id }}');
       const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
+      const deckPriceEl = document.getElementById('MobileStickyATC-DeckPrice-{{ section.id }}');
 
       if (!mainSubmitBtn) return;
 
@@ -194,9 +252,29 @@
           variantTitleEl.textContent = variant.title !== 'Default Title' ? variant.title : '';
         }
 
-        // Update Price
-        if (priceEl && variant.price) {
-          priceEl.innerHTML = formatMoney(variant.price, moneyFormat);
+        // Get Metafield Prices for this Variant
+        const meta = variantMetafields[variant.id];
+        let displayPrice = variant.price;
+        let displayDeckPrice = 0;
+
+        if (meta) {
+          displayPrice = meta.offeredPrice > 0 ? meta.offeredPrice : variant.price;
+          displayDeckPrice = meta.deckPrice;
+        }
+
+        // Update Offered Price
+        if (priceEl) {
+          priceEl.innerHTML = formatMoney(displayPrice, moneyFormat);
+        }
+
+        // Update Deck (Cross) Price
+        if (deckPriceEl) {
+          if (displayDeckPrice > 0 && displayDeckPrice > displayPrice) {
+            deckPriceEl.style.display = 'inline';
+            deckPriceEl.innerHTML = formatMoney(displayDeckPrice, moneyFormat);
+          } else {
+            deckPriceEl.style.display = 'none';
+          }
         }
 
         // Update Button Availability State
@@ -218,7 +296,7 @@
         }
       });
 
-      // 4. Fallback Observer: Track hidden ID input in main form (Dawn & modern themes)
+      // 4. Fallback Observer: Track hidden ID input in main form
       const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
       if (variantInput) {
         const observerVariantInput = new MutationObserver(() => {
@@ -246,12 +324,21 @@
         }
       }).observe(document, { subtree: true, childList: true });
 
-      // 6. Click Handler to submit original ATC form
+      // 6. Click Handler to submit original ATC form & Scroll to .dp-actions-container
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
           if (mainSubmitBtn.disabled) return;
+          
           mainSubmitBtn.click();
+
+          const targetContainer = document.querySelector('.dp-actions-container');
+          if (targetContainer) {
+            targetContainer.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+          }
         });
       }
     }
