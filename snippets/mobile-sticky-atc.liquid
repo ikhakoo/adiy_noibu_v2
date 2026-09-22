@@ -14,13 +14,15 @@
         {%- endunless -%}
       </span>
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
-        {{ current_variant.price | money }}
+        
         {%- if current_variant.metafields.custom.deck_price.value -%}
           {%- assign deck_price_cents = current_variant.metafields.custom.deck_price.value | times: 100 -%}
           <span class="mobile-sticky-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">
-            - Deck: {{ deck_price_cents | money }}
+            {{ deck_price_cents | money }}
           </span>
         {%- endif -%}
+
+        {{ current_variant.price | money }}
       </span>
     </div>
 
