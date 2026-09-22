@@ -2072,22 +2072,18 @@
 
                       <!-- 5. Action Buttons -->
                       <div class="dp-actions-container">
-                        <button type="submit" name="add" class="dp-reserve-btn product-form__submit button button--full-width" id="ReserveDeckBtn">
+                        {% comment %} <button type="submit" name="add" class="dp-reserve-btn product-form__submit button button--full-width" id="ReserveDeckBtn">
                           <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
                           <span class="dp-btn-arrow">→</span>
-                        </button>
+                        </button> {% endcomment %}
 
-                        {%- if block.settings.show_dynamic_checkout -%}
-                          <div class="dp-dynamic-checkout-wrap">
-                            {{ form | payment_button }}
-                          </div>
-                        {%- endif -%}
+                        
 
                         <button
                           id="ProductSubmitButton-{{ section_id }}"
                           type="submit"
                           name="add"
-                          class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+                          class="dp-reserve-btn product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
                           {% if product.selected_or_first_available_variant.available == false
                             or quantity_rule_soldout
                             or product.selected_or_first_available_variant == null
@@ -2103,19 +2099,14 @@
                             <path d="M9.57324 9.33337V11.7001" stroke="white" stroke-linecap="round"/>
                             <path d="M2.3335 6.66663L3.2735 12.4267C3.48682 13.7199 4.00016 14.6667 5.90682 14.6667H9.92682C12.0002 14.6667 12.3068 13.7599 12.5468 12.5067L13.6668 6.66663" stroke="white" stroke-linecap="round"/>
                           </svg>
-                          <span>
-                            {%- if product.selected_or_first_available_variant == null -%}
-                              {{ 'products.product.unavailable' | t }}
-                            {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-                              {{ 'products.product.sold_out' | t }}
-                            {%- else -%}
-                              {{ 'products.product.add_to_cart' | t }}
-                            {%- endif -%}
-                          </span>
+                          <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
+                          <span class="dp-btn-arrow">→</span>
                           {%- render 'loading-spinner' -%}
                         </button>
-                        {%- if show_dynamic_checkout -%}
-                          {{ form | payment_button }}
+                        {%- if block.settings.show_dynamic_checkout -%}
+                          <div class="dp-dynamic-checkout-wrap">
+                            {{ form | payment_button }}
+                          </div>
                         {%- endif -%}
                       </div>
 
