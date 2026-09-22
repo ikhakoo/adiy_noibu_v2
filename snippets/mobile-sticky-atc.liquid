@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar with Real-time Variant Sync & Selection Dropdown
+  Mobile Sticky Add-to-Cart Bar with Real-time Variant Sync & Delivery Month Dropdown
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -24,11 +24,14 @@
             {%- endfor -%}
           </select>
         </div>
-      {%- else -%}
-        <span class="mobile-sticky-atc-variant" id="MobileStickyATC-Variant-{{ section.id }}">
-          {{ current_variant.title }}
-        </span>
       {%- endunless -%}
+
+      <!-- Delivery Month Dropdown for Sticky Bar -->
+      <div class="mobile-sticky-atc-select-wrapper">
+        <select id="MobileStickyATC-DeliveryMonth-{{ section.id }}" class="mobile-sticky-atc-select">
+          <option value="" disabled selected>Schedule Delivery Month...</option>
+        </select>
+      </div>
 
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
         {{ current_variant.price | money }}
@@ -53,14 +56,12 @@
 </div>
 
 <style>
-  /* Hidden on Desktop (above 750px) */
   @media screen and (min-width: 751px) {
     .mobile-sticky-atc-wrapper {
       display: none !important;
     }
   }
 
-  /* Mobile Styles (750px and below) */
   @media screen and (max-width: 750px) {
     .mobile-sticky-atc-wrapper {
       position: fixed;
@@ -104,7 +105,7 @@
     }
 
     .mobile-sticky-atc-select-wrapper {
-      margin: 3px 0;
+      margin: 2px 0;
     }
 
     .mobile-sticky-atc-select {
@@ -117,16 +118,11 @@
       color: #000;
     }
 
-    .mobile-sticky-atc-variant {
-      font-size: 11px;
-      color: #000;
-      font-weight: 500;
-    }
-
     .mobile-sticky-atc-price {
       font-size: 13px;
       font-weight: 500;
       color: #000;
+      margin-top: 2px;
     }
 
     .mobile-sticky-atc-action {
@@ -161,45 +157,26 @@
       let value = '';
       const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
       const formatString = format || '${{amount}}';
-
-      function defaultOption(opt, def) {
-        return (typeof opt == 'undefined') ? def : opt;
-      }
-
+      function defaultOption(opt, def) { return (typeof opt == 'undefined') ? def : opt; }
       function formatWithDelimiters(number, precision, thousands, decimal) {
         precision = defaultOption(precision, 2);
         thousands = defaultOption(thousands, ',');
         decimal   = defaultOption(decimal, '.');
-
         if (isNaN(number) || number == null) return 0;
-
         number = (number / 100.0).toFixed(precision);
-
         const parts = number.split('.');
         const dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
         const cents = parts[1] ? (decimal + parts[1]) : '';
-
         return dollars + cents;
       }
-
       const match = formatString.match(placeholderRegex);
       if (!match) return value;
-
       switch (match[1]) {
-        case 'amount':
-          value = formatWithDelimiters(cents, 2);
-          break;
-        case 'amount_no_decimals':
-          value = formatWithDelimiters(cents, 0);
-          break;
-        case 'amount_with_comma_separator':
-          value = formatWithDelimiters(cents, 2, '.', ',');
-          break;
-        case 'amount_no_decimals_with_space_separator':
-          value = formatWithDelimiters(cents, 0, ' ');
-          break;
+        case 'amount': value = formatWithDelimiters(cents, 2); break;
+        case 'amount_no_decimals': value = formatWithDelimiters(cents, 0); break;
+        case 'amount_with_comma_separator': value = formatWithDelimiters(cents, 2, '.', ','); break;
+        case 'amount_no_decimals_with_space_separator': value = formatWithDelimiters(cents, 0, ' '); break;
       }
-
       return formatString.replace(placeholderRegex, value);
     }
 
@@ -211,12 +188,42 @@
       const mainSubmitBtn = mainForm ? mainForm.querySelector('[type="submit"], [name="add"]') : null;
       const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
       const variantSelect = document.getElementById('MobileStickyATC-Select-{{ section.id }}');
-      const variantTitleEl = document.getElementById('MobileStickyATC-Variant-{{ section.id }}');
+      const deliveryMonthSelect = document.getElementById('MobileStickyATC-DeliveryMonth-{{ section.id }}');
       const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
 
       if (!mainSubmitBtn) return;
 
-      // 1. Scroll Observer
+      // Populate Delivery Month dropdown from main page picker buttons if available
+      const mainMonthButtons = document.querySelectorAll('.dp-inline-picker button, [data-month], .month-btn, #InlineMonthPicker button');
+      if (deliveryMonthSelect && mainMonthButtons.length > 0) {
+        mainMonthButtons.forEach(btn => {
+          const opt = document.createElement('option');
+          opt.value = btn.getAttribute('data-value') || btn.textContent.trim();
+          opt.textContent = btn.textContent.trim();
+          deliveryMonthSelect.appendChild(opt);
+        });
+      }
+
+      // Sync Delivery Month selection with main page picker
+      if (deliveryMonthSelect) {
+        deliveryMonthSelect.addEventListener('change', function() {
+          const selectedVal = this.value;
+          // Find and click corresponding button on main page
+          mainMonthButtons.forEach(btn => {
+            if (btn.textContent.trim() === selectedVal || btn.getAttribute('data-value') === selectedVal) {
+              btn.click();
+            }
+          });
+          // Also update hidden input if present
+          const hiddenInput = document.getElementById('EstimatedDeliveryDate');
+          if (hiddenInput) {
+            hiddenInput.value = selectedVal;
+            hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+      }
+
+      // Scroll Observer
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting && window.innerWidth <= 750) {
@@ -229,133 +236,46 @@
 
       observer.observe(mainSubmitBtn);
 
-      // 2. Real-Time Sync Function
-      function updateStickyVariant(variant, triggerSource = '') {
+      function updateStickyVariant(variant) {
         if (!variant) return;
-
-        if (variantSelect && triggerSource !== 'dropdown' && variantSelect.value != variant.id) {
-          variantSelect.value = variant.id;
-        }
-
-        if (variantTitleEl) {
-          variantTitleEl.textContent = variant.title !== 'Default Title' ? variant.title : '';
-        }
-
         if (priceEl && variant.price) {
           priceEl.innerHTML = formatMoney(variant.price, moneyFormat);
         }
-
         if (stickyBtn) {
           if (variant.available) {
             stickyBtn.removeAttribute('disabled');
-            stickyBtn.textContent = "{{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}";
+            stickyBtn.textContent = "Add to Cart";
           } else {
             stickyBtn.setAttribute('disabled', 'disabled');
-            stickyBtn.textContent = "{{ 'products.product.sold_out' | t | default: 'Sold Out' }}";
+            stickyBtn.textContent = "Sold Out";
           }
         }
       }
 
-      // 3. Dropdown Change Event: Trigger main page radio buttons / option value IDs
       if (variantSelect) {
         variantSelect.addEventListener('change', function() {
           const selectedVariantId = parseInt(this.value);
           const matchedVariant = productData.variants.find(v => v.id === selectedVariantId);
-          
           if (matchedVariant) {
-            updateStickyVariant(matchedVariant, 'dropdown');
-
-            // Update main form hidden ID input
+            updateStickyVariant(matchedVariant);
             const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
             if (variantInput) {
               variantInput.value = selectedVariantId;
               variantInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
-
-            // Match option value IDs with radio inputs provided in HTML cards
-            if (matchedVariant.option1) {
-              const radios = mainForm ? mainForm.querySelectorAll('input[type="radio"]') : [];
-              radios.forEach(radio => {
-                const radioVal = radio.value.trim().toLowerCase();
-                const opt1 = matchedVariant.option1.trim().toLowerCase();
-                const opt2 = matchedVariant.option2 ? matchedVariant.option2.trim().toLowerCase() : '';
-                const opt3 = matchedVariant.option3 ? matchedVariant.option3.trim().toLowerCase() : '';
-
-                if (radioVal === opt1 || radioVal === opt2 || radioVal === opt3) {
-                  if (!radio.checked) {
-                    radio.checked = true;
-                    radio.dispatchEvent(new Event('change', { bubbles: true }));
-                    radio.dispatchEvent(new Event('click', { bubbles: true }));
-                  }
-                }
-              });
-            }
-
-            // Fallback URL update to force theme re-render
-            const newUrl = new URL(window.location.href);
-            newUrl.searchParams.set('variant', selectedVariantId);
-            window.history.replaceState({}, '', newUrl);
-            window.dispatchEvent(new PopStateEvent('popstate'));
           }
         });
       }
 
-      // 4. Listen to Theme Variant Changes
-      document.addEventListener('variant:change', function(evt) {
-        if (evt.detail && evt.detail.variant) {
-          updateStickyVariant(evt.detail.variant, 'theme');
-        }
-      });
-
-      window.addEventListener('popstate', function() {
-        checkVariantFromURL();
-      });
-
-      function checkVariantFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const variantId = urlParams.get('variant');
-        if (variantId) {
-          const matchedVariant = productData.variants.find(v => v.id === parseInt(variantId));
-          if (matchedVariant) {
-            updateStickyVariant(matchedVariant, 'url');
-          }
-        }
-      }
-
-      // 5. Fallback Observer
-      const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
-      if (variantInput) {
-        const observerVariantInput = new MutationObserver(() => {
-          const selectedVariantId = parseInt(variantInput.value);
-          if (productData && productData.variants) {
-            const matchedVariant = productData.variants.find(v => v.id === selectedVariantId);
-            if (matchedVariant) updateStickyVariant(matchedVariant, 'observer');
-          }
-        });
-        observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
-      }
-
-      if (mainForm) {
-        mainForm.addEventListener('change', function(e) {
-          const target = e.target;
-          if ((target.name && target.name.includes('id')) || target.matches('select, input[type="radio"]')) {
-            setTimeout(() => {
-              const currentInputId = mainForm.querySelector('input[name="id"]');
-              if (currentInputId) {
-                const matchedVariant = productData.variants.find(v => v.id === parseInt(currentInputId.value));
-                if (matchedVariant) {
-                  updateStickyVariant(matchedVariant, 'mainform');
-                }
-              }
-            }, 50);
-          }
-        });
-      }
-
-      // 6. Click Handler for Sticky Button
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
+          // Check if delivery month is required and selected
+          const hiddenInput = document.getElementById('EstimatedDeliveryDate');
+          if (hiddenInput && hiddenInput.hasAttribute('required') && !hiddenInput.value) {
+            alert('Please select an estimated delivery month.');
+            return;
+          }
           if (mainSubmitBtn.disabled) return;
           mainSubmitBtn.click();
         });
