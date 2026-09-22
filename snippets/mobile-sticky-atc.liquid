@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar with Real-time Variant Sync & Delivery Month Dropdown
+  Mobile Sticky Add-to-Cart Bar with Real-time Variant Sync & Scroll-to-Calendar
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -15,7 +15,7 @@
             {%- for variant in product.variants -%}
               <option 
                 value="{{ variant.id }}" 
-                {% if variant == current_variant %}selected="selected"grid{% endif %}
+                {% if variant == current_variant %}selected="selected"{% endif %}
                 {% unless variant.available %}disabled="disabled"{% endunless %}
               >
                 {{ variant.title }}
@@ -26,32 +26,10 @@
         </div>
       {%- endunless -%}
 
-      <!-- Delivery Month Dropdown with Hardcoded Options -->
-      <div class="mobile-sticky-atc-select-wrapper">
-        <select id="MobileStickyATC-DeliveryMonth-{{ section.id }}" class="mobile-sticky-atc-select">
-          <option value="" disabled selected>Schedule Delivery Month...</option>
-          <optgroup label="2026">
-            <option value="2026-09">Sep 2026</option>
-            <option value="2026-10">Oct 2026</option>
-            <option value="2026-11">Nov 2026</option>
-            <option value="2026-12">Dec 2026</option>
-          </optgroup>
-          <optgroup label="2027">
-            <option value="2027-01">Jan 2027</option>
-            <option value="2027-02">Feb 2027</option>
-            <option value="2027-03">Mar 2027</option>
-            <option value="2027-04">Apr 2027</option>
-            <option value="2027-05">May 2027</option>
-            <option value="2027-06">Jun 2027</option>
-            <option value="2027-07">Jul 2027</option>
-            <option value="2027-08">Aug 2027</option>
-            <option value="2027-09">Sep 2027</option>
-            <option value="2027-10">Oct 2027</option>
-            <option value="2027-11">Nov 2027</option>
-            <option value="2027-12">Dec 2027</option>
-          </optgroup>
-        </select>
-      </div>
+      <!-- Trigger Button to Open/Scroll to Calendar -->
+      <button type="button" id="MobileStickyATC-CalendarTrigger-{{ section.id }}" class="mobile-sticky-atc-calendar-btn">
+        <span id="StickyDeliveryText">📅 Schedule Delivery Month</span>
+      </button>
 
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
         {{ current_variant.price | money }}
@@ -138,6 +116,23 @@
       color: #000;
     }
 
+    .mobile-sticky-atc-calendar-btn {
+      width: 100%;
+      background: #f1f5f3;
+      border: 1px solid #194636;
+      color: #194636;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 8px;
+      border-radius: 4px;
+      text-align: left;
+      cursor: pointer;
+      margin: 2px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .mobile-sticky-atc-price {
       font-size: 13px;
       font-weight: 500;
@@ -208,34 +203,43 @@
       const mainSubmitBtn = mainForm ? mainForm.querySelector('[type="submit"], [name="add"]') : null;
       const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
       const variantSelect = document.getElementById('MobileStickyATC-Select-{{ section.id }}');
-      const deliveryMonthSelect = document.getElementById('MobileStickyATC-DeliveryMonth-{{ section.id }}');
+      const calendarTrigger = document.getElementById('MobileStickyATC-CalendarTrigger-{{ section.id }}');
+      const stickyDeliveryText = document.getElementById('StickyDeliveryText');
       const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
 
       if (!mainSubmitBtn) return;
 
-      // Sync Delivery Month selection to main page hidden input & buttons
-      if (deliveryMonthSelect) {
-        deliveryMonthSelect.addEventListener('change', function() {
-          const selectedVal = this.value; // e.g. "2026-09"
-          
-          // Update main page hidden input (EstimatedDeliveryDate)
-          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
-          if (mainHiddenInput) {
-            mainHiddenInput.value = selectedVal;
-            mainHiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+      // Scroll to Calendar section when clicked
+      if (calendarTrigger) {
+        calendarTrigger.addEventListener('click', function() {
+          const calendarEl = document.getElementById('InlineMonthPicker') || document.querySelector('.dp-inline-picker') || document.querySelector('input[name*="Estimated Delivery"]');
+          if (calendarEl) {
+            calendarEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Temporarily hide sticky bar so user can see calendar clearly
+            stickyBar.classList.remove('is-visible');
           }
-
-          // Try clicking matching button on main page if it exists
-          const mainButtons = document.querySelectorAll('.dp-inline-picker button, #InlineMonthPicker button');
-          mainButtons.forEach(btn => {
-            if (btn.textContent.trim().toLowerCase().includes(this.options[this.selectedIndex].text.split(' ')[0].toLowerCase())) {
-              btn.click();
-            }
-          });
         });
       }
 
-      // Scroll Observer
+      // Track when user selects a month on main page to update sticky bar text
+      const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
+      if (mainHiddenInput) {
+        const observerInput = new MutationObserver(() => {
+          if (mainHiddenInput.value && stickyDeliveryText) {
+            stickyDeliveryText.textContent = "📅 Selected: " + mainHiddenInput.value;
+          }
+        });
+        observerInput.observe(mainHiddenInput, { attributes: true, attributeFilter: ['value'] });
+        
+        // Also listen to change event on hidden input
+        mainHiddenInput.addEventListener('change', function() {
+          if (this.value && stickyDeliveryText) {
+            stickyDeliveryText.textContent = "📅 Selected: " + this.value;
+          }
+        });
+      }
+
+      // Scroll Observer for Sticky Bar visibility
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting && window.innerWidth <= 750) {
@@ -283,15 +287,12 @@
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
           
-          // Validation for Delivery Month
-          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
-          if (deliveryMonthSelect && !deliveryMonthSelect.value) {
-            alert('Please select an estimated delivery month.');
-            deliveryMonthSelect.focus();
+          // Check if delivery month is selected
+          if (mainHiddenInput && mainHiddenInput.hasAttribute('required') && !mainHiddenInput.value) {
+            alert('Please select an estimated delivery month from the calendar.');
+            const calendarEl = document.getElementById('InlineMonthPicker') || document.querySelector('.dp-inline-picker');
+            if (calendarEl) calendarEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
-          }
-          if (mainHiddenInput && !mainHiddenInput.value && deliveryMonthSelect.value) {
-            mainHiddenInput.value = deliveryMonthSelect.value;
           }
 
           if (mainSubmitBtn.disabled) return;
