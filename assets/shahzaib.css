@@ -397,6 +397,9 @@
     display:none;
 }
 @media screen and (max-width: 728px) {
+    .template-product-250-products .custom-product-gallery-grid{
+        display:none;
+    }
     .template-product-250-products .custom-gallery-badges-container {
         display:none;
     }
