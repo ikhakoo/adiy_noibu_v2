@@ -246,23 +246,12 @@
         }
       }).observe(document, { subtree: true, childList: true });
 
-      // 6. Click Handler to submit original ATC form & Smooth Scroll to .dp-actions-container
+      // 6. Click Handler to submit original ATC form
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
           if (mainSubmitBtn.disabled) return;
-          
-          // Trigger the original add-to-cart action
           mainSubmitBtn.click();
-
-          // Smooth scroll up to .dp-actions-container
-          const targetContainer = document.querySelector('.dp-actions-container');
-          if (targetContainer) {
-            targetContainer.scrollIntoView({
-              behavior: 'smooth',
-              block: 'center'
-            });
-          }
         });
       }
     }
