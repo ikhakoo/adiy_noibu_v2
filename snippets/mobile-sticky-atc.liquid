@@ -13,6 +13,7 @@
           {{ current_variant.title }}
         {%- endunless -%}
       </span>
+      <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
         {{ current_variant.price | money }}
       </span>
@@ -34,6 +35,23 @@
     </div>
   </div>
 </div>
+
+ <!-- Variant Metafile JSON Mapping for JavaScript -->
+                  <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
+                    {
+                      {%- for variant in product.variants -%}
+                        {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+                        {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+                        {%- assign v_offered = v_deck | minus: v_disc -%}
+                        "{{ variant.id }}": {
+                          "deckPrice": {{ v_deck }},
+                          "discountValue": {{ v_disc }},
+                          "offeredPrice": {{ v_offered }},
+                          "dueTodayPrice": {{ variant.price }}
+                        }{% unless forloop.last %},{% endunless %}
+                      {%- endfor -%}
+                    }
+                  </script>
 
 <style>
   /* Hidden on Desktop (above 750px) */
