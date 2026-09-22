@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync with Deck Price Metafield Fixed)
+  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync with Deck Price Metafield & Custom Styling)
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -7,14 +7,12 @@
 <div id="MobileStickyATC-{{ section.id }}" class="mobile-sticky-atc-wrapper">
   <div class="mobile-sticky-atc-content">
     <div class="mobile-sticky-atc-info">
-      {% comment %} <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span> {% endcomment %}
       <span class="mobile-sticky-atc-variant" id="MobileStickyATC-Variant-{{ section.id }}">
         {%- unless product.has_only_default_variant -%}
           {{ current_variant.title }}
         {%- endunless -%}
       </span>
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
-        
         {%- if current_variant.metafields.custom.deck_price.value -%}
           {%- assign deck_price_cents = current_variant.metafields.custom.deck_price.value | times: 100 -%}
           <span class="mobile-sticky-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">
@@ -75,16 +73,16 @@
     .mobile-sticky-atc-wrapper.is-visible {
       transform: translateY(0);
     }
-    .saving-badge{
+    .saving-badge {
       padding: 4px 12px;
-    border-radius: 150px;
-    background: #e7f4df;
-    color: #000;
-    font-size: 14px;
-    font-weight: 400;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+      border-radius: 150px;
+      background: #e7f4df;
+      color: #000;
+      font-size: 14px;
+      font-weight: 400;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .mobile-sticky-atc-content {
@@ -132,7 +130,6 @@
     
     .mobile-sticky-deck-price {
       text-decoration: line-through;
-
     }
 
     .mobile-sticky-atc-btn {
@@ -249,12 +246,15 @@
         }
 
         if (priceEl && variant.price) {
-          let priceHTML = formatMoney(variant.price, moneyFormat);
+          let priceHTML = '';
           
           if (variant.deck_price) {
             const formattedDeckPrice = formatMoney(variant.deck_price, moneyFormat);
-            priceHTML += ` <span class="mobile-sticky-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">- Deck: ${formattedDeckPrice}</span>`;
+            priceHTML += `<span class="mobile-sticky-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">${formattedDeckPrice}</span> `;
           }
+          
+          priceHTML += formatMoney(variant.price, moneyFormat);
+          priceHTML += ` <span class="saving-badge">Reserve Your Deck</span>`;
           
           priceEl.innerHTML = priceHTML;
         }
