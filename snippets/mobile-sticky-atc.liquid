@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar with Direct Calendar Re-parenting for Working Selection
+  Mobile Sticky Add-to-Cart Bar with Working Calendar & Variant Price/Details Sync
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -124,7 +124,6 @@
       color: #666;
     }
 
-    /* Compact styling for the calendar inside the popup */
     .sticky-calendar-body .dp-inline-picker,
     .sticky-calendar-body .dp-years-container {
       display: flex;
@@ -271,14 +270,12 @@
 
       if (!mainSubmitBtn) return;
 
-      // Find original picker container on the main page
       const mainPicker = document.getElementById('InlineMonthPicker') || document.querySelector('.dp-inline-picker');
       const mainPickerParent = mainPicker ? mainPicker.parentNode : null;
 
       if (calendarTrigger && calendarPopup) {
         calendarTrigger.addEventListener('click', function(e) {
           e.stopPropagation();
-          // Move the actual live calendar picker into the popup container when opened
           if (mainPicker && calendarBody && !calendarBody.contains(mainPicker)) {
             calendarBody.appendChild(mainPicker);
           }
@@ -289,14 +286,12 @@
       if (calendarClose && calendarPopup) {
         calendarClose.addEventListener('click', function() {
           calendarPopup.style.display = 'none';
-          // Put the picker back to its original place if needed, or leave it
           if (mainPicker && mainPickerParent && !mainPickerParent.contains(mainPicker)) {
             mainPickerParent.appendChild(mainPicker);
           }
         });
       }
 
-      // Listen for selection changes on the main hidden input to update the trigger button text
       const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
       if (mainHiddenInput) {
         const observerInput = new MutationObserver(() => {
@@ -312,7 +307,6 @@
         });
         observerInput.observe(mainHiddenInput, { attributes: true, attributeFilter: ['value'] });
         
-        // Fallback click listener on calendar body to catch any month button clicks directly
         if (calendarBody) {
           calendarBody.addEventListener('click', function(e) {
             const btn = e.target.closest('button');
@@ -373,11 +367,29 @@
           const matchedVariant = productData.variants.find(v => v.id === selectedVariantId);
           if (matchedVariant) {
             updateStickyVariant(matchedVariant);
+            
+            // 1. Update main page variant hidden input or select elements
             const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
             if (variantInput) {
               variantInput.value = selectedVariantId;
               variantInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
+
+            // 2. Sync with theme's main product form variant selectors/dropdowns if they exist
+            const mainVariantSelects = mainForm.querySelectorAll('select[name*="id"], select.product-form__variant-select, input[name*="id"][type="radio"]');
+            mainVariantSelects.forEach(el => {
+              if (el.tagName === 'SELECT') {
+                el.value = selectedVariantId;
+                el.dispatchEvent(new Event('change', { bubbles: true }));
+              } else if (el.type === 'radio' && parseInt(el.value) === selectedVariantId) {
+                el.click();
+              }
+            });
+
+            // 3. Trigger URL change / event handlers if theme uses them
+            const url = new URL(window.location.href);
+            url.searchParams.set('variant', selectedVariantId);
+            window.history.replaceState({ path: url.href }, '', url.href);
           }
         });
       }
