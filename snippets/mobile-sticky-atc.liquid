@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync & Metafield Prices)
+  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync & Full Design Match)
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -8,6 +8,7 @@
 {%- assign current_v_disc = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
 {%- assign current_v_offered = current_v_deck | minus: current_v_disc -%}
 {%- if current_v_offered <= 0 -%}{%- assign current_v_offered = current_variant.price -%}{%- endif -%}
+{%- assign current_save_amount = current_v_deck | minus: current_v_offered -%}
 
 {%- comment -%} Variant Metafile JSON Mapping for JavaScript {%- endcomment -%}
 <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
@@ -17,10 +18,12 @@
       {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
       {%- assign v_offered = v_deck | minus: v_disc -%}
       {%- if v_offered <= 0 -%}{%- assign v_offered = variant.price -%}{%- endif -%}
+      {%- assign save_amt = v_deck | minus: v_offered -%}
       "{{ variant.id }}": {
         "deckPrice": {{ v_deck }},
         "discountValue": {{ v_disc }},
         "offeredPrice": {{ v_offered }},
+        "saveAmount": {{ save_amt }},
         "dueTodayPrice": {{ variant.price }}
       }{% unless forloop.last %},{% endunless %}
     {%- endfor -%}
@@ -29,13 +32,9 @@
 
 <div id="MobileStickyATC-{{ section.id }}" class="mobile-sticky-atc-wrapper">
   <div class="mobile-sticky-atc-content">
-    <div class="mobile-sticky-atc-info">
-      <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span>
-      <span class="mobile-sticky-atc-variant" id="MobileStickyATC-Variant-{{ section.id }}">
-        {%- unless product.has_only_default_variant -%}
-          {{ current_variant.title }}
-        {%- endunless -%}
-      </span>
+    
+    <!-- Top Row: Prices & Save Badge -->
+    <div class="mobile-sticky-atc-top-row">
       <div class="mobile-sticky-atc-price-wrap" id="MobileStickyATC-PriceWrap-{{ section.id }}">
         {%- if current_v_deck > 0 and current_v_deck > current_v_offered -%}
           <span class="mobile-sticky-atc-deck-price" id="MobileStickyATC-DeckPrice-{{ section.id }}">
@@ -46,8 +45,27 @@
           {{ current_v_offered | money }}
         </span>
       </div>
+
+      <div class="mobile-sticky-atc-save-badge-wrap" id="MobileStickyATC-SaveWrap-{{ section.id }}" {% unless current_save_amount > 0 %}style="display:none;"{% endunless %}>
+        <span class="mobile-sticky-atc-save-badge" id="MobileStickyATC-SaveBadge-{{ section.id }}">
+          Save {{ current_save_amount | money }}
+        </span>
+      </div>
     </div>
 
+    <!-- Middle Row: Trust Badges (Warranty & Money Back) -->
+    <div class="mobile-sticky-atc-trust-row">
+      <div class="trust-badge-item">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>10-Year Warranty</span>
+      </div>
+      <div class="trust-badge-item">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span>100-Day Money Back</span>
+      </div>
+    </div>
+
+    <!-- Bottom Row: Add to Cart Button -->
     <div class="mobile-sticky-atc-action">
       <button
         type="button"
@@ -55,13 +73,15 @@
         class="mobile-sticky-atc-btn button button--primary"
         {% unless current_variant.available %}disabled{% endunless %}
       >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; vertical-align: middle;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
         {%- if current_variant.available -%}
-          {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+          {{ 'products.product.add_to_cart' | t | default: 'Add To Cart' }}
         {%- else -%}
           {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
         {%- endif -%}
       </button>
     </div>
+
   </div>
 </div>
 
@@ -81,12 +101,14 @@
       left: 0;
       width: 100%;
       background: #ffffff;
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
       z-index: 999;
-      padding: 12px 16px;
+      padding: 10px 14px 12px 14px;
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
-      border-top: 1px solid #e8e8e8;
+      border-top: 1px solid #eaeaea;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
     }
 
     .mobile-sticky-atc-wrapper.is-visible {
@@ -95,43 +117,26 @@
 
     .mobile-sticky-atc-content {
       display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mobile-sticky-atc-top-row {
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-    }
-
-    .mobile-sticky-atc-info {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .mobile-sticky-atc-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #000;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .mobile-sticky-atc-variant {
-      font-size: 11px;
-      color: #666;
-      font-weight: 500;
-      margin-bottom: 2px;
+      gap: 8px;
     }
 
     .mobile-sticky-atc-price-wrap {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 2px;
     }
 
     .mobile-sticky-atc-deck-price {
       font-size: 13px;
-      color: #888;
+      color: #888888;
       text-decoration: line-through;
       font-weight: 400;
     }
@@ -139,17 +144,55 @@
     .mobile-sticky-atc-price {
       font-size: 15px;
       font-weight: 700;
-      color: #000;
+      color: #000000;
+    }
+
+    .mobile-sticky-atc-save-badge {
+      background-color: #eaf3ec;
+      color: #2e6930;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    .mobile-sticky-atc-trust-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #444;
+      padding: 0 4px;
+    }
+
+    .trust-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .trust-badge-item svg {
+      stroke: #555;
     }
 
     .mobile-sticky-atc-btn {
-      min-width: 130px;
-      padding: 10px 16px;
-      font-size: 14px;
-      border-radius: 4px;
       width: 100%;
-      white-space: nowrap;
-      background: #194636;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      background: #8b6f5d !important; /* Match brown style in screenshot */
+      color: #ffffff !important;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-sticky-atc-btn:hover {
+      opacity: 0.95;
     }
   }
 </style>
@@ -159,7 +202,6 @@
     const productData = {{ product | json }};
     const moneyFormat = "{{ shop.money_format | escape }}";
     
-    // Parse Variant Metafields JSON safely
     let variantMetafields = {};
     try {
       const metafieldsScript = document.getElementById('VariantMetafieldsJson-{{ section.id }}');
@@ -224,13 +266,13 @@
       const mainForm = document.querySelector('form[action*="/cart/add"]');
       const mainSubmitBtn = mainForm ? mainForm.querySelector('[type="submit"], [name="add"]') : null;
       const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
-      const variantTitleEl = document.getElementById('MobileStickyATC-Variant-{{ section.id }}');
       const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
       const deckPriceEl = document.getElementById('MobileStickyATC-DeckPrice-{{ section.id }}');
+      const saveWrapEl = document.getElementById('MobileStickyATC-SaveWrap-{{ section.id }}');
+      const saveBadgeEl = document.getElementById('MobileStickyATC-SaveBadge-{{ section.id }}');
 
       if (!mainSubmitBtn) return;
 
-      // 1. Scroll Observer (Slide in/out)
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting && window.innerWidth <= 750) {
@@ -243,31 +285,24 @@
 
       observer.observe(mainSubmitBtn);
 
-      // 2. Real-Time Variant Sync Function
       function updateStickyVariant(variant) {
         if (!variant) return;
 
-        // Update Variant Name
-        if (variantTitleEl) {
-          variantTitleEl.textContent = variant.title !== 'Default Title' ? variant.title : '';
-        }
-
-        // Get Metafield Prices for this Variant
         const meta = variantMetafields[variant.id];
         let displayPrice = variant.price;
         let displayDeckPrice = 0;
+        let displaySaveAmount = 0;
 
         if (meta) {
           displayPrice = meta.offeredPrice > 0 ? meta.offeredPrice : variant.price;
           displayDeckPrice = meta.deckPrice;
+          displaySaveAmount = meta.saveAmount;
         }
 
-        // Update Offered Price
         if (priceEl) {
           priceEl.innerHTML = formatMoney(displayPrice, moneyFormat);
         }
 
-        // Update Deck (Cross) Price
         if (deckPriceEl) {
           if (displayDeckPrice > 0 && displayDeckPrice > displayPrice) {
             deckPriceEl.style.display = 'inline';
@@ -277,11 +312,19 @@
           }
         }
 
-        // Update Button Availability State
+        if (saveWrapEl && saveBadgeEl) {
+          if (displaySaveAmount > 0) {
+            saveWrapEl.style.display = 'block';
+            saveBadgeEl.innerHTML = 'Save ' + formatMoney(displaySaveAmount, moneyFormat);
+          } else {
+            saveWrapEl.style.display = 'none';
+          }
+        }
+
         if (stickyBtn) {
           if (variant.available) {
             stickyBtn.removeAttribute('disabled');
-            stickyBtn.textContent = "{{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}";
+            stickyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; vertical-align: middle;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>` + "{{ 'products.product.add_to_cart' | t | default: 'Add To Cart' }}";
           } else {
             stickyBtn.setAttribute('disabled', 'disabled');
             stickyBtn.textContent = "{{ 'products.product.sold_out' | t | default: 'Sold Out' }}";
@@ -289,14 +332,12 @@
         }
       }
 
-      // 3. Listen to Theme Variant Change Events
       document.addEventListener('variant:change', function(evt) {
         if (evt.detail && evt.detail.variant) {
           updateStickyVariant(evt.detail.variant);
         }
       });
 
-      // 4. Fallback Observer: Track hidden ID input in main form
       const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
       if (variantInput) {
         const observerVariantInput = new MutationObserver(() => {
@@ -309,7 +350,6 @@
         observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
       }
 
-      // 5. Fallback Observer: Track URL parameter changes (?variant=123456)
       let lastUrl = location.href;
       new MutationObserver(() => {
         const url = location.href;
@@ -324,7 +364,6 @@
         }
       }).observe(document, { subtree: true, childList: true });
 
-      // 6. Click Handler to submit original ATC form & Scroll to .dp-actions-container
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
