@@ -1,10 +1,21 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar with Real-time Variant Sync & Scroll-to-Calendar
+  Mobile Sticky Add-to-Cart Bar with Inline Popup Calendar for Delivery Month
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
 <div id="MobileStickyATC-{{ section.id }}" class="mobile-sticky-atc-wrapper">
+  <!-- Popup Calendar Container inside Sticky Bar -->
+  <div id="StickyCalendarPopup-{{ section.id }}" class="sticky-calendar-popup" style="display: none;">
+    <div class="sticky-calendar-header">
+      <span>Schedule Your Delivery</span>
+      <button type="button" id="StickyCalendarClose-{{ section.id }}" class="sticky-calendar-close">&times;</button>
+    </div>
+    <div class="sticky-calendar-body" id="StickyCalendarBody-{{ section.id }}">
+      <!-- Calendar buttons will be loaded here dynamically from the main page picker -->
+    </div>
+  </div>
+
   <div class="mobile-sticky-atc-content">
     <div class="mobile-sticky-atc-info">
       <span class="mobile-sticky-atc-title">{{ product.title | truncate: 25 }}</span>
@@ -26,9 +37,9 @@
         </div>
       {%- endunless -%}
 
-      <!-- Trigger Button to Open/Scroll to Calendar -->
+      <!-- Trigger Button to Open Popup Calendar -->
       <button type="button" id="MobileStickyATC-CalendarTrigger-{{ section.id }}" class="mobile-sticky-atc-calendar-btn">
-        <span id="StickyDeliveryText">📅 Schedule Delivery Month</span>
+        <span id="StickyDeliveryText-{{ section.id }}">📅 Schedule Delivery Month</span>
       </button>
 
       <span class="mobile-sticky-atc-price" id="MobileStickyATC-Price-{{ section.id }}">
@@ -67,7 +78,7 @@
       left: 0;
       width: 100%;
       background: #ffffff;
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
       z-index: 999;
       padding: 10px 16px;
       transform: translateY(100%);
@@ -77,6 +88,67 @@
 
     .mobile-sticky-atc-wrapper.is-visible {
       transform: translateY(0);
+    }
+
+    /* Popup Calendar Styling */
+    .sticky-calendar-popup {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 -6px 16px rgba(0,0,0,0.1);
+      padding: 12px;
+      box-sizing: border-box;
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .sticky-calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #000;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 6px;
+    }
+
+    .sticky-calendar-close {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .sticky-calendar-body .dp-inline-picker,
+    .sticky-calendar-body .dp-years-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Style for buttons inside popup matching your theme */
+    .sticky-calendar-body button {
+      padding: 8px 12px;
+      margin: 3px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .sticky-calendar-body button.selected, 
+    .sticky-calendar-body button:active {
+      background: #194636;
+      color: #fff;
+      border-color: #194636;
     }
 
     .mobile-sticky-atc-content {
@@ -204,38 +276,62 @@
       const stickyBtn = document.getElementById('MobileStickyATC-Button-{{ section.id }}');
       const variantSelect = document.getElementById('MobileStickyATC-Select-{{ section.id }}');
       const calendarTrigger = document.getElementById('MobileStickyATC-CalendarTrigger-{{ section.id }}');
-      const stickyDeliveryText = document.getElementById('StickyDeliveryText');
+      const calendarPopup = document.getElementById('StickyCalendarPopup-{{ section.id }}');
+      const calendarClose = document.getElementById('StickyCalendarClose-{{ section.id }}');
+      const calendarBody = document.getElementById('StickyCalendarBody-{{ section.id }}');
+      const stickyDeliveryText = document.getElementById('StickyDeliveryText-{{ section.id }}');
       const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
 
       if (!mainSubmitBtn) return;
 
-      // Scroll to Calendar section when clicked
-      if (calendarTrigger) {
-        calendarTrigger.addEventListener('click', function() {
-          const calendarEl = document.getElementById('InlineMonthPicker') || document.querySelector('.dp-inline-picker') || document.querySelector('input[name*="Estimated Delivery"]');
-          if (calendarEl) {
-            calendarEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Temporarily hide sticky bar so user can see calendar clearly
-            stickyBar.classList.remove('is-visible');
-          }
+      // Clone main page calendar into the popup if available
+      const mainPicker = document.getElementById('InlineMonthPicker') || document.querySelector('.dp-inline-picker');
+      if (mainPicker && calendarBody) {
+        calendarBody.innerHTML = '';
+        calendarBody.appendChild(mainPicker.cloneNode(true));
+      }
+
+      // Toggle Popup on click
+      if (calendarTrigger && calendarPopup) {
+        calendarTrigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          calendarPopup.style.display = calendarPopup.style.display === 'none' ? 'block' : 'none';
         });
       }
 
-      // Track when user selects a month on main page to update sticky bar text
-      const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
-      if (mainHiddenInput) {
-        const observerInput = new MutationObserver(() => {
-          if (mainHiddenInput.value && stickyDeliveryText) {
-            stickyDeliveryText.textContent = "📅 Selected: " + mainHiddenInput.value;
-          }
+      if (calendarClose && calendarPopup) {
+        calendarClose.addEventListener('click', function() {
+          calendarPopup.style.display = 'none';
         });
-        observerInput.observe(mainHiddenInput, { attributes: true, attributeFilter: ['value'] });
-        
-        // Also listen to change event on hidden input
-        mainHiddenInput.addEventListener('change', function() {
-          if (this.value && stickyDeliveryText) {
-            stickyDeliveryText.textContent = "📅 Selected: " + this.value;
+      }
+
+      // Handle selection inside the popup calendar body
+      if (calendarBody) {
+        calendarBody.addEventListener('click', function(e) {
+          const btn = e.target.closest('button');
+          if (!btn) return;
+
+          const monthText = btn.textContent.trim();
+          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
+          
+          // Find corresponding button on the main page and click it to keep everything in sync
+          const mainButtons = document.querySelectorAll('.dp-inline-picker button, #InlineMonthPicker button');
+          mainButtons.forEach(mb => {
+            if (mb.textContent.trim() === monthText) {
+              mb.click();
+            }
+          });
+
+          if (mainHiddenInput && mainHiddenInput.value) {
+            stickyDeliveryText.textContent = "📅 Selected: " + mainHiddenInput.value;
+          } else {
+            stickyDeliveryText.textContent = "📅 Selected: " + monthText;
           }
+
+          // Close popup after selection
+          setTimeout(() => {
+            if (calendarPopup) calendarPopup.style.display = 'none';
+          }, 200);
         });
       }
 
@@ -246,6 +342,7 @@
             stickyBar.classList.add('is-visible');
           } else {
             stickyBar.classList.remove('is-visible');
+            if (calendarPopup) calendarPopup.style.display = 'none';
           }
         });
       }, { threshold: 0 });
@@ -286,12 +383,11 @@
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
+          const mainHiddenInput = document.getElementById('EstimatedDeliveryDate');
           
-          // Check if delivery month is selected
           if (mainHiddenInput && mainHiddenInput.hasAttribute('required') && !mainHiddenInput.value) {
-            alert('Please select an estimated delivery month from the calendar.');
-            const calendarEl = document.getElementById('InlineMonthPicker') || document.querySelector('.dp-inline-picker');
-            if (calendarEl) calendarEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            alert('Please select an estimated delivery month.');
+            if (calendarPopup) calendarPopup.style.display = 'block';
             return;
           }
 
