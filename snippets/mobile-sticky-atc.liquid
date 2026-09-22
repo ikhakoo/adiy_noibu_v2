@@ -1,5 +1,5 @@
 {% comment %}
-  Mobile Sticky Add-to-Cart Bar (Real-time Variant Sync & Selection Dropdown)
+  Mobile Sticky Add-to-Cart Bar with Real-time Variant Sync & Selection Dropdown
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -19,6 +19,7 @@
                 {% unless variant.available %}disabled="disabled"{% endunless %}
               >
                 {{ variant.title }}
+                {%- unless variant.available %} (Sold Out){% endunless -%}
               </option>
             {%- endfor -%}
           </select>
@@ -225,22 +226,26 @@
 
       observer.observe(mainSubmitBtn);
 
-      // 2. Real-Time Variant Sync Function
+      // 2. Real-Time Variant Sync Function (Updates UI when variant changes from anywhere)
       function updateStickyVariant(variant, triggerSource = '') {
         if (!variant) return;
 
+        // Update Dropdown if changed externally
         if (variantSelect && triggerSource !== 'dropdown' && variantSelect.value != variant.id) {
           variantSelect.value = variant.id;
         }
 
+        // Update Variant Title Text (if no dropdown)
         if (variantTitleEl) {
           variantTitleEl.textContent = variant.title !== 'Default Title' ? variant.title : '';
         }
 
+        // Update Price
         if (priceEl && variant.price) {
           priceEl.innerHTML = formatMoney(variant.price, moneyFormat);
         }
 
+        // Update Button Availability State
         if (stickyBtn) {
           if (variant.available) {
             stickyBtn.removeAttribute('disabled');
@@ -261,38 +266,25 @@
           if (matchedVariant) {
             updateStickyVariant(matchedVariant, 'dropdown');
 
-            // A. Update Main Form Hidden Variant Input
+            // Update Main Form Hidden Variant Input
             const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
             if (variantInput) {
               variantInput.value = selectedVariantId;
+              // Trigger change on main form inputs so theme JS updates main page too
               variantInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
-            // B. Sync with theme's custom visual options/buttons on main page
-            matchedVariant.options.forEach((optionValue) => {
-              const optionInputs = mainForm.querySelectorAll('input[type="radio"], input[type="checkbox"], select option');
-              optionInputs.forEach(input => {
-                if (input.value === optionValue || input.textContent.trim() === optionValue) {
-                  if (input.tagName === 'OPTION') {
-                    input.parentElement.value = input.value;
-                    input.parentElement.dispatchEvent(new Event('change', { bubbles: true }));
-                  } else {
-                    input.checked = true;
-                    input.dispatchEvent(new Event('change', { bubbles: true }));
-                    input.dispatchEvent(new Event('click', { bubbles: true }));
-                  }
-                }
-              });
+            // Also try updating select dropdowns on the main product form if they exist
+            const mainVariantSelects = mainForm.querySelectorAll('select[name*="id"], select[data-selected-variant]');
+            mainVariantSelects.forEach(select => {
+              select.value = selectedVariantId;
+              select.dispatchEvent(new Event('change', { bubbles: true }));
             });
-
-            document.dispatchEvent(new CustomEvent('variant:change', {
-              detail: { variant: matchedVariant }
-            }));
           }
         });
       }
 
-      // 4. Listen to Theme Variant Change Events (External sync)
+      // 4. Listen to Theme Variant Change Events (External sync from main page selectors)
       document.addEventListener('variant:change', function(evt) {
         if (evt.detail && evt.detail.variant) {
           updateStickyVariant(evt.detail.variant, 'theme');
