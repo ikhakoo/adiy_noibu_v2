@@ -273,7 +273,7 @@
         if (stickyBtn) {
           if (variant.available) {
             stickyBtn.removeAttribute('disabled');
-            stickyBtn.textContent = "{{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}";
+            stickyBtn.textContent = "{{ 'products.product.add_to_cart' | t | default: 'RESERVE FOR $250' }}";
           } else {
             stickyBtn.setAttribute('disabled', 'disabled');
             stickyBtn.textContent = "{{ 'products.product.sold_out' | t | default: 'Sold Out' }}";
