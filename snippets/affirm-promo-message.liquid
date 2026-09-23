@@ -1,9 +1,17 @@
 {%- comment -%}
   Re-usable Affirm Promo Snippet
   Accepts parameter: price (Optional, defaults to product.price)
+
+  `price` is an amount in cents. When no usable amount is available we render
+  nothing at all. Emitting `data-amount=""` makes affirm.js log
+  "ERROR (Affirm): Amount provided is not a valid number." and the placeholder
+  then falls back to the generic "Pay with Affirm on orders over $35" copy
+  instead of the real "Starting at $X/mo" offer.
 {%- endcomment -%}
 
 {%- assign current_price = price | default: product.price -%}
+
+{%- if current_price != blank and current_price > 0 -%}
 {%- assign public_key = 'M97BIX0W3ONNSNNH' -%}
 
 <div 
@@ -52,3 +60,4 @@
     document.head.appendChild(script);
   }
 </script>
+{%- endif -%}

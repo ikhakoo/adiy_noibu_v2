@@ -474,9 +474,9 @@
               {%- endif -%}
 
               <!-- Financing -->
-              {%- if block.settings.show_financing -%}
+              {%- if block.settings.show_financing and card_product != blank -%}
                 <div class="deck-card__financing-bar">
-                  {% render 'affirm-promo-message', price: product.selected_or_first_available_variant.price %}
+                  {% render 'affirm-promo-message', price: card_product.price_min %}
 
                   
                   {% comment %} {%- if block.settings.financing_link_text != blank -%}
