@@ -45,7 +45,6 @@
 
 <style>
   /* Hidden on Desktop (above 750px) */
-  
   @media screen and (min-width: 751px) {
     .mobile-sticky-atc-wrapper {
       display: none !important;
@@ -231,6 +230,9 @@
 
       if (!mainSubmitBtn) return;
 
+      // Watch .dp-product-form instead of the button (with fallback to mainSubmitBtn)
+      const targetElement = document.querySelector('.dp-product-form') || mainSubmitBtn;
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting && window.innerWidth <= 750) {
@@ -241,7 +243,7 @@
         });
       }, { threshold: 0 });
 
-      observer.observe(mainSubmitBtn);
+      observer.observe(targetElement);
 
       function updateStickyVariant(variant) {
         if (!variant) return;
