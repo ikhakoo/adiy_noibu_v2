@@ -130,11 +130,17 @@ if (!customElements.get('product-info')) {
           })
           .catch((error) => {
             if (error.name === 'AbortError') {
+              // A newer variant change aborted this in-flight request. The
+              // abort is an internal supersession, not a user-facing failure,
+              // so it must NOT reject the pending product:select promise --
+              // doing so leaves that rejection unhandled and surfaces as
+              // "signal is aborted without reason" (Noibu #330). The
+              // superseding request owns and settles the pending promise.
               console.log('Fetch aborted by user');
             } else {
               console.error(error);
+              this.variantSelectors?.rejectPendingSelectPromise(error);
             }
-            this.variantSelectors?.rejectPendingSelectPromise(error);
           });
       }
 
