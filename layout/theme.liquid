@@ -509,7 +509,8 @@
 
     <script>
       document.addEventListener('click', function (e) {
-        const btn = e.target.closest('a[href="#chat"]');
+        if (!(e.target instanceof Element)) return;
+        const btn = e.target.closest('a[href="#chat"], [data-chat-trigger]');
 
         if (!btn) return;
 

@@ -1176,19 +1176,23 @@
       if (targetPopup) {
         item.addEventListener('mouseenter', () => {
           clearTimeout(timer);
+          menuItems.forEach(i => i.classList.remove('is-active'));
           popups.forEach(p => p.classList.remove('open'));
+          item.classList.add('is-active');
           targetPopup.classList.add('open');
         });
 
         item.addEventListener('mouseleave', () => {
           timer = setTimeout(() => {
             if (!targetPopup.matches(':hover')) {
+              item.classList.remove('is-active');
               targetPopup.classList.remove('open');
             }
           }, 150);
         });
 
         targetPopup.addEventListener('mouseleave', () => {
+          item.classList.remove('is-active');
           targetPopup.classList.remove('open');
         });
 
@@ -1197,30 +1201,6 @@
         });
       }
     });
-  });
-
-  // Hover/Active Class management in your JS snippet:
-  item.addEventListener('mouseenter', () => {
-    clearTimeout(timer);
-    menuItems.forEach(i => i.classList.remove('is-active'));
-    popups.forEach(p => p.classList.remove('open'));
-    
-    item.classList.add('is-active');
-    targetPopup.classList.add('open');
-  });
-
-  item.addEventListener('mouseleave', () => {
-    timer = setTimeout(() => {
-      if (!targetPopup.matches(':hover')) {
-        item.classList.remove('is-active');
-        targetPopup.classList.remove('open');
-      }
-    }, 150);
-  });
-
-  targetPopup.addEventListener('mouseleave', () => {
-    item.classList.remove('is-active');
-    targetPopup.classList.remove('open');
   });
 </script>
 
