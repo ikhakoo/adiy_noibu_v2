@@ -34,7 +34,7 @@
         {% unless current_variant.available %}disabled{% endunless %}
       >
         {%- if current_variant.available -%}
-          {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+          {{ 'products.product.add_to_cart' | t | default: 'RESERVE FOR $250' }}
         {%- else -%}
           {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
         {%- endif -%}
