@@ -156,7 +156,6 @@
     const productData = {{ product | json }};
     const moneyFormat = "{{ shop.money_format | escape }}";
 
-    // Safely map and convert variant deck_price metafield into cents
     {% if product.variants.size > 0 %}
       const variantMetafields = {
         {% for variant in product.variants %}
@@ -228,22 +227,27 @@
       const variantTitleEl = document.getElementById('MobileStickyATC-Variant-{{ section.id }}');
       const priceEl = document.getElementById('MobileStickyATC-Price-{{ section.id }}');
 
-      if (!mainSubmitBtn) return;
-
-      // Watch .dp-product-form instead of the button (with fallback to mainSubmitBtn)
       const targetElement = document.querySelector('.dp-product-form') || mainSubmitBtn;
+      if (!targetElement) return;
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting && window.innerWidth <= 750) {
+      // Reliable Scroll Position Check using window scroll event
+      function checkScroll() {
+        if (window.innerWidth <= 750) {
+          const rect = targetElement.getBoundingClientRect();
+          // Jab form ki bottom position screen ke upar (0 se kam) ho jaye, tab sticky bar dikhao
+          if (rect.bottom < 0) {
             stickyBar.classList.add('is-visible');
           } else {
             stickyBar.classList.remove('is-visible');
           }
-        });
-      }, { threshold: 0 });
+        } else {
+          stickyBar.classList.remove('is-visible');
+        }
+      }
 
-      observer.observe(targetElement);
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      window.addEventListener('resize', checkScroll);
+      checkScroll(); // Initial check on load
 
       function updateStickyVariant(variant) {
         if (!variant) return;
@@ -312,8 +316,8 @@
       if (stickyBtn) {
         stickyBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          if (mainSubmitBtn.disabled) return;
-          mainSubmitBtn.click();
+          if (mainSubmitBtn && mainSubmitBtn.disabled) return;
+          if (mainSubmitBtn) mainSubmitBtn.click();
         });
       }
     }
