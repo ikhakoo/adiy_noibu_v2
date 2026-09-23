@@ -217,6 +217,11 @@
         "type": "shopify://apps/tinyseo-seo-speed/blocks/website-json-ld-embed/0605268f-f7c4-4e95-b560-e43df7d59ae4",
         "disabled": false,
         "settings": {}
+      },
+      "10837457020649725524": {
+        "type": "shopify://apps/noibupixel/blocks/noibu-core/01a0abe7-a6bf-7b1c-ac89-69dee68e16b6",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
@@ -272,7 +277,7 @@
           "button": "#ffffff",
           "button_label": "#ffffff",
           "secondary_button_label": "#ffffff",
-          "shadow": "#FFFFFF"
+          "shadow": "#ffffff"
         }
       },
       "scheme-ddc5657a-87bc-4902-88aa-ab71ad3610ba": {
