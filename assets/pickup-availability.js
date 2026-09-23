@@ -5,10 +5,11 @@ if (!customElements.get('pickup-availability')) {
       constructor() {
         super();
 
-        if (!this.hasAttribute('available')) return;
-
         this.errorHtml = this.querySelector('template').content.firstElementChild.cloneNode(true);
         this.onClickRefreshList = this.onClickRefreshList.bind(this);
+
+        if (!this.hasAttribute('available')) return;
+
         this.fetchAvailability(this.dataset.variantId);
       }
 
