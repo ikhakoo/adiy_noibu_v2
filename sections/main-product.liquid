@@ -259,6 +259,10 @@
       font-size: 14px;
       text-align: center;
     }
+     .product__info-wrapper .material-card-price-from {
+      font-weight: 400;
+      margin-right: 4px;
+    }
      .product__info-wrapper .step-header span[data-selected-value] {
       color: #d1d1d1;
       font-weight: normal;
@@ -1653,10 +1657,16 @@
                               {%- if block.settings.custom_price_1 != blank -%}
                                 {{ block.settings.custom_price_1 }}
                               {%- else -%}
+                                {%- assign card_deck_price_1 = prod_1.selected_or_first_available_variant.metafields.custom.deck_price -%}
                                 {%- if is_active_1 and product.selected_or_first_available_variant.metafields.custom.deck_price != blank -%}
                                   {{ product.selected_or_first_available_variant.metafields.custom.deck_price }}
+                                {%- elsif card_deck_price_1 != blank -%}
+                                  {{ card_deck_price_1 | money }}
                                 {%- else -%}
-                                  {{ prod_1.selected_or_first_available_variant.metafields.custom.deck_price | default: prod_1.price_min | money }}
+                                  {%- if prod_1.price_varies -%}
+                                    <span class="material-card-price-from">From</span>
+                                  {%- endif -%}
+                                  {{ prod_1.price_min | money }}
                                 {%- endif -%}
                               {%- endif -%}
                             </div>
@@ -1714,10 +1724,16 @@
                               {%- if block.settings.custom_price_2 != blank -%}
                                 {{ block.settings.custom_price_2 }}
                               {%- else -%}
+                                {%- assign card_deck_price_2 = prod_2.selected_or_first_available_variant.metafields.custom.deck_price -%}
                                 {%- if is_active_2 and product.selected_or_first_available_variant.metafields.custom.deck_price != blank -%}
                                   {{ product.selected_or_first_available_variant.metafields.custom.deck_price }}
+                                {%- elsif card_deck_price_2 != blank -%}
+                                  {{ card_deck_price_2 | money }}
                                 {%- else -%}
-                                  {{ prod_2.selected_or_first_available_variant.metafields.custom.deck_price | default: prod_2.price_min | money }}
+                                  {%- if prod_2.price_varies -%}
+                                    <span class="material-card-price-from">From</span>
+                                  {%- endif -%}
+                                  {{ prod_2.price_min | money }}
                                 {%- endif -%}
                               {%- endif -%}
                             </div>
