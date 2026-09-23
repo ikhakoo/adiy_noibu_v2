@@ -65,15 +65,32 @@
       color: #000;
       font-size: 14px;
   }
-  .custom-annoucement-bar .announcement-bar a {
+  .custom-annoucement-bar .announcement-bar a,
+  .custom-annoucement-bar .announcement-bar .announcement-bar__chat-trigger {
       text-decoration: none;
       color: #000;
       font-size: 14px;
   }
   .template-index .custom-annoucement-bar .announcement-bar p,
-  .template-index .custom-annoucement-bar .announcement-bar a {
+  .template-index .custom-annoucement-bar .announcement-bar a,
+  .template-index .custom-annoucement-bar .announcement-bar .announcement-bar__chat-trigger {
     color: #fff;
     min-height: auto;
+  }
+
+  /* The chat control is a <button> so that it is announced as a control rather
+     than as a link to a fragment that does not exist. These rules strip the UA
+     button styling so it renders exactly as the link it replaced. */
+  .custom-annoucement-bar .announcement-bar .announcement-bar__chat-trigger {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    font-size: 14px;
+    line-height: inherit;
+    cursor: pointer;
+    text-align: inherit;
   }
 
   /* SVG Base & Dynamic Color Fix */
@@ -94,6 +111,10 @@
   }
   .custom-annoucement-bar .announcement-bar .left-side a{
     display: flex;
+    /* The icon and the rating text used to be two sibling links, spaced by the
+       10px gap on .left-side. They are now one link, so the gap lives here. */
+    align-items: center;
+    gap: 10px;
   }
   .custom-annoucement-bar .announcement-bar .left-side svg,
   .custom-annoucement-bar .announcement-bar .left-side img {
@@ -187,6 +208,7 @@
      Padding grows the hit box; the matching negative margin keeps the row
      exactly where it was, so nothing moves. */
   .custom-annoucement-bar .announcement-bar .right-side .text-box > a,
+  .custom-annoucement-bar .announcement-bar .right-side .text-box > .announcement-bar__chat-trigger,
   .custom-annoucement-bar .announcement-bar .right-side .contact > a {
     display: inline-flex;
     align-items: center;
@@ -196,7 +218,8 @@
     padding: 12px;
     margin: -12px;
   }
-  .custom-annoucement-bar .announcement-bar .right-side .text-box > a{
+  .custom-annoucement-bar .announcement-bar .right-side .text-box > a,
+  .custom-annoucement-bar .announcement-bar .right-side .text-box > .announcement-bar__chat-trigger {
     padding: 0;
   }
   
@@ -219,7 +242,18 @@
           {% when 'left' %}
             <div class="left-side" {{ block.shopify_attributes }}>
               
-              <a href="{{ block.settings.left_link }}">
+              {%- comment -%}
+                The rating icon and the rating text point at the same page, so
+                they are one link, not two. Splitting them left the icon in a
+                link of its own whose only content was a decorative image -- a
+                link with no accessible name at all (WCAG 2.4.4 / 4.1.2), which
+                a screen reader announces as an unlabelled link on every page of
+                the store. It also put two adjacent links to the same
+                destination in the tab order for no benefit. Keeping the icon
+                inside the labelled link fixes both: the image stays decorative
+                (alt="") and the surrounding text names the link.
+              {%- endcomment -%}
+              <a href="{{ block.settings.left_link }}" class="left-side-link">
                 {% if block.settings.svg_code != blank %}
                   {{ block.settings.svg_code }}
                 {% elsif block.settings.icon != blank %}
@@ -238,11 +272,9 @@
                     fetchpriority="low"
                   />
                 {% endif %}
-              </a>
-              <a href="{{ block.settings.left_link }}" class="left-side-link">
                 <p>
-                  {{ block.settings.rating_text }} 
-                  <span class="dynamic-review-count-global"></span> 
+                  {{ block.settings.rating_text }}
+                  <span class="dynamic-review-count-global"></span>
                   {{ block.settings.text_suffix }}
                 </p>
               </a>
@@ -264,7 +296,29 @@
           {% when 'right' %}
             <div class="right-side" {{ block.shopify_attributes }}>
               <div class="text-box">
-                {% if block.settings.message_link != blank %}
+                {%- comment -%}
+                  "#chat" is not a destination -- there is no element with that
+                  id anywhere on the page. It is a hook for the delegated
+                  handler in theme.liquid that opens the chat widget, so the
+                  control is a button that does something, not a link that goes
+                  somewhere. Rendered as <a href="#chat"> it was a broken
+                  same-page link (WCAG 2.4.4) on every page of the store, and
+                  with JavaScript unavailable it did nothing at all. Real
+                  destinations still render as links.
+                {%- endcomment -%}
+                {%- assign message_opens_chat = false -%}
+                {%- if block.settings.message_link contains '#chat' -%}
+                  {%- assign message_opens_chat = true -%}
+                {%- endif -%}
+
+                {% if message_opens_chat %}
+                  <button
+                    type="button"
+                    data-chat-trigger
+                    class="announcement-bar__chat-trigger"
+                    style="display: flex; align-items: center; gap: 10px;"
+                  >
+                {% elsif block.settings.message_link != blank %}
                   <a href="{{ block.settings.message_link }}" style="display: flex; align-items: center; gap: 10px;">
                 {% endif %}
 
@@ -285,7 +339,9 @@
                   <p>{{ block.settings.message_text }}</p>
                 {% endif %}
 
-                {% if block.settings.message_link != blank %}
+                {% if message_opens_chat %}
+                  </button>
+                {% elsif block.settings.message_link != blank %}
                   </a>
                 {% endif %}
               </div>
