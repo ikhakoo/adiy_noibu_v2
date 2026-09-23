@@ -52,6 +52,7 @@
         },
         "custom_price_a6rzcR": {
           "type": "custom_price",
+          "disabled": true,
           "settings": {
             "prefix_text_price": "Reserve your deck for",
             "postfix_text_price": "today"
@@ -226,6 +227,12 @@
             ]
           }
         },
+        "custom_liquid_QFz6hM": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- if product.metafields.custom.image_gallery_top_badges.value != blank -%}\n    <div class=\"custom-gallery-badges-container\">\n      {%- for badge in product.metafields.custom.image_gallery_top_badges.value -%}\n        <div class=\"custom-badge-pill\">\n          \n          {%- comment -%} Icon Render {%- endcomment -%}\n          {%- assign badge_icon = badge.icon.value | default: badge.image.value | default: badge.badge_icon.value -%}\n          {%- if badge_icon != blank -%}\n            <img \n              src=\"{{ badge_icon | image_url: width: 40 }}\" \n              alt=\"\" \n              width=\"18\" \n              height=\"18\" \n              class=\"badge-custom-icon\"\n              loading=\"lazy\"\n            >\n          {%- else -%}\n            <span class=\"badge-icon-fallback\">✓</span>\n          {%- endif -%}\n\n          {%- comment -%} Text Render {%- endcomment -%}\n          <span class=\"badge-text\">\n            {{ badge.label.value | default: badge.title.value | default: badge.text.value | default: badge.name.value | default: badge }}\n          </span>\n\n        </div>\n      {%- endfor -%}\n    </div>\n  {%- endif -%}"
+          }
+        },
         "collapsible_tab_mQbURJ": {
           "type": "collapsible_tab",
           "settings": {
@@ -291,6 +298,7 @@
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
         "accessories_block_TPUpnp",
+        "custom_liquid_QFz6hM",
         "collapsible_tab_mQbURJ",
         "collapsible_tab_cGLBjX",
         "collapsible_tab_6gXUgQ",
