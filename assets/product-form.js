@@ -6,6 +6,8 @@ if (!customElements.get('product-form')) {
         super();
 
         this.form = this.querySelector('form');
+        // Upgraded on a childless clone (DOM snapshotting tools, extensions).
+        if (!this.form) return;
         this.variantIdInput.disabled = false;
         this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
         this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
