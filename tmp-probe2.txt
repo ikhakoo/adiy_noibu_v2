@@ -1,0 +1,3 @@
+alpha "quoted" \n literal-backslash-n
+beta	tab	here
+gamma
