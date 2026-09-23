@@ -780,6 +780,15 @@ class SliderComponent extends HTMLElement {
     // This should be refactored as part of https://github.com/Shopify/dawn/issues/2057
     if (!this.slider || !this.nextButton) return;
 
+    // When the slider is hidden at initialization (e.g. a media gallery for an
+    // inactive variant, or a slider inside a collapsed tab) every slide reports
+    // clientWidth 0, so initPages() leaves sliderItemsToShow empty and returns
+    // before computing sliderItemOffset. A scroll event can still fire update()
+    // in that state, where sliderItemsToShow[0] is undefined and isSlideVisible()
+    // then throws "Cannot read properties of undefined (reading 'offsetLeft')"
+    // (Noibu #440). With no visible slides there is nothing to update, so bail.
+    if (!this.sliderItemsToShow || this.sliderItemsToShow.length === 0) return;
+
     const previousPage = this.currentPage;
     this.currentPage = Math.round(this.slider.scrollLeft / this.sliderItemOffset) + 1;
 
