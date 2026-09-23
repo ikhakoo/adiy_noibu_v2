@@ -2,6 +2,9 @@ class DetailsDisclosure extends HTMLElement {
   constructor() {
     super();
     this.mainDetailsToggle = this.querySelector('details');
+    // Upgraded on a childless clone (DOM snapshotting tools, extensions):
+    // there is nothing to wire up.
+    if (!this.mainDetailsToggle) return;
     this.content = this.mainDetailsToggle.querySelector('summary').nextElementSibling;
 
     this.mainDetailsToggle.addEventListener('focusout', this.onFocusOut.bind(this));
@@ -39,7 +42,7 @@ class HeaderMenu extends DetailsDisclosure {
   }
 
   onToggle() {
-    if (!this.header) return;
+    if (!this.header || !this.mainDetailsToggle) return;
     this.header.preventHide = this.mainDetailsToggle.open;
 
     if (document.documentElement.style.getPropertyValue('--header-bottom-position-desktop') !== '') return;

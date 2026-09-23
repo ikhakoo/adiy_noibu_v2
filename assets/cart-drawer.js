@@ -2,8 +2,13 @@ class CartDrawer extends HTMLElement {
   constructor() {
     super();
 
+    // Upgraded on a childless clone (DOM snapshotting tools, extensions):
+    // bail before binding the real header cart icon to this detached copy.
+    const overlay = this.querySelector('#CartDrawer-Overlay');
+    if (!overlay) return;
+
     this.addEventListener('keyup', (evt) => evt.code === 'Escape' && this.close());
-    this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
+    overlay.addEventListener('click', this.close.bind(this));
     this.setHeaderCartIconAccessibility();
   }
 
