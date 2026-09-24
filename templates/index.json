@@ -703,7 +703,6 @@
           "type": "gallery_set",
           "settings": {
             "featured_position": "left",
-            "image_1": "shopify://shop_images/IMG_1987_1.jpg",
             "image_2": "shopify://shop_images/image2_1.jpg",
             "image_3": "shopify://shop_images/IMG_1340_1.jpg",
             "image_4": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.44.46_7c7bdfbd_1.jpg",
@@ -888,7 +887,6 @@
             "image_1": "shopify://shop_images/Terry_D_Chase_-_12x20_PT_Photo_1.jpg",
             "image_2": "shopify://shop_images/image0-be7fe40c-fab5-471c-b2f4-ebf8f722baca_1.jpg",
             "image_3": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.48.21_3885407f_1_f15c7615-a2a2-4c60-992f-ed91507e5d78.jpg",
-            "image_4": "shopify://shop_images/WhatsApp_Image_2026-04-16_at_1.59.28_PM_1.jpg",
             "image_5": "shopify://shop_images/52b72dce-c49b-4710-a90a-6d8a2ef6361f_1.jpg",
             "image_6": "shopify://shop_images/image_8357.png",
             "image_7": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.44.46_7c7bdfbd_1.jpg"
@@ -1037,7 +1035,7 @@
           "type": "gallery_image",
           "name": "Gallery Image (main)",
           "settings": {
-            "image": "shopify://shop_images/Photo_Jul_26_2026_3_05_43_PM.jpg"
+            "image": "shopify://shop_images/a-diy_deck_1.png"
           }
         },
         "gallery_image_kUYTEt": {
@@ -1055,7 +1053,7 @@
         "gallery_image_wPzTgQ": {
           "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/IMG_1987_1.jpg"
+            "image": "shopify://shop_images/a-diy_deck_2.png"
           }
         },
         "gallery_image_dYxyKN": {
@@ -1073,7 +1071,7 @@
         "gallery_image_fXgLX6": {
           "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-04-16_at_1.59.28_PM_1.jpg"
+            "image": "shopify://shop_images/a-diy_deck_1_3.png"
           }
         },
         "gallery_image_bxyzVQ": {
