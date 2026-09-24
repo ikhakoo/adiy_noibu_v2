@@ -1,7 +1,7 @@
 #chat-button,
 #chat-window,
 #chat-campaigns{
-    z-index:8;
+    z-index:2;
 }
 #CartDrawer{
     z-index:9;
