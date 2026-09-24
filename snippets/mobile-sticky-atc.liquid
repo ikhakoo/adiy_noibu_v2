@@ -31,12 +31,14 @@
         type="button"
         id="MobileStickyATC-Button-{{ section.id }}"
         class="mobile-sticky-atc-btn button button--primary"
+        data-label-available="RESERVE FOR $250"
+        data-label-sold-out="{{ 'products.product.sold_out' | t | escape }}"
         {% unless current_variant.available %}disabled{% endunless %}
       >
         {%- if current_variant.available -%}
           RESERVE FOR $250
         {%- else -%}
-          {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
+          {{ 'products.product.sold_out' | t }}
         {%- endif -%}
       </button>
     </div>
@@ -265,7 +267,7 @@
           }
           
           priceHTML += formatMoney(variant.price, moneyFormat);
-          priceHTML += ` <span class="saving-badge">Reserve Your Deck</span>`;
+          priceHTML += ` <span class="saving-badge">Due Today</span>`;
           
           priceEl.innerHTML = priceHTML;
         }
@@ -273,10 +275,10 @@
         if (stickyBtn) {
           if (variant.available) {
             stickyBtn.removeAttribute('disabled');
-            stickyBtn.textContent = "{{ 'products.product.add_to_cart' | t | default: 'RESERVE FOR $250' }}";
+            stickyBtn.textContent = stickyBtn.dataset.labelAvailable || 'RESERVE FOR $250';
           } else {
             stickyBtn.setAttribute('disabled', 'disabled');
-            stickyBtn.textContent = "{{ 'products.product.sold_out' | t | default: 'Sold Out' }}";
+            stickyBtn.textContent = stickyBtn.dataset.labelSoldOut || 'Sold Out';
           }
         }
       }
