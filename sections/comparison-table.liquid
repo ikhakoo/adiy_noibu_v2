@@ -385,6 +385,8 @@
       }
     }
 
+    trackWrapper.addEventListener('scroll', onScroll, { passive: true });
+
     /* Allow page vertical scrolling while cursor is over horizontal slider */
     trackWrapper.addEventListener('wheel', function (e) {
       // Horizontal scroll stays inside the slider
