@@ -1,8 +1,9 @@
 #chat-button,
 #chat-window,
 #chat-campaigns{
-    z-index:8;
+    z-index:2;
 }
+
 #CartDrawer{
     z-index:9;
 }
@@ -37,11 +38,12 @@
     justify-content: space-between;
     display: flex;
     flex-direction: column;
-    height: 88%;
+    height: 98%;
     background: #fff;
     border-radius: 10px;
     margin: 1rem;
-    margin-top:0;
+    margin-top: 0;
+    z-index: 9;
 }
 #menu-drawer .menu-drawer__navigation{
     background: #fff;
