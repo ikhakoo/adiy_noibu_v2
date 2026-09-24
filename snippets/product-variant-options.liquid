@@ -151,8 +151,9 @@
             Find variant associated with this option value for featured image fallback
           endcomment
           assign matched_variant = null
+          assign option_index0 = option.position | minus: 1
           for variant in product.variants
-            if variant.options[option.position_index0] == value
+            if variant.options[option_index0] == value
               assign matched_variant = variant
               break
             endif
