@@ -542,6 +542,9 @@
     let currentSelectedCountry = countriesList[0];
 
     const flagSelect = document.getElementById('FlagSelect');
+    // The native form (and this dropdown) is currently replaced by the
+    // Klaviyo embed; bail instead of throwing on the page.
+    if (!flagSelect) return;
     const trigger = flagSelect.querySelector('.custom-flag-select__trigger');
     const optionsList = document.getElementById('FlagOptionsList');
     const currentFlag = document.getElementById('CurrentFlag');
