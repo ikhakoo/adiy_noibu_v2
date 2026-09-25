@@ -780,6 +780,11 @@ class SliderComponent extends HTMLElement {
     // This should be refactored as part of https://github.com/Shopify/dawn/issues/2057
     if (!this.slider || !this.nextButton) return;
 
+    // Nothing to page through until initPages() has found at least two laid-out
+    // slides (thumbnails hidden on mobile, gallery still rendering). A scroll
+    // event in that state used to reach isSlideVisible(undefined) (Noibu #440).
+    if (!this.sliderItemsToShow || this.sliderItemsToShow.length < 2) return;
+
     const previousPage = this.currentPage;
     this.currentPage = Math.round(this.slider.scrollLeft / this.sliderItemOffset) + 1;
 
@@ -941,8 +946,10 @@ class SlideshowComponent extends SliderComponent {
       link.classList.remove('slider-counter__link--active');
       link.removeAttribute('aria-current');
     });
-    this.sliderControlButtons[this.currentPage - 1].classList.add('slider-counter__link--active');
-    this.sliderControlButtons[this.currentPage - 1].setAttribute('aria-current', true);
+    const activeLink = this.sliderControlButtons[this.currentPage - 1];
+    if (!activeLink) return;
+    activeLink.classList.add('slider-counter__link--active');
+    activeLink.setAttribute('aria-current', true);
   }
 
   autoPlayToggle() {
