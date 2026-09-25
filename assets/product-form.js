@@ -69,6 +69,13 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
+            } else if (this.dataset.redirectTo) {
+              // Deposit / reservation flows (250 PDP) go straight to checkout once the
+              // line is in the cart. The add still went through the AJAX cart API, so
+              // storefront analytics and the cart lines-update event have already fired.
+              this.resolveCartLinesUpdate(linesUpdateDeferred);
+              window.location.assign(this.dataset.redirectTo);
+              return;
             } else if (!this.cart) {
               this.resolveCartLinesUpdate(linesUpdateDeferred);
               window.location = window.routes.cart_url;
@@ -143,7 +150,10 @@ if (!customElements.get('product-form')) {
           if (text) this.submitButtonText.textContent = text;
         } else {
           this.submitButton.removeAttribute('disabled');
-          this.submitButtonText.textContent = window.variantStrings.addToCart;
+          // Buttons with their own label (e.g. "RESERVE FOR $250") keep it; everything
+          // else falls back to the theme's translated "Add to cart".
+          this.submitButtonText.textContent =
+            this.submitButton.dataset.addToCartText || window.variantStrings.addToCart;
         }
       }
 
