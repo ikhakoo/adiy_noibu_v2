@@ -542,6 +542,10 @@
     let currentSelectedCountry = countriesList[0];
 
     const flagSelect = document.getElementById('FlagSelect');
+    // The native contact form is currently commented out in favour of the
+    // Klaviyo embed, so its elements aren't rendered. Bail out instead of
+    // throwing "Cannot read properties of null (reading 'querySelector')".
+    if (!flagSelect) return;
     const trigger = flagSelect.querySelector('.custom-flag-select__trigger');
     const optionsList = document.getElementById('FlagOptionsList');
     const currentFlag = document.getElementById('CurrentFlag');
