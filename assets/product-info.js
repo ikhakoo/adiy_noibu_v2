@@ -130,10 +130,14 @@ if (!customElements.get('product-info')) {
           })
           .catch((error) => {
             if (error.name === 'AbortError') {
+              // A newer option selection superseded this request. That newer request
+              // owns the pending select promise and will settle it, so rejecting here
+              // only produced an unhandled "signal is aborted without reason"
+              // (Noibu #330 / #495).
               console.log('Fetch aborted by user');
-            } else {
-              console.error(error);
+              return;
             }
+            console.error(error);
             this.variantSelectors?.rejectPendingSelectPromise(error);
           });
       }
