@@ -14,12 +14,29 @@ if (!customElements.get('product-form')) {
         this.submitButton = this.querySelector('[type="submit"]');
         this.submitButtonText = this.submitButton.querySelector('span');
 
-        if (document.querySelector('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
+        // Deposit / reservation flows skip the cart drawer and go straight to
+        // checkout once the line is in the cart. The add still goes through
+        // /cart/add.js so Shopify's cart listener and the Standard Events
+        // CartLinesUpdateEvent fire product_added_to_cart for every pixel
+        // (Meta, GA4, Klaviyo) before the page navigates.
+        this.redirectToCheckout = this.dataset.redirectToCheckout === 'true';
+        this.checkoutUrl = this.form.querySelector('input[name="return_to"]')?.value || '/checkout';
+
+        // Label to restore when the button is re-enabled after a variant change.
+        // Falls back to the theme's Add to cart string for standard buy buttons.
+        this.submitLabel = this.dataset.submitLabel || null;
+
+        if (document.querySelector('cart-drawer') && !this.redirectToCheckout) {
+          this.submitButton.setAttribute('aria-haspopup', 'dialog');
+        }
 
         this.hideErrors = this.dataset.hideErrors === 'true';
       }
 
       onSubmitHandler(evt) {
+        // A capture-phase validator (e.g. the deposit form's delivery-month
+        // check) may have already vetoed this submit.
+        if (evt.defaultPrevented) return;
         evt.preventDefault();
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
 
@@ -69,6 +86,21 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
+            } else if (this.redirectToCheckout) {
+              // Let the pixel sandbox receive the add (CartLinesUpdateEvent
+              // resolves with the fresh cart) before leaving the page.
+              this.error = false;
+              this.navigating = true;
+              publish(PUB_SUB_EVENTS.cartUpdate, {
+                source: 'product-form',
+                productVariantId: variantId,
+                cartData: response,
+              });
+              const go = () => { window.location = this.checkoutUrl; };
+              Promise.resolve(this.resolveCartLinesUpdate(linesUpdateDeferred))
+                .catch(() => {})
+                .then(() => setTimeout(go, 300));
+              return;
             } else if (!this.cart) {
               this.resolveCartLinesUpdate(linesUpdateDeferred);
               window.location = window.routes.cart_url;
@@ -113,6 +145,7 @@ if (!customElements.get('product-form')) {
             linesUpdateDeferred?.reject(e);
           })
           .finally(() => {
+            if (this.navigating) return; // keep the loading state until checkout loads
             this.submitButton.classList.remove('loading');
             if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
@@ -143,7 +176,7 @@ if (!customElements.get('product-form')) {
           if (text) this.submitButtonText.textContent = text;
         } else {
           this.submitButton.removeAttribute('disabled');
-          this.submitButtonText.textContent = window.variantStrings.addToCart;
+          this.submitButtonText.textContent = this.submitLabel || window.variantStrings.addToCart;
         }
       }
 
@@ -164,15 +197,15 @@ if (!customElements.get('product-form')) {
       }
 
       resolveCartLinesUpdate(deferred) {
-        if (!deferred) return;
+        if (!deferred) return Promise.resolve();
         const { CartLinesUpdateEvent } = window.StandardEvents || {};
-        if (!CartLinesUpdateEvent) return;
+        if (!CartLinesUpdateEvent) return Promise.resolve();
 
         const pendingCartDataPromise = typeof CartItems !== 'undefined'
           ? CartItems.fetchCartData()
           : fetch(`${routes.cart_url}.json`).then((response) => response.json());
 
-        pendingCartDataPromise
+        return pendingCartDataPromise
           .then((cart) => {
             if (!cart?.currency) return deferred.reject(new Error('Missing currency in cart response'));
             deferred.resolve({ cart: CartLinesUpdateEvent.createCartFromAjaxResponse(cart) });
