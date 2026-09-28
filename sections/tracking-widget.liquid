@@ -400,6 +400,107 @@
   .stage-2__support-card p { margin: 0 0 1rem 0; font-size: 1.2rem; letter-spacing: 0.5px; }
   .stage-2__support-btn { background: #fff; border: 1px solid #d1d5db; border-radius: 6px; padding: 10px 20px; font-weight: 700; cursor: pointer; font-size: 1.3rem; width: 100%; max-width: 300px; color: #000; text-decoration: none; }
 
+  .digital-workspace-section {
+  margin-top: 40px;
+  padding: 20px 0;
+  text-align: center;
+  font-family: inherit;
+}
+
+.digital-workspace-header h2 {
+  font-size: 26px;
+  color: #002B49;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.digital-workspace-header p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 28px;
+}
+
+.digital-workspace-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 991px) {
+  .digital-workspace-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .digital-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.workspace-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  min-height: 180px;
+}
+
+.workspace-card-icon {
+  width: 40px;
+  height: 40px;
+  background: #e8ecef;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: #002B49;
+}
+
+.workspace-card-icon.app-icon {
+  background: #063b28;
+  color: #ffffff;
+}
+
+.workspace-card h4 {
+  font-size: 15px;
+  color: #002B49;
+  margin: 0 0 20px 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.workspace-btn {
+  width: 100%;
+  background: #063b28;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease;
+}
+
+.workspace-btn:hover {
+  background: #04291c;
+}
+
+.workspace-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
 
   
 
