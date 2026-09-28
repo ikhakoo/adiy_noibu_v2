@@ -269,6 +269,79 @@
       margin-left: 5px;
     }
 
+    /*************** Payment plan picker (split-payments template) *****************/
+     .product__info-wrapper .payment-plan-block {
+      margin-bottom: 2rem;
+    }
+     .product__info-wrapper .payment-plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+     .product__info-wrapper .payment-plan-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      border: 1px solid #e2e2e2;
+      border-radius: 3px;
+      padding: 12px 5px 10px;
+      color: #000000;
+      background-color: #ffffff;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+     .product__info-wrapper .payment-plan-card:hover {
+      border: 1.5px solid #1b3d2f;
+    }
+     .product__info-wrapper .payment-plan-card:has(input:checked) {
+      border: 1.5px solid #1b3d2f;
+      background-color: #ECEBEB;
+    }
+     .product__info-wrapper .payment-plan-card:has(input:focus-visible) {
+      outline: 2px solid #1b3d2f;
+      outline-offset: 2px;
+    }
+     .product__info-wrapper .payment-plan-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+     .product__info-wrapper .payment-plan-card__title {
+      font-size: 14px;
+    }
+     .product__info-wrapper .payment-plan-card__amount {
+      font-size: 17px;
+      font-weight: 500;
+    }
+     .product__info-wrapper .payment-plan-card__per {
+      font-size: 13px;
+      font-weight: 400;
+    }
+     .product__info-wrapper .payment-plan-card__note {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+     .product__info-wrapper .payment-plan-footnote {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.4;
+      opacity: 0.8;
+    }
+    @media screen and (max-width: 380px) {
+       .product__info-wrapper .payment-plan-grid {
+        gap: 8px;
+      }
+       .product__info-wrapper .payment-plan-card__amount {
+        font-size: 15px;
+      }
+    }
+
     /*************** Financing widgetcss *****************/
      .product__info-wrapper .financing-widget-block {
       margin: 0 0 5px;
@@ -1821,6 +1894,76 @@
                     });
                   });
                 </script>
+
+                {%- when 'payment_plan_picker' -%}
+                  {%- comment -%}
+                    Split-payments step: one card per Pay-in-N plan (selling plans created by the
+                    adiy-payment-plans app). The radios submit `selling_plan` with the product form
+                    through the form attribute, like the variant options do, so the cart line is
+                    bought on the chosen plan. Amounts are the selected variant's per-month price;
+                    the script below swaps this block's cards in from the re-rendered section when
+                    the variant changes. Numbered after the variant steps: Step 1 is material, then
+                    one step per option (Size, Color).
+                  {%- endcomment -%}
+                  {%- if product.selling_plan_groups.size > 0 -%}
+                    {%- assign plan_step = product.options.size | plus: 2 -%}
+                    {%- assign plan_variant = product.selected_or_first_available_variant -%}
+                    {%- assign selected_plan_id = product.selected_selling_plan.id
+                      | default: plan_variant.selling_plan_allocations.first.selling_plan.id
+                    -%}
+                    <div class="payment-plan-block" {{ block.shopify_attributes }}>
+                      <div class="step-header">Step {{ plan_step }}: Choose Your Payment Plan</div>
+                      <fieldset class="payment-plan-grid" id="PaymentPlans-{{ section.id }}">
+                        <legend class="visually-hidden">Payment plan</legend>
+                        {%- for allocation in plan_variant.selling_plan_allocations -%}
+                          {%- assign plan_count = allocation.selling_plan.options.first.value
+                            | remove: 'Pay in '
+                            | plus: 0
+                          -%}
+                          <label class="payment-plan-card">
+                            <input
+                              type="radio"
+                              name="selling_plan"
+                              value="{{ allocation.selling_plan.id }}"
+                              form="{{ product_form_id }}"
+                              {% if allocation.selling_plan.id == selected_plan_id %}
+                                checked
+                              {% endif %}
+                            >
+                            <span class="payment-plan-card__title">Pay in {{ plan_count }}</span>
+                            <span class="payment-plan-card__amount">
+                              {{- allocation.price | money -}}
+                              <span class="payment-plan-card__per">/mo</span>
+                            </span>
+                            <span class="payment-plan-card__note">{{ plan_count }} monthly payments</span>
+                          </label>
+                        {%- endfor -%}
+                      </fieldset>
+                      <p class="payment-plan-footnote">
+                        First payment today, the rest charged monthly to the same card. No fees or interest.
+                        Your deck ships once it's paid in full.
+                      </p>
+                    </div>
+
+                    <script>
+                      // pubsub.js / constants.js are deferred, so wait for them.
+                      document.addEventListener('DOMContentLoaded', function () {
+                        const sectionId = {{ section.id | json }};
+                        if (typeof subscribe !== 'function') return;
+                        // Keep the customer's plan choice, refresh the per-month amounts for the new variant.
+                        subscribe(PUB_SUB_EVENTS.variantChange, ({ data }) => {
+                          if (data.sectionId !== sectionId) return;
+                          const current = document.getElementById(`PaymentPlans-${sectionId}`);
+                          const next = data.html.getElementById(`PaymentPlans-${sectionId}`);
+                          if (!current || !next) return;
+                          const chosen = current.querySelector('input[name="selling_plan"]:checked')?.value;
+                          current.innerHTML = next.innerHTML;
+                          const keep = chosen && current.querySelector(`input[name="selling_plan"][value="${chosen}"]`);
+                          if (keep) keep.checked = true;
+                        });
+                      });
+                    </script>
+                  {%- endif -%}
 
                 {%- when 'accessories_block' -%}
                   <div class="product-accessories-widget" {{ block.shopify_attributes }}>
@@ -4042,6 +4185,12 @@
           "label": "Custom Image 2"
         }
       ]
+    },
+    {
+      "type": "payment_plan_picker",
+      "name": "Payment Plan Picker",
+      "limit": 1,
+      "settings": []
     },
 
     {
