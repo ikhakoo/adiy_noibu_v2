@@ -1,0 +1,10 @@
+{%- comment -%}
+  Accepts: label, link, style (primary | secondary | white | outline-white | text), small (bool)
+{%- endcomment -%}
+{%- if label != blank -%}
+  {%- if style == 'text' -%}
+    <a class="sg-link" href="{{ link | default: '#' }}">{{ label | escape }}</a>
+  {%- else -%}
+    <a class="sg-btn sg-btn--{{ style | default: 'primary' }}{% if small %} sg-btn--sm{% endif %}" href="{{ link | default: '#' }}">{{ label | escape }}</a>
+  {%- endif -%}
+{%- endif -%}

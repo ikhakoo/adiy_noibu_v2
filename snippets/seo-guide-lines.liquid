@@ -1,0 +1,48 @@
+{%- comment -%}
+  Renders a textarea (one item per line) as a list.
+  Use " | " to split a line into two parts where the style needs it.
+
+  Accepts:
+  - items: textarea string
+  - display: checklist | numbered | factors | figures | steps | chips | links | specs
+
+  Placeholder text of the form "[ADD ... HERE]" is highlighted automatically.
+{%- endcomment -%}
+{%- if items != blank -%}
+  {%- assign lines = items | newline_to_br | split: '<br />' -%}
+  {%- capture list_items -%}
+    {%- for line in lines -%}
+      {%- assign l = line | strip -%}
+      {%- if l == blank -%}{%- continue -%}{%- endif -%}
+      {%- assign parts = l | split: ' | ' -%}
+      {%- assign a = parts[0] | strip | escape | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' -%}
+      {%- assign b = parts[1] | strip | escape | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' -%}
+      {%- case display -%}
+        {%- when 'factors' -%}
+          <div><b>{{ a }}</b><span>{{ b }}</span></div>
+        {%- when 'figures' -%}
+          <div class="sg-fig"><span>{{ a }}</span>{% if b contains 'sg-ph' %}{{ b }}{% else %}<b>{{ b }}</b>{% endif %}</div>
+        {%- when 'specs' -%}
+          <li><span>{{ a }}</span>{{ b }}</li>
+        {%- when 'steps' -%}
+          <li><b>{{ a }}</b><span>{{ b }}</span></li>
+        {%- when 'links' -%}
+          {%- assign href = parts[1] | strip -%}
+          <li>{% if href != blank %}<a href="{{ href }}" rel="noopener">{{ parts[0] | strip | escape }}</a>{% else %}{{ a }}{% endif %}</li>
+        {%- else -%}
+          <li>{{ l | escape | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</li>
+      {%- endcase -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- case display -%}
+    {%- when 'factors' -%}<div class="sg-factors">{{ list_items }}</div>
+    {%- when 'figures' -%}<div class="sg-figs">{{ list_items }}</div>
+    {%- when 'specs' -%}<ul class="sg-specs">{{ list_items }}</ul>
+    {%- when 'steps' -%}<ol class="sg-steps">{{ list_items }}</ol>
+    {%- when 'links' -%}<ol class="sg-links">{{ list_items }}</ol>
+    {%- when 'numbered' -%}<ol class="sg-numbered">{{ list_items }}</ol>
+    {%- when 'chips' -%}<ul class="sg-chips">{{ list_items }}</ul>
+    {%- else -%}<ul class="sg-checks">{{ list_items }}</ul>
+  {%- endcase -%}
+{%- endif -%}
