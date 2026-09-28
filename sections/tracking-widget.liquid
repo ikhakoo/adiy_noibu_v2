@@ -584,6 +584,7 @@ async function handleTrackingSubmit(event) {
   const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
   const submitBtn = document.getElementById("trackSubmitBtn");
   const resultContainer = document.getElementById("trackingResultContainer");
+  const workspaceContainer = document.getElementById("digitalWorkspaceContainer");
   const orderNumber = inputEl.value.trim();
 
   if (!orderNumber) return;
@@ -592,6 +593,7 @@ async function handleTrackingSubmit(event) {
   submitBtn.innerText = "Searching...";
   submitBtn.disabled = true;
   resultContainer.style.display = "none";
+  if (workspaceContainer) workspaceContainer.style.display = "none";
 
   try {
     const response = await fetch(`https://adiy-order-tracker.a-diy.workers.dev/track?order=${encodeURIComponent(orderNumber)}`);
@@ -632,6 +634,7 @@ async function handleTrackingSubmit(event) {
       const videoUrl = (firstItem.videoLinks && firstItem.videoLinks.length > 0) ? firstItem.videoLinks[0] : '';
       const app3dUrl = (firstItem.appLinks3d && firstItem.appLinks3d.length > 0) ? firstItem.appLinks3d[0] : '';
 
+      // Main Tracking Result Box inside card
       resultContainer.innerHTML = `
         <div class="tracking-result-header">
           <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
@@ -649,8 +652,20 @@ async function handleTrackingSubmit(event) {
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
         </button>
+      `;
+      resultContainer.style.display = "block";
 
-        <!-- Digital Workspace & Resources Section -->
+      // Render Outside Workspace Container
+      let outerWorkspaceEl = document.getElementById("digitalWorkspaceContainer");
+      if (!outerWorkspaceEl) {
+        outerWorkspaceEl = document.createElement("div");
+        outerWorkspaceEl.id = "digitalWorkspaceContainer";
+        // Search card block ke bad append karenge
+        const searchCard = document.getElementById("tracking-search-container") || resultContainer.parentElement;
+        searchCard.parentElement.insertBefore(outerWorkspaceEl, searchCard.nextSibling);
+      }
+
+      outerWorkspaceEl.innerHTML = `
         <div class="digital-workspace-section">
           <div class="digital-workspace-header">
             <h2>Your Digital Build Workspace & Resources</h2>
@@ -708,8 +723,7 @@ async function handleTrackingSubmit(event) {
           </div>
         </div>
       `;
-      
-      resultContainer.style.display = "block";
+      outerWorkspaceEl.style.display = "block";
 
     } else {
       resultContainer.innerHTML = `<p style="color: #dc2626; margin: 0; text-align: center;">Order not found. Please check your order number.</p>`;
@@ -732,6 +746,9 @@ function showLiveProgressStage() {
 
   const searchCardContainer = document.getElementById('tracking-search-container');
   if (searchCardContainer) searchCardContainer.style.display = 'none';
+
+  const workspaceContainer = document.getElementById('digitalWorkspaceContainer');
+  if (workspaceContainer) workspaceContainer.style.display = 'none';
 
   const stageContainer = document.getElementById('dynamic-tracking-stage');
   if (stageContainer) stageContainer.style.display = 'block';
@@ -767,9 +784,6 @@ function showLiveProgressStage() {
   ];
 
   if (!isStage2) {
-    // ------------------------------------
-    // STAGE 1 VIEW
-    // ------------------------------------
     stage1Block.style.display = 'block';
     stage2Block.style.display = 'none';
 
@@ -823,9 +837,6 @@ function showLiveProgressStage() {
     });
 
   } else {
-    // ------------------------------------
-    // STAGE 2 VIEW
-    // ------------------------------------
     stage1Block.style.display = 'none';
     stage2Block.style.display = 'block';
 
@@ -896,11 +907,13 @@ function resetTrackingView() {
   const sectionId = "{{ section.id }}";
   const inputEl = document.getElementById(`TrackingInput-${sectionId}`);
   const resultContainer = document.getElementById("trackingResultContainer");
+  const workspaceContainer = document.getElementById("digitalWorkspaceContainer");
   const stageContainer = document.getElementById("dynamic-tracking-stage");
   const searchCardContainer = document.getElementById("tracking-search-container");
 
   if (inputEl) inputEl.value = "";
   if (resultContainer) resultContainer.style.display = "none";
+  if (workspaceContainer) workspaceContainer.style.display = "none";
   if (stageContainer) stageContainer.style.display = "none";
   if (searchCardContainer) searchCardContainer.style.display = "block";
 }
