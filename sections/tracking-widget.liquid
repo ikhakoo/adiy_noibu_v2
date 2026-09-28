@@ -505,8 +505,9 @@ resultContainer.innerHTML = `
           <div><strong>Email:</strong> ${customerEmail}</div>
           <div><strong>Phone:</strong> ${customerPhone}</div>
           <div><strong>Order Date:</strong> ${formattedDate}</div>
-          <div><strong>Product Title:</strong> ${productTitle}</div>
-          <div><strong>Variant:</strong> ${variantTitle}</div>
+          
+          <div style="grid-column: 1 / -1;"><strong>Product Title:</strong> ${productTitle}</div>
+          <div style="grid-column: 1 / -1;"><strong>Variant:</strong> ${variantTitle}</div>
         </div>
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
