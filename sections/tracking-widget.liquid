@@ -490,6 +490,8 @@ async function handleTrackingSubmit(event) {
       const customerName = data.customer && data.customer.name ? data.customer.name : 'N/A';
       const customerEmail = data.customer && data.customer.email ? data.customer.email : 'N/A';
       const customerPhone = data.customer && data.customer.phone ? data.customer.phone : 'N/A';
+      const productTitle = (order.items && order.items.length > 0 && order.items[0].title) ? order.items[0].title : 'N/A';
+      const variantTitle = (order.items && order.items.length > 0 && order.items[0].variantTitle) ? order.items[0].variantTitle : 'N/A';
 
       resultContainer.innerHTML = `
         <div class="tracking-result-header">
@@ -501,6 +503,8 @@ async function handleTrackingSubmit(event) {
           <div><strong>Email:</strong> ${customerEmail}</div>
           <div><strong>Phone:</strong> ${customerPhone}</div>
           <div><strong>Order Date:</strong> ${formattedDate}</div>
+          <div><strong>Product Title:</strong> ${productTitle}</div>
+          <div><strong>Variant:</strong> ${variantTitle}</div>
           {% comment %} <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
           <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div> {% endcomment %}
         </div>
