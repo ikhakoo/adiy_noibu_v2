@@ -777,6 +777,11 @@ async function handleTrackingSubmit(event) {
 function showLiveProgressStage() {
   if (!window.currentActiveOrderData || !window.currentActiveOrderData.order) return;
 
+  const sectionElement = document.querySelector(`.stage-1-{{ section.id }}`);
+  if (sectionElement) {
+    sectionElement.classList.remove("is-search-result-stage");
+  }
+
   const order = window.currentActiveOrderData.order;
 
   const searchCardContainer = document.getElementById('tracking-search-container');
