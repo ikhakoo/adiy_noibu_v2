@@ -415,6 +415,36 @@
 <script>
 window.currentActiveOrderData = null;
 
+// Cross-Device PDF Download Helper (Windows, Mac, Android, iOS)
+async function forceDownloadPdf(url, filename) {
+  if (!url) return;
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename || 'document.pdf';
+    document.body.appendChild(link);
+    link.click();
+    
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    window.open(url, '_blank');
+  }
+}
+
+// Resource Link Redirect Helper
+function openResourceLink(url) {
+  if (url) {
+    window.open(url, '_blank');
+  } else {
+    alert('Link not available for this product.');
+  }
+}
+
 function calculateWorkingDays(startDate, endDate) {
   let count = 0;
   let curDate = new Date(startDate.getTime());
@@ -469,7 +499,7 @@ async function handleTrackingSubmit(event) {
     if (data.success && data.order) {
       const order = data.order;
       
-      window.currentActiveOrderData = { order: order, delivery: data.delivery };
+      window.currentActiveOrderData = { order: order, delivery: data.delivery, items: data.items };
       try {
         localStorage.setItem('lastFetchedOrderData', JSON.stringify(window.currentActiveOrderData));
       } catch (e) {
@@ -485,17 +515,23 @@ async function handleTrackingSubmit(event) {
         timeZone: 'America/New_York'
       });
 
-      const tagsText = (order.tags && order.tags.length > 0) ? order.tags.join(', ') : 'None';
       const fulfillmentText = order.fulfillmentStatus ? order.fulfillmentStatus.replace(/_/g, ' ') : 'N/A';
       const customerName = data.customer && data.customer.name ? data.customer.name : 'N/A';
       const customerEmail = data.customer && data.customer.email ? data.customer.email : 'N/A';
       const customerPhone = data.customer && data.customer.phone ? data.customer.phone : 'N/A';
-      // Pehle item se product title aur variant extract karein (fallback safety ke sath)
-      const firstItem = (data.items && data.items.length > 0) ? data.items[0] : null;
-      const productTitle = firstItem ? (firstItem.productTitle || firstItem.title || 'N/A') : 'N/A';
-      const variantTitle = (firstItem && firstItem.variantTitle) ? firstItem.variantTitle : 'N/A';
+      
+      // First Item Details
+      const firstItem = (data.items && data.items.length > 0) ? data.items[0] : {};
+      const productTitle = firstItem.productTitle || firstItem.title || 'N/A';
+      const variantTitle = firstItem.variantTitle || 'N/A';
 
-resultContainer.innerHTML = `
+      // Metafield Links Extraction
+      const manualPdf = firstItem.productManualsPdf || '';
+      const footingPdf = firstItem.footingDiagramsPdf || '';
+      const videoUrl = (firstItem.videoLinks && firstItem.videoLinks.length > 0) ? firstItem.videoLinks[0] : '';
+      const app3dUrl = (firstItem.appLinks3d && firstItem.appLinks3d.length > 0) ? firstItem.appLinks3d[0] : '';
+
+      resultContainer.innerHTML = `
         <div class="tracking-result-header">
           <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
           <span class="status-badge">${fulfillmentText}</span>
@@ -512,26 +548,64 @@ resultContainer.innerHTML = `
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
         </button>
-      `;
 
-      resultContainer.innerHTML = `
-        <div class="tracking-result-header">
-          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
-          <span class="status-badge">${fulfillmentText}</span>
+        <!-- Digital Workspace & Resources Section -->
+        <div class="digital-workspace-section">
+          <div class="digital-workspace-header">
+            <h2>Your Digital Build Workspace & Resources</h2>
+            <p>Access your engineering documentation, 3D model, and assembly guides anytime before delivery day.</p>
+          </div>
+
+          <div class="digital-workspace-grid">
+            <!-- Card 1: Installation Manual -->
+            <div class="workspace-card">
+              <div class="workspace-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              </div>
+              <h4>A-DIY Master Installation Manual</h4>
+              <button type="button" class="workspace-btn" ${manualPdf ? `onclick="forceDownloadPdf('${manualPdf}', 'Master_Installation_Manual.pdf')"` : 'disabled'}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                DOWNLOAD PDF
+              </button>
+            </div>
+
+            <!-- Card 2: Footing Plan Diagram -->
+            <div class="workspace-card">
+              <div class="workspace-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <h4>Footing Plan Diagram</h4>
+              <button type="button" class="workspace-btn" ${footingPdf ? `onclick="forceDownloadPdf('${footingPdf}', 'Footing_Plan_Diagram.pdf')"` : 'disabled'}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                DOWNLOAD DIAGRAM
+              </button>
+            </div>
+
+            <!-- Card 3: Video Build Masterclass -->
+            <div class="workspace-card">
+              <div class="workspace-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2.18" ry="2.18"></rect><line x1="10" y1="4" x2="10" y2="20"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+              </div>
+              <h4>Video Build Masterclass Series</h4>
+              <button type="button" class="workspace-btn" ${videoUrl ? `onclick="openResourceLink('${videoUrl}')"` : 'disabled'}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                WATCH VIDEO
+              </button>
+            </div>
+
+            <!-- Card 4: 3D Interactive Web App -->
+            <div class="workspace-card">
+              <div class="workspace-card-icon app-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+              </div>
+              <h4>A-DIY 3D Interactive Web App</h4>
+              <button type="button" class="workspace-btn" ${app3dUrl ? `onclick="openResourceLink('${app3dUrl}')"` : 'disabled'}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                LAUNCH 3D WEB APP
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="tracking-result-grid">
-          <div><strong>Customer Name:</strong> ${customerName}</div>
-          <div><strong>Email:</strong> ${customerEmail}</div>
-          <div><strong>Phone:</strong> ${customerPhone}</div>
-          <div><strong>Order Date:</strong> ${formattedDate}</div>
-          <div><strong>Product Title:</strong> ${productTitle}</div>
-          <div><strong>Variant:</strong> ${variantTitle}</div>
-          {% comment %} <div><strong>Financial Status:</strong> ${order.financialStatus}</div>
-          <div><strong>Fulfillment Status:</strong> ${fulfillmentText}</div> {% endcomment %}
-        </div>
-        <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
-          View Live Progress &rarr;
-        </button>
       `;
       
       resultContainer.style.display = "block";
@@ -593,7 +667,7 @@ function showLiveProgressStage() {
 
   if (!isStage2) {
     // ------------------------------------
-    // STAGE 1 VIEW (Max 62% Cap)
+    // STAGE 1 VIEW
     // ------------------------------------
     stage1Block.style.display = 'block';
     stage2Block.style.display = 'none';
@@ -601,64 +675,33 @@ function showLiveProgressStage() {
     stepPill.innerText = "Step 1 of 3";
     mainHeading.innerText = "Your deck is now in production.";
     subheading.innerText = "Every A-DIY deck is made just for you, nothing sits in a warehouse.";
-    etaText.innerText = "Estimated: 3 business days";
-    percentLabel.innerText = "of your deck is completed.";
+    etaText.innerText = "Estimated: 7 business days";
+    percentLabel.innerText = "of step 1 is complete.";
 
     let checkedItems = [];
 
-    {% comment %} if (workingDays <= 1) {
-      progress = 22;
-      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
-    } else if (workingDays === 2) {
-      progress = 45;
-      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
-    } else if (workingDays === 3) {
-      progress = 60;
-      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
-    } else {
-      progress = 62;
-      checkedItems = [...allCheckboxes];
-    } {% endcomment %}
     if (workingDays <= 1) {
       progress = 22;
       checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production'];
     } else if (workingDays === 2) {
-      progress = 45;
-      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together'];
+      progress = 35;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep'];
+    } else if (workingDays === 3) {
+      progress = 50;
+      checkedItems = ['chk-order-confirmed', 'chk-materials-selected', 'chk-components-production', 'chk-hardware-prep', 'chk-deck-together', 'chk-lines-up'];
     } else {
-      progress = 62;
+      progress = 85;
       checkedItems = [...allCheckboxes];
     }
 
-    // Stage 1 Icon Highlight Logic (Only first 2 icons highlighted)
+    const stepThresholds = [22, 35, 70]; 
+
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
 
-      let maxActiveIcons = 1;
-      if (workingDays === 2) {
-        maxActiveIcons = 2;
-      } else if (workingDays >= 3) {
-        maxActiveIcons = 3;
-      }
-
-      {% comment %} if (stepEl) {
-        if (i <= 2) {
-          stepEl.classList.add('active');
-        } else {
-          stepEl.classList.remove('active');
-        }
-      }
-
-      if (lineEl) {
-        if (i === 1) {
-          lineEl.classList.add('active');
-        } else {
-          lineEl.classList.remove('active');
-        }
-      } {% endcomment %}
       if (stepEl) {
-        if (i <= maxActiveIcons) {
+        if (i <= 3 && progress >= stepThresholds[i - 1]) {
           stepEl.classList.add('active');
         } else {
           stepEl.classList.remove('active');
@@ -666,7 +709,7 @@ function showLiveProgressStage() {
       }
 
       if (lineEl) {
-        if (i < maxActiveIcons) {
+        if (i < 3 && progress >= stepThresholds[i]) {
           lineEl.classList.add('active');
         } else {
           lineEl.classList.remove('active');
@@ -680,16 +723,8 @@ function showLiveProgressStage() {
 
   } else {
     // ------------------------------------
-    // STAGE 2 VIEW (Starts from 71% to 100%)
+    // STAGE 2 VIEW
     // ------------------------------------
-    
-    if (fulfillmentStatus === 'FULFILLED') {
-      const cleanOrderNumber = order.number.toString().replace(/[^0-9]/g, '');
-      const redirectUrl = `https://efwtrack.com/track/${cleanOrderNumber}`;
-      window.location.href = redirectUrl;
-      return;
-    }
-
     stage1Block.style.display = 'none';
     stage2Block.style.display = 'block';
 
@@ -697,28 +732,27 @@ function showLiveProgressStage() {
     mainHeading.innerText = "Getting your deck ready to ship.";
     subheading.innerText = "We're packing and securing everything for its trip to you.";
     etaText.innerText = "Estimate: 3 to 4 business days";
-    percentLabel.innerText = "of your deck is completed.";
+    percentLabel.innerText = "of step 2 is complete.";
 
     const stage2WorkingDays = workingDays - 3;
 
     if (stage2WorkingDays <= 1) {
-      progress = 71;
-    } else if (stage2WorkingDays === 2) {
       progress = 85;
+    } else if (stage2WorkingDays === 2) {
+      progress = 90;
     } else if (stage2WorkingDays === 3) {
       progress = 95;
     } else {
       progress = 100;
     }
 
-    // Stage 2 Icon Highlight Logic (3rd icon active at start, 4th icon active after 95%)
     for (let i = 1; i <= 4; i++) {
       const stepEl = document.getElementById(`flow-step-${i}`);
       const lineEl = document.getElementById(`flow-line-${i}`);
 
       let isActive = false;
-      if (i <= 3 && progress >= 71) isActive = true;
-      if (i === 4 && progress >= 95) isActive = true;
+      if (i <= 3 && progress >= 70) isActive = true;
+      if (i === 4 && progress >= 100) isActive = true;
 
       if (stepEl) {
         if (isActive) {
@@ -729,7 +763,7 @@ function showLiveProgressStage() {
       }
 
       if (lineEl) {
-        if (i < 3 || (i === 3 && progress >= 95)) {
+        if (i < 3 || (i === 3 && progress >= 100)) {
           lineEl.classList.add('active');
         } else {
           lineEl.classList.remove('active');
