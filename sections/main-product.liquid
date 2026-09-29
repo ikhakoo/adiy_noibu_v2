@@ -965,6 +965,281 @@
       font-size: 14px;
       letter-spacing: 0.2px;
     }
+
+    .deck-pricing-block {
+      margin: 20px 0;
+      font-family: inherit;
+    }
+    .dp-card {
+      background: #ffffff;
+      border: 1px solid #e3e3e3;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+    }
+    .dp-deck-card {
+      background: #E9E9E9;
+      border: 1px solid #26170c2e;
+    }
+    .dp-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price-wrapper{
+      background: #F1F1F1;
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid #26170c33;
+    }
+    .dp-label {
+      font-weight: 500;
+      color: #1a1a1a;
+      font-size: 18px;
+    }
+    .dp-value {
+      font-weight: 500;
+      color: #1a1a1a;
+      font-size: 18px;
+    }
+    .bold-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    
+    .dp-discount-badge-row {
+      display: flex;
+      align-items: center;
+      margin: 12px 0;
+      font-size: 13px;
+      color: #215626;
+    }
+    .dp-badge-icon {
+      background: #215626;
+      color: #fff;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      margin-right: 8px;
+    }
+    .dp-savings {
+      margin-left: auto;
+      font-weight: 700;
+    }
+    .dp-subtext {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .dp-delivery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .dp-truck-icon {
+      font-size: 18px;
+    }
+    .dp-input-wrapper {
+      position: relative;
+    }
+
+    /* Inline Month Picker Styling */
+    .dp-inline-picker {
+      background: #fff;
+      border: 1px solid #d0d0d0;
+      border-radius: 8px;
+      padding: 14px;
+      font-family: inherit;
+    }
+    .dp-year-group {
+      margin-bottom: 14px;
+    }
+    .dp-year-group:last-child {
+      margin-bottom: 0;
+    }
+    .dp-picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #1a1a1a;
+      padding: 0 4px;
+    }
+    .dp-picker-header button {
+      background: none;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dp-picker-header button:hover {
+      background: #f1f1f1;
+    }
+    .dp-months-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .dp-month-cell {
+      background: #f9f9f9;
+      border: 1px solid #e3e3e3;
+      border-radius: 6px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dp-month-cell:hover:not(.disabled) {
+      background: #eaeaea;
+      border-color: #bbb;
+    }
+    .dp-month-cell.selected {
+      background: #1b4332 !important;
+      color: #fff !important;
+      border-color: #1b4332 !important;
+      font-weight: 600;
+    }
+    .dp-month-cell.disabled {
+      background: #f5f5f5;
+      color: #ccc;
+      border-color: #eee;
+      cursor: not-allowed;
+      pointer-events: none;
+      display:none;
+    }
+
+    .dp-agreement-footer {
+      margin: 16px 0;
+      text-align: center;
+      padding: 0 5px;
+    }
+    .dp-agreement-text p{
+      font-size: 14px;
+      color: #555;
+      line-height: 1.5;
+      margin: 0 0 6px 0;
+    }
+    .dp-agreement-text p a{
+      text-decoration: none;
+      color: #1e5fa6;
+    }
+    .dp-agreement-text a {
+      color: #111;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    .dp-info-link-wrap {
+      margin-top: 4px;
+    }
+    .dp-info-link {
+      font-size: 13px;
+      color: #1e5fa6;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .dp-info-link:hover {
+      text-decoration: underline;
+    }
+    .dp-actions-container {
+      margin-top: 16px;
+    }
+    .dp-reserve-btn {
+      display: flex;
+      width: 100%;
+      background-color: #1b4332;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .dp-reserve-btn:hover {
+      background-color: #143225;
+    }
+    .dp-btn-arrow {
+      margin-left: 8px;
+      font-size: 18px;
+    }
+    .dp-dynamic-checkout-wrap {
+      margin-top: 10px;
+    }
+    .dp-dynamic-checkout-wrap div[data-shopify="payment-button"] {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .dp-inline-picker.has-error {
+      border-color: #d9534f !important;
+      box-shadow: 0 0 0 2px rgba(217, 83, 79, 0.2);
+    }
+    .dp-error-message {
+      color: #d9534f;
+      font-size: 12px;
+      margin-top: 6px;
+      display: none;
+    }
+    .dp-inline-picker.has-error + .dp-error-message,
+    .dp-error-message.visible {
+      display: block;
+    }
+    .dp-year-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      padding-left: 2px;
+      text-align: center;
+    }
+    .dp-months-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .dp-month-cell {
+      background: #f9f9f9;
+      border: 1px solid #e3e3e3;
+      border-radius: 6px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dp-month-cell:hover:not(.disabled) {
+      background: #eaeaea;
+      border-color: #bbb;
+    }
+    .dp-month-cell.selected {
+      background: #1b4332 !important;
+      color: #fff !important;
+      border-color: #1b4332 !important;
+      font-weight: 600;
+    }
        
     
     @media screen and (max-width:628px){
@@ -2896,283 +3171,6 @@
                       }
                     });
                   </script>
-
-                  <style>
-                    .deck-pricing-block {
-                      margin: 20px 0;
-                      font-family: inherit;
-                    }
-                    .dp-card {
-                      background: #ffffff;
-                      border: 1px solid #e3e3e3;
-                      border-radius: 12px;
-                      padding: 18px 20px;
-                      margin-bottom: 12px;
-                      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
-                    }
-                    .dp-deck-card {
-                      background: #E9E9E9;
-                      border: 1px solid #26170c2e;
-                    }
-                    .dp-row {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                    }
-                    .price-wrapper{
-                      background: #F1F1F1;
-                      padding: 15px;
-                      border-radius: 15px;
-                      border: 1px solid #26170c33;
-                    }
-                    .dp-label {
-                      font-weight: 500;
-                      color: #1a1a1a;
-                      font-size: 18px;
-                    }
-                    .dp-value {
-                      font-weight: 500;
-                      color: #1a1a1a;
-                      font-size: 18px;
-                    }
-                    .bold-price {
-                      font-size: 20px;
-                      font-weight: 700;
-                      color: #1a1a1a;
-                    }
-                    
-                    .dp-discount-badge-row {
-                      display: flex;
-                      align-items: center;
-                      margin: 12px 0;
-                      font-size: 13px;
-                      color: #215626;
-                    }
-                    .dp-badge-icon {
-                      background: #215626;
-                      color: #fff;
-                      border-radius: 50%;
-                      width: 16px;
-                      height: 16px;
-                      display: inline-flex;
-                      align-items: center;
-                      justify-content: center;
-                      font-size: 9px;
-                      margin-right: 8px;
-                    }
-                    .dp-savings {
-                      margin-left: auto;
-                      font-weight: 700;
-                    }
-                    .dp-subtext {
-                      font-size: 12px;
-                      color: #666;
-                      margin-top: 4px;
-                      line-height: 1.4;
-                    }
-                    .dp-delivery-header {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      margin-bottom: 10px;
-                    }
-                    .dp-truck-icon {
-                      font-size: 18px;
-                    }
-                    .dp-input-wrapper {
-                      position: relative;
-                    }
-
-                    /* Inline Month Picker Styling */
-                    .dp-inline-picker {
-                      background: #fff;
-                      border: 1px solid #d0d0d0;
-                      border-radius: 8px;
-                      padding: 14px;
-                      font-family: inherit;
-                    }
-                    .dp-year-group {
-                      margin-bottom: 14px;
-                    }
-                    .dp-year-group:last-child {
-                      margin-bottom: 0;
-                    }
-                    .dp-picker-header {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      margin-bottom: 10px;
-                      font-weight: 600;
-                      font-size: 15px;
-                      color: #1a1a1a;
-                      padding: 0 4px;
-                    }
-                    .dp-picker-header button {
-                      background: none;
-                      border: 1px solid #d0d0d0;
-                      border-radius: 4px;
-                      width: 28px;
-                      height: 28px;
-                      cursor: pointer;
-                      font-weight: bold;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                    }
-                    .dp-picker-header button:hover {
-                      background: #f1f1f1;
-                    }
-                    .dp-months-grid {
-                      display: grid;
-                      grid-template-columns: repeat(4, 1fr);
-                      gap: 8px;
-                    }
-                    .dp-month-cell {
-                      background: #f9f9f9;
-                      border: 1px solid #e3e3e3;
-                      border-radius: 6px;
-                      padding: 10px 0;
-                      text-align: center;
-                      font-size: 13px;
-                      font-weight: 500;
-                      color: #333;
-                      cursor: pointer;
-                      transition: all 0.2s ease;
-                    }
-                    .dp-month-cell:hover:not(.disabled) {
-                      background: #eaeaea;
-                      border-color: #bbb;
-                    }
-                    .dp-month-cell.selected {
-                      background: #1b4332 !important;
-                      color: #fff !important;
-                      border-color: #1b4332 !important;
-                      font-weight: 600;
-                    }
-                    .dp-month-cell.disabled {
-                      background: #f5f5f5;
-                      color: #ccc;
-                      border-color: #eee;
-                      cursor: not-allowed;
-                      pointer-events: none;
-                      display:none;
-                    }
-
-                    .dp-agreement-footer {
-                      margin: 16px 0;
-                      text-align: center;
-                      padding: 0 5px;
-                    }
-                    .dp-agreement-text p{
-                      font-size: 14px;
-                      color: #555;
-                      line-height: 1.5;
-                      margin: 0 0 6px 0;
-                    }
-                    .dp-agreement-text p a{
-                      text-decoration: none;
-                      color: #1e5fa6;
-                    }
-                    .dp-agreement-text a {
-                      color: #111;
-                      font-weight: 600;
-                      text-decoration: underline;
-                    }
-                    .dp-info-link-wrap {
-                      margin-top: 4px;
-                    }
-                    .dp-info-link {
-                      font-size: 13px;
-                      color: #1e5fa6;
-                      font-weight: 600;
-                      text-decoration: none;
-                    }
-                    .dp-info-link:hover {
-                      text-decoration: underline;
-                    }
-                    .dp-actions-container {
-                      margin-top: 16px;
-                    }
-                    .dp-reserve-btn {
-                      display: flex;
-                      width: 100%;
-                      background-color: #1b4332;
-                      color: #ffffff;
-                      border: none;
-                      border-radius: 8px;
-                      padding: 16px 20px;
-                      font-size: 16px;
-                      font-weight: 600;
-                      align-items: center;
-                      justify-content: center;
-                      cursor: pointer;
-                      transition: background-color 0.2s ease;
-                      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                    }
-                    .dp-reserve-btn:hover {
-                      background-color: #143225;
-                    }
-                    .dp-btn-arrow {
-                      margin-left: 8px;
-                      font-size: 18px;
-                    }
-                    .dp-dynamic-checkout-wrap {
-                      margin-top: 10px;
-                    }
-                    .dp-dynamic-checkout-wrap div[data-shopify="payment-button"] {
-                      border-radius: 8px;
-                      overflow: hidden;
-                    }
-                    .dp-inline-picker.has-error {
-                      border-color: #d9534f !important;
-                      box-shadow: 0 0 0 2px rgba(217, 83, 79, 0.2);
-                    }
-                    .dp-error-message {
-                      color: #d9534f;
-                      font-size: 12px;
-                      margin-top: 6px;
-                      display: none;
-                    }
-                    .dp-inline-picker.has-error + .dp-error-message,
-                    .dp-error-message.visible {
-                      display: block;
-                    }
-                    .dp-year-title {
-                      font-size: 14px;
-                      font-weight: 700;
-                      color: #1a1a1a;
-                      margin-bottom: 8px;
-                      padding-left: 2px;
-                      text-align: center;
-                    }
-                    .dp-months-grid {
-                      display: grid;
-                      grid-template-columns: repeat(4, 1fr);
-                      gap: 8px;
-                    }
-                    .dp-month-cell {
-                      background: #f9f9f9;
-                      border: 1px solid #e3e3e3;
-                      border-radius: 6px;
-                      padding: 10px 0;
-                      text-align: center;
-                      font-size: 13px;
-                      font-weight: 500;
-                      color: #333;
-                      cursor: pointer;
-                      transition: all 0.2s ease;
-                    }
-                    .dp-month-cell:hover:not(.disabled) {
-                      background: #eaeaea;
-                      border-color: #bbb;
-                    }
-                    .dp-month-cell.selected {
-                      background: #1b4332 !important;
-                      color: #fff !important;
-                      border-color: #1b4332 !important;
-                      font-weight: 600;
-                    }
-                  </style>
 
                   
 
