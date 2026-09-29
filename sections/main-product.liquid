@@ -2300,30 +2300,13 @@
 
                       <!-- 5. Action Buttons -->
                       <div class="dp-actions-container">
-
-                        <button
-                          id="ProductSubmitButton-{{ section.id }}"
-                          type="submit"
-                          name="add"
-                          class="dp-reserve-btn product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
-                          data-add-to-cart-text="{{ block.settings.button_text | default: 'Reserve Your Deck' | escape }}"
-                          {% if product.selected_or_first_available_variant.available == false
-                            or quantity_rule_soldout
-                            or product.selected_or_first_available_variant == null
-                          %}
-                            disabled
-                          {% endif %}
-                        >
-
-                          <span>{{ block.settings.button_text | default: 'Reserve Your Deck' }}</span>
-                          <span class="dp-btn-arrow">→</span>
-                          {%- render 'loading-spinner' -%}
-                        </button>
-                        {%- if block.settings.show_dynamic_checkout -%}
-                          <div class="dp-dynamic-checkout-wrap">
-                            {{ form | payment_button }}
-                          </div>
-                        {%- endif -%}
+                        {%- render 'buy-buttons',
+                          block: block,
+                          product: product,
+                          product_form_id: product_form_id,
+                          section_id: section.id,
+                          show_pickup_availability: true
+                        -%}
                       </div>
 
                       <div class="product-form__error-message-wrapper" role="alert" hidden>
