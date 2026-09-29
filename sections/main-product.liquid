@@ -2584,8 +2584,8 @@
   <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
     {
       {%- for variant in product.variants -%}
-        {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
-        {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+        {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 100 | default: 0 -%}
+        {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 100 | default: 0 -%}
         {%- assign v_offered = v_deck | minus: v_disc -%}
         "{{ variant.id }}": {
           "deckPrice": {{ v_deck }},
