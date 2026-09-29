@@ -1,0 +1,45 @@
+{{ 'seo-guide.css' | asset_url | stylesheet_tag }}
+
+{%- assign s = section.settings -%}
+<section class="sg sg-bg--{{ s.background }}" style="padding-bottom: {{ s.padding_bottom }}px; padding-top: {{ s.padding_top }}px;">
+  <div class="sg-wrap">
+    <div class="sg-cta">
+      <div class="sg-cta__media">
+        {%- render 'seo-guide-media', image: s.image, video: s.video, label: 'Background image or video', sizes: '(min-width: 1200px) 1140px, 100vw', bare: true -%}
+      </div>
+      <div class="sg-cta__shade"></div>
+      <div class="sg-cta__t">
+        {%- if s.kicker != blank -%}<span class="sg-cta__tri">{{ s.kicker | escape }}</span>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="sg-h2">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.text != blank -%}<div class="sg-cta__text sg-rte">{{ s.text }}</div>{%- endif -%}
+        <div class="sg-row">
+          {%- render 'seo-guide-button', label: s.button_label, link: s.button_link, style: 'white' -%}
+          {%- render 'seo-guide-button', label: s.button2_label, link: s.button2_link, style: 'outline-white' -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SEO Guide: Final CTA",
+  "tag": "div",
+  "class": "section-seo-guide-cta",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "video", "id": "video", "label": "Background video" },
+    { "type": "text", "id": "kicker", "label": "Eyebrow", "default": "No cutting. No measuring. No guesswork." },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Another way to build your deck" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Build Yours" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    { "type": "text", "id": "button2_label", "label": "Secondary button label", "default": "Free Design Consultation" },
+    { "type": "url", "id": "button2_link", "label": "Secondary button link" },
+    { "type": "select", "id": "background", "label": "Section background", "default": "ground", "options": [ { "value": "ground", "label": "Page grey" }, { "value": "white", "label": "White" } ] },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "presets": [ { "name": "SEO Guide: Final CTA" } ]
+}
+{% endschema %}
