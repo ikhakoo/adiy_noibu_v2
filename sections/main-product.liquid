@@ -2309,111 +2309,95 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const hiddenDateInput = document.getElementById("EstimatedDeliveryDate");
-      const yearsContainer = document.getElementById("YearsContainer");
-      const inlinePicker = document.getElementById("InlineMonthPicker");
-      const errorMsg = document.getElementById("CalendarErrorMsg");
+      // --- (Aapka purana calendar aur validation code yahan pehle se hoga) ---
 
-      let today = new Date();
-      let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
-      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
+      // --- B. Variant Change Pricing Update Logic ---
+      const variantJsonEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
+      if (!variantJsonEl) return;
       
-      if (!showCurrentMonth && minMonthsOffset === 0) {
-        minMonthsOffset = 1;
+      const variantData = JSON.parse(variantJsonEl.textContent);
+
+      // Elements jinhein update karna hai
+      const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
+      const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
+      const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
+      const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
+      
+      const deckPriceValEl = document.getElementById("DeckPriceVal");
+      const savingsValEl = document.getElementById("SavingsVal");
+      const offeredPriceValEl = document.getElementById("OfferedPriceVal");
+      const dueTodayValEl = document.getElementById("DueTodayVal");
+      const deckPricePropertyEl = document.getElementById("DeckPriceProperty");
+
+      // Shopify money formatter helper (agar theme ka global money format ho toh theek, warna standard formatting)
+      function formatMoney(cents) {
+        return "$" + (cents / 100).toFixed(2).replace(/\.00$/, ''); // Apni theme ke mutabiq currency symbol adjust kar sakte hain agar zaroorat ho
       }
 
-      let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
-      let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
-      let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
+      function updatePricingDisplay(variantId) {
+        const data = variantData[variantId];
+        if (!data) return;
 
-      let selectedYear = null;
-      let selectedMonth = null;
-      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-      function renderGroupedCalendar() {
-        if (!yearsContainer) return;
-        yearsContainer.innerHTML = '';
-
-        let monthsByYear = {};
-        let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-        let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
-
-        while (currIterDate <= endIterDate) {
-          let y = currIterDate.getFullYear();
-          let m = currIterDate.getMonth();
-
-          if (!monthsByYear[y]) monthsByYear[y] = [];
-          monthsByYear[y].push(m);
-          currIterDate.setMonth(currIterDate.getMonth() + 1);
+        // 1. Deck Price & Visibility
+        if (deckCardContainer) {
+          deckCardContainer.style.display = data.deckPrice === 0 ? "none" : "block";
+        }
+        if (deckPriceValEl) {
+          deckPriceValEl.textContent = formatMoney(data.deckPrice * 100);
         }
 
-        Object.keys(monthsByYear).forEach(year => {
-          const yearGroup = document.createElement('div');
-          yearGroup.className = 'dp-year-group';
+        // 2. Discount & Offered Price Visibility
+        const hasDiscount = data.discountValue > 0;
+        if (discountRow) discountRow.style.display = hasDiscount ? "flex" : "none";
+        if (deckDivider) deckDivider.style.display = hasDiscount ? "block" : "none";
+        if (offeredPriceRow) offeredPriceRow.style.display = hasDiscount ? "flex" : "none";
 
-          const yearTitle = document.createElement('div');
-          yearTitle.className = 'dp-year-title';
-          yearTitle.textContent = year;
-          yearGroup.appendChild(yearTitle);
+        if (hasDiscount) {
+          if (savingsValEl) savingsValEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
+          if (offeredPriceValEl) offeredPriceValEl.textContent = formatMoney(data.offeredPrice * 100);
+        }
 
-          const grid = document.createElement('div');
-          grid.className = 'dp-months-grid';
+        // 3. Due Today Price
+        if (dueTodayValEl) {
+          dueTodayValEl.textContent = formatMoney(data.dueTodayPrice);
+        }
 
-          monthsByYear[year].forEach(monthIndex => {
-            const cell = document.createElement('div');
-            cell.className = 'dp-month-cell';
-            cell.textContent = monthNames[monthIndex];
-
-            if (selectedYear !== null && parseInt(year) === selectedYear && monthIndex === selectedMonth) {
-              cell.classList.add('selected');
-            }
-
-            cell.addEventListener('click', function() {
-              selectedYear = parseInt(year);
-              selectedMonth = monthIndex;
-              if (hiddenDateInput) {
-                hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
-              }
-              
-              if (inlinePicker) inlinePicker.classList.remove('has-error');
-              if (errorMsg) errorMsg.style.display = 'none';
-
-              renderGroupedCalendar();
-            });
-
-            grid.appendChild(cell);
-          });
-
-          yearGroup.appendChild(grid);
-          yearsContainer.appendChild(yearGroup);
-        });
+        // 4. Hidden Property Update
+        if (deckPricePropertyEl) {
+          deckPricePropertyEl.value = formatMoney(data.deckPrice * 100);
+        }
       }
 
-      renderGroupedCalendar();
+      // Shopify ke standard variant change events ko listen karna (Theme architecture ke mutabiq)
+      // 1. URL search params change ya custom event check karna
+      function getSelectedVariantId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('variant');
+      }
 
-      // Form Validation & Native Form Sync
-      const productForm = document.getElementById('product-form-' + "{{ section.id }}");
-      if (productForm) {
-        productForm.addEventListener('submit', function(e) {
-          if (!hiddenDateInput.value) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-
-            if (inlinePicker) {
-              inlinePicker.classList.add('has-error');
-              inlinePicker.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            if (errorMsg) {
-              errorMsg.style.display = 'block';
-            }
-          } else {
-            // Ensure properties are inside the native form before submit
-            if (!productForm.contains(hiddenDateInput)) {
-              productForm.appendChild(hiddenDateInput);
-              productForm.appendChild(document.getElementById('DeckPriceProperty'));
-            }
+      // Theme mein agar standard form select change ho
+      const sectionElement = document.getElementById("DeckPricingBlock-{{ section.id }}");
+      if (sectionElement) {
+        const productFormRoot = sectionElement.closest('form') || document.querySelector('form[action*="/cart/add"]');
+        
+        // Variant inputs ya dropdowns par change event
+        document.addEventListener('change', function(e) {
+          if (e.target.name === 'id' || e.target.closest('[data-selected-variant], variant-radios, variant-selects')) {
+            setTimeout(() => {
+              const urlVariantId = getSelectedVariantId();
+              if (urlVariantId && variantData[urlVariantId]) {
+                updatePricingDisplay(urlVariantId);
+              }
+            }, 50);
           }
-        }, { capture: true });
+        });
+
+        // Agar theme Custom Event use karti hai (Jaise Dawn theme mein 'variant:change')
+        document.addEventListener('variant:change', function(e) {
+          if (e.detail && e.detail.variant) {
+            updatePricingDisplay(e.detail.variant.id);
+          }
+        });
       }
     });
   </script>
