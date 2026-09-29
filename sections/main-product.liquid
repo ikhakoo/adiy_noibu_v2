@@ -1923,6 +1923,9 @@
                     purchase. Its saving comes from shop.metafields.payment_plans.pay_in_full
                     ({"type": "percent" | "amount" | "none", "value": n}), which the app writes
                     alongside the automatic discount checkout applies, so the two always match.
+
+                    Card amounts are rounded to whole dollars for display only ($733.31 -> $733);
+                    the cart and checkout show the exact figures.
                   {%- endcomment -%}
                   {%- if product.selling_plan_groups.size > 0 -%}
                     {%- assign plan_step = product.options.size | plus: 2 -%}
@@ -1956,17 +1959,17 @@
                           {%- if pay_in_full_saving > 0 -%}
                             <s class="payment-plan-card__compare">
                               <span class="visually-hidden">Regular price</span>
-                              {{- plan_variant.price | money -}}
+                              {{- plan_variant.price | divided_by: 100.0 | round | times: 100 | money_without_trailing_zeros -}}
                             </s>
                             <span class="payment-plan-card__amount">
                               <span class="visually-hidden">Sale price</span>
-                              {{- pay_in_full_price | money -}}
+                              {{- pay_in_full_price | divided_by: 100.0 | round | times: 100 | money_without_trailing_zeros -}}
                             </span>
                             <span class="payment-plan-card__note payment-plan-card__save">
-                              Save {{ pay_in_full_saving | money }}
+                              Save {{ pay_in_full_saving | divided_by: 100.0 | round | times: 100 | money_without_trailing_zeros }}
                             </span>
                           {%- else -%}
-                            <span class="payment-plan-card__amount">{{ pay_in_full_price | money }}</span>
+                            <span class="payment-plan-card__amount">{{ pay_in_full_price | divided_by: 100.0 | round | times: 100 | money_without_trailing_zeros }}</span>
                             <span class="payment-plan-card__note">One payment</span>
                           {%- endif -%}
                         </label>
@@ -1988,7 +1991,7 @@
                             >
                             <span class="payment-plan-card__title">Pay in {{ plan_count }}</span>
                             <span class="payment-plan-card__amount">
-                              {{- allocation.price | money -}}
+                              {{- allocation.price | divided_by: 100.0 | round | times: 100 | money_without_trailing_zeros -}}
                               <span class="payment-plan-card__per">/mo</span>
                             </span>
                             <span class="payment-plan-card__note">{{ plan_count }} monthly payments</span>
