@@ -1141,6 +1141,7 @@
       line-height: 1.5;
       margin: 0 0 6px 0;
     }
+    .dp-agreement-text a,
     .dp-agreement-text p a{
       text-decoration: none;
       color: #1e5fa6;
@@ -2455,7 +2456,7 @@
                     </details>
                   </div>
 
-                {%- when 'estimated_price_cta_s' -%}
+                {%- when 'estimated_price_cta_standard' -%}
   <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
     {%- assign current_variant = product.selected_or_first_available_variant -%}
     
@@ -2466,7 +2467,6 @@
 
     {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-    <!-- NOTE: Humne pura product-form tag yahan wrap kiya hai taake delivery inputs form ke andar submit hon -->
     <product-form
       class="product-form"
       data-section-id="{{ section.id }}"
@@ -2474,7 +2474,7 @@
     >
       {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
 
-        <!-- Hidden Variant ID input -->
+        <!-- Hidden Variant ID input jo ab JS se dynamically update hoga -->
         <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantIdInput-{{ section.id }}">
 
         <div class="price-wrapper">
@@ -2488,7 +2488,6 @@
               <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
             </div>
             
-            <!-- Discount Row -->
             <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
               <span class="dp-badge-icon">✓</span>
               <span class="dp-badge-text">Discount Applied</span>
@@ -2519,14 +2518,12 @@
             </div>
             
             <div class="dp-input-wrapper">
-              <!-- Hidden input jo cart mein value pass karega -->
               <input 
                 type="hidden" 
                 id="EstimatedDeliveryDate-{{ section.id }}" 
                 name="properties[Estimated Delivery Month]" 
               >
               
-              <!-- Custom Inline Month/Year Picker UI -->
               <div class="dp-inline-picker" id="InlineMonthPicker-{{ section.id }}">
                 <div class="dp-years-container" id="YearsContainer-{{ section.id }}"></div>
               </div>
@@ -2585,7 +2582,6 @@
     </product-form>
   </div>
 
-  <!-- Variant Metafile JSON Mapping -->
   <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
     {
       {%- for variant in product.variants -%}
@@ -2610,6 +2606,7 @@
       const inlinePicker = document.getElementById("InlineMonthPicker-" + sectionId);
       const errorMsg = document.getElementById("CalendarErrorMsg-" + sectionId);
       const productForm = document.getElementById("product-form-" + sectionId);
+      const variantIdInput = document.getElementById("VariantIdInput-" + sectionId);
 
       let today = new Date();
       let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
@@ -2723,6 +2720,11 @@
           const data = metafieldsData[variantId];
           if (!data) return;
 
+          // Hidden variant ID input ko update karna zaroori hai taake sahi variant add ho
+          if (variantIdInput) {
+            variantIdInput.value = variantId;
+          }
+
           const deckCardContainer = document.getElementById("DeckCardContainer-" + sectionId);
           const discountRow = document.getElementById("DiscountRow-" + sectionId);
           const deckDivider = document.getElementById("DeckDivider-" + sectionId);
@@ -2791,7 +2793,6 @@
         });
       }
 
-      // Strict Validation on Add to Cart / Checkout click
       if (productForm) {
         productForm.addEventListener('click', function(e) {
           const submitBtn = e.target.closest('button[type="submit"], input[type="submit"], .product-form__submit, button[name="add"]');
