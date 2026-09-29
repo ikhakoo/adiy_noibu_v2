@@ -189,7 +189,8 @@
         "intro": "<p>Most New York homeowners end up choosing between the same three paths. The right one depends on how custom the design is, how much of the work you want to take on, and how much certainty you want about materials and price before the project starts.</p>",
         "layout": "grid",
         "padding_top": 56,
-        "padding_bottom": 96
+        "padding_bottom": 96,
+        "equal_height": false
       },
       "blocks": {
         "w1": {

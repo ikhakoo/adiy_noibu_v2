@@ -34,7 +34,7 @@
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <div class="{% if s.layout == 'two_columns' %}sg-cols sg-cols--{{ s.column_ratio }}{% else %}sg-grid sg-grid--pairs{% endif %}{% unless has_head %} sg-grid--flush{% endunless %}">
+      <div class="{% if s.layout == 'two_columns' %}sg-cols sg-cols--{{ s.column_ratio }}{% else %}sg-grid sg-grid--pairs{% unless s.equal_height %} sg-grid--top{% endunless %}{% endif %}{% unless has_head %} sg-grid--flush{% endunless %}">
 
       {%- assign group_close = '</div></div>' -%}
       {%- for col in cols -%}
@@ -281,6 +281,7 @@
     { "type": "select", "id": "layout", "label": "Block layout", "default": "grid", "options": [ { "value": "grid", "label": "Grid (use each block's width)" }, { "value": "two_columns", "label": "Two stacked columns (use each block's column)" } ] },
     { "type": "select", "id": "column_ratio", "label": "Column ratio", "default": "6-6", "options": [ { "value": "6-6", "label": "50 / 50" }, { "value": "7-5", "label": "Wide left" }, { "value": "5-7", "label": "Wide right" } ] },
     { "type": "checkbox", "id": "narrow", "label": "Narrow content width", "default": false },
+    { "type": "checkbox", "id": "equal_height", "label": "Equal-height cards in a row", "default": true },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 96 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 96 },
     { "type": "header", "content": "Structured data" },
