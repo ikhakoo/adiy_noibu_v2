@@ -2176,7 +2176,7 @@
                     </details>
                   </div>
 
-                {%- when 'estimated_price_cta_standard' -%}
+                {%- when 'estimated_price_cta_s' -%}
   <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
     {%- assign current_variant = product.selected_or_first_available_variant -%}
     
@@ -4295,6 +4295,90 @@
           "type": "checkbox",
           "id": "show_inventory_quantity",
           "label": "t:sections.main-product.blocks.inventory.settings.show_inventory_quantity.label",
+          "default": true
+        }
+      ]
+    },
+
+    {
+      "type": "estimated_price_cta_s",
+      "name": "Estimated Price CTA S",
+      "settings": [
+        {
+          "type": "text",
+          "id": "due_today_subtext",
+          "label": "Due Today Subtext",
+          "default": "Non-refundable Reservation Fee."
+        },
+        {
+          "type": "text",
+          "id": "delivery_title",
+          "label": "Delivery Title",
+          "default": "Estimated Delivery Month"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_delivery_subtext",
+          "label": "Show Delivery Subtext",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "delivery_subtext",
+          "label": "Delivery Subtext",
+          "default": "Select your preferred delivery month."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_current_month",
+          "label": "Allow Current Month Selection",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "min_days_offset",
+          "label": "Minimum Days Offset",
+          "min": 0,
+          "max": 60,
+          "step": 5,
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "max_months_offset",
+          "label": "Maximum Months Range",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 6
+        },
+        {
+          "type": "checkbox",
+          "id": "show_footer_agreement",
+          "label": "Show Agreement Footer",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "agreement_text",
+          "label": "Agreement Text",
+          "default": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice."
+        },
+        {
+          "type": "text",
+          "id": "info_link_text",
+          "label": "Info Link Text",
+          "default": "Terms & Conditions"
+        },
+        {
+          "type": "url",
+          "id": "info_link_url",
+          "label": "Info Link URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Show dynamic checkout buttons",
           "default": true
         }
       ]
