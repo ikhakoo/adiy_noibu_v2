@@ -2606,7 +2606,6 @@
       const errorMsg = document.getElementById("CalendarErrorMsg-" + sectionId);
       const productForm = document.getElementById("product-form-" + sectionId);
       
-      // Dawn ke apne native variant input ko target karein jo buy-buttons render karta hai
       const variantIdInput = productForm ? productForm.querySelector('input[name="id"]') : null;
 
       let today = new Date();
@@ -2683,6 +2682,13 @@
               }
               if (errorMsg) errorMsg.style.display = 'none';
 
+              // Month select hone par express checkout / dynamic buttons ko enable/show kar dein
+              const dynamicCheckoutButtons = productForm.querySelectorAll('.shopify-payment-button, shopify-accelerated-checkout, .dz-express-checkout');
+              dynamicCheckoutButtons.forEach(el => {
+                el.style.opacity = '1';
+                el.style.pointerEvents = 'auto';
+              });
+
               renderGroupedCalendar();
             });
 
@@ -2721,7 +2727,6 @@
           const data = metafieldsData[variantId];
           if (!data) return;
 
-          // Dawn ke native variant input ko update karo taake cart mein sahi variant jaye
           const currentVariantInput = productForm ? productForm.querySelector('input[name="id"]') : variantIdInput;
           if (currentVariantInput) {
             currentVariantInput.value = variantId;
@@ -2766,13 +2771,11 @@
         }
 
         function getActiveVariantId() {
-          // Pehle URL parameters check karein jo Dawn update karta hai
           const urlParams = new URLSearchParams(window.location.search);
           const urlVariant = urlParams.get('variant');
           if (urlVariant && metafieldsData[urlVariant]) {
             return urlVariant;
           }
-          // Phir Dawn ke native input ki value check karein
           const nativeInput = productForm ? productForm.querySelector('input[name="id"]') : null;
           if (nativeInput && nativeInput.value && metafieldsData[nativeInput.value]) {
             return nativeInput.value;
@@ -2803,9 +2806,19 @@
         setInterval(checkAndUpdateVariant, 400);
       }
 
+      // Initial state: Agar month select nahi hai toh Buy with Shop / Dynamic buttons ko disable/dim kar dein
       if (productForm) {
+        const dynamicCheckoutButtons = productForm.querySelectorAll('.shopify-payment-button, shopify-accelerated-checkout, .dz-express-checkout');
+        if (!hiddenDateInput.value) {
+          dynamicCheckoutButtons.forEach(el => {
+            el.style.opacity = '0.5';
+            el.style.pointerEvents = 'none';
+          });
+        }
+
         productForm.addEventListener('click', function(e) {
-          const submitBtn = e.target.closest('button[type="submit"], input[type="submit"], .product-form__submit, button[name="add"]');
+          // Check for standard add to cart or express checkout buttons clicks
+          const submitBtn = e.target.closest('button[type="submit"], input[type="submit"], .product-form__submit, button[name="add"], .shopify-payment-button, shopify-accelerated-checkout');
           if (!submitBtn) return;
 
           if (!hiddenDateInput || !hiddenDateInput.value) {
