@@ -2314,6 +2314,92 @@
       const inlinePicker = document.getElementById("InlineMonthPicker");
       const errorMsg = document.getElementById("CalendarErrorMsg");
 
+      // Variant Metafields JSON Data
+      const variantDataEl = document.getElementById("VariantMetafieldsJson-{{ section.id }}");
+      let variantData = {};
+      if (variantDataEl) {
+        try {
+          variantData = JSON.parse(variantDataEl.textContent);
+        } catch (e) {
+          console.error("Error parsing variant metafields JSON", e);
+        }
+      }
+
+      // Elements to update on variant change
+      const deckCardContainer = document.getElementById("DeckCardContainer-{{ section.id }}");
+      const deckPriceVal = document.getElementById("DeckPriceVal");
+      const discountRow = document.getElementById("DiscountRow-{{ section.id }}");
+      const savingsVal = document.getElementById("SavingsVal");
+      const deckDivider = document.getElementById("DeckDivider-{{ section.id }}");
+      const offeredPriceRow = document.getElementById("OfferedPriceRow-{{ section.id }}");
+      const offeredPriceVal = document.getElementById("OfferedPriceVal");
+      const dueTodayVal = document.getElementById("DueTodayVal");
+      const deckPriceProperty = document.getElementById("DeckPriceProperty");
+
+      function formatMoney(cents) {
+        // Shopify standard money format approximation or use raw formatting if available
+        return '$' + (cents).toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+      }
+
+      function updatePrices(variantId) {
+        const data = variantData[variantId];
+        if (!data) return;
+
+        // 1. Deck Price & Card visibility
+        if (data.deckPrice > 0) {
+          if (deckCardContainer) deckCardContainer.style.display = 'block';
+          if (deckPriceVal) deckPriceVal.textContent = formatMoney(data.deckPrice);
+          if (deckPriceProperty) deckPriceProperty.value = formatMoney(data.deckPrice);
+        } else {
+          if (deckCardContainer) deckCardContainer.style.display = 'none';
+        }
+
+        // 2. Discount & Offered Price
+        if (data.discountValue > 0) {
+          if (discountRow) discountRow.style.display = 'flex';
+          if (savingsVal) savingsVal.textContent = 'Savings -' + formatMoney(data.discountValue);
+          if (deckDivider) deckDivider.style.display = 'block';
+          if (offeredPriceRow) offeredPriceRow.style.display = 'flex';
+          if (offeredPriceVal) offeredPriceVal.textContent = formatMoney(data.offeredPrice);
+        } else {
+          if (discountRow) discountRow.style.display = 'none';
+          if (deckDivider) deckDivider.style.display = 'none';
+          if (offeredPriceRow) offeredPriceRow.style.display = 'none';
+        }
+
+        // 3. Due Today Price
+        if (dueTodayVal) {
+          dueTodayVal.textContent = formatMoney(data.dueTodayPrice);
+        }
+      }
+
+      // Listen to Dawn theme variant change events
+      const sectionElement = document.getElementById("DeckPricingBlock-{{ section.id }}");
+      if (sectionElement) {
+        document.addEventListener('change', function(e) {
+          // Check if variant input changed
+          if (e.target.name === 'id' || e.target.closest('variant-radios') || e.target.closest('variant-selects')) {
+            setTimeout(() => {
+              const urlParams = new URLSearchParams(window.location.search);
+              const variantId = urlParams.get('variant');
+              if (variantId && variantData[variantId]) {
+                updatePrices(variantId);
+              }
+            }, 100);
+          }
+        });
+
+        // Also listen to custom variant:change event if Dawn fires it
+        window.addEventListener('popstate', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const variantId = urlParams.get('variant');
+          if (variantId && variantData[variantId]) {
+            updatePrices(variantId);
+          }
+        });
+      }
+
+      // Calendar Logic
       let today = new Date();
       let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
       let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
@@ -2407,10 +2493,9 @@
               errorMsg.style.display = 'block';
             }
           } else {
-            // Ensure properties are inside the native form before submit
             if (!productForm.contains(hiddenDateInput)) {
               productForm.appendChild(hiddenDateInput);
-              productForm.appendChild(document.getElementById('DeckPriceProperty'));
+              productForm.appendChild(deckPriceProperty);
             }
           }
         }, { capture: true });
