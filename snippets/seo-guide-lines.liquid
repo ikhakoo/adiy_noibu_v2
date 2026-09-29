@@ -30,7 +30,7 @@
           {%- assign href = parts[1] | strip -%}
           <li>{% if href != blank %}<a href="{{ href }}" rel="noopener">{{ parts[0] | strip | escape }}</a>{% else %}{{ a }}{% endif %}</li>
         {%- else -%}
-          <li>{{ l | escape | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</li>
+          <li><span>{{ l | escape | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</span></li>
       {%- endcase -%}
     {%- endfor -%}
   {%- endcapture -%}

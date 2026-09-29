@@ -766,7 +766,8 @@
             "button_style": "primary",
             "button2_label": "Learn More",
             "button2_link": "/pages/why-a-diy",
-            "button2_style": "secondary"
+            "button2_style": "secondary",
+            "title_h2": true
           }
         }
       },
@@ -876,7 +877,7 @@
           "type": "panel",
           "settings": {
             "width": "4",
-            "style": "white",
+            "style": "ground",
             "title": "New York City",
             "subtitle": "Manhattan · Brooklyn · Queens · the Bronx · Staten Island",
             "body": "<p>NYC Construction Codes, DOB permits, plans by a licensed engineer or architect, and DCWP-licensed home improvement contractors.</p>"
@@ -886,7 +887,7 @@
           "type": "panel",
           "settings": {
             "width": "4",
-            "style": "white",
+            "style": "ground",
             "title": "Long Island",
             "subtitle": "Nassau County · Suffolk County",
             "body": "<p>Both counties license home improvement contractors. Salt air near the coast is a factor when choosing materials.</p>"
@@ -896,7 +897,7 @@
           "type": "panel",
           "settings": {
             "width": "4",
-            "style": "white",
+            "style": "ground",
             "title": "Lower Hudson Valley",
             "subtitle": "Westchester · Yonkers · Rockland · Putnam",
             "body": "<p>County licensing applies in Westchester, Rockland and Putnam, and Yonkers issues its own license.</p>"
@@ -906,7 +907,7 @@
           "type": "panel",
           "settings": {
             "width": "4",
-            "style": "white",
+            "style": "ground",
             "title": "Mid-Hudson and Capital Region",
             "subtitle": "Poughkeepsie · Newburgh · Kingston · Albany · Schenectady · Troy · Saratoga Springs",
             "body": "<p>Permits come from your city, town or village building department under the Uniform Code.</p>"
@@ -916,7 +917,7 @@
           "type": "panel",
           "settings": {
             "width": "4",
-            "style": "white",
+            "style": "ground",
             "title": "Central New York and the Finger Lakes",
             "subtitle": "Syracuse · Ithaca · Utica · Binghamton",
             "body": "<p>Heavy snow and deep frost make footing depth and snow load key questions for your building department.</p>"
@@ -926,7 +927,7 @@
           "type": "panel",
           "settings": {
             "width": "4",
-            "style": "white",
+            "style": "ground",
             "title": "Western New York and the North Country",
             "subtitle": "Buffalo · Rochester · Niagara Falls · Watertown · Plattsburgh",
             "body": "<p>Buffalo licenses home improvement contractors. Lake-effect snow is a major design consideration across the region.</p>"

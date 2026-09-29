@@ -97,7 +97,13 @@
                     {%- if b.kicker != blank -%}<span class="sg-kicker">{{ b.kicker | escape }}</span>{%- endif -%}
                     {%- if b.show_stars -%}<span class="sg-stars" aria-label="5 stars">★★★★★</span>{%- endif -%}
                     {%- if b.stat != blank -%}<span class="sg-panel__stat">{{ b.stat | escape }}</span>{%- endif -%}
-                    {%- if b.title != blank -%}<h3 class="sg-h3{% if b.title_small %} sg-h3--sm{% endif %}">{{ b.title | escape }}</h3>{%- endif -%}
+                    {%- if b.title != blank -%}
+                      {%- if b.title_h2 -%}
+                        <h2 class="sg-h2">{{ b.title | escape }}</h2>
+                      {%- else -%}
+                        <h3 class="sg-h3{% if b.title_small %} sg-h3--sm{% endif %}">{{ b.title | escape }}</h3>
+                      {%- endif -%}
+                    {%- endif -%}
                     {%- if b.subtitle != blank -%}<span class="sg-panel__sub">{{ b.subtitle | escape }}</span>{%- endif -%}
                     {%- if b.body != blank -%}
                       <div class="sg-rte{% if b.small_body %} sg-small{% endif %}">{{ b.body | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</div>
@@ -311,6 +317,7 @@
         { "type": "text", "id": "stat", "label": "Big stat", "info": "e.g. 5-year" },
         { "type": "text", "id": "title", "label": "Title" },
         { "type": "checkbox", "id": "title_small", "label": "Smaller title", "default": false },
+        { "type": "checkbox", "id": "title_h2", "label": "Use title as a section heading (H2)", "default": false, "info": "For a panel that is the only content of its section." },
         { "type": "text", "id": "subtitle", "label": "Subtitle" },
         { "type": "richtext", "id": "body", "label": "Body" },
         { "type": "checkbox", "id": "small_body", "label": "Smaller body text", "default": true },

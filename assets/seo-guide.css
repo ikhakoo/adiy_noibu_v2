@@ -68,7 +68,7 @@
 .sg-num { font-variant-numeric: tabular-nums; }
 .sg-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .sg-stack { display: grid; gap: 16px; align-content: start; }
-.sg-ph { display: inline-block; background: var(--sg-flag-bg); color: var(--sg-flag); font-size: 14px; line-height: 1.5; padding: 3px 9px; border-radius: 6px; letter-spacing: 0.2px; }
+.sg-ph { display: inline; -webkit-box-decoration-break: clone; box-decoration-break: clone; background: var(--sg-flag-bg); color: var(--sg-flag); font-size: 14px; line-height: 1.5; padding: 3px 9px; border-radius: 6px; letter-spacing: 0.2px; }
 .sg-rte p + p, .sg-rte p + ul, .sg-rte ul + p { margin-top: 12px; }
 .sg-rte ul, .sg-rte ol { padding-left: 20px; display: grid; gap: 6px; }
 .sg-rte strong { color: var(--sg-ink); font-weight: 500; }
