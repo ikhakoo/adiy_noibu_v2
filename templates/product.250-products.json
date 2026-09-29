@@ -154,9 +154,9 @@
             "min_days_offset": 30,
             "max_months_offset": 11,
             "show_footer_agreement": true,
-            "agreement_text": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.",
+            "agreement_text": "By placing this order, I agree to the A-DIY $250 Order Deposit",
             "info_link_text": "Terms & Conditions",
-            "info_link_url": "",
+            "info_link_url": "shopify://pages/250-deck-deposite-terms-conditions",
             "show_dynamic_checkout": true
           }
         },
