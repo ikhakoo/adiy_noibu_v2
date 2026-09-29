@@ -148,7 +148,7 @@
           "settings": {
             "due_today_subtext": "Non-refundable Reservation Fee.",
             "delivery_title": "Estimated Delivery Month",
-            "show_delivery_subtext": true,
+            "show_delivery_subtext": false,
             "delivery_subtext": "Select your preferred delivery month.",
             "show_current_month": true,
             "min_days_offset": 30,
