@@ -2613,15 +2613,20 @@
 
       let today = new Date();
       let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
-      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-      
-      if (!showCurrentMonth && minMonthsOffset === 0) {
-        minMonthsOffset = 1;
+      // Earliest selectable month = the month that contains (today + min_days_offset).
+      // Previously anything <= 30 days collapsed to "current month allowed", so a 30-day
+      // lead time still offered the current month (e.g. September on Sep 30).
+      let minDaysOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}", 10);
+      if (isNaN(minDaysOffset) || minDaysOffset < 0) minDaysOffset = 0;
+      let earliestDelivery = new Date(today.getFullYear(), today.getMonth(), today.getDate() + minDaysOffset);
+      let minDate = new Date(earliestDelivery.getFullYear(), earliestDelivery.getMonth(), 1);
+      if (!showCurrentMonth && minDate.getFullYear() === today.getFullYear() && minDate.getMonth() === today.getMonth()) {
+        minDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
       }
 
       let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
-      let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
       let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
+      if (maxDate < minDate) maxDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
 
       let selectedYear = null;
       let selectedMonth = null;
@@ -3001,16 +3006,21 @@
                       let today = new Date();
                       
                       let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
-                      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-                      
-                      if (!showCurrentMonth && minMonthsOffset === 0) {
-                        minMonthsOffset = 1;
+                      // Earliest selectable month = the month that contains (today + min_days_offset).
+                      // Previously anything <= 30 days collapsed to "current month allowed", so a 30-day
+                      // lead time still offered the current month (e.g. September on Sep 30).
+                      let minDaysOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}", 10);
+                      if (isNaN(minDaysOffset) || minDaysOffset < 0) minDaysOffset = 0;
+                      let earliestDelivery = new Date(today.getFullYear(), today.getMonth(), today.getDate() + minDaysOffset);
+                      let minDate = new Date(earliestDelivery.getFullYear(), earliestDelivery.getMonth(), 1);
+                      if (!showCurrentMonth && minDate.getFullYear() === today.getFullYear() && minDate.getMonth() === today.getMonth()) {
+                        minDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
                       }
 
                       let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
 
-                      let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
                       let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
+                      if (maxDate < minDate) maxDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
 
                       let selectedYear = null;
                       let selectedMonth = null;
