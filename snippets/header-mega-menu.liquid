@@ -108,8 +108,8 @@
         {%- comment -%} Check if any block matches this menu title {%- endcomment -%}
         {%- assign has_custom_block = false -%}
         {%- for block in section.blocks -%}
-          {%- assign block_trigger = block.settings.trigger_title | downcase | trim -%}
-          {%- assign menu_title = link.title | downcase | trim -%}
+          {%- assign block_trigger = block.settings.trigger_title | downcase | strip -%}
+          {%- assign menu_title = link.title | downcase | strip -%}
           {%- if block.type == 'mega_menu_product' and block_trigger == menu_title -%}
             {%- assign has_custom_block = true -%}
           {%- endif -%}
@@ -139,8 +139,8 @@
                     {%- comment -%} Custom Hanso Cards Block Layout {%- endcomment -%}
                     <div class="hanso-cards-container">
                       {%- for block in section.blocks -%}
-                        {%- assign block_trigger = block.settings.trigger_title | downcase | trim -%}
-                        {%- assign menu_title = link.title | downcase | trim -%}
+                        {%- assign block_trigger = block.settings.trigger_title | downcase | strip -%}
+                        {%- assign menu_title = link.title | downcase | strip -%}
                         
                         {%- if block.type == 'mega_menu_product' and block_trigger == menu_title -%}
                           {%- assign product = block.settings.product -%}
