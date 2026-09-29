@@ -327,6 +327,10 @@
       font-size: 12px;
       opacity: 0.8;
     }
+     .product__info-wrapper .payment-plan-card__compare {
+      font-size: 13px;
+      opacity: 0.6;
+    }
      .product__info-wrapper .payment-plan-card__save {
       color: #1b3d2f;
       font-weight: 600;
@@ -1949,13 +1953,20 @@
                             data-installments="1"
                           >
                           <span class="payment-plan-card__title">Pay in full</span>
-                          <span class="payment-plan-card__amount">{{ pay_in_full_price | money }}</span>
                           {%- if pay_in_full_saving > 0 -%}
+                            <s class="payment-plan-card__compare">
+                              <span class="visually-hidden">Regular price</span>
+                              {{- plan_variant.price | money -}}
+                            </s>
+                            <span class="payment-plan-card__amount">
+                              <span class="visually-hidden">Sale price</span>
+                              {{- pay_in_full_price | money -}}
+                            </span>
                             <span class="payment-plan-card__note payment-plan-card__save">
-                              Save {{ pay_in_full_saving | money -}}
-                              {%- if pay_in_full.type == 'percent' %} ({{ pay_in_full.value }}%){% endif %}
+                              Save {{ pay_in_full_saving | money }}
                             </span>
                           {%- else -%}
+                            <span class="payment-plan-card__amount">{{ pay_in_full_price | money }}</span>
                             <span class="payment-plan-card__note">One payment</span>
                           {%- endif -%}
                         </label>
