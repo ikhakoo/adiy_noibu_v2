@@ -1926,6 +1926,7 @@
                               name="selling_plan"
                               value="{{ allocation.selling_plan.id }}"
                               form="{{ product_form_id }}"
+                              data-installments="{{ plan_count }}"
                               {% if allocation.selling_plan.id == selected_plan_id %}
                                 checked
                               {% endif %}
@@ -2844,25 +2845,101 @@
                     assign max_day = max_delivery_timestamp | date: '%d' | plus: 0
                   -%}
 
-                  <div class="estimated-delivery-block" {{ block.shopify_attributes }}>
-                    <h2 class="delivery-title h4">
-                      {{ block.settings.heading_prefix }}
-                      <span class="delivery-date-range">
-                        {%- if min_month == max_month -%}
-                          {{ min_month }} {{ min_day }}–{{ max_day }}
-                        {%- else -%}
-                          {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+                  {%- if product.selling_plan_groups.size > 0 -%}
+                    {%- comment -%}
+                      Payment-plan products ship after the final payment, so the window is
+                      final payment date + min/max business days. The final payment is
+                      (N - 1) months out for the plan picked in the payment_plan_picker step,
+                      so the dates are worked out in the browser and follow the plan choice.
+                    {%- endcomment -%}
+                    <div
+                      class="estimated-delivery-block"
+                      data-plan-delivery
+                      data-form-id="{{ product_form_id }}"
+                      data-min-days="{{ min_days }}"
+                      data-max-days="{{ max_days }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <h2 class="delivery-title h4">
+                        {{ block.settings.heading_prefix }}
+                        <span class="delivery-date-range" data-plan-delivery-range></span>
+                      </h2>
+                      <p class="delivery-subtext">
+                        <span class="stock-status">Ships after your final payment</span>
+                        {{ block.settings.subtext_middle }} {{ min_days }}–{{ max_days }} {{ block.settings.subtext_suffix }}
+                      </p>
+                    </div>
+
+                    <script>
+                      document.addEventListener('DOMContentLoaded', function () {
+                        const block = document.querySelector('[data-plan-delivery][data-form-id="{{ product_form_id }}"]');
+                        if (!block) return;
+                        const range = block.querySelector('[data-plan-delivery-range]');
+                        const minDays = Number(block.dataset.minDays);
+                        const maxDays = Number(block.dataset.maxDays);
+
+                        // Same day-of-month N months later, clamped to the month's last day.
+                        const addMonths = (date, months) => {
+                          const d = new Date(date);
+                          const day = d.getDate();
+                          d.setDate(1);
+                          d.setMonth(d.getMonth() + months);
+                          d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()));
+                          return d;
+                        };
+                        const addBusinessDays = (date, days) => {
+                          const d = new Date(date);
+                          while (days > 0) {
+                            d.setDate(d.getDate() + 1);
+                            if (d.getDay() !== 0 && d.getDay() !== 6) days--;
+                          }
+                          return d;
+                        };
+                        const month = (d) => d.toLocaleString('en-US', { month: 'long' });
+                        const withYear = (d) => (d.getFullYear() !== new Date().getFullYear() ? `, ${d.getFullYear()}` : '');
+
+                        const render = () => {
+                          const checked = document.querySelector(
+                            `input[name="selling_plan"][form="${block.dataset.formId}"]:checked`
+                          );
+                          const installments = Number(checked?.dataset.installments || 0);
+                          if (!installments) return;
+                          const finalPayment = addMonths(new Date(), installments - 1);
+                          const from = addBusinessDays(finalPayment, minDays);
+                          const to = addBusinessDays(finalPayment, maxDays);
+                          range.textContent =
+                            from.getMonth() === to.getMonth() && from.getFullYear() === to.getFullYear()
+                              ? `${month(from)} ${from.getDate()}–${to.getDate()}${withYear(to)}`
+                              : `${month(from)} ${from.getDate()} – ${month(to)} ${to.getDate()}${withYear(to)}`;
+                        };
+
+                        render();
+                        document.addEventListener('change', (e) => {
+                          if (e.target instanceof Element && e.target.matches('input[name="selling_plan"]')) render();
+                        });
+                      });
+                    </script>
+                  {%- else -%}
+                    <div class="estimated-delivery-block" {{ block.shopify_attributes }}>
+                      <h2 class="delivery-title h4">
+                        {{ block.settings.heading_prefix }}
+                        <span class="delivery-date-range">
+                          {%- if min_month == max_month -%}
+                            {{ min_month }} {{ min_day }}–{{ max_day }}
+                          {%- else -%}
+                            {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+                          {%- endif -%}
+                        </span>
+                      </h2>
+                      <p class="delivery-subtext">
+                        {%- if block.settings.subtext_prefix != blank -%}
+                          <span class="stock-status">{{ block.settings.subtext_prefix }}</span>
                         {%- endif -%}
-                      </span>
-                    </h2>
-                    <p class="delivery-subtext">
-                      {%- if block.settings.subtext_prefix != blank -%}
-                        <span class="stock-status">{{ block.settings.subtext_prefix }}</span>
-                      {%- endif -%}
-                      {{ block.settings.subtext_middle }} {{ min_days }}–{{ max_days }} {{ block.settings.subtext_suffix }}
-                    </p>
-                  </div>
-                  
+                        {{ block.settings.subtext_middle }} {{ min_days }}–{{ max_days }} {{ block.settings.subtext_suffix }}
+                      </p>
+                    </div>
+                  {%- endif -%}
+
                 {%- when 'quantity_selector' -%}
                   <div
                     id="Quantity-Form-{{ section.id }}"
