@@ -126,6 +126,7 @@
         },
         "estimated_price_cta_LrEKtH": {
           "type": "estimated_price_cta",
+          "disabled": true,
           "settings": {
             "due_today_subtext": "Non-refundable Reservation Fee.",
             "delivery_title": "Schedule Your Delivery",
@@ -140,6 +141,23 @@
             "info_link_url": "",
             "show_dynamic_checkout": true,
             "button_text": "RESERVE FOR $250"
+          }
+        },
+        "estimated_price_cta_s_CMDx7x": {
+          "type": "estimated_price_cta_s",
+          "settings": {
+            "due_today_subtext": "Non-refundable Reservation Fee.",
+            "delivery_title": "Estimated Delivery Month",
+            "show_delivery_subtext": true,
+            "delivery_subtext": "Select your preferred delivery month.",
+            "show_current_month": true,
+            "min_days_offset": 30,
+            "max_months_offset": 11,
+            "show_footer_agreement": true,
+            "agreement_text": "By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.",
+            "info_link_text": "Terms & Conditions",
+            "info_link_url": "",
+            "show_dynamic_checkout": true
           }
         },
         "estimated_delivery_HC9tbH": {
@@ -290,6 +308,7 @@
         "variant_picker",
         "custom_liquid_FnEVbe",
         "estimated_price_cta_LrEKtH",
+        "estimated_price_cta_s_CMDx7x",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
         "countdown_timer_NM9Fxn",
