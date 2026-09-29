@@ -150,7 +150,7 @@
             "delivery_title": "Estimated Delivery Month",
             "show_delivery_subtext": false,
             "delivery_subtext": "Select your preferred delivery month.",
-            "show_current_month": true,
+            "show_current_month": false,
             "min_days_offset": 30,
             "max_months_offset": 11,
             "show_footer_agreement": true,
