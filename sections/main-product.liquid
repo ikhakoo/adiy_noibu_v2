@@ -2641,7 +2641,7 @@
           const data = metafieldsData[variantId];
           if (!data) return;
 
-          // Hidden Variant ID input ko update karna taake exact selected variant add ho
+          // Har dafa active variant ki exact ID hidden input mein set ho
           if (variantIdInput) {
             variantIdInput.value = data.id;
           }
@@ -2679,14 +2679,12 @@
           updateCartPriceProperty(formatMoney(data.deckPrice * 100));
         }
 
-        // Dawn theme ke variant changes ko pakdne ka secure tareeqa
         function detectActiveVariant() {
-          // 1. Pehle Dawn ke main variant input se check karein
-          const mainVariantInput = document.querySelector('form[data-type="add-to-cart-form"] input[name="id"], input.product-variant-id');
-          if (mainVariantInput && metafieldsData[mainVariantInput.value]) {
-            return mainVariantInput.value;
+          // Dawn theme ke main variant inputs ko target karna
+          const variantInput = productForm.querySelector('input[name="id"]');
+          if (variantInput && metafieldsData[variantInput.value]) {
+            return variantInput.value;
           }
-          // 2. Phir URL parameters se check karein
           const urlParams = new URLSearchParams(window.location.search);
           const urlVariant = urlParams.get('variant');
           if (urlVariant && metafieldsData[urlVariant]) {
@@ -2695,24 +2693,37 @@
           return "{{ current_variant.id }}";
         }
 
-        // Initial load par update karein
+        // Initial Load
         updateBlockData(detectActiveVariant());
 
-        // Har click ya change par active variant ko track karein
+        // Dawn theme variant change listener (MutationObserver sab se behtareen tareeqa hai hidden input changes ko detect karne ka)
+        const targetVariantInput = productForm.querySelector('input[name="id"]');
+        if (targetVariantInput) {
+          const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.attributeName === "value") {
+                const activeId = detectActiveVariant();
+                updateBlockData(activeId);
+              }
+            });
+          });
+          observer.observe(targetVariantInput, { attributes: true });
+        }
+
+        // Fallback clicks/changes par bhi check rakhna
         document.addEventListener('change', function() {
           setTimeout(() => {
             const activeId = detectActiveVariant();
             updateBlockData(activeId);
-          }, 80);
+          }, 50);
         });
 
         document.addEventListener('click', function(e) {
-          const target = e.target.closest('input[type="radio"], label, variant-radios, variant-selects');
-          if (target) {
+          if (e.target.closest('variant-radios, variant-selects, input[type="radio"], select')) {
             setTimeout(() => {
               const activeId = detectActiveVariant();
               updateBlockData(activeId);
-            }, 100);
+            }, 80);
           }
         });
 
