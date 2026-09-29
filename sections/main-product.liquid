@@ -2720,7 +2720,6 @@
           const data = metafieldsData[variantId];
           if (!data) return;
 
-          // Hidden variant ID input ko update karna zaroori hai taake sahi variant add ho
           if (variantIdInput) {
             variantIdInput.value = variantId;
           }
@@ -2755,20 +2754,26 @@
             }
           }
 
-          if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice * 100);
-          if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue * 100);
-          if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice * 100);
+          if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice);
+          if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue);
+          if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice);
           if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
 
-          updateCartPriceProperty(formatMoney(data.deckPrice * 100));
+          updateCartPriceProperty(formatMoney(data.deckPrice));
         }
 
         function getActiveVariantId() {
+          // 1. Pehle hidden input check karein agar Dawn ne update kiya ho
+          if (variantIdInput && variantIdInput.value && metafieldsData[variantIdInput.value]) {
+            return variantIdInput.value;
+          }
+          // 2. Phir URL parameters check karein
           const urlParams = new URLSearchParams(window.location.search);
           const urlVariant = urlParams.get('variant');
           if (urlVariant && metafieldsData[urlVariant]) {
             return urlVariant;
           }
+          // 3. Fallback to default variant
           return "{{ current_variant.id }}";
         }
 
@@ -2777,20 +2782,26 @@
           updateBlockData(initialVariantId);
         }
 
-        document.addEventListener('change', function(e) {
-          const target = e.target instanceof Element ? e.target : null;
-          if (!target) return;
-          if (target.name === 'id' || target.closest('variant-radios') || target.closest('variant-selects')) {
-            setTimeout(() => {
-              const activeId = getActiveVariantId();
-              updateBlockData(activeId);
-            }, 100);
+        // Listen to both change, click and custom variant updates on the page
+        function checkAndUpdateVariant() {
+          const activeId = getActiveVariantId();
+          if (activeId && metafieldsData[activeId]) {
+            updateBlockData(activeId);
+          }
+        }
+
+        document.addEventListener('change', checkAndUpdateVariant);
+        document.addEventListener('click', function(e) {
+          // Agar user ne koi variant swatch ya radio button click kiya hai
+          if (e.target.closest('input[type="radio"]') || e.target.closest('variant-radios') || e.target.closest('variant-selects') || e.target.closest('.js-variant-item')) {
+            setTimeout(checkAndUpdateVariant, 150);
           }
         });
 
-        window.addEventListener('popstate', () => {
-          updateBlockData(getActiveVariantId());
-        });
+        window.addEventListener('popstate', checkAndUpdateVariant);
+
+        // Continuous sync interval taake Dawn theme ke background updates miss na hon
+        setInterval(checkAndUpdateVariant, 500);
       }
 
       if (productForm) {
