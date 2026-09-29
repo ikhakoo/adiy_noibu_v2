@@ -2467,18 +2467,12 @@
 
     {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-    <product-form
-      class="product-form"
-      data-section-id="{{ section.id }}"
-      data-hide-errors="false"
-    >
+    <product-form class="product-form" data-section-id="{{ section.id }}">
       {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
-
-        <!-- Hidden Variant ID input jo ab JS se dynamically update hoga -->
+        <!-- Ye input ab har dafa active variant ki exact ID uthayega -->
         <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantIdInput-{{ section.id }}">
 
         <div class="price-wrapper">
-          <!-- 1. Deck Price & Discount Box -->
           <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
             <div class="dp-row main-deck-price-row">
               <div>
@@ -2502,7 +2496,6 @@
             </div>
           </div>
 
-          <!-- 2. Due Today Box -->
           <div class="dp-card dp-due-card">
             <div class="dp-row">
               <span class="dp-label">Due Today</span>
@@ -2511,77 +2504,32 @@
             <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
           </div>
 
-          <!-- 3. Estimated Delivery Month/Year Picker Box -->
           <div class="dp-card dp-delivery-card">
             <div class="dp-delivery-header">
               <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
             </div>
             
             <div class="dp-input-wrapper">
-              <input 
-                type="hidden" 
-                id="EstimatedDeliveryDate-{{ section.id }}" 
-                name="properties[Estimated Delivery Month]" 
-              >
-              
+              <input type="hidden" id="EstimatedDeliveryDate-{{ section.id }}" name="properties[Estimated Delivery Month]">
               <div class="dp-inline-picker" id="InlineMonthPicker-{{ section.id }}">
                 <div class="dp-years-container" id="YearsContainer-{{ section.id }}"></div>
               </div>
               <div class="dp-error-message" id="CalendarErrorMsg-{{ section.id }}" style="color: #ff0000; font-size: 12px; margin-top: 6px; display: none;">Please select an estimated delivery month.</div>
               
-              <input 
-                type="hidden" 
-                id="DeckPriceProperty-{{ section.id }}" 
-                name="properties[Price]" 
-                value="{{ deck_price | times: 100 | money_without_trailing_zeros }}"
-              >
-              <input 
-                type="hidden" 
-                name="properties[_Order Type]" 
-                value="Deposit"
-              >
+              <input type="hidden" id="DeckPriceProperty-{{ section.id }}" name="properties[Price]" value="{{ deck_price | times: 100 | money_without_trailing_zeros }}">
+              <input type="hidden" name="properties[_Order Type]" value="Deposit">
             </div>
-
-            {%- if block.settings.show_delivery_subtext -%}
-              <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
-            {%- endif -%}
           </div>
         </div>
 
-        <!-- 4. Agreement Text -->
-        {%- if block.settings.show_footer_agreement -%}
-          <div class="dp-agreement-footer" style="margin: 15px 0;">
-            <div class="dp-agreement-text">
-              {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
-            </div>
-            {%- if block.settings.info_link_text != blank -%}
-              <div class="dp-info-link-wrap" style="margin-top: 5px;">
-                <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-
-        <!-- 5. Action Buttons -->
         <div class="dp-buy-buttons-wrapper">
-          {%- render 'buy-buttons',
-            block: block,
-            product: product,
-            product_form_id: product_form_id,
-            section_id: section.id,
-            show_pickup_availability: true
-          -%}
+          {%- render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true -%}
         </div>
-
-        <div class="product-form__error-message-wrapper" role="alert" hidden>
-          <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
-          <span class="product-form__error-message"></span>
-        </div>
-
       {%- endform -%}
     </product-form>
   </div>
 
+  <!-- Variants JSON mapping jismein title aur saara data hoga -->
   <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
     {
       {%- for variant in product.variants -%}
@@ -2589,6 +2537,8 @@
         {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
         {%- assign v_offered = v_deck | minus: v_disc -%}
         "{{ variant.id }}": {
+          "id": "{{ variant.id }}",
+          "title": {{ variant.title | json }},
           "deckPrice": {{ v_deck }},
           "discountValue": {{ v_disc }},
           "offeredPrice": {{ v_offered }},
@@ -2609,30 +2559,18 @@
       const variantIdInput = document.getElementById("VariantIdInput-" + sectionId);
 
       let today = new Date();
-      let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
-      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-      
-      if (!showCurrentMonth && minMonthsOffset === 0) {
-        minMonthsOffset = 1;
-      }
-
-      let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
+      let minMonthsOffset = 1;
+      let maxMonthsOffset = 6;
       let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
       let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
 
       let selectedYear = null;
       let selectedMonth = null;
-
-      if (hiddenDateInput) {
-        hiddenDateInput.value = '';
-      }
-
       const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
       function renderGroupedCalendar() {
         if (!yearsContainer) return;
         yearsContainer.innerHTML = '';
-
         let monthsByYear = {};
         let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
         let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
@@ -2640,10 +2578,7 @@
         while (currIterDate <= endIterDate) {
           let y = currIterDate.getFullYear();
           let m = currIterDate.getMonth();
-
-          if (!monthsByYear[y]) {
-            monthsByYear[y] = [];
-          }
+          if (!monthsByYear[y]) monthsByYear[y] = [];
           monthsByYear[y].push(m);
           currIterDate.setMonth(currIterDate.getMonth() + 1);
         }
@@ -2651,7 +2586,6 @@
         Object.keys(monthsByYear).forEach(year => {
           const yearGroup = document.createElement('div');
           yearGroup.className = 'dp-year-group';
-
           const yearTitle = document.createElement('div');
           yearTitle.className = 'dp-year-title';
           yearTitle.textContent = year;
@@ -2675,19 +2609,12 @@
               if (hiddenDateInput) {
                 hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
               }
-              
-              if (inlinePicker) {
-                inlinePicker.style.borderColor = "";
-                inlinePicker.classList.remove('has-error');
-              }
+              if (inlinePicker) inlinePicker.style.borderColor = "";
               if (errorMsg) errorMsg.style.display = 'none';
-
               renderGroupedCalendar();
             });
-
             grid.appendChild(cell);
           });
-
           yearGroup.appendChild(grid);
           yearsContainer.appendChild(yearGroup);
         });
@@ -2706,12 +2633,6 @@
         }
       }
 
-      const variantTitles = {
-        {%- for variant in product.variants -%}
-          "{{ variant.id }}": "{{ variant.title }}",
-        {%- endfor -%}
-      };
-
       const metaJsonEl = document.getElementById("VariantMetafieldsJson-" + sectionId);
       if (metaJsonEl) {
         const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
@@ -2720,9 +2641,9 @@
           const data = metafieldsData[variantId];
           if (!data) return;
 
-          // Hidden variant ID input ko update karna zaroori hai taake sahi variant add ho
+          // Hidden Variant ID input ko update karna taake exact selected variant add ho
           if (variantIdInput) {
-            variantIdInput.value = variantId;
+            variantIdInput.value = data.id;
           }
 
           const deckCardContainer = document.getElementById("DeckCardContainer-" + sectionId);
@@ -2735,13 +2656,8 @@
           const dueTodayEl = document.getElementById("DueTodayVal");
           const selectedSizeEl = document.getElementById("SelectedSizeDisplay");
 
-          if (selectedSizeEl) {
-            selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
-          }
-
-          if (deckCardContainer) {
-            deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
-          }
+          if (selectedSizeEl) selectedSizeEl.textContent = "Size: " + data.title;
+          if (deckCardContainer) deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
 
           if (discountRow && deckDivider && offeredPriceRow) {
             if (data.discountValue > 0) {
@@ -2763,7 +2679,14 @@
           updateCartPriceProperty(formatMoney(data.deckPrice * 100));
         }
 
-        function getActiveVariantId() {
+        // Dawn theme ke variant changes ko pakdne ka secure tareeqa
+        function detectActiveVariant() {
+          // 1. Pehle Dawn ke main variant input se check karein
+          const mainVariantInput = document.querySelector('form[data-type="add-to-cart-form"] input[name="id"], input.product-variant-id');
+          if (mainVariantInput && metafieldsData[mainVariantInput.value]) {
+            return mainVariantInput.value;
+          }
+          // 2. Phir URL parameters se check karein
           const urlParams = new URLSearchParams(window.location.search);
           const urlVariant = urlParams.get('variant');
           if (urlVariant && metafieldsData[urlVariant]) {
@@ -2772,27 +2695,33 @@
           return "{{ current_variant.id }}";
         }
 
-        const initialVariantId = getActiveVariantId();
-        if (metafieldsData[initialVariantId]) {
-          updateBlockData(initialVariantId);
-        }
+        // Initial load par update karein
+        updateBlockData(detectActiveVariant());
 
-        document.addEventListener('change', function(e) {
-          const target = e.target instanceof Element ? e.target : null;
-          if (!target) return;
-          if (target.name === 'id' || target.closest('variant-radios') || target.closest('variant-selects')) {
+        // Har click ya change par active variant ko track karein
+        document.addEventListener('change', function() {
+          setTimeout(() => {
+            const activeId = detectActiveVariant();
+            updateBlockData(activeId);
+          }, 80);
+        });
+
+        document.addEventListener('click', function(e) {
+          const target = e.target.closest('input[type="radio"], label, variant-radios, variant-selects');
+          if (target) {
             setTimeout(() => {
-              const activeId = getActiveVariantId();
+              const activeId = detectActiveVariant();
               updateBlockData(activeId);
             }, 100);
           }
         });
 
         window.addEventListener('popstate', () => {
-          updateBlockData(getActiveVariantId());
+          updateBlockData(detectActiveVariant());
         });
       }
 
+      // Add to cart validation check
       if (productForm) {
         productForm.addEventListener('click', function(e) {
           const submitBtn = e.target.closest('button[type="submit"], input[type="submit"], .product-form__submit, button[name="add"]');
@@ -2801,15 +2730,11 @@
           if (!hiddenDateInput || !hiddenDateInput.value) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            e.stopPropagation();
-
             if (inlinePicker) {
               inlinePicker.style.borderColor = "#ff0000";
               inlinePicker.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            if (errorMsg) {
-              errorMsg.style.display = 'block';
-            }
+            if (errorMsg) errorMsg.style.display = 'block';
             return false;
           }
         }, true);
