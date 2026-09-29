@@ -1,0 +1,58 @@
+{{ 'seo-guide.css' | asset_url | stylesheet_tag }}
+
+<div class="sg sg-pnav-wrap" style="--sg-sticky: {{ section.settings.sticky_offset }}px; --sg-sticky-m: {{ section.settings.sticky_offset_mobile }}px;">
+  <div class="sg-wrap">
+    <nav class="sg-pnav" aria-label="{{ section.settings.label | escape }}" data-sg-pnav>
+      {%- for block in section.blocks -%}
+        {%- assign anchor = block.settings.anchor | remove: '#' | handleize -%}
+        <a href="#{{ anchor }}" {{ block.shopify_attributes }}{% if forloop.first %} class="is-active"{% endif %}>{{ block.settings.label | escape }}</a>
+      {%- endfor -%}
+    </nav>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var nav = document.querySelector('#shopify-section-{{ section.id }} [data-sg-pnav]');
+    if (!nav) return;
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    var ticking = false;
+    function spy() {
+      ticking = false;
+      var current = links[0];
+      targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top < 220) current = links[i]; });
+      links.forEach(function (a) { a.classList.toggle('is-active', a === current); });
+      if (current && nav.scrollWidth > nav.clientWidth) {
+        var left = current.offsetLeft - nav.clientWidth / 2 + current.clientWidth / 2;
+        nav.scrollTo({ left: left, behavior: 'auto' });
+      }
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+    spy();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SEO Guide: On-page nav",
+  "tag": "div",
+  "class": "section-seo-guide-nav",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Accessible label", "default": "On this page" },
+    { "type": "range", "id": "sticky_offset", "label": "Sticky offset (desktop)", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 96, "info": "Distance from the top of the window, so the bar sits below the sticky header." },
+    { "type": "range", "id": "sticky_offset_mobile", "label": "Sticky offset (mobile)", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 70 }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Section" },
+        { "type": "text", "id": "anchor", "label": "Anchor ID", "info": "Must match the Anchor ID set on a content section, e.g. sg-cost" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "SEO Guide: On-page nav", "blocks": [ { "type": "link" }, { "type": "link" } ] } ]
+}
+{% endschema %}
