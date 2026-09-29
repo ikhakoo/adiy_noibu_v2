@@ -547,9 +547,25 @@ function setChecked(elementId, isChecked) {
   }
 }
 
+// Order/product data from the tracker API is inserted with innerHTML; escape it so a
+// title or URL containing quotes or < > can't break the markup or inject script.
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Only open http(s) or protocol-relative (//cdn...) links from the order data.
+function isSafeUrl(url) {
+  return /^(https?:)?\/\//i.test(String(url || '').trim());
+}
+
 // PDF Download Helper Function
 function forceDownloadPdf(url, fileName) {
-  if (!url) return;
+  if (!isSafeUrl(url)) return;
   const a = document.createElement('a');
   a.href = url;
   a.download = fileName || 'download.pdf';
@@ -561,8 +577,8 @@ function forceDownloadPdf(url, fileName) {
 
 // Open Links Helper Function
 function openResourceLink(url) {
-  if (!url) return;
-  window.open(url, '_blank');
+  if (!isSafeUrl(url)) return;
+  window.open(url, '_blank', 'noopener');
 }
 
 async function handleTrackingSubmit(event) {
@@ -628,17 +644,17 @@ async function handleTrackingSubmit(event) {
       // Main Tracking Result Box inside card
       resultContainer.innerHTML = `
         <div class="tracking-result-header">
-          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${order.number}</h3>
+          <h3 style="margin:0; font-size: 18px; color: #002B49;">Order #${escapeHtml(order.number)}</h3>
           <span class="status-badge">${fulfillmentText}</span>
         </div>
         <div class="tracking-result-grid">
-          <div><strong>Customer Name:</strong> ${customerName}</div>
-          <div><strong>Email:</strong> ${customerEmail}</div>
-          <div><strong>Phone:</strong> ${customerPhone}</div>
+          <div><strong>Customer Name:</strong> ${escapeHtml(customerName)}</div>
+          <div><strong>Email:</strong> ${escapeHtml(customerEmail)}</div>
+          <div><strong>Phone:</strong> ${escapeHtml(customerPhone)}</div>
           <div><strong>Order Date:</strong> ${formattedDate}</div>
           
-          <div style="grid-column: 1 / -1;"><strong>Product Title:</strong> ${productTitle}</div>
-          <div style="grid-column: 1 / -1;"><strong>Variant:</strong> ${variantTitle}</div>
+          <div style="grid-column: 1 / -1;"><strong>Product Title:</strong> ${escapeHtml(productTitle)}</div>
+          <div style="grid-column: 1 / -1;"><strong>Variant:</strong> ${escapeHtml(variantTitle)}</div>
         </div>
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
@@ -674,7 +690,7 @@ async function handleTrackingSubmit(event) {
                 </svg>
               </div>
               <h4>A-DIY Master Installation Manual</h4>
-              <button type="button" class="workspace-btn" ${manualPdf ? `onclick="forceDownloadPdf('${manualPdf}', 'Master_Installation_Manual.pdf')"` : 'disabled'}>
+              <button type="button" class="workspace-btn" ${manualPdf ? `data-url="${escapeHtml(manualPdf)}" onclick="forceDownloadPdf(this.dataset.url, 'Master_Installation_Manual.pdf')"` : 'disabled'}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 DOWNLOAD PDF
               </button>
@@ -689,7 +705,7 @@ async function handleTrackingSubmit(event) {
                 </svg>
               </div>
               <h4>Footing Plan Diagram</h4>
-              <button type="button" class="workspace-btn" ${footingPdf ? `onclick="forceDownloadPdf('${footingPdf}', 'Footing_Plan_Diagram.pdf')"` : 'disabled'}>
+              <button type="button" class="workspace-btn" ${footingPdf ? `data-url="${escapeHtml(footingPdf)}" onclick="forceDownloadPdf(this.dataset.url, 'Footing_Plan_Diagram.pdf')"` : 'disabled'}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 DOWNLOAD DIAGRAM
               </button>
@@ -704,7 +720,7 @@ async function handleTrackingSubmit(event) {
                 </svg>
               </div>
               <h4>Video Build Masterclass Series</h4>
-              <button type="button" class="workspace-btn" ${videoUrl ? `onclick="openResourceLink('${videoUrl}')"` : 'disabled'}>
+              <button type="button" class="workspace-btn" ${videoUrl ? `data-url="${escapeHtml(videoUrl)}" onclick="openResourceLink(this.dataset.url)"` : 'disabled'}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 WATCH VIDEO
               </button>
@@ -738,7 +754,7 @@ async function handleTrackingSubmit(event) {
                 </svg>
               </div>
               <h4>A-DIY 3D Interactive Web App</h4>
-              <button type="button" class="workspace-btn" ${app3dUrl ? `onclick="openResourceLink('${app3dUrl}')"` : 'disabled'}>
+              <button type="button" class="workspace-btn" ${app3dUrl ? `data-url="${escapeHtml(app3dUrl)}" onclick="openResourceLink(this.dataset.url)"` : 'disabled'}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 LAUNCH 3D WEB APP
               </button>
