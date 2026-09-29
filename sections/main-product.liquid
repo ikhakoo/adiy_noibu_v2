@@ -2474,8 +2474,7 @@
     >
       {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
 
-        <!-- Hidden Variant ID input jo ab JS se dynamically update hoga -->
-        <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantIdInput-{{ section.id }}">
+        <!-- NOTE: Yahan se humne apna alag hidden input hata diya hai taake Dawn ke native input ke sath conflict na ho -->
 
         <div class="price-wrapper">
           <!-- 1. Deck Price & Discount Box -->
@@ -2606,7 +2605,9 @@
       const inlinePicker = document.getElementById("InlineMonthPicker-" + sectionId);
       const errorMsg = document.getElementById("CalendarErrorMsg-" + sectionId);
       const productForm = document.getElementById("product-form-" + sectionId);
-      const variantIdInput = document.getElementById("VariantIdInput-" + sectionId);
+      
+      // Dawn ke apne native variant input ko target karein jo buy-buttons render karta hai
+      const variantIdInput = productForm ? productForm.querySelector('input[name="id"]') : null;
 
       let today = new Date();
       let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
@@ -2720,8 +2721,10 @@
           const data = metafieldsData[variantId];
           if (!data) return;
 
-          if (variantIdInput) {
-            variantIdInput.value = variantId;
+          // Dawn ke native variant input ko update karo taake cart mein sahi variant jaye
+          const currentVariantInput = productForm ? productForm.querySelector('input[name="id"]') : variantIdInput;
+          if (currentVariantInput) {
+            currentVariantInput.value = variantId;
           }
 
           const deckCardContainer = document.getElementById("DeckCardContainer-" + sectionId);
@@ -2763,17 +2766,17 @@
         }
 
         function getActiveVariantId() {
-          // 1. Pehle hidden input check karein agar Dawn ne update kiya ho
-          if (variantIdInput && variantIdInput.value && metafieldsData[variantIdInput.value]) {
-            return variantIdInput.value;
-          }
-          // 2. Phir URL parameters check karein
+          // Pehle URL parameters check karein jo Dawn update karta hai
           const urlParams = new URLSearchParams(window.location.search);
           const urlVariant = urlParams.get('variant');
           if (urlVariant && metafieldsData[urlVariant]) {
             return urlVariant;
           }
-          // 3. Fallback to default variant
+          // Phir Dawn ke native input ki value check karein
+          const nativeInput = productForm ? productForm.querySelector('input[name="id"]') : null;
+          if (nativeInput && nativeInput.value && metafieldsData[nativeInput.value]) {
+            return nativeInput.value;
+          }
           return "{{ current_variant.id }}";
         }
 
@@ -2782,7 +2785,6 @@
           updateBlockData(initialVariantId);
         }
 
-        // Listen to both change, click and custom variant updates on the page
         function checkAndUpdateVariant() {
           const activeId = getActiveVariantId();
           if (activeId && metafieldsData[activeId]) {
@@ -2792,16 +2794,13 @@
 
         document.addEventListener('change', checkAndUpdateVariant);
         document.addEventListener('click', function(e) {
-          // Agar user ne koi variant swatch ya radio button click kiya hai
           if (e.target.closest('input[type="radio"]') || e.target.closest('variant-radios') || e.target.closest('variant-selects') || e.target.closest('.js-variant-item')) {
             setTimeout(checkAndUpdateVariant, 150);
           }
         });
 
         window.addEventListener('popstate', checkAndUpdateVariant);
-
-        // Continuous sync interval taake Dawn theme ke background updates miss na hon
-        setInterval(checkAndUpdateVariant, 500);
+        setInterval(checkAndUpdateVariant, 400);
       }
 
       if (productForm) {
