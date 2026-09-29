@@ -1,0 +1,59 @@
+{{ 'seo-guide.css' | asset_url | stylesheet_tag }}
+
+<div class="sg sg-trust" style="--sg-cols: {{ section.blocks.size | at_least: 1 | at_most: 6 }};">
+  <div class="sg-wrap">
+    <ul>
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>
+          {%- case block.settings.icon -%}
+            {%- when 'grid' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4h16v16zM4 9h16M4 14h16M9 4v16M14 4v16"/></svg>
+            {%- when 'layers' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M12 3v18"/><circle cx="12" cy="12" r="9"/></svg>
+            {%- when 'document' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg>
+            {%- when 'shield' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+            {%- when 'truck' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+            {%- when 'tools' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l4 4-9 9H5v-4zM13 7l4 4"/></svg>
+            {%- else -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          {%- endcase -%}
+          <span>{{ block.settings.text | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SEO Guide: Trust strip",
+  "tag": "div",
+  "class": "section-seo-guide-trust",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust point",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "check",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "grid", "label": "Deck grid" },
+            { "value": "layers", "label": "Materials" },
+            { "value": "document", "label": "Document" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "tools", "label": "Tools" }
+          ]
+        },
+        { "type": "text", "id": "text", "label": "Text", "default": "Trust point" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    { "name": "SEO Guide: Trust strip", "blocks": [ { "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" } ] }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1176 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "seo-guide-hero",
+      "settings": {
+        "image": "shopify://shop_images/HOMEPAGE_HERO.png",
+        "overlay_opacity": 86,
+        "min_height": 620,
+        "overlap_header": true,
+        "overlap_amount": 150,
+        "kicker": "New York Deck Guide · 2026",
+        "heading": "Building a Deck in New York: Contractors, Costs, Permits and Deck-Kit Options",
+        "text": "<p>Whether you are collecting quotes from deck builders on Long Island, pricing lumber in Rochester or reading permit rules for a Westchester backyard, there are three realistic ways to build a deck in New York. You can hire a contractor to handle everything, build from raw materials yourself, or start with a professionally engineered deck system such as A-DIY and assemble it yourself or with local help. This guide compares all three and explains what drives cost, how permits and contractor licensing work in New York, and which materials hold up best here.</p>",
+        "button_label": "Explore Deck Options",
+        "button_link": "#sg-options",
+        "button2_label": "See How A-DIY Works",
+        "button2_link": "#sg-how",
+        "article_schema": true,
+        "author": "A-DIY Product Team",
+        "date_published": "2026-09-28",
+        "date_modified": "2026-09-25"
+      },
+      "blocks": {
+        "meta_1": {
+          "type": "meta",
+          "settings": {
+            "text": "Reviewed by <strong>A-DIY Product Team</strong>"
+          }
+        },
+        "meta_2": {
+          "type": "meta",
+          "settings": {
+            "text": "Regulations checked <strong>September 25, 2026</strong>"
+          }
+        },
+        "meta_3": {
+          "type": "meta",
+          "settings": {
+            "text": "<strong>15 min</strong> read"
+          }
+        }
+      },
+      "block_order": [
+        "meta_1",
+        "meta_2",
+        "meta_3"
+      ]
+    },
+    "trust": {
+      "type": "seo-guide-trust",
+      "settings": {},
+      "blocks": {
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "grid",
+            "text": "Pre-engineered deck system"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "layers",
+            "text": "Pressure-treated and composite options"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "document",
+            "text": "Engineering diagrams for permit applications"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "text": "5-year structural warranty"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "nav": {
+      "type": "seo-guide-anchor-nav",
+      "settings": {
+        "label": "On this page",
+        "sticky_offset": 96,
+        "sticky_offset_mobile": 70
+      },
+      "blocks": {
+        "n1": {
+          "type": "link",
+          "settings": {
+            "label": "Options",
+            "anchor": "sg-ways"
+          }
+        },
+        "n2": {
+          "type": "link",
+          "settings": {
+            "label": "Contractor vs. A-DIY",
+            "anchor": "sg-compare"
+          }
+        },
+        "n3": {
+          "type": "link",
+          "settings": {
+            "label": "Deck Sizes",
+            "anchor": "sg-options"
+          }
+        },
+        "n4": {
+          "type": "link",
+          "settings": {
+            "label": "Cost",
+            "anchor": "sg-cost"
+          }
+        },
+        "n5": {
+          "type": "link",
+          "settings": {
+            "label": "Contractors",
+            "anchor": "sg-contractors"
+          }
+        },
+        "n6": {
+          "type": "link",
+          "settings": {
+            "label": "Permits",
+            "anchor": "sg-permits"
+          }
+        },
+        "n7": {
+          "type": "link",
+          "settings": {
+            "label": "Materials",
+            "anchor": "sg-materials"
+          }
+        },
+        "n8": {
+          "type": "link",
+          "settings": {
+            "label": "Foundations",
+            "anchor": "sg-foundations"
+          }
+        },
+        "n9": {
+          "type": "link",
+          "settings": {
+            "label": "How It Works",
+            "anchor": "sg-how"
+          }
+        },
+        "n10": {
+          "type": "link",
+          "settings": {
+            "label": "FAQ",
+            "anchor": "sg-faq"
+          }
+        }
+      },
+      "block_order": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "n6",
+        "n7",
+        "n8",
+        "n9",
+        "n10"
+      ]
+    },
+    "ways": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-ways",
+        "background": "ground",
+        "kicker": "Your options",
+        "heading": "Three Ways to Build a Deck in New York",
+        "heading_tag": "h2",
+        "intro": "<p>Most New York homeowners end up choosing between the same three paths. The right one depends on how custom the design is, how much of the work you want to take on, and how much certainty you want about materials and price before the project starts.</p>",
+        "layout": "grid",
+        "padding_top": 56,
+        "padding_bottom": 96,
+        "equal_height": false
+      },
+      "blocks": {
+        "w1": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "white",
+            "media_label": "Contractor framing photo: owned or licensed image of a crew building a custom deck",
+            "media_position": "top",
+            "media_ratio": "16 / 11",
+            "title": "Hire a Full-Service Deck Contractor",
+            "body": "<p>A deck builder designs the deck for your property, sources materials, handles construction and usually coordinates permits and inspections. It is the most hands-off route and the most flexible for unusual designs, and labor makes up a large share of the price.</p>",
+            "small_body": true
+          }
+        },
+        "w2": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "white",
+            "media_label": "Raw lumber photo: lumber, hardware and saw on site",
+            "media_position": "top",
+            "media_ratio": "16 / 11",
+            "title": "Build From Raw Materials",
+            "body": "<p>You plan the layout, work out a cut list, buy lumber and hardware, then measure, cut and assemble every piece. This can keep material costs down if you have the skills and tools, but the structural layout, span choices and every connection are your responsibility.</p>",
+            "small_body": true
+          }
+        },
+        "w3": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "mint-strong",
+            "image": "shopify://shop_images/pressure-treated-kiln-dried-wood-deck-kit-736760.jpg",
+            "media_position": "top",
+            "media_ratio": "16 / 11",
+            "tag": "A-DIY",
+            "title": "Use a Professionally Engineered Deck System",
+            "body": "<p>A-DIY supplies a pre-engineered deck system. The lumber arrives cut to size, with the hardware and structural layout worked out in advance, so you assemble a finished deck instead of designing one from scratch. You can build it yourself or hire local help.</p>",
+            "small_body": true
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3"
+      ]
+    },
+    "compare": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-compare",
+        "background": "white",
+        "kicker": "Side by side",
+        "heading": "Deck Contractor vs. A-DIY Deck System",
+        "heading_tag": "h2",
+        "intro": "<p>A contractor and an engineered deck system solve different problems. This table shows where each one fits.</p>",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "tbl": {
+          "type": "table",
+          "settings": {
+            "width": "12",
+            "caption": "Deck contractor compared with the A-DIY deck system",
+            "header": "Factor | Full-service deck contractor | A-DIY deck system",
+            "rows": "Design | Custom to your property, including shapes, levels and house attachment | Standard sizes with a structural layout worked out in advance\nMaterials | Chosen and sourced by the contractor; grade and brand depend on the quote | Grade 1 Southern Yellow Pine, pressure-treated and kiln-dried, or composite decking, shipped together with galvanized hardware\nLabor | The contractor's crew | You, or a handyman or carpenter you hire locally\nCutting and measuring | Done on site during construction | Lumber arrives cut to size; no cutting or measuring for the standard layout\nPermits | Often handled by the contractor; confirm in the contract | You or your installer apply; engineering diagrams are available to support the application\nFoundations | Designed and installed for your site and local frost depth | Includes deck blocks; your building department decides whether other footings are required\nCustomization | High | Within available sizes, materials and post-height options\nPricing | Quoted per project; depends heavily on labor and site conditions | System price listed up front; site work, footings, permits and any hired labor are separate\nEngineering | Depends on the contractor; stamped plans may be required locally | Pre-engineered system; joists spaced 13 to 14 inches on center\nWarranty | Contractor workmanship warranty plus manufacturer warranties | 5-year structural warranty on pressure-treated framing; composite boards carry the Deckorators manufacturer warranty\nBest use | Complex, multi-level, rooftop or fully managed projects | Standard rectangular decks where you want a known system price and a straightforward build",
+            "highlight": "3"
+          }
+        },
+        "c1": {
+          "type": "panel",
+          "settings": {
+            "width": "6",
+            "style": "ground",
+            "title": "When a Contractor May Make Sense",
+            "small_body": false,
+            "body": "<ul><li>The deck is multi-level, curved, rooftop or integrated with other structures.</li><li>It attaches to the house with a ledger and needs flashing details.</li><li>You are in New York City, where deck plans must be designed by a licensed engineer or architect and filed with the Department of Buildings.</li><li>You want one company responsible for design, permits, construction and inspections.</li></ul>"
+          }
+        },
+        "c2": {
+          "type": "panel",
+          "settings": {
+            "width": "6",
+            "style": "dark",
+            "title": "When A-DIY May Make Sense",
+            "small_body": false,
+            "body": "<ul><li>A standard size fits your yard, and you want the system price before any site work begins.</li><li>You want to skip the cut list, the measuring and the lumber-yard runs.</li><li>You are comfortable assembling it with a drill, or you have a local handyman or carpenter in mind.</li><li>You want engineering diagrams to bring to your building department.</li></ul>"
+          }
+        },
+        "c3": {
+          "type": "panel",
+          "settings": {
+            "width": "12",
+            "style": "plain",
+            "small_body": true,
+            "body": "<p>A-DIY is not a New York contractor, installer, contractor directory or permit authority, and it has no local crews or offices in New York. A-DIY supplies the deck system.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "tbl",
+        "c1",
+        "c2",
+        "c3"
+      ]
+    },
+    "options": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-options",
+        "background": "ground",
+        "kicker": "Shop by size",
+        "heading": "A real deck, engineered to come together.",
+        "heading_tag": "h2",
+        "intro": "<p>Current A-DIY deck options. Prices update automatically from the store.</p>",
+        "head_link_label": "Not sure which size? Book a free design consultation →",
+        "head_link_url": "/pages/design-consultation",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "p1": {
+          "type": "product",
+          "settings": {
+            "width": "4",
+            "product": "pressure-treated-kiln-dried-wood-deck-kit",
+            "variant_match": "12 x 12",
+            "title": "12×12 Pressure-Treated Deck",
+            "description": "<p>144 sq ft. Grade 1 Southern Yellow Pine, pressure-treated and kiln-dried.</p>",
+            "specs": "Beams | 6×6\nJoists | 2×6, 13–14 in. on center\nBoards | Pre-sealed, 5.5 in. wide",
+            "button_label": "Shop Now →"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "width": "4",
+            "product": "pressure-treated-kiln-dried-wood-deck-kit",
+            "variant_match": "12 x 16",
+            "title": "12×16 Pressure-Treated Deck",
+            "description": "<p>192 sq ft. Grade 1 Southern Yellow Pine, pressure-treated and kiln-dried.</p>",
+            "specs": "Beams | 6×6\nJoists | 2×6, 13–14 in. on center\nBoards | Pre-sealed, 5.5 in. wide",
+            "missing_text": "[ADD VERIFIED 12×16 PRESSURE-TREATED PRICE AND AVAILABILITY HERE]",
+            "fallback_button_label": "See Pressure-Treated Sizes →",
+            "image": "shopify://shop_images/pressure-treated-kiln-dried-wood-deck-kit-648657.jpg"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "width": "4",
+            "product": "a-diy-composite-deck-kit",
+            "variant_match": "12 x 16",
+            "title": "12×16 Composite Deck",
+            "tag": "Low maintenance",
+            "alt_style": true,
+            "description": "<p>192 sq ft. Deckorators composite decking in Amazon Gray or Forest Wood.</p>",
+            "specs": "Decking | Deckorators composite\nColors | Amazon Gray, Forest Wood\nBoard warranty | Manufacturer",
+            "button_label": "Shop Now →"
+          }
+        },
+        "sizes": {
+          "type": "panel",
+          "settings": {
+            "width": "12",
+            "style": "white",
+            "title": "More sizes",
+            "title_small": true,
+            "small_body": true,
+            "body": "<p><strong>Pressure-treated:</strong> 6×12, 6×16, 6×20, 8×12, 8×16, 8×20, 12×12, 12×18, 12×20, 12×24, 12×28, 16×16, 16×20, 16×24, 16×28</p><p><strong>Composite:</strong> 12×12, 12×16, 12×20, 12×24, 12×28, 16×16, 16×20, 16×24, 16×28</p>",
+            "button_label": "Compare All Sizes and Prices",
+            "button_link": "shopify://collections/all",
+            "button_style": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "sizes"
+      ]
+    },
+    "cost": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-cost",
+        "background": "white",
+        "kicker": "Budget",
+        "heading": "How Much Does It Cost to Build a Deck in New York?",
+        "heading_tag": "h2",
+        "intro": "<p>There is no single statewide price for a deck in New York. The same deck can cost very differently in Nassau County than near Syracuse, because labor rates, permit fees, design requirements and site conditions change from one municipality to the next. The most reliable number is a set of written quotes for your own property, built on the same scope.</p>",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "f1": {
+          "type": "panel",
+          "settings": {
+            "width": "7",
+            "style": "ground",
+            "title": "What Drives the Cost of a Deck",
+            "items": "Size | More square feet means more framing, decking, hardware and labor.\nMaterial | Pressure-treated wood generally costs less up front than composite.\nHeight | Higher decks need longer posts, bracing, and often stairs and guards.\nFoundations | Footing type and depth depend on soil, local frost depth and what your building department requires.\nSite conditions | Slopes, rock, poor drainage and tight access add time and equipment.\nPermits and plans | Fees, surveys and required drawings vary by municipality. In NYC, plans must come from a licensed engineer or architect.\nLabor | Full custom construction costs more than hiring help to assemble a system.\nStairs and railings | Each flight of stairs and every run of guard adds material and labor.\nDemolition | Removing and hauling away an old deck is usually priced separately.\nCustom features | Multiple levels, curves, built-in seating and lighting add design and build time.",
+            "items_display": "factors"
+          }
+        },
+        "f2": {
+          "type": "panel",
+          "settings": {
+            "width": "5",
+            "style": "dark",
+            "kicker": "Reference figures",
+            "title": "Contractor-Built Deck Additions, 2025",
+            "body": "<p>The 2025 Cost vs. Value report publishes national average job costs for a contractor-built deck addition. New York costs may be higher or lower.</p>",
+            "items": "Wood deck addition, national average | $18,263\nComposite deck addition, national average | $25,096\nNew York or Middle Atlantic figure | [ADD VERIFIED INFORMATION HERE]",
+            "items_display": "figures",
+            "body_after": "<p>For an A-DIY build, start with the system price on the store, then add delivery, site preparation, any footings your building department requires, permit fees and any labor you hire. [ADD VERIFIED NEW YORK ASSEMBLY-LABOR COST DATA HERE]</p>",
+            "button_label": "View Current Sizes and Prices",
+            "button_link": "#sg-options",
+            "button_style": "white"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2"
+      ]
+    },
+    "contractors": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-contractors",
+        "background": "ground",
+        "kicker": "Hiring",
+        "heading": "How to Find and Hire a Deck Contractor in New York",
+        "heading_tag": "h2",
+        "intro": "<p>A good deck builder is easier to identify when you compare quotes on the same written scope. Before you call anyone, write one page that describes the deck: approximate size, material, height, whether it is attached or freestanding, stairs and railings, removal of an old deck, site conditions, and who will apply for the permit.</p>",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "h1": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "white",
+            "title": "Compare Quotes and References",
+            "items_display": "checklist",
+            "items": "Get at least three written estimates for the same scope.\nAsk for references from decks of similar size, ideally in your town or county.\nCheck the business name and address, and look up complaints with your county consumer affairs office.\nMake sure each quote lists lumber grade, framing sizes, decking brand, footings, stairs, railings, permits and cleanup."
+          }
+        },
+        "h2": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "mint",
+            "kicker": "New York requirements",
+            "title": "Licensing Is Local, Not Statewide",
+            "body": "<p>New York does not issue a statewide home-improvement contractor license. According to the New York Attorney General, contractors must be licensed in <strong>New York City, Nassau, Suffolk, Westchester, Putnam and Rockland counties, and the City of Buffalo</strong>. Yonkers also issues its own home improvement license.</p><p>In New York City, the Department of Consumer and Worker Protection (DCWP) licenses home improvement contractors. Look up the license number before you sign.</p>"
+          }
+        },
+        "h3": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "dark",
+            "title": "Your Contract Rights Under State Law",
+            "items_display": "checklist",
+            "items": "Home improvement work over $500 requires a written contract signed by both parties.\nThe contract must include start and completion dates, a description of the work and materials, and the payment schedule.\nYou can cancel until midnight of the third business day after signing.\nDeposits must be placed in escrow, or the contractor must post a bond or similar guarantee."
+          }
+        },
+        "h4": {
+          "type": "panel",
+          "settings": {
+            "width": "6",
+            "style": "white",
+            "title": "Insurance, Payments and Warranties",
+            "body": "<p>Ask for current liability and workers' compensation certificates issued by the insurer. Since 2022, New York home improvement contracts must also include an insurance disclosure. Keep progress payments tied to completed work rather than dates, and get every change order in writing before extra work begins.</p><p>Ask what workmanship warranty the contractor offers. It is separate from manufacturer warranties on lumber, decking and hardware.</p>"
+          }
+        },
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Which license do you hold for my town or county?",
+            "answer": "<p>If you live in NYC, Nassau, Suffolk, Westchester, Putnam, Rockland or Buffalo, ask for the local license number and look it up.</p>",
+            "open": true,
+            "group_title": "Questions to Ask Any Deck Builder",
+            "group_style": "white",
+            "width": "6"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Who applies for the permit and books inspections?",
+            "answer": "<p>Put it in the contract. If the contractor files, the permit should name them.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "What footing system and depth are you proposing?",
+            "answer": "<p>It should match your building department's frost depth and soil requirements.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "How will my deposit be held?",
+            "answer": "<p>State law requires escrow or a bond. The contractor must tell you where the money is held.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ]
+    },
+    "permits": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-permits",
+        "background": "white",
+        "kicker": "Permits and codes",
+        "heading": "Deck Permits in New York",
+        "heading_tag": "h2",
+        "intro": "<p>Most new decks in New York need a building permit. Who issues it, and which code applies, depends on whether you live inside or outside New York City.</p>",
+        "layout": "two_columns",
+        "column_ratio": "6-6",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "pm1": {
+          "type": "panel",
+          "settings": {
+            "column": "left",
+            "style": "ground",
+            "kicker": "Outside New York City",
+            "title": "The 2025 Uniform Code",
+            "body": "<p>The Department of State maintains the Uniform Fire Prevention and Building Code. The 2025 edition took effect on December 31, 2025, and its residential code is based on the 2024 International Residential Code with New York modifications.</p><p>Cities, towns and villages enforce the code and issue building permits. If a municipality has opted out, the county enforces it, and if the county has also opted out, the Department of State does. That is why fees, submittal requirements and inspection scheduling differ from one town to the next.</p>"
+          }
+        },
+        "pm2": {
+          "type": "panel",
+          "settings": {
+            "column": "left",
+            "style": "dark",
+            "kicker": "Major-city difference",
+            "title": "New York City",
+            "body": "<p>The five boroughs are not covered by the Uniform Code. They follow the 2022 NYC Construction Codes, and the NYC Department of Buildings (DOB) issues deck permits. DOB requires deck and porch plans to be designed by a New York State licensed Professional Engineer or Registered Architect, who files the application. Construction can start only after DOB approves the plans and issues permits, and any electrical work must be done by an NYC-licensed electrician.</p>"
+          }
+        },
+        "pm3": {
+          "type": "panel",
+          "settings": {
+            "column": "left",
+            "style": "ground",
+            "kicker": "Set locally",
+            "title": "Frost Depth and Snow Load",
+            "body": "<p>Your building department fills in the local climatic and geographic design criteria table (Table R301.2), including the minimum footing depth for frost. Ground snow load comes from the state snow load map and increases with elevation above 1,000 feet. Ask your building department for its current values before you choose footings.</p>"
+          }
+        },
+        "pm4": {
+          "type": "panel",
+          "settings": {
+            "column": "right",
+            "style": "mint",
+            "title": "Common Questions to Ask Your Building Department",
+            "items_display": "numbered",
+            "items": "Does my deck need a building permit?\nIs zoning review needed, and what setbacks apply to my lot?\nDo you need a survey or site plan?\nAre stamped drawings required?\nWhat footing depth and footing type do you require?\nIs a small freestanding deck treated differently from an attached deck?\nWhich inspections are required, and when?\nCan I, as the homeowner, do the work myself?",
+            "small_body": false
+          }
+        },
+        "pm5": {
+          "type": "panel",
+          "settings": {
+            "column": "right",
+            "style": "ground",
+            "title": "What A-DIY Engineering Information May Provide",
+            "body": "<p>A-DIY provides engineering diagrams to support a permit application. They document the deck system itself: its dimensions and structural layout, including 6×6 beams and 2×6 joists spaced 13 to 14 inches on center. [ADD VERIFIED LIST OF WHAT THE DIAGRAMS INCLUDE HERE]</p><p>Your building department may still ask for property-specific items that a deck system cannot supply, such as a survey or site plan, setbacks, footing details, stair and guard details, or stamped drawings. In NYC, a licensed engineer or architect must prepare and file the plans.</p>"
+          }
+        },
+        "pm6": {
+          "type": "panel",
+          "settings": {
+            "column": "right",
+            "style": "note",
+            "small_body": false,
+            "body": "<p>Your local building department has final authority over permits. A-DIY engineering information may support an application, but it does not guarantee permit approval.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "pm1",
+        "pm2",
+        "pm3",
+        "pm4",
+        "pm5",
+        "pm6"
+      ]
+    },
+    "materials": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-materials",
+        "background": "ground",
+        "kicker": "Materials",
+        "heading": "Pressure-Treated Wood vs. Composite Decking in New York",
+        "heading_tag": "h2",
+        "intro": "<p>New York is hard on decks. Lake-effect snow off Lake Erie and Lake Ontario buries decks around Buffalo, Rochester and Syracuse. Long freeze-and-thaw seasons upstate push moisture in and out of the wood. Summers are humid across the state, and decks on Long Island and along the coast see salt air. Both materials work here. The difference is how much upkeep you want and what you want to spend up front.</p>",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "m0": {
+          "type": "panel",
+          "settings": {
+            "width": "12",
+            "style": "plain",
+            "items": "Lake-effect snow\nFreeze–thaw cycles\nHumid summers\nCoastal salt air",
+            "items_display": "chips"
+          }
+        },
+        "m1": {
+          "type": "panel",
+          "settings": {
+            "width": "6",
+            "style": "white",
+            "image": "shopify://shop_images/pressure-treated-kiln-dried-wood-deck-kit-648657.jpg",
+            "media_position": "top",
+            "media_ratio": "16 / 9",
+            "title": "Pressure-Treated Wood",
+            "body": "<p>Choose it when you want a lower starting price and real wood grain, and you are fine with routine cleaning and a fresh stain or sealer every few seasons. After a snowy winter, check for surface checking and re-seal exposed end grain.</p>",
+            "button_label": "Shop Wood Deck Kit",
+            "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+            "button_style": "secondary"
+          }
+        },
+        "m2": {
+          "type": "panel",
+          "settings": {
+            "width": "6",
+            "style": "grey",
+            "image": "shopify://shop_images/a-diy-composite-deck-kit-483555.jpg",
+            "media_position": "top",
+            "media_ratio": "16 / 9",
+            "title": "Composite",
+            "body": "<p>Choose it when you want a consistent surface with no staining or sealing, and you can accept a higher upfront price. It is a common choice for decks that see heavy snow or coastal air, though darker boards can get warm in direct summer sun.</p>",
+            "button_label": "Shop Composite Deck Kit",
+            "button_link": "shopify://products/a-diy-composite-deck-kit",
+            "button_style": "primary"
+          }
+        },
+        "mt": {
+          "type": "table",
+          "settings": {
+            "width": "12",
+            "caption": "Pressure-treated wood compared with composite decking",
+            "header": "Factor | Pressure-treated wood | Composite",
+            "rows": "Upfront cost | Generally lower | Generally higher\nLook | Natural grain and color variation | Uniform manufactured finish\nMaintenance | Periodic cleaning, staining or sealing | Periodic cleaning; no staining or sealing\nFreeze–thaw and snow | Can check, split or cup as moisture cycles | Designed to resist moisture-related cracking and splintering\nSummer sun | Depends on stain color and exposure | Darker colors can get warmer underfoot\nColor changes | Can be restained a new color | Set by the board color you choose\nRepairs | Boards can be sanded, refinished or replaced | Boards can be replaced; refinishing is limited\nA-DIY warranty | 5-year structural warranty | Boards covered by the Deckorators manufacturer warranty; framing covered by A-DIY terms",
+            "highlight": "0"
+          }
+        }
+      },
+      "block_order": [
+        "m0",
+        "m1",
+        "m2",
+        "mt"
+      ]
+    },
+    "foundations": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-foundations",
+        "background": "white",
+        "kicker": "Site conditions",
+        "heading": "Uneven Ground, Elevated Decks and Deck Foundations",
+        "heading_tag": "h2",
+        "intro": "<p>Few New York backyards are perfectly flat. Before choosing a deck, look at how water moves across the yard, what the soil is like, and how high the finished deck needs to sit.</p>",
+        "layout": "two_columns",
+        "column_ratio": "6-6",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "sc": {
+          "type": "scenarios",
+          "settings": {
+            "column": "left",
+            "caption_1": "Standard height",
+            "caption_2": "Longer posts, braced",
+            "caption_3": "Sloped ground"
+          }
+        },
+        "g1": {
+          "type": "panel",
+          "settings": {
+            "column": "left",
+            "style": "ground",
+            "title": "What A-DIY Supports Today",
+            "items_display": "checklist",
+            "items": "Each kit assembles at 15 to 17 inches off the ground as standard.\nLonger post kits with bracing are available when you need more height. [ADD VERIFIED MAXIMUM SUPPORTED HEIGHT HERE]\nOn uneven ground, posts can be trimmed to level the deck, or longer posts used on the low side.\nThe kit includes deck blocks. Railings and steps are available as add-ons. [ADD VERIFIED RAILING AND STEP OPTIONS HERE]"
+          }
+        },
+        "g2": {
+          "type": "panel",
+          "settings": {
+            "column": "right",
+            "style": "plain",
+            "small_body": false,
+            "body": "<p><strong>Drainage and soil.</strong> Keep water moving away from the house and out from under the deck. Soft or wet soil, fill and rock ledge all change what kind of support will work.</p><p><strong>Height, stairs and guards.</strong> As a deck gets higher, it needs longer posts, bracing, stairs and, above a certain height, guards. Residential codes generally require guards on walking surfaces more than 30 inches above grade; confirm the exact rule with your building department.</p><p><strong>Foundations.</strong> Depending on the property, the deck and local approval, support options can include surface deck blocks, concrete footings poured in tube forms, helical piles or ground screws. Much of New York has deep frost, and many building departments require footings that extend below the local frost line. Some allow exceptions for small, low, freestanding decks. Ask before you buy.</p>",
+            "items": "Deck blocks\nConcrete footings\nTube-form piers\nHelical piles\nGround screws",
+            "items_display": "chips"
+          }
+        },
+        "g3": {
+          "type": "panel",
+          "settings": {
+            "column": "right",
+            "style": "note",
+            "small_body": false,
+            "body": "<p>The right foundation depends on your property, the deck configuration and local approval. A-DIY does not approve foundations for a specific site; your building department does.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "sc",
+        "g1",
+        "g2",
+        "g3"
+      ]
+    },
+    "how": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-how",
+        "background": "ground",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "hw": {
+          "type": "panel",
+          "settings": {
+            "width": "12",
+            "style": "soft",
+            "video": "shopify://files/videos/Cropped Video.mov",
+            "media_label": "Delivery-to-assembly video",
+            "media_position": "right",
+            "kicker": "The process",
+            "title": "How A-DIY Works",
+            "items_display": "steps",
+            "items": "Choose your size and material | Pick a size and a pressure-treated or composite surface.\nReview your property | Check space, slope, height, drainage and delivery access.\nConfirm permits and foundations | Ask your building department what it needs and which footings it requires.\nReceive your deck system | Cut lumber, hardware and instructions arrive by freight delivery.\nAssemble it or hire local help | Build it yourself with a drill, or bring in a local handyman or carpenter.\nComplete required inspections | Schedule any inspections your municipality requires.",
+            "button_label": "Build Your Deck",
+            "button_link": "#sg-options",
+            "button_style": "primary",
+            "button2_label": "Learn More",
+            "button2_link": "/pages/why-a-diy",
+            "button2_style": "secondary",
+            "title_h2": true
+          }
+        }
+      },
+      "block_order": [
+        "hw"
+      ]
+    },
+    "engineering": {
+      "type": "seo-guide-content",
+      "settings": {
+        "background": "white",
+        "kicker": "Built to last",
+        "heading": "Engineering, Strength and Warranty",
+        "heading_tag": "h2",
+        "intro": "<p>A-DIY is a pre-engineered deck system: the structural layout is worked out before the lumber is cut, so every deck of a given size goes together the same way.</p>",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "e1": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "Structure and Materials",
+            "body": "<p>Pressure-treated kits use Grade 1 Southern Yellow Pine that is pressure-treated and kiln-dried, with 6×6 beams, 2×6 joists spaced 13 to 14 inches on center, pre-sealed 5.5-inch deck boards and galvanized screws and hardware.</p>"
+          }
+        },
+        "e2": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "Structural Rating",
+            "body": "<p>[ADD FINAL ENGINEERING-APPROVED STRUCTURAL-RATING STATEMENT HERE]</p><p>Real-world performance depends on correct assembly, the configuration, suitable foundations, site conditions, post height and bracing.</p>"
+          }
+        },
+        "e3": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "dark",
+            "stat": "5-year",
+            "title": "Structural Warranty",
+            "body": "<p>A-DIY warrants beams, joists, rim joists, blocking, posts, stair framing and structural fascia against manufacturing defects that cause a material loss of structural integrity under normal residential use, for five years from the original purchase. Composite boards are covered by the Deckorators manufacturer warranty. Exclusions include improper installation, improper footings, poor site conditions and normal wear.</p>",
+            "button_label": "Read the full warranty →",
+            "button_link": "/pages/a-diy-warranty",
+            "button_style": "text"
+          }
+        }
+      },
+      "block_order": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    },
+    "customer": {
+      "type": "seo-guide-content",
+      "settings": {
+        "background": "ground",
+        "kicker": "Customer project",
+        "heading": "A Verified New York Deck",
+        "heading_tag": "h2",
+        "align": "center",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "cu": {
+          "type": "panel",
+          "settings": {
+            "width": "12",
+            "style": "white",
+            "media_label": "Verified New York customer photos: completed deck, before, and assembly",
+            "media_position": "left",
+            "show_stars": true,
+            "body": "<p>[ADD VERIFIED NEW YORK CUSTOMER PROJECT HERE]</p>",
+            "body_after": "<p>Region, deck size, material, ground conditions, foundation, who assembled it and permit details will appear here once confirmed with the customer.</p>",
+            "button_label": "Read A-DIY Reviews",
+            "button_link": "/pages/reviews",
+            "button_style": "secondary",
+            "small_body": false
+          }
+        }
+      },
+      "block_order": [
+        "cu"
+      ]
+    },
+    "regions": {
+      "type": "seo-guide-content",
+      "settings": {
+        "background": "white",
+        "kicker": "Across the state",
+        "heading": "Building a Deck Across New York",
+        "heading_tag": "h2",
+        "intro": "<p>Permits and contractor licensing in New York change with the municipality, so where you live matters as much as what you build. A-DIY ships deck systems to homes across New York State; it has no local offices or crews here.</p>",
+        "layout": "grid",
+        "padding_top": 96,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "r1": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "New York City",
+            "subtitle": "Manhattan · Brooklyn · Queens · the Bronx · Staten Island",
+            "body": "<p>NYC Construction Codes, DOB permits, plans by a licensed engineer or architect, and DCWP-licensed home improvement contractors.</p>"
+          }
+        },
+        "r2": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "Long Island",
+            "subtitle": "Nassau County · Suffolk County",
+            "body": "<p>Both counties license home improvement contractors. Salt air near the coast is a factor when choosing materials.</p>"
+          }
+        },
+        "r3": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "Lower Hudson Valley",
+            "subtitle": "Westchester · Yonkers · Rockland · Putnam",
+            "body": "<p>County licensing applies in Westchester, Rockland and Putnam, and Yonkers issues its own license.</p>"
+          }
+        },
+        "r4": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "Mid-Hudson and Capital Region",
+            "subtitle": "Poughkeepsie · Newburgh · Kingston · Albany · Schenectady · Troy · Saratoga Springs",
+            "body": "<p>Permits come from your city, town or village building department under the Uniform Code.</p>"
+          }
+        },
+        "r5": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "Central New York and the Finger Lakes",
+            "subtitle": "Syracuse · Ithaca · Utica · Binghamton",
+            "body": "<p>Heavy snow and deep frost make footing depth and snow load key questions for your building department.</p>"
+          }
+        },
+        "r6": {
+          "type": "panel",
+          "settings": {
+            "width": "4",
+            "style": "ground",
+            "title": "Western New York and the North Country",
+            "subtitle": "Buffalo · Rochester · Niagara Falls · Watertown · Plattsburgh",
+            "body": "<p>Buffalo licenses home improvement contractors. Lake-effect snow is a major design consideration across the region.</p>"
+          }
+        },
+        "rdel": {
+          "type": "panel",
+          "settings": {
+            "width": "12",
+            "style": "mint",
+            "inline": true,
+            "small_body": false,
+            "body": "<p>Anywhere in New York State, A-DIY can deliver a deck system to your address.</p>",
+            "button_label": "See Shipping Details",
+            "button_link": "/policies/shipping-policy",
+            "button_style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "rdel"
+      ]
+    },
+    "faq": {
+      "type": "seo-guide-content",
+      "settings": {
+        "anchor_id": "sg-faq",
+        "background": "ground",
+        "kicker": "FAQ",
+        "heading": "Frequently Asked Questions",
+        "heading_tag": "h2",
+        "align": "center",
+        "layout": "grid",
+        "narrow": true,
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "faq_schema": true
+      },
+      "blocks": {
+        "faq1": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need a permit to build a deck in New York?",
+            "answer": "<p>Usually, yes. Outside New York City, your city, town or village issues permits under the 2025 Uniform Code. In the five boroughs, the NYC Department of Buildings issues permits under the NYC Construction Codes. Check with your building department before ordering materials.</p>",
+            "open": true,
+            "group_style": "white",
+            "width": "12"
+          }
+        },
+        "faq2": {
+          "type": "faq",
+          "settings": {
+            "question": "How much does it cost to build a deck in New York?",
+            "answer": "<p>It depends on size, material, height, footings, site conditions, permits and labor. National 2025 Cost vs. Value averages for a contractor-built deck addition were $18,263 for wood and $25,096 for composite. A-DIY system prices are listed on the store, with site work, permits and any hired labor separate.</p>"
+          }
+        },
+        "faq3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do deck contractors need a license in New York?",
+            "answer": "<p>There is no statewide license. Home improvement contractors must be licensed locally in New York City, Nassau, Suffolk, Westchester, Putnam and Rockland counties, and the City of Buffalo. Yonkers also issues its own license.</p>"
+          }
+        },
+        "faq4": {
+          "type": "faq",
+          "settings": {
+            "question": "What should a New York deck contract include?",
+            "answer": "<p>For work over $500, state law requires a written contract with start and completion dates, the work and materials, the payment schedule and a notice of your right to cancel until midnight of the third business day after signing. Deposits must be escrowed or bonded.</p>"
+          }
+        },
+        "faq5": {
+          "type": "faq",
+          "settings": {
+            "question": "Is pressure-treated wood or composite better for New York?",
+            "answer": "<p>Neither is best everywhere. Pressure-treated wood costs less up front but needs periodic sealing through snow and freeze–thaw seasons. Composite costs more but skips staining and sealing.</p>"
+          }
+        },
+        "faq6": {
+          "type": "faq",
+          "settings": {
+            "question": "Can an A-DIY deck go on uneven ground?",
+            "answer": "<p>Yes. Posts can be trimmed to level the deck, and longer post kits with bracing are available. Drainage, soil and your building department's footing requirements still decide what is appropriate.</p>"
+          }
+        },
+        "faq7": {
+          "type": "faq",
+          "settings": {
+            "question": "What foundation does an A-DIY deck use?",
+            "answer": "<p>The kit includes deck blocks. Many New York building departments require footings below the frost line for decks, so ask what yours requires before you build.</p>"
+          }
+        },
+        "faq8": {
+          "type": "faq",
+          "settings": {
+            "question": "Does A-DIY provide engineering for permits?",
+            "answer": "<p>A-DIY provides engineering diagrams to support a permit application. They do not guarantee approval, and your building department may ask for site-specific drawings. In NYC, a licensed engineer or architect must file the plans.</p>"
+          }
+        },
+        "faq9": {
+          "type": "faq",
+          "settings": {
+            "question": "What warranty comes with an A-DIY deck?",
+            "answer": "<p>Pressure-treated framing carries a 5-year structural warranty against manufacturing defects. Composite boards are covered by the Deckorators manufacturer warranty.</p>"
+          }
+        },
+        "faq10": {
+          "type": "faq",
+          "settings": {
+            "question": "Does A-DIY deliver in New York, and how long does it take?",
+            "answer": "<p>Yes. A-DIY ships throughout the continental United States, including all of New York State. The product page lists delivery by LTL ground freight, typically within 10 to 14 business days.</p>"
+          }
+        },
+        "faq11": {
+          "type": "faq",
+          "settings": {
+            "question": "Is A-DIY a New York deck contractor?",
+            "answer": "<p>No. A-DIY supplies professionally engineered, ready-to-assemble deck systems. It does not install decks, pull permits or have local crews. You can assemble the system yourself or hire local help.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq1",
+        "faq2",
+        "faq3",
+        "faq4",
+        "faq5",
+        "faq6",
+        "faq7",
+        "faq8",
+        "faq9",
+        "faq10",
+        "faq11"
+      ]
+    },
+    "cta": {
+      "type": "seo-guide-cta",
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_9.png",
+        "kicker": "No cutting. No measuring. No guesswork.",
+        "heading": "Another Way to Build Your New York Deck",
+        "text": "<p>Between hiring a full-service contractor and building everything from raw lumber, there is a third option. A-DIY delivers a pre-engineered deck system that you can assemble yourself or with local help.</p>",
+        "button_label": "Build Yours",
+        "button_link": "#sg-options",
+        "button2_label": "Free Design Consultation",
+        "button2_link": "/pages/design-consultation",
+        "background": "ground",
+        "padding_top": 0,
+        "padding_bottom": 80
+      }
+    },
+    "sources": {
+      "type": "seo-guide-content",
+      "settings": {
+        "background": "ground",
+        "layout": "two_columns",
+        "column_ratio": "5-7",
+        "padding_top": 32,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "s1": {
+          "type": "panel",
+          "settings": {
+            "column": "left",
+            "style": "plain",
+            "title": "Sources",
+            "small_body": false,
+            "body": "<p>Last reviewed: <strong>September 25, 2026</strong></p>"
+          }
+        },
+        "s2": {
+          "type": "panel",
+          "settings": {
+            "column": "right",
+            "style": "plain",
+            "items": "NYS Department of State: 2025 Uniform Code adoption | https://dos.ny.gov/notice-adoption\nNYS Department of State: Uniform Code enforcement (Legal Memorandum LG03) | https://dos.ny.gov/legal-memorandum-lg03-nys-uniform-fire-prevention-and-building-code-what-elected-officials-need\nNYS Department of State: Technical bulletin on Table R301.2 design criteria | https://dos.ny.gov/system/files/documents/2021/12/2021-12-15_tb_table-r301.2.pdf\nNYC Department of Buildings: Decks and porches | https://www.nyc.gov/site/buildings/property-or-business-owner/decks-porches-swimming-pools.page\nNYC Department of Buildings: 2022 NYC Construction Codes | https://www.nyc.gov/site/buildings/codes/2022-construction-codes.page\nNY Attorney General: Contractors and home maintenance | https://ag.ny.gov/resources/individuals/consumer-issues/contractors-home-maintenance\nNY General Business Law §771: Home improvement contracts | https://law.justia.com/codes/new-york/gbs/article-36-a/771/\nNYC DCWP: Home improvement contractor license | https://www.nyc.gov/site/dca/businesses/license-checklist-home-improvement-contractor.page\nCity of Yonkers: Home improvement license application | https://www.yonkersny.gov/DocumentCenter/View/14753/Home-Improvement-License-Application-052825\nCost vs. Value 2025: Deck additions (national) | https://www.jlconline.com/cost-vs-value/2025/\nA-DIY: Pressure-treated deck kit | https://a-diy.com/products/pressure-treated-kiln-dried-wood-deck-kit\nA-DIY: Composite deck kit | https://a-diy.com/products/a-diy-composite-deck-kit\nA-DIY: Warranty | https://a-diy.com/pages/a-diy-warranty",
+            "items_display": "links"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2"
+      ]
+    },
+    "legal": {
+      "type": "seo-guide-content",
+      "settings": {
+        "background": "ground",
+        "layout": "grid",
+        "padding_top": 0,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "s3": {
+          "type": "panel",
+          "settings": {
+            "width": "12",
+            "style": "plain",
+            "small_text": true,
+            "body": "<p>This page provides general educational information, not legal or engineering advice. Permit, zoning, setback, foundation, structural, contractor-licensing and inspection requirements vary by jurisdiction. A-DIY is not a local contractor or installation provider and does not guarantee permit approval. Product sizes, materials, supported heights, foundation compatibility, pricing, delivery and warranty are subject to the applicable specifications and terms. Confirm your project requirements with your local building department and qualified professionals.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s3"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "nav",
+    "ways",
+    "compare",
+    "options",
+    "cost",
+    "contractors",
+    "permits",
+    "materials",
+    "foundations",
+    "how",
+    "engineering",
+    "customer",
+    "regions",
+    "faq",
+    "cta",
+    "sources",
+    "legal"
+  ]
+}

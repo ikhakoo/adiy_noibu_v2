@@ -275,7 +275,7 @@
     }
      .product__info-wrapper .payment-plan-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       border: 0;
       padding: 0;
@@ -327,11 +327,25 @@
       font-size: 12px;
       opacity: 0.8;
     }
+     .product__info-wrapper .payment-plan-card__compare {
+      font-size: 13px;
+      opacity: 0.6;
+    }
+     .product__info-wrapper .payment-plan-card__save {
+      color: #1b3d2f;
+      font-weight: 600;
+      opacity: 1;
+    }
      .product__info-wrapper .payment-plan-footnote {
       margin: 10px 0 0;
       font-size: 13px;
       line-height: 1.4;
       opacity: 0.8;
+    }
+    @media screen and (max-width: 749px) {
+       .product__info-wrapper .payment-plan-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
     @media screen and (max-width: 380px) {
        .product__info-wrapper .payment-plan-grid {
@@ -1904,6 +1918,11 @@
                     the script below swaps this block's cards in from the re-rendered section when
                     the variant changes. Numbered after the variant steps: Step 1 is material, then
                     one step per option (Size, Color).
+
+                    The Pay in full card submits an empty selling_plan, i.e. a normal one-time
+                    purchase. Its saving comes from shop.metafields.payment_plans.pay_in_full
+                    ({"type": "percent" | "amount" | "none", "value": n}), which the app writes
+                    alongside the automatic discount checkout applies, so the two always match.
                   {%- endcomment -%}
                   {%- if product.selling_plan_groups.size > 0 -%}
                     {%- assign plan_step = product.options.size | plus: 2 -%}
@@ -1911,10 +1930,46 @@
                     {%- assign selected_plan_id = product.selected_selling_plan.id
                       | default: plan_variant.selling_plan_allocations.first.selling_plan.id
                     -%}
+                    {%- liquid
+                      assign pay_in_full = shop.metafields.payment_plans.pay_in_full.value
+                      assign pay_in_full_saving = 0
+                      if pay_in_full.type == 'percent' and pay_in_full.value > 0
+                        assign pay_in_full_saving = plan_variant.price | times: pay_in_full.value | divided_by: 100.0 | round
+                      elsif pay_in_full.type == 'amount' and pay_in_full.value > 0
+                        assign pay_in_full_saving = pay_in_full.value | times: 100 | round | at_most: plan_variant.price
+                      endif
+                      assign pay_in_full_price = plan_variant.price | minus: pay_in_full_saving
+                    -%}
                     <div class="payment-plan-block" {{ block.shopify_attributes }}>
                       <div class="step-header">Step {{ plan_step }}: Choose Your Payment Plan</div>
                       <fieldset class="payment-plan-grid" id="PaymentPlans-{{ section.id }}">
                         <legend class="visually-hidden">Payment plan</legend>
+                        <label class="payment-plan-card">
+                          <input
+                            type="radio"
+                            name="selling_plan"
+                            value=""
+                            form="{{ product_form_id }}"
+                            data-installments="1"
+                          >
+                          <span class="payment-plan-card__title">Pay in full</span>
+                          {%- if pay_in_full_saving > 0 -%}
+                            <s class="payment-plan-card__compare">
+                              <span class="visually-hidden">Regular price</span>
+                              {{- plan_variant.price | money -}}
+                            </s>
+                            <span class="payment-plan-card__amount">
+                              <span class="visually-hidden">Sale price</span>
+                              {{- pay_in_full_price | money -}}
+                            </span>
+                            <span class="payment-plan-card__note payment-plan-card__save">
+                              Save {{ pay_in_full_saving | money }}
+                            </span>
+                          {%- else -%}
+                            <span class="payment-plan-card__amount">{{ pay_in_full_price | money }}</span>
+                            <span class="payment-plan-card__note">One payment</span>
+                          {%- endif -%}
+                        </label>
                         {%- for allocation in plan_variant.selling_plan_allocations -%}
                           {%- assign plan_count = allocation.selling_plan.options.first.value
                             | remove: 'Pay in '
@@ -1941,8 +1996,8 @@
                         {%- endfor -%}
                       </fieldset>
                       <p class="payment-plan-footnote">
-                        First payment today, the rest charged monthly to the same card. No fees or interest.
-                        Your deck ships once it's paid in full.
+                        Payment plans: first payment today, the rest charged monthly to the same card. No fees
+                        or interest. Your deck ships once it's paid in full.
                       </p>
                     </div>
 
@@ -2864,8 +2919,14 @@
                         {{ block.settings.heading_prefix }}
                         <span class="delivery-date-range" data-plan-delivery-range></span>
                       </h2>
-                      <p class="delivery-subtext">
+                      <p class="delivery-subtext" data-plan-subtext>
                         <span class="stock-status">Ships after your final payment</span>
+                      </p>
+                      <p class="delivery-subtext" data-full-subtext hidden>
+                        {%- if block.settings.subtext_prefix != blank -%}
+                          <span class="stock-status">{{ block.settings.subtext_prefix }}</span>
+                        {%- endif -%}
+                        {{ block.settings.subtext_middle }} {{ min_days }}–{{ max_days }} {{ block.settings.subtext_suffix }}
                       </p>
                     </div>
 
@@ -2903,6 +2964,9 @@
                           );
                           const installments = Number(checked?.dataset.installments || 0);
                           if (!installments) return;
+                          // Pay in full (1 installment) ships now: the regular "In stock" line.
+                          block.querySelector('[data-plan-subtext]').hidden = installments === 1;
+                          block.querySelector('[data-full-subtext]').hidden = installments !== 1;
                           const finalPayment = addMonths(new Date(), installments - 1);
                           const from = addBusinessDays(finalPayment, minDays);
                           const to = addBusinessDays(finalPayment, maxDays);

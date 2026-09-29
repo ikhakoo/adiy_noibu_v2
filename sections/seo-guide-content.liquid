@@ -1,0 +1,405 @@
+{{ 'seo-guide.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign anchor = s.anchor_id | remove: '#' | handleize
+  if s.layout == 'two_columns'
+    assign cols = 'left,right' | split: ','
+  else
+    assign cols = 'all' | split: ','
+  endif
+  assign has_head = false
+  if s.kicker != blank or s.heading != blank or s.intro != blank
+    assign has_head = true
+  endif
+-%}
+
+<section
+  {% if anchor != blank %}id="{{ anchor }}"{% endif %}
+  class="sg sg-sec sg-anchor sg-bg--{{ s.background }}"
+  style="--sg-pt: {{ s.padding_top }}px; --sg-pb: {{ s.padding_bottom }}px; --sg-pt-m: {{ s.padding_top | times: 0.6 | round }}px; --sg-pb-m: {{ s.padding_bottom | times: 0.6 | round }}px;"
+>
+  <div class="sg-wrap{% if s.narrow %} sg-wrap--narrow{% endif %}">
+    {%- if has_head -%}
+      <div class="sg-head-row">
+        <div class="sg-head{% if s.align == 'center' %} sg-head--center{% endif %}">
+          {%- if s.kicker != blank -%}<span class="sg-kicker">{{ s.kicker | escape }}</span>{%- endif -%}
+          {%- if s.heading != blank -%}<{{ s.heading_tag }} class="sg-h2">{{ s.heading }}</{{ s.heading_tag }}>{%- endif -%}
+          {%- if s.intro != blank -%}<div class="sg-rte">{{ s.intro | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</div>{%- endif -%}
+        </div>
+        {%- if s.head_link_label != blank -%}
+          <a class="sg-link" href="{{ s.head_link_url | default: '#' }}">{{ s.head_link_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="{% if s.layout == 'two_columns' %}sg-cols sg-cols--{{ s.column_ratio }}{% else %}sg-grid sg-grid--pairs{% unless s.equal_height %} sg-grid--top{% endunless %}{% endif %}{% unless has_head %} sg-grid--flush{% endunless %}">
+
+      {%- assign group_close = '</div></div>' -%}
+      {%- for col in cols -%}
+        {%- if col != 'all' -%}{{ '<div class="sg-col">' }}{%- endif -%}
+        {%- assign in_group = false -%}
+
+        {%- for block in section.blocks -%}
+          {%- if col != 'all' and block.settings.column != col -%}{%- continue -%}{%- endif -%}
+          {%- liquid
+            assign b = block.settings
+            assign wclass = ''
+            if col == 'all' and b.width != blank and b.width != '12'
+              assign wclass = 'w-' | append: b.width
+            endif
+          -%}
+
+          {%- if block.type != 'faq' and in_group -%}
+            {{- group_close -}}
+            {%- assign in_group = false -%}
+          {%- endif -%}
+
+          {%- case block.type -%}
+
+            {%- when 'faq' -%}
+              {%- unless in_group -%}
+                {%- capture group_open -%}
+                  {%- if b.group_title != blank -%}{{ ' has-title' }}{%- endif -%}
+                {%- endcapture -%}
+                {{- '<div class="sg-blk ' | append: wclass | append: ' sg-acc-group sg-acc-group--' | append: b.group_style | append: group_open | append: '">' -}}
+                {%- if b.group_title != blank -%}<h3 class="sg-h3 sg-acc-group__title">{{ b.group_title | escape }}</h3>{%- endif -%}
+                {{- '<div class="sg-acc">' -}}
+                {%- assign in_group = true -%}
+              {%- endunless -%}
+              <details {{ block.shopify_attributes }}{% if b.open %} open{% endif %}>
+                <summary>{{ b.question | escape }}</summary>
+                <div class="sg-acc__a sg-rte">{{ b.answer | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</div>
+              </details>
+
+            {%- when 'panel' -%}
+              {%- liquid
+                assign has_media = false
+                if b.image != blank or b.video != blank
+                  assign has_media = true
+                elsif request.design_mode and b.media_label != blank
+                  assign has_media = true
+                endif
+                assign ratio = nil
+                if b.media_position == 'top'
+                  assign ratio = b.media_ratio
+                endif
+              -%}
+              <div class="sg-blk {{ wclass }}" {{ block.shopify_attributes }}>
+                <div class="sg-panel sg-panel--{{ b.style }}{% if has_media %} sg-panel--has-media sg-media-{{ b.media_position }}{% endif %}{% if b.small_text %} sg-panel--small{% endif %}{% if b.inline %} sg-panel--inline{% endif %}{% if b.center %} sg-panel--center{% endif %}">
+                  {%- if has_media -%}
+                    {%- render 'seo-guide-media', image: b.image, video: b.video, label: b.media_label, ratio: ratio, sizes: '(min-width: 990px) 50vw, 100vw' -%}
+                  {%- endif -%}
+                  <div class="sg-panel__body">
+                    {%- if b.inline -%}<div class="sg-stack" style="gap: 8px;">{%- endif -%}
+                    {%- if b.tag != blank -%}<span class="sg-tag">{{ b.tag | escape }}</span>{%- endif -%}
+                    {%- if b.kicker != blank -%}<span class="sg-kicker">{{ b.kicker | escape }}</span>{%- endif -%}
+                    {%- if b.show_stars -%}<span class="sg-stars" aria-label="5 stars">★★★★★</span>{%- endif -%}
+                    {%- if b.stat != blank -%}<span class="sg-panel__stat">{{ b.stat | escape }}</span>{%- endif -%}
+                    {%- if b.title != blank -%}
+                      {%- if b.title_h2 -%}
+                        <h2 class="sg-h2">{{ b.title | escape }}</h2>
+                      {%- else -%}
+                        <h3 class="sg-h3{% if b.title_small %} sg-h3--sm{% endif %}">{{ b.title | escape }}</h3>
+                      {%- endif -%}
+                    {%- endif -%}
+                    {%- if b.subtitle != blank -%}<span class="sg-panel__sub">{{ b.subtitle | escape }}</span>{%- endif -%}
+                    {%- if b.body != blank -%}
+                      <div class="sg-rte{% if b.small_body %} sg-small{% endif %}">{{ b.body | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</div>
+                    {%- endif -%}
+                    {%- render 'seo-guide-lines', items: b.items, display: b.items_display -%}
+                    {%- if b.body_after != blank -%}
+                      <div class="sg-rte sg-small">{{ b.body_after | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' }}</div>
+                    {%- endif -%}
+                    {%- if b.inline -%}</div>{%- endif -%}
+                    {%- if b.button_label != blank or b.button2_label != blank -%}
+                      <div class="sg-row">
+                        {%- render 'seo-guide-button', label: b.button_label, link: b.button_link, style: b.button_style -%}
+                        {%- render 'seo-guide-button', label: b.button2_label, link: b.button2_link, style: b.button2_style -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+
+            {%- when 'product' -%}
+              {%- liquid
+                assign p = b.product
+                assign v = nil
+                if p != blank
+                  if b.variant_match != blank
+                    for x in p.variants
+                      if x.title contains b.variant_match
+                        assign v = x
+                        break
+                      endif
+                    endfor
+                  else
+                    assign v = p.selected_or_first_available_variant
+                  endif
+                endif
+                assign img = b.image
+                if img == blank and v != blank and v.featured_image != blank
+                  assign img = v.featured_image
+                endif
+                if img == blank and p != blank
+                  assign img = p.featured_image
+                endif
+                assign url = b.button_link
+                if url == blank
+                  if v != blank
+                    assign url = v.url
+                  elsif p != blank
+                    assign url = p.url
+                  endif
+                endif
+                assign title = b.title
+                if title == blank and p != blank
+                  assign title = p.title
+                endif
+              -%}
+              <div class="sg-blk {{ wclass }}" {{ block.shopify_attributes }}>
+                <article class="sg-prod{% if b.alt_style %} sg-prod--alt{% endif %}">
+                  {%- render 'seo-guide-media', image: img, label: 'Product image', sizes: '(min-width: 990px) 33vw, 100vw' -%}
+                  <div class="sg-prod__body">
+                    {%- if b.tag != blank -%}<span class="sg-tag" style="justify-self: center;">{{ b.tag | escape }}</span>{%- endif -%}
+                    <h3>{{ title | escape }}</h3>
+                    {%- if v != blank -%}
+                      <p class="sg-prod__price">From <b class="sg-num">{{ v.price | money }}</b></p>
+                    {%- elsif b.missing_text != blank -%}
+                      <p><span class="sg-ph">{{ b.missing_text | escape }}</span></p>
+                    {%- endif -%}
+                    {%- if b.description != blank -%}<div class="sg-rte sg-small">{{ b.description }}</div>{%- endif -%}
+                    {%- if url != blank -%}
+                      {%- if v != blank -%}
+                        {%- assign btn = b.button_label | default: 'Shop Now →' -%}
+                      {%- else -%}
+                        {%- assign btn = b.fallback_button_label | default: 'See All Sizes →' -%}
+                      {%- endif -%}
+                      {%- render 'seo-guide-button', label: btn, link: url, style: 'primary', small: true -%}
+                    {%- endif -%}
+                    {%- render 'seo-guide-lines', items: b.specs, display: 'specs' -%}
+                  </div>
+                </article>
+              </div>
+
+            {%- when 'table' -%}
+              {%- liquid
+                assign heads = b.header | split: ' | '
+                assign rows = b.rows | newline_to_br | split: '<br />'
+                assign hl = b.highlight | plus: 0
+              -%}
+              <div class="sg-blk {{ wclass }}" {{ block.shopify_attributes }}>
+                <div class="sg-tw">
+                  <table class="sg-table">
+                    {%- if b.caption != blank -%}<caption class="visually-hidden">{{ b.caption | escape }}</caption>{%- endif -%}
+                    <thead><tr>
+                      {%- for h in heads -%}
+                        <th scope="col"{% if forloop.index == hl %} class="is-hl"{% endif %}>{{ h | strip | escape }}</th>
+                      {%- endfor -%}
+                    </tr></thead>
+                    <tbody>
+                      {%- for r in rows -%}
+                        {%- assign line = r | strip -%}
+                        {%- if line == blank -%}{%- continue -%}{%- endif -%}
+                        {%- assign cells = line | split: ' | ' -%}
+                        <tr>
+                          {%- for c in cells -%}
+                            {%- assign cell = c | strip | escape | replace: '[ADD', '<span class="sg-ph">[ADD' | replace: 'HERE]', 'HERE]</span>' -%}
+                            {%- if forloop.first -%}
+                              <th scope="row">{{ cell }}</th>
+                            {%- else -%}
+                              <td{% if forloop.index == hl %} class="is-hl"{% endif %}>{{ cell }}</td>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </tr>
+                      {%- endfor -%}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            {%- when 'scenarios' -%}
+              <div class="sg-blk {{ wclass }}" {{ block.shopify_attributes }}>
+                <div class="sg-scen">
+                  <figure><svg viewBox="0 0 150 90" role="img" aria-label="{{ b.caption_1 | escape }}"><rect width="150" height="90" fill="#f3f3f3"/><rect y="70" width="150" height="20" fill="#7d955f"/><rect x="20" y="58" width="110" height="7" fill="#c89b5f"/><g fill="#6f543a"><rect x="24" y="65" width="6" height="5"/><rect x="72" y="65" width="6" height="5"/><rect x="120" y="65" width="6" height="5"/></g></svg>{{ b.caption_1 | escape }}</figure>
+                  <figure><svg viewBox="0 0 150 90" role="img" aria-label="{{ b.caption_2 | escape }}"><rect width="150" height="90" fill="#f3f3f3"/><rect y="76" width="150" height="14" fill="#7d955f"/><rect x="20" y="28" width="110" height="7" fill="#c89b5f"/><g fill="#6f543a"><rect x="24" y="35" width="5" height="41"/><rect x="72" y="35" width="5" height="41"/><rect x="121" y="35" width="5" height="41"/></g><g stroke="#6f543a" stroke-width="2"><line x1="29" y1="38" x2="50" y2="64"/><line x1="121" y1="38" x2="100" y2="64"/></g></svg>{{ b.caption_2 | escape }}</figure>
+                  <figure><svg viewBox="0 0 150 90" role="img" aria-label="{{ b.caption_3 | escape }}"><rect width="150" height="90" fill="#f3f3f3"/><polygon points="0,82 150,58 150,90 0,90" fill="#7d955f"/><rect x="20" y="40" width="110" height="7" fill="#c89b5f"/><g fill="#6f543a"><rect x="24" y="47" width="5" height="32"/><rect x="72" y="47" width="5" height="24"/><rect x="121" y="47" width="5" height="16"/></g></svg>{{ b.caption_3 | escape }}</figure>
+                </div>
+              </div>
+
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- if in_group -%}{{- group_close -}}{%- endif -%}
+        {%- if col != 'all' -%}{{ '</div>' }}{%- endif -%}
+      {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if s.faq_schema -%}
+  {%- assign faq_count = 0 -%}
+  {%- for block in section.blocks -%}{%- if block.type == 'faq' -%}{%- assign faq_count = faq_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+  {%- if faq_count > 0 -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {%- assign first = true -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'faq' -%}
+              {%- unless first -%},{%- endunless -%}
+              {
+                "@type": "Question",
+                "name": {{ block.settings.question | json }},
+                "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | strip | json }} }
+              }
+              {%- assign first = false -%}
+            {%- endif -%}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SEO Guide: Content",
+  "tag": "div",
+  "class": "section-seo-guide-content",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "info": "Used by the on-page nav, e.g. sg-cost. Letters, numbers and hyphens." },
+    { "type": "select", "id": "background", "label": "Background", "default": "ground", "options": [ { "value": "ground", "label": "Page grey" }, { "value": "white", "label": "White" }, { "value": "soft", "label": "Soft grey" } ] },
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "kicker", "label": "Eyebrow" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "select", "id": "heading_tag", "label": "Heading level", "default": "h2", "options": [ { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" } ] },
+    { "type": "richtext", "id": "intro", "label": "Intro" },
+    { "type": "select", "id": "align", "label": "Heading alignment", "default": "left", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ] },
+    { "type": "text", "id": "head_link_label", "label": "Link beside heading" },
+    { "type": "url", "id": "head_link_url", "label": "Link URL" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Block layout", "default": "grid", "options": [ { "value": "grid", "label": "Grid (use each block's width)" }, { "value": "two_columns", "label": "Two stacked columns (use each block's column)" } ] },
+    { "type": "select", "id": "column_ratio", "label": "Column ratio", "default": "6-6", "options": [ { "value": "6-6", "label": "50 / 50" }, { "value": "7-5", "label": "Wide left" }, { "value": "5-7", "label": "Wide right" } ] },
+    { "type": "checkbox", "id": "narrow", "label": "Narrow content width", "default": false },
+    { "type": "checkbox", "id": "equal_height", "label": "Equal-height cards in a row", "default": true },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 96 },
+    { "type": "header", "content": "Structured data" },
+    { "type": "checkbox", "id": "faq_schema", "label": "Output FAQPage schema from FAQ blocks", "default": false, "info": "Turn on for one section per page only." }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel / card",
+      "settings": [
+        { "type": "select", "id": "width", "label": "Width (grid layout)", "default": "12", "options": [ { "value": "12", "label": "Full" }, { "value": "8", "label": "Two thirds" }, { "value": "7", "label": "Wide half" }, { "value": "6", "label": "Half" }, { "value": "5", "label": "Narrow half" }, { "value": "4", "label": "One third" } ] },
+        { "type": "select", "id": "column", "label": "Column (two-column layout)", "default": "left", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] },
+        { "type": "select", "id": "style", "label": "Style", "default": "white", "options": [ { "value": "white", "label": "White card" }, { "value": "ground", "label": "Page grey card" }, { "value": "soft", "label": "Soft grey card" }, { "value": "grey", "label": "Grey card" }, { "value": "mint", "label": "Mint card" }, { "value": "mint-strong", "label": "Mint card, green outline" }, { "value": "dark", "label": "Dark card" }, { "value": "note", "label": "Note (gold rule)" }, { "value": "plain", "label": "Plain text, no card" } ] },
+        { "type": "checkbox", "id": "inline", "label": "Text and buttons on one row", "default": false },
+        { "type": "checkbox", "id": "center", "label": "Center content", "default": false },
+        { "type": "checkbox", "id": "small_text", "label": "Fine print style", "default": false },
+        { "type": "header", "content": "Media" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "video", "id": "video", "label": "Video", "info": "Plays muted on loop. Replaces the image." },
+        { "type": "text", "id": "media_label", "label": "Placeholder label", "info": "Shown only in the theme editor while no image is set." },
+        { "type": "select", "id": "media_position", "label": "Media position", "default": "top", "options": [ { "value": "top", "label": "Top" }, { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] },
+        { "type": "select", "id": "media_ratio", "label": "Media shape (top)", "default": "16 / 9", "options": [ { "value": "16 / 9", "label": "Wide 16:9" }, { "value": "16 / 11", "label": "Landscape 16:11" }, { "value": "4 / 3", "label": "Classic 4:3" }, { "value": "1 / 1", "label": "Square" } ] },
+        { "type": "header", "content": "Text" },
+        { "type": "text", "id": "tag", "label": "Badge" },
+        { "type": "text", "id": "kicker", "label": "Eyebrow" },
+        { "type": "checkbox", "id": "show_stars", "label": "Show 5 stars", "default": false },
+        { "type": "text", "id": "stat", "label": "Big stat", "info": "e.g. 5-year" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "checkbox", "id": "title_small", "label": "Smaller title", "default": false },
+        { "type": "checkbox", "id": "title_h2", "label": "Use title as a section heading (H2)", "default": false, "info": "For a panel that is the only content of its section." },
+        { "type": "text", "id": "subtitle", "label": "Subtitle" },
+        { "type": "richtext", "id": "body", "label": "Body" },
+        { "type": "checkbox", "id": "small_body", "label": "Smaller body text", "default": true },
+        { "type": "textarea", "id": "items", "label": "List items", "info": "One per line. For two-part styles write: Title | Detail" },
+        { "type": "select", "id": "items_display", "label": "List style", "default": "checklist", "options": [ { "value": "checklist", "label": "Checklist" }, { "value": "numbered", "label": "Numbered list" }, { "value": "steps", "label": "Numbered steps (Title | Detail)" }, { "value": "factors", "label": "Two-column facts (Title | Detail)" }, { "value": "figures", "label": "Figures (Label | Value)" }, { "value": "specs", "label": "Spec rows (Label | Value)" }, { "value": "chips", "label": "Chips" }, { "value": "links", "label": "Numbered links (Label | URL)" } ] },
+        { "type": "richtext", "id": "body_after", "label": "Text after list" },
+        { "type": "header", "content": "Buttons" },
+        { "type": "text", "id": "button_label", "label": "Button label" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        { "type": "select", "id": "button_style", "label": "Button style", "default": "primary", "options": [ { "value": "primary", "label": "Green" }, { "value": "secondary", "label": "Mint" }, { "value": "white", "label": "White" }, { "value": "outline-white", "label": "White outline" }, { "value": "text", "label": "Text link" } ] },
+        { "type": "text", "id": "button2_label", "label": "Second button label" },
+        { "type": "url", "id": "button2_link", "label": "Second button link" },
+        { "type": "select", "id": "button2_style", "label": "Second button style", "default": "secondary", "options": [ { "value": "primary", "label": "Green" }, { "value": "secondary", "label": "Mint" }, { "value": "white", "label": "White" }, { "value": "outline-white", "label": "White outline" }, { "value": "text", "label": "Text link" } ] }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product card",
+      "settings": [
+        { "type": "select", "id": "width", "label": "Width (grid layout)", "default": "4", "options": [ { "value": "12", "label": "Full" }, { "value": "6", "label": "Half" }, { "value": "4", "label": "One third" } ] },
+        { "type": "select", "id": "column", "label": "Column (two-column layout)", "default": "left", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] },
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "variant_match", "label": "Variant", "info": "Text the variant title contains, e.g. 12 x 12 or 12 x 16 / Amazon Gray. Price and image update from the store." },
+        { "type": "text", "id": "title", "label": "Card title" },
+        { "type": "text", "id": "tag", "label": "Badge" },
+        { "type": "checkbox", "id": "alt_style", "label": "Grey card", "default": false },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "richtext", "id": "description", "label": "Description" },
+        { "type": "textarea", "id": "specs", "label": "Spec rows", "info": "One per line: Label | Value" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now →" },
+        { "type": "url", "id": "button_link", "label": "Button link override" },
+        { "type": "text", "id": "missing_text", "label": "Text when variant isn't found", "default": "[ADD VERIFIED PRICE AND AVAILABILITY HERE]" },
+        { "type": "text", "id": "fallback_button_label", "label": "Button label when variant isn't found", "default": "See All Sizes →" }
+      ]
+    },
+    {
+      "type": "table",
+      "name": "Comparison table",
+      "settings": [
+        { "type": "select", "id": "width", "label": "Width (grid layout)", "default": "12", "options": [ { "value": "12", "label": "Full" }, { "value": "8", "label": "Two thirds" }, { "value": "6", "label": "Half" } ] },
+        { "type": "select", "id": "column", "label": "Column (two-column layout)", "default": "left", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] },
+        { "type": "text", "id": "caption", "label": "Table caption (screen readers)" },
+        { "type": "text", "id": "header", "label": "Column headings", "info": "Separate with |", "default": "Factor | Option A | Option B" },
+        { "type": "textarea", "id": "rows", "label": "Rows", "info": "One row per line, cells separated with |. The first cell is the row label." },
+        { "type": "select", "id": "highlight", "label": "Highlight column", "default": "0", "options": [ { "value": "0", "label": "None" }, { "value": "2", "label": "Column 2" }, { "value": "3", "label": "Column 3" }, { "value": "4", "label": "Column 4" } ] }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer</p>" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false },
+        { "type": "paragraph", "content": "Consecutive questions are grouped into one accordion. The settings below apply when this question starts a group." },
+        { "type": "text", "id": "group_title", "label": "Group title" },
+        { "type": "select", "id": "group_style", "label": "Group style", "default": "white", "options": [ { "value": "white", "label": "White card" }, { "value": "plain", "label": "No card" } ] },
+        { "type": "select", "id": "width", "label": "Group width (grid layout)", "default": "12", "options": [ { "value": "12", "label": "Full" }, { "value": "8", "label": "Two thirds" }, { "value": "7", "label": "Wide half" }, { "value": "6", "label": "Half" }, { "value": "5", "label": "Narrow half" } ] },
+        { "type": "select", "id": "column", "label": "Column (two-column layout)", "default": "left", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] }
+      ]
+    },
+    {
+      "type": "scenarios",
+      "name": "Deck height diagrams",
+      "settings": [
+        { "type": "select", "id": "width", "label": "Width (grid layout)", "default": "12", "options": [ { "value": "12", "label": "Full" }, { "value": "6", "label": "Half" } ] },
+        { "type": "select", "id": "column", "label": "Column (two-column layout)", "default": "left", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] },
+        { "type": "text", "id": "caption_1", "label": "Caption: ground level", "default": "Standard height" },
+        { "type": "text", "id": "caption_2", "label": "Caption: elevated", "default": "Longer posts, braced" },
+        { "type": "text", "id": "caption_3", "label": "Caption: slope", "default": "Sloped ground" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEO Guide: Content",
+      "settings": { "kicker": "Eyebrow", "heading": "Section heading" },
+      "blocks": [
+        { "type": "panel", "settings": { "width": "6", "title": "Panel title", "body": "<p>Panel text.</p>" } },
+        { "type": "panel", "settings": { "width": "6", "style": "dark", "title": "Panel title", "body": "<p>Panel text.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

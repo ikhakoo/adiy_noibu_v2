@@ -1,0 +1,105 @@
+{{ 'seo-guide.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign shade = s.overlay_opacity | divided_by: 100.0
+-%}
+
+<section
+  id="sg-hero-{{ section.id }}"
+  class="sg sg-hero{% if s.overlap_header %} sg-hero--overlap{% endif %}"
+  style="--sg-hero-h: {{ s.min_height }}px; --sg-shade: {{ shade }};{% if s.overlap_header %} --sg-overlap: {{ s.overlap_amount }}px;{% endif %}"
+  aria-labelledby="sg-h1-{{ section.id }}"
+>
+  <div class="sg-hero__media">
+    {%- render 'seo-guide-media', image: s.image, video: s.video, label: 'Hero image or muted video loop', eager: true, sizes: '100vw', bare: true -%}
+  </div>
+  <div class="sg-hero__shade"></div>
+  <div class="sg-wrap">
+    {%- if s.kicker != blank -%}<span class="sg-kicker">{{ s.kicker | escape }}</span>{%- endif -%}
+    <h1 id="sg-h1-{{ section.id }}" class="sg-h1">{{ s.heading | default: page.title | escape }}</h1>
+    {%- if s.text != blank -%}<div class="sg-hero__text sg-rte">{{ s.text }}</div>{%- endif -%}
+    {%- if s.button_label != blank or s.button2_label != blank -%}
+      <div class="sg-row">
+        {%- render 'seo-guide-button', label: s.button_label, link: s.button_link, style: 'white' -%}
+        {%- render 'seo-guide-button', label: s.button2_label, link: s.button2_link, style: 'outline-white' -%}
+      </div>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <ul class="sg-hero__meta">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if s.article_schema -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "headline": {{ s.heading | default: page.title | json }},
+          {%- if s.image != blank %}"image": {{ s.image | image_url: width: 1600 | prepend: 'https:' | json }},{% endif %}
+          {%- if s.date_published != blank %}"datePublished": {{ s.date_published | json }},{% endif %}
+          {%- if s.date_modified != blank %}"dateModified": {{ s.date_modified | json }},{% endif %}
+          "author": { "@type": "Organization", "name": {{ s.author | default: shop.name | json }}, "url": {{ shop.url | json }} },
+          "publisher": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ shop.url | json }} },
+          "mainEntityOfPage": {{ canonical_url | json }}
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+            { "@type": "ListItem", "position": 2, "name": {{ page.title | default: s.heading | json }}, "item": {{ canonical_url | json }} }
+          ]
+        }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SEO Guide: Hero",
+  "tag": "div",
+  "class": "section-seo-guide-hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "video", "id": "video", "label": "Background video", "info": "Plays muted on loop. Replaces the image when set." },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay darkness", "min": 0, "max": 100, "step": 2, "unit": "%", "default": 86 },
+    { "type": "range", "id": "min_height", "label": "Minimum height", "min": 360, "max": 900, "step": 20, "unit": "px", "default": 620 },
+    { "type": "checkbox", "id": "overlap_header", "label": "Extend behind the header", "default": true, "info": "Pulls the hero up behind the announcement bar and floating nav, like the homepage." },
+    { "type": "range", "id": "overlap_amount", "label": "Overlap amount", "min": 0, "max": 250, "step": 5, "unit": "px", "default": 150 },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "kicker", "label": "Eyebrow", "default": "Deck Guide" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the page title." },
+    { "type": "richtext", "id": "text", "label": "Intro" },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Explore Deck Options" },
+    { "type": "url", "id": "button_link", "label": "Primary button link", "info": "Use #sg-options style anchors to jump within the page." },
+    { "type": "text", "id": "button2_label", "label": "Secondary button label", "default": "See How A-DIY Works" },
+    { "type": "url", "id": "button2_link", "label": "Secondary button link" },
+    { "type": "header", "content": "Structured data" },
+    { "type": "checkbox", "id": "article_schema", "label": "Output Article and Breadcrumb schema", "default": true },
+    { "type": "text", "id": "author", "label": "Author or reviewer", "default": "A-DIY Product Team" },
+    { "type": "text", "id": "date_published", "label": "Date published", "info": "YYYY-MM-DD" },
+    { "type": "text", "id": "date_modified", "label": "Last reviewed", "info": "YYYY-MM-DD" }
+  ],
+  "blocks": [
+    {
+      "type": "meta",
+      "name": "Byline item",
+      "limit": 4,
+      "settings": [
+        { "type": "inline_richtext", "id": "text", "label": "Text", "default": "Reviewed by <strong>A-DIY Product Team</strong>" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "SEO Guide: Hero", "blocks": [ { "type": "meta" } ] }
+  ]
+}
+{% endschema %}
