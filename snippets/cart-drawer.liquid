@@ -1090,40 +1090,37 @@
       {%- endif -%}
     {%- endfor -%}
 
-    {%- unless hide_global_truck -%}
-      <div class="truck-icon-text">
-        <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
+    <div class="truck-icon-text" {% if hide_global_truck %}style="opacity: 0; visibility: hidden; pointer-events: none;"{% endif %}>
+      <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
 
-        <div class="content">
-          <p class="heading">
-            Get it delivered by 
-            <span class="delivery-date-range">
-              {%- comment -%} Optional: agar yahan bhi selected month show karwana ho {%- endcomment -%}
-              {%- assign selected_delivery = nil -%}
-              {%- for p in cart_item.properties -%}
-                {%- if p.first == 'Estimated Delivery Month' -%}
-                  {%- assign selected_delivery = p.last -%}
-                {%- endif -%}
-              {%- endfor -%}
-
-              {%- if selected_delivery != blank -%}
-                {{ selected_delivery }}
-              {%- else -%}
-                {%- if min_month == max_month -%}
-                  {{ min_month }} {{ min_day }}–{{ max_day }}
-                {%- else -%}
-                  {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
-                {%- endif -%}
+      <div class="content">
+        <p class="heading">
+          Get it delivered by 
+          <span class="delivery-date-range">
+            {%- assign selected_delivery = nil -%}
+            {%- for p in cart_item.properties -%}
+              {%- if p.first == 'Estimated Delivery Month' -%}
+                {%- assign selected_delivery = p.last -%}
               {%- endif -%}
-            </span>
-          </p>
+            {%- endfor -%}
 
-          <p class="subtext">
-            Deliver in {{ min_days }}–{{ max_days }} business days
-          </p>
-        </div>
+            {%- if selected_delivery != blank -%}
+              {{ selected_delivery }}
+            {%- else -%}
+              {%- if min_month == max_month -%}
+                {{ min_month }} {{ min_day }}–{{ max_day }}
+              {%- else -%}
+                {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+              {%- endif -%}
+            {%- endif -%}
+          </span>
+        </p>
+
+        <p class="subtext">
+          Deliver in {{ min_days }}–{{ max_days }} business days
+        </p>
       </div>
-    {%- endunless -%}
+    </div>
 
 
 
