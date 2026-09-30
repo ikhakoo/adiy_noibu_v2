@@ -1081,48 +1081,42 @@
 
 
 
-    <div class="truck-icon-text">
+    {%- assign current_delivery_text = '' -%}
+{%- for cart_item in cart.items -%}
+  {%- if cart_item.product.handle == '250-a-diy-composite-deck-kit' or cart_item.product.handle == '250-pressure-treated-kiln-dried-wood-deck-kit' -%}
+    {%- for p in cart_item.properties -%}
+      {%- if p.first == 'Estimated Delivery Month' -%}
+        {%- assign current_delivery_text = p.last -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div class="truck-icon-text">
   <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
 
   <div class="content">
     <p class="heading">
       Get it delivered by 
       <span class="delivery-date-range">
-        {%- assign property_size = item.properties | size -%}
-        {%- if property_size > 0 -%}
-          {%- for p in item.properties -%}
-            {%- if p.first contains 'Date' or p.first contains 'Month' or p.last contains '-' -%}
-              {%- assign val = p.last -%}
-              {%- if val contains '-' and val.size == 7 -%}
-                {%- assign year_month = val | split: '-' -%}
-                {%- assign m_num = year_month[1] | plus: 0 -%}
-                {%- case m_num -%}
-                  {%- when 1 -%}{%- assign derived_month = 'January' -%}
-                  {%- when 2 -%}{%- assign derived_month = 'February' -%}
-                  {%- when 3 -%}{%- assign derived_month = 'March' -%}
-                  {%- when 4 -%}{%- assign derived_month = 'April' -%}
-                  {%- when 5 -%}{%- assign derived_month = 'May' -%}
-                  {%- when 6 -%}{%- assign derived_month = 'June' -%}
-                  {%- when 7 -%}{%- assign derived_month = 'July' -%}
-                  {%- when 8 -%}{%- assign derived_month = 'August' -%}
-                  {%- when 9 -%}{%- assign derived_month = 'September' -%}
-                  {%- when 10 -%}{%- assign derived_month = 'October' -%}
-                  {%- when 11 -%}{%- assign derived_month = 'November' -%}
-                  {%- when 12 -%}{%- assign derived_month = 'December' -%}
-                {%- endcase -%}
-              {%- endif -%}
-            {%- endif -%}
-          {%- endfor -%}
+        {%- if current_delivery_text != blank -%}
+          {{ current_delivery_text }}
+        {%- else -%}
+          {%- if min_month == max_month -%}
+            {{ min_month }} {{ min_day }}–{{ max_day }}
+          {%- else -%}
+            {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+          {%- endif -%}
         {%- endif -%}
-
-        {%- assign month_to_show = derived_month | default: min_month -%}
-
-        {{ month_to_show }} {{ min_day }}–{{ max_day }}
       </span>
     </p>
 
     <p class="subtext">
-      Deliver in {{ min_days }}–{{ max_days }} business days
+      {%- if current_delivery_text != blank -%}
+        Estimated Pre-order Delivery
+      {%- else -%}
+        Deliver in {{ min_days }}–{{ max_days }} business days
+      {%- endif -%}
     </p>
   </div>
 </div>
