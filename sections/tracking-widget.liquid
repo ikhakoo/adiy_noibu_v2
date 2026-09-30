@@ -707,100 +707,103 @@ async function handleTrackingSubmit(event) {
 
       outerWorkspaceEl.classList.add("is-search-result-stage");
 
-      // Outer workspace elements ke liye items par map chalayein
-      outerWorkspaceEl.innerHTML = (data.items && data.items.length > 0)
-        ? data.items.map(item => {
-            // Har item ke apne metafields variables define karein
-            const manualPdf = item.manualPdf || '';
-            const footingPdf = item.footingPdf || '';
-            const videoUrl = item.videoUrl || '';
-            const app3dUrl = item.app3dUrl || '';
-            
-            // Agar variant title available ho toh title ke sath show karein
-            const variantTitle = item.variantTitle && item.variantTitle !== 'Default Title' && item.variantTitle !== 'N/A' 
-              ? ` (${item.variantTitle})` 
-              : '';
+      outerWorkspaceEl.innerHTML = `
+        <div class="digital-workspace-section">
+          <div class="digital-workspace-header">
+            <h2>Everything You Need to Build Your Deck</h2>
+            <p>Your plans, instructions, videos, and interactive 3D guide. All in one place.</p>
+          </div>
 
-            return `
-              <div class="digital-workspace-section" style="margin-bottom: 50px; border-bottom: 2px solid #eaeaea; padding-bottom: 40px;">
-                <div class="digital-workspace-header">
-                  <h2>Everything You Need to Build Your Deck${variantTitle}</h2>
-                  <p>Your plans, instructions, videos, and interactive 3D guide. All in one place.</p>
+          <div class="digital-workspace-grid">
+            <!-- Card 1: Installation Manual -->
+            ${manualPdf ? `
+              <div class="workspace-card">
+                <div class="workspace-card-icon">
+                  <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="72" height="72" rx="6" fill="#E2E2E2"/>
+                    <path d="M39 32.85V30.3C39.825 29.95 40.6688 29.6875 41.5312 29.5125C42.3937 29.3375 43.3 29.25 44.25 29.25C44.9 29.25 45.5375 29.3 46.1625 29.4C46.7875 29.5 47.4 29.625 48 29.775V32.175C47.4 31.95 46.7938 31.7813 46.1813 31.6688C45.5688 31.5563 44.925 31.5 44.25 31.5C43.3 31.5 42.3875 31.6188 41.5125 31.8563C40.6375 32.0938 39.8 32.425 39 32.85ZM39 41.1V38.55C39.825 38.2 40.6688 37.9375 41.5312 37.7625C42.3937 37.5875 43.3 37.5 44.25 37.5C44.9 37.5 45.5375 37.55 46.1625 37.65C46.7875 37.75 47.4 37.875 48 38.025V40.425C47.4 40.2 46.7938 40.0312 46.1813 39.9188C45.5688 39.8063 44.925 39.75 44.25 39.75C43.3 39.75 42.3875 39.8625 41.5125 40.0875C40.6375 40.3125 39.8 40.65 39 41.1ZM39 36.975V34.425C39.825 34.075 40.6688 33.8125 41.5312 33.6375C42.3937 33.4625 43.3 33.375 44.25 33.375C44.9 33.375 45.5375 33.425 46.1625 33.525C46.7875 33.625 47.4 33.75 48 33.9V36.3C47.4 36.075 46.7938 35.9062 46.1813 35.7938C45.5688 35.6813 44.925 35.625 44.25 35.625C43.3 35.625 42.3875 35.7438 41.5125 35.9813C40.6375 36.2188 39.8 36.55 39 36.975ZM27.75 42C28.925 42 30.0687 42.1313 31.1812 42.3937C32.2937 42.6562 33.4 43.05 34.5 43.575C35.6 44.1 34.5 28.8 34.5 28.8C33.475 28.2 32.3875 27.75 31.2375 27.45C30.0875 27.15 28.925 27 27.75 27C26.85 27 25.9563 27.0875 25.0688 27.2625C24.1813 27.4375 23.325 27.7 22.5 28.05V42.9C23.375 42.6 24.2438 42.375 25.1062 42.225C25.9688 42.075 26.85 42 27.75 42ZM37.5 43.575C38.6 43.05 39.7062 42.6562 40.8187 42.3937C41.9312 42.1313 43.075 42 44.25 42C45.15 42 46.0313 42.075 46.8938 42.225C47.7563 42.375 48.625 42.6 49.5 42.9V28.05C48.675 27.7 47.8188 27.4375 46.9313 27.2625C46.0438 27.0875 45.15 27 44.25 27C43.075 27 41.9125 27.15 40.7625 27.45C39.6125 27.75 38.525 28.2 37.5 28.8V43.575ZM36 48C34.8 47.05 33.5 46.3125 32.1 45.7875C30.7 45.2625 29.25 45 27.75 45C26.7 45 25.6687 45.1375 24.6562 45.4125C23.6438 45.6875 22.675 46.075 21.75 46.575C21.225 46.85 20.7188 46.8375 20.2313 46.5375C19.7438 46.2375 19.5 45.8 19.5 45.225V27.15C19.5 26.875 19.5688 26.6125 19.7063 26.3625C19.8438 26.1125 20.05 25.925 20.325 25.8C21.475 25.2 22.675 24.75 23.925 24.45C25.175 24.15 26.45 24 27.75 24C29.2 24 30.6187 24.1875 32.0062 24.5625C33.3937 24.9375 34.725 25.5 36 26.25C37.275 25.5 38.6063 24.9375 39.9938 24.5625C41.3813 24.1875 42.8 24 44.25 24C45.55 24 46.825 24.15 48.075 24.45C49.325 24.75 50.525 25.2 51.675 25.8C51.95 25.925 52.1562 26.1125 52.2937 26.3625C52.4312 26.6125 52.5 26.875 52.5 27.15V45.225C52.5 45.8 52.2563 46.2375 51.7688 46.5375C51.2813 46.8375 50.775 46.85 50.25 46.575C49.325 46.075 48.3563 45.6875 47.3438 45.4125C46.3312 45.1375 45.3 45 44.25 45C42.75 45 41.3 45.2625 39.9 45.7875C38.5 46.3125 37.2 47.05 36 48Z" fill="#002F21"/>
+                  </svg>
                 </div>
-
-                <div class="digital-workspace-grid">
-                  <!-- Card 1: Installation Manual -->
-                  ${manualPdf ? `
-                    <div class="workspace-card">
-                      <div class="workspace-card-icon">
-                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width="72" height="72" rx="6" fill="#E2E2E2"/>
-                          <path d="M39 32.85V30.3C39.825 29.95 40.6688 29.6875 41.5312 29.5125C42.3937 29.3375 43.3 29.25 44.25 29.25C44.9 29.25 45.5375 29.3 46.1625 29.4C46.7875 29.5 47.4 29.625 48 29.775V32.175C47.4 31.95 46.7938 31.7813 46.1813 31.6688C45.5688 31.5563 44.925 31.5 44.25 31.5C43.3 31.5 42.3875 31.6188 41.5125 31.8563C40.6375 32.0938 39.8 32.425 39 32.85ZM39 41.1V38.55C39.825 38.2 40.6688 37.9375 41.5312 37.7625C42.3937 37.5875 43.3 37.5 44.25 37.5C44.9 37.5 45.5375 37.55 46.1625 37.65C46.7875 37.75 47.4 37.875 48 38.025V40.425C47.4 40.2 46.7938 40.0312 46.1813 39.9188C45.5688 39.8063 44.925 39.75 44.25 39.75C43.3 39.75 42.3875 39.8625 41.5125 40.0875C40.6375 40.3125 39.8 40.65 39 41.1ZM39 36.975V34.425C39.825 34.075 40.6688 33.8125 41.5312 33.6375C42.3937 33.4625 43.3 33.375 44.25 33.375C44.9 33.375 45.5375 33.425 46.1625 33.525C46.7875 33.625 47.4 33.75 48 33.9V36.3C47.4 36.075 46.7938 35.9062 46.1813 35.7938C45.5688 35.6813 44.925 35.625 44.25 35.625C43.3 35.625 42.3875 35.7438 41.5125 35.9813C40.6375 36.2188 39.8 36.55 39 36.975ZM27.75 42C28.925 42 30.0687 42.1313 31.1812 42.3937C32.2937 42.6562 33.4 43.05 34.5 43.575C35.6 44.1 34.5 28.8 34.5 28.8C33.475 28.2 32.3875 27.75 31.2375 27.45C30.0875 27.15 28.925 27 27.75 27C26.85 27 25.9563 27.0875 25.0688 27.2625C24.1813 27.4375 23.325 27.7 22.5 28.05V42.9C23.375 42.6 24.2438 42.375 25.1062 42.225C25.9688 42.075 26.85 42 27.75 42ZM37.5 43.575C38.6 43.05 39.7062 42.6562 40.8187 42.3937C41.9312 42.1313 43.075 42 44.25 42C45.15 42 46.0313 42.075 46.8938 42.225C47.7563 42.375 48.625 42.6 49.5 42.9V28.05C48.675 27.7 47.8188 27.4375 46.9313 27.2625C46.0438 27.0875 45.15 27 44.25 27C43.075 27 41.9125 27.15 40.7625 27.45C39.6125 27.75 38.525 28.2 37.5 28.8V43.575ZM36 48C34.8 47.05 33.5 46.3125 32.1 45.7875C30.7 45.2625 29.25 45 27.75 45C26.7 45 25.6687 45.1375 24.6562 45.4125C23.6438 45.6875 22.675 46.075 21.75 46.575C21.225 46.85 20.7188 46.8375 20.2313 46.5375C19.7438 46.2375 19.5 45.8 19.5 45.225V27.15C19.5 26.875 19.5688 26.6125 19.7063 26.3625C19.8438 26.1125 20.05 25.925 20.325 25.8C21.475 25.2 22.675 24.75 23.925 24.45C25.175 24.15 26.45 24 27.75 24C29.2 24 30.6187 24.1875 32.0062 24.5625C33.3937 24.9375 34.725 25.5 36 26.25C37.275 25.5 38.6063 24.9375 39.9938 24.5625C41.3813 24.1875 42.8 24 44.25 24C45.55 24 46.825 24.15 48.075 24.45C49.325 24.75 50.525 25.2 51.675 25.8C51.95 25.925 52.1562 26.1125 52.2937 26.3625C52.4312 26.6125 52.5 26.875 52.5 27.15V45.225C52.5 45.8 52.2563 46.2375 51.7688 46.5375C51.2813 46.8375 50.775 46.85 50.25 46.575C49.325 46.075 48.3563 45.6875 47.3438 45.4125C46.3312 45.1375 45.3 45 44.25 45C42.75 45 41.3 45.2625 39.9 45.7875C38.5 46.3125 37.2 47.05 36 48Z" fill="#002F21"/>
-                        </svg>
-                      </div>
-                      <h4>Installation Guide</h4>
-                      <button type="button" class="workspace-btn" onclick="forceDownloadPdf('${manualPdf}', 'Master_Installation_Manual.pdf')">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        Download Guide
-                      </button>
-                    </div>
-                  ` : ''}
-
-                  <!-- Card 2: Footing Plan -->
-                  ${footingPdf ? `
-                    <div class="workspace-card">
-                      <div class="workspace-card-icon">
-                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width="72" height="72" rx="6" fill="#E2E2E2"/>
-                          <path d="M28.125 49.5L27.75 46.2L32.025 34.425C32.4 34.775 32.8063 35.0688 33.2437 35.3063C33.6812 35.5438 34.15 35.725 34.65 35.85C35.15 35.975 30.525 47.175 30.525 47.175L28.125 49.5ZM43.875 49.5L41.475 47.175L37.35 35.85C37.85 35.725 38.3188 35.5438 38.7563 35.3063C39.1938 35.0688 39.6 34.775 39.975 34.425L44.25 46.2L43.875 49.5ZM36 34.5C34.75 34.5 33.6875 34.0625 32.8125 33.1875C31.9375 32.3125 31.5 31.25 31.5 30C31.5 29.025 31.7812 28.1562 32.3438 27.3938C32.9062 26.6312 33.625 26.1 34.5 25.8V22.5H37.5V25.8C38.375 26.1 39.0938 26.6312 39.6562 27.3938C40.2188 28.1562 40.5 29.025 40.5 30C40.5 31.25 40.0625 32.3125 39.1875 33.1875C38.3125 34.0625 37.25 34.5 36 34.5ZM36 31.5C36.425 31.5 36.7812 31.3562 37.0688 31.0688C37.3562 30.7812 37.5 30.425 37.5 30C37.5 29.575 37.3562 29.2188 37.0688 28.9312C36.7812 28.6437 36.425 28.5 36 28.5C35.575 28.5 35.2188 28.6437 34.9312 28.9312C34.6437 29.2188 34.5 29.575 34.5 30C34.5 30.425 34.6437 30.7812 34.9312 31.0688C35.2188 31.3562 35.575 31.5 36 31.5Z" fill="#002F21"/>
-                        </svg>
-                      </div>
-                      <h4>Footing Plan</h4>
-                      <button type="button" class="workspace-btn" onclick="forceDownloadPdf('${footingPdf}', 'Footing_Plan_Diagram.pdf')">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        Download FOOTING PLAN
-                      </button>
-                    </div>
-                  ` : ''}
-
-                  <!-- Card 3: Video Build Masterclass -->
-                  ${videoUrl ? `
-                    <div class="workspace-card">
-                      <div class="workspace-card-icon">
-                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width="72" height="72" rx="6" fill="#E2E2E2"/>
-                          <path d="M32.25 42.75L42.75 36C42.75 36 36.6848 27.2262 32.25 29.25C27.4537 31.4388 32.25 42.75 32.25 42.75ZM24 48C23.175 48 22.4688 47.7063 21.8812 47.1188C21.2937 46.5313 21 45.825 21 45V27C21 26.175 21.2937 25.4688 21.8812 24.8812C22.4688 24.2937 23.175 24 24 24H48C48.825 24 49.5313 24.2937 50.1188 24.8812C50.7063 25.4688 51 26.175 51 27V45C51 45.825 50.7063 46.5313 50.1188 47.1188C49.5313 47.7063 48.825 48 48 48H24ZM24 45H48V27H24V45Z" fill="#002F21"/>
-                        </svg>
-                      </div>
-                      <h4>Composite Installation</h4>
-                      <button type="button" class="workspace-btn" onclick="openResourceLink('${videoUrl}')">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        Watch Video
-                      </button>
-                    </div>
-                  ` : ''}
-
-                  <!-- Card 4: 3D Interactive Web App -->
-                  ${app3dUrl ? `
-                    <div class="workspace-card">
-                      <div class="workspace-card-icon app-icon">
-                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width="72" height="72" rx="6" fill="#E2E2E2"/>
-                          <path d="M34.5 47.2125L27 42.9C26.525 42.625 26.1563 42.2625 25.8938 41.8125C25.6313 41.3625 25.5 40.8625 25.5 40.3125V31.6875C25.5 31.1375 25.6313 30.6375 25.8938 30.1875C26.1563 29.7375 26.525 29.375 27 29.1L34.5 24.7875C34.975 24.5125 35.475 24.375 36 24.375C36.525 24.375 37.025 24.5125 37.5 24.7875L45 29.1C45.475 29.375 45.8437 29.7375 46.1062 30.1875C46.3687 30.6375 46.5 31.1375 46.5 31.6875V40.3125C46.5 40.8625 46.3687 41.3625 46.1062 41.8125C45.8437 42.2625 45.475 42.625 45 42.9L37.5 47.2125C37.025 47.4875 36.525 47.625 36 47.625C35.475 47.625 34.975 47.4875 34.5 47.2125ZM34.5 43.7625V36.8625L28.5 33.375V40.3125L34.5 43.7625ZM37.5 43.7625L43.5 40.3125V33.375L37.5 36.8625V43.7625ZM21 28.5V24C21 23.175 21.2937 22.4687 21.8812 21.8812C22.4687 21.2937 23.175 21 24 21H28.5V24H24V28.5H21ZM28.5 51H24C23.175 51 22.4687 50.7063 21.8812 50.1188C21.2937 49.5313 21 48.825 21 48V43.5H24V48H28.5V51ZM43.5 51V48H48V43.5H51V48C51 48.825 50.7063 49.5313 50.1188 50.1188C49.5313 50.7063 48.825 51 48 51H43.5ZM48 28.5V24H43.5V21H48C48.825 21 49.5313 21.2937 50.1188 21.8812C50.7063 22.4687 51 23.175 51 24V28.5H48ZM36 34.275L41.925 30.7875L36 27.375L30.075 30.7875L36 34.275Z" fill="#002F21"/>
-                        </svg>
-                      </div>
-                      <h4>3D Instructional App</h4>
-                      <button type="button" class="workspace-btn" onclick="openResourceLink('${app3dUrl}')">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        Launch App
-                      </button>
-                    </div>
-                  ` : ''}
-                </div>
+                <h4>Installation Guide</h4>
+                <button type="button" class="workspace-btn" onclick="forceDownloadPdf('${manualPdf}', 'Master_Installation_Manual.pdf')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Download Guide
+                </button>
               </div>
-            `;
-          }).join('')
-        : '';
+            ` : ''}
+
+            <!-- Card 2: Footing Plan -->
+            ${footingPdf ? `
+              <div class="workspace-card">
+                <div class="workspace-card-icon">
+                  <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="72" height="72" rx="6" fill="#E2E2E2"/>
+                    <path d="M28.125 49.5L27.75 46.2L32.025 34.425C32.4 34.775 32.8063 35.0688 33.2437 35.3063C33.6812 35.5438 34.15 35.725 34.65 35.85C35.15 35.975 30.525 47.175 30.525 47.175L28.125 49.5ZM43.875 49.5L41.475 47.175L37.35 35.85C37.85 35.725 38.3188 35.5438 38.7563 35.3063C39.1938 35.0688 39.6 34.775 39.975 34.425L44.25 46.2L43.875 49.5ZM36 34.5C34.75 34.5 33.6875 34.0625 32.8125 33.1875C31.9375 32.3125 31.5 31.25 31.5 30C31.5 29.025 31.7812 28.1562 32.3438 27.3938C32.9062 26.6312 33.625 26.1 34.5 25.8V22.5H37.5V25.8C38.375 26.1 39.0938 26.6312 39.6562 27.3938C40.2188 28.1562 40.5 29.025 40.5 30C40.5 31.25 40.0625 32.3125 39.1875 33.1875C38.3125 34.0625 37.25 34.5 36 34.5ZM36 31.5C36.425 31.5 36.7812 31.3562 37.0688 31.0688C37.3562 30.7812 37.5 30.425 37.5 30C37.5 29.575 37.3562 29.2188 37.0688 28.9312C36.7812 28.6437 36.425 28.5 36 28.5C35.575 28.5 35.2188 28.6437 34.9312 28.9312C34.6437 29.2188 34.5 29.575 34.5 30C34.5 30.425 34.6437 30.7812 34.9312 31.0688C35.2188 31.3562 35.575 31.5 36 31.5Z" fill="#002F21"/>
+                  </svg>
+                </div>
+                <h4>Footing Plan</h4>
+                <button type="button" class="workspace-btn" onclick="forceDownloadPdf('${footingPdf}', 'Footing_Plan_Diagram.pdf')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Download FOOTING PLAN
+                </button>
+              </div>
+            ` : ''}
+
+            <!-- Card 3: Video Build Masterclass -->
+            ${videoUrl ? `
+              <div class="workspace-card">
+                <div class="workspace-card-icon">
+                  <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="72" height="72" rx="6" fill="#E2E2E2"/>
+                    <path d="M32.25 42.75L42.75 36C42.75 36 36.6848 27.2262 32.25 29.25C27.4537 31.4388 32.25 42.75 32.25 42.75ZM24 48C23.175 48 22.4688 47.7063 21.8812 47.1188C21.2937 46.5313 21 45.825 21 45V27C21 26.175 21.2937 25.4688 21.8812 24.8812C22.4688 24.2937 23.175 24 24 24H48C48.825 24 49.5313 24.2937 50.1188 24.8812C50.7063 25.4688 51 26.175 51 27V45C51 45.825 50.7063 46.5313 50.1188 47.1188C49.5313 47.7063 48.825 48 48 48H24ZM24 45H48V27H24V45Z" fill="#002F21"/>
+                  </svg>
+                </div>
+                <h4>Composite Installation</h4>
+                <button type="button" class="workspace-btn" onclick="openResourceLink('${videoUrl}')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  Watch Video
+                </button>
+              </div>
+            ` : ''}
+
+            <!-- Card 4: 3D Interactive Web App -->
+            ${app3dUrl ? `
+              <div class="workspace-card">
+                <div class="workspace-card-icon app-icon">
+                  <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_4557_284)">
+                    <g filter="url(#filter0_d_4557_284)">
+                    <rect width="72" height="72" rx="6" fill="#E2E2E2" shape-rendering="crispEdges"/>
+                    <path d="M34.5 47.2125L27 42.9C26.525 42.625 26.1563 42.2625 25.8938 41.8125C25.6313 41.3625 25.5 40.8625 25.5 40.3125V31.6875C25.5 31.1375 25.6313 30.6375 25.8938 30.1875C26.1563 29.7375 26.525 29.375 27 29.1L34.5 24.7875C34.975 24.5125 35.475 24.375 36 24.375C36.525 24.375 37.025 24.5125 37.5 24.7875L45 29.1C45.475 29.375 45.8437 29.7375 46.1062 30.1875C46.3687 30.6375 46.5 31.1375 46.5 31.6875V40.3125C46.5 40.8625 46.3687 41.3625 46.1062 41.8125C45.8437 42.2625 45.475 42.625 45 42.9L37.5 47.2125C37.025 47.4875 36.525 47.625 36 47.625C35.475 47.625 34.975 47.4875 34.5 47.2125ZM34.5 43.7625V36.8625L28.5 33.375V40.3125L34.5 43.7625ZM37.5 43.7625L43.5 40.3125V33.375L37.5 36.8625V43.7625ZM21 28.5V24C21 23.175 21.2937 22.4687 21.8812 21.8812C22.4687 21.2937 23.175 21 24 21H28.5V24H24V28.5H21ZM28.5 51H24C23.175 51 22.4687 50.7063 21.8812 50.1188C21.2937 49.5313 21 48.825 21 48V43.5H24V48H28.5V51ZM43.5 51V48H48V43.5H51V48C51 48.825 50.7063 49.5313 50.1188 50.1188C49.5313 50.7063 48.825 51 48 51H43.5ZM48 28.5V24H43.5V21H48C48.825 21 49.5313 21.2937 50.1188 21.8812C50.7063 22.4687 51 23.175 51 24V28.5H48ZM36 34.275L41.925 30.7875L36 27.375L30.075 30.7875L36 34.275Z" fill="#002F21"/>
+                    </g>
+                    </g>
+                    <defs>
+                    <filter id="filter0_d_4557_284" x="-3" y="-1.5" width="78" height="78" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset dy="1.5"/>
+                    <feGaussianBlur stdDeviation="1.5"/>
+                    <feComposite in2="hardAlpha" operator="out"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4557_284"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4557_284" result="shape"/>
+                    </filter>
+                    <clipPath id="clip0_4557_284">
+                    <rect width="72" height="72" fill="white"/>
+                    </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                <h4>3D Instructional App</h4>
+                <button type="button" class="workspace-btn" onclick="openResourceLink('${app3dUrl}')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  Launch App
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
       outerWorkspaceEl.style.display = "block";
 
     } else {
