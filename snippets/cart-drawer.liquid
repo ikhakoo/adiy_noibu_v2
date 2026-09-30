@@ -1079,12 +1079,18 @@
       assign max_day = max_delivery_timestamp | date: '%d' | plus: 0
     -%}
 
-    {%- assign hide_truck_icon = false -%}
-    {%- if item.product.handle == '250-a-diy-composite-deck-kit' or item.product.handle == '250-pressure-treated-kiln-dried-wood-deck-kit' -%}
-      {%- assign hide_truck_icon = true -%}
-    {%- endif -%}
 
-    {%- unless hide_truck_icon -%}
+
+
+    {%- assign hide_global_truck = false -%}
+    {%- for cart_item in cart.items -%}
+      {%- if cart_item.product.handle == '250-a-diy-composite-deck-kit' or cart_item.product.handle == '250-pressure-treated-kiln-dried-wood-deck-kit' -%}
+        {%- assign hide_global_truck = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- unless hide_global_truck -%}
       <div class="truck-icon-text">
         <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
 
@@ -1092,8 +1098,9 @@
           <p class="heading">
             Get it delivered by 
             <span class="delivery-date-range">
+              {%- comment -%} Optional: agar yahan bhi selected month show karwana ho {%- endcomment -%}
               {%- assign selected_delivery = nil -%}
-              {%- for p in item.properties -%}
+              {%- for p in cart_item.properties -%}
                 {%- if p.first == 'Estimated Delivery Month' -%}
                   {%- assign selected_delivery = p.last -%}
                 {%- endif -%}
@@ -1112,15 +1119,14 @@
           </p>
 
           <p class="subtext">
-            {%- if selected_delivery != blank -%}
-              Estimated Pre-order Delivery
-            {%- else -%}
-              Deliver in {{ min_days }}–{{ max_days }} business days
-            {%- endif -%}
+            Deliver in {{ min_days }}–{{ max_days }} business days
           </p>
         </div>
       </div>
     {%- endunless -%}
+
+
+
 
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
