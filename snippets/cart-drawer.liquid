@@ -1104,12 +1104,22 @@
           {%- if date_parts.size == 2 -%}
             {%- assign target_year = date_parts[0] -%}
             {%- assign target_month_num = date_parts[1] | times: 1 -%}
+            {%- assign month_name = '' -%}
             {%- case target_month_num -%}
-              {%- when 1 -%}January {% when 2 -%}February {% when 3 -%}March {% when 4 -%}April 
-              {%- when 5 -%}May {% when 6 -%}June {% when 7 -%}July {% when 8 -%}August 
-              {%- when 9 -%}September {% when 10 -%}October {% when 11 -%}November {% when 12 -%}December
+              {%- when 1 -%}{% assign month_name = 'January' %}
+              {%- when 2 -%}{% assign month_name = 'February' %}
+              {%- when 3 -%}{% assign month_name = 'March' %}
+              {%- when 4 -%}{% assign month_name = 'April' %}
+              {%- when 5 -%}{% assign month_name = 'May' %}
+              {%- when 6 -%}{% assign month_name = 'June' %}
+              {%- when 7 -%}{% assign month_name = 'July' %}
+              {%- when 8 -%}{% assign month_name = 'August' %}
+              {%- when 9 -%}{% assign month_name = 'September' %}
+              {%- when 10 -%}{% assign month_name = 'October' %}
+              {%- when 11 -%}{% assign month_name = 'November' %}
+              {%- when 12 -%}{% assign month_name = 'December' %}
             {%- endcase -%}
-            {{ target_year }}
+            {{ month_name }} {{ target_year }}
           {%- else -%}
             {{ current_delivery_text }}
           {%- endif -%}
