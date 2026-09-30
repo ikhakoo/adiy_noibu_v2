@@ -1079,26 +1079,48 @@
       assign max_day = max_delivery_timestamp | date: '%d' | plus: 0
     -%}
 
-    <div class="truck-icon-text">
-      <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
+    {%- assign hide_truck_icon = false -%}
+    {%- if item.product.handle == '250-a-diy-composite-deck-kit' or item.product.handle == '250-pressure-treated-kiln-dried-wood-deck-kit' -%}
+      {%- assign hide_truck_icon = true -%}
+    {%- endif -%}
 
-      <div class="content">
-        <p class="heading">
-          Get it delivered by 
-          <span class="delivery-date-range">
-            {%- if min_month == max_month -%}
-              {{ min_month }} {{ min_day }}–{{ max_day }}
+    {%- unless hide_truck_icon -%}
+      <div class="truck-icon-text">
+        <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
+
+        <div class="content">
+          <p class="heading">
+            Get it delivered by 
+            <span class="delivery-date-range">
+              {%- assign selected_delivery = nil -%}
+              {%- for p in item.properties -%}
+                {%- if p.first == 'Estimated Delivery Month' -%}
+                  {%- assign selected_delivery = p.last -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if selected_delivery != blank -%}
+                {{ selected_delivery }}
+              {%- else -%}
+                {%- if min_month == max_month -%}
+                  {{ min_month }} {{ min_day }}–{{ max_day }}
+                {%- else -%}
+                  {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+                {%- endif -%}
+              {%- endif -%}
+            </span>
+          </p>
+
+          <p class="subtext">
+            {%- if selected_delivery != blank -%}
+              Estimated Pre-order Delivery
             {%- else -%}
-              {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+              Deliver in {{ min_days }}–{{ max_days }} business days
             {%- endif -%}
-          </span>
-        </p>
-
-        <p class="subtext">
-          Deliver in {{ min_days }}–{{ max_days }} business days
-        </p>
+          </p>
+        </div>
       </div>
-    </div>
+    {%- endunless -%}
 
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
