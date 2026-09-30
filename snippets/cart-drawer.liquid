@@ -1082,66 +1082,66 @@
 
 
     {%- assign current_delivery_text = '' -%}
-{%- for cart_item in cart.items -%}
-  {%- if cart_item.product.handle == '250-a-diy-composite-deck-kit' or cart_item.product.handle == '250-pressure-treated-kiln-dried-wood-deck-kit' -%}
-    {%- for p in cart_item.properties -%}
-      {%- if p.first == 'Estimated Delivery Month' -%}
-        {%- assign current_delivery_text = p.last -%}
+    {%- for cart_item in cart.items -%}
+      {%- if cart_item.product.handle == '250-a-diy-composite-deck-kit' or cart_item.product.handle == '250-pressure-treated-kiln-dried-wood-deck-kit' -%}
+        {%- for p in cart_item.properties -%}
+          {%- if p.first == 'Estimated Delivery Month' -%}
+            {%- assign current_delivery_text = p.last -%}
+          {%- endif -%}
+        {%- endfor -%}
       {%- endif -%}
     {%- endfor -%}
-  {%- endif -%}
-{%- endfor -%}
 
-<div class="truck-icon-text">
-  <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
+    <div class="truck-icon-text">
+      <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
 
-  <div class="content">
-    <p class="heading">
-      Get it delivered by 
-      <span class="delivery-date-range">
-        {%- if current_delivery_text != blank -%}
-          {%- assign date_parts = current_delivery_text | split: '-' -%}
-          {%- if date_parts.size == 2 -%}
-            {%- assign target_year = date_parts[0] -%}
-            {%- assign target_month_num = date_parts[1] | times: 1 -%}
-            {%- assign month_name = '' -%}
-            {%- case target_month_num -%}
-              {%- when 1 -%}{% assign month_name = 'January' %}
-              {%- when 2 -%}{% assign month_name = 'February' %}
-              {%- when 3 -%}{% assign month_name = 'March' %}
-              {%- when 4 -%}{% assign month_name = 'April' %}
-              {%- when 5 -%}{% assign month_name = 'May' %}
-              {%- when 6 -%}{% assign month_name = 'June' %}
-              {%- when 7 -%}{% assign month_name = 'July' %}
-              {%- when 8 -%}{% assign month_name = 'August' %}
-              {%- when 9 -%}{% assign month_name = 'September' %}
-              {%- when 10 -%}{% assign month_name = 'October' %}
-              {%- when 11 -%}{% assign month_name = 'November' %}
-              {%- when 12 -%}{% assign month_name = 'December' %}
-            {%- endcase -%}
-            {{ month_name }} {{ target_year }}
+      <div class="content">
+        <p class="heading">
+          Get it delivered by 
+          <span class="delivery-date-range">
+            {%- if current_delivery_text != blank -%}
+              {%- assign date_parts = current_delivery_text | split: '-' -%}
+              {%- if date_parts.size == 2 -%}
+                {%- assign target_year = date_parts[0] -%}
+                {%- assign target_month_num = date_parts[1] | times: 1 -%}
+                {%- assign month_name = '' -%}
+                {%- case target_month_num -%}
+                  {%- when 1 -%}{% assign month_name = 'January' %}
+                  {%- when 2 -%}{% assign month_name = 'February' %}
+                  {%- when 3 -%}{% assign month_name = 'March' %}
+                  {%- when 4 -%}{% assign month_name = 'April' %}
+                  {%- when 5 -%}{% assign month_name = 'May' %}
+                  {%- when 6 -%}{% assign month_name = 'June' %}
+                  {%- when 7 -%}{% assign month_name = 'July' %}
+                  {%- when 8 -%}{% assign month_name = 'August' %}
+                  {%- when 9 -%}{% assign month_name = 'September' %}
+                  {%- when 10 -%}{% assign month_name = 'October' %}
+                  {%- when 11 -%}{% assign month_name = 'November' %}
+                  {%- when 12 -%}{% assign month_name = 'December' %}
+                {%- endcase -%}
+                {{ month_name }} {{ target_year }}
+              {%- else -%}
+                {{ current_delivery_text }}
+              {%- endif -%}
+            {%- else -%}
+              {%- if min_month == max_month -%}
+                {{ min_month }} {{ min_day }}–{{ max_day }}
+              {%- else -%}
+                {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
+              {%- endif -%}
+            {%- endif -%}
+          </span>
+        </p>
+
+        <p class="subtext">
+          {%- if current_delivery_text != blank -%}
+            Estimated Pre-order Delivery
           {%- else -%}
-            {{ current_delivery_text }}
+            Deliver in {{ min_days }}–{{ max_days }} business days
           {%- endif -%}
-        {%- else -%}
-          {%- if min_month == max_month -%}
-            {{ min_month }} {{ min_day }}–{{ max_day }}
-          {%- else -%}
-            {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
-          {%- endif -%}
-        {%- endif -%}
-      </span>
-    </p>
-
-    <p class="subtext">
-      {%- if current_delivery_text != blank -%}
-        Estimated Pre-order Delivery
-      {%- else -%}
-        Deliver in {{ min_days }}–{{ max_days }} business days
-      {%- endif -%}
-    </p>
-  </div>
-</div>
+        </p>
+      </div>
+    </div>
 
 
 
