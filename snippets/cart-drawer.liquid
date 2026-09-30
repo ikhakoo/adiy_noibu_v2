@@ -584,7 +584,7 @@
                   {%- for item in cart.items -%}
                     <div
                       id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                      class="custom-cart-drawer-item cart-item{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
+                      class="custom-cart-drawer-item cart-item product-{{ item.product.handle }}{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
                       role="row"
                       {% if item.parent_relationship.parent != null %}
                         aria-label="{{- 'products.product.nested_label' | t: title: item.product.title, parent_title: item.parent_relationship.parent.title | escape -}}"
