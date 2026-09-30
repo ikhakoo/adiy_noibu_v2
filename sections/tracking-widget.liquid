@@ -656,6 +656,15 @@ async function handleTrackingSubmit(event) {
       const videoUrl = (firstItem.videoLinks && firstItem.videoLinks.length > 0) ? firstItem.videoLinks[0] : '';
       const app3dUrl = (firstItem.appLinks3d && firstItem.appLinks3d.length > 0) ? firstItem.appLinks3d[0] : '';
 
+      const itemsHtml = (data.items && data.items.length > 0)
+        ? data.items.map(item => `
+            <div style="margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0;">
+              <div><strong>Product:</strong> ${item.productTitle || item.title || 'N/A'}</div>
+              <div><strong>Variant:</strong> ${item.variantTitle || 'N/A'} ${item.quantity > 1 ? `(Qty: ${item.quantity})` : ''}</div>
+            </div>
+          `).join('')
+        : '<div><strong>Product:</strong> N/A</div>';
+
       // Main Tracking Result Box inside card
       resultContainer.innerHTML = `
         <div class="tracking-result-header">
@@ -668,8 +677,12 @@ async function handleTrackingSubmit(event) {
           <div><strong>Phone:</strong> ${customerPhone}</div>
           <div><strong>Order Date:</strong> ${formattedDate}</div>
           
-          <div style="grid-column: 1 / -1;"><strong>Product:</strong> ${productTitle}</div>
-          <div style="grid-column: 1 / -1;"><strong>Variant:</strong> ${variantTitle}</div>
+          <div style="grid-column: 1 / -1; margin-top: 8px;">
+            <strong>Items:</strong>
+            <div style="margin-top: 8px;">
+              ${itemsHtml}
+            </div>
+          </div>
         </div>
         <button type="button" class="stage-1__view-progress-btn" onclick="showLiveProgressStage()">
           View Live Progress &rarr;
