@@ -45,18 +45,27 @@
         <div class="stage-1__search-logo-text">A-DIY</div>
       {%- endif -%}
 
-      <div class="stage-1__search-header">
-        <div class="stage-1__search-head">{{ section.settings.search_head }}</div>
-        <div class="stage-1__search-desc">{{ section.settings.search_desc }}</div>
+      <!-- Search Query Section (Will be hidden on success) -->
+      <div id="searchQuerySection">
+        <div class="stage-1__search-header">
+          <div class="stage-1__search-head">{{ section.settings.search_head }}</div>
+          <div class="stage-1__search-desc">{{ section.settings.search_desc }}</div>
+        </div>
+
+        <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
+          <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="ORDER NUMBER" required />
+          <button type="submit" id="trackSubmitBtn" class="stage-1__btn">ACCESS MY HUB</button>
+        </form>
+
+        <div class="stage-1__search-footer">
+          {{ section.settings.search_footer }}  
+        </div>
       </div>
 
-      <form class="stage-1__search-form" onsubmit="handleTrackingSubmit(event)">
-        <input type="text" id="TrackingInput-{{ section.id }}" class="stage-1__input" placeholder="ORDER NUMBER" required />
-        <button type="submit" id="trackSubmitBtn" class="stage-1__btn">ACCESS MY HUB</button>
-      </form>
-
-      <div class="stage-1__search-footer">
-        {{ section.settings.search_footer }}  
+      <!-- Active Heading (Will be shown in place of search form on success) -->
+      <div id="searchActiveHeading" style="display: none; margin-bottom: 1.5rem;">
+        <h2 class="stage-1__search-head" style="font-size: 30px; margin-bottom: 0.5rem;">Your Order Hub</h2>
+        <p style="font-size: 1.4rem; color: #555; margin: 0;">Access your live tracking, guides, and 3D build resources below.</p>
       </div>
 
       <div id="trackingResultContainer" class="stage-1__order-card" style="display: none;"></div>
@@ -230,7 +239,6 @@
         </div>
         
         <div class="stage-1__checklist-container" style="margin-top: 2.5rem; padding: 0; border: 0;">
-          {% comment %} <iframe style="border-radius: 12px;" width="100%" height="400" src="https://www.youtube.com/embed/zWPayGdRQFE?si=wePOU2PH2I2JjHYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> {% endcomment %}
            <div class="video-container" style="position: relative; width: 100%; max-width: 400px; height: 710px; margin: 5rem auto auto;">
               <iframe 
                   src="https://www.youtube.com/embed/46Ub_BuguJU?loop=1&playlist=46Ub_BuguJU&controls=1" 
@@ -393,7 +401,6 @@
   .stage-2__dot-red { width: 6px; height: 6px; background-color: #fff; border-radius: 50%; }
   .stage-2__upsell-header { display: flex; justify-content: space-between; align-items: flex-start; }
   .stage-2__upsell-title { font-size: 2.2rem; font-weight: 800; color: #111; margin: 0 0 1rem 0; }
-  {% comment %} .stage-2__lightning-icon { font-size: 2rem; color: #eab308; } {% endcomment %}
   .stage-2__upsell-desc { font-size: 1.45rem; color: #333; line-height: 1.5; margin-bottom: 1.2rem; }
   .stage-2__upsell-subdesc { font-size: 1.35rem; color: #555; line-height: 1.5; margin-bottom: 1.5rem; }
   .stage-2__warning-pill { border: 1px solid #fca5a5; background-color: #ffe4e6; color: #991b1b; padding: 8px 14px; border-radius: 20px; font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; display: inline-block; }
@@ -413,7 +420,6 @@
   .stage-2__support-card { background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 1.5rem; text-align: center; }
   .stage-2__support-card p { margin: 0 0 1rem 0; font-size: 1.2rem; letter-spacing: 0.5px; }
   .stage-2__support-btn { background: #fff; border: 1px solid #d1d5db; border-radius: 6px; padding: 10px 20px; font-weight: 700; cursor: pointer; font-size: 1.3rem; width: 100%; max-width: 300px; color: #000; text-decoration: none; }
-
 
   .digital-workspace-section {
     margin-top: 40px;
@@ -517,7 +523,6 @@
     cursor: not-allowed;
   }
   
-
   @media screen and (max-width: 600px) {
     .stage-1__search-form { flex-direction: column; gap: 10px; }
     .stage-1__btn { width: 100%; }
@@ -613,6 +618,10 @@ async function handleTrackingSubmit(event) {
       } catch (e) {
         console.warn('LocalStorage error', e);
       }
+
+      // Hide Search Query Section and Show Active Heading
+      document.getElementById('searchQuerySection').style.display = 'none';
+      document.getElementById('searchActiveHeading').style.display = 'block';
 
       const formattedDate = new Date(order.date).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -959,11 +968,15 @@ function resetTrackingView() {
   const resultContainer = document.getElementById("trackingResultContainer");
   const stageContainer = document.getElementById("dynamic-tracking-stage");
   const searchCardContainer = document.getElementById("tracking-search-container");
+  const searchSection = document.getElementById("searchQuerySection");
+  const activeHeading = document.getElementById("searchActiveHeading");
 
   if (inputEl) inputEl.value = "";
   if (resultContainer) resultContainer.style.display = "none";
   if (stageContainer) stageContainer.style.display = "none";
   if (searchCardContainer) searchCardContainer.style.display = "block";
+  if (searchSection) searchSection.style.display = "block";
+  if (activeHeading) activeHeading.style.display = "none";
 }
 </script>
 
