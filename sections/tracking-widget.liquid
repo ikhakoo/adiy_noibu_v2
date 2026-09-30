@@ -33,6 +33,7 @@
       {%- endif -%}
 
       <div class="stage-1__search-header">
+        <div class="stage-1__search-head">{{ section.settings.search_head }}</div>
         <div class="stage-1__search-desc">{{ section.settings.search_desc }}</div>
       </div>
 
@@ -960,6 +961,12 @@ function resetTrackingView() {
       "type": "image_picker",
       "id": "logo_image",
       "label": "Search Card Logo"
+    },
+    {
+      "type": "text",
+      "id": "search_head",
+      "label": "Search Heading",
+      "default": "Track it. Plan it. Build it."
     },
     {
       "type": "text",
