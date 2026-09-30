@@ -1100,7 +1100,19 @@
       Get it delivered by 
       <span class="delivery-date-range">
         {%- if current_delivery_text != blank -%}
-          {{ current_delivery_text }}
+          {%- assign date_parts = current_delivery_text | split: '-' -%}
+          {%- if date_parts.size == 2 -%}
+            {%- assign target_year = date_parts[0] -%}
+            {%- assign target_month_num = date_parts[1] | times: 1 -%}
+            {%- case target_month_num -%}
+              {%- when 1 -%}January {% when 2 -%}February {% when 3 -%}March {% when 4 -%}April 
+              {%- when 5 -%}May {% when 6 -%}June {% when 7 -%}July {% when 8 -%}August 
+              {%- when 9 -%}September {% when 10 -%}October {% when 11 -%}November {% when 12 -%}December
+            {%- endcase -%}
+            {{ target_year }}
+          {%- else -%}
+            {{ current_delivery_text }}
+          {%- endif -%}
         {%- else -%}
           {%- if min_month == max_month -%}
             {{ min_month }} {{ min_day }}–{{ max_day }}
