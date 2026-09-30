@@ -658,7 +658,7 @@ async function handleTrackingSubmit(event) {
 
       const itemsHtml = (data.items && data.items.length > 0)
         ? data.items.map(item => `
-            <div style"padding-bottom:8px;">
+            <div style="margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0;">
               <div><strong>Product:</strong> ${item.productTitle || item.title || 'N/A'}</div>
               <div><strong>Variant:</strong> ${item.variantTitle || 'N/A'} ${item.quantity > 1 ? `(Qty: ${item.quantity})` : ''}</div>
             </div>
