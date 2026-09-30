@@ -656,17 +656,16 @@ async function handleTrackingSubmit(event) {
       const videoUrl = (firstItem.videoLinks && firstItem.videoLinks.length > 0) ? firstItem.videoLinks[0] : '';
       const app3dUrl = (firstItem.appLinks3d && firstItem.appLinks3d.length > 0) ? firstItem.appLinks3d[0] : '';
 
-      // Items HTML generator with exact formatting
+      // Items HTML generator with conditional Variant and separate Qty row
       const itemsHtml = (data.items && data.items.length > 0)
         ? data.items.map(item => {
-            let variantText = item.variantTitle && item.variantTitle !== 'Default Title' ? item.variantTitle : 'N/A';
-            if (item.quantity > 1) {
-              variantText += ` (Qty: ${item.quantity})`;
-            }
+            const hasVariant = item.variantTitle && item.variantTitle !== 'Default Title' && item.variantTitle !== 'N/A';
+            
             return `
-              <div style="margin-bottom: 14px;">
+              <div style="margin-bottom: 16px;">
                 <div><strong>Product:</strong> ${item.productTitle || item.title || 'N/A'}</div>
-                <div><strong>Variant:</strong> ${variantText}</div>
+                ${hasVariant ? `<div><strong>Variant:</strong> ${item.variantTitle}</div>` : ''}
+                <div><strong>Quantity:</strong> ${item.quantity || 1}</div>
               </div>
             `;
           }).join('')
