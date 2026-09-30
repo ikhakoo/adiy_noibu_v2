@@ -1079,39 +1079,19 @@
       assign max_day = max_delivery_timestamp | date: '%d' | plus: 0
     -%}
 
+    
 
-
-
-    {%- assign hide_global_truck = false -%}
-    {%- for cart_item in cart.items -%}
-      {%- if cart_item.product.handle == '250-a-diy-composite-deck-kit' or cart_item.product.handle == '250-pressure-treated-kiln-dried-wood-deck-kit' -%}
-        {%- assign hide_global_truck = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-
-    <div class="truck-icon-text" {% if hide_global_truck %}style="opacity: 0; visibility: hidden; pointer-events: none;"{% endif %}>
+    <div class="truck-icon-text">
       <img src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/van.png?v=1786579968&width=72" alt="Delivery Truck" class="truck-icon" loading="lazy">
 
       <div class="content">
         <p class="heading">
           Get it delivered by 
           <span class="delivery-date-range">
-            {%- assign selected_delivery = nil -%}
-            {%- for p in cart_item.properties -%}
-              {%- if p.first == 'Estimated Delivery Month' -%}
-                {%- assign selected_delivery = p.last -%}
-              {%- endif -%}
-            {%- endfor -%}
-
-            {%- if selected_delivery != blank -%}
-              {{ selected_delivery }}
+            {%- if min_month == max_month -%}
+              {{ min_month }} {{ min_day }}–{{ max_day }}
             {%- else -%}
-              {%- if min_month == max_month -%}
-                {{ min_month }} {{ min_day }}–{{ max_day }}
-              {%- else -%}
-                {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
-              {%- endif -%}
+              {{ min_month }} {{ min_day }} – {{ max_month }} {{ max_day }}
             {%- endif -%}
           </span>
         </p>
@@ -1121,7 +1101,6 @@
         </p>
       </div>
     </div>
-
 
 
 
