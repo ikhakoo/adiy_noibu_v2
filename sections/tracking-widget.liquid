@@ -638,7 +638,7 @@ async function handleTrackingSubmit(event) {
       const customerName = data.customer && data.customer.name ? data.customer.name : 'N/A';
 
       document.getElementById('customer-name-display').innerText = customerName;
-      
+
       const customerEmail = data.customer && data.customer.email ? data.customer.email : 'N/A';
       const customerPhone = data.customer && data.customer.phone ? data.customer.phone : 'N/A';
       
@@ -688,7 +688,6 @@ async function handleTrackingSubmit(event) {
       outerWorkspaceEl.innerHTML = `
         <div class="digital-workspace-section">
           <div class="digital-workspace-header">
-            <h2>Welcome to your A-DIY Hub, (${customerName})</h2>
             <h2>Everything You Need to Build Your Deck</h2>
             <p>Your plans, instructions, videos, and interactive 3D guide. All in one place.</p>
           </div>
