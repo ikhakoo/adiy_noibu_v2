@@ -527,6 +527,11 @@
     background: #cccccc;
     cursor: not-allowed;
   }
+  .digital-workspace-item-block:last-child {
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
   
   @media screen and (max-width: 600px) {
     .stage-1__search-form { flex-direction: column; gap: 10px; }
@@ -726,7 +731,7 @@ async function handleTrackingSubmit(event) {
           allItemsWorkspaceHtml += `
             <div class="digital-workspace-item-block" style="margin-bottom: 40px; border-bottom: 1px solid #e2e2e2; padding-bottom: 30px;">
               <div class="digital-workspace-header" style="text-align: left; margin-bottom: 20px;">
-                <h3 style="font-size: 26px; color: #000; font-weight: 700; margin: 0 0 4px 0; text-align: center;">
+                <h3 style="font-size: 26px; color: #000; margin: 0 0 4px 0; text-align: center;">
                   Everything You Need to Build Your Deck - ${variantTitle}
                 </h3>
                 <p style="font-size: 16px; color: #000; margin: 0; text-align: center;">Your plans, instructions, videos, and interactive 3D guide for this variant.</p>
