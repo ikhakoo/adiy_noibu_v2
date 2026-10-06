@@ -668,8 +668,8 @@ async function handleTrackingSubmit(event) {
             
             return `
               <div style="margin-bottom: 16px;">
-                <div><strong>Product:</strong> ${item.productTitle || item.title || 'N/A'} ${item.variantTitle}</div>
-                ${hasVariant ? `<div><strong>Variant:</strong> ${item.variantTitle}</div>` : ''}
+                <div><strong>Product:</strong> ${item.productTitle || item.title || 'N/A'} | ${item.variantTitle}</div>
+                {% comment %} ${hasVariant ? `<div><strong>Variant:</strong> ${item.variantTitle}</div>` : ''} {% endcomment %}
                 <div><strong>Quantity:</strong> ${item.quantity || 1}</div>
               </div>
             `;
