@@ -59,6 +59,7 @@
         },
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
+          "disabled": true,
           "settings": {
             "logo_1": "shopify://shop_images/Untitled_design_32.png-2.png",
             "text_1": "Pay Month With Affirm",
@@ -69,8 +70,7 @@
             "logo_3": "shopify://shop_images/Untitled_design_32_png_1624df21-e928-4e67-9587-aa3c52112551.png",
             "text_3": "Buy Now, Pay Later With Shop Pay",
             "link_3": "#klarna"
-          },
-          "disabled": true
+          }
         },
         "custom_liquid_7nXE8n": {
           "type": "custom_liquid",
@@ -114,6 +114,16 @@
             "custom_liquid": "<hr>"
           }
         },
+        "payment_plan_picker": {
+          "type": "payment_plan_picker",
+          "settings": {}
+        },
+        "custom_liquid_planHr": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<hr>"
+          }
+        },
         "estimated_delivery_HC9tbH": {
           "type": "estimated_delivery",
           "settings": {
@@ -145,6 +155,7 @@
         },
         "affirm_pay_over_time_messaging_product_block_nTFQar": {
           "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "disabled": true,
           "settings": {
             "logo_align": "left",
             "font_size": 14,
@@ -152,8 +163,7 @@
             "logo_type": "logo",
             "public_api_key": "",
             "price_selector": ""
-          },
-          "disabled": true
+          }
         },
         "need_assistance_block_rdEmyW": {
           "type": "need_assistance_block",
@@ -226,16 +236,6 @@
             "icon": "none",
             "content": "",
             "page": ""
-          }
-        },
-        "payment_plan_picker": {
-          "type": "payment_plan_picker",
-          "settings": {}
-        },
-        "custom_liquid_planHr": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<hr>"
           }
         }
       },
@@ -2412,7 +2412,7 @@
           "settings": {
             "assign_tabs": "Finance",
             "question": "Can I pay for my deck over time?",
-            "answer": "<p>Yes. Financing is available through Affirm, Klarna and Shop Pay, with $0 down and 0% interest options over terms of up to 24 months. Financing is subject to credit approval; terms and conditions apply.</p>"
+            "answer": "<p>Yes! Financing is available through Affirm, Klarna, and Shop Pay. 0% APR financing options for up to 24 months are available. Financing is subject to credit approval. Terms and conditions apply.</p>"
           }
         },
         "faq_item_finance_methods": {
