@@ -3531,7 +3531,7 @@
           "settings": {
             "assign_tabs": "Finance",
             "question": "Can I pay for my deck over time?",
-            "answer": "<p>Yes. Financing is available through Affirm, Klarna and Shop Pay, with $0 down and 0% interest options over terms of up to 24 months. Financing is subject to credit approval; terms and conditions apply.</p>"
+            "answer": "<p>Yes! Financing is available through Affirm, Klarna, and Shop Pay. 0% APR financing options for up to 24 months are available. Financing is subject to credit approval. Terms and conditions apply.</p>"
           }
         },
         "faq_item_finance_methods": {
