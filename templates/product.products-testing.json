@@ -38,7 +38,6 @@
         },
         "text_ifcgmB": {
           "type": "text",
-          "disabled": true,
           "settings": {
             "custom_class": "product-sub-title",
             "text": "{{ product.metafields.custom.product_sub_title.value }}",
@@ -47,16 +46,7 @@
         },
         "price": {
           "type": "price",
-          "disabled": true,
           "settings": {}
-        },
-        "custom_price_a6rzcR": {
-          "type": "custom_price",
-          "disabled": true,
-          "settings": {
-            "prefix_text_price": "Reserve your deck for",
-            "postfix_text_price": "today"
-          }
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
@@ -69,7 +59,6 @@
         },
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
-          "disabled": true,
           "settings": {
             "logo_1": "shopify://shop_images/Untitled_design_32.png-2.png",
             "text_1": "Pay Month With Affirm",
@@ -92,14 +81,14 @@
           "type": "material_switcher",
           "settings": {
             "heading": "Step 1: Choose Material",
-            "show_price": true,
-            "product_1": "250-pressure-treated-kiln-dried-wood-deck-kit",
+            "show_price": false,
+            "product_1": "pressure-treated-kiln-dried-wood-deck-kit",
             "title_1": "Pressure Treated",
-            "custom_price_1": "$4,399.00",
+            "custom_price_1": "",
             "image_1": "shopify://shop_images/Group_1597879819.png",
-            "product_2": "250-a-diy-composite-deck-kit",
+            "product_2": "a-diy-composite-deck-kit",
             "title_2": "Composite",
-            "custom_price_2": "$5,400.00",
+            "custom_price_2": "",
             "image_2": "shopify://shop_images/Group_1597879819_1.png"
           }
         },
@@ -124,45 +113,8 @@
             "custom_liquid": "<hr>"
           }
         },
-        "estimated_price_cta_LrEKtH": {
-          "type": "estimated_price_cta",
-          "disabled": true,
-          "settings": {
-            "due_today_subtext": "Non-refundable Reservation Fee.",
-            "delivery_title": "Schedule Your Delivery",
-            "show_delivery_subtext": false,
-            "delivery_subtext": "Select a date between 30 days from today and up to 6 months.",
-            "min_days_offset": 30,
-            "max_months_offset": 11,
-            "show_current_month": true,
-            "show_footer_agreement": true,
-            "agreement_text": "<p>By placing this order, I agree to the A-DIY $250 Order Deposit <a href=\"/pages/250-deck-deposite-terms-conditions\" title=\"$250 Order Deposit Terms & Conditions\">Terms & Conditions</a></p>",
-            "info_link_text": "",
-            "info_link_url": "",
-            "show_dynamic_checkout": true,
-            "button_text": "RESERVE FOR $250"
-          }
-        },
-        "estimated_price_cta_s_CMDx7x": {
-          "type": "estimated_price_cta_s",
-          "settings": {
-            "due_today_subtext": "Non-refundable Reservation Fee.",
-            "delivery_title": "Select Delivery Month",
-            "show_delivery_subtext": false,
-            "delivery_subtext": "Select your preferred delivery month.",
-            "show_current_month": true,
-            "min_days_offset": 30,
-            "max_months_offset": 11,
-            "show_footer_agreement": true,
-            "agreement_text": "By placing this order, I agree to the A-DIY $250 Order Deposit",
-            "info_link_text": "Terms & Conditions",
-            "info_link_url": "shopify://pages/250-deck-deposite-terms-conditions",
-            "show_dynamic_checkout": true
-          }
-        },
         "estimated_delivery_HC9tbH": {
           "type": "estimated_delivery",
-          "disabled": true,
           "settings": {
             "heading_prefix": "Get it delivered by",
             "min_days": 10,
@@ -174,9 +126,8 @@
         },
         "buy_buttons": {
           "type": "buy_buttons",
-          "disabled": true,
           "settings": {
-            "show_dynamic_checkout": true,
+            "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
           }
         },
@@ -185,7 +136,7 @@
           "disabled": true,
           "settings": {
             "heading": "Labor Day Sale Ends in:",
-            "end_date": "2026-09-13",
+            "end_date": "2026-09-15",
             "end_time": "23:59:59",
             "bg_color": "#a33429",
             "text_color": "#ffffff"
@@ -193,7 +144,6 @@
         },
         "affirm_pay_over_time_messaging_product_block_nTFQar": {
           "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "disabled": true,
           "settings": {
             "logo_align": "left",
             "font_size": 14,
@@ -201,16 +151,6 @@
             "logo_type": "logo",
             "public_api_key": "",
             "price_selector": ""
-          }
-        },
-        "affirm_promo_bar_dgqQry": {
-          "type": "affirm_promo_bar",
-          "disabled": true,
-          "settings": {
-            "text_before": "Starting At $184/Mo Or 0% APR With",
-            "logo": "shopify://shop_images/Untitled_design_32_png_f393bc2c-1b8e-45f6-9e17-3bc9f47c23e7.png",
-            "link_text": "See If You Qualify",
-            "link_url": "#affirm"
           }
         },
         "need_assistance_block_rdEmyW": {
@@ -243,12 +183,6 @@
             "accessory_products": [
               "steps-cedar-wood"
             ]
-          }
-        },
-        "custom_liquid_QFz6hM": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{%- if product.metafields.custom.image_gallery_top_badges.value != blank -%}\n    <div class=\"custom-gallery-badges-container\">\n      {%- for badge in product.metafields.custom.image_gallery_top_badges.value -%}\n        <div class=\"custom-badge-pill\">\n          \n          {%- comment -%} Icon Render {%- endcomment -%}\n          {%- assign badge_icon = badge.icon.value | default: badge.image.value | default: badge.badge_icon.value -%}\n          {%- if badge_icon != blank -%}\n            <img \n              src=\"{{ badge_icon | image_url: width: 40 }}\" \n              alt=\"\" \n              width=\"18\" \n              height=\"18\" \n              class=\"badge-custom-icon\"\n              loading=\"lazy\"\n            >\n          {%- else -%}\n            <span class=\"badge-icon-fallback\">✓</span>\n          {%- endif -%}\n\n          {%- comment -%} Text Render {%- endcomment -%}\n          <span class=\"badge-text\">\n            {{ badge.label.value | default: badge.title.value | default: badge.text.value | default: badge.name.value | default: badge }}\n          </span>\n\n        </div>\n      {%- endfor -%}\n    </div>\n  {%- endif -%}"
           }
         },
         "collapsible_tab_mQbURJ": {
@@ -299,7 +233,6 @@
         "title",
         "text_ifcgmB",
         "price",
-        "custom_price_a6rzcR",
         "discount_promo_YW9Hge",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
@@ -307,17 +240,13 @@
         "custom_liquid_HmnBKa",
         "variant_picker",
         "custom_liquid_FnEVbe",
-        "estimated_price_cta_LrEKtH",
-        "estimated_price_cta_s_CMDx7x",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
         "countdown_timer_NM9Fxn",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
-        "affirm_promo_bar_dgqQry",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
         "accessories_block_TPUpnp",
-        "custom_liquid_QFz6hM",
         "collapsible_tab_mQbURJ",
         "collapsible_tab_cGLBjX",
         "collapsible_tab_6gXUgQ",
