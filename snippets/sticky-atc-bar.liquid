@@ -156,22 +156,37 @@
   </style>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const stickyBar = document.getElementById("customStickyATC");
-      if (!stickyBar) return;
+  document.addEventListener("DOMContentLoaded", function () {
+    const stickyBar = document.getElementById("customStickyATC");
+    if (!stickyBar) return;
 
-      // Hum scroll position check karenge. Jab user 400px se zyada niche scroll karega 
-      // aur main add to cart button view se nikal chuka hoga tab sticky bar show hoga.
-      window.addEventListener("scroll", function () {
-        const scrollPosition = window.scrollY;
-        
-        // Aap yahan pixel value adjust kar sakte hain ke kitna scroll karne ke baad sticky bar aaye
-        if (scrollPosition > 500) {
-          stickyBar.classList.add("is-visible");
-        } else {
-          stickyBar.classList.remove("is-visible");
-        }
-      });
-    });
-  </script>
+    // Shopify ke main Add to Cart button ko dhoondne ke liye common selectors
+    const mainAddToCartBtn = document.querySelector('form[action*="/cart/add"] button[type="submit"], .product-form__submit, button[name="add"], .product__submit');
+
+    if (!mainAddToCartBtn) return;
+
+    function checkButtonVisibility() {
+      const rect = mainAddToCartBtn.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      // Check karein ke kya main button screen (viewport) ke andar kahin bhi visible hai
+      const isVisible = (rect.top <= windowHeight) && (rect.bottom >= 0);
+
+      if (isVisible) {
+        // Agar main button screen par dikh raha hai, toh sticky bar hide kar do
+        stickyBar.classList.remove("is-visible");
+      } else {
+        // Agar main button screen se upar ya niche nikal gaya hai, toh sticky bar show kar do
+        stickyBar.classList.add("is-visible");
+      }
+    }
+
+    // Scroll aur Resize par check karte rahein
+    window.addEventListener("scroll", checkButtonVisibility);
+    window.addEventListener("resize", checkButtonVisibility);
+    
+    // Page load hone par bhi ek baar check karein
+    checkButtonVisibility();
+  });
+</script>
 {%- endif -%}
