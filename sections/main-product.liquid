@@ -1406,7 +1406,7 @@
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-            {% render 'sticky-atc-bar', product: product %}
+            
 
             {%- for block in section.blocks -%}
               {%- case block.type -%}
@@ -4282,7 +4282,7 @@
 </product-info>
 
 {%- render 'mobile-sticky-atc', product: product, section: section -%} 
-
+{% render 'sticky-atc-bar', product: product %}
 
 <script>
   document.addEventListener('click', function (e) {
