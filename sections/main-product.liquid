@@ -2495,6 +2495,231 @@
                       });
                     </script>
                   {%- endif -%}
+                
+                {%- when 'promo_timer_banner' -%}
+                  <div class="promo-banner-container" {{ block.shopify_attributes }}>
+                    <div class="promo-banner-inner" style="background-color: {{ block.settings.bg_color }};">
+                      
+                      <!-- Top Header Section with Icon and Text -->
+                      <div class="promo-header">
+                        {%- if block.settings.banner_icon != blank -%}
+                          <div class="promo-icon">
+                            <img src="{{ block.settings.banner_icon | image_url: width: 100 }}" alt="Promo Icon" loading="lazy">
+                          </div>
+                        {%- endif -%}
+                        <div class="promo-titles">
+                          {%- if block.settings.heading != blank -%}
+                            <h2 class="promo-heading">{{ block.settings.heading }}</h2>
+                          {%- endif -%}
+                          {%- if block.settings.subheading != blank -%}
+                            <p class="promo-subheading">{{ block.settings.subheading }}</p>
+                          {%- endif -%}
+                        </div>
+                      </div>
+
+                      <div class="promo-divider"></div>
+
+                      <!-- Bottom Content Grid: Left Bullet Points & Right Countdown Timer -->
+                      <div class="promo-grid">
+                        {%- if block.settings.bullet_points != blank -%}
+                          <div class="promo-bullet-list">
+                            {{ block.settings.bullet_points }}
+                          </div>
+                        {%- endif -%}
+
+                        {%- if block.settings.end_date != blank -%}
+                          <div class="promo-timer-box" data-end-date="{{ block.settings.end_date }}">
+                            <div class="timer-title">OFFER ENDS IN:</div>
+                            <div class="timer-digits">
+                              <div class="time-block">
+                                <span class="days">00</span>
+                                <span class="time-label">days</span>
+                              </div>
+                              <span class="time-separator">:</span>
+                              <div class="time-block">
+                                <span class="hours">00</span>
+                                <span class="time-label">hrs</span>
+                              </div>
+                              <span class="time-separator">:</span>
+                              <div class="time-block">
+                                <span class="minutes">00</span>
+                                <span class="time-label">min</span>
+                              </div>
+                              <span class="time-separator">:</span>
+                              <div class="time-block">
+                                <span class="seconds">00</span>
+                                <span class="time-label">secs</span>
+                              </div>
+                            </div>
+                          </div>
+                        {%- endif -%}
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <style>
+                    .promo-banner-container {
+                      width: 100%;
+                      margin: 15px 0;
+                      font-family: inherit;
+                    }
+                    .promo-banner-inner {
+                      border-radius: 10px;
+                      padding: 24px;
+                      color: #ffffff;
+                      box-sizing: border-box;
+                    }
+                    .promo-header {
+                      display: flex;
+                      align-items: center;
+                      gap: 16px;
+                    }
+                    .promo-icon img {
+                      width: 48px;
+                      height: 48px;
+                      object-fit: contain;
+                      filter: brightness(0) invert(1);
+                    }
+                    .promo-heading {
+                      margin: 0 0 4px 0;
+                      font-size: 22px;
+                      font-weight: 700;
+                      line-height: 1.2;
+                      color: #ffffff;
+                    }
+                    .promo-subheading {
+                      margin: 0;
+                      font-size: 15px;
+                      opacity: 0.9;
+                      color: #ffffff;
+                    }
+                    .promo-divider {
+                      height: 1px;
+                      background-color: rgba(255, 255, 255, 0.25);
+                      margin: 18px 0;
+                    }
+                    .promo-grid {
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      gap: 20px;
+                      flex-wrap: wrap;
+                    }
+                    .promo-bullet-list {
+                      flex: 1;
+                      min-width: 240px;
+                    }
+                    .promo-bullet-list ul {
+                      margin: 0;
+                      padding-left: 18px;
+                    }
+                    .promo-bullet-list li {
+                      margin-bottom: 6px;
+                      font-size: 14px;
+                      line-height: 1.4;
+                      color: #ffffff;
+                    }
+                    .promo-bullet-list li:last-child {
+                      margin-bottom: 0;
+                    }
+                    .promo-timer-box {
+                      background: rgba(0, 0, 0, 0.18);
+                      border-radius: 8px;
+                      padding: 14px 18px;
+                      text-align: center;
+                      min-width: 220px;
+                    }
+                    .timer-title {
+                      font-size: 11px;
+                      font-weight: 700;
+                      letter-spacing: 1px;
+                      margin-bottom: 8px;
+                      opacity: 0.85;
+                    }
+                    .timer-digits {
+                      display: flex;
+                      align-items: center;
+                      justify-center: center;
+                      gap: 6px;
+                      font-weight: 700;
+                    }
+                    .time-block {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      min-width: 32px;
+                    }
+                    .time-block span:first-child {
+                      font-size: 22px;
+                      line-height: 1;
+                    }
+                    .time-label {
+                      font-size: 10px;
+                      opacity: 0.8;
+                      margin-top: 3px;
+                      font-weight: 400;
+                    }
+                    .time-separator {
+                      font-size: 20px;
+                      opacity: 0.7;
+                      margin-bottom: 12px;
+                    }
+
+                    @media screen and (max-width: 768px) {
+                      .promo-grid {
+                        flex-direction: column;
+                        align-items: stretch;
+                      }
+                      .promo-timer-box {
+                        width: 100%;
+                      }
+                    }
+                  </style>
+
+                  <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                      const timerBoxes = document.querySelectorAll(".promo-timer-box");
+                      
+                      timerBoxes.forEach(function (box) {
+                        const endDateString = box.getAttribute("data-end-date");
+                        if (!endDateString) return;
+                        
+                        const endTime = new Date(endDateString).getTime();
+                        
+                        const daysEl = box.querySelector(".days");
+                        const hoursEl = box.querySelector(".hours");
+                        const minsEl = box.querySelector(".minutes");
+                        const secsEl = box.querySelector(".seconds");
+
+                        function updateTimer() {
+                          const now = new Date().getTime();
+                          const distance = endTime - now;
+
+                          if (distance < 0) {
+                            daysEl.textContent = "00";
+                            hoursEl.textContent = "00";
+                            minsEl.textContent = "00";
+                            secsEl.textContent = "00";
+                            return;
+                          }
+
+                          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                          daysEl.textContent = String(days).padStart(2, '0');
+                          hoursEl.textContent = String(hours).padStart(2, '0');
+                          minsEl.textContent = String(minutes).padStart(2, '0');
+                          secsEl.textContent = String(seconds).padStart(2, '0');
+                        }
+
+                        updateTimer();
+                        setInterval(updateTimer, 1000);
+                      });
+                    });
+                  </script>
                   
                 {%- when 'sku' -%}
                   <p
@@ -4728,6 +4953,48 @@
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
       "limit": 1
+    },
+    {
+      "type": "promo_timer_banner",
+      "name": "Promo Timer Banner",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#1b3d2f"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_icon",
+          "label": "Banner Icon / Badge"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Hansø Backyard Harvest Event"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Save up to 30% on pergolas and awnings."
+        },
+        {
+          "type": "richtext",
+          "id": "bullet_points",
+          "label": "Bullet Points List",
+          "default": "<p><ul><li>30% Off Pro+ Pergolas</li><li>30% Off Horizon Pergolas</li><li>25% Off Awnings</li><li>30% Off Selected Accessories</li></ul></p>"
+        },
+        {
+          "type": "text",
+          "id": "end_date",
+          "label": "Timer End Date & Time",
+          "info": "Format format likhein: YYYY-MM-DDTHH:MM:SS (Jaise: 2026-12-31T23:59:59)",
+          "default": "2026-12-31T23:59:59"
+        }
+      ]
     },
     {
       "type": "share",

@@ -70,6 +70,7 @@
         },
         "financing_widget_jbeqY8": {
           "type": "financing_widget",
+          "disabled": true,
           "settings": {
             "logo_1": "shopify://shop_images/Untitled_design_32.png-2.png",
             "text_1": "Pay Month With Affirm",
@@ -84,6 +85,7 @@
         },
         "custom_liquid_7nXE8n": {
           "type": "custom_liquid",
+          "disabled": true,
           "settings": {
             "custom_liquid": "<hr>"
           }
