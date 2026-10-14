@@ -1287,7 +1287,7 @@
 /*================================================================== template-product-products-testing ====================================================*/
 
 .template-product-products-testing .product .product__info-wrapper .title-top-text{ font-size: 14px; }
-.template-product-products-testing{ }
+.template-product-products-testing .custom-gallery-badges-container{ flex-wrap: wrap; border-top: 1px solid #C6C6C6; border-bottom: 1px solid #C6C6C6; padding: 10px;}
 .template-product-products-testing{ }
 .template-product-products-testing{ }
 .template-product-products-testing{ }
