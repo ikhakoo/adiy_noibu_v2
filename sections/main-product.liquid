@@ -1529,19 +1529,44 @@
                     {%- endif -%}
                   </div>
                 {%- when 'price' -%}
-                  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price">
-                    {%- render 'price',
-                      product: product,
-                      use_variant: true,
-                      show_badges: true,
-                      price_class: 'price--large'
-                    -%}
-                  </div>
-                  {%- if product.quantity_price_breaks_configured? -%}
-                    <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
-                      <span>{{ 'products.product.volume_pricing.note' | t }}</span>
-                    </div>
-                  {%- endif -%}
+  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price">
+    {%- if block.settings.price_style == 'style_2' -%}
+      {%- assign variant = product.selected_or_first_available_variant -%}
+      <div class="custom-total-price-wrapper" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; align-baseline: middle;">
+        <span class="total-price-label" style="font-weight: 600; font-size: 1.1rem;">Total Price:</span>
+        
+        {%- if variant.compare_at_price > variant.price -%}
+          <s class="price-item price-item--regular" style="color: #707070; text-decoration: line-through; font-size: 1rem;">
+            {{ variant.compare_at_price | money }}
+          </s>
+        {%- endif -%}
+        
+        <span class="price-item price-item--sale" style="font-weight: bold; font-size: 1.1rem;">
+          {{ variant.price | money }}
+        </span>
+
+        {%- if variant.compare_at_price > variant.price -%}
+          {%- assign saved_amount = variant.compare_at_price | minus: variant.price -%}
+          <span class="save-badge" style="background-color: #e6f4ea; color: #137333; padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">
+            Save {{ saved_amount | money }}
+          </span>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      {%- render 'price',
+        product: product,
+        use_variant: true,
+        show_badges: true,
+        price_class: 'price--large'
+      -%}
+    {%- endif -%}
+  </div>
+
+  {%- if product.quantity_price_breaks_configured? -%}
+    <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
+      <span>{{ 'products.product.volume_pricing.note' | t }}</span>
+    </div>
+  {%- endif -%}
                   {% comment %} {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
                     <div class="product__tax caption rte">
                       {%- if cart.duties_included and cart.taxes_included -%}
