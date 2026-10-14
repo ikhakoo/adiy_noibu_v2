@@ -1345,14 +1345,12 @@
                       <span class="promo-prefix">{{ block.settings.prefix_text }}</span>
                       <span class="discounted-price" id="DiscountedPrice-{{ section.id }}-{{ block.id }}">
                         {%- liquid
-  # Agar discount code se 1500 extract hota hai
-  assign discount_amount = current_discount_num | times: 100
-  assign final_calc_price = current_variant.price | minus: discount_amount
-
-  if final_calc_price < 0
-    assign final_calc_price = 0
-  endif
--%}
+                          assign discount_cents = current_discount_num | times: 100
+                          assign final_calc_price = current_variant.price | minus: discount_cents
+                          if final_calc_price < 0
+                            assign final_calc_price = 0
+                          endif
+                        -%}
                         {{ final_calc_price | money }}
                       </span>
                       <span class="promo-middle">{{ block.settings.middle_text }}</span>
