@@ -1,9 +1,6 @@
-{% comment %}
-  Complete Inline Product Price & ATC Box Snippet (Hansø Home Style)
-{% endcomment %}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div class="inline-atc-box" id="inline-atc-box-{{ section.id }}">
+<div class="inline-atc-box sticky-atc-hidden" id="inline-atc-box-{{ section.id }}">
   <div class="inline-atc-content">
     
     <!-- Left Section: Pricing & Badges -->
@@ -42,10 +39,10 @@
     <!-- Right Section: Add To Cart Button -->
     <div class="inline-atc-right">
       <button 
-        type="submit" 
-        name="add" 
+        type="button" 
         class="inline-atc-btn" 
         id="inline-atc-button"
+        data-variant-id="{{ current_variant.id }}"
         {% unless current_variant.available %}disabled{% endunless %}
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -64,18 +61,30 @@
 
 <style>
   .inline-atc-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
     background: #ffffff;
-    border: 1px solid #e2e2e2;
-    border-radius: 12px;
-    padding: 16px 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    margin: 20px 0;
+    border-top: 1px solid #e2e2e2;
+    padding: 14px 20px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
     font-family: inherit;
+    z-index: 99999;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Hidden state when main ATC is visible */
+  .inline-atc-box.sticky-atc-hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .inline-atc-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -85,7 +94,7 @@
   .inline-atc-left {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
 
   .inline-atc-prices {
@@ -98,11 +107,11 @@
   .inline-price-compare {
     text-decoration: line-through;
     color: #777777;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .inline-price-current {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: #1a1a1a;
   }
@@ -110,9 +119,9 @@
   .inline-save-badge {
     background-color: #e5f5e8;
     color: #276d33;
-    padding: 4px 10px;
+    padding: 2px 8px;
     border-radius: 20px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     display: inline-block;
   }
@@ -122,7 +131,7 @@
     align-items: center;
     gap: 15px;
     color: #444444;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
   }
 
@@ -141,8 +150,8 @@
     color: #ffffff;
     border: none;
     border-radius: 8px;
-    padding: 14px 28px;
-    font-size: 16px;
+    padding: 12px 24px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -189,15 +198,21 @@
       });
     }
 
+    const floatingBox = document.getElementById("inline-atc-box-{{ section.id }}");
+    const buttonEl = document.getElementById("inline-atc-button");
+    const btnTextEl = document.getElementById("inline-atc-btn-text");
+    const currentPriceEl = document.getElementById("atc-current-price");
+    const comparePriceEl = document.getElementById("atc-compare-price");
+    const saveBadgeEl = document.getElementById("atc-save-badge");
+    const saveAmountEl = document.getElementById("atc-save-amount");
+
+    // 1. Update ATC Box on variant change
     function updateAtcBox(variant) {
       if (!variant) return;
 
-      const currentPriceEl = document.getElementById("atc-current-price");
-      const comparePriceEl = document.getElementById("atc-compare-price");
-      const saveBadgeEl = document.getElementById("atc-save-badge");
-      const saveAmountEl = document.getElementById("atc-save-amount");
-      const buttonEl = document.getElementById("inline-atc-button");
-      const btnTextEl = document.getElementById("inline-atc-btn-text");
+      if (buttonEl) {
+        buttonEl.setAttribute("data-variant-id", variant.id);
+      }
 
       if (currentPriceEl) {
         currentPriceEl.innerText = formatMoney(variant.price);
@@ -232,10 +247,72 @@
       }
     }
 
+    // Listen to theme variant change event
     document.addEventListener("variant:changed", function (e) {
       if (e.detail && e.detail.variant) {
         updateAtcBox(e.detail.variant);
       }
     });
+
+    // 2. Intersection Observer to show/hide sticky bar based on main ATC button visibility
+    const mainAtcButton = document.querySelector('form[action*="/cart/add"] button[type="submit"], .product-form__submit, [name="add"]');
+    
+    if (mainAtcButton && floatingBox) {
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Main button is visible, hide sticky bar
+            floatingBox.classList.add("sticky-atc-hidden");
+          } else {
+            // Main button is out of view, show sticky bar
+            floatingBox.classList.remove("sticky-atc-hidden");
+          }
+        });
+      }, { threshold: 0 });
+
+      observer.observe(mainAtcButton);
+    }
+
+    // 3. Handle AJAX Add to Cart click
+    if (buttonEl) {
+      buttonEl.addEventListener("click", function () {
+        const variantId = this.getAttribute("data-variant-id");
+        if (!variantId || buttonEl.hasAttribute("disabled")) return;
+
+        const originalText = btnTextEl.innerText;
+        btnTextEl.innerText = "Adding...";
+        buttonEl.setAttribute("disabled", "true");
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: 1
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          btnTextEl.innerText = "Added!";
+          setTimeout(() => {
+            btnTextEl.innerText = originalText;
+            buttonEl.removeAttribute("disabled");
+          }, 1500);
+
+          // Trigger cart drawer refresh event if your theme supports it (e.g. Dawn theme events)
+          document.dispatchEvent(new CustomEvent('cart:refresh', { detail: data }));
+          
+          // Optional: Open cart drawer or redirect if needed (uncomment below if theme doesn't open drawer automatically)
+          // window.location.href = '/cart';
+        })
+        .catch(error => {
+          console.error('Error adding to cart:', error);
+          btnTextEl.innerText = originalText;
+          buttonEl.removeAttribute("disabled");
+        });
+      });
+    }
   });
 </script>
