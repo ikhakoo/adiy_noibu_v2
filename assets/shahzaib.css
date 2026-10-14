@@ -1291,6 +1291,18 @@
 .template-product-products-testing .custom-badge-pill{ font-size: 12px; width: 49%; border:0;}
 .template-product-products-testing .review-text-wrapper{ font-size: 14px; }
 .template-product-products-testing .product__media-wrapper .custom-gallery-badges-container { display:none; }
+.template-product-products-testing .product__description h2 { font-size: 18px; }
+.template-product-products-testing .product__description h3,
+.template-product-products-testing .product__description h4,
+.template-product-products-testing .product__description h5,
+.template-product-products-testing .product__description h6 { font-size: 16px; }
+.template-product-products-testing .product__description p{ font-size: 14px; }
+.template-product-products-testing .product__description ul,
+.template-product-products-testing .product__description.rte ul { padding-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem; }
+.template-product-products-testing .product__description li,
+.template-product-products-testing .product__description.rte li { margin-bottom: 0.8rem; }
+.template-product-products-testing .product__description li > p,
+.template-product-products-testing .product__description.rte li > p { display: inline; margin: 0 !important; padding: 0 !important; }
 .template-product-products-testing{ }
 .template-product-products-testing{ }
 .template-product-products-testing{ }
