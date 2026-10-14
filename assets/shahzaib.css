@@ -1307,5 +1307,5 @@
 
 @media screen and (max-width:600px){
     .template-product-products-testing .custom-badge-pill { font-size: 9px; }
-    .template-product-products-testing .custom-gallery-badges-container{ gap: 3px; }
+    .template-product-products-testing .custom-gallery-badges-container{ gap: 3px; padding: 10px 0; }
 }
