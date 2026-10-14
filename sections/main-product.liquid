@@ -4282,7 +4282,7 @@
 
 {%- render 'mobile-sticky-atc', product: product, section: section -%} 
 
-{% render 'custom-sticky-atc-bar' %}
+{% render 'custom-sticky-atc-bar', product: product %}
 <script>
   document.addEventListener('click', function (e) {
     const toggleBtn = e.target.closest('.js-financing-toggle');
