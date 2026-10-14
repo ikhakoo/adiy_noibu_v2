@@ -46,8 +46,19 @@
           "type": "description",
           "settings": {}
         },
+        "promo_timer_banner_4kjH4Y": {
+          "type": "promo_timer_banner",
+          "settings": {
+            "bg_color": "#1b3d2f",
+            "heading": "Hansø Backyard Harvest Event",
+            "subheading": "Save up to 30% on pergolas and awnings.",
+            "bullet_points": "<ul><li>30% Off Pro+ Pergolas</li><li>30% Off Horizon Pergolas</li><li>25% Off Awnings</li><li>30% Off Selected Accessories</li></ul>",
+            "end_date": "2026-10-30T23:59:59"
+          }
+        },
         "text_ifcgmB": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "custom_class": "product-sub-title",
             "text": "{{ product.metafields.custom.product_sub_title.value }}",
@@ -246,6 +257,7 @@
         "review_rating_bar_CcqBf9",
         "custom_liquid_YR93ix",
         "description_4hpknB",
+        "promo_timer_banner_4kjH4Y",
         "text_ifcgmB",
         "price",
         "discount_promo_YW9Hge",
