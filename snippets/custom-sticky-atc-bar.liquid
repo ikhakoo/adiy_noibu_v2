@@ -1,5 +1,5 @@
 {%- comment -%}
-  Right Column Sticky Box with Variant ID Sync for Buy-Buttons
+  Right Column Sticky Box with Direct Form Submission Sync
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
@@ -32,15 +32,16 @@
       <span class="rac-perk-item">✅ 100-Day Money Back</span>
     </div>
 
-    <!-- Buy Buttons Render -->
-    <div class="rac-action" id="DesktopSticky-Action-{{ section.id }}">
-      {%- render 'buy-buttons',
-        block: block,
-        product: product,
-        product_form_id: product_form_id,
-        section_id: section.id,
-        show_pickup_availability: true
-      -%}
+    <!-- Custom Button that Triggers Main Form Add to Cart -->
+    <div class="rac-action">
+      <button 
+        type="button" 
+        id="DesktopSticky-AddToCartBtn-{{ section.id }}" 
+        class="rac-btn button button--primary"
+        {% unless current_variant.available %}disabled{% endunless %}
+      >
+        <span>{% if current_variant.available %}Add to cart{% else %}Sold Out{% endif %}</span>
+      </button>
     </div>
 
   </div>
@@ -121,8 +122,27 @@
     width: 100%;
   }
 
-  .rac-action .product-form {
-    margin: 0 !important;
+  .rac-btn {
+    background-color: #194636 !important; /* Aapke theme ka button color */
+    color: #fff !important;
+    border: none !important;
+    width: 100% !important;
+    padding: 14px 20px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+
+  .rac-btn:hover {
+    background-color: #123327 !important;
+  }
+
+  .rac-btn:disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed !important;
   }
 </style>
 
@@ -220,7 +240,7 @@
       checkVisibility();
 
       const priceContainer = document.getElementById('DesktopSticky-Price-{{ section.id }}');
-      const stickyActionContainer = document.getElementById('DesktopSticky-Action-{{ section.id }}');
+      const stickyActionBtn = document.getElementById('DesktopSticky-AddToCartBtn-{{ section.id }}');
 
       function updateStickyVariant(variant) {
         if (!variant) return;
@@ -239,21 +259,14 @@
           priceContainer.innerHTML = priceHTML;
         }
 
-        // Update Variant ID input inside sticky box so correct variant is added to cart
-        if (stickyActionContainer) {
-          const stickyVariantInput = stickyActionContainer.querySelector('input[name="id"]');
-          if (stickyVariantInput) {
-            stickyVariantInput.value = variant.id;
-          }
-          const stickySubmitBtn = stickyActionContainer.querySelector('[type="submit"], [name="add"]');
-          if (stickySubmitBtn) {
-            if (variant.available) {
-              stickySubmitBtn.removeAttribute('disabled');
-              stickySubmitBtn.textContent = "Add to cart";
-            } else {
-              stickySubmitBtn.setAttribute('disabled', 'disabled');
-              stickySubmitBtn.textContent = "Sold Out";
-            }
+        // Update Button state
+        if (stickyActionBtn) {
+          if (variant.available) {
+            stickyActionBtn.removeAttribute('disabled');
+            stickyActionBtn.querySelector('span').textContent = "Add to cart";
+          } else {
+            stickyActionBtn.setAttribute('disabled', 'disabled');
+            stickyActionBtn.querySelector('span').textContent = "Sold Out";
           }
         }
       }
@@ -277,6 +290,17 @@
           }
         });
         observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
+      }
+
+      // When sticky button is clicked, trigger the main product form's submit button
+      if (stickyActionBtn) {
+        stickyActionBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const currentMainSubmit = mainForm ? mainForm.querySelector('[type="submit"], [name="add"]') : mainAddToCartBtn;
+          if (currentMainSubmit && !currentMainSubmit.disabled) {
+            currentMainSubmit.click();
+          }
+        });
       }
     }
 
