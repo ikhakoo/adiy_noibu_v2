@@ -47,14 +47,14 @@
   /* Hidden on Desktop (above 750px) */
   @media screen and (min-width: 751px) {
     .mobile-sticky-atc-wrapper {
-      display: none !important;
+      {% comment %} display: none !important; {% endcomment %}
     }
   }
 
   /* Mobile Styles (750px and below) */
   @media screen and (max-width: 750px) {
     .mobile-sticky-atc-wrapper {
-      display: none;
+      {% comment %} display: none; {% endcomment %}
     }
     .template-product-250-products .mobile-sticky-atc-wrapper {
       display: block;
