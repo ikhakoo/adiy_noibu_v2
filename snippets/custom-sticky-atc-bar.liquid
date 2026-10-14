@@ -244,7 +244,10 @@
         const windowHeight = window.innerHeight || document.documentElement.clientHeight;
         const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
 
-        if (isBtnOutOfView) {
+        // Mobile ke liye: tabhi show ho jab user ne kam az kam 50px scroll kar liya ho
+        const scrollThreshold = window.innerWidth <= 750 ? window.scrollY > 50 : true;
+
+        if (isBtnOutOfView && scrollThreshold) {
           stickyBox.classList.add("is-visible");
         } else {
           stickyBox.classList.remove("is-visible");
