@@ -1,5 +1,5 @@
 {%- comment -%}
-  Right Column Sticky Box with Runtime Price Sync via MutationObserver
+  Right Column Sticky Box with Reliable Runtime Price Sync
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
@@ -149,20 +149,31 @@
     window.addEventListener("resize", checkVisibility, { passive: true });
     checkVisibility();
 
-    // Runtime Price Sync via MutationObserver on main product price element
-    const mainPriceElement = document.querySelector('.price, .product__price, [id*="price-"], .no-js-hidden .price');
-    const stickyPriceContainer = document.getElementById('sticky-price-container');
+    // Runtime Price Sync Function
+    function syncPrice() {
+      const mainPriceElem = document.querySelector('.price, .product__price, [id*="price-"], .price-item');
+      const stickyPriceContainer = document.getElementById('sticky-price-container');
+      if (mainPriceElem && stickyPriceContainer) {
+        stickyPriceContainer.innerHTML = mainPriceElem.innerHTML;
+      }
+    }
 
-    if (mainPriceElement && stickyPriceContainer) {
-      const observer = new MutationObserver(function(mutations) {
-        stickyPriceContainer.innerHTML = mainPriceElement.innerHTML;
+    // Listen to changes on variant inputs / form
+    const productForm = document.querySelector('form[action*="/cart/add"]');
+    if (productForm) {
+      productForm.addEventListener('change', function () {
+        setTimeout(syncPrice, 100);
+        setTimeout(syncPrice, 350); // fallback after theme ajax completes
       });
+    }
 
-      observer.observe(mainPriceElement, {
-        childList: true,
-        subtree: true,
-        characterData: true
+    // Also observe price container parent
+    const priceParent = document.querySelector('.price')?.parentElement || document.querySelector('.product__info-container');
+    if (priceParent) {
+      const observer = new MutationObserver(function () {
+        syncPrice();
       });
+      observer.observe(priceParent, { childList: true, subtree: true });
     }
   });
 </script>
