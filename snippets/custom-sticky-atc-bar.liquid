@@ -1,5 +1,5 @@
 {%- comment -%}
-  Right-Aligned Floating Sticky ATC Box
+  Right-Aligned Floating Sticky ATC Box (Increased Width)
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
@@ -25,9 +25,8 @@
   #right-aligned-sticky-box.right-aligned-sticky-box {
     position: fixed !important;
     bottom: 20px !important;
-    /* Yeh right side se exact wahi space lega jo aapke right column ki hai */
     right: max(20px, calc((100vw - 1200px) / 2 + 20px)) !important;
-    width: 380px !important;
+    width: 460px !important; /* Width yahan barha di gayi hai */
     background-color: #ffffff !important;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15) !important;
     padding: 16px !important;
@@ -57,28 +56,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
   }
 
   .rac-title {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #121212;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 220px;
+    flex: 1;
   }
 
   .rac-price {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: #121212;
     white-space: nowrap;
   }
 
   .rac-action .rac-btn {
-    background-color: #8b7355; /* Apne theme ke button color ke mutabiq match kar lein */
+    background-color: #8b7355;
     color: #fff;
     border: none;
     width: 100%;
@@ -99,12 +98,11 @@
     cursor: not-allowed;
   }
 
-  /* Tablets aur Mobile ke liye responsive adjustment */
   @media screen and (max-width: 1024px) {
     #right-aligned-sticky-box.right-aligned-sticky-box {
       right: 20px !important;
       left: auto !important;
-      width: 340px !important;
+      width: 400px !important;
     }
   }
 
@@ -125,7 +123,6 @@
 
     if (!stickyBox || !mainAddToCartBtn) return;
 
-    // Body ke end mein append kar dete hain taake fixed positioning hamesha screen par right side par rahay
     document.body.appendChild(stickyBox);
 
     function checkVisibility() {
@@ -138,10 +135,8 @@
         isProductInView = (sectionRect.top <= windowHeight && sectionRect.bottom >= 0);
       }
 
-      // Main button screen view se bahar nikal gaya ho (upar ya neeche)
       const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
 
-      // Box sirf tabhi show hoga jab user product section ke andar ho AUR main button screen par na ho
       if (isProductInView && isBtnOutOfView) {
         stickyBox.classList.add("is-visible");
       } else {
