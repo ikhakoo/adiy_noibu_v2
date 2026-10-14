@@ -44,19 +44,21 @@
   <style>
     .custom-sticky-atc-bar {
       position: fixed;
-      bottom: -100px; /* Shuru me screen se bahar rakha hai */
+      bottom: 0;
       left: 0;
       width: 100%;
       background-color: #ffffff;
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.12);
       z-index: 99999;
-      padding: 12px 20px;
+      padding: 14px 20px;
       box-sizing: border-box;
-      transition: bottom 0.3s ease-in-out;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-top: 1px solid #eaeaea;
     }
 
     .custom-sticky-atc-bar.is-visible {
-      bottom: 0; /* Jab class lagegi toh screen par aa jayega */
+      transform: translateY(0);
     }
 
     .sticky-atc-inner {
@@ -89,7 +91,6 @@
 
     .sticky-compare-price {
       font-size: 14px;
-      text-decoration: line-height;
       text-decoration: line-through;
       color: #888;
     }
@@ -156,39 +157,37 @@
   </style>
 
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const stickyBar = document.getElementById("customStickyATC");
-    if (!stickyBar) return;
+    document.addEventListener("DOMContentLoaded", function () {
+      const stickyBar = document.getElementById("customStickyATC");
+      if (!stickyBar) return;
 
-    const mainButtons = document.querySelector(".product-form__buttons");
+      const mainButtons = document.querySelector(".product-form__buttons");
 
-    function checkStickyState() {
-      if (!mainButtons) {
-        // Agar element na mile toh default mein sticky bar show rakhein
-        stickyBar.classList.add("is-visible");
-        return;
+      function checkStickyState() {
+        if (!mainButtons) {
+          stickyBar.classList.add("is-visible");
+          return;
+        }
+
+        const rect = mainButtons.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        // Agar main button screen ke viewport ke andar kahin bhi nazar aa raha hai
+        const isVisible = (rect.top <= windowHeight) && (rect.bottom >= 0);
+
+        if (isVisible) {
+          // Main button screen par hai -> Sticky bar hide rahega
+          stickyBar.classList.remove("is-visible");
+        } else {
+          // Main button screen se nikal gaya hai -> Sticky bar screen ke sath float karega
+          stickyBar.classList.add("is-visible");
+        }
       }
 
-      const rect = mainButtons.getBoundingClientRect();
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
-      // Check karein kya .product-form__buttons screen ke andar dikh raha hai
-      const isVisible = (rect.top <= windowHeight) && (rect.bottom >= 0);
-
-      if (isVisible) {
-        // Agar screen par dikh raha hai, toh sticky bar hide kar do
-        stickyBar.classList.remove("is-visible");
-      } else {
-        // Agar screen par nahi dikh raha, toh sticky bar show kar do
-        stickyBar.classList.add("is-visible");
-      }
-    }
-
-    window.addEventListener("scroll", checkStickyState);
-    window.addEventListener("resize", checkStickyState);
-    
-    // Page load hote hi check karein
-    checkStickyState();
-  });
-</script>
+      window.addEventListener("scroll", checkStickyState);
+      window.addEventListener("resize", checkStickyState);
+      
+      checkStickyState();
+    });
+  </script>
 {%- endif -%}
