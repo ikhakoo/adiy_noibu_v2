@@ -1,116 +1,202 @@
 <!-- ========================================== -->
-<!-- STYLES FOR STICKY ADD TO CART -->
+<!-- STICKY BOTTOM BAR STYLES -->
 <!-- ========================================== -->
 <style>
-  .sticky-add-to-cart-wrapper {
+  .custom-sticky-atc-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     background: #ffffff;
-    padding: 12px 20px;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+    padding: 12px 24px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
     z-index: 9999;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    gap: 20px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     transform: translateY(100%);
     opacity: 0;
     pointer-events: none;
+    box-sizing: border-box;
   }
 
-  .sticky-add-to-cart-wrapper.is-active {
+  /* Active state jab original button screen se bahar ho jaye */
+  .custom-sticky-atc-bar.is-visible {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
   }
 
-  .sticky-add-to-cart-wrapper .sticky-submit-btn {
-    background-color: #1a4234; /* Matching dark green color */
+  /* Left Side: Pricing & Badges */
+  .sticky-bar-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sticky-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .sticky-compare-price {
+    text-decoration: line-through;
+    color: #888888;
+    font-size: 15px;
+  }
+
+  .sticky-current-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+  }
+
+  .sticky-save-badge {
+    background-color: #eaf5ec;
+    color: #277542;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .sticky-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: #333333;
+  }
+
+  .sticky-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sticky-badge-item svg {
+    width: 16px;
+    height: 16px;
+    stroke: #333;
+  }
+
+  /* Right Side: Add to Cart Button */
+  .sticky-bar-right {
+    flex-shrink: 0;
+  }
+
+  .sticky-atc-action-btn {
+    background-color: #8c6d57; /* Screenshot ke matching brown/taupe color */
     color: #ffffff;
     border: none;
-    padding: 14px 28px;
+    padding: 14px 36px;
     font-size: 16px;
     font-weight: 600;
     border-radius: 6px;
     cursor: pointer;
-    width: 100%;
-    max-width: 450px;
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 10px;
+    transition: opacity 0.2s ease;
   }
 
-  .sticky-add-to-cart-wrapper .sticky-submit-btn:hover {
-    opacity: 0.92;
+  .sticky-atc-action-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Responsive styling for mobile devices */
+  @media (max-width: 768px) {
+    .custom-sticky-atc-bar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 10px 15px;
+    }
+    .sticky-bar-right {
+      width: 100%;
+    }
+    .sticky-atc-action-btn {
+      width: 100%;
+      justify-content: center;
+    }
+    .sticky-badges-row {
+      font-size: 11px;
+      gap: 10px;
+    }
   }
 </style>
 
 <!-- ========================================== -->
-<!-- HTML MARKUP -->
+<!-- HTML STRUCTURE -->
 <!-- ========================================== -->
-<div class="sticky-add-to-cart-wrapper" id="stickyAddToCartBar">
-  <button type="button" class="sticky-submit-btn" onclick="handleStickyAddToCart()">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <path d="M16 10a4 4 0 0 1-8 0"></path>
-    </svg>
-    <span>Add to cart</span>
-  </button>
+<div class="custom-sticky-atc-bar" id="customStickyBar">
+  <div class="sticky-bar-left">
+    <div class="sticky-price-wrapper">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="sticky-compare-price">{{ product.compare_at_price | money }}</span>
+      {%- endif -%}
+      <span class="sticky-current-price" id="stickyProductPrice">{{ product.price | money }}</span>
+      
+      {%- if product.compare_at_price > product.price -%}
+        {%- assign saved_amount = product.compare_at_price | minus: product.price -%}
+        <span class="sticky-save-badge">Save {{ saved_amount | money }}</span>
+      {%- endif -%}
+    </div>
+
+    <div class="sticky-badges-row">
+      <div class="sticky-badge-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>10-Year Warranty</span>
+      </div>
+      <div class="sticky-badge-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span>100-Day Money Back</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky-bar-right">
+    <button type="button" class="sticky-atc-action-btn" onclick="triggerMainAddToCart()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      <span>Add To Cart</span>
+    </button>
+  </div>
 </div>
 
 <!-- ========================================== -->
-<!-- JAVASCRIPT OBSERVER LOGIC -->
+<!-- JAVASCRIPT LOGIC -->
 <!-- ========================================== -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // Original Add to Cart button ko target karne ke selectors
-    const mainBtnSelectors = [
-      'form[action*="/cart/add"] [name="add"]',
-      'form[action*="/cart/add"] button[type="submit"]',
-      '.product-form__submit',
-      '[data-add-to-cart]'
-    ];
+    const mainAddToCartBtn = document.querySelector('form[action*="/cart/add"] button[type="submit"]') || 
+                             document.querySelector('.product-form__submit');
+    const stickyBar = document.getElementById('customStickyBar');
 
-    let originalBtn = null;
-    for (const selector of mainBtnSelectors) {
-      const el = document.querySelector(selector);
-      if (el) {
-        originalBtn = el;
-        break;
-      }
-    }
-
-    const stickyBar = document.getElementById('stickyAddToCartBar');
-
-    if (originalBtn && stickyBar) {
+    if (mainAddToCartBtn && stickyBar) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          // Jab original button screen par visible NAHI hoga, tab sticky show hoga
+          // Jab main button screen par nahi hoga, tab ye sticky bar show hogi
           if (!entry.isIntersecting) {
-            stickyBar.classList.add('is-active');
+            stickyBar.classList.add('is-visible');
           } else {
-            stickyBar.classList.remove('is-active');
+            stickyBar.classList.remove('is-visible');
           }
         });
-      }, {
-        threshold: 0
-      });
+      }, { threshold: 0 });
 
-      observer.observe(originalBtn);
+      observer.observe(mainAddToCartBtn);
     }
   });
 
-  // Sticky button click hone par original button trigger hoga
-  function handleStickyAddToCart() {
-    const mainBtn = document.querySelector('form[action*="/cart/add"] [name="add"]') || 
-                    document.querySelector('form[action*="/cart/add"] button[type="submit"]') || 
-                    document.querySelector('.product-form__submit');
-    if (mainBtn) {
-      mainBtn.click();
+  // Sticky bar ke button par click karne se original form submit hoga
+  function triggerMainAddToCart() {
+    const mainAddToCartBtn = document.querySelector('form[action*="/cart/add"] button[type="submit"]') || 
+                             document.querySelector('.product-form__submit');
+    if (mainAddToCartBtn) {
+      mainAddToCartBtn.click();
     }
   }
 </script>
