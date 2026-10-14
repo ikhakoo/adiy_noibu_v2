@@ -55,16 +55,16 @@
 </div>
   <style>
     .sticky-atc-bar {
-  position: fixed;
+position: fixed; /* Isko absolute ya static ki jagah fixed karein */
   bottom: 0;
   left: 0;
   width: 100%;
   background-color: #ffffff;
   box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
-  z-index: 999;
+  z-index: 99999; /* Iska z-index high rakhein taake ye baaki content ke upar aaye */
   padding: 12px 20px;
   font-family: inherit;
-  transition: transform 0.3s ease-in-out;
+  box-sizing: border-box;
 }
 
 .sticky-atc-container {
