@@ -1,403 +1,116 @@
-{% comment %}
-  =============================================================================
-  Floating Add to Cart Bar Snippet for Shopify Dawn Theme
-  =============================================================================
-  File: snippets/floating-add-to-cart.liquid
-  Usage: In sections/main-product.liquid, add {% render 'floating-add-to-cart', product: product %} 
-         at the bottom of the section file.
-{% endcomment %}
-
-{%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- assign featured_media = current_variant.featured_media | default: product.featured_media -%}
-
-<div id="FloatingBuyBar" class="floating-buy-bar" data-product-id="{{ product.id }}">
-  <div class="page-width floating-buy-bar__container">
-    
-    <!-- Left Section: Thumbnail & Title/Price Info -->
-    <div class="floating-buy-bar__product-info">
-      {%- if featured_media -%}
-        <img 
-          id="FloatingBuyBar-Image"
-          src="{{ featured_media | image_url: width: 120 }}" 
-          alt="{{ featured_media.alt | escape }}" 
-          class="floating-buy-bar__image"
-          width="50"
-          height="50"
-          loading="lazy"
-        />
-      {%- endif -%}
-      
-      <div class="floating-buy-bar__details">
-        <h3 class="floating-buy-bar__title h4">{{ product.title | escape }}</h3>
-        
-        <div class="floating-buy-bar__price-wrapper" id="FloatingBuyBar-Price">
-          <span class="floating-buy-bar__price price-item--regular font-bold">
-            {{ current_variant.price | money }}
-          </span>
-          
-          <span class="floating-buy-bar__compare-price line-through text-subdued {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
-            {{ current_variant.compare_at_price | money }}
-          </span>
-
-          {%- assign save_amount = current_variant.compare_at_price | minus: current_variant.price -%}
-          <span class="floating-buy-bar__badge badge {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
-            Save {{ save_amount | money }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right Section: Variants, Quantity & Add to Cart Form -->
-    <div class="floating-buy-bar__actions">
-      <form method="post" action="{{ routes.cart_add_url }}" id="floating-buy-bar-form" accept-charset="UTF-8" class="floating-buy-bar__form" enctype="multipart/form-data">
-        <input type="hidden" name="form_type" value="product">
-        <input type="hidden" name="utf8" value="✓">
-        <input type="hidden" name="id" id="FloatingBuyBar-VariantId" value="{{ current_variant.id }}">
-
-        <!-- Variant Selector Dropdown (Shown if product has > 1 variant) -->
-        {%- if product.has_only_default_variant == false -%}
-          <div class="floating-buy-bar__select-wrapper">
-            <select id="FloatingBuyBar-VariantSelect" class="select__select floating-buy-bar__select" aria-label="Select Variant">
-              {%- for variant in product.variants -%}
-                <option 
-                  value="{{ variant.id }}" 
-                  data-price="{{ variant.price | money }}"
-                  data-compare-price="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}"
-                  data-save-amount="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | minus: variant.price | money }}{% endif %}"
-                  data-available="{{ variant.available }}"
-                  data-image="{% if variant.featured_media %}{{ variant.featured_media | image_url: width: 120 }}{% endif %}"
-                  {% if variant.id == current_variant.id %}selected="selected"{% endif %}>
-                  {{ variant.title }} - {% if variant.available %}{{ variant.price | money }}{% else %}{{ 'products.product.sold_out' | t | default: 'Sold Out' }}{% endif %}
-                </option>
-              {%- endfor -%}
-            </select>
-            <svg aria-hidden="true" focusable="false" class="icon icon-caret" viewBox="0 0 10 6">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
-            </svg>
-          </div>
-        {%- endif -%}
-
-        <!-- Quantity Selector -->
-        <div class="floating-buy-bar__quantity quantity">
-          <button class="quantity__button no-js-hidden" name="minus" type="button" id="FloatingBuyBar-Minus">
-            <span class="visually-hidden">Decrease quantity</span>
-            &#8722;
-          </button>
-          <input 
-            class="quantity__input"
-            type="number"
-            name="quantity"
-            id="FloatingBuyBar-Quantity"
-            min="1"
-            value="1"
-            aria-label="Quantity"
-          >
-          <button class="quantity__button no-js-hidden" name="plus" type="button" id="FloatingBuyBar-Plus">
-            <span class="visually-hidden">Increase quantity</span>
-            &#43;
-          </button>
-        </div>
-
-        <!-- Add To Cart Submit Button -->
-        <button 
-          type="submit" 
-          id="FloatingBuyBar-Submit"
-          class="button button--primary floating-buy-bar__submit"
-          {% unless current_variant.available %}disabled{% endunless %}>
-          <span id="FloatingBuyBar-SubmitText">
-            {%- if current_variant.available -%}
-              {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
-            {%- else -%}
-              {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
-            {%- endif -%}
-          </span>
-          <div class="loading-overlay__spinner hidden">
-            <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-              <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-            </svg>
-          </div>
-        </button>
-      </form>
-    </div>
-
-  </div>
-</div>
-
+<!-- ========================================== -->
+<!-- STYLES FOR STICKY ADD TO CART -->
+<!-- ========================================== -->
 <style>
-  /* Sticky/Floating Buy Bar Container */
-  .floating-buy-bar {
+  .sticky-add-to-cart-wrapper {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(var(--color-background), 1);
-    color: rgba(var(--color-foreground), 1);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
-    border-top: 1px solid rgba(var(--color-foreground), 0.08);
-    padding: 1rem 0;
-    z-index: 999;
+    background: #ffffff;
+    padding: 12px 20px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     transform: translateY(100%);
     opacity: 0;
-    visibility: hidden;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.35s ease;
+    pointer-events: none;
   }
 
-  /* Slide-up Active State */
-  .floating-buy-bar.is-visible {
+  .sticky-add-to-cart-wrapper.is-active {
     transform: translateY(0);
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
   }
 
-  .floating-buy-bar__container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-
-  .floating-buy-bar__product-info {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    min-width: 0;
-  }
-
-  .floating-buy-bar__image {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: var(--media-radius, 4px);
-    flex-shrink: 0;
-    border: 1px solid rgba(var(--color-foreground), 0.08);
-  }
-
-  .floating-buy-bar__details {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .floating-buy-bar__title {
-    margin: 0;
-    font-size: 1.4rem;
+  .sticky-add-to-cart-wrapper .sticky-submit-btn {
+    background-color: #1a4234; /* Matching dark green color */
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
     font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.2;
-  }
-
-  .floating-buy-bar__price-wrapper {
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 450px;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    margin-top: 0.3rem;
+    justify-content: center;
+    gap: 10px;
   }
 
-  .floating-buy-bar__price {
-    font-size: 1.4rem;
-  }
-
-  .floating-buy-bar__compare-price {
-    font-size: 1.2rem;
-    text-decoration: line-through;
-    opacity: 0.6;
-  }
-
-  .floating-buy-bar__badge {
-    background-color: rgba(var(--color-badge-background), 0.15);
-    color: rgb(var(--color-badge-foreground, 34, 139, 34));
-    font-size: 1.1rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-
-  .floating-buy-bar__actions {
-    display: flex;
-    align-items: center;
-  }
-
-  .floating-buy-bar__form {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 0;
-  }
-
-  .floating-buy-bar__select-wrapper {
-    position: relative;
-    min-width: 140px;
-  }
-
-  .floating-buy-bar__select {
-    padding: 0.8rem 3rem 0.8rem 1.2rem;
-    font-size: 1.3rem;
-    height: 4.2rem;
-    border-radius: var(--inputs-radius, 4px);
-  }
-
-  .floating-buy-bar__quantity {
-    width: 10rem;
-    min-height: 4.2rem;
-    border-radius: var(--inputs-radius, 4px);
-  }
-
-  .floating-buy-bar__quantity .quantity__input {
-    font-size: 1.3rem;
-    height: 4.2rem;
-  }
-
-  .floating-buy-bar__submit {
-    min-height: 4.2rem;
-    padding: 0 2rem;
-    margin: 0;
-    white-space: nowrap;
-  }
-
-  .line-through {
-    text-decoration: line-through;
-  }
-
-  .hidden {
-    display: none !important;
-  }
-
-  /* Responsive Adjustments for Tablet and Mobile */
-  @media screen and (max-width: 749px) {
-    .floating-buy-bar {
-      padding: 0.8rem 0;
-    }
-
-    .floating-buy-bar__container {
-      gap: 0.8rem;
-    }
-
-    /* Hide image & title on mobile to save space */
-    .floating-buy-bar__image,
-    .floating-buy-bar__title {
-      display: none;
-    }
-
-    .floating-buy-bar__select-wrapper {
-      min-width: 110px;
-    }
-
-    .floating-buy-bar__quantity {
-      display: none; /* Hide quantity on mobile for compact layout */
-    }
-
-    .floating-buy-bar__submit {
-      padding: 0 1.2rem;
-      font-size: 1.3rem;
-      flex-grow: 1;
-    }
+  .sticky-add-to-cart-wrapper .sticky-submit-btn:hover {
+    opacity: 0.92;
   }
 </style>
 
+<!-- ========================================== -->
+<!-- HTML MARKUP -->
+<!-- ========================================== -->
+<div class="sticky-add-to-cart-wrapper" id="stickyAddToCartBar">
+  <button type="button" class="sticky-submit-btn" onclick="handleStickyAddToCart()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <path d="M16 10a4 4 0 0 1-8 0"></path>
+    </svg>
+    <span>Add to cart</span>
+  </button>
+</div>
+
+<!-- ========================================== -->
+<!-- JAVASCRIPT OBSERVER LOGIC -->
+<!-- ========================================== -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const floatingBar = document.getElementById('FloatingBuyBar');
-    if (!floatingBar) return;
+  document.addEventListener("DOMContentLoaded", function () {
+    // Original Add to Cart button ko target karne ke selectors
+    const mainBtnSelectors = [
+      'form[action*="/cart/add"] [name="add"]',
+      'form[action*="/cart/add"] button[type="submit"]',
+      '.product-form__submit',
+      '[data-add-to-cart]'
+    ];
 
-    const variantSelect = document.getElementById('FloatingBuyBar-VariantSelect');
-    const variantIdInput = document.getElementById('FloatingBuyBar-VariantId');
-    const priceContainer = document.getElementById('FloatingBuyBar-Price');
-    const submitBtn = document.getElementById('FloatingBuyBar-Submit');
-    const submitBtnText = document.getElementById('FloatingBuyBar-SubmitText');
-    const productImage = document.getElementById('FloatingBuyBar-Image');
-    
-    // Quantity Controls
-    const qtyInput = document.getElementById('FloatingBuyBar-Quantity');
-    const minusBtn = document.getElementById('FloatingBuyBar-Minus');
-    const plusBtn = document.getElementById('FloatingBuyBar-Plus');
-
-    if (minusBtn && plusBtn && qtyInput) {
-      minusBtn.addEventListener('click', () => {
-        const val = parseInt(qtyInput.value) || 1;
-        if (val > 1) qtyInput.value = val - 1;
-      });
-      plusBtn.addEventListener('click', () => {
-        const val = parseInt(qtyInput.value) || 1;
-        qtyInput.value = val + 1;
-      });
-    }
-
-    // Dynamic Variant Change Handler
-    if (variantSelect) {
-      variantSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        const variantId = selectedOption.value;
-        const price = selectedOption.dataset.price;
-        const comparePrice = selectedOption.dataset.comparePrice;
-        const saveAmount = selectedOption.dataset.saveAmount;
-        const available = selectedOption.dataset.available === 'true';
-        const imageSrc = selectedOption.dataset.image;
-
-        // Update Hidden Variant ID Input
-        if (variantIdInput) variantIdIdInput = variantIdInput.value = variantId;
-
-        // Update Image
-        if (productImage && imageSrc) {
-          productImage.src = imageSrc;
-        }
-
-        // Update Pricing Display
-        let priceHTML = `<span class="floating-buy-bar__price price-item--regular font-bold">${price}</span>`;
-        if (comparePrice) {
-          priceHTML += `<span class="floating-buy-bar__compare-price line-through text-subdued">${comparePrice}</span>`;
-          priceHTML += `<span class="floating-buy-bar__badge badge">Save ${saveAmount}</span>`;
-        }
-        if (priceContainer) priceContainer.innerHTML = priceHTML;
-
-        // Update Button Availability
-        if (submitBtn) {
-          if (available) {
-            submitBtn.removeAttribute('disabled');
-            if (submitBtnText) submitBtnText.textContent = {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' | json }};
-          } else {
-            submitBtn.setAttribute('disabled', 'true');
-            if (submitBtnText) submitBtnText.textContent = {{ 'products.product.sold_out' | t | default: 'Sold Out' | json }};
-          }
-        }
-      });
-    }
-
-    // Scroll Detection logic (Trigger when main Add to Cart button scrolls past viewport)
-    function initScrollObserver() {
-      // Find Dawn's default buy button in main product section
-      const mainBuyButton = document.querySelector('.product-form__submit') || document.querySelector('[name="add"]');
-      
-      if (mainBuyButton) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            // Show floating bar when main buy button is NOT visible (scrolled past)
-            if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-              floatingBar.classList.add('is-visible');
-            } else {
-              floatingBar.classList.remove('is-visible');
-            }
-          });
-        }, {
-          threshold: 0
-        });
-
-        observer.observe(mainBuyButton);
-      } else {
-        // Fallback: Trigger on pixel scroll if main buy button is not found
-        window.addEventListener('scroll', function() {
-          if (window.scrollY > 450) {
-            floatingBar.classList.add('is-visible');
-          } else {
-            floatingBar.classList.remove('is-visible');
-          }
-        });
+    let originalBtn = null;
+    for (const selector of mainBtnSelectors) {
+      const el = document.querySelector(selector);
+      if (el) {
+        originalBtn = el;
+        break;
       }
     }
 
-    initScrollObserver();
+    const stickyBar = document.getElementById('stickyAddToCartBar');
+
+    if (originalBtn && stickyBar) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          // Jab original button screen par visible NAHI hoga, tab sticky show hoga
+          if (!entry.isIntersecting) {
+            stickyBar.classList.add('is-active');
+          } else {
+            stickyBar.classList.remove('is-active');
+          }
+        });
+      }, {
+        threshold: 0
+      });
+
+      observer.observe(originalBtn);
+    }
   });
+
+  // Sticky button click hone par original button trigger hoga
+  function handleStickyAddToCart() {
+    const mainBtn = document.querySelector('form[action*="/cart/add"] [name="add"]') || 
+                    document.querySelector('form[action*="/cart/add"] button[type="submit"]') || 
+                    document.querySelector('.product-form__submit');
+    if (mainBtn) {
+      mainBtn.click();
+    }
+  }
 </script>
