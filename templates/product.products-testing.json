@@ -146,7 +146,9 @@
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "price_style": "style_2"
+          }
         },
         "affirm_pay_over_time_messaging_product_block_nTFQar": {
           "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
