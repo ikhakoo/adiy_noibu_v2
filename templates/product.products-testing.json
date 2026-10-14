@@ -66,11 +66,6 @@
             "text_style": "body"
           }
         },
-        "price": {
-          "type": "price",
-          "disabled": true,
-          "settings": {}
-        },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
           "disabled": true,
@@ -149,11 +144,34 @@
             "subtext_suffix": "business days"
           }
         },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {}
+        },
+        "affirm_pay_over_time_messaging_product_block_nTFQar": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "settings": {
+            "logo_align": "left",
+            "font_size": 14,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
+          }
+        },
+        "sticky_atc_bar_Pb9zBM": {
+          "type": "sticky_atc_bar",
+          "settings": {
+            "warranty_text": "10-Year Warranty",
+            "returns_text": "100-Day Returns"
           }
         },
         "countdown_timer_NM9Fxn": {
@@ -165,17 +183,6 @@
             "end_time": "23:59:59",
             "bg_color": "#a33429",
             "text_color": "#ffffff"
-          }
-        },
-        "affirm_pay_over_time_messaging_product_block_nTFQar": {
-          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "settings": {
-            "logo_align": "left",
-            "font_size": 14,
-            "logo_color": "blue",
-            "logo_type": "logo",
-            "public_api_key": "",
-            "price_selector": ""
           }
         },
         "need_assistance_block_rdEmyW": {
@@ -260,7 +267,6 @@
         "description_4hpknB",
         "promo_timer_banner_4kjH4Y",
         "text_ifcgmB",
-        "price",
         "discount_promo_YW9Hge",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
@@ -269,9 +275,11 @@
         "variant_picker",
         "custom_liquid_FnEVbe",
         "estimated_delivery_HC9tbH",
-        "buy_buttons",
-        "countdown_timer_NM9Fxn",
+        "price",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
+        "buy_buttons",
+        "sticky_atc_bar_Pb9zBM",
+        "countdown_timer_NM9Fxn",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
         "accessories_block_TPUpnp",
