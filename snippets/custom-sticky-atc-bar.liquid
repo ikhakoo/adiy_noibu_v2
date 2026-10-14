@@ -168,34 +168,42 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const stickyBar = document.getElementById("custom-sticky-atc-bar");
-    // Yeh selector aapke main Add to Cart button ko target karega
     const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
+    // Product section container ko target karne ke liye
+    const productSection = document.querySelector(".product, .product-section, section[id*='product']");
 
     if (!stickyBar || !mainAddToCartBtn) return;
 
-    // Bar ko document body ke end mein move kar dete hain taake layout ki kisi bhi clipping se bach jaye
+    // Bar ko document body ke end mein move kar dete hain
     document.body.appendChild(stickyBar);
 
-    function checkMainButtonVisibility() {
-      const rect = mainAddToCartBtn.getBoundingClientRect();
+    function checkVisibility() {
+      const btnRect = mainAddToCartBtn.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      
+      // Check karein ke kya user abhi product section ke andar hi hai ya nahi
+      let isProductInView = true;
+      if (productSection) {
+        const sectionRect = productSection.getBoundingClientRect();
+        // Product section tabhi view mein hai jab tak uska koi hissa screen par hai
+        isProductInView = (sectionRect.top <= windowHeight && sectionRect.bottom >= 0);
+      }
 
-      // Check karein ke kya main button screen (viewport) ke andar visible hai ya nahi
-      // Agar button screen par nazar aa raha hai, toh sticky bar HIDE rahega (`is-visible` remove)
-      // Agar button screen se upar ya neeche nikal gaya hai, toh sticky bar SHOW ho jayega (`is-visible` add)
-      const isButtonVisible = (rect.top <= windowHeight) && (rect.bottom >= 0);
+      // Main button screen view se bahar nikal gaya ho (upar ya neeche)
+      const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
 
-      if (!isButtonVisible) {
+      // Sticky bar sirf tab show hoga jab user product section ke andar ho AUR main button screen par na ho
+      if (isProductInView && isBtnOutOfView) {
         stickyBar.classList.add("is-visible");
       } else {
         stickyBar.classList.remove("is-visible");
       }
     }
 
-    window.addEventListener("scroll", checkMainButtonVisibility, { passive: true });
-    window.addEventListener("resize", checkMainButtonVisibility, { passive: true });
+    window.addEventListener("scroll", checkVisibility, { passive: true });
+    window.addEventListener("resize", checkVisibility, { passive: true });
     
     // Initial check
-    checkMainButtonVisibility();
+    checkVisibility();
   });
 </script>
