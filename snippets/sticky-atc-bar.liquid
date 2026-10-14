@@ -1,6 +1,6 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div class="inline-atc-box sticky-atc-hidden" id="inline-atc-box-{{ section.id }}">
+<div class="inline-atc-box" id="inline-atc-box-{{ section.id }}">
   <div class="inline-atc-content">
     
     <!-- Left Section: Pricing & Badges -->
@@ -73,9 +73,11 @@
     font-family: inherit;
     z-index: 99999;
     transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
   }
 
-  /* Hidden state when main ATC is visible */
+  /* Hidden state when main ATC is visible on screen */
   .inline-atc-box.sticky-atc-hidden {
     transform: translateY(100%);
     opacity: 0;
@@ -254,17 +256,17 @@
       }
     });
 
-    // 2. Intersection Observer to show/hide sticky bar based on main ATC button visibility
+    // 2. Intersection Observer logic (Corrected)
     const mainAtcButton = document.querySelector('form[action*="/cart/add"] button[type="submit"], .product-form__submit, [name="add"]');
     
     if (mainAtcButton && floatingBox) {
       const observer = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Main button is visible, hide sticky bar
+            // Agar main button screen par nazar aa raha hai, toh floating bar hide kar do
             floatingBox.classList.add("sticky-atc-hidden");
           } else {
-            // Main button is out of view, show sticky bar
+            // Agar main button screen par nazar NAHI aa raha, toh floating bar show rakho
             floatingBox.classList.remove("sticky-atc-hidden");
           }
         });
@@ -301,11 +303,7 @@
             buttonEl.removeAttribute("disabled");
           }, 1500);
 
-          // Trigger cart drawer refresh event if your theme supports it (e.g. Dawn theme events)
           document.dispatchEvent(new CustomEvent('cart:refresh', { detail: data }));
-          
-          // Optional: Open cart drawer or redirect if needed (uncomment below if theme doesn't open drawer automatically)
-          // window.location.href = '/cart';
         })
         .catch(error => {
           console.error('Error adding to cart:', error);
