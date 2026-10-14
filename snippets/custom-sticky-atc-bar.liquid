@@ -1,41 +1,22 @@
 {%- comment -%}
-  Right Column Sticky Box with Buy-Buttons & Dynamic Price Sync
+  Right Column Exact Match Sticky Box
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
 <div id="right-column-sticky-box" class="right-column-sticky-box">
   <div class="rac-content">
-    <!-- Price & Savings Section -->
-    <div class="rac-price-row">
-      <div class="rac-prices" id="sticky-price-container">
-        {%- assign current_variant = product.selected_or_first_available_variant -%}
-        {%- if current_variant.compare_at_price > current_variant.price -%}
-          <span class="rac-compare-price">{{ current_variant.compare_at_price | money }}</span>
-        {%- endif -%}
-        <span class="rac-current-price">{{ current_variant.price | money }}</span>
-        
-        {%- if current_variant.compare_at_price > current_variant.price -%}
-          {%- assign save_amt = current_variant.compare_at_price | minus: current_variant.price -%}
-          <span class="rac-save-badge" id="sticky-save-badge">Save {{ save_amt | money }}</span>
-        {%- endif -%}
-      </div>
+    <div class="rac-header">
+      <span class="rac-title">{{ product.title }}</span>
+      <span class="rac-price">{{ product.selected_or_first_available_variant.price | money }}</span>
     </div>
 
-    <!-- Trust Badges (Jaise 2nd image mein hain) -->
-    <div class="rac-perks">
-      <span class="rac-perk-item">🛡️ 10-Year Warranty</span>
-      <span class="rac-perk-item">✅ 100-Day Money Back</span>
-    </div>
-
-    <!-- Buy Buttons Render -->
     <div class="rac-action">
-      {%- render 'buy-buttons',
-        block: block,
-        product: product,
-        product_form_id: product_form_id,
-        section_id: section.id,
-        show_pickup_availability: true
-      -%}
+      {%- form 'product', product, id: 'rac-sticky-form', class: 'sticky-product-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="rac-variant-input">
+        <button type="submit" name="add" class="rac-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          <span>{% if product.selected_or_first_available_variant.available %}Add To Cart{% else %}Sold Out{% endif %}</span>
+        </button>
+      {%- endform -%}
     </div>
   </div>
 </div>
@@ -47,8 +28,8 @@
     bottom: 20px !important;
     width: 100% !important;
     background-color: #ffffff !important;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12) !important;
-    padding: 18px !important;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15) !important;
+    padding: 16px !important;
     border-radius: 8px !important;
     z-index: 99999 !important;
     border: 1px solid #e5e5e5 !important;
@@ -67,57 +48,50 @@
     width: 100%;
   }
 
-  .rac-price-row {
+  .rac-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-  }
-
-  .rac-prices {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .rac-compare-price {
-    text-decoration: line-through;
-    color: #888;
-    font-size: 14px;
-  }
-
-  .rac-current-price {
-    font-size: 18px;
-    font-weight: 700;
-    color: #121212;
-  }
-
-  .rac-save-badge {
-    background-color: #eaf6ea;
-    color: #2b7a2b;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  .rac-perks {
-    display: flex;
     align-items: center;
     gap: 15px;
-    font-size: 12px;
-    color: #555;
-    border-top: 1px solid #f0f0f0;
-    padding-top: 8px;
   }
 
-  .rac-action {
+  .rac-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #121212;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+  }
+
+  .rac-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #121212;
+    white-space: nowrap;
+  }
+
+  .rac-action .rac-btn {
+    background-color: #8b7355;
+    color: #fff;
+    border: none;
     width: 100%;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
 
-  /* Agar render hone wale buy-buttons ka margin adjust karna ho */
-  .rac-action .product-form {
-    margin: 0 !important;
+  .rac-btn:hover {
+    background-color: #725d43;
+  }
+
+  .rac-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
 </style>
 
@@ -125,6 +99,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     const stickyBox = document.getElementById("right-column-sticky-box");
     const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
+    // Is baar hum direct right column ke main form ya container ke andar append karenge
     const productFormContainer = document.querySelector(".product-form, product-form, .product__info-container");
 
     if (!stickyBox || !mainAddToCartBtn) return;
@@ -136,6 +111,7 @@
     function checkVisibility() {
       const btnRect = mainAddToCartBtn.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
       const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
 
       if (isBtnOutOfView) {
