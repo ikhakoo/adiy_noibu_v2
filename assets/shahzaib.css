@@ -1290,7 +1290,7 @@
 .template-product-products-testing .custom-gallery-badges-container{ flex-wrap: wrap; border-top: 1px solid #C6C6C6; border-bottom: 1px solid #C6C6C6; padding: 10px; }
 .template-product-products-testing .custom-badge-pill{ font-size: 12px; width: 49%; border:0;}
 .template-product-products-testing .review-text-wrapper{ font-size: 14px; }
-.template-product-products-testing{ }
+.template-product-products-testing .product__media-wrapper .custom-gallery-badges-container { display:none; }
 .template-product-products-testing{ }
 .template-product-products-testing{ }
 .template-product-products-testing{ }
