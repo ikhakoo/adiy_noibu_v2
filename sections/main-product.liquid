@@ -1533,7 +1533,7 @@
     {%- if block.settings.price_style == 'style_2' -%}
       {%- assign variant = product.selected_or_first_available_variant -%}
       <div class="custom-total-price-wrapper" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; align-baseline: middle;">
-        <span class="total-price-label" style="font-weight: 600; font-size: 1.1rem;">Total Price:</span>
+        <span class="total-price-label" style="font-weight: 500; font-size: 18px; color: #000">Total Price:</span>
         
         {%- if variant.compare_at_price > variant.price -%}
           <s class="price-item price-item--regular" style="color: #707070; text-decoration: line-through; font-size: 1rem;">
@@ -1541,7 +1541,7 @@
           </s>
         {%- endif -%}
         
-        <span class="price-item price-item--sale" style="font-weight: bold; font-size: 1.1rem;">
+        <span class="price-item price-item--sale" style="font-weight: 500; font-size: 16px; color: #000">
           {{ variant.price | money }}
         </span>
 
