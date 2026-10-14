@@ -4450,10 +4450,28 @@
     },
 
     {
-      "type": "price",
-      "name": "t:sections.main-product.blocks.price.name",
-      "limit": 1
-    },
+  "type": "price",
+  "name": "t:sections.main-product.blocks.price.name",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "select",
+      "id": "price_style",
+      "label": "Price Style",
+      "options": [
+        {
+          "value": "style_1",
+          "label": "Style 1 (Default)"
+        },
+        {
+          "value": "style_2",
+          "label": "Style 2 (Total Price & Save Badge)"
+        }
+      ],
+      "default": "style_1"
+    }
+  ]
+},
 
     {
       "type": "custom_price",
