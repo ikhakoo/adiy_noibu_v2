@@ -1,0 +1,170 @@
+{%- comment -%}
+  Sticky Floating Add to Cart Snippet
+  Usage: {% render 'sticky-add-to-cart' %}
+{%- endcomment -%}
+
+<div id="sticky-cart-bar" class="sticky-cart-bar">
+  <div class="sticky-cart-container">
+    <!-- Left: Product Title & Price -->
+    <div class="sticky-cart-info">
+      <div class="sticky-product-title-price">
+        <span class="sticky-product-title">{{ product.title }}</span>
+        <div class="sticky-price-wrapper">
+          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+            <span class="sticky-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="sticky-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Add to Cart Form -->
+    <div class="sticky-cart-actions">
+      {%- form 'product', product, id: 'sticky-product-form', class: 'sticky-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="sticky-variant-id">
+        
+        <button type="submit" name="add" class="sticky-add-to-cart-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          <span class="sticky-btn-text">
+            {%- if product.selected_or_first_available_variant.available -%}
+              Add To Cart
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </span>
+        </button>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .sticky-cart-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    padding: 12px 24px;
+    z-index: 999;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .sticky-cart-bar.active {
+    transform: translateY(0);
+  }
+
+  .sticky-cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .sticky-cart-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .sticky-product-title-price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sticky-product-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #121212;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+  }
+
+  .sticky-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .sticky-compare-price {
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .sticky-current-price {
+    font-weight: 700;
+    color: #121212;
+  }
+
+  .sticky-cart-actions .sticky-add-to-cart-btn {
+    background-color: #8b7355; /* Apni theme ke button color ke mutabiq adjust kar lein */
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .sticky-cart-actions .sticky-add-to-cart-btn:hover {
+    background-color: #725d43;
+  }
+
+  .sticky-cart-actions .sticky-add-to-cart-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 768px) {
+    .sticky-product-title {
+      display: none;
+    }
+    .sticky-cart-bar {
+      padding: 10px 15px;
+    }
+    .sticky-cart-actions .sticky-add-to-cart-btn {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const stickyBar = document.getElementById("sticky-cart-bar");
+    const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
+
+    if (!stickyBar || !mainAddToCartBtn) return;
+
+    // Intersection Observer to toggle sticky bar
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting && window.scrollY > 300) {
+          stickyBar.classList.add("active");
+        } else {
+          stickyBar.classList.remove("active");
+        }
+      },
+      {
+        root: null,
+        threshold: 0,
+      }
+    );
+
+    observer.observe(mainAddToCartBtn);
+
+    // Optional: Agar aapki theme mein variant change hone par hidden input ya price update karni ho
+    // Aap main product form ke variant change event se yahan value pass kar sakte hain.
+  });
+</script>
