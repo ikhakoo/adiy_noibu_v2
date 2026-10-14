@@ -50,6 +50,7 @@
           "type": "promo_timer_banner",
           "settings": {
             "bg_color": "#1b3d2f",
+            "banner_icon": "shopify://shop_images/discount-icon.svg",
             "heading": "Hansø Backyard Harvest Event",
             "subheading": "Save up to 30% on pergolas and awnings.",
             "bullet_points": "<ul><li>30% Off Pro+ Pergolas</li><li>30% Off Horizon Pergolas</li><li>25% Off Awnings</li><li>30% Off Selected Accessories</li></ul>",
