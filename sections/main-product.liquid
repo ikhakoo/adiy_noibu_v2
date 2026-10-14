@@ -1406,7 +1406,6 @@
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-            {% render 'sticky-atc-bar', product: product %}
 
             {%- for block in section.blocks -%}
               {%- case block.type -%}
@@ -4283,7 +4282,7 @@
 
 {%- render 'mobile-sticky-atc', product: product, section: section -%} 
 
-
+{% render 'custom-sticky-atc-bar' %}
 <script>
   document.addEventListener('click', function (e) {
     const toggleBtn = e.target.closest('.js-financing-toggle');
