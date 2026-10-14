@@ -146,7 +146,6 @@
         },
         "price": {
           "type": "price",
-          "disabled": true,
           "settings": {}
         },
         "affirm_pay_over_time_messaging_product_block_nTFQar": {
