@@ -1406,6 +1406,8 @@
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
+            {% render 'sticky-atc-bar', product: product %}
+
             {%- for block in section.blocks -%}
               {%- case block.type -%}
                 {%- when '@app' -%}
@@ -4228,7 +4230,7 @@
               {{- 'icon-arrow.svg' | inline_asset_content -}}
             </a>
           </section>
-          {% render 'sticky-atc-bar', product: product %}
+          
         </div>
       </div>
 
