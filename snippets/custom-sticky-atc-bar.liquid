@@ -1,5 +1,5 @@
 {%- comment -%}
-  Right Column Sticky Box with Real-time Variant & Deck Price Metafield Sync
+  Right Column Sticky Box with Variant ID Sync for Buy-Buttons
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
@@ -33,7 +33,7 @@
     </div>
 
     <!-- Buy Buttons Render -->
-    <div class="rac-action">
+    <div class="rac-action" id="DesktopSticky-Action-{{ section.id }}">
       {%- render 'buy-buttons',
         block: block,
         product: product,
@@ -220,20 +220,42 @@
       checkVisibility();
 
       const priceContainer = document.getElementById('DesktopSticky-Price-{{ section.id }}');
+      const stickyActionContainer = document.getElementById('DesktopSticky-Action-{{ section.id }}');
 
       function updateStickyVariant(variant) {
-        if (!variant || !priceContainer) return;
+        if (!variant) return;
 
-        let priceHTML = '';
-        if (variant.deck_price) {
-          const formattedDeckPrice = formatMoney(variant.deck_price, moneyFormat);
-          priceHTML += `<span class="rac-compare-price">${formattedDeckPrice}</span> `;
+        // Update Price
+        if (priceContainer) {
+          let priceHTML = '';
+          if (variant.deck_price) {
+            const formattedDeckPrice = formatMoney(variant.deck_price, moneyFormat);
+            priceHTML += `<span class="rac-compare-price">${formattedDeckPrice}</span> `;
+          }
+          
+          priceHTML += `<span class="rac-current-price">${formatMoney(variant.price, moneyFormat)}</span>`;
+          priceHTML += ` <span class="rac-save-badge">Due Today</span>`;
+          
+          priceContainer.innerHTML = priceHTML;
         }
-        
-        priceHTML += `<span class="rac-current-price">${formatMoney(variant.price, moneyFormat)}</span>`;
-        priceHTML += ` <span class="rac-save-badge">Due Today</span>`;
-        
-        priceContainer.innerHTML = priceHTML;
+
+        // Update Variant ID input inside sticky box so correct variant is added to cart
+        if (stickyActionContainer) {
+          const stickyVariantInput = stickyActionContainer.querySelector('input[name="id"]');
+          if (stickyVariantInput) {
+            stickyVariantInput.value = variant.id;
+          }
+          const stickySubmitBtn = stickyActionContainer.querySelector('[type="submit"], [name="add"]');
+          if (stickySubmitBtn) {
+            if (variant.available) {
+              stickySubmitBtn.removeAttribute('disabled');
+              stickySubmitBtn.textContent = "Add to cart";
+            } else {
+              stickySubmitBtn.setAttribute('disabled', 'disabled');
+              stickySubmitBtn.textContent = "Sold Out";
+            }
+          }
+        }
       }
 
       // Listen to theme variant change event
@@ -243,7 +265,7 @@
         }
       });
 
-      // Observe variant input value changes
+      // Observe variant input value changes on main form
       const mainForm = document.querySelector('form[action*="/cart/add"]');
       const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
       if (variantInput) {
@@ -256,21 +278,6 @@
         });
         observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
       }
-
-      // URL parameter change sync
-      let lastUrl = location.href;
-      new MutationObserver(() => {
-        const url = location.href;
-        if (url !== lastUrl) {
-          lastUrl = url;
-          const urlParams = new URLSearchParams(window.location.search);
-          const variantId = parseInt(urlParams.get('variant'));
-          if (variantId && productData && productData.variants) {
-            const matchedVariant = productData.variants.find(v => v.id === variantId);
-            if (matchedVariant) updateStickyVariant(matchedVariant);
-          }
-        }
-      }).observe(document, { subtree: true, childList: true });
     }
 
     if (document.readyState === 'loading') {
