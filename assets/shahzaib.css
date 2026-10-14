@@ -1304,24 +1304,8 @@
 .template-product-products-testing .product__description li > p,
 .template-product-products-testing .product__description.rte li > p { display: inline; margin: 0 !important; padding: 0 !important; }
 .template-product-products-testing .product__info-container .product__description{ margin-bottom:5px; }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
-.template-product-products-testing{ }
+
+@media screen and (max-width:600px){
+    .template-product-products-testing .template-product-products-testing .custom-badge-pill { font-size: 9px; }
+    .template-product-products-testing .custom-gallery-badges-container{ gap: 3px; }
+}
