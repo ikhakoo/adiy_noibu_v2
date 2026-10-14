@@ -53,3 +53,203 @@
 
   </div>
 </div>
+  <style>
+    .sticky-atc-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  padding: 12px 20px;
+  font-family: inherit;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sticky-atc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sticky-atc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sticky-atc-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sticky-price-compare {
+  text-decoration: line-through;
+  color: #666666;
+  font-size: 16px;
+}
+
+.sticky-price-current {
+  font-weight: bold;
+  font-size: 18px;
+  color: #111111;
+}
+
+.sticky-save-badge {
+  background-color: #eaf8e6;
+  color: #1e6d1e;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sticky-atc-features {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: #333333;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sticky-add-btn {
+  background-color: #8c6a58; /* Color matching the reference image */
+  color: #ffffff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.sticky-add-btn:hover {
+  background-color: #755544;
+}
+
+.sticky-add-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .sticky-atc-features {
+    display: none; /* Hide trust badges on smaller screens */
+  }
+}
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+  // Main Product Form Element
+  const mainProductForm = document.querySelector('form[action*="/cart/add"]');
+  const stickyButton = document.getElementById("sticky-submit-btn");
+
+  // Format Money Helper Function
+  function formatMoney(cents) {
+    return (cents / 100).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    });
+  }
+
+  // Handle Sticky Add to Cart Click
+  if (stickyButton && mainProductForm) {
+    stickyButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      
+      // Main form ka submit button trigger karein
+      const mainSubmitBtn = mainProductForm.querySelector('[name="add"]');
+      if (mainSubmitBtn) {
+        mainSubmitBtn.click();
+      } else {
+        mainProductForm.submit();
+      }
+    });
+  }
+
+  // Listen for Variant Change Event (Works on Shopify Dawn & similar themes)
+  document.addEventListener("variant:changed", function (event) {
+    const variant = event.detail.variant;
+    updateStickyBar(variant);
+  });
+
+  // Alternative Observer for Shopify Theme Select Selectors
+  const variantSelects = document.querySelector('variant-selects, variant-radios');
+  if (variantSelects) {
+    variantSelects.addEventListener('change', function() {
+      // Small delay to allow theme JS to update URL/State
+      setTimeout(() => {
+        if (window.ShopifyAnalytics && window.ShopifyAnalytics.meta && window.ShopifyAnalytics.meta.selectedVariantId) {
+             // You can fetch or read variant details from window.product or Theme API
+        }
+      }, 100);
+    });
+  }
+
+  // Update Sticky Bar Elements dynamically
+  function updateStickyBar(variant) {
+    if (!variant) return;
+
+    const currentPriceEl = document.getElementById("sticky-current-price");
+    const comparePriceEl = document.getElementById("sticky-compare-price");
+    const saveBadgeEl = document.getElementById("sticky-save-badge");
+    const saveAmountEl = document.getElementById("sticky-save-amount");
+    const btnTextEl = document.getElementById("sticky-btn-text");
+
+    // Update Price
+    if (currentPriceEl) {
+      currentPriceEl.innerText = formatMoney(variant.price);
+    }
+
+    // Update Compare & Save Badge
+    if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+      const saveAmount = variant.compare_at_price - variant.price;
+      
+      if (comparePriceEl) {
+        comparePriceEl.innerText = formatMoney(variant.compare_at_price);
+        comparePriceEl.classList.remove("hidden");
+      }
+      
+      if (saveAmountEl) {
+        saveAmountEl.innerText = formatMoney(saveAmount);
+      }
+      
+      if (saveBadgeEl) {
+        saveBadgeEl.classList.remove("hidden");
+      }
+    } else {
+      if (comparePriceEl) comparePriceEl.classList.add("hidden");
+      if (saveBadgeEl) saveBadgeEl.classList.add("hidden");
+    }
+
+    // Update Button Availability
+    if (stickyButton && btnTextEl) {
+      if (variant.available) {
+        stickyButton.removeAttribute("disabled");
+        btnTextEl.innerText = "Add To Cart";
+      } else {
+        stickyButton.setAttribute("disabled", "true");
+        btnTextEl.innerText = "Sold Out";
+      }
+    }
+  }
+});
+</script>
