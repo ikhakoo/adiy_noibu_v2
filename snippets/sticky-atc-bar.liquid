@@ -1,6 +1,6 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div class="inline-atc-box sticky-atc-hidden" id="inline-atc-box-{{ section.id }}">
+<div class="inline-atc-box" id="inline-atc-box-{{ section.id }}">
   <div class="inline-atc-content">
     
     <!-- Left Section: Pricing & Badges -->
@@ -72,16 +72,6 @@
     box-sizing: border-box;
     font-family: inherit;
     z-index: 99999;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  /* Hidden state when at the top */
-  .inline-atc-box.sticky-atc-hidden {
-    transform: translateY(100%);
-    opacity: 0;
-    pointer-events: none;
   }
 
   .inline-atc-content {
@@ -200,7 +190,6 @@
       });
     }
 
-    const floatingBox = document.getElementById("inline-atc-box-{{ section.id }}");
     const buttonEl = document.getElementById("inline-atc-button");
     const btnTextEl = document.getElementById("inline-atc-btn-text");
     const currentPriceEl = document.getElementById("atc-current-price");
@@ -208,7 +197,7 @@
     const saveBadgeEl = document.getElementById("atc-save-badge");
     const saveAmountEl = document.getElementById("atc-save-amount");
 
-    // Variant change handle karna
+    // Variant change hone par price aur variant id update karna
     function updateAtcBox(variant) {
       if (!variant) return;
 
@@ -249,24 +238,14 @@
       }
     }
 
+    // Theme ke variant change event ko sunna
     document.addEventListener("variant:changed", function (e) {
       if (e.detail && e.detail.variant) {
         updateAtcBox(e.detail.variant);
       }
     });
 
-    // Scroll Position ke zariye bar show/hide karna (Hansø style)
-    if (floatingBox) {
-      window.addEventListener("scroll", function () {
-        if (window.scrollY > 300) {
-          floatingBox.classList.remove("sticky-atc-hidden");
-        } else {
-          floatingBox.classList.add("sticky-atc-hidden");
-        }
-      });
-    }
-
-    // AJAX Add to Cart
+    // AJAX Add to Cart button click handler
     if (buttonEl) {
       buttonEl.addEventListener("click", function () {
         const variantId = this.getAttribute("data-variant-id");
