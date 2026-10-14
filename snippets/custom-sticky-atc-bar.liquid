@@ -1,26 +1,19 @@
 {%- comment -%}
-  Right-Side Floating Corner Sticky ATC Box
+  Right-Aligned Floating Sticky ATC Box
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
-<div id="right-corner-sticky-box" class="right-corner-sticky-box">
-  <div class="right-corner-content">
-    <!-- Product Info / Price -->
-    <div class="right-corner-header">
-      <span class="right-corner-title">{{ product.title }}</span>
-      <div class="right-corner-prices">
-        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-          <span class="rc-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-        {%- endif -%}
-        <span class="rc-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
-      </div>
+<div id="right-aligned-sticky-box" class="right-aligned-sticky-box">
+  <div class="rac-content">
+    <div class="rac-header">
+      <span class="rac-title">{{ product.title }}</span>
+      <span class="rac-price">{{ product.selected_or_first_available_variant.price | money }}</span>
     </div>
 
-    <!-- Add to Cart Button -->
-    <div class="right-corner-action">
-      {%- form 'product', product, id: 'right-corner-form', class: 'sticky-product-form' -%}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="right-corner-variant-input">
-        <button type="submit" name="add" class="right-corner-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+    <div class="rac-action">
+      {%- form 'product', product, id: 'rac-sticky-form', class: 'sticky-product-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="rac-variant-input">
+        <button type="submit" name="add" class="rac-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
           <span>{% if product.selected_or_first_available_variant.available %}Add To Cart{% else %}Sold Out{% endif %}</span>
         </button>
       {%- endform -%}
@@ -29,11 +22,12 @@
 </div>
 
 <style>
-  #right-corner-sticky-box.right-corner-sticky-box {
+  #right-aligned-sticky-box.right-aligned-sticky-box {
     position: fixed !important;
     bottom: 20px !important;
-    right: 20px !important;
-    width: 340px !important;
+    /* Yeh right side se exact wahi space lega jo aapke right column ki hai */
+    right: max(20px, calc((100vw - 1200px) / 2 + 20px)) !important;
+    width: 380px !important;
     background-color: #ffffff !important;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15) !important;
     padding: 16px !important;
@@ -42,58 +36,48 @@
     border: 1px solid #e5e5e5 !important;
     box-sizing: border-box;
     display: none !important;
-    transform: translateY(20px);
+    transform: translateY(15px);
     opacity: 0;
     transition: all 0.3s ease-in-out;
   }
 
-  #right-corner-sticky-box.right-corner-sticky-box.is-visible {
+  #right-aligned-sticky-box.right-aligned-sticky-box.is-visible {
     display: block !important;
     transform: translateY(0) !important;
     opacity: 1 !important;
   }
 
-  .right-corner-content {
+  .rac-content {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  .right-corner-header {
+  .rac-header {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
   }
 
-  .right-corner-title {
-    font-size: 14px;
+  .rac-title {
+    font-size: 13px;
     font-weight: 600;
     color: #121212;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 220px;
   }
 
-  .right-corner-prices {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-  }
-
-  .rc-compare-price {
-    text-decoration: line-through;
-    color: #888;
-    font-size: 13px;
-  }
-
-  .rc-current-price {
+  .rac-price {
+    font-size: 15px;
     font-weight: 700;
     color: #121212;
-    font-size: 16px;
+    white-space: nowrap;
   }
 
-  .right-corner-action .right-corner-btn {
+  .rac-action .rac-btn {
     background-color: #8b7355; /* Apne theme ke button color ke mutabiq match kar lein */
     color: #fff;
     border: none;
@@ -106,20 +90,28 @@
     transition: background-color 0.2s ease;
   }
 
-  .right-corner-btn:hover {
+  .rac-btn:hover {
     background-color: #725d43;
   }
 
-  .right-corner-btn:disabled {
+  .rac-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
 
-  /* Mobile responsiveness ke liye (choti screen par width fit karne ke liye) */
+  /* Tablets aur Mobile ke liye responsive adjustment */
+  @media screen and (max-width: 1024px) {
+    #right-aligned-sticky-box.right-aligned-sticky-box {
+      right: 20px !important;
+      left: auto !important;
+      width: 340px !important;
+    }
+  }
+
   @media screen and (max-width: 768px) {
-    #right-corner-sticky-box.right-corner-sticky-box {
-      right: 10px !important;
-      left: 10px !important;
+    #right-aligned-sticky-box.right-aligned-sticky-box {
+      left: 15px !important;
+      right: 15px !important;
       width: auto !important;
     }
   }
@@ -127,13 +119,13 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const stickyBox = document.getElementById("right-corner-sticky-box");
+    const stickyBox = document.getElementById("right-aligned-sticky-box");
     const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
     const productSection = document.querySelector(".product, .product-section, section[id*='product']");
 
     if (!stickyBox || !mainAddToCartBtn) return;
 
-    // Body ke end mein append kar dete hain taake fixed positioning screen par right corner mein theek se kaam kare
+    // Body ke end mein append kar dete hain taake fixed positioning hamesha screen par right side par rahay
     document.body.appendChild(stickyBox);
 
     function checkVisibility() {
@@ -146,7 +138,7 @@
         isProductInView = (sectionRect.top <= windowHeight && sectionRect.bottom >= 0);
       }
 
-      // Main button screen view se bahar nikal gaya ho (chahe upar Step 2/3 par hon ya neeche)
+      // Main button screen view se bahar nikal gaya ho (upar ya neeche)
       const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
 
       // Box sirf tabhi show hoga jab user product section ke andar ho AUR main button screen par na ho
