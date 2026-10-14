@@ -12,16 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "review_rating_bar_CcqBf9": {
-          "type": "review_rating_bar",
-          "settings": {
-            "review_link": "shopify://pages/reviews",
-            "svg_code": "",
-            "icon": "shopify://shop_images/Frame_1597879831.png",
-            "rating_text": "4.8 / 5 stars",
-            "text_suffix": "reviews"
-          }
-        },
         "text_aygjFj": {
           "type": "text",
           "settings": {
@@ -34,6 +24,22 @@
           "type": "title",
           "settings": {
             "custom_title": "{{ product.metafields.custom.product_title.value }}"
+          }
+        },
+        "review_rating_bar_CcqBf9": {
+          "type": "review_rating_bar",
+          "settings": {
+            "review_link": "shopify://pages/reviews",
+            "svg_code": "",
+            "icon": "shopify://shop_images/Frame_1597879831.png",
+            "rating_text": "4.8 / 5 stars",
+            "text_suffix": "reviews"
+          }
+        },
+        "custom_liquid_YR93ix": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- if product.metafields.custom.image_gallery_top_badges.value != blank -%}\n    <div class=\"custom-gallery-badges-container\">\n      {%- for badge in product.metafields.custom.image_gallery_top_badges.value -%}\n        <div class=\"custom-badge-pill\">\n          \n          {%- comment -%} Icon Render {%- endcomment -%}\n          {%- assign badge_icon = badge.icon.value | default: badge.image.value | default: badge.badge_icon.value -%}\n          {%- if badge_icon != blank -%}\n            <img \n              src=\"{{ badge_icon | image_url: width: 40 }}\" \n              alt=\"\" \n              width=\"18\" \n              height=\"18\" \n              class=\"badge-custom-icon\"\n              loading=\"lazy\"\n            >\n          {%- else -%}\n            <span class=\"badge-icon-fallback\">✓</span>\n          {%- endif -%}\n\n          {%- comment -%} Text Render {%- endcomment -%}\n          <span class=\"badge-text\">\n            {{ badge.label.value | default: badge.title.value | default: badge.text.value | default: badge.name.value | default: badge }}\n          </span>\n\n        </div>\n      {%- endfor -%}\n    </div>\n  {%- endif -%}"
           }
         },
         "text_ifcgmB": {
@@ -228,9 +234,10 @@
         }
       },
       "block_order": [
-        "review_rating_bar_CcqBf9",
         "text_aygjFj",
         "title",
+        "review_rating_bar_CcqBf9",
+        "custom_liquid_YR93ix",
         "text_ifcgmB",
         "price",
         "discount_promo_YW9Hge",
