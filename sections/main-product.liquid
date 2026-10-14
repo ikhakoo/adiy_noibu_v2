@@ -1345,10 +1345,21 @@
                       <span class="promo-prefix">{{ block.settings.prefix_text }}</span>
                       <span class="discounted-price" id="DiscountedPrice-{{ section.id }}-{{ block.id }}">
                         {%- liquid
-                          
-                          assign final_calc_price = current_variant.price | minus: discount_cents
-                          if final_calc_price < 0
-                            assign final_calc_price = 0
+                          assign compare_price = current_variant.compare_at_price
+                          assign price = current_variant.price
+
+                          if compare_price > price
+                            # Discount in amount (Rupees/Cents)
+                            assign discount_amount = compare_price | minus: price
+                            
+                            # Discount in percentage (%)
+                            assign discount_percentage = discount_amount | times: 100 | divided_by: compare_price
+                            
+                            assign final_calc_price = price
+                          else
+                            assign discount_amount = 0
+                            assign discount_percentage = 0
+                            assign final_calc_price = price
                           endif
                         -%}
                         {{ final_calc_price | money }}
