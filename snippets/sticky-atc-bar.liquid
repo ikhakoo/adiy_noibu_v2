@@ -1,44 +1,65 @@
 <!-- ========================================== -->
-<!-- BOTTOM-RIGHT FLOATING ADD TO CART STYLES -->
+<!-- FULL-WIDTH BOTTOM STICKY ADD TO CART BAR -->
 <!-- ========================================== -->
 <style>
-  .bottom-right-floating-atc {
+  .full-width-sticky-atc {
     position: fixed;
-    bottom: 25px;
-    right: 25px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    padding: 12px 24px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
     z-index: 99999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
   }
 
-  .bottom-right-floating-atc .floating-atc-btn {
-    background-color: #1a4234; /* Apni pasand ya image ke mutabiq dark green color */
-    color: #ffffff;
-    border: none;
-    padding: 15px 30px;
+  /* Jab main button screen se bahar hoga tab ye active hogi */
+  .full-width-sticky-atc.is-active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sticky-product-title {
     font-size: 16px;
     font-weight: 600;
-    border-radius: 50px; /* Fully rounded ya 8px kar sakte hain */
+    color: #111111;
+  }
+
+  .sticky-action-btn {
+    background-color: #1a4234; /* Dark green theme matching color */
+    color: #ffffff;
+    border: none;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: opacity 0.2s ease;
   }
 
-  .bottom-right-floating-atc .floating-atc-btn:hover {
-    transform: translateY(-2px);
-    opacity: 0.95;
+  .sticky-action-btn:hover {
+    opacity: 0.9;
   }
 
-  /* Mobile screen ke liye thoda adjust karne ke liye */
+  /* Mobile devices ke liye responsive adjustment */
   @media (max-width: 768px) {
-    .bottom-right-floating-atc {
-      bottom: 15px;
-      right: 15px;
+    .full-width-sticky-atc {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 15px;
+      text-align: center;
     }
-    .bottom-right-floating-atc .floating-atc-btn {
-      padding: 12px 20px;
-      font-size: 14px;
+    .sticky-action-btn {
+      width: 100%;
     }
   }
 </style>
@@ -46,29 +67,48 @@
 <!-- ========================================== -->
 <!-- HTML STRUCTURE -->
 <!-- ========================================== -->
-<div class="bottom-right-floating-atc">
-  <button type="button" class="floating-atc-btn" onclick="triggerOriginalAddToCart()">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <path d="M16 10a4 4 0 0 1-8 0"></path>
-    </svg>
-    <span>Add to cart</span>
-  </button>
+<div class="full-width-sticky-atc" id="fullWidthStickyBar">
+  <div class="sticky-product-title">
+    {{ product.title }}
+  </div>
+  <div>
+    <button type="button" class="sticky-action-btn" onclick="triggerOriginalAddToCart()">
+      Add to cart
+    </button>
+  </div>
 </div>
 
 <!-- ========================================== -->
 <!-- JAVASCRIPT LOGIC -->
 <!-- ========================================== -->
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const mainAddToCartBtn = document.querySelector('form[action*="/cart/add"] button[type="submit"]') || 
+                             document.querySelector('.product-form__submit');
+    const stickyBar = document.getElementById('fullWidthStickyBar');
+
+    if (mainAddToCartBtn && stickyBar) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          // Jab main button view se hat jayega, tab full-width bar bottom par show hogi
+          if (!entry.isIntersecting) {
+            stickyBar.classList.add('is-active');
+          } else {
+            stickyBar.classList.remove('is-active');
+          }
+        });
+      }, { threshold: 0 });
+
+      observer.observe(mainAddToCartBtn);
+    }
+  });
+
+  // Sticky bar ke button par click karne se original add to cart trigger hoga
   function triggerOriginalAddToCart() {
-    // Ye function asli/main Add to Cart button ko click kar dega taaki cart me product add ho jaye
     const mainAddToCartBtn = document.querySelector('form[action*="/cart/add"] button[type="submit"]') || 
                              document.querySelector('.product-form__submit');
     if (mainAddToCartBtn) {
       mainAddToCartBtn.click();
-    } else {
-      console.log("Main add to cart button nahi mila!");
     }
   }
 </script>
