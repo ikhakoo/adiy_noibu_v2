@@ -4228,32 +4228,34 @@
                     </style>
 
                     <script>
-                      document.addEventListener("DOMContentLoaded", function () {
-                        const stickyBar = document.getElementById("customStickyATC");
-                        const mainAddToCartBtn = document.querySelector('form[action*="/cart/add"] button[type="submit"], .product-form__submit, button[name="add"]');
+      document.addEventListener("DOMContentLoaded", function () {
+        const stickyBar = document.getElementById("customStickyATC");
+        const mainAddToCartBtn = document.querySelector('form[action*="/cart/add"] button[type="submit"], .product-form__submit, button[name="add"]');
 
-                        if (!stickyBar || !mainAddToCartBtn) return;
+        if (!stickyBar || !mainAddToCartBtn) return;
 
-                        const observer = new IntersectionObserver(function (entries) {
-                          entries.forEach(function (entry) {
-                            if (entry.isIntersecting) {
-                              stickyBar.classList.remove("is-visible");
-                            } else {
-                              const rect = entry.target.getBoundingClientRect();
-                              if (rect.top < 0) {
-                                stickyBar.classList.add("is-visible");
-                              } else {
-                                stickyBar.classList.remove("is-visible");
-                              }
-                            }
-                          });
-                        }, {
-                          threshold: 0
-                        });
+        function checkScrollPosition() {
+          const rect = mainAddToCartBtn.getBoundingClientRect();
+          
+          // Agar main button screen ke viewport ke andar visible hai (kahin bhi upar ya niche)
+          const isVisible = (rect.top <= window.innerHeight) && (rect.bottom >= 0);
 
-                        observer.observe(mainAddToCartBtn);
-                      });
-                    </script>
+          if (isVisible) {
+            // Agar main button screen par dikh raha hai, toh sticky bar hide kar do
+            stickyBar.classList.remove("is-visible");
+          } else {
+            // Agar main button screen se upar ya niche chala gaya hai, toh sticky bar show kar do
+            stickyBar.classList.add("is-visible");
+          }
+        }
+
+        window.addEventListener("scroll", checkScrollPosition);
+        window.addEventListener("resize", checkScrollPosition);
+        
+        // Page load hote hi ek baar check karein
+        checkScrollPosition();
+      });
+    </script>
                   {%- endif -%}
 
                 {%- when 'complementary' -%}
