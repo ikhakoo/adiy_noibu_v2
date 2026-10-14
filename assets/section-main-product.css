@@ -87,6 +87,17 @@ product-info {
     max-width: 40%;
     width: calc(40% - var(--grid-desktop-horizontal-spacing) / 2);
   }
+  .template-product-products-testing .product--medium:not(.product--no-media) .product__media-wrapper,
+  .template-product-products-testing .product--small:not(.product--no-media) .product__info-wrapper {
+    max-width: 55%;
+    width: calc(55% - var(--grid-desktop-horizontal-spacing) / 2);
+  }
+
+  .template-product-products-testing .product--medium:not(.product--no-media) .product__info-wrapper,
+  .template-product-products-testing .product--small:not(.product--no-media) .product__media-wrapper {
+    max-width: 45%;
+    width: calc(45% - var(--grid-desktop-horizontal-spacing) / 2);
+  }
 }
 
 /* Dynamic checkout */
