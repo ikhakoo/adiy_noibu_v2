@@ -2419,91 +2419,92 @@
                       {%- endif -%}
                     {%- endif -%}
                   </p>
+                  
                 {%- when 'description' -%}
-  {%- if product.description != blank -%}
-    <div class="product-description-wrapper" {{ block.shopify_attributes }}>
-      <!-- Description with line clamp initially -->
-      <div class="product__description rte quick-add-hidden read-more-content" id="readMoreContent">
-        {{ product.description }}
-      </div>
-      
-      <!-- Read More / Read Less Button -->
-      <button type="button" class="read-more-btn" id="readMoreBtn" style="display: none;">Read More</button>
-    </div>
+                  {%- if product.description != blank -%}
+                    <div class="product-description-wrapper" {{ block.shopify_attributes }}>
+                      <!-- Description with line clamp initially -->
+                      <div class="product__description rte quick-add-hidden read-more-content" id="readMoreContent">
+                        {{ product.description }}
+                      </div>
+                      
+                      <!-- Read More / Read Less Button -->
+                      <button type="button" class="read-more-btn" id="readMoreBtn" style="display: none;">Read More</button>
+                    </div>
 
-    <!-- CSS Styling -->
-    <style>
-      .product-description-wrapper {
-        position: relative;
-        margin-bottom: 15px;
-      }
+                    <!-- CSS Styling -->
+                    <style>
+                      .product-description-wrapper {
+                        position: relative;
+                        margin-bottom: 15px;
+                      }
 
-      /* Shuru me 3 lines dikhayega aur ellipsis lagayega */
-      .read-more-content {
-        display: -webkit-box;
-        -webkit-line-clamp: 3; /* Aap yahan 3 ya 4 lines kar sakte hain */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        transition: max-height 0.4s ease-in-out;
-        max-height: 5.5em; /* Approximate height for 3 lines */
-      }
+                      /* Shuru me 3 lines dikhayega aur ellipsis lagayega */
+                      .read-more-content {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3; /* Aap yahan 3 ya 4 lines kar sakte hain */
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        transition: max-height 0.4s ease-in-out;
+                        max-height: 5.5em; /* Approximate height for 3 lines */
+                      }
 
-      /* Expanded state jab button click ho */
-      .read-more-content.expanded {
-        display: block;
-        -webkit-line-clamp: unset;
-        max-height: 3000px; /* High value taake poora content smoothly khul jaye */
-        overflow: visible;
-      }
+                      /* Expanded state jab button click ho */
+                      .read-more-content.expanded {
+                        display: block;
+                        -webkit-line-clamp: unset;
+                        max-height: 3000px; /* High value taake poora content smoothly khul jaye */
+                        overflow: visible;
+                      }
 
-      /* Read More Button Styling (Image ke mutabiq) */
-      .read-more-btn {
-        background: none;
-        border: none;
-        color: #8c5d43; /* Brand color - apni theme ke hisab se change kar sakte hain */
-        font-weight: 600;
-        font-size: 14px;
-        text-decoration: underline;
-        cursor: pointer;
-        padding: 6px 0 0 0;
-        display: inline-block;
-      }
+                      /* Read More Button Styling (Image ke mutabiq) */
+                      .read-more-btn {
+                        background: none;
+                        border: none;
+                        color: #8c5d43; /* Brand color - apni theme ke hisab se change kar sakte hain */
+                        font-weight: 600;
+                        font-size: 14px;
+                        text-decoration: underline;
+                        cursor: pointer;
+                        padding: 6px 0 0 0;
+                        display: inline-block;
+                      }
 
-      .read-more-btn:hover {
-        opacity: 0.8;
-      }
-    </style>
+                      .read-more-btn:hover {
+                        opacity: 0.8;
+                      }
+                    </style>
 
-    <!-- JavaScript for Toggle & Auto-hide Button if content is short -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const content = document.getElementById("readMoreContent");
-        const btn = document.getElementById("readMoreBtn");
+                    <!-- JavaScript for Toggle & Auto-hide Button if content is short -->
+                    <script>
+                      document.addEventListener("DOMContentLoaded", function () {
+                        const content = document.getElementById("readMoreContent");
+                        const btn = document.getElementById("readMoreBtn");
 
-        if (content && btn) {
-          // Check agar content chota hai (3 lines se kam), toh button ki zaroorat nahi hai
-          // Iske liye scrollHeight aur clientHeight ka comparison kar sakte hain
-          setTimeout(() => {
-            if (content.scrollHeight > content.clientHeight + 10) {
-              btn.style.display = "inline-block";
-            }
-          }, 100);
+                        if (content && btn) {
+                          // Check agar content chota hai (3 lines se kam), toh button ki zaroorat nahi hai
+                          // Iske liye scrollHeight aur clientHeight ka comparison kar sakte hain
+                          setTimeout(() => {
+                            if (content.scrollHeight > content.clientHeight + 10) {
+                              btn.style.display = "inline-block";
+                            }
+                          }, 100);
 
-          btn.addEventListener("click", function () {
-            if (content.classList.contains("expanded")) {
-              content.classList.remove("expanded");
-              btn.textContent = "Read More";
-              // Optional: Wapas upar scroll hone se bachane ke liye smooth scroll
-              content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-              content.classList.add("expanded");
-              btn.textContent = "Read Less";
-            }
-          });
-        }
-      });
-    </script>
-  {%- endif -%}
+                          btn.addEventListener("click", function () {
+                            if (content.classList.contains("expanded")) {
+                              content.classList.remove("expanded");
+                              btn.textContent = "Read More";
+                              // Optional: Wapas upar scroll hone se bachane ke liye smooth scroll
+                              content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            } else {
+                              content.classList.add("expanded");
+                              btn.textContent = "Read Less";
+                            }
+                          });
+                        }
+                      });
+                    </script>
+                  {%- endif -%}
                   
                 {%- when 'sku' -%}
                   <p
