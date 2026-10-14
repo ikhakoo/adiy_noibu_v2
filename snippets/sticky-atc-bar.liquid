@@ -1,47 +1,55 @@
-{% comment %} Sticky Floating Add to Cart Bar Snippet {% endcomment %}
-{% assign current_variant = product.selected_or_first_available_variant %}
+{% comment %}
+  Complete Inline Product Price & ATC Box Snippet (Hansø Home Style)
+{% endcomment %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div id="sticky-add-to-cart-bar" class="sticky-atc-bar">
-  <div class="sticky-atc-container">
+<div class="inline-atc-box" id="inline-atc-box-{{ section.id }}">
+  <div class="inline-atc-content">
     
-    <!-- Left Side: Pricing and Trust Badges -->
-    <div class="sticky-atc-info">
-      <div class="sticky-atc-price-wrapper">
-        <!-- Compare Price (Strikethrough) -->
-        <span id="sticky-compare-price" class="sticky-price-compare {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
+    <!-- Left Section: Pricing & Badges -->
+    <div class="inline-atc-left">
+      <div class="inline-atc-prices">
+        <!-- Compare At Price (Strikethrough) -->
+        <span class="inline-price-compare {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}" id="atc-compare-price">
           {{ current_variant.compare_at_price | money }}
         </span>
 
-        <!-- Regular / Sale Price -->
-        <span id="sticky-current-price" class="sticky-price-current">
+        <!-- Selling Price -->
+        <span class="inline-price-current" id="atc-current-price">
           {{ current_variant.price | money }}
         </span>
 
-        <!-- Save Amount Badge -->
-        {% assign save_amount = current_variant.compare_at_price | minus: current_variant.price %}
-        <span id="sticky-save-badge" class="sticky-save-badge {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
-          Save <span id="sticky-save-amount">{{ save_amount | money }}</span>
+        <!-- Discount / Save Badge -->
+        {%- assign save_amount = current_variant.compare_at_price | minus: current_variant.price -%}
+        <span class="inline-save-badge {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}" id="atc-save-badge">
+          Save <span id="atc-save-amount">{{ save_amount | money }}</span>
         </span>
       </div>
 
-      <!-- Trust Badges Under Price -->
-      <div class="sticky-atc-features">
-        <span class="feature-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><text x="12" y="15" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">10</text></svg>
+      <!-- Trust Badges under price -->
+      <div class="inline-atc-features">
+        <span class="feature-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><text x="12" y="15" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">10</text></svg>
           10-Year Warranty
         </span>
-        <span class="feature-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span class="feature-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
           100-Day Money Back
         </span>
       </div>
     </div>
 
-    <!-- Right Side: Add to Cart Button -->
-    <div class="sticky-atc-action">
-      <button type="button" id="sticky-submit-btn" class="sticky-add-btn" {% unless current_variant.available %}disabled{% endunless %}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span id="sticky-btn-text">
+    <!-- Right Section: Add To Cart Button -->
+    <div class="inline-atc-right">
+      <button 
+        type="submit" 
+        name="add" 
+        class="inline-atc-btn" 
+        id="inline-atc-button"
+        {% unless current_variant.available %}disabled{% endunless %}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="inline-atc-btn-text">
           {% if current_variant.available %}
             Add To Cart
           {% else %}
@@ -53,203 +61,181 @@
 
   </div>
 </div>
-  <style>
-    .sticky-atc-bar {
-position: fixed; /* Isko absolute ya static ki jagah fixed karein */
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #ffffff;
-  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
-  z-index: 99999; /* Iska z-index high rakhein taake ye baaki content ke upar aaye */
-  padding: 12px 20px;
-  font-family: inherit;
-  box-sizing: border-box;
-}
 
-.sticky-atc-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sticky-atc-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.sticky-atc-price-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sticky-price-compare {
-  text-decoration: line-through;
-  color: #666666;
-  font-size: 16px;
-}
-
-.sticky-price-current {
-  font-weight: bold;
-  font-size: 18px;
-  color: #111111;
-}
-
-.sticky-save-badge {
-  background-color: #eaf8e6;
-  color: #1e6d1e;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.sticky-atc-features {
-  display: flex;
-  gap: 15px;
-  font-size: 12px;
-  color: #333333;
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.sticky-add-btn {
-  background-color: #8c6a58; /* Color matching the reference image */
-  color: #ffffff;
-  border: none;
-  padding: 12px 32px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.2s;
-}
-
-.sticky-add-btn:hover {
-  background-color: #755544;
-}
-
-.sticky-add-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.hidden {
-  display: none !important;
-}
-
-@media (max-width: 768px) {
-  .sticky-atc-features {
-    display: none; /* Hide trust badges on smaller screens */
-  }
-}
-  </style>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-  // Main Product Form Element
-  const mainProductForm = document.querySelector('form[action*="/cart/add"]');
-  const stickyButton = document.getElementById("sticky-submit-btn");
-
-  // Format Money Helper Function
-  function formatMoney(cents) {
-    return (cents / 100).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD"
-    });
+<style>
+  .inline-atc-box {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
+    box-sizing: border-box;
+    font-family: inherit;
   }
 
-  // Handle Sticky Add to Cart Click
-  if (stickyButton && mainProductForm) {
-    stickyButton.addEventListener("click", function (e) {
-      e.preventDefault();
-      
-      // Main form ka submit button trigger karein
-      const mainSubmitBtn = mainProductForm.querySelector('[name="add"]');
-      if (mainSubmitBtn) {
-        mainSubmitBtn.click();
-      } else {
-        mainProductForm.submit();
+  .inline-atc-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .inline-atc-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .inline-atc-prices {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .inline-price-compare {
+    text-decoration: line-through;
+    color: #777777;
+    font-size: 15px;
+  }
+
+  .inline-price-current {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .inline-save-badge {
+    background-color: #e5f5e8;
+    color: #276d33;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .inline-atc-features {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #444444;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .feature-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .inline-atc-right {
+    flex-shrink: 0;
+  }
+
+  .inline-atc-btn {
+    background-color: #8c6a58;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .inline-atc-btn:hover {
+    background-color: #745444;
+  }
+
+  .inline-atc-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  @media (max-width: 480px) {
+    .inline-atc-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .inline-atc-right {
+      width: 100%;
+    }
+    .inline-atc-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function formatMoney(cents) {
+      return (cents / 100).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+      });
+    }
+
+    function updateAtcBox(variant) {
+      if (!variant) return;
+
+      const currentPriceEl = document.getElementById("atc-current-price");
+      const comparePriceEl = document.getElementById("atc-compare-price");
+      const saveBadgeEl = document.getElementById("atc-save-badge");
+      const saveAmountEl = document.getElementById("atc-save-amount");
+      const buttonEl = document.getElementById("inline-atc-button");
+      const btnTextEl = document.getElementById("inline-atc-btn-text");
+
+      if (currentPriceEl) {
+        currentPriceEl.innerText = formatMoney(variant.price);
       }
-    });
-  }
 
-  // Listen for Variant Change Event (Works on Shopify Dawn & similar themes)
-  document.addEventListener("variant:changed", function (event) {
-    const variant = event.detail.variant;
-    updateStickyBar(variant);
-  });
+      if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+        const saveAmount = variant.compare_at_price - variant.price;
 
-  // Alternative Observer for Shopify Theme Select Selectors
-  const variantSelects = document.querySelector('variant-selects, variant-radios');
-  if (variantSelects) {
-    variantSelects.addEventListener('change', function() {
-      // Small delay to allow theme JS to update URL/State
-      setTimeout(() => {
-        if (window.ShopifyAnalytics && window.ShopifyAnalytics.meta && window.ShopifyAnalytics.meta.selectedVariantId) {
-             // You can fetch or read variant details from window.product or Theme API
+        if (comparePriceEl) {
+          comparePriceEl.innerText = formatMoney(variant.compare_at_price);
+          comparePriceEl.classList.remove("hidden");
         }
-      }, 100);
-    });
-  }
-
-  // Update Sticky Bar Elements dynamically
-  function updateStickyBar(variant) {
-    if (!variant) return;
-
-    const currentPriceEl = document.getElementById("sticky-current-price");
-    const comparePriceEl = document.getElementById("sticky-compare-price");
-    const saveBadgeEl = document.getElementById("sticky-save-badge");
-    const saveAmountEl = document.getElementById("sticky-save-amount");
-    const btnTextEl = document.getElementById("sticky-btn-text");
-
-    // Update Price
-    if (currentPriceEl) {
-      currentPriceEl.innerText = formatMoney(variant.price);
-    }
-
-    // Update Compare & Save Badge
-    if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-      const saveAmount = variant.compare_at_price - variant.price;
-      
-      if (comparePriceEl) {
-        comparePriceEl.innerText = formatMoney(variant.compare_at_price);
-        comparePriceEl.classList.remove("hidden");
-      }
-      
-      if (saveAmountEl) {
-        saveAmountEl.innerText = formatMoney(saveAmount);
-      }
-      
-      if (saveBadgeEl) {
-        saveBadgeEl.classList.remove("hidden");
-      }
-    } else {
-      if (comparePriceEl) comparePriceEl.classList.add("hidden");
-      if (saveBadgeEl) saveBadgeEl.classList.add("hidden");
-    }
-
-    // Update Button Availability
-    if (stickyButton && btnTextEl) {
-      if (variant.available) {
-        stickyButton.removeAttribute("disabled");
-        btnTextEl.innerText = "Add To Cart";
+        if (saveAmountEl) {
+          saveAmountEl.innerText = formatMoney(saveAmount);
+        }
+        if (saveBadgeEl) {
+          saveBadgeEl.classList.remove("hidden");
+        }
       } else {
-        stickyButton.setAttribute("disabled", "true");
-        btnTextEl.innerText = "Sold Out";
+        if (comparePriceEl) comparePriceEl.classList.add("hidden");
+        if (saveBadgeEl) saveBadgeEl.classList.add("hidden");
+      }
+
+      if (buttonEl && btnTextEl) {
+        if (variant.available) {
+          buttonEl.removeAttribute("disabled");
+          btnTextEl.innerText = "Add To Cart";
+        } else {
+          buttonEl.setAttribute("disabled", "true");
+          btnTextEl.innerText = "Sold Out";
+        }
       }
     }
-  }
-});
+
+    document.addEventListener("variant:changed", function (e) {
+      if (e.detail && e.detail.variant) {
+        updateAtcBox(e.detail.variant);
+      }
+    });
+  });
 </script>
