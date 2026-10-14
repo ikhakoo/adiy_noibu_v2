@@ -1582,4 +1582,9 @@ media-gallery {
     min-height: 20px;
     font-size: 11px !important;
   }
+  .product__media-wrapper .custom-product-slider-wrapper,
+  .product__media-wrapper .custom-main-slider,
+  .product__media-wrapper .custom-slide-img-wrap {
+    min-height: 25rem;
+  }
 }

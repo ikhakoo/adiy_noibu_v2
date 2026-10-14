@@ -573,6 +573,15 @@
     margin-bottom: 0;
     padding-bottom: 0;
   }
+
+  @media screen and (max-width:768px){
+    .custom-slide-img-wrap,
+    .custom-main-slider,
+    .custom-product-slider-wrapper,
+    .custom-slide-img-wrap img{
+        height: 25rem;
+    }
+  }
 /********************* end *******************/
 
 /******************************* Product Page / Tailored to Your Space section *******************************/
@@ -618,6 +627,7 @@
     .tailored-space-sec .multicolumn-card__info .rte{
         max-width:100%;
     }
+    
 }
 /********************* end *******************/
 
