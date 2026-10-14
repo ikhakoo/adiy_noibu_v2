@@ -1,14 +1,14 @@
 {%- comment -%}
-  Right Column Sticky Box (Floating style same, inner content updated)
+  Right Column Sticky Box with Runtime Price Sync via MutationObserver
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
 <div id="right-column-sticky-box" class="right-column-sticky-box">
   <div class="rac-content">
     
-    <!-- Inner Content: Prices, Save Badge & Perks -->
+    <!-- Price & Savings Section -->
     <div class="rac-price-row">
-      <div class="rac-prices">
+      <div class="rac-prices" id="sticky-price-container">
         {%- assign current_variant = product.selected_or_first_available_variant -%}
         {%- if current_variant.compare_at_price > current_variant.price -%}
           <span class="rac-compare-price">{{ current_variant.compare_at_price | money }}</span>
@@ -42,7 +42,6 @@
 </div>
 
 <style>
-  /* Floating / Sticky Positioning (Aapki purani position waisi hi hai) */
   #right-column-sticky-box.right-column-sticky-box {
     display: none !important;
     position: sticky !important;
@@ -149,5 +148,21 @@
     window.addEventListener("scroll", checkVisibility, { passive: true });
     window.addEventListener("resize", checkVisibility, { passive: true });
     checkVisibility();
+
+    // Runtime Price Sync via MutationObserver on main product price element
+    const mainPriceElement = document.querySelector('.price, .product__price, [id*="price-"], .no-js-hidden .price');
+    const stickyPriceContainer = document.getElementById('sticky-price-container');
+
+    if (mainPriceElement && stickyPriceContainer) {
+      const observer = new MutationObserver(function(mutations) {
+        stickyPriceContainer.innerHTML = mainPriceElement.innerHTML;
+      });
+
+      observer.observe(mainPriceElement, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+    }
   });
 </script>
