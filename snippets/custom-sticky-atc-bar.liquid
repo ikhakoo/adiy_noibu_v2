@@ -7,31 +7,29 @@
 
 <div id="right-column-sticky-box" class="right-column-sticky-box">
   <div class="rac-content">
-    
-    <!-- Price & Savings Section -->
-    <div class="rac-price-row">
-      <div class="rac-prices" id="DesktopSticky-Price-{{ section.id }}">
-        {%- if current_variant.metafields.custom.deck_price.value -%}
-          {%- assign deck_price_cents = current_variant.metafields.custom.deck_price.value | times: 100 -%}
-          <span class="rac-compare-price" id="DesktopSticky-DeckPrice-{{ section.id }}">
-            {{ deck_price_cents | money }}
-          </span>
-        {%- endif -%}
+    <div class="sticky-left">
+      <div class="rac-price-row">
+        <div class="rac-prices" id="DesktopSticky-Price-{{ section.id }}">
+          {%- if current_variant.metafields.custom.deck_price.value -%}
+            {%- assign deck_price_cents = current_variant.metafields.custom.deck_price.value | times: 100 -%}
+            <span class="rac-compare-price" id="DesktopSticky-DeckPrice-{{ section.id }}">
+              {{ deck_price_cents | money }}
+            </span>
+          {%- endif -%}
 
-        <span class="rac-current-price" id="DesktopSticky-CurrentPrice-{{ section.id }}">
-          {{ current_variant.price | money }}
-        </span>
-        
-        <span class="rac-save-badge">Due Today</span>
+          <span class="rac-current-price" id="DesktopSticky-CurrentPrice-{{ section.id }}">
+            {{ current_variant.price | money }}
+          </span>
+          
+        </div>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="rac-perks">
+        <span class="rac-perk-item">🛡️ 10-Year Warranty</span>
+        <span class="rac-perk-item">✅ 100-Day Money Back</span>
       </div>
     </div>
-
-    <!-- Trust Badges -->
-    <div class="rac-perks">
-      <span class="rac-perk-item">🛡️ 10-Year Warranty</span>
-      <span class="rac-perk-item">✅ 100-Day Money Back</span>
-    </div>
-
     <!-- Custom Button that Triggers Main Form Add to Cart -->
     <div class="rac-action">
       <button 
