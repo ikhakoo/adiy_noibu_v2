@@ -1532,7 +1532,7 @@
   <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="product-price">
     {%- if block.settings.price_style == 'style_2' -%}
       {%- assign variant = product.selected_or_first_available_variant -%}
-      <div class="custom-total-price-wrapper" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; align-baseline: middle;">
+      <div class="custom-total-price-wrapper" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between;">
         <span class="total-price-label" style="font-weight: 500; font-size: 18px; color: #000">Total Price:</span>
         
         {%- if variant.compare_at_price > variant.price -%}
