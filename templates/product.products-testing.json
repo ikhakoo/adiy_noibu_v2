@@ -133,17 +133,6 @@
             "custom_liquid": "<hr>"
           }
         },
-        "estimated_delivery_HC9tbH": {
-          "type": "estimated_delivery",
-          "settings": {
-            "heading_prefix": "Get it delivered by",
-            "min_days": 10,
-            "max_days": 14,
-            "subtext_prefix": "In stock",
-            "subtext_middle": "delivered in",
-            "subtext_suffix": "business days"
-          }
-        },
         "price": {
           "type": "price",
           "settings": {
@@ -166,6 +155,17 @@
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
+          }
+        },
+        "estimated_delivery_HC9tbH": {
+          "type": "estimated_delivery",
+          "settings": {
+            "heading_prefix": "Get it delivered by",
+            "min_days": 10,
+            "max_days": 14,
+            "subtext_prefix": "In stock",
+            "subtext_middle": "delivered in",
+            "subtext_suffix": "business days"
           }
         },
         "countdown_timer_NM9Fxn": {
@@ -268,10 +268,10 @@
         "custom_liquid_HmnBKa",
         "variant_picker",
         "custom_liquid_FnEVbe",
-        "estimated_delivery_HC9tbH",
         "price",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
         "buy_buttons",
+        "estimated_delivery_HC9tbH",
         "countdown_timer_NM9Fxn",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
