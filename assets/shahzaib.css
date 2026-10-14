@@ -1306,6 +1306,6 @@
 .template-product-products-testing .product__info-container .product__description{ margin-bottom:5px; }
 
 @media screen and (max-width:600px){
-    .template-product-products-testing .template-product-products-testing .custom-badge-pill { font-size: 9px; }
+    .template-product-products-testing .custom-badge-pill { font-size: 9px; }
     .template-product-products-testing .custom-gallery-badges-container{ gap: 3px; }
 }
