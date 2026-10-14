@@ -1,9 +1,9 @@
 {%- comment -%}
-  Right-Aligned Floating Sticky ATC Box (Full Right Column Width)
+  Right Column Sticky ATC Box (Exact Section Aligned)
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
-<div id="right-aligned-sticky-box" class="right-aligned-sticky-box">
+<div id="right-column-sticky-box" class="right-column-sticky-box">
   <div class="rac-content">
     <div class="rac-header">
       <span class="rac-title">{{ product.title }}</span>
@@ -22,34 +22,31 @@
 </div>
 
 <style>
-  #right-aligned-sticky-box.right-aligned-sticky-box {
-    position: fixed !important;
+  /* Shuru mein yeh hidden rahega */
+  #right-column-sticky-box.right-column-sticky-box {
+    display: none !important;
+    position: sticky !important;
     bottom: 20px !important;
-    right: max(20px, calc((100vw - 1200px) / 2 + 20px)) !important;
-    width: 540px !important; /* Width mazeed barha kar 540px kar di gayi hai */
     background-color: #ffffff !important;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15) !important;
     padding: 16px !important;
     border-radius: 8px !important;
-    z-index: 999999 !important;
+    z-index: 99999 !important;
     border: 1px solid #e5e5e5 !important;
     box-sizing: border-box;
-    display: none !important;
-    transform: translateY(15px);
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
+    margin-top: 20px;
   }
 
-  #right-aligned-sticky-box.right-aligned-sticky-box.is-visible {
+  /* Jab JS active karegi toh yeh right column ke andar show ho jayega */
+  #right-column-sticky-box.right-column-sticky-box.is-visible {
     display: block !important;
-    transform: translateY(0) !important;
-    opacity: 1 !important;
   }
 
   .rac-content {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
   }
 
   .rac-header {
@@ -97,47 +94,31 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
-
-  @media screen and (max-width: 1024px) {
-    #right-aligned-sticky-box.right-aligned-sticky-box {
-      right: 20px !important;
-      left: auto !important;
-      width: 480px !important;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    #right-aligned-sticky-box.right-aligned-sticky-box {
-      left: 15px !important;
-      right: 15px !important;
-      width: auto !important;
-    }
-  }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const stickyBox = document.getElementById("right-aligned-sticky-box");
+    const stickyBox = document.getElementById("right-column-sticky-box");
     const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
-    const productSection = document.querySelector(".product, .product-section, section[id*='product']");
+    // Shopify theme ka right column container
+    const productInfoWrapper = document.querySelector(".product__info-wrapper, .product-info-container, .product__column-sticky");
 
     if (!stickyBox || !mainAddToCartBtn) return;
 
-    document.body.appendChild(stickyBox);
+    // Isko direct right column ke andar shift kar dete hain taake width 100% match kare
+    if (productInfoWrapper) {
+      productInfoWrapper.appendChild(stickyBox);
+    }
 
     function checkVisibility() {
       const btnRect = mainAddToCartBtn.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
-      let isProductInView = true;
-      if (productSection) {
-        const sectionRect = productSection.getBoundingClientRect();
-        isProductInView = (sectionRect.top <= windowHeight && sectionRect.bottom >= 0);
-      }
-
+      // Main button screen view se bahar nikal gaya ho (upar Step 2/3 par ya neeche)
       const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
 
-      if (isProductInView && isBtnOutOfView) {
+      // Jab main button screen par nahi hoga, tabhi right column ke andar sticky box show hoga
+      if (isBtnOutOfView) {
         stickyBox.classList.add("is-visible");
       } else {
         stickyBox.classList.remove("is-visible");
