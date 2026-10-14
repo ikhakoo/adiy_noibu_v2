@@ -2752,388 +2752,388 @@
                   </div>
 
                 {%- when 'estimated_price_cta_s' -%}
-  <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
-    {%- assign current_variant = product.selected_or_first_available_variant -%}
-    
-    {%- assign deck_price = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
-    {%- assign discount_value = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
-    {%- assign offered_price = deck_price | minus: discount_value -%}
-    {%- assign due_today_price = current_variant.price -%}
+                  <div class="deck-pricing-block" id="DeckPricingBlock-{{ section.id }}">
+                    {%- assign current_variant = product.selected_or_first_available_variant -%}
+                    
+                    {%- assign deck_price = current_variant.metafields.custom.deck_price.value | times: 1 | default: 0 -%}
+                    {%- assign discount_value = current_variant.metafields.custom.discount_value.value | times: 1 | default: 0 -%}
+                    {%- assign offered_price = deck_price | minus: discount_value -%}
+                    {%- assign due_today_price = current_variant.price -%}
 
-    {%- assign product_form_id = 'product-form-' | append: section.id -%}
+                    {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-    <product-form
-      class="product-form"
-      data-section-id="{{ section.id }}"
-      data-hide-errors="false"
-    >
-      {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
+                    <product-form
+                      class="product-form"
+                      data-section-id="{{ section.id }}"
+                      data-hide-errors="false"
+                    >
+                      {%- form 'product', product, id: product_form_id, class: 'dp-product-form', data-type: 'add-to-cart-form' -%}
 
-        <!-- NOTE: Yahan se humne apna alag hidden input hata diya hai taake Dawn ke native input ke sath conflict na ho -->
+                        <!-- NOTE: Yahan se humne apna alag hidden input hata diya hai taake Dawn ke native input ke sath conflict na ho -->
 
-        <div class="price-wrapper">
-          <!-- 1. Deck Price & Discount Box -->
-          <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
-            <div class="dp-row main-deck-price-row">
-              <div>
-                <span class="dp-label">Deck Price:</span>
-                <span class="dp-selected-size-subtext" id="SelectedSizeDisplay" style="display: block; font-size: 13px; color: #666; font-weight: normal; margin-top: 2px;">Size: {{ current_variant.title }}</span>
-              </div>
-              <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
-            </div>
-            
-            <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
-              <span class="dp-badge-icon">✓</span>
-              <span class="dp-badge-text">Discount Applied</span>
-              <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
-            </div>
+                        <div class="price-wrapper">
+                          <!-- 1. Deck Price & Discount Box -->
+                          <div class="dp-card dp-deck-card" id="DeckCardContainer-{{ section.id }}" style="{% if deck_price == 0 %}display: none;{% endif %}">
+                            <div class="dp-row main-deck-price-row">
+                              <div>
+                                <span class="dp-label">Deck Price:</span>
+                                <span class="dp-selected-size-subtext" id="SelectedSizeDisplay" style="display: block; font-size: 13px; color: #666; font-weight: normal; margin-top: 2px;">Size: {{ current_variant.title }}</span>
+                              </div>
+                              <span class="dp-value" id="DeckPriceVal">{{ deck_price | times: 100 | money_without_trailing_zeros }}</span>
+                            </div>
+                            
+                            <div class="dp-discount-badge-row" id="DiscountRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
+                              <span class="dp-badge-icon">✓</span>
+                              <span class="dp-badge-text">Discount Applied</span>
+                              <span class="dp-savings" id="SavingsVal">Savings -{{ discount_value | times: 100 | money_without_trailing_zeros }}</span>
+                            </div>
 
-            <hr style="margin: 10px 0; {% if discount_value == 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
+                            <hr style="margin: 10px 0; {% if discount_value == 0 %}display: none;{% endif %}" id="DeckDivider-{{ section.id }}">
 
-            <div class="dp-row offered-price-row" id="OfferedPriceRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
-              <span class="dp-label">Offered Price</span>
-              <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
-            </div>
-          </div>
+                            <div class="dp-row offered-price-row" id="OfferedPriceRow-{{ section.id }}" style="{% if discount_value == 0 %}display: none;{% endif %}">
+                              <span class="dp-label">Offered Price</span>
+                              <span class="dp-value bold-price" id="OfferedPriceVal">{{ offered_price | times: 100 | money_without_trailing_zeros }}</span>
+                            </div>
+                          </div>
 
-          <!-- 2. Due Today Box -->
-          <div class="dp-card dp-due-card">
-            <div class="dp-row">
-              <span class="dp-label">Due Today</span>
-              <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
-            </div>
-            <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
-          </div>
+                          <!-- 2. Due Today Box -->
+                          <div class="dp-card dp-due-card">
+                            <div class="dp-row">
+                              <span class="dp-label">Due Today</span>
+                              <span class="dp-value bold-price" id="DueTodayVal">{{ due_today_price | money_without_trailing_zeros }}</span>
+                            </div>
+                            <div class="dp-subtext">{{ block.settings.due_today_subtext | default: 'Non-refundable Reservation Fee.' }}</div>
+                          </div>
 
-          <!-- 3. Estimated Delivery Month/Year Picker Box -->
-          <div class="dp-card dp-delivery-card">
-            <div class="dp-delivery-header">
-              <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
-            </div>
-            
-            <div class="dp-input-wrapper">
-              <input 
-                type="hidden" 
-                id="EstimatedDeliveryDate-{{ section.id }}" 
-                name="properties[Estimated Delivery Month]" 
-              >
-              
-              <div class="dp-inline-picker" id="InlineMonthPicker-{{ section.id }}">
-                <div class="dp-years-container" id="YearsContainer-{{ section.id }}"></div>
-              </div>
-              <div class="dp-error-message" id="CalendarErrorMsg-{{ section.id }}" style="color: #ff0000; font-size: 12px; margin-top: 6px; display: none;">Please select an estimated delivery month.</div>
-              
-              <input 
-                type="hidden" 
-                id="DeckPriceProperty-{{ section.id }}" 
-                name="properties[Price]" 
-                value="{{ deck_price | times: 100 | money_without_trailing_zeros }}"
-              >
-              <input 
-                type="hidden" 
-                name="properties[_Order Type]" 
-                value="Deposit"
-              >
-            </div>
+                          <!-- 3. Estimated Delivery Month/Year Picker Box -->
+                          <div class="dp-card dp-delivery-card">
+                            <div class="dp-delivery-header">
+                              <span class="dp-label">{{ block.settings.delivery_title | default: 'Estimated Delivery Month' }}</span>
+                            </div>
+                            
+                            <div class="dp-input-wrapper">
+                              <input 
+                                type="hidden" 
+                                id="EstimatedDeliveryDate-{{ section.id }}" 
+                                name="properties[Estimated Delivery Month]" 
+                              >
+                              
+                              <div class="dp-inline-picker" id="InlineMonthPicker-{{ section.id }}">
+                                <div class="dp-years-container" id="YearsContainer-{{ section.id }}"></div>
+                              </div>
+                              <div class="dp-error-message" id="CalendarErrorMsg-{{ section.id }}" style="color: #ff0000; font-size: 12px; margin-top: 6px; display: none;">Please select an estimated delivery month.</div>
+                              
+                              <input 
+                                type="hidden" 
+                                id="DeckPriceProperty-{{ section.id }}" 
+                                name="properties[Price]" 
+                                value="{{ deck_price | times: 100 | money_without_trailing_zeros }}"
+                              >
+                              <input 
+                                type="hidden" 
+                                name="properties[_Order Type]" 
+                                value="Deposit"
+                              >
+                            </div>
 
-            {%- if block.settings.show_delivery_subtext -%}
-              <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
-            {%- endif -%}
-          </div>
-        </div>
+                            {%- if block.settings.show_delivery_subtext -%}
+                              <div class="dp-subtext" style="margin-top: 8px;">{{ block.settings.delivery_subtext | default: 'Select your preferred delivery month.' }}</div>
+                            {%- endif -%}
+                          </div>
+                        </div>
 
-        <!-- 4. Agreement Text -->
-        {%- if block.settings.show_footer_agreement -%}
-          <div class="dp-agreement-footer" style="margin: 15px 0;">
-            <div class="dp-agreement-text">
-              {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
-            </div>
-            {%- if block.settings.info_link_text != blank -%}
-              <div class="dp-info-link-wrap" style="margin-top: 5px;">
-                <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
+                        <!-- 4. Agreement Text -->
+                        {%- if block.settings.show_footer_agreement -%}
+                          <div class="dp-agreement-footer" style="margin: 15px 0;">
+                            <div class="dp-agreement-text">
+                              {{ block.settings.agreement_text | default: 'By placing this order, I agree to the A-DIY Build Agreement, Terms of Craft, and Privacy Notice.' }}
+                            </div>
+                            {%- if block.settings.info_link_text != blank -%}
+                              <div class="dp-info-link-wrap" style="margin-top: 5px;">
+                                <a href="{{ block.settings.info_link_url | default: '#' }}" class="dp-info-link">{{ block.settings.info_link_text }}</a>
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
 
-        <!-- 5. Action Buttons -->
-        <div class="dp-buy-buttons-wrapper">
-          {%- render 'buy-buttons',
-            block: block,
-            product: product,
-            product_form_id: product_form_id,
-            section_id: section.id,
-            show_pickup_availability: true
-          -%}
-        </div>
+                        <!-- 5. Action Buttons -->
+                        <div class="dp-buy-buttons-wrapper">
+                          {%- render 'buy-buttons',
+                            block: block,
+                            product: product,
+                            product_form_id: product_form_id,
+                            section_id: section.id,
+                            show_pickup_availability: true
+                          -%}
+                        </div>
 
-        <div class="product-form__error-message-wrapper" role="alert" hidden>
-          <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
-          <span class="product-form__error-message"></span>
-        </div>
+                        <div class="product-form__error-message-wrapper" role="alert" hidden>
+                          <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+                          <span class="product-form__error-message"></span>
+                        </div>
 
-      {%- endform -%}
-    </product-form>
-  </div>
+                      {%- endform -%}
+                    </product-form>
+                  </div>
 
-  <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
-    {
-      {%- for variant in product.variants -%}
-        {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 100 | default: 0 -%}
-        {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 100 | default: 0 -%}
-        {%- assign v_offered = v_deck | minus: v_disc -%}
-        "{{ variant.id }}": {
-          "deckPrice": {{ v_deck }},
-          "discountValue": {{ v_disc }},
-          "offeredPrice": {{ v_offered }},
-          "dueTodayPrice": {{ variant.price }}
-        }{% unless forloop.last %},{% endunless %}
-      {%- endfor -%}
-    }
-  </script>
+                  <script type="application/json" id="VariantMetafieldsJson-{{ section.id }}">
+                    {
+                      {%- for variant in product.variants -%}
+                        {%- assign v_deck = variant.metafields.custom.deck_price.value | times: 100 | default: 0 -%}
+                        {%- assign v_disc = variant.metafields.custom.discount_value.value | times: 100 | default: 0 -%}
+                        {%- assign v_offered = v_deck | minus: v_disc -%}
+                        "{{ variant.id }}": {
+                          "deckPrice": {{ v_deck }},
+                          "discountValue": {{ v_disc }},
+                          "offeredPrice": {{ v_offered }},
+                          "dueTodayPrice": {{ variant.price }}
+                        }{% unless forloop.last %},{% endunless %}
+                      {%- endfor -%}
+                    }
+                  </script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const sectionId = "{{ section.id }}";
-      const hiddenDateInput = document.getElementById("EstimatedDeliveryDate-" + sectionId);
-      const yearsContainer = document.getElementById("YearsContainer-" + sectionId);
-      const inlinePicker = document.getElementById("InlineMonthPicker-" + sectionId);
-      const errorMsg = document.getElementById("CalendarErrorMsg-" + sectionId);
-      const productForm = document.getElementById("product-form-" + sectionId);
-      
-      const variantIdInput = productForm ? productForm.querySelector('input[name="id"]') : null;
+                  <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                      const sectionId = "{{ section.id }}";
+                      const hiddenDateInput = document.getElementById("EstimatedDeliveryDate-" + sectionId);
+                      const yearsContainer = document.getElementById("YearsContainer-" + sectionId);
+                      const inlinePicker = document.getElementById("InlineMonthPicker-" + sectionId);
+                      const errorMsg = document.getElementById("CalendarErrorMsg-" + sectionId);
+                      const productForm = document.getElementById("product-form-" + sectionId);
+                      
+                      const variantIdInput = productForm ? productForm.querySelector('input[name="id"]') : null;
 
-      let today = new Date();
-      let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
-      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
-      
-      if (!showCurrentMonth && minMonthsOffset === 0) {
-        minMonthsOffset = 1;
-      }
+                      let today = new Date();
+                      let showCurrentMonth = "{{ block.settings.show_current_month }}" === "true";
+                      let minMonthsOffset = parseInt("{{ block.settings.min_days_offset | default: 30 }}") > 30 ? 2 : 0;
+                      
+                      if (!showCurrentMonth && minMonthsOffset === 0) {
+                        minMonthsOffset = 1;
+                      }
 
-      let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
-      let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
-      let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
+                      let maxMonthsOffset = parseInt("{{ block.settings.max_months_offset | default: 6 }}");
+                      let minDate = new Date(today.getFullYear(), today.getMonth() + minMonthsOffset, 1);
+                      let maxDate = new Date(today.getFullYear(), today.getMonth() + maxMonthsOffset, 1);
 
-      let selectedYear = null;
-      let selectedMonth = null;
+                      let selectedYear = null;
+                      let selectedMonth = null;
 
-      if (hiddenDateInput) {
-        hiddenDateInput.value = '';
-      }
+                      if (hiddenDateInput) {
+                        hiddenDateInput.value = '';
+                      }
 
-      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-      function renderGroupedCalendar() {
-        if (!yearsContainer) return;
-        yearsContainer.innerHTML = '';
+                      function renderGroupedCalendar() {
+                        if (!yearsContainer) return;
+                        yearsContainer.innerHTML = '';
 
-        let monthsByYear = {};
-        let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-        let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+                        let monthsByYear = {};
+                        let currIterDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+                        let endIterDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
 
-        while (currIterDate <= endIterDate) {
-          let y = currIterDate.getFullYear();
-          let m = currIterDate.getMonth();
+                        while (currIterDate <= endIterDate) {
+                          let y = currIterDate.getFullYear();
+                          let m = currIterDate.getMonth();
 
-          if (!monthsByYear[y]) {
-            monthsByYear[y] = [];
-          }
-          monthsByYear[y].push(m);
-          currIterDate.setMonth(currIterDate.getMonth() + 1);
-        }
+                          if (!monthsByYear[y]) {
+                            monthsByYear[y] = [];
+                          }
+                          monthsByYear[y].push(m);
+                          currIterDate.setMonth(currIterDate.getMonth() + 1);
+                        }
 
-        Object.keys(monthsByYear).forEach(year => {
-          const yearGroup = document.createElement('div');
-          yearGroup.className = 'dp-year-group';
+                        Object.keys(monthsByYear).forEach(year => {
+                          const yearGroup = document.createElement('div');
+                          yearGroup.className = 'dp-year-group';
 
-          const yearTitle = document.createElement('div');
-          yearTitle.className = 'dp-year-title';
-          yearTitle.textContent = year;
-          yearGroup.appendChild(yearTitle);
+                          const yearTitle = document.createElement('div');
+                          yearTitle.className = 'dp-year-title';
+                          yearTitle.textContent = year;
+                          yearGroup.appendChild(yearTitle);
 
-          const grid = document.createElement('div');
-          grid.className = 'dp-months-grid';
+                          const grid = document.createElement('div');
+                          grid.className = 'dp-months-grid';
 
-          monthsByYear[year].forEach(monthIndex => {
-            const cell = document.createElement('div');
-            cell.className = 'dp-month-cell';
-            cell.textContent = monthNames[monthIndex];
+                          monthsByYear[year].forEach(monthIndex => {
+                            const cell = document.createElement('div');
+                            cell.className = 'dp-month-cell';
+                            cell.textContent = monthNames[monthIndex];
 
-            if (selectedYear !== null && parseInt(year) === selectedYear && monthIndex === selectedMonth) {
-              cell.classList.add('selected');
-            }
+                            if (selectedYear !== null && parseInt(year) === selectedYear && monthIndex === selectedMonth) {
+                              cell.classList.add('selected');
+                            }
 
-            cell.addEventListener('click', function() {
-              selectedYear = parseInt(year);
-              selectedMonth = monthIndex;
-              if (hiddenDateInput) {
-                hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
-              }
-              
-              if (inlinePicker) {
-                inlinePicker.style.borderColor = "";
-                inlinePicker.classList.remove('has-error');
-              }
-              if (errorMsg) errorMsg.style.display = 'none';
+                            cell.addEventListener('click', function() {
+                              selectedYear = parseInt(year);
+                              selectedMonth = monthIndex;
+                              if (hiddenDateInput) {
+                                hiddenDateInput.value = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+                              }
+                              
+                              if (inlinePicker) {
+                                inlinePicker.style.borderColor = "";
+                                inlinePicker.classList.remove('has-error');
+                              }
+                              if (errorMsg) errorMsg.style.display = 'none';
 
-              // Month select hone par express checkout / dynamic buttons ko enable/show kar dein
-              const dynamicCheckoutButtons = productForm.querySelectorAll('.shopify-payment-button, shopify-accelerated-checkout, .dz-express-checkout');
-              dynamicCheckoutButtons.forEach(el => {
-                el.style.opacity = '1';
-                el.style.pointerEvents = 'auto';
-              });
+                              // Month select hone par express checkout / dynamic buttons ko enable/show kar dein
+                              const dynamicCheckoutButtons = productForm.querySelectorAll('.shopify-payment-button, shopify-accelerated-checkout, .dz-express-checkout');
+                              dynamicCheckoutButtons.forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.pointerEvents = 'auto';
+                              });
 
-              renderGroupedCalendar();
-            });
+                              renderGroupedCalendar();
+                            });
 
-            grid.appendChild(cell);
-          });
+                            grid.appendChild(cell);
+                          });
 
-          yearGroup.appendChild(grid);
-          yearsContainer.appendChild(yearGroup);
-        });
-      }
+                          yearGroup.appendChild(grid);
+                          yearsContainer.appendChild(yearGroup);
+                        });
+                      }
 
-      renderGroupedCalendar();
+                      renderGroupedCalendar();
 
-      function formatMoney(cents) {
-        return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }
+                      function formatMoney(cents) {
+                        return '$' + (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      }
 
-      function updateCartPriceProperty(formattedPrice) {
-        const priceInput = document.getElementById('DeckPriceProperty-' + sectionId);
-        if (priceInput) {
-          priceInput.value = formattedPrice;
-        }
-      }
+                      function updateCartPriceProperty(formattedPrice) {
+                        const priceInput = document.getElementById('DeckPriceProperty-' + sectionId);
+                        if (priceInput) {
+                          priceInput.value = formattedPrice;
+                        }
+                      }
 
-      const variantTitles = {
-        {%- for variant in product.variants -%}
-          "{{ variant.id }}": "{{ variant.title }}",
-        {%- endfor -%}
-      };
+                      const variantTitles = {
+                        {%- for variant in product.variants -%}
+                          "{{ variant.id }}": "{{ variant.title }}",
+                        {%- endfor -%}
+                      };
 
-      const metaJsonEl = document.getElementById("VariantMetafieldsJson-" + sectionId);
-      if (metaJsonEl) {
-        const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
+                      const metaJsonEl = document.getElementById("VariantMetafieldsJson-" + sectionId);
+                      if (metaJsonEl) {
+                        const metafieldsData = JSON.parse(metaJsonEl.innerHTML);
 
-        function updateBlockData(variantId) {
-          const data = metafieldsData[variantId];
-          if (!data) return;
+                        function updateBlockData(variantId) {
+                          const data = metafieldsData[variantId];
+                          if (!data) return;
 
-          const currentVariantInput = productForm ? productForm.querySelector('input[name="id"]') : variantIdInput;
-          if (currentVariantInput) {
-            currentVariantInput.value = variantId;
-          }
+                          const currentVariantInput = productForm ? productForm.querySelector('input[name="id"]') : variantIdInput;
+                          if (currentVariantInput) {
+                            currentVariantInput.value = variantId;
+                          }
 
-          const deckCardContainer = document.getElementById("DeckCardContainer-" + sectionId);
-          const discountRow = document.getElementById("DiscountRow-" + sectionId);
-          const deckDivider = document.getElementById("DeckDivider-" + sectionId);
-          const offeredPriceRow = document.getElementById("OfferedPriceRow-" + sectionId);
-          const deckPriceEl = document.getElementById("DeckPriceVal");
-          const savingsEl = document.getElementById("SavingsVal");
-          const offeredPriceEl = document.getElementById("OfferedPriceVal");
-          const dueTodayEl = document.getElementById("DueTodayVal");
-          const selectedSizeEl = document.getElementById("SelectedSizeDisplay");
+                          const deckCardContainer = document.getElementById("DeckCardContainer-" + sectionId);
+                          const discountRow = document.getElementById("DiscountRow-" + sectionId);
+                          const deckDivider = document.getElementById("DeckDivider-" + sectionId);
+                          const offeredPriceRow = document.getElementById("OfferedPriceRow-" + sectionId);
+                          const deckPriceEl = document.getElementById("DeckPriceVal");
+                          const savingsEl = document.getElementById("SavingsVal");
+                          const offeredPriceEl = document.getElementById("OfferedPriceVal");
+                          const dueTodayEl = document.getElementById("DueTodayVal");
+                          const selectedSizeEl = document.getElementById("SelectedSizeDisplay");
 
-          if (selectedSizeEl) {
-            selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
-          }
+                          if (selectedSizeEl) {
+                            selectedSizeEl.textContent = "Size: " + (variantTitles[variantId] || "");
+                          }
 
-          if (deckCardContainer) {
-            deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
-          }
+                          if (deckCardContainer) {
+                            deckCardContainer.style.display = data.deckPrice > 0 ? "block" : "none";
+                          }
 
-          if (discountRow && deckDivider && offeredPriceRow) {
-            if (data.discountValue > 0) {
-              discountRow.style.display = "flex";
-              deckDivider.style.display = "block";
-              offeredPriceRow.style.display = "flex";
-            } else {
-              discountRow.style.display = "none";
-              deckDivider.style.display = "none";
-              offeredPriceRow.style.display = "none";
-            }
-          }
+                          if (discountRow && deckDivider && offeredPriceRow) {
+                            if (data.discountValue > 0) {
+                              discountRow.style.display = "flex";
+                              deckDivider.style.display = "block";
+                              offeredPriceRow.style.display = "flex";
+                            } else {
+                              discountRow.style.display = "none";
+                              deckDivider.style.display = "none";
+                              offeredPriceRow.style.display = "none";
+                            }
+                          }
 
-          if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice);
-          if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue);
-          if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice);
-          if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
+                          if (deckPriceEl) deckPriceEl.textContent = formatMoney(data.deckPrice);
+                          if (savingsEl) savingsEl.textContent = "Savings -" + formatMoney(data.discountValue);
+                          if (offeredPriceEl) offeredPriceEl.textContent = formatMoney(data.offeredPrice);
+                          if (dueTodayEl) dueTodayEl.textContent = formatMoney(data.dueTodayPrice);
 
-          updateCartPriceProperty(formatMoney(data.deckPrice));
-        }
+                          updateCartPriceProperty(formatMoney(data.deckPrice));
+                        }
 
-        function getActiveVariantId() {
-          const urlParams = new URLSearchParams(window.location.search);
-          const urlVariant = urlParams.get('variant');
-          if (urlVariant && metafieldsData[urlVariant]) {
-            return urlVariant;
-          }
-          const nativeInput = productForm ? productForm.querySelector('input[name="id"]') : null;
-          if (nativeInput && nativeInput.value && metafieldsData[nativeInput.value]) {
-            return nativeInput.value;
-          }
-          return "{{ current_variant.id }}";
-        }
+                        function getActiveVariantId() {
+                          const urlParams = new URLSearchParams(window.location.search);
+                          const urlVariant = urlParams.get('variant');
+                          if (urlVariant && metafieldsData[urlVariant]) {
+                            return urlVariant;
+                          }
+                          const nativeInput = productForm ? productForm.querySelector('input[name="id"]') : null;
+                          if (nativeInput && nativeInput.value && metafieldsData[nativeInput.value]) {
+                            return nativeInput.value;
+                          }
+                          return "{{ current_variant.id }}";
+                        }
 
-        const initialVariantId = getActiveVariantId();
-        if (metafieldsData[initialVariantId]) {
-          updateBlockData(initialVariantId);
-        }
+                        const initialVariantId = getActiveVariantId();
+                        if (metafieldsData[initialVariantId]) {
+                          updateBlockData(initialVariantId);
+                        }
 
-        function checkAndUpdateVariant() {
-          const activeId = getActiveVariantId();
-          if (activeId && metafieldsData[activeId]) {
-            updateBlockData(activeId);
-          }
-        }
+                        function checkAndUpdateVariant() {
+                          const activeId = getActiveVariantId();
+                          if (activeId && metafieldsData[activeId]) {
+                            updateBlockData(activeId);
+                          }
+                        }
 
-        document.addEventListener('change', checkAndUpdateVariant);
-        document.addEventListener('click', function(e) {
-          if (e.target.closest('input[type="radio"]') || e.target.closest('variant-radios') || e.target.closest('variant-selects') || e.target.closest('.js-variant-item')) {
-            setTimeout(checkAndUpdateVariant, 150);
-          }
-        });
+                        document.addEventListener('change', checkAndUpdateVariant);
+                        document.addEventListener('click', function(e) {
+                          if (e.target.closest('input[type="radio"]') || e.target.closest('variant-radios') || e.target.closest('variant-selects') || e.target.closest('.js-variant-item')) {
+                            setTimeout(checkAndUpdateVariant, 150);
+                          }
+                        });
 
-        window.addEventListener('popstate', checkAndUpdateVariant);
-        setInterval(checkAndUpdateVariant, 400);
-      }
+                        window.addEventListener('popstate', checkAndUpdateVariant);
+                        setInterval(checkAndUpdateVariant, 400);
+                      }
 
-      // Initial state: Agar month select nahi hai toh Buy with Shop / Dynamic buttons ko disable/dim kar dein
-      if (productForm) {
-        const dynamicCheckoutButtons = productForm.querySelectorAll('.shopify-payment-button, shopify-accelerated-checkout, .dz-express-checkout');
-        if (!hiddenDateInput.value) {
-          dynamicCheckoutButtons.forEach(el => {
-            el.style.opacity = '0.5';
-            el.style.pointerEvents = 'none';
-          });
-        }
+                      // Initial state: Agar month select nahi hai toh Buy with Shop / Dynamic buttons ko disable/dim kar dein
+                      if (productForm) {
+                        const dynamicCheckoutButtons = productForm.querySelectorAll('.shopify-payment-button, shopify-accelerated-checkout, .dz-express-checkout');
+                        if (!hiddenDateInput.value) {
+                          dynamicCheckoutButtons.forEach(el => {
+                            el.style.opacity = '0.5';
+                            el.style.pointerEvents = 'none';
+                          });
+                        }
 
-        productForm.addEventListener('click', function(e) {
-          // Check for standard add to cart or express checkout buttons clicks
-          const submitBtn = e.target.closest('button[type="submit"], input[type="submit"], .product-form__submit, button[name="add"], .shopify-payment-button, shopify-accelerated-checkout');
-          if (!submitBtn) return;
+                        productForm.addEventListener('click', function(e) {
+                          // Check for standard add to cart or express checkout buttons clicks
+                          const submitBtn = e.target.closest('button[type="submit"], input[type="submit"], .product-form__submit, button[name="add"], .shopify-payment-button, shopify-accelerated-checkout');
+                          if (!submitBtn) return;
 
-          if (!hiddenDateInput || !hiddenDateInput.value) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            e.stopPropagation();
+                          if (!hiddenDateInput || !hiddenDateInput.value) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            e.stopPropagation();
 
-            if (inlinePicker) {
-              inlinePicker.style.borderColor = "#ff0000";
-              inlinePicker.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            if (errorMsg) {
-              errorMsg.style.display = 'block';
-            }
-            return false;
-          }
-        }, true);
-      }
-    });
-  </script>
+                            if (inlinePicker) {
+                              inlinePicker.style.borderColor = "#ff0000";
+                              inlinePicker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                            if (errorMsg) {
+                              errorMsg.style.display = 'block';
+                            }
+                            return false;
+                          }
+                        }, true);
+                      }
+                    });
+                  </script>
 
 
                 {%- when 'estimated_price_cta' -%}
@@ -4228,6 +4228,7 @@
               {{- 'icon-arrow.svg' | inline_asset_content -}}
             </a>
           </section>
+          {% render 'sticky-atc-bar', product: product %}
         </div>
       </div>
 
@@ -4279,7 +4280,7 @@
 </product-info>
 
 {%- render 'mobile-sticky-atc', product: product, section: section -%} 
-{% render 'sticky-atc-bar', product: product %}
+
 
 <script>
   document.addEventListener('click', function (e) {
