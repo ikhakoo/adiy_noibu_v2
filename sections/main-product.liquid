@@ -2530,7 +2530,7 @@
                       <!-- Top Header Section with Icon and Text -->
                       <div class="promo-header">
                         {%- if block.settings.banner_icon != blank -%}
-                          <div class="promo-icon">
+                          <div class="promo-icon" style="display:flex">
                             <img src="{{ block.settings.banner_icon | image_url: width: 100 }}" alt="Promo Icon" loading="lazy">
                           </div>
                         {%- endif -%}
