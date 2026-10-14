@@ -1,7 +1,7 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div class="inline-atc-box" id="inline-atc-box-{{ section.id }}">
-  <div class="inline-atc-content">
+<div class="hansot-floating-atc-wrapper" id="inline-atc-box-{{ section.id }}">
+  <div class="hansot-floating-atc-content">
     
     <!-- Left Section: Pricing & Badges -->
     <div class="inline-atc-left">
@@ -60,27 +60,29 @@
 </div>
 
 <style>
-  .inline-atc-box {
+  /* Hansø Style Floating Floating Card Box */
+  .hansot-floating-atc-wrapper {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 900px;
     background: #ffffff;
-    border-top: 1px solid #e2e2e2;
-    padding: 14px 20px;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e2e2;
+    border-radius: 16px;
+    padding: 16px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
     font-family: inherit;
-    z-index: 99999;
+    z-index: 999999;
   }
 
-  .inline-atc-content {
-    max-width: 1200px;
-    margin: 0 auto;
+  .hansot-floating-atc-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 20px;
   }
 
   .inline-atc-left {
@@ -103,7 +105,7 @@
   }
 
   .inline-price-current {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: #1a1a1a;
   }
@@ -123,7 +125,7 @@
     align-items: center;
     gap: 15px;
     color: #444444;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
   }
 
@@ -142,7 +144,7 @@
     color: #ffffff;
     border: none;
     border-radius: 8px;
-    padding: 12px 24px;
+    padding: 12px 28px;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
@@ -166,17 +168,25 @@
     display: none !important;
   }
 
-  @media (max-width: 480px) {
-    .inline-atc-content {
-      flex-direction: column;
-      align-items: flex-start;
+  @media (max-width: 768px) {
+    .hansot-floating-atc-wrapper {
+      width: calc(100% - 20px);
+      bottom: 10px;
+      padding: 12px 16px;
     }
-    .inline-atc-right {
-      width: 100%;
+    .hansot-floating-atc-content {
+      flex-direction: row;
+      align-items: center;
+    }
+    .inline-atc-features {
+      display: none; /* Mobile par clean rakhne ke liye features hide kiye hain, agar chahiye toh hata dein */
+    }
+    .inline-price-current {
+      font-size: 16px;
     }
     .inline-atc-btn {
-      width: 100%;
-      justify-content: center;
+      padding: 10px 16px;
+      font-size: 14px;
     }
   }
 </style>
@@ -197,7 +207,6 @@
     const saveBadgeEl = document.getElementById("atc-save-badge");
     const saveAmountEl = document.getElementById("atc-save-amount");
 
-    // Variant change hone par price aur variant id update karna
     function updateAtcBox(variant) {
       if (!variant) return;
 
@@ -238,14 +247,12 @@
       }
     }
 
-    // Theme ke variant change event ko sunna
     document.addEventListener("variant:changed", function (e) {
       if (e.detail && e.detail.variant) {
         updateAtcBox(e.detail.variant);
       }
     });
 
-    // AJAX Add to Cart button click handler
     if (buttonEl) {
       buttonEl.addEventListener("click", function () {
         const variantId = this.getAttribute("data-variant-id");
