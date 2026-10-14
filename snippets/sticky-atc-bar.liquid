@@ -1,193 +1,55 @@
-{%- if product.selected_or_first_available_variant -%}
-  <div class="custom-sticky-atc-bar" id="customStickyATC">
-    <div class="sticky-atc-inner">
-      
-      <!-- Left Side: Pricing & Savings -->
-      <div class="sticky-atc-left">
-        <div class="sticky-price-row">
-          <span class="sticky-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
-          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-            <span class="sticky-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-            <span class="sticky-save-badge">
-              Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}
-            </span>
-          {%- endif -%}
-        </div>
-        
-        <!-- Trust Badges -->
-        <div class="sticky-trust-badges">
-          <div class="sticky-badge-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            <span>10-Year Warranty</span>
-          </div>
-          <div class="sticky-badge-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span>100-Day Returns</span>
-          </div>
-        </div>
+{% comment %} Sticky Floating Add to Cart Bar Snippet {% endcomment %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<div id="sticky-add-to-cart-bar" class="sticky-atc-bar">
+  <div class="sticky-atc-container">
+    
+    <!-- Left Side: Pricing and Trust Badges -->
+    <div class="sticky-atc-info">
+      <div class="sticky-atc-price-wrapper">
+        <!-- Compare Price (Strikethrough) -->
+        <span id="sticky-compare-price" class="sticky-price-compare {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
+          {{ current_variant.compare_at_price | money }}
+        </span>
+
+        <!-- Regular / Sale Price -->
+        <span id="sticky-current-price" class="sticky-price-current">
+          {{ current_variant.price | money }}
+        </span>
+
+        <!-- Save Amount Badge -->
+        {% assign save_amount = current_variant.compare_at_price | minus: current_variant.price %}
+        <span id="sticky-save-badge" class="sticky-save-badge {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
+          Save <span id="sticky-save-amount">{{ save_amount | money }}</span>
+        </span>
       </div>
 
-      <!-- Right Side: Add to Cart Form -->
-      <div class="sticky-atc-right">
-        <form action="/cart/add" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="sticky-submit-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-            <span>{% if product.selected_or_first_available_variant.available %}Add To Cart{% else %}Sold Out{% endif %}</span>
-          </button>
-        </form>
+      <!-- Trust Badges Under Price -->
+      <div class="sticky-atc-features">
+        <span class="feature-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><text x="12" y="15" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">10</text></svg>
+          10-Year Warranty
+        </span>
+        <span class="feature-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          100-Day Money Back
+        </span>
       </div>
-
     </div>
+
+    <!-- Right Side: Add to Cart Button -->
+    <div class="sticky-atc-action">
+      <button type="button" id="sticky-submit-btn" class="sticky-add-btn" {% unless current_variant.available %}disabled{% endunless %}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="sticky-btn-text">
+          {% if current_variant.available %}
+            Add To Cart
+          {% else %}
+            Sold Out
+          {% endif %}
+        </span>
+      </button>
+    </div>
+
   </div>
-
-  <style>
-    .custom-sticky-atc-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: #ffffff;
-      box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.12);
-      z-index: 99999;
-      padding: 14px 20px;
-      box-sizing: border-box;
-      transform: translateY(100%);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-top: 1px solid #eaeaea;
-    }
-
-    .custom-sticky-atc-bar.is-visible {
-      transform: translateY(0);
-    }
-
-    .sticky-atc-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .sticky-atc-left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .sticky-price-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .sticky-current-price {
-      font-size: 16px;
-      font-weight: 700;
-      color: #111;
-    }
-
-    .sticky-compare-price {
-      font-size: 14px;
-      text-decoration: line-through;
-      color: #888;
-    }
-
-    .sticky-save-badge {
-      background-color: #eaf6ed;
-      color: #1b3d2f;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 20px;
-    }
-
-    .sticky-trust-badges {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .sticky-badge-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 12px;
-      color: #555;
-    }
-
-    .sticky-badge-item svg {
-      stroke: #555;
-    }
-
-    .sticky-submit-btn {
-      background-color: #1b3d2f;
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      padding: 12px 28px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-    }
-
-    .sticky-submit-btn:hover {
-      opacity: 0.9;
-    }
-
-    @media screen and (max-width: 768px) {
-      .sticky-trust-badges {
-        display: none;
-      }
-      .custom-sticky-atc-bar {
-        padding: 10px 15px;
-      }
-      .sticky-submit-btn {
-        padding: 10px 18px;
-        font-size: 14px;
-      }
-    }
-  </style>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const stickyBar = document.getElementById("customStickyATC");
-      if (!stickyBar) return;
-
-      const mainButtons = document.querySelector(".product-form__buttons");
-
-      function checkStickyState() {
-        if (!mainButtons) {
-          stickyBar.classList.add("is-visible");
-          return;
-        }
-
-        const rect = mainButtons.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
-        // Agar main button screen ke viewport ke andar kahin bhi nazar aa raha hai
-        const isVisible = (rect.top <= windowHeight) && (rect.bottom >= 0);
-
-        if (isVisible) {
-          // Main button screen par hai -> Sticky bar hide rahega
-          stickyBar.classList.remove("is-visible");
-        } else {
-          // Main button screen se nikal gaya hai -> Sticky bar screen ke sath float karega
-          stickyBar.classList.add("is-visible");
-        }
-      }
-
-      window.addEventListener("scroll", checkStickyState);
-      window.addEventListener("resize", checkStickyState);
-      
-      checkStickyState();
-    });
-  </script>
-{%- endif -%}
+</div>
