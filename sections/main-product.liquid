@@ -2423,11 +2423,11 @@
                 {%- when 'description' -%}
                   {%- if product.description != blank -%}
                     <div class="product-description-wrapper" {{ block.shopify_attributes }}>
-                      <div class="product__description rte quick-add-hidden read-more-content" id="readMoreContent">
+                      <div class="product__description rte quick-add-hidden des-read-more-content" id="desReadMoreContent">
                         {{ product.description }}
                       </div>
                       
-                      <button type="button" class="read-more-btn" id="readMoreBtn" style="display: none;">Read More</button>
+                      <button type="button" class="des-read-more-btn" id="readMoreBtn" style="display: none;">Read More</button>
                     </div>
 
                     <style>
@@ -2436,7 +2436,7 @@
                         margin-bottom: 15px;
                       }
 
-                      .read-more-content {
+                      .des-read-more-content {
                         display: -webkit-box;
                         -webkit-line-clamp: 4;
                         -webkit-box-orient: vertical;
@@ -2445,14 +2445,14 @@
                         max-height: 100%;
                       }
 
-                      .read-more-content.expanded {
+                      .des-read-more-content.expanded {
                         display: block;
                         -webkit-line-clamp: unset;
                         max-height: 3000px;
                         overflow: visible;
                       }
 
-                      .read-more-btn {
+                      .des-read-more-btn {
                         background: none;
                         border: none;
                         color: #8c5d43;
@@ -2464,14 +2464,14 @@
                         display: inline-block;
                       }
 
-                      .read-more-btn:hover {
+                      .des-read-more-btn:hover {
                         opacity: 0.8;
                       }
                     </style>
 
                     <script>
                       document.addEventListener("DOMContentLoaded", function () {
-                        const content = document.getElementById("readMoreContent");
+                        const content = document.getElementById("desReadMoreContent");
                         const btn = document.getElementById("readMoreBtn");
 
                         if (content && btn) {
