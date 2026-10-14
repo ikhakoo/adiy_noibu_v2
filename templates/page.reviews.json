@@ -253,6 +253,32 @@
             "review_text": "Every board is clearly marked for quick assembly. The fitment was good, impressed with the strength of the deck.Overall appearance was excellent."
           }
         },
+        "text_review_ejaPFq": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Jan-nio J.",
+            "author_handle": "",
+            "headline": "Pressure treated - 12 x 18",
+            "social_icon": "google",
+            "review_text": "Absolutely love it! The experience has been exceptional, and I’ve already recommended it to several friends. It’s always a pleasure to support a service that truly delivers quality and excellence."
+          }
+        },
+        "text_review_JwY8qR": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "It’s Me",
+            "author_handle": "",
+            "headline": "I would highly recommend this company",
+            "social_icon": "trustpilot",
+            "review_text": "I would highly recommend this company. I ordered the 12x12 deck and with the easy instructions I was able to build the deck by myself in a day. I’m already looking into another deck."
+          }
+        },
         "text_review_37MmyY": {
           "type": "text_review",
           "settings": {
@@ -1467,6 +1493,8 @@
         "image_review_cFfg8g",
         "image_review_RxGbTF",
         "text_review_3aTUTa",
+        "text_review_ejaPFq",
+        "text_review_JwY8qR",
         "text_review_37MmyY",
         "video_review_nrTFyH",
         "image_review_PTYLBx",

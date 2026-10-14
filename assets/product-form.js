@@ -72,14 +72,10 @@ if (!customElements.get('product-form')) {
             } else if (this.dataset.redirectTo) {
               // Deposit / reservation flows (250 PDP) go straight to checkout once the
               // line is in the cart. The add still went through the AJAX cart API, so
-              // storefront analytics and the cart lines-update event have already fired.
-              this.resolveCartLinesUpdate(linesUpdateDeferred);
-              window.location.assign(this.dataset.redirectTo);
-              return;
+              // storefront analytics have already seen it.
+              return this.navigateAfterCartLinesUpdate(linesUpdateDeferred, this.dataset.redirectTo);
             } else if (!this.cart) {
-              this.resolveCartLinesUpdate(linesUpdateDeferred);
-              window.location = window.routes.cart_url;
-              return;
+              return this.navigateAfterCartLinesUpdate(linesUpdateDeferred, window.routes.cart_url);
             }
 
             this.resolveCartLinesUpdate(linesUpdateDeferred);
@@ -173,16 +169,32 @@ if (!customElements.get('product-form')) {
         return deferred;
       }
 
+      // Leaving the page cancels any request still in flight. The checkout redirect used
+      // to start in the same tick as the /cart.json request that settles the
+      // cart:lines-update promise, so on iOS that request was cancelled, came back
+      // empty, and the promise was rejected with "Missing currency in cart response"
+      // instead of resolving with the cart (Noibu #525). Let the cart snapshot land
+      // first; the cap keeps a slow response from holding the shopper on the page.
+      navigateAfterCartLinesUpdate(deferred, url) {
+        const maxWait = new Promise((resolve) => setTimeout(resolve, 1500));
+
+        return Promise.race([this.resolveCartLinesUpdate(deferred), maxWait]).then(() => {
+          window.location.assign(url);
+        });
+      }
+
+      // Always returns a promise that fulfils once the event promise has been settled
+      // (or straight away when there is no event to settle). It never rejects.
       resolveCartLinesUpdate(deferred) {
-        if (!deferred) return;
+        if (!deferred) return Promise.resolve();
         const { CartLinesUpdateEvent } = window.StandardEvents || {};
-        if (!CartLinesUpdateEvent) return;
+        if (!CartLinesUpdateEvent) return Promise.resolve();
 
         const pendingCartDataPromise = typeof CartItems !== 'undefined'
           ? CartItems.fetchCartData()
           : fetch(`${routes.cart_url}.json`).then((response) => response.json());
 
-        pendingCartDataPromise
+        return pendingCartDataPromise
           .then((cart) => {
             if (!cart?.currency) return deferred.reject(new Error('Missing currency in cart response'));
             deferred.resolve({ cart: CartLinesUpdateEvent.createCartFromAjaxResponse(cart) });
