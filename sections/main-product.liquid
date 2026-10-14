@@ -1345,7 +1345,7 @@
                       <span class="promo-prefix">{{ block.settings.prefix_text }}</span>
                       <span class="discounted-price" id="DiscountedPrice-{{ section.id }}-{{ block.id }}">
                         {%- liquid
-                          assign discount_cents = current_discount_num | times: 100
+                          
                           assign final_calc_price = current_variant.price | minus: discount_cents
                           if final_calc_price < 0
                             assign final_calc_price = 0
