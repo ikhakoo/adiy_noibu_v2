@@ -52,10 +52,12 @@
     display: none !important;
     position: sticky !important;
     bottom: 20px !important;
-    width: 100% !important;
+    width: calc(100% + 40px) !important; /* Width ko column se thoda barha diya hai */
+    margin-left: -20px !important;     /* Left side se stretch karne ke liye */
+    margin-right: -20px !important;    /* Right side se stretch karne ke liye */
     background-color: #ffffff !important;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12) !important;
-    padding: 18px !important;
+    padding: 18px 24px !important;     /* Andar ki padding thodi adjust kar di */
     border-radius: 8px !important;
     z-index: 6 !important;
     border: 1px solid #e5e5e5 !important;
