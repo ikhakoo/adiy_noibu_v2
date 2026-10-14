@@ -166,13 +166,6 @@
             "show_gift_card_recipient": false
           }
         },
-        "sticky_atc_bar_Pb9zBM": {
-          "type": "sticky_atc_bar",
-          "settings": {
-            "warranty_text": "10-Year Warranty",
-            "returns_text": "100-Day Returns"
-          }
-        },
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
           "disabled": true,
@@ -277,7 +270,6 @@
         "price",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
         "buy_buttons",
-        "sticky_atc_bar_Pb9zBM",
         "countdown_timer_NM9Fxn",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
