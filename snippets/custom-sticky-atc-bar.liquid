@@ -1,37 +1,28 @@
 {%- comment -%}
-  Floating Sticky Add to Cart Bar
-  Usage: {% render 'sticky-atc-bar' %}
+  Right-Side Floating Sticky ATC Box
+  Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
 
-<div id="custom-sticky-atc-bar" class="custom-sticky-atc">
-  <div class="custom-sticky-container">
-    <!-- Left: Price & Savings / Badges -->
-    <div class="custom-sticky-left">
-      <div class="custom-sticky-prices">
-        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-          <span class="custom-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-        {%- endif -%}
-        <span class="custom-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
-        
-        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-          {%- assign save_amount = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price -%}
-          <span class="custom-save-badge">Save {{ save_amount | money }}</span>
-        {%- endif -%}
-      </div>
+<div id="right-sticky-atc-box" class="right-sticky-box">
+  <div class="right-sticky-content">
+    <!-- Price & Savings -->
+    <div class="right-sticky-prices">
+      {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+        <span class="right-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+      {%- endif -%}
+      <span class="right-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
       
-      <!-- Optional Trust Badges / Info (Jaise aapke screenshot mein hain) -->
-      <div class="custom-sticky-perks">
-        <span class="perk-item">🛡️ 10-Year Warranty</span>
-        <span class="perk-item">✅ 100-Day Money Back</span>
-      </div>
+      {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+        {%- assign save_amt = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price -%}
+        <span class="right-save-badge">Save {{ save_amt | money }}</span>
+      {%- endif -%}
     </div>
 
-    <!-- Right: Add to Cart Button -->
-    <div class="custom-sticky-right">
-      {%- form 'product', product, id: 'custom-sticky-form', class: 'sticky-product-form' -%}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="sticky-variant-input">
-        <button type="submit" name="add" class="custom-sticky-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <!-- Add to Cart Button -->
+    <div class="right-sticky-action">
+      {%- form 'product', product, id: 'right-sticky-form', class: 'sticky-product-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="right-variant-input">
+        <button type="submit" name="add" class="right-sticky-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
           <span>{% if product.selected_or_first_available_variant.available %}Add To Cart{% else %}Sold Out{% endif %}</span>
         </button>
       {%- endform -%}
@@ -40,170 +31,115 @@
 </div>
 
 <style>
-  #custom-sticky-atc-bar.custom-sticky-atc {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    background-color: #ffffff !important;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1) !important;
-    padding: 14px 24px !important;
-    z-index: 999999 !important;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
-    border-top: 1px solid #e5e5e5;
-    box-sizing: border-box;
+  /* Shuru mein yeh hidden rahega */
+  #right-sticky-atc-box.right-sticky-box {
+    display: none;
+    position: sticky;
+    bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    padding: 16px;
+    border-radius: 8px;
+    z-index: 99;
+    border: 1px solid #e5e5e5;
+    margin-top: 20px;
+    transition: all 0.3s ease-in-out;
   }
 
-  #custom-sticky-atc-bar.custom-sticky-atc.is-visible {
-    transform: translateY(0) !important;
+  /* Jab JS active class degi tab yeh right column mein show ho jayega */
+  #right-sticky-atc-box.right-sticky-box.is-visible {
+    display: block;
   }
 
-  .custom-sticky-container {
-    max-width: 1300px;
-    margin: 0 auto;
+  .right-sticky-content {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .custom-sticky-left {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .custom-sticky-prices {
+  .right-sticky-prices {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 16px;
+    flex-wrap: wrap;
   }
 
-  .custom-compare-price {
+  .right-compare-price {
     text-decoration: line-through;
     color: #888;
-    font-size: 15px;
+    font-size: 14px;
   }
 
-  .custom-current-price {
+  .right-current-price {
     font-weight: 700;
     color: #121212;
     font-size: 18px;
   }
 
-  .custom-save-badge {
+  .right-save-badge {
     background-color: #eaf6ea;
     color: #2b7a2b;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 13px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: 600;
   }
 
-  .custom-sticky-perks {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 13px;
-    color: #555;
-  }
-
-  .custom-sticky-right .custom-sticky-btn {
-    background-color: #8b7355; /* Apne theme ke button color se match kar lein */
+  .right-sticky-action .right-sticky-btn {
+    background-color: #8b7355; /* Apne theme ke button color ke mutabiq match kar lein */
     color: #fff;
     border: none;
-    padding: 14px 32px;
+    width: 100%;
+    padding: 12px 20px;
     font-size: 15px;
     font-weight: 600;
     border-radius: 4px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
     transition: background-color 0.2s ease;
-    white-space: nowrap;
   }
 
-  .custom-sticky-btn:hover {
+  .right-sticky-btn:hover {
     background-color: #725d43;
   }
 
-  .custom-sticky-btn:disabled {
+  .right-sticky-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-  }
-
-  /* Responsive Design for Mobile */
-  @media screen and (max-width: 768px) {
-    .custom-sticky-perks {
-      display: none; /* Mobile par space bachane ke liye perks hide kar diye hain */
-    }
-    .custom-sticky-container {
-      gap: 10px;
-    }
-    .custom-sticky-prices {
-      font-size: 14px;
-    }
-    .custom-current-price {
-      font-size: 15px;
-    }
-    .custom-save-badge {
-      font-size: 11px;
-      padding: 2px 6px;
-    }
-    #custom-sticky-atc-bar.custom-sticky-atc {
-      padding: 10px 15px !important;
-    }
-    .custom-sticky-right .custom-sticky-btn {
-      padding: 10px 18px;
-      font-size: 14px;
-    }
   }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const stickyBar = document.getElementById("custom-sticky-atc-bar");
+    const stickyBox = document.getElementById("right-sticky-atc-box");
     const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
-    // Product section container ko target karne ke liye
-    const productSection = document.querySelector(".product, .product-section, section[id*='product']");
+    const productInfoWrapper = document.querySelector(".product__info-wrapper, .product-info-container, .product__column-sticky");
 
-    if (!stickyBar || !mainAddToCartBtn) return;
+    if (!stickyBox || !mainAddToCartBtn) return;
 
-    // Bar ko document body ke end mein move kar dete hain
-    document.body.appendChild(stickyBar);
+    // Agar aap chahte hain ke yeh sirf right column ke andar hi render ho, toh isko wahan move kar sakte hain
+    if (productInfoWrapper) {
+      productInfoWrapper.appendChild(stickyBox);
+    }
 
     function checkVisibility() {
-      const btnRect = mainAddToCartBtn.getBoundingClientRect();
+      const rect = mainAddToCartBtn.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-      
-      // Check karein ke kya user abhi product section ke andar hi hai ya nahi
-      let isProductInView = true;
-      if (productSection) {
-        const sectionRect = productSection.getBoundingClientRect();
-        // Product section tabhi view mein hai jab tak uska koi hissa screen par hai
-        isProductInView = (sectionRect.top <= windowHeight && sectionRect.bottom >= 0);
-      }
 
-      // Main button screen view se bahar nikal gaya ho (upar ya neeche)
-      const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
+      // Check karein ke main button screen par nazar aa raha hai ya nahi
+      const isButtonVisible = (rect.top <= windowHeight) && (rect.bottom >= 0);
 
-      // Sticky bar sirf tab show hoga jab user product section ke andar ho AUR main button screen par na ho
-      if (isProductInView && isBtnOutOfView) {
-        stickyBar.classList.add("is-visible");
+      // Agar main button screen par hai, toh right side wala box HIDE rahega
+      // Jab main button screen se upar ya neeche nikal jayega, toh right side wala box SHOW ho jayega
+      if (!isButtonVisible) {
+        stickyBox.classList.add("is-visible");
       } else {
-        stickyBar.classList.remove("is-visible");
+        stickyBox.classList.remove("is-visible");
       }
     }
 
     window.addEventListener("scroll", checkVisibility, { passive: true });
     window.addEventListener("resize", checkVisibility, { passive: true });
     
-    // Initial check
     checkVisibility();
   });
 </script>
