@@ -1,293 +1,403 @@
+{% comment %}
+  =============================================================================
+  Floating Add to Cart Bar Snippet for Shopify Dawn Theme
+  =============================================================================
+  File: snippets/floating-add-to-cart.liquid
+  Usage: In sections/main-product.liquid, add {% render 'floating-add-to-cart', product: product %} 
+         at the bottom of the section file.
+{% endcomment %}
+
 {%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign featured_media = current_variant.featured_media | default: product.featured_media -%}
 
-<div class="hansot-floating-atc-wrapper" id="inline-atc-box-{{ section.id }}">
-  <div class="hansot-floating-atc-content">
+<div id="FloatingBuyBar" class="floating-buy-bar" data-product-id="{{ product.id }}">
+  <div class="page-width floating-buy-bar__container">
     
-    <!-- Left Section: Pricing & Badges -->
-    <div class="inline-atc-left">
-      <div class="inline-atc-prices">
-        <!-- Compare At Price (Strikethrough) -->
-        <span class="inline-price-compare {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}" id="atc-compare-price">
-          {{ current_variant.compare_at_price | money }}
-        </span>
+    <!-- Left Section: Thumbnail & Title/Price Info -->
+    <div class="floating-buy-bar__product-info">
+      {%- if featured_media -%}
+        <img 
+          id="FloatingBuyBar-Image"
+          src="{{ featured_media | image_url: width: 120 }}" 
+          alt="{{ featured_media.alt | escape }}" 
+          class="floating-buy-bar__image"
+          width="50"
+          height="50"
+          loading="lazy"
+        />
+      {%- endif -%}
+      
+      <div class="floating-buy-bar__details">
+        <h3 class="floating-buy-bar__title h4">{{ product.title | escape }}</h3>
+        
+        <div class="floating-buy-bar__price-wrapper" id="FloatingBuyBar-Price">
+          <span class="floating-buy-bar__price price-item--regular font-bold">
+            {{ current_variant.price | money }}
+          </span>
+          
+          <span class="floating-buy-bar__compare-price line-through text-subdued {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
+            {{ current_variant.compare_at_price | money }}
+          </span>
 
-        <!-- Selling Price -->
-        <span class="inline-price-current" id="atc-current-price">
-          {{ current_variant.price | money }}
-        </span>
-
-        <!-- Discount / Save Badge -->
-        {%- assign save_amount = current_variant.compare_at_price | minus: current_variant.price -%}
-        <span class="inline-save-badge {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}" id="atc-save-badge">
-          Save <span id="atc-save-amount">{{ save_amount | money }}</span>
-        </span>
-      </div>
-
-      <!-- Trust Badges under price -->
-      <div class="inline-atc-features">
-        <span class="feature-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><text x="12" y="15" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">10</text></svg>
-          10-Year Warranty
-        </span>
-        <span class="feature-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-          100-Day Money Back
-        </span>
+          {%- assign save_amount = current_variant.compare_at_price | minus: current_variant.price -%}
+          <span class="floating-buy-bar__badge badge {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}">
+            Save {{ save_amount | money }}
+          </span>
+        </div>
       </div>
     </div>
 
-    <!-- Right Section: Add To Cart Button -->
-    <div class="inline-atc-right">
-      <button 
-        type="button" 
-        class="inline-atc-btn" 
-        id="inline-atc-button"
-        data-variant-id="{{ current_variant.id }}"
-        {% unless current_variant.available %}disabled{% endunless %}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span id="inline-atc-btn-text">
-          {% if current_variant.available %}
-            Add To Cart
-          {% else %}
-            Sold Out
-          {% endif %}
-        </span>
-      </button>
+    <!-- Right Section: Variants, Quantity & Add to Cart Form -->
+    <div class="floating-buy-bar__actions">
+      <form method="post" action="{{ routes.cart_add_url }}" id="floating-buy-bar-form" accept-charset="UTF-8" class="floating-buy-bar__form" enctype="multipart/form-data">
+        <input type="hidden" name="form_type" value="product">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="id" id="FloatingBuyBar-VariantId" value="{{ current_variant.id }}">
+
+        <!-- Variant Selector Dropdown (Shown if product has > 1 variant) -->
+        {%- if product.has_only_default_variant == false -%}
+          <div class="floating-buy-bar__select-wrapper">
+            <select id="FloatingBuyBar-VariantSelect" class="select__select floating-buy-bar__select" aria-label="Select Variant">
+              {%- for variant in product.variants -%}
+                <option 
+                  value="{{ variant.id }}" 
+                  data-price="{{ variant.price | money }}"
+                  data-compare-price="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}"
+                  data-save-amount="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | minus: variant.price | money }}{% endif %}"
+                  data-available="{{ variant.available }}"
+                  data-image="{% if variant.featured_media %}{{ variant.featured_media | image_url: width: 120 }}{% endif %}"
+                  {% if variant.id == current_variant.id %}selected="selected"{% endif %}>
+                  {{ variant.title }} - {% if variant.available %}{{ variant.price | money }}{% else %}{{ 'products.product.sold_out' | t | default: 'Sold Out' }}{% endif %}
+                </option>
+              {%- endfor -%}
+            </select>
+            <svg aria-hidden="true" focusable="false" class="icon icon-caret" viewBox="0 0 10 6">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+            </svg>
+          </div>
+        {%- endif -%}
+
+        <!-- Quantity Selector -->
+        <div class="floating-buy-bar__quantity quantity">
+          <button class="quantity__button no-js-hidden" name="minus" type="button" id="FloatingBuyBar-Minus">
+            <span class="visually-hidden">Decrease quantity</span>
+            &#8722;
+          </button>
+          <input 
+            class="quantity__input"
+            type="number"
+            name="quantity"
+            id="FloatingBuyBar-Quantity"
+            min="1"
+            value="1"
+            aria-label="Quantity"
+          >
+          <button class="quantity__button no-js-hidden" name="plus" type="button" id="FloatingBuyBar-Plus">
+            <span class="visually-hidden">Increase quantity</span>
+            &#43;
+          </button>
+        </div>
+
+        <!-- Add To Cart Submit Button -->
+        <button 
+          type="submit" 
+          id="FloatingBuyBar-Submit"
+          class="button button--primary floating-buy-bar__submit"
+          {% unless current_variant.available %}disabled{% endunless %}>
+          <span id="FloatingBuyBar-SubmitText">
+            {%- if current_variant.available -%}
+              {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+            {%- else -%}
+              {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
+            {%- endif -%}
+          </span>
+          <div class="loading-overlay__spinner hidden">
+            <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+              <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+            </svg>
+          </div>
+        </button>
+      </form>
     </div>
 
   </div>
 </div>
 
 <style>
-  /* Hansø Style Floating Floating Card Box */
-  .hansot-floating-atc-wrapper {
+  /* Sticky/Floating Buy Bar Container */
+  .floating-buy-bar {
     position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 900px;
-    background: #ffffff;
-    border: 1px solid #e2e2e2;
-    border-radius: 16px;
-    padding: 16px 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    box-sizing: border-box;
-    font-family: inherit;
-    z-index: 999999;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(var(--color-background), 1);
+    color: rgba(var(--color-foreground), 1);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: 1rem 0;
+    z-index: 999;
+    transform: translateY(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.35s ease;
   }
 
-  .hansot-floating-atc-content {
+  /* Slide-up Active State */
+  .floating-buy-bar.is-visible {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .floating-buy-bar__container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 1.5rem;
   }
 
-  .inline-atc-left {
+  .floating-buy-bar__product-info {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    min-width: 0;
+  }
+
+  .floating-buy-bar__image {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: var(--media-radius, 4px);
+    flex-shrink: 0;
+    border: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  .floating-buy-bar__details {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    min-width: 0;
   }
 
-  .inline-atc-prices {
+  .floating-buy-bar__title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+
+  .floating-buy-bar__price-wrapper {
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.3rem;
   }
 
-  .inline-price-compare {
+  .floating-buy-bar__price {
+    font-size: 1.4rem;
+  }
+
+  .floating-buy-bar__compare-price {
+    font-size: 1.2rem;
     text-decoration: line-through;
-    color: #777777;
-    font-size: 14px;
+    opacity: 0.6;
   }
 
-  .inline-price-current {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
-
-  .inline-save-badge {
-    background-color: #e5f5e8;
-    color: #276d33;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 12px;
+  .floating-buy-bar__badge {
+    background-color: rgba(var(--color-badge-background), 0.15);
+    color: rgb(var(--color-badge-foreground, 34, 139, 34));
+    font-size: 1.1rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
     font-weight: 600;
-    display: inline-block;
   }
 
-  .inline-atc-features {
+  .floating-buy-bar__actions {
     display: flex;
     align-items: center;
-    gap: 15px;
-    color: #444444;
-    font-size: 12px;
-    font-weight: 500;
   }
 
-  .feature-tag {
+  .floating-buy-bar__form {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 1rem;
+    margin: 0;
   }
 
-  .inline-atc-right {
-    flex-shrink: 0;
+  .floating-buy-bar__select-wrapper {
+    position: relative;
+    min-width: 140px;
   }
 
-  .inline-atc-btn {
-    background-color: #8c6a58;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 28px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.2s ease;
+  .floating-buy-bar__select {
+    padding: 0.8rem 3rem 0.8rem 1.2rem;
+    font-size: 1.3rem;
+    height: 4.2rem;
+    border-radius: var(--inputs-radius, 4px);
+  }
+
+  .floating-buy-bar__quantity {
+    width: 10rem;
+    min-height: 4.2rem;
+    border-radius: var(--inputs-radius, 4px);
+  }
+
+  .floating-buy-bar__quantity .quantity__input {
+    font-size: 1.3rem;
+    height: 4.2rem;
+  }
+
+  .floating-buy-bar__submit {
+    min-height: 4.2rem;
+    padding: 0 2rem;
+    margin: 0;
     white-space: nowrap;
   }
 
-  .inline-atc-btn:hover {
-    background-color: #745444;
-  }
-
-  .inline-atc-btn:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+  .line-through {
+    text-decoration: line-through;
   }
 
   .hidden {
     display: none !important;
   }
 
-  @media (max-width: 768px) {
-    .hansot-floating-atc-wrapper {
-      width: calc(100% - 20px);
-      bottom: 10px;
-      padding: 12px 16px;
+  /* Responsive Adjustments for Tablet and Mobile */
+  @media screen and (max-width: 749px) {
+    .floating-buy-bar {
+      padding: 0.8rem 0;
     }
-    .hansot-floating-atc-content {
-      flex-direction: row;
-      align-items: center;
+
+    .floating-buy-bar__container {
+      gap: 0.8rem;
     }
-    .inline-atc-features {
-      display: none; /* Mobile par clean rakhne ke liye features hide kiye hain, agar chahiye toh hata dein */
+
+    /* Hide image & title on mobile to save space */
+    .floating-buy-bar__image,
+    .floating-buy-bar__title {
+      display: none;
     }
-    .inline-price-current {
-      font-size: 16px;
+
+    .floating-buy-bar__select-wrapper {
+      min-width: 110px;
     }
-    .inline-atc-btn {
-      padding: 10px 16px;
-      font-size: 14px;
+
+    .floating-buy-bar__quantity {
+      display: none; /* Hide quantity on mobile for compact layout */
+    }
+
+    .floating-buy-bar__submit {
+      padding: 0 1.2rem;
+      font-size: 1.3rem;
+      flex-grow: 1;
     }
   }
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    function formatMoney(cents) {
-      return (cents / 100).toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD"
+  document.addEventListener('DOMContentLoaded', function() {
+    const floatingBar = document.getElementById('FloatingBuyBar');
+    if (!floatingBar) return;
+
+    const variantSelect = document.getElementById('FloatingBuyBar-VariantSelect');
+    const variantIdInput = document.getElementById('FloatingBuyBar-VariantId');
+    const priceContainer = document.getElementById('FloatingBuyBar-Price');
+    const submitBtn = document.getElementById('FloatingBuyBar-Submit');
+    const submitBtnText = document.getElementById('FloatingBuyBar-SubmitText');
+    const productImage = document.getElementById('FloatingBuyBar-Image');
+    
+    // Quantity Controls
+    const qtyInput = document.getElementById('FloatingBuyBar-Quantity');
+    const minusBtn = document.getElementById('FloatingBuyBar-Minus');
+    const plusBtn = document.getElementById('FloatingBuyBar-Plus');
+
+    if (minusBtn && plusBtn && qtyInput) {
+      minusBtn.addEventListener('click', () => {
+        const val = parseInt(qtyInput.value) || 1;
+        if (val > 1) qtyInput.value = val - 1;
+      });
+      plusBtn.addEventListener('click', () => {
+        const val = parseInt(qtyInput.value) || 1;
+        qtyInput.value = val + 1;
       });
     }
 
-    const buttonEl = document.getElementById("inline-atc-button");
-    const btnTextEl = document.getElementById("inline-atc-btn-text");
-    const currentPriceEl = document.getElementById("atc-current-price");
-    const comparePriceEl = document.getElementById("atc-compare-price");
-    const saveBadgeEl = document.getElementById("atc-save-badge");
-    const saveAmountEl = document.getElementById("atc-save-amount");
+    // Dynamic Variant Change Handler
+    if (variantSelect) {
+      variantSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const variantId = selectedOption.value;
+        const price = selectedOption.dataset.price;
+        const comparePrice = selectedOption.dataset.comparePrice;
+        const saveAmount = selectedOption.dataset.saveAmount;
+        const available = selectedOption.dataset.available === 'true';
+        const imageSrc = selectedOption.dataset.image;
 
-    function updateAtcBox(variant) {
-      if (!variant) return;
+        // Update Hidden Variant ID Input
+        if (variantIdInput) variantIdIdInput = variantIdInput.value = variantId;
 
-      if (buttonEl) {
-        buttonEl.setAttribute("data-variant-id", variant.id);
-      }
-
-      if (currentPriceEl) {
-        currentPriceEl.innerText = formatMoney(variant.price);
-      }
-
-      if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-        const saveAmount = variant.compare_at_price - variant.price;
-
-        if (comparePriceEl) {
-          comparePriceEl.innerText = formatMoney(variant.compare_at_price);
-          comparePriceEl.classList.remove("hidden");
+        // Update Image
+        if (productImage && imageSrc) {
+          productImage.src = imageSrc;
         }
-        if (saveAmountEl) {
-          saveAmountEl.innerText = formatMoney(saveAmount);
-        }
-        if (saveBadgeEl) {
-          saveBadgeEl.classList.remove("hidden");
-        }
-      } else {
-        if (comparePriceEl) comparePriceEl.classList.add("hidden");
-        if (saveBadgeEl) saveBadgeEl.classList.add("hidden");
-      }
 
-      if (buttonEl && btnTextEl) {
-        if (variant.available) {
-          buttonEl.removeAttribute("disabled");
-          btnTextEl.innerText = "Add To Cart";
-        } else {
-          buttonEl.setAttribute("disabled", "true");
-          btnTextEl.innerText = "Sold Out";
+        // Update Pricing Display
+        let priceHTML = `<span class="floating-buy-bar__price price-item--regular font-bold">${price}</span>`;
+        if (comparePrice) {
+          priceHTML += `<span class="floating-buy-bar__compare-price line-through text-subdued">${comparePrice}</span>`;
+          priceHTML += `<span class="floating-buy-bar__badge badge">Save ${saveAmount}</span>`;
         }
-      }
+        if (priceContainer) priceContainer.innerHTML = priceHTML;
+
+        // Update Button Availability
+        if (submitBtn) {
+          if (available) {
+            submitBtn.removeAttribute('disabled');
+            if (submitBtnText) submitBtnText.textContent = {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' | json }};
+          } else {
+            submitBtn.setAttribute('disabled', 'true');
+            if (submitBtnText) submitBtnText.textContent = {{ 'products.product.sold_out' | t | default: 'Sold Out' | json }};
+          }
+        }
+      });
     }
 
-    document.addEventListener("variant:changed", function (e) {
-      if (e.detail && e.detail.variant) {
-        updateAtcBox(e.detail.variant);
-      }
-    });
-
-    if (buttonEl) {
-      buttonEl.addEventListener("click", function () {
-        const variantId = this.getAttribute("data-variant-id");
-        if (!variantId || buttonEl.hasAttribute("disabled")) return;
-
-        const originalText = btnTextEl.innerText;
-        btnTextEl.innerText = "Adding...";
-        buttonEl.setAttribute("disabled", "true");
-
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            id: variantId,
-            quantity: 1
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          btnTextEl.innerText = "Added!";
-          setTimeout(() => {
-            btnTextEl.innerText = originalText;
-            buttonEl.removeAttribute("disabled");
-          }, 1500);
-
-          document.dispatchEvent(new CustomEvent('cart:refresh', { detail: data }));
-        })
-        .catch(error => {
-          console.error('Error adding to cart:', error);
-          btnTextEl.innerText = originalText;
-          buttonEl.removeAttribute("disabled");
+    // Scroll Detection logic (Trigger when main Add to Cart button scrolls past viewport)
+    function initScrollObserver() {
+      // Find Dawn's default buy button in main product section
+      const mainBuyButton = document.querySelector('.product-form__submit') || document.querySelector('[name="add"]');
+      
+      if (mainBuyButton) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            // Show floating bar when main buy button is NOT visible (scrolled past)
+            if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+              floatingBar.classList.add('is-visible');
+            } else {
+              floatingBar.classList.remove('is-visible');
+            }
+          });
+        }, {
+          threshold: 0
         });
-      });
+
+        observer.observe(mainBuyButton);
+      } else {
+        // Fallback: Trigger on pixel scroll if main buy button is not found
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 450) {
+            floatingBar.classList.add('is-visible');
+          } else {
+            floatingBar.classList.remove('is-visible');
+          }
+        });
+      }
     }
+
+    initScrollObserver();
   });
 </script>
