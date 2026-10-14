@@ -1,27 +1,32 @@
 {%- comment -%}
-  Right Column Sticky Box with Reliable Runtime Price Sync
+  Right Column Sticky Box with Real-time Variant & Deck Price Metafield Sync
   Usage: {% render 'custom-sticky-atc-bar' %}
 {%- endcomment -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
 
 <div id="right-column-sticky-box" class="right-column-sticky-box">
   <div class="rac-content">
     
     <!-- Price & Savings Section -->
     <div class="rac-price-row">
-      <div class="rac-prices" id="sticky-price-container">
-        {%- assign current_variant = product.selected_or_first_available_variant -%}
-        {%- if current_variant.compare_at_price > current_variant.price -%}
-          <span class="rac-compare-price">{{ current_variant.compare_at_price | money }}</span>
+      <div class="rac-prices" id="DesktopSticky-Price-{{ section.id }}">
+        {%- if current_variant.metafields.custom.deck_price.value -%}
+          {%- assign deck_price_cents = current_variant.metafields.custom.deck_price.value | times: 100 -%}
+          <span class="rac-compare-price" id="DesktopSticky-DeckPrice-{{ section.id }}">
+            {{ deck_price_cents | money }}
+          </span>
         {%- endif -%}
-        <span class="rac-current-price">{{ current_variant.price | money }}</span>
+
+        <span class="rac-current-price" id="DesktopSticky-CurrentPrice-{{ section.id }}">
+          {{ current_variant.price | money }}
+        </span>
         
-        {%- if current_variant.compare_at_price > current_variant.price -%}
-          {%- assign save_amt = current_variant.compare_at_price | minus: current_variant.price -%}
-          <span class="rac-save-badge">Save {{ save_amt | money }}</span>
-        {%- endif -%}
+        <span class="rac-save-badge">Due Today</span>
       </div>
     </div>
 
+    <!-- Trust Badges -->
     <div class="rac-perks">
       <span class="rac-perk-item">🛡️ 10-Year Warranty</span>
       <span class="rac-perk-item">✅ 100-Day Money Back</span>
@@ -122,58 +127,156 @@
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const stickyBox = document.getElementById("right-column-sticky-box");
-    const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
-    const productFormContainer = document.querySelector(".product-form, product-form, .product__info-container");
+  (function() {
+    const productData = {{ product | json }};
+    const moneyFormat = "{{ shop.money_format | escape }}";
 
-    if (!stickyBox || !mainAddToCartBtn) return;
-
-    if (productFormContainer) {
-      productFormContainer.appendChild(stickyBox);
-    }
-
-    function checkVisibility() {
-      const btnRect = mainAddToCartBtn.getBoundingClientRect();
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-      const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
-
-      if (isBtnOutOfView) {
-        stickyBox.classList.add("is-visible");
-      } else {
-        stickyBox.classList.remove("is-visible");
-      }
-    }
-
-    window.addEventListener("scroll", checkVisibility, { passive: true });
-    window.addEventListener("resize", checkVisibility, { passive: true });
-    checkVisibility();
-
-    // Runtime Price Sync Function
-    function syncPrice() {
-      const mainPriceElem = document.querySelector('.price, .product__price, [id*="price-"], .price-item');
-      const stickyPriceContainer = document.getElementById('sticky-price-container');
-      if (mainPriceElem && stickyPriceContainer) {
-        stickyPriceContainer.innerHTML = mainPriceElem.innerHTML;
-      }
-    }
-
-    // Listen to changes on variant inputs / form
-    const productForm = document.querySelector('form[action*="/cart/add"]');
-    if (productForm) {
-      productForm.addEventListener('change', function () {
-        setTimeout(syncPrice, 100);
-        setTimeout(syncPrice, 350); // fallback after theme ajax completes
+    {% if product.variants.size > 0 %}
+      const variantMetafields = {
+        {% for variant in product.variants %}
+          "{{ variant.id }}": {
+            "deck_price": {% if variant.metafields.custom.deck_price.value %}{{ variant.metafields.custom.deck_price.value | times: 100 }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      };
+      
+      productData.variants = productData.variants.map(v => {
+        if (variantMetafields[v.id]) {
+          v.deck_price = variantMetafields[v.id].deck_price;
+        }
+        return v;
       });
+    {% endif %}
+
+    function formatMoney(cents, format) {
+      if (typeof cents === 'string') cents = cents.replace('.', '');
+      let value = '';
+      const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+      const formatString = format || '${{amount}}';
+
+      function defaultOption(opt, def) {
+        return (typeof opt == 'undefined') ? def : opt;
+      }
+
+      function formatWithDelimiters(number, precision, thousands, decimal) {
+        precision = defaultOption(precision, 2);
+        thousands = defaultOption(thousands, ',');
+        decimal   = defaultOption(decimal, '.');
+
+        if (isNaN(number) || number == null) return 0;
+
+        number = (number / 100.0).toFixed(precision);
+
+        const parts = number.split('.');
+        const dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
+        const cents = parts[1] ? (decimal + parts[1]) : '';
+
+        return dollars + cents;
+      }
+
+      switch (formatString.match(placeholderRegex)[1]) {
+        case 'amount':
+          value = formatWithDelimiters(cents, 2);
+          break;
+        case 'amount_no_decimals':
+          value = formatWithDelimiters(cents, 0);
+          break;
+        case 'amount_with_comma_separator':
+          value = formatWithDelimiters(cents, 2, '.', ',');
+          break;
+        case 'amount_no_decimals_with_space_separator':
+          value = formatWithDelimiters(cents, 0, ' ');
+          break;
+      }
+
+      return formatString.replace(placeholderRegex, value);
     }
 
-    // Also observe price container parent
-    const priceParent = document.querySelector('.price')?.parentElement || document.querySelector('.product__info-container');
-    if (priceParent) {
-      const observer = new MutationObserver(function () {
-        syncPrice();
+    function initDesktopStickyATC() {
+      const stickyBox = document.getElementById("right-column-sticky-box");
+      const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
+      const productFormContainer = document.querySelector(".product-form, product-form, .product__info-container");
+
+      if (!stickyBox || !mainAddToCartBtn) return;
+
+      if (productFormContainer) {
+        productFormContainer.appendChild(stickyBox);
+      }
+
+      function checkVisibility() {
+        const btnRect = mainAddToCartBtn.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        const isBtnOutOfView = (btnRect.top > windowHeight) || (btnRect.bottom < 0);
+
+        if (isBtnOutOfView) {
+          stickyBox.classList.add("is-visible");
+        } else {
+          stickyBox.classList.remove("is-visible");
+        }
+      }
+
+      window.addEventListener("scroll", checkVisibility, { passive: true });
+      window.addEventListener("resize", checkVisibility, { passive: true });
+      checkVisibility();
+
+      const priceContainer = document.getElementById('DesktopSticky-Price-{{ section.id }}');
+
+      function updateStickyVariant(variant) {
+        if (!variant || !priceContainer) return;
+
+        let priceHTML = '';
+        if (variant.deck_price) {
+          const formattedDeckPrice = formatMoney(variant.deck_price, moneyFormat);
+          priceHTML += `<span class="rac-compare-price">${formattedDeckPrice}</span> `;
+        }
+        
+        priceHTML += `<span class="rac-current-price">${formatMoney(variant.price, moneyFormat)}</span>`;
+        priceHTML += ` <span class="rac-save-badge">Due Today</span>`;
+        
+        priceContainer.innerHTML = priceHTML;
+      }
+
+      // Listen to theme variant change event
+      document.addEventListener('variant:change', function(evt) {
+        if (evt.detail && evt.detail.variant) {
+          updateStickyVariant(evt.detail.variant);
+        }
       });
-      observer.observe(priceParent, { childList: true, subtree: true });
+
+      // Observe variant input value changes
+      const mainForm = document.querySelector('form[action*="/cart/add"]');
+      const variantInput = mainForm ? mainForm.querySelector('input[name="id"]') : null;
+      if (variantInput) {
+        const observerVariantInput = new MutationObserver(() => {
+          const selectedVariantId = parseInt(variantInput.value);
+          if (productData && productData.variants) {
+            const matchedVariant = productData.variants.find(v => v.id === selectedVariantId);
+            if (matchedVariant) updateStickyVariant(matchedVariant);
+          }
+        });
+        observerVariantInput.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
+      }
+
+      // URL parameter change sync
+      let lastUrl = location.href;
+      new MutationObserver(() => {
+        const url = location.href;
+        if (url !== lastUrl) {
+          lastUrl = url;
+          const urlParams = new URLSearchParams(window.location.search);
+          const variantId = parseInt(urlParams.get('variant'));
+          if (variantId && productData && productData.variants) {
+            const matchedVariant = productData.variants.find(v => v.id === variantId);
+            if (matchedVariant) updateStickyVariant(matchedVariant);
+          }
+        }
+      }).observe(document, { subtree: true, childList: true });
     }
-  });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDesktopStickyATC);
+    } else {
+      initDesktopStickyATC();
+    }
+  })();
 </script>
