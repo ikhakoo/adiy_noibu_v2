@@ -1,6 +1,6 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div class="inline-atc-box" id="inline-atc-box-{{ section.id }}">
+<div class="inline-atc-box sticky-atc-hidden" id="inline-atc-box-{{ section.id }}">
   <div class="inline-atc-content">
     
     <!-- Left Section: Pricing & Badges -->
@@ -77,7 +77,7 @@
     opacity: 1;
   }
 
-  /* Hidden state when main ATC is visible on screen */
+  /* Hansø style: Hidden by default when main button is in view */
   .inline-atc-box.sticky-atc-hidden {
     transform: translateY(100%);
     opacity: 0;
@@ -231,6 +231,7 @@
           saveAmountEl.innerText = formatMoney(saveAmount);
         }
         if (saveBadgeEl) {
+          saveBadgeEl.classList.add("hidden"); // Adjust if badge needed
           saveBadgeEl.classList.remove("hidden");
         }
       } else {
@@ -249,24 +250,25 @@
       }
     }
 
-    // Listen to theme variant change event
+    // Listen to variant change event
     document.addEventListener("variant:changed", function (e) {
       if (e.detail && e.detail.variant) {
         updateAtcBox(e.detail.variant);
       }
     });
 
-    // 2. Intersection Observer logic (Corrected)
+    // 2. Hansø Style Scroll Trigger (Intersection Observer)
+    // Yeh page ke main Add To Cart button ko track karega
     const mainAtcButton = document.querySelector('form[action*="/cart/add"] button[type="submit"], .product-form__submit, [name="add"]');
     
     if (mainAtcButton && floatingBox) {
       const observer = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Agar main button screen par nazar aa raha hai, toh floating bar hide kar do
+            // Jab main button screen par nazar aa raha hai -> Floating bar chupha do (hide)
             floatingBox.classList.add("sticky-atc-hidden");
           } else {
-            // Agar main button screen par nazar NAHI aa raha, toh floating bar show rakho
+            // Jab main button screen se oopar nikal gaya -> Floating bar dikha do (show)
             floatingBox.classList.remove("sticky-atc-hidden");
           }
         });
@@ -275,7 +277,7 @@
       observer.observe(mainAtcButton);
     }
 
-    // 3. Handle AJAX Add to Cart click
+    // 3. AJAX Add to Cart click handler
     if (buttonEl) {
       buttonEl.addEventListener("click", function () {
         const variantId = this.getAttribute("data-variant-id");
