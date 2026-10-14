@@ -1,5 +1,5 @@
 {%- comment -%}
-  Sticky Floating Add to Cart Snippet
+  Sticky Floating Add to Cart Snippet (Triggers both Above and Below Main Button)
   Usage: {% render 'sticky-add-to-cart' %}
 {%- endcomment -%}
 
@@ -44,9 +44,9 @@
     left: 0;
     width: 100%;
     background-color: #ffffff;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
     padding: 12px 24px;
-    z-index: 999;
+    z-index: 99999;
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
     border-top: 1px solid #e5e5e5;
@@ -104,7 +104,7 @@
   }
 
   .sticky-cart-actions .sticky-add-to-cart-btn {
-    background-color: #8b7355; /* Apni theme ke button color ke mutabiq adjust kar lein */
+    background-color: #8b7355;
     color: #fff;
     border: none;
     padding: 12px 32px;
@@ -125,7 +125,6 @@
     cursor: not-allowed;
   }
 
-  /* Mobile Responsive */
   @media screen and (max-width: 768px) {
     .sticky-product-title {
       display: none;
@@ -143,28 +142,30 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const stickyBar = document.getElementById("sticky-cart-bar");
+    // Main button selector
     const mainAddToCartBtn = document.querySelector(".product-form__submit, form[action*='/cart/add'] button[type='submit']");
 
     if (!stickyBar || !mainAddToCartBtn) return;
 
-    // Intersection Observer to toggle sticky bar
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting && window.scrollY > 300) {
-          stickyBar.classList.add("active");
-        } else {
-          stickyBar.classList.remove("active");
-        }
-      },
-      {
-        root: null,
-        threshold: 0,
+    function checkScroll() {
+      const rect = mainAddToCartBtn.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      // Agar main button viewport se bilkul bahar hai (chaye upar chala gaya ho ya neeche)
+      const isVisible = rect.top <= windowHeight && rect.bottom >= 0;
+
+      if (!isVisible) {
+        stickyBar.classList.add("active");
+      } else {
+        stickyBar.classList.remove("active");
       }
-    );
+    }
 
-    observer.observe(mainAddToCartBtn);
+    // Scroll aur Resize dono par check karega
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll, { passive: true });
 
-    // Optional: Agar aapki theme mein variant change hone par hidden input ya price update karni ho
-    // Aap main product form ke variant change event se yahan value pass kar sakte hain.
+    // Initial check
+    checkScroll();
   });
 </script>
