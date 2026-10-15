@@ -1574,7 +1574,7 @@ media-gallery {
    party answers and pushes the material switcher - and everything below it -
    down. Reserve the one line it ends up as. */
 .product__info-container .affirm-promo-wrapper .affirm-as-low-as {
-  min-height: 25px;
+  min-height: 20px;
 }
 
 @media screen and (max-width: 628px) {
@@ -1585,6 +1585,6 @@ media-gallery {
   .product__media-wrapper .custom-product-slider-wrapper,
   .product__media-wrapper .custom-main-slider,
   .product__media-wrapper .custom-slide-img-wrap {
-    min-height: 25rem;
+    min-height: 20rem;
   }
 }
