@@ -581,6 +581,9 @@
     .custom-slide-img-wrap img{
         height: 20rem;
     }
+    .custom-product-slider-wrapper{
+        margin: 0 0 10px;
+    }
   }
 /********************* end *******************/
 
