@@ -347,10 +347,10 @@
     "reviews": {
       "type": "pvd-reviews",
       "blocks": {
-        "video-1": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-1.jpg", "title": "Why we finally added a deck" } },
-        "video-2": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-2.jpg", "title": "A deck built in two days" } },
-        "video-3": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-3.png", "title": "Built solo, first ever DIY project" } },
-        "video-4": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-4.jpg", "title": "Boards going down, step by step" } },
+        "video-1": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-1.jpg", "video": "shopify://files/videos/We built a deck in TWO DAYS!!! 🤯 If you’re in the market for a new deck, check out A-DIY @decks.mp4", "title": "Why we finally added a deck" } },
+        "video-2": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-2.jpg", "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4", "title": "A deck built in two days" } },
+        "video-3": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-3.png", "video": "shopify://files/videos/16 Home Carousel Video Portrait 4.mp4", "title": "Built solo, first ever DIY project" } },
+        "video-4": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-4.jpg", "video": "shopify://files/videos/PasadenaReview_NoText.mov", "title": "Boards going down, step by step" } },
         "review-1": { "type": "review", "settings": { "source": "★★★★★ · Trustpilot", "text": "I'm just the person to prove this product is foolproof. Very easy to follow and build. I highly recommend using A-DIY. They are easy to work with and they use a great carrier in Estes.", "author": "Thomas" } },
         "review-2": { "type": "review", "settings": { "source": "★★★★★ · Google Reviews", "text": "I'm a 62yr old nurse. I put this together by myself. The instructions are wonderful. I feel blessed to have this space for rest and relaxation.", "author": "Mary O." } },
         "review-3": { "type": "review", "settings": { "source": "★★★★★ · Trustpilot", "text": "Precut and color coded pieces were extremely easy to work with. Good quality material.", "author": "Cindy A. Siller" } }

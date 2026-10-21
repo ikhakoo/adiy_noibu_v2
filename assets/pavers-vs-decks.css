@@ -21,6 +21,8 @@
   --pvd-sage: #7fa796;
   --pvd-amber: #e3a83b;
   --pvd-gap: 52px;
+  --pvd-page-width: 1440px;
+  --pvd-gutter: 40px;
 
   font-family: var(--font-body-family);
   color: var(--pvd-ink);
@@ -34,28 +36,20 @@
   box-sizing: border-box;
 }
 
-.pvd h1,
-.pvd h2,
-.pvd h3,
-.pvd p,
-.pvd ul,
-.pvd ol,
-.pvd figure,
-.pvd blockquote {
+/* Resets use :where() so they sit at single-class specificity: the component
+   classes below (cards with padding, white headings) always override them. */
+.pvd :where(h1, h2, h3, p, ul, ol, figure, blockquote) {
   margin: 0;
   padding: 0;
   letter-spacing: normal;
 }
 
-.pvd h1,
-.pvd h2,
-.pvd h3 {
+.pvd :where(h1, h2, h3) {
   font-family: var(--font-heading-family);
-  color: inherit;
+  color: var(--pvd-ink);
 }
 
-.pvd ul,
-.pvd ol {
+.pvd :where(ul, ol) {
   list-style: none;
 }
 
@@ -66,7 +60,7 @@
 .pvd--dark { background: var(--pvd-ink); }
 
 .pvd__inner {
-  width: min(1120px, calc(100% - 40px));
+  width: min(var(--pvd-page-width), calc(100% - 2 * var(--pvd-gutter)));
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -409,7 +403,7 @@ a.pvd-chip--active:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 18px max(20px, calc((100% - 1120px) / 2));
+  padding: 18px max(var(--pvd-gutter), calc((100% - var(--pvd-page-width)) / 2));
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -1241,12 +1235,22 @@ a.pvd-chip--active:hover {
   background: var(--pvd-ink);
 }
 
+[data-pvd-video] {
+  cursor: pointer;
+}
+
 .pvd-video video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pvd-video .is-playing video {
+  opacity: 1;
 }
 
 .pvd-video__play {
@@ -1258,20 +1262,60 @@ a.pvd-chip--active:hover {
   justify-content: center;
   width: 48px;
   height: 48px;
+  border-radius: 999px;
+  background: rgba(32, 34, 29, 0.55);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.pvd-video .is-playing .pvd-video__play {
+  opacity: 0;
+}
+
+.pvd-video__mute {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
   padding: 0;
   border: 0;
   border-radius: 999px;
-  background: rgba(32, 34, 29, 0.55);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-button.pvd-video__play:hover {
-  background: rgba(32, 34, 29, 0.8);
+.pvd-video__mute svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  pointer-events: none;
 }
 
-.pvd-video.is-playing .pvd-video__play {
+.pvd-video__icon-unmuted,
+.pvd-video__mute.is-unmuted .pvd-video__icon-muted {
   display: none;
+}
+
+.pvd-video__mute.is-unmuted .pvd-video__icon-unmuted {
+  display: block;
+}
+
+.pvd-video .is-playing .pvd-video__mute,
+.pvd-video__mute:focus-visible {
+  opacity: 1;
+}
+
+.pvd-video__mute:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .pvd-video__title {
@@ -1480,6 +1524,7 @@ button.pvd-video__play:hover {
 @media screen and (max-width: 989px) {
   .pvd {
     padding: 80px 0 72px;
+    --pvd-gutter: 32px;
   }
 
   .pvd-hero {
@@ -1540,6 +1585,7 @@ button.pvd-video__play:hover {
   .pvd {
     padding: 64px 0 56px;
     --pvd-gap: 36px;
+    --pvd-gutter: 20px;
   }
 
   .pvd-hero {
