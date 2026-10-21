@@ -1,0 +1,122 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign rows = section.blocks | where: 'type', 'row'
+  assign better_items = section.blocks | where: 'type', 'better_item'
+  assign column_count = 3
+  if section.settings.column_4 != blank
+    assign column_count = 4
+  endif
+-%}
+
+<div class="pvd pvd-table-section pvd--{{ section.settings.background }}"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      step_number: section.settings.step_number,
+      step_label: section.settings.step_label,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    <div class="pvd-table-wrap">
+      <div class="pvd-table-scroll">
+        <table class="pvd-table">
+          {%- if column_count == 4 -%}
+            <colgroup><col style="width: 20%"><col style="width: 28.57%"><col style="width: 25.71%"><col style="width: 25.71%"></colgroup>
+          {%- else -%}
+            <colgroup><col style="width: 22.14%"><col style="width: 38.93%"><col style="width: 38.93%"></colgroup>
+          {%- endif -%}
+          <thead>
+            <tr>
+              <th scope="col">{{ section.settings.column_1 | escape }}</th>
+              <th scope="col">{{ section.settings.column_2 | escape }}</th>
+              <th scope="col"{% if column_count == 3 %} class="is-highlight"{% endif %}>{{ section.settings.column_3 | escape }}</th>
+              {%- if column_count == 4 -%}
+                <th scope="col" class="is-highlight">{{ section.settings.column_4 | escape }}</th>
+              {%- endif -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in rows -%}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row">{{ block.settings.label | escape }}</th>
+                <td>{{ block.settings.cell_2 | escape }}</td>
+                <td{% if column_count == 3 %} class="is-highlight"{% endif %}>{{ block.settings.cell_3 | escape }}</td>
+                {%- if column_count == 4 -%}
+                  <td class="is-highlight">{{ block.settings.cell_4 | escape }}</td>
+                {%- endif -%}
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {%- if better_items.size > 0 -%}
+      <div class="pvd-better">
+        <p class="pvd-label">{{ section.settings.better_label | escape }}</p>
+        <ul class="pvd-list" role="list">
+          {%- for block in better_items -%}
+            <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'check-amber' %}<span>{{ block.settings.text | escape }}</span></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.note != blank -%}
+      <p class="pvd-note">{{ section.settings.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Comparison table",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "white"
+    },
+    { "type": "text", "id": "step_number", "label": "Chip number" },
+    { "type": "text", "id": "step_label", "label": "Chip label" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "header", "content": "Columns", "info": "Leave column 4 blank for a three-column table. The last column is highlighted." },
+    { "type": "text", "id": "column_1", "label": "Column 1 heading" },
+    { "type": "text", "id": "column_2", "label": "Column 2 heading" },
+    { "type": "text", "id": "column_3", "label": "Column 3 heading" },
+    { "type": "text", "id": "column_4", "label": "Column 4 heading" },
+    { "type": "text", "id": "better_label", "label": "Checklist label", "default": "When pavers are the better choice" },
+    { "type": "textarea", "id": "note", "label": "Footnote" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Row label", "default": "Row" },
+        { "type": "text", "id": "cell_2", "label": "Column 2" },
+        { "type": "text", "id": "cell_3", "label": "Column 3" },
+        { "type": "text", "id": "cell_4", "label": "Column 4" }
+      ]
+    },
+    {
+      "type": "better_item",
+      "name": "Checklist item",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [{ "name": "PvD · Comparison table" }]
+}
+{% endschema %}

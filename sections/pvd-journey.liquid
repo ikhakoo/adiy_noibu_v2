@@ -1,0 +1,42 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<nav class="pvd pvd-journey" aria-label="{{ section.settings.label | escape }}">
+  <div class="pvd-journey__track">
+    {%- if section.settings.label != blank -%}
+      <p class="pvd-label pvd-journey__label">{{ section.settings.label | escape }}</p>
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      <a
+        class="pvd-chip{% if block.settings.highlight %} pvd-chip--active{% endif %}"
+        href="{{ block.settings.link | default: '#' }}"
+        {{ block.shopify_attributes }}
+      >
+        <span class="pvd-chip__n">{{ forloop.index }}</span>
+        <span>{{ block.settings.title | escape }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "PvD · Journey strip",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Your journey" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Step" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Use an anchor such as #pvd-step-1" },
+        { "type": "checkbox", "id": "highlight", "label": "Highlight", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PvD · Journey strip" }]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<div class="pvd pvd-final pvd--dark"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  {%- if section.settings.image != blank -%}
+    {%- render 'pvd-image', image: section.settings.image, class: 'pvd-final__photo', sizes: '100vw' -%}
+  {%- endif -%}
+  <div class="pvd__inner">
+    <h2 class="pvd-final__title">{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.lede != blank -%}
+      <p class="pvd-final__lede">{{ section.settings.lede | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="pvd-final__body">{{ section.settings.body | escape }}</p>
+    {%- endif -%}
+    <div class="pvd-actions">
+      {%- if section.settings.button_1_label != blank -%}
+        <a class="pvd-btn pvd-btn--primary pvd-btn--lg" href="{{ section.settings.button_1_link | default: '#' }}">{{ section.settings.button_1_label | escape }}</a>
+      {%- endif -%}
+      {%- if section.settings.button_2_label != blank -%}
+        <a class="pvd-btn pvd-btn--ghost-dark pvd-btn--lg" href="{{ section.settings.button_2_link | default: '#' }}">{{ section.settings.button_2_label | escape }}</a>
+      {%- endif -%}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <ul class="pvd-trust" role="list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Final CTA",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "image_picker", "id": "image", "label": "Full-width image" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "lede", "label": "Lede" },
+    { "type": "textarea", "id": "body", "label": "Body" },
+    { "type": "text", "id": "button_1_label", "label": "Primary button label" },
+    { "type": "url", "id": "button_1_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button label" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link" }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [{ "name": "PvD · Final CTA" }]
+}
+{% endschema %}

@@ -1,0 +1,80 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign paver_items = section.blocks | where: 'type', 'paver_item'
+  assign deck_items = section.blocks | where: 'type', 'deck_item'
+-%}
+
+<div class="pvd pvd-slope pvd--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      step_number: section.settings.step_number,
+      step_label: section.settings.step_label,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    <div class="pvd-slope__layout">
+      {%- render 'pvd-image',
+        image: section.settings.image,
+        sizes: '(min-width: 1200px) 548px, (min-width: 990px) calc(50vw - 32px), calc(100vw - 40px)'
+      -%}
+      <div class="pvd-slope__cards">
+        <div class="pvd-card">
+          <p class="pvd-label">{{ section.settings.paver_label | escape }}</p>
+          <ul class="pvd-list" role="list">
+            {%- for block in paver_items -%}
+              <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'minus' %}<span>{{ block.settings.text | escape }}</span></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div class="pvd-card pvd-card--mint">
+          <p class="pvd-label">{{ section.settings.deck_label | escape }}</p>
+          <ul class="pvd-list" role="list">
+            {%- for block in deck_items -%}
+              <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'check' %}<span>{{ block.settings.text | escape }}</span></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <p class="pvd-note pvd-note--wide pvd-note--body">{{ section.settings.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Sloped yards",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "step_number", "label": "Chip number" },
+    { "type": "text", "id": "step_label", "label": "Chip label" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "paver_label", "label": "Paver card label", "default": "On a slope, a paver patio means" },
+    { "type": "text", "id": "deck_label", "label": "Deck card label", "default": "On a slope, a deck means" },
+    { "type": "textarea", "id": "note", "label": "Footnote" }
+  ],
+  "blocks": [
+    {
+      "type": "paver_item",
+      "name": "Paver point",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    },
+    {
+      "type": "deck_item",
+      "name": "Deck point",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [{ "name": "PvD · Sloped yards" }]
+}
+{% endschema %}

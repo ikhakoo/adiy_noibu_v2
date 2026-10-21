@@ -1,0 +1,75 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<div class="pvd pvd-steps pvd--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      step_number: section.settings.step_number,
+      step_label: section.settings.step_label,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    {%- if section.settings.image != blank -%}
+      {%- render 'pvd-image',
+        image: section.settings.image,
+        class: 'pvd-steps__photo',
+        sizes: '(min-width: 1200px) 1120px, calc(100vw - 40px)'
+      -%}
+    {%- elsif section.settings.placeholder_label != blank -%}
+      <div class="pvd-placeholder">
+        <span class="pvd-placeholder__label">{{ section.settings.placeholder_label | escape }}</span>
+      </div>
+    {%- endif -%}
+
+    <ol class="pvd-grid pvd-grid--3" role="list">
+      {%- for block in section.blocks -%}
+        <li class="pvd-step" {{ block.shopify_attributes }}>
+          <span class="pvd-step__num" aria-hidden="true">{{ forloop.index }}</span>
+          <h3 class="pvd-step__title">{{ block.settings.title | escape }}</h3>
+          <p class="pvd-step__text">{{ block.settings.text | escape }}</p>
+        </li>
+      {%- endfor -%}
+    </ol>
+
+    {%- if section.settings.callout_text != blank -%}
+      <div class="pvd-callout">
+        {%- if section.settings.callout_label != blank -%}
+          <p class="pvd-label">{{ section.settings.callout_label | escape }}</p>
+        {%- endif -%}
+        <p class="pvd-callout__text">{{ section.settings.callout_text | escape }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Installing pavers",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "step_number", "label": "Chip number" },
+    { "type": "text", "id": "step_label", "label": "Chip label" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "placeholder_label", "label": "Placeholder label", "info": "Shown on a sand-coloured box while no image is selected" },
+    { "type": "text", "id": "callout_label", "label": "Callout label" },
+    { "type": "textarea", "id": "callout_text", "label": "Callout text" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Step" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PvD · Installing pavers" }]
+}
+{% endschema %}

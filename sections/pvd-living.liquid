@@ -1,0 +1,50 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<div class="pvd pvd-living pvd--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    <div class="pvd-grid pvd-grid--2">
+      {%- for block in section.blocks -%}
+        <div class="pvd-tile" {{ block.shopify_attributes }}>
+          {%- render 'pvd-image',
+            image: block.settings.image,
+            sizes: '(min-width: 1200px) 548px, (min-width: 750px) calc(50vw - 32px), calc(100vw - 40px)'
+          -%}
+          <h3 class="pvd-tile__title">{{ block.settings.title | escape }}</h3>
+          <p class="pvd-tile__text">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Living space",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PvD · Living space" }]
+}
+{% endschema %}

@@ -1,0 +1,152 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign videos = section.blocks | where: 'type', 'video'
+  assign reviews = section.blocks | where: 'type', 'review'
+-%}
+
+<div class="pvd pvd-reviews pvd--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    <div class="pvd-reviews__top">
+      {%- render 'pvd-header',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        intro: section.settings.intro
+      -%}
+      {%- if section.settings.rating != blank -%}
+        <div class="pvd-rating">
+          <p class="pvd-rating__score">
+            {{- section.settings.rating | escape -}}
+            <span class="pvd-rating__out"> / 5</span>
+          </p>
+          <div class="pvd-rating__details">
+            <p class="pvd-rating__text">{{ section.settings.rating_text | escape }}</p>
+            <div class="pvd-badges">
+              {%- if section.settings.badge_1 != blank -%}<span class="pvd-badge">{{ section.settings.badge_1 | escape }}</span>{%- endif -%}
+              {%- if section.settings.badge_2 != blank -%}<span class="pvd-badge">{{ section.settings.badge_2 | escape }}</span>{%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if videos.size > 0 -%}
+      <div class="pvd-videos">
+        {%- for block in videos -%}
+          <div class="pvd-video" {{ block.shopify_attributes }}>
+            <div class="pvd-media">
+              {%- if block.settings.poster != blank -%}
+                {{
+                  block.settings.poster
+                  | image_url: width: 800
+                  | image_tag:
+                    widths: '300, 400, 600, 800',
+                    sizes: '(min-width: 1200px) 266px, (min-width: 750px) calc(50vw - 30px), 68vw',
+                    loading: 'lazy',
+                    alt: block.settings.poster.alt
+                }}
+              {%- elsif block.settings.video != blank -%}
+                {{ block.settings.video.preview_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+
+              {%- if block.settings.video != blank -%}
+                <button type="button" class="pvd-video__play" data-pvd-play aria-label="Play video: {{ block.settings.title | escape }}">
+                  {%- render 'pvd-icon', name: 'play' -%}
+                </button>
+                <template>
+                  {{ block.settings.video | video_tag: controls: true, playsinline: true, preload: 'metadata' }}
+                </template>
+              {%- else -%}
+                <span class="pvd-video__play" aria-hidden="true">{%- render 'pvd-icon', name: 'play' -%}</span>
+              {%- endif -%}
+            </div>
+            <p class="pvd-video__title">{{ block.settings.title | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if reviews.size > 0 -%}
+      <div class="pvd-grid pvd-grid--3">
+        {%- for block in reviews -%}
+          <blockquote class="pvd-review" {{ block.shopify_attributes }}>
+            <p class="pvd-label">{{ block.settings.source | escape }}</p>
+            <p class="pvd-review__text">{{ block.settings.text | escape }}</p>
+            {%- if block.settings.author != blank -%}
+              <footer class="pvd-review__author">{{ block.settings.author | escape }}</footer>
+            {%- endif -%}
+          </blockquote>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a class="pvd-btn pvd-btn--outline" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label | escape }}</a>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (() => {
+    const root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    root.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-pvd-play]');
+      if (!button) return;
+      const media = button.closest('.pvd-media');
+      const template = media && media.querySelector('template');
+      if (!template) return;
+      const video = template.content.querySelector('video');
+      if (!video) return;
+      media.appendChild(video);
+      media.closest('.pvd-video').classList.add('is-playing');
+      video.play().catch(() => {});
+      video.focus();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PvD · Customer confidence",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "header", "content": "Rating" },
+    { "type": "text", "id": "rating", "label": "Rating", "default": "4.8" },
+    { "type": "text", "id": "rating_text", "label": "Rating text" },
+    { "type": "text", "id": "badge_1", "label": "Badge 1", "default": "Trustpilot" },
+    { "type": "text", "id": "badge_2", "label": "Badge 2", "default": "Google Reviews" },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Label", "default": "See All Customer Reviews" },
+    { "type": "url", "id": "button_link", "label": "Link" }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Customer video",
+      "settings": [
+        { "type": "image_picker", "id": "poster", "label": "Poster image" },
+        { "type": "video", "id": "video", "label": "Video", "info": "Plays in place when the play button is clicked" },
+        { "type": "text", "id": "title", "label": "Title" }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "source", "label": "Label", "default": "★★★★★ · Trustpilot" },
+        { "type": "textarea", "id": "text", "label": "Review text" },
+        { "type": "text", "id": "author", "label": "Author" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PvD · Customer confidence" }]
+}
+{% endschema %}

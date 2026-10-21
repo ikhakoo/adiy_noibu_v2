@@ -1,0 +1,91 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<div class="pvd pvd-problems pvd--dark"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      step_number: section.settings.step_number,
+      step_label: section.settings.step_label,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro,
+      dark: true
+    -%}
+
+    <div class="pvd-grid pvd-grid--2">
+      {%- for block in section.blocks -%}
+        <article class="pvd-problem" {{ block.shopify_attributes }}>
+          {%- render 'pvd-image',
+            image: block.settings.image,
+            sizes: '(min-width: 1200px) 492px, (min-width: 750px) calc(50vw - 88px), calc(100vw - 82px)'
+          -%}
+          <h3 class="pvd-problem__title">{{ block.settings.title | escape }}</h3>
+          {%- if block.settings.what != blank -%}
+            <p class="pvd-problem__line">
+              <strong>{{ section.settings.what_label | escape }}</strong>
+              {{ block.settings.what | escape }}
+            </p>
+          {%- endif -%}
+          {%- if block.settings.why != blank -%}
+            <p class="pvd-problem__line">
+              <strong>{{ section.settings.why_label | escape }}</strong>
+              {{ block.settings.why | escape }}
+            </p>
+          {%- endif -%}
+          {%- if block.settings.fix != blank -%}
+            <p class="pvd-problem__line pvd-problem__line--fix">
+              <strong>{{ section.settings.fix_label | escape }}</strong>
+              {{ block.settings.fix | escape }}
+            </p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.repair_text != blank -%}
+      <div class="pvd-repair">
+        <h3 class="pvd-repair__title">{{ section.settings.repair_title | escape }}</h3>
+        <p class="pvd-repair__text">{{ section.settings.repair_text | escape }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.note != blank -%}
+      <p class="pvd-note">{{ section.settings.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · What goes wrong",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "step_number", "label": "Chip number" },
+    { "type": "text", "id": "step_label", "label": "Chip label" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "what_label", "label": "\"What happens\" label", "default": "What happens." },
+    { "type": "text", "id": "why_label", "label": "\"Why\" label", "default": "Why." },
+    { "type": "text", "id": "fix_label", "label": "\"The fix\" label", "default": "The fix." },
+    { "type": "text", "id": "repair_title", "label": "Repair box title" },
+    { "type": "textarea", "id": "repair_text", "label": "Repair box text" },
+    { "type": "textarea", "id": "note", "label": "Footnote" }
+  ],
+  "blocks": [
+    {
+      "type": "problem",
+      "name": "Problem",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Problem" },
+        { "type": "textarea", "id": "what", "label": "What happens" },
+        { "type": "textarea", "id": "why", "label": "Why" },
+        { "type": "textarea", "id": "fix", "label": "The fix" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PvD · What goes wrong" }]
+}
+{% endschema %}

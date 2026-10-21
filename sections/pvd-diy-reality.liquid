@@ -1,0 +1,82 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign paver_items = section.blocks | where: 'type', 'paver_item'
+  assign deck_items = section.blocks | where: 'type', 'deck_item'
+-%}
+
+<div class="pvd pvd-diy pvd--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      step_number: section.settings.step_number,
+      step_label: section.settings.step_label,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    <div class="pvd-grid pvd-grid--2">
+      <div class="pvd-panel">
+        <p class="pvd-label">{{ section.settings.paver_label | escape }}</p>
+        <ul class="pvd-list" role="list">
+          {%- for block in paver_items -%}
+            <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'minus' %}<span>{{ block.settings.text | escape }}</span></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="pvd-panel pvd-panel--mint">
+        <p class="pvd-label">{{ section.settings.deck_label | escape }}</p>
+        <ul class="pvd-list" role="list">
+          {%- for block in deck_items -%}
+            <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'check' %}<span>{{ block.settings.text | escape }}</span></li>
+          {%- endfor -%}
+        </ul>
+        {%- if section.settings.photo_1 != blank or section.settings.photo_2 != blank -%}
+          <div class="pvd-panel__photos">
+            {%- render 'pvd-image', image: section.settings.photo_1, sizes: '(min-width: 1200px) 231px, (min-width: 750px) 25vw, 50vw' -%}
+            {%- render 'pvd-image', image: section.settings.photo_2, sizes: '(min-width: 1200px) 231px, (min-width: 750px) 25vw, 50vw' -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <p class="pvd-note">{{ section.settings.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · DIY reality",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "step_number", "label": "Chip number" },
+    { "type": "text", "id": "step_label", "label": "Chip label" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "paver_label", "label": "Paver column label", "default": "Laying a paver patio means" },
+    { "type": "text", "id": "deck_label", "label": "Deck column label", "default": "Assembling an A-DIY deck means" },
+    { "type": "image_picker", "id": "photo_1", "label": "Deck column photo 1" },
+    { "type": "image_picker", "id": "photo_2", "label": "Deck column photo 2" },
+    { "type": "textarea", "id": "note", "label": "Footnote" }
+  ],
+  "blocks": [
+    {
+      "type": "paver_item",
+      "name": "Paver task",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    },
+    {
+      "type": "deck_item",
+      "name": "Deck task",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [{ "name": "PvD · DIY reality" }]
+}
+{% endschema %}

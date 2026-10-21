@@ -1,0 +1,123 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign stats = section.blocks | where: 'type', 'stat'
+  assign caveats = section.blocks | where: 'type', 'caveat'
+-%}
+
+<div class="pvd pvd-roi pvd--mint"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      step_number: section.settings.step_number,
+      step_label: section.settings.step_label,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    <div class="pvd-grid pvd-grid--3">
+      {%- for block in stats -%}
+        <div class="pvd-stat" {{ block.shopify_attributes }}>
+          <p class="pvd-stat__value{% if block.settings.muted %} pvd-stat__value--muted{% endif %}">{{ block.settings.value | escape }}</p>
+          <h3 class="pvd-stat__title">{{ block.settings.title | escape }}</h3>
+          <p class="pvd-stat__sub">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="pvd-years">
+      <div class="pvd-years__head">
+        {%- if section.settings.years_label != blank -%}
+          <p class="pvd-label">{{ section.settings.years_label | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.years_text != blank -%}
+          <p class="pvd-years__text">{{ section.settings.years_text | escape }}</p>
+        {%- endif -%}
+      </div>
+      <div class="pvd-grid pvd-grid--2">
+        <figure class="pvd-captioned">
+          {%- render 'pvd-image',
+            image: section.settings.image_1,
+            sizes: '(min-width: 1200px) 548px, (min-width: 750px) calc(50vw - 32px), calc(100vw - 40px)'
+          -%}
+          <figcaption class="pvd-caption">
+            <span class="pvd-caption__title">{{ section.settings.caption_1_title | escape }}</span>
+            <span class="pvd-caption__sub">{{ section.settings.caption_1_text | escape }}</span>
+          </figcaption>
+        </figure>
+        <figure class="pvd-captioned">
+          {%- render 'pvd-image',
+            image: section.settings.image_2,
+            sizes: '(min-width: 1200px) 548px, (min-width: 750px) calc(50vw - 32px), calc(100vw - 40px)'
+          -%}
+          <figcaption class="pvd-caption pvd-caption--green">
+            <span class="pvd-caption__title">{{ section.settings.caption_2_title | escape }}</span>
+            <span class="pvd-caption__sub">{{ section.settings.caption_2_text | escape }}</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    {%- if section.settings.source != blank -%}
+      <p class="pvd-source">{{ section.settings.source }}</p>
+    {%- endif -%}
+
+    {%- if caveats.size > 0 -%}
+      <div class="pvd-grid pvd-grid--3">
+        {%- for block in caveats -%}
+          <p class="pvd-caveat" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</p>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.statement != blank -%}
+      <p class="pvd-statement">{{ section.settings.statement | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Resale value",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "step_number", "label": "Chip number" },
+    { "type": "text", "id": "step_label", "label": "Chip label" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "header", "content": "Ten years on" },
+    { "type": "text", "id": "years_label", "label": "Label" },
+    { "type": "textarea", "id": "years_text", "label": "Text" },
+    { "type": "image_picker", "id": "image_1", "label": "Left image (paver patio)" },
+    { "type": "text", "id": "caption_1_title", "label": "Left caption title" },
+    { "type": "text", "id": "caption_1_text", "label": "Left caption text" },
+    { "type": "image_picker", "id": "image_2", "label": "Right image (deck)" },
+    { "type": "text", "id": "caption_2_title", "label": "Right caption title" },
+    { "type": "text", "id": "caption_2_text", "label": "Right caption text" },
+    { "type": "header", "content": "Footer" },
+    { "type": "inline_richtext", "id": "source", "label": "Source line" },
+    { "type": "textarea", "id": "statement", "label": "Closing statement" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "0%" },
+        { "type": "checkbox", "id": "muted", "label": "Muted colour", "default": false },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "caveat",
+      "name": "Caveat",
+      "settings": [{ "type": "textarea", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [{ "name": "PvD · Resale value" }]
+}
+{% endschema %}

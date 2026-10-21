@@ -1,0 +1,76 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<div class="pvd pvd-faq pvd--sand"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    <div class="pvd-faq__layout">
+      <div class="pvd-header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="pvd-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 class="pvd-faq__title">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}
+          <div class="pvd-faq__lede">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="pvd-faq__list">
+        {%- for block in section.blocks -%}
+          <details class="pvd-faq__item"{% if forloop.first and section.settings.open_first %} open{% endif %} {{ block.shopify_attributes }}>
+            <summary class="pvd-faq__q">
+              <span>{{ block.settings.question | escape }}</span>
+              <span class="pvd-faq__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="pvd-faq__a">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | strip | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PvD · FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "inline_richtext", "id": "text", "label": "Text" },
+    { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PvD · FAQ" }]
+}
+{% endschema %}

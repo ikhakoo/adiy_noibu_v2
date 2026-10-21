@@ -1,0 +1,69 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign paver_items = section.blocks | where: 'type', 'paver_item'
+  assign deck_items = section.blocks | where: 'type', 'deck_item'
+-%}
+
+<div class="pvd pvd-drainage pvd--sand"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    <div class="pvd-grid pvd-grid--2">
+      <div class="pvd-drain">
+        <h3 class="pvd-drain__title">{% render 'pvd-icon', name: 'paver' %}{{ section.settings.paver_title | escape }}</h3>
+        <ul class="pvd-list" role="list">
+          {%- for block in paver_items -%}
+            <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'minus' %}<span>{{ block.settings.text | escape }}</span></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div class="pvd-drain pvd-drain--deck">
+        <h3 class="pvd-drain__title">{% render 'pvd-icon', name: 'deck' %}{{ section.settings.deck_title | escape }}</h3>
+        <ul class="pvd-list" role="list">
+          {%- for block in deck_items -%}
+            <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'check' %}<span>{{ block.settings.text | escape }}</span></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    {%- if section.settings.statement != blank -%}
+      <p class="pvd-statement">{{ section.settings.statement | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Drainage",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "paver_title", "label": "Paver card title", "default": "On a paver patio" },
+    { "type": "text", "id": "deck_title", "label": "Deck card title", "default": "On a deck" },
+    { "type": "textarea", "id": "statement", "label": "Closing statement" }
+  ],
+  "blocks": [
+    {
+      "type": "paver_item",
+      "name": "Paver point",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    },
+    {
+      "type": "deck_item",
+      "name": "Deck point",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [{ "name": "PvD · Drainage" }]
+}
+{% endschema %}

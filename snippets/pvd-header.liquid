@@ -1,0 +1,28 @@
+{%- comment -%}
+  Section header for the Pavers vs. Decks page: optional step chip, eyebrow, H2 and intro.
+
+  Accepts:
+  - step_number: {String} Number shown in the chip (chip is hidden when blank)
+  - step_label: {String} Chip text, e.g. "Step 1 of 7 · Installing pavers"
+  - eyebrow: {String}
+  - heading: {String}
+  - intro: {String}
+  - dark: {Boolean} Use the outlined chip for dark backgrounds
+{%- endcomment -%}
+<div class="pvd-header">
+  {%- if step_number != blank and step_label != blank -%}
+    <span class="pvd-chip{% if dark %} pvd-chip--dark{% endif %}">
+      <span class="pvd-chip__n">{{ step_number | escape }}</span>
+      <span>{{ step_label | escape }}</span>
+    </span>
+  {%- endif -%}
+  {%- if eyebrow != blank -%}
+    <p class="pvd-eyebrow">{{ eyebrow | escape }}</p>
+  {%- endif -%}
+  {%- if heading != blank -%}
+    <h2 class="pvd-h2">{{ heading | escape }}</h2>
+  {%- endif -%}
+  {%- if intro != blank -%}
+    <p class="pvd-intro">{{ intro | escape }}</p>
+  {%- endif -%}
+</div>

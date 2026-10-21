@@ -1,0 +1,78 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<div class="pvd pvd-alt pvd--green"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    <div class="pvd-alt__intro">
+      <div class="pvd-alt__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="pvd-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 class="pvd-alt__title">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p class="pvd-alt__text">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+        <div class="pvd-actions">
+          {%- if section.settings.button_1_label != blank -%}
+            <a class="pvd-btn pvd-btn--white" href="{{ section.settings.button_1_link | default: '#' }}">{{ section.settings.button_1_label | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.button_2_label != blank -%}
+            <a class="pvd-btn pvd-btn--ghost-sage" href="{{ section.settings.button_2_link | default: '#' }}">{{ section.settings.button_2_label | escape }}</a>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.note != blank -%}
+          <p class="pvd-alt__note">{{ section.settings.note | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="pvd-alt__renders">
+        {%- render 'pvd-image', image: section.settings.image_1, sizes: '(min-width: 1200px) 540px, (min-width: 990px) calc(50vw - 40px), calc(100vw - 40px)' -%}
+        <div class="pvd-alt__row">
+          {%- render 'pvd-image', image: section.settings.image_2, sizes: '(min-width: 1200px) 263px, (min-width: 990px) 25vw, 50vw' -%}
+          {%- render 'pvd-image', image: section.settings.image_3, sizes: '(min-width: 1200px) 263px, (min-width: 990px) 25vw, 50vw' -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="pvd-grid pvd-grid--3">
+      {%- for block in section.blocks -%}
+        <div class="pvd-feature" {{ block.shopify_attributes }}>
+          <h3 class="pvd-feature__title">{{ block.settings.title | escape }}</h3>
+          <p class="pvd-feature__text">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · A-DIY alternative",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_1_label", "label": "Primary button label" },
+    { "type": "url", "id": "button_1_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button label" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link", "info": "Use #chat to open live chat" },
+    { "type": "textarea", "id": "note", "label": "Note" },
+    { "type": "image_picker", "id": "image_1", "label": "Main image" },
+    { "type": "image_picker", "id": "image_2", "label": "Small image 1" },
+    { "type": "image_picker", "id": "image_3", "label": "Small image 2" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Feature" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PvD · A-DIY alternative" }]
+}
+{% endschema %}

@@ -1,0 +1,431 @@
+{
+  "sections": {
+    "hero": {
+      "type": "pvd-hero",
+      "settings": {
+        "anchor_id": "",
+        "eyebrow": "Pavers vs. Decks · A homeowner's guide",
+        "heading": "Pavers vs. Decks. What You Should Know Before You Build.",
+        "lede": "Both options can create a beautiful backyard, but their installation processes, long-term maintenance, and total costs can be very different.",
+        "body": "Most homeowners compare the price of the stones to the price of the boards and stop there. The real differences live underneath the surface: how much ground gets moved, what it takes to keep the finished space level and dry, and what the project costs you year after year.",
+        "button_1_label": "Start the comparison",
+        "button_1_link": "#pvd-step-1",
+        "button_2_label": "Skip to the A-DIY kit",
+        "button_2_link": "#pvd-alternative",
+        "image_1": "shopify://shop_images/pavers-vs-decks-hero-deck.png",
+        "caption_1_title": "A deck",
+        "caption_1_text": "Built on footings, above the ground",
+        "image_2": "shopify://shop_images/pavers-vs-decks-hero-paver.png",
+        "caption_2_title": "A paver patio",
+        "caption_2_text": "Built on a compacted base, at grade"
+      }
+    },
+    "journey": {
+      "type": "pvd-journey",
+      "blocks": {
+        "journey-1": { "type": "step", "settings": { "title": "Installing pavers", "link": "#pvd-step-1", "highlight": false } },
+        "journey-2": { "type": "step", "settings": { "title": "What goes wrong", "link": "#pvd-step-2", "highlight": false } },
+        "journey-3": { "type": "step", "settings": { "title": "The DIY reality", "link": "#pvd-step-3", "highlight": false } },
+        "journey-4": { "type": "step", "settings": { "title": "Cost & upkeep", "link": "#pvd-step-4", "highlight": false } },
+        "journey-5": { "type": "step", "settings": { "title": "Resale value", "link": "#pvd-step-5", "highlight": false } },
+        "journey-6": { "type": "step", "settings": { "title": "Your yard", "link": "#pvd-step-6", "highlight": false } },
+        "journey-7": { "type": "step", "settings": { "title": "The alternative", "link": "#pvd-step-7", "highlight": true } }
+      },
+      "block_order": ["journey-1", "journey-2", "journey-3", "journey-4", "journey-5", "journey-6", "journey-7"],
+      "settings": {
+        "label": "Your journey"
+      }
+    },
+    "installing": {
+      "type": "pvd-steps",
+      "blocks": {
+        "step-1": { "type": "step", "settings": { "title": "Mark out and plan", "text": "Lay out the footprint, check for utilities, and decide where water will go before a single shovel goes in." } },
+        "step-2": { "type": "step", "settings": { "title": "Excavate", "text": "The whole area is dug out to several inches below the finished height to make room for base layers. For a typical patio that is a lot of soil to move by hand or by machine." } },
+        "step-3": { "type": "step", "settings": { "title": "Haul away the soil", "text": "Excavated earth has to go somewhere. It is heavy, bulky, and often needs a dumpster, a trailer, or a disposal fee." } },
+        "step-4": { "type": "step", "settings": { "title": "Lay the aggregate base", "text": "Crushed stone is spread in layers to create a stable platform. Too thin, and the surface moves later." } },
+        "step-5": { "type": "step", "settings": { "title": "Compact every layer", "text": "Each lift of base material is run over with a plate compactor. Uneven compaction is the number one reason pavers sink." } },
+        "step-6": { "type": "step", "settings": { "title": "Grade for drainage", "text": "The base is sloped slightly away from the house so rain runs off instead of pooling. This has to be measured, not eyeballed." } },
+        "step-7": { "type": "step", "settings": { "title": "Screed the bedding sand", "text": "A thin, perfectly level layer of sand is pulled across the base with a straight edge. This is the surface the pavers actually sit on." } },
+        "step-8": { "type": "step", "settings": { "title": "Set and cut the pavers", "text": "Stones go down in pattern, and every edge and curve has to be cut to fit with a masonry saw." } },
+        "step-9": { "type": "step", "settings": { "title": "Edge, sand, and compact again", "text": "Edge restraints are installed, joint sand is swept in, and the finished surface is compacted and sealed." } }
+      },
+      "block_order": ["step-1", "step-2", "step-3", "step-4", "step-5", "step-6", "step-7", "step-8", "step-9"],
+      "settings": {
+        "anchor_id": "pvd-step-1",
+        "step_number": "1",
+        "step_label": "Step 1 of 7 · Installing pavers",
+        "eyebrow": "The reality of installing pavers",
+        "heading": "It's Not Just Laying Down Stones.",
+        "intro": "A paver patio is really two projects: the base you never see, and the surface you do. Most of the work, the cost, and the long-term performance is decided by the first one.",
+        "placeholder_label": "Excavation and compacted gravel base · stock photo (replace)",
+        "callout_label": "Why the ground matters more than the stones",
+        "callout_text": "Pavers only stay where the base holds them. A beautiful stone laid on a poorly prepared base will sink, tilt, and separate; a plain stone on a properly built base will stay flat for years. The preparation is the product."
+      }
+    },
+    "problems": {
+      "type": "pvd-problems",
+      "blocks": {
+        "problem-1": { "type": "problem", "settings": { "image": "shopify://shop_images/pavers-vs-decks-problem-sinking.jpg", "title": "Sinking or uneven pavers", "what": "Individual stones or whole areas drop below the surrounding surface, creating dips and trip edges.", "why": "The base was too thin, unevenly compacted, or has washed out underneath from water moving through it.", "fix": "Lift the affected pavers, rebuild and re-compact the base beneath them, re-screed the sand, and reset the stones. For large areas this means redoing the patio." } },
+        "problem-2": { "type": "problem", "settings": { "image": "shopify://shop_images/pavers-vs-decks-problem-weeds.jpg", "title": "Weeds in the joints", "what": "Grass and weeds sprout between the stones within a season or two.", "why": "Wind-blown seed settles into joint sand, and ordinary sand gives roots an easy home.", "fix": "Pull or treat the weeds, blow out the old joint sand, and re-sand with polymeric sand, which hardens when wet. This is a recurring job." } },
+        "problem-3": { "type": "problem", "settings": { "image": "shopify://shop_images/pavers-vs-decks-problem-pooling.jpg", "title": "Water pooling", "what": "Puddles sit on the patio after rain instead of draining away.", "why": "The surface was not graded to a consistent slope, or low spots have developed as the base settled.", "fix": "Minor pooling can be lived with. Real correction means lifting the pavers in the low area and re-grading the base." } },
+        "problem-4": { "type": "problem", "settings": { "image": "shopify://shop_images/pavers-vs-decks-problem-edges.jpg", "title": "Edges separating or shifting", "what": "The outer rows creep outward and gaps open up across the patio.", "why": "Missing or failed edge restraints let the stones migrate under foot traffic and freeze-thaw movement.", "fix": "Install or replace edge restraints, push the field back into place, and re-sand the joints." } },
+        "problem-5": { "type": "problem", "settings": { "image": "shopify://shop_images/pavers-vs-decks-problem-freeze.jpg", "title": "Freeze-thaw movement", "what": "Pavers heave upward in winter and settle unevenly in spring, especially in colder regions.", "why": "Water trapped in or under the base expands as it freezes and pushes the surface up.", "fix": "Improve drainage so water cannot sit in the base. In severe cases the base depth and material need to be rebuilt for the climate." } },
+        "problem-6": { "type": "problem", "settings": { "image": "shopify://shop_images/pavers-vs-decks-problem-cracked.jpg", "title": "Cracked or chipped pavers", "what": "Individual stones split or lose corners.", "why": "A void under the stone, a heavy point load, or de-icing salts breaking down the surface over time.", "fix": "Replace the stone. Matching the original color and texture can be hard once a product line changes." } }
+      },
+      "block_order": ["problem-1", "problem-2", "problem-3", "problem-4", "problem-5", "problem-6"],
+      "settings": {
+        "anchor_id": "pvd-step-2",
+        "step_number": "2",
+        "step_label": "Step 2 of 7 · What goes wrong",
+        "eyebrow": "Paver horror stories",
+        "heading": "The Problems You Don't See in the Pictures.",
+        "intro": "None of these are guaranteed to happen. All of them are common, and almost all trace back to the base, the drainage, or the climate. Here is what each one looks like, why it happens, and what it takes to put right.",
+        "what_label": "What happens.",
+        "why_label": "Why.",
+        "fix_label": "The fix.",
+        "repair_title": "Unplanned repair work",
+        "repair_text": "A small fix turns into a weekend, then a contractor call. Because every fix on a paver patio starts with lifting the surface, small problems are rarely small to repair. Budget time and money for maintenance from year one, and inspect edges and low spots every spring.",
+        "note": "These problems are potential outcomes, most likely when installation or maintenance is inadequate. A well-built, well-maintained paver patio can perform for a long time."
+      }
+    },
+    "diy_reality": {
+      "type": "pvd-diy-reality",
+      "blocks": {
+        "paver-1": { "type": "paver_item", "settings": { "text": "Excavating a large area by hand or with rented equipment" } },
+        "paver-2": { "type": "paver_item", "settings": { "text": "Moving tons of gravel, sand, and stone across the yard" } },
+        "paver-3": { "type": "paver_item", "settings": { "text": "Renting and operating a plate compactor and masonry saw" } },
+        "paver-4": { "type": "paver_item", "settings": { "text": "Creating a consistent slope across the whole base" } },
+        "paver-5": { "type": "paver_item", "settings": { "text": "Achieving uniform compaction in every layer" } },
+        "paver-6": { "type": "paver_item", "settings": { "text": "Cutting stones accurately for edges and curves" } },
+        "paver-7": { "type": "paver_item", "settings": { "text": "Managing drainage so water never sits in the base" } },
+        "paver-8": { "type": "paver_item", "settings": { "text": "Going back to fix mistakes after the surface is down" } },
+        "deck-1": { "type": "deck_item", "settings": { "text": "Place the included footings on level ground" } },
+        "deck-2": { "type": "deck_item", "settings": { "text": "Set the pre-engineered, pre-cut frame sections" } },
+        "deck-3": { "type": "deck_item", "settings": { "text": "Fasten the boards with a drill. That is the only tool you need" } },
+        "deck-4": { "type": "deck_item", "settings": { "text": "Add steps and railings from the same kit system" } },
+        "deck-5": { "type": "deck_item", "settings": { "text": "Call or chat with a real person if you get stuck" } }
+      },
+      "block_order": ["paver-1", "paver-2", "paver-3", "paver-4", "paver-5", "paver-6", "paver-7", "paver-8", "deck-1", "deck-2", "deck-3", "deck-4", "deck-5"],
+      "settings": {
+        "anchor_id": "pvd-step-3",
+        "step_number": "3",
+        "step_label": "Step 3 of 7 · The DIY reality",
+        "eyebrow": "DIY · What you're really signing up for",
+        "heading": "A DIY Project. With a Lot More DIY.",
+        "intro": "On video, laying pavers looks like a satisfying weekend. In a real yard, the hard parts are the ones the camera skips: the digging, the hauling, the compacting, and the measuring that has to be right the first time.",
+        "paver_label": "Laying a paver patio means",
+        "deck_label": "Assembling an A-DIY deck means",
+        "photo_1": "shopify://shop_images/pavers-vs-decks-diy-frame-footings.png",
+        "photo_2": "shopify://shop_images/pavers-vs-decks-diy-boards-down.jpg",
+        "note": "A-DIY kits still need a prepared, reasonably level spot and the included footings set correctly. We simplify the structure; we do not skip it."
+      }
+    },
+    "cost": {
+      "type": "pvd-cost",
+      "blocks": {
+        "line-1": { "type": "line_item", "settings": { "title": "Pavers", "text": "The number you see in the store. Usually a minority of the finished cost.", "depends_on": "Product" } },
+        "line-2": { "type": "line_item", "settings": { "title": "Excavation", "text": "Labor or machine time to dig out the full footprint to depth.", "depends_on": "Your yard" } },
+        "line-3": { "type": "line_item", "settings": { "title": "Soil disposal", "text": "Dumpster, hauling, or tipping fees for everything dug out.", "depends_on": "Your yard" } },
+        "line-4": { "type": "line_item", "settings": { "title": "Gravel and sand", "text": "Base aggregate and bedding sand, delivered by the ton.", "depends_on": "Size" } },
+        "line-5": { "type": "line_item", "settings": { "title": "Equipment rental", "text": "Plate compactor, masonry saw, wheelbarrows, and sometimes a mini excavator.", "depends_on": "Method" } },
+        "line-6": { "type": "line_item", "settings": { "title": "Labor", "text": "Either a crew's time or your own weekends, often several of them.", "depends_on": "Method" } },
+        "line-7": { "type": "line_item", "settings": { "title": "Cutting and waste", "text": "Edge cuts, curves, and broken stones add material you do not see in the finished patio.", "depends_on": "Shape" } },
+        "line-8": { "type": "line_item", "settings": { "title": "Edging and sealing", "text": "Edge restraints, polymeric sand, and sealer.", "depends_on": "Size" } },
+        "line-9": { "type": "line_item", "settings": { "title": "Site access", "text": "A back yard with no gate for machinery changes the plan and the price.", "depends_on": "Your yard" } },
+        "kit-1": { "type": "kit_item", "settings": { "text": "One price for the structure, surface, footings, and hardware" } },
+        "kit-2": { "type": "kit_item", "settings": { "text": "Priced the same nationwide, shipped to your driveway" } },
+        "kit-3": { "type": "kit_item", "settings": { "text": "No excavation, no aggregate, no disposal, no machine rental" } },
+        "kit-4": { "type": "kit_item", "settings": { "text": "Steps and railings priced as add-ons, not as surprises" } }
+      },
+      "block_order": ["line-1", "line-2", "line-3", "line-4", "line-5", "line-6", "line-7", "line-8", "line-9", "kit-1", "kit-2", "kit-3", "kit-4"],
+      "settings": {
+        "anchor_id": "pvd-step-4",
+        "step_number": "4",
+        "step_label": "Step 4 of 7 · Cost & upkeep",
+        "eyebrow": "Cost · What the initial price doesn't tell you",
+        "heading": "The Pavers Are Only Part of the Bill.",
+        "intro": "Inexpensive stones do not make an inexpensive patio. The stones are usually one line on a much longer list, and most of the other lines depend on your yard, not on the product.",
+        "bill_label": "A typical paver patio bill",
+        "depends_label": "Depends on",
+        "image": "shopify://shop_images/pavers-vs-decks-kit-render.jpg",
+        "kit_label": "What an engineered deck kit changes",
+        "note": "Which option costs less depends on project size, materials, site conditions, and how it gets installed. For some yards and sizes a paver patio is cheaper; the difference is that a kit price is known before you start."
+      }
+    },
+    "maintenance": {
+      "type": "pvd-table",
+      "blocks": {
+        "m-1": { "type": "row", "settings": { "label": "Weeds", "cell_2": "Pull and re-sand joints, usually every year or two", "cell_3": "None in the surface", "cell_4": "None in the surface" } },
+        "m-2": { "type": "row", "settings": { "label": "Washing", "cell_2": "Pressure wash, then replace the joint sand it blows out", "cell_3": "Hose or light wash", "cell_4": "Hose or light wash" } },
+        "m-3": { "type": "row", "settings": { "label": "Stains", "cell_2": "Scrub or replace stained stones; seal to prevent", "cell_3": "Clean and re-finish", "cell_4": "Clean; stains lift easily" } },
+        "m-4": { "type": "row", "settings": { "label": "Surface finish", "cell_2": "Re-seal every few years", "cell_3": "Stain or seal every one to three years", "cell_4": "No staining or sealing" } },
+        "m-5": { "type": "row", "settings": { "label": "Drainage problems", "cell_2": "Lift and re-grade the affected area", "cell_3": "Water passes between boards", "cell_4": "Water passes between boards" } },
+        "m-6": { "type": "row", "settings": { "label": "Uneven areas", "cell_2": "Lift, rebuild base, reset", "cell_3": "Rarely; check posts and footings", "cell_4": "Rarely; check posts and footings" } },
+        "m-7": { "type": "row", "settings": { "label": "Structure check", "cell_2": "Edges and low spots each spring", "cell_3": "Fasteners and footings each spring", "cell_4": "Fasteners and footings each spring" } }
+      },
+      "block_order": ["m-1", "m-2", "m-3", "m-4", "m-5", "m-6", "m-7"],
+      "settings": {
+        "anchor_id": "pvd-maintenance",
+        "background": "white",
+        "step_number": "",
+        "step_label": "",
+        "eyebrow": "Maintenance · The cost after installation",
+        "heading": "The Installation Ends. The Upkeep Doesn't.",
+        "intro": "The price on day one is the installation cost. The price over ten years is the ownership cost. They are not the same number, and for pavers the gap tends to be wider than people expect.",
+        "column_1": "Ongoing job",
+        "column_2": "Paver patio",
+        "column_3": "Wood deck",
+        "column_4": "Composite deck",
+        "better_label": "When pavers are the better choice",
+        "note": "Wood decks trade paver-style surface work for finishing work; composite removes most of it. Every option needs a yearly look-over."
+      }
+    },
+    "roi": {
+      "type": "pvd-roi",
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "value": "94.9%", "muted": false, "title": "Wood deck addition", "text": "Average cost recovered at resale" } },
+        "stat-2": { "type": "stat", "settings": { "value": "88.5%", "muted": false, "title": "Composite deck addition", "text": "Average cost recovered at resale" } },
+        "stat-3": { "type": "stat", "settings": { "value": "≈46%", "muted": true, "title": "Backyard patio", "text": "For the specific patio project analyzed" } },
+        "caveat-1": { "type": "caveat", "settings": { "text": "The projects measured are not identical. The patio in the report is a larger, feature-rich installation; the deck figures describe a defined deck addition. They are not a like-for-like comparison with an A-DIY kit." } },
+        "caveat-2": { "type": "caveat", "settings": { "text": "None of these are guaranteed returns. Installation cost, material choice, regional preference, and the project specification all move the number." } },
+        "caveat-3": { "type": "caveat", "settings": { "text": "Other credible research places patio returns higher in some markets. Treat the figures as a signal, not a promise." } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3", "caveat-1", "caveat-2", "caveat-3"],
+      "settings": {
+        "anchor_id": "pvd-step-5",
+        "step_number": "5",
+        "step_label": "Step 5 of 7 · Resale value",
+        "eyebrow": "Return on investment",
+        "heading": "A Backyard Investment Should Make Sense Beyond Today.",
+        "intro": "Resale value is only one way to judge a backyard project, but it is a useful one. Independent research tracks how much of a project's cost homeowners recover at sale.",
+        "years_label": "What \"return\" looks like ten years on",
+        "years_text": "A patio only holds its value while its base holds. Settled, weedy, uneven pavers are a repair bill a buyer sees straight away. A deck built on footings, with a 25-year composite warranty, is still the deck you built.",
+        "image_1": "shopify://shop_images/pavers-vs-decks-roi-paver-years.jpg",
+        "caption_1_title": "A paver patio, years in",
+        "caption_1_text": "Settled · weeds · pooling · separated edges",
+        "image_2": "shopify://shop_images/pavers-vs-decks-hero-deck.png",
+        "caption_2_title": "An A-DIY deck, years in",
+        "caption_2_text": "Level · dry · 25-year composite warranty",
+        "source": "Source: Zonda · 2025 Cost vs. Value Report · national averages · zondahome.com/2025-cost-vs-value-report",
+        "statement": "What the data does suggest: a well-built deck is consistently among the better-returning outdoor projects, and a lower upfront cost tends to improve the ratio."
+      }
+    },
+    "slope": {
+      "type": "pvd-slope",
+      "blocks": {
+        "slope-paver-1": { "type": "paver_item", "settings": { "text": "Grading the site, which can mean cutting into the high side and filling the low side" } },
+        "slope-paver-2": { "type": "paver_item", "settings": { "text": "More excavation and more soil to dispose of" } },
+        "slope-paver-3": { "type": "paver_item", "settings": { "text": "A retaining wall when the drop is more than a few inches" } },
+        "slope-paver-4": { "type": "paver_item", "settings": { "text": "Extra attention to drainage, because water now runs toward the patio" } },
+        "slope-deck-1": { "type": "deck_item", "settings": { "text": "A frame that sits level on posts and footings, whatever the ground does underneath" } },
+        "slope-deck-2": { "type": "deck_item", "settings": { "text": "Longer posts on the low side instead of a wall" } },
+        "slope-deck-3": { "type": "deck_item", "settings": { "text": "Water passing under and between the structure" } },
+        "slope-deck-4": { "type": "deck_item", "settings": { "text": "Choosing a height that suits the yard" } }
+      },
+      "block_order": ["slope-paver-1", "slope-paver-2", "slope-paver-3", "slope-paver-4", "slope-deck-1", "slope-deck-2", "slope-deck-3", "slope-deck-4"],
+      "settings": {
+        "anchor_id": "pvd-step-6",
+        "step_number": "6",
+        "step_label": "Step 6 of 7 · Your yard",
+        "eyebrow": "Sloped backyards",
+        "heading": "Your Backyard Doesn't Have to Be Perfectly Flat.",
+        "intro": "Pavers need the ground to be level. A deck brings its own level with it.",
+        "image": "shopify://shop_images/pavers-vs-decks-slope-deck.png",
+        "paver_label": "On a slope, a paver patio means",
+        "deck_label": "On a slope, a deck means",
+        "note": "A-DIY kits come in multiple heights and freestanding configurations, so a level living space is possible on yards that would otherwise need serious earthwork. A sloped site still needs its footings placed correctly and, for taller decks, local requirements checked."
+      }
+    },
+    "drainage": {
+      "type": "pvd-drainage",
+      "blocks": {
+        "drain-paver-1": { "type": "paver_item", "settings": { "text": "A paver surface sheds water only if it is graded to; poor grading sends it into puddles or toward the house" } },
+        "drain-paver-2": { "type": "paver_item", "settings": { "text": "An inadequate or poorly compacted base lets water collect underneath, which leads to settling and freeze-thaw heave" } },
+        "drain-paver-3": { "type": "paver_item", "settings": { "text": "Heavy clay soil or a low spot in the yard makes both problems worse" } },
+        "drain-deck-1": { "type": "deck_item", "settings": { "text": "Rain passes between the boards and drains through the ground below, so the surface itself does not pool" } },
+        "drain-deck-2": { "type": "deck_item", "settings": { "text": "The frame sits on footings above the soil instead of in it" } },
+        "drain-deck-3": { "type": "deck_item", "settings": { "text": "The ground under a deck still needs to drain, and water should be directed away from the house" } }
+      },
+      "block_order": ["drain-paver-1", "drain-paver-2", "drain-paver-3", "drain-deck-1", "drain-deck-2", "drain-deck-3"],
+      "settings": {
+        "anchor_id": "pvd-drainage",
+        "eyebrow": "Drainage and water",
+        "heading": "What Happens When It Rains?",
+        "intro": "Water is the quiet cause behind most patio problems, and the thing to plan for before anything else.",
+        "paver_title": "On a paver patio",
+        "deck_title": "On a deck",
+        "statement": "A deck does not make water go away. It changes where water sits: under the structure rather than in it."
+      }
+    },
+    "living": {
+      "type": "pvd-living",
+      "blocks": {
+        "tile-1": { "type": "tile", "settings": { "image": "shopify://shop_images/pavers-vs-decks-living-room.png", "title": "A defined room", "text": "Raised a step above the yard, a deck reads as its own space. Furniture has a place; the lawn stays the lawn." } },
+        "tile-2": { "type": "tile", "settings": { "image": "shopify://shop_images/pavers-vs-decks-living-steps.png", "title": "Steps and railings", "text": "Add steps where you want to come and go, and railings where you want to sit with a cup of coffee and not think about the edge." } },
+        "tile-3": { "type": "tile", "settings": { "image": "shopify://shop_images/pavers-vs-decks-slope-deck.png", "title": "Freestanding or attached", "text": "Put it off the back door, or out by the fire pit where the evening light is. A freestanding platform goes where the yard is best, not where the house is." } },
+        "tile-4": { "type": "tile", "settings": { "image": "shopify://shop_images/pavers-vs-decks-living-dusk.png", "title": "Room to grow", "text": "Pergolas, planters, lighting, and an outdoor table all sit naturally on a level, built surface." } }
+      },
+      "block_order": ["tile-1", "tile-2", "tile-3", "tile-4"],
+      "settings": {
+        "anchor_id": "pvd-living-space",
+        "eyebrow": "Living space and design flexibility",
+        "heading": "More Than a Surface. A Place to Live.",
+        "intro": "A patio is a floor. A deck is a room without walls: a defined, raised space with an edge, a step down to the lawn, and a railing to lean on at the end of the day."
+      }
+    },
+    "comparison": {
+      "type": "pvd-table",
+      "blocks": {
+        "c-1": { "type": "row", "settings": { "label": "Installation", "cell_2": "Excavate, base, compact, grade, screed, set, cut, edge, sand", "cell_3": "Set footings, assemble frame, fasten boards", "cell_4": "" } },
+        "c-2": { "type": "row", "settings": { "label": "DIY complexity", "cell_2": "High: heavy, technical, unforgiving of mistakes", "cell_3": "Moderate: guided assembly, pre-cut parts", "cell_4": "" } },
+        "c-3": { "type": "row", "settings": { "label": "Specialized equipment", "cell_2": "Plate compactor, masonry saw, often an excavator", "cell_3": "A drill", "cell_4": "" } },
+        "c-4": { "type": "row", "settings": { "label": "Site preparation", "cell_2": "Full excavation and base construction", "cell_3": "A reasonably level spot for the footings", "cell_4": "" } },
+        "c-5": { "type": "row", "settings": { "label": "Initial cost", "cell_2": "Varies widely with site and size; stones are a fraction of it", "cell_3": "Known kit price, same nationwide, plus delivery", "cell_4": "" } },
+        "c-6": { "type": "row", "settings": { "label": "Ongoing maintenance", "cell_2": "Weeds, joint sand, washing, sealing, re-leveling", "cell_3": "Composite: wash. Wood: stain or seal periodically", "cell_4": "" } },
+        "c-7": { "type": "row", "settings": { "label": "Sloped yards", "cell_2": "Grading, extra excavation, possibly a retaining wall", "cell_3": "Level frame on posts; choose a height", "cell_4": "" } },
+        "c-8": { "type": "row", "settings": { "label": "Drainage", "cell_2": "Must be graded into the base and surface", "cell_3": "Passes between boards; ground below still needs to drain", "cell_4": "" } },
+        "c-9": { "type": "row", "settings": { "label": "Repair considerations", "cell_2": "Most repairs start by lifting the surface", "cell_3": "Replace a board or fastener", "cell_4": "" } },
+        "c-10": { "type": "row", "settings": { "label": "Design flexibility", "cell_2": "Flat, at grade; shapes and patterns", "cell_3": "Raised, freestanding or attached; steps and railings", "cell_4": "" } },
+        "c-11": { "type": "row", "settings": { "label": "Resale value", "cell_2": "Positive; lower average recovery in the Zonda report", "cell_3": "Positive; higher average recovery in the Zonda report", "cell_4": "" } },
+        "better-1": { "type": "better_item", "settings": { "text": "A flat, well-drained site with easy machine access" } },
+        "better-2": { "type": "better_item", "settings": { "text": "A walkway, fire-pit circle, or small area at ground level" } },
+        "better-3": { "type": "better_item", "settings": { "text": "A look or pattern that only stone can give" } },
+        "better-4": { "type": "better_item", "settings": { "text": "A home where a raised structure is not wanted or allowed" } }
+      },
+      "block_order": ["c-1", "c-2", "c-3", "c-4", "c-5", "c-6", "c-7", "c-8", "c-9", "c-10", "c-11", "better-1", "better-2", "better-3", "better-4"],
+      "settings": {
+        "anchor_id": "pvd-step-7",
+        "background": "sand",
+        "step_number": "7",
+        "step_label": "Step 7 of 7 · The alternative",
+        "eyebrow": "The complete comparison",
+        "heading": "Two Great Backyard Options. Two Very Different Projects.",
+        "intro": "Side by side, with the honest version of each column.",
+        "column_1": "",
+        "column_2": "Paver patio",
+        "column_3": "A-DIY deck kit",
+        "column_4": "",
+        "better_label": "When pavers are the better choice",
+        "note": ""
+      }
+    },
+    "alternative": {
+      "type": "pvd-alternative",
+      "blocks": {
+        "feature-1": { "type": "feature", "settings": { "title": "Engineered components", "text": "Modular frame sections, pre-cut boards, and the footings included. A sound structure, designed once and built many times." } },
+        "feature-2": { "type": "feature", "settings": { "title": "Drill-based assembly", "text": "One tool. Parts are pre-cut and pre-drilled, so assembly is fastening, not fabricating." } },
+        "feature-3": { "type": "feature", "settings": { "title": "Guided instructions", "text": "Step-by-step guides, plus a real person on the phone or chat when you want one." } },
+        "feature-4": { "type": "feature", "settings": { "title": "Product options", "text": "Pressure-treated wood or composite. Multiple sizes and heights. Steps and railings that belong to the same system." } },
+        "feature-5": { "type": "feature", "settings": { "title": "Nationwide delivery", "text": "Shipped to your driveway across the continental US, typically in 10 to 14 business days." } },
+        "feature-6": { "type": "feature", "settings": { "title": "Built to last", "text": "25-year warranty on composite; 5-year structural warranty on the wood kit." } }
+      },
+      "block_order": ["feature-1", "feature-2", "feature-3", "feature-4", "feature-5", "feature-6"],
+      "settings": {
+        "anchor_id": "pvd-alternative",
+        "eyebrow": "The A-DIY alternative",
+        "heading": "Skip the Digging. Start Living.",
+        "text": "A-DIY is a professional-grade deck, engineered into a kit a homeowner can assemble. Everything you have read above is the reason it exists.",
+        "button_1_label": "Explore Deck Kits",
+        "button_1_link": "shopify://collections/deck-kits",
+        "button_2_label": "Chat With a Design Consultant",
+        "button_2_link": "#chat",
+        "note": "We simplify how a deck gets built. We do not simplify what a deck needs to be.",
+        "image_1": "shopify://shop_images/pavers-vs-decks-kit-render.jpg",
+        "image_2": "shopify://shop_images/pavers-vs-decks-alt-boards.png",
+        "image_3": "shopify://shop_images/pavers-vs-decks-alt-layers.png"
+      }
+    },
+    "reviews": {
+      "type": "pvd-reviews",
+      "blocks": {
+        "video-1": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-1.jpg", "title": "Why we finally added a deck" } },
+        "video-2": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-2.jpg", "title": "A deck built in two days" } },
+        "video-3": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-3.png", "title": "Built solo, first ever DIY project" } },
+        "video-4": { "type": "video", "settings": { "poster": "shopify://shop_images/pavers-vs-decks-video-4.jpg", "title": "Boards going down, step by step" } },
+        "review-1": { "type": "review", "settings": { "source": "★★★★★ · Trustpilot", "text": "I'm just the person to prove this product is foolproof. Very easy to follow and build. I highly recommend using A-DIY. They are easy to work with and they use a great carrier in Estes.", "author": "Thomas" } },
+        "review-2": { "type": "review", "settings": { "source": "★★★★★ · Google Reviews", "text": "I'm a 62yr old nurse. I put this together by myself. The instructions are wonderful. I feel blessed to have this space for rest and relaxation.", "author": "Mary O." } },
+        "review-3": { "type": "review", "settings": { "source": "★★★★★ · Trustpilot", "text": "Precut and color coded pieces were extremely easy to work with. Good quality material.", "author": "Cindy A. Siller" } }
+      },
+      "block_order": ["video-1", "video-2", "video-3", "video-4", "review-1", "review-2", "review-3"],
+      "settings": {
+        "anchor_id": "pvd-reviews",
+        "eyebrow": "Customer confidence",
+        "heading": "Built by Homeowners. Made for Living.",
+        "intro": "The best argument for a kit is a stranger's backyard. Here are real customers, real assemblies, and real finished decks: people who were where you are now, and built it anyway.",
+        "rating": "4.8",
+        "rating_text": "from 1,751 verified reviews · 91% five stars",
+        "badge_1": "Trustpilot",
+        "badge_2": "Google Reviews",
+        "button_label": "See All Customer Reviews",
+        "button_link": "shopify://pages/reviews"
+      }
+    },
+    "faq": {
+      "type": "pvd-faq",
+      "blocks": {
+        "faq-1": { "type": "question", "settings": { "question": "Are pavers cheaper than decking?", "answer": "<p>Sometimes, and it depends almost entirely on the site. The stones themselves are often inexpensive, but excavation, base material, disposal, equipment, and labor usually make up most of a paver patio's finished cost, and all of them scale with your yard. A deck kit has a known price before you start, and no site earthwork. On a flat, accessible yard with a small footprint, pavers can come in lower; on a sloped or awkward site the comparison usually flips.</p>" } },
+        "faq-2": { "type": "question", "settings": { "question": "Is a paver patio a good DIY project?", "answer": "<p>It can be, but it is a bigger job than it looks. Most of the work is in the base: excavating, hauling soil away, spreading and compacting gravel in layers, grading for drainage, and screeding sand perfectly level, usually with a rented plate compactor and masonry saw. Mistakes in the base tend to show up later as sinking, pooling, or shifting stones, and fixing them means lifting the surface.</p>" } },
+        "faq-3": { "type": "question", "settings": { "question": "Why do pavers sink?", "answer": "<p>Almost always because of what is underneath. A base that was too thin, unevenly compacted, or washed out by water moving through it lets stones drop below the surrounding surface. The fix is to lift the affected pavers, rebuild and re-compact the base, re-screed the sand, and reset the stones.</p>" } },
+        "faq-4": { "type": "question", "settings": { "question": "Can weeds grow between pavers?", "answer": "<p>Yes. Wind-blown seed settles into the joint sand, and ordinary sand gives roots an easy home, so weeds often appear within a season or two. Re-sanding with polymeric sand, which hardens when wet, helps, but pulling weeds and re-sanding joints is a recurring job. A deck surface has no joints for weeds to grow in.</p>" } },
+        "faq-5": { "type": "question", "settings": { "question": "Is a deck better for a sloped backyard?", "answer": "<p>Usually. Pavers need level ground, so a slope means grading, extra excavation and disposal, and often a retaining wall. A deck frame sits level on posts and footings whatever the ground does underneath, with longer posts on the low side instead of a wall. A sloped site still needs its footings placed correctly and, for taller decks, local requirements checked.</p>" } },
+        "faq-6": { "type": "question", "settings": { "question": "Which needs more maintenance?", "answer": "<p>A paver patio typically needs the most ongoing work: weeding and re-sanding joints, pressure washing, re-sealing every few years, and lifting and resetting areas that settle. A wood deck needs cleaning and staining or sealing every one to three years. A composite deck needs little more than a wash and a yearly check of fasteners and footings.</p>" } },
+        "faq-7": { "type": "question", "settings": { "question": "Are pavers or decks better for resale value?", "answer": "<p>Both add value, but decks have recovered more of their cost on average. In the Zonda 2025 Cost vs. Value Report, a wood deck addition recovered 94.9% of its cost at resale and a composite deck 88.5%, compared with roughly 46% for the backyard patio project analyzed. The projects are not identical and none of these are guaranteed returns, so treat the figures as a signal, not a promise.</p>" } },
+        "faq-8": { "type": "question", "settings": { "question": "How long do paver patios last?", "answer": "<p>The stones themselves are durable; how long the patio stays flat and usable depends on the base underneath and how well it is maintained. A well-built, well-maintained paver patio can perform for a long time. A thin or poorly compacted base, poor drainage, or freeze-thaw cycles can lead to settling, heaving, and repairs much sooner.</p>" } },
+        "faq-9": { "type": "question", "settings": { "question": "How long does a wood deck last?", "answer": "<p>It depends on the lumber, the climate, and the upkeep. Pressure-treated wood lasts longest when it is cleaned and stained or sealed every one to three years and the fasteners and footings are checked each spring. A-DIY wood deck kits carry a 5-year structural warranty.</p>" } },
+        "faq-10": { "type": "question", "settings": { "question": "What about composite decking?", "answer": "<p>Composite removes most of the finishing work: no staining or sealing, stains lift easily, and routine care is a hose or light wash. It typically costs more up front than pressure-treated wood. A-DIY composite deck kits are backed by a 25-year warranty.</p>" } },
+        "faq-11": { "type": "question", "settings": { "question": "Can I build a deck without hiring a contractor?", "answer": "<p>Yes. An A-DIY kit arrives with pre-engineered, pre-cut frame sections, boards, footings, and hardware, and a drill is the only tool you need. You place the footings on a prepared, reasonably level spot, set the frame, and fasten the boards, with step-by-step guides and a real person on the phone or chat if you get stuck.</p>" } },
+        "faq-12": { "type": "question", "settings": { "question": "What makes A-DIY different from traditional DIY decking?", "answer": "<p>Traditional DIY decking means designing the structure, buying and cutting lumber, and building the frame from scratch. A-DIY is a professional-grade deck engineered into a kit: modular frame sections, pre-cut and pre-drilled boards, and footings included, so assembly is fastening, not fabricating. It ships to your driveway at a price that is the same nationwide and known before you start.</p>" } },
+        "faq-13": { "type": "question", "settings": { "question": "Does a deck require permits or special footings?", "answer": "<p>Permit rules vary by city and county, and often depend on the deck's height, size, and whether it attaches to the house, so check with your local building department before you build. A-DIY kits include their footings, which need to be set correctly on a prepared, reasonably level spot; for taller decks or sloped sites, check local requirements first.</p>" } },
+        "faq-14": { "type": "question", "settings": { "question": "Can a deck be built in the middle of a backyard?", "answer": "<p>Yes. A freestanding deck does not need to attach to the house, so it can go wherever the yard is best: out by the fire pit, under a tree, or where the evening light is. It still needs a reasonably level spot for its footings and ground underneath that drains.</p>" } }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6", "faq-7", "faq-8", "faq-9", "faq-10", "faq-11", "faq-12", "faq-13", "faq-14"],
+      "settings": {
+        "anchor_id": "pvd-faq",
+        "eyebrow": "Frequently asked questions",
+        "heading": "The questions people ask before they decide.",
+        "text": "Still weighing it up? <a href=\"/pages/free-design-consultation\" title=\"Free design consultation\">Book a free design consultation</a> and talk it through with a real person.",
+        "open_first": true
+      }
+    },
+    "final_cta": {
+      "type": "pvd-final-cta",
+      "blocks": {
+        "trust-1": { "type": "trust_item", "settings": { "text": "★ 4.8 / 5 from 1,751 reviews" } },
+        "trust-2": { "type": "trust_item", "settings": { "text": "25-year composite warranty" } },
+        "trust-3": { "type": "trust_item", "settings": { "text": "0% APR financing with Affirm, on approval" } },
+        "trust-4": { "type": "trust_item", "settings": { "text": "Delivered in 10–14 business days" } },
+        "trust-5": { "type": "trust_item", "settings": { "text": "Only tool: a drill" } }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4", "trust-5"],
+      "settings": {
+        "anchor_id": "",
+        "image": "shopify://shop_images/pavers-vs-decks-living-dusk.png",
+        "heading": "The Backyard You Wanted. Without the Project You Didn't.",
+        "lede": "You now know what a paver patio really involves: the digging, the base, the grading, the upkeep, and the repairs that start by lifting the surface. You also know what a deck does differently, and why.",
+        "body": "An A-DIY kit gives you a professionally engineered deck, delivered to your driveway, assembled with a drill, and backed by a warranty. The hard part has already been done. What is left is the part you were looking forward to.",
+        "button_1_label": "Find Your Deck",
+        "button_1_link": "shopify://collections/deck-kits",
+        "button_2_label": "Book a free design consultation",
+        "button_2_link": "shopify://pages/free-design-consultation"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "journey",
+    "installing",
+    "problems",
+    "diy_reality",
+    "cost",
+    "maintenance",
+    "roi",
+    "slope",
+    "drainage",
+    "living",
+    "comparison",
+    "alternative",
+    "reviews",
+    "faq",
+    "final_cta"
+  ]
+}

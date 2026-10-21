@@ -1,0 +1,84 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+<div class="pvd pvd-hero pvd--sand"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    <div class="pvd-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pvd-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 class="pvd-hero__title">{{ section.settings.heading | escape }}</h1>
+      {%- if section.settings.lede != blank -%}
+        <p class="pvd-hero__lede">{{ section.settings.lede | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="pvd-hero__body">{{ section.settings.body | escape }}</p>
+      {%- endif -%}
+      <div class="pvd-actions">
+        {%- if section.settings.button_1_label != blank -%}
+          <a class="pvd-btn pvd-btn--primary" href="{{ section.settings.button_1_link | default: '#' }}">
+            {{- section.settings.button_1_label | escape -}}
+            {%- render 'pvd-icon', name: 'arrow-down' -%}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a class="pvd-btn pvd-btn--outline" href="{{ section.settings.button_2_link | default: '#' }}">
+            {{- section.settings.button_2_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="pvd-grid pvd-grid--2">
+      <figure class="pvd-captioned">
+        {%- render 'pvd-image',
+          image: section.settings.image_1,
+          sizes: '(min-width: 1200px) 548px, (min-width: 750px) calc(50vw - 32px), calc(100vw - 40px)',
+          eager: true
+        -%}
+        <figcaption class="pvd-caption">
+          <span class="pvd-caption__title">{{ section.settings.caption_1_title | escape }}</span>
+          <span class="pvd-caption__sub">{{ section.settings.caption_1_text | escape }}</span>
+        </figcaption>
+      </figure>
+      <figure class="pvd-captioned">
+        {%- render 'pvd-image',
+          image: section.settings.image_2,
+          sizes: '(min-width: 1200px) 548px, (min-width: 750px) calc(50vw - 32px), calc(100vw - 40px)',
+          eager: true
+        -%}
+        <figcaption class="pvd-caption">
+          <span class="pvd-caption__title">{{ section.settings.caption_2_title | escape }}</span>
+          <span class="pvd-caption__sub">{{ section.settings.caption_2_text | escape }}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Pavers vs. Decks · A homeowner's guide" },
+    { "type": "textarea", "id": "heading", "label": "Heading (H1)", "default": "Pavers vs. Decks. What You Should Know Before You Build." },
+    { "type": "textarea", "id": "lede", "label": "Lede" },
+    { "type": "textarea", "id": "body", "label": "Body" },
+    { "type": "text", "id": "button_1_label", "label": "Primary button label", "default": "Start the comparison" },
+    { "type": "url", "id": "button_1_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button label", "default": "Skip to the A-DIY kit" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link" },
+    { "type": "header", "content": "Left image" },
+    { "type": "image_picker", "id": "image_1", "label": "Image" },
+    { "type": "text", "id": "caption_1_title", "label": "Caption title", "default": "A deck" },
+    { "type": "text", "id": "caption_1_text", "label": "Caption text", "default": "Built on footings, above the ground" },
+    { "type": "header", "content": "Right image" },
+    { "type": "image_picker", "id": "image_2", "label": "Image" },
+    { "type": "text", "id": "caption_2_title", "label": "Caption title", "default": "A paver patio" },
+    { "type": "text", "id": "caption_2_text", "label": "Caption text", "default": "Built on a compacted base, at grade" }
+  ],
+  "presets": [{ "name": "PvD · Hero" }]
+}
+{% endschema %}

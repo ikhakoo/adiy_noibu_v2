@@ -1,0 +1,93 @@
+{{ 'pavers-vs-decks.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign line_items = section.blocks | where: 'type', 'line_item'
+  assign kit_items = section.blocks | where: 'type', 'kit_item'
+-%}
+
+<div class="pvd pvd-cost pvd--sand"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="pvd__inner">
+    {%- render 'pvd-header',
+      step_number: section.settings.step_number,
+      step_label: section.settings.step_label,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      intro: section.settings.intro
+    -%}
+
+    <div class="pvd-cost__layout">
+      <div class="pvd-bill">
+        <div class="pvd-bill__head">
+          <p class="pvd-label">{{ section.settings.bill_label | escape }}</p>
+          <p class="pvd-label">{{ section.settings.depends_label | escape }}</p>
+        </div>
+        {%- for block in line_items -%}
+          <div class="pvd-bill__row" {{ block.shopify_attributes }}>
+            <div class="pvd-bill__copy">
+              <h3 class="pvd-bill__title">{{ block.settings.title | escape }}</h3>
+              <p class="pvd-bill__desc">{{ block.settings.text | escape }}</p>
+            </div>
+            <p class="pvd-bill__tag">{{ block.settings.depends_on | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="pvd-kit">
+        {%- render 'pvd-image',
+          image: section.settings.image,
+          sizes: '(min-width: 1200px) 452px, calc(100vw - 40px)'
+        -%}
+        <div class="pvd-kit__box">
+          <p class="pvd-label">{{ section.settings.kit_label | escape }}</p>
+          <ul class="pvd-list" role="list">
+            {%- for block in kit_items -%}
+              <li {{ block.shopify_attributes }}>{% render 'pvd-icon', name: 'check-white' %}<span>{{ block.settings.text | escape }}</span></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <p class="pvd-note pvd-note--wide">{{ section.settings.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PvD · Cost",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "step_number", "label": "Chip number" },
+    { "type": "text", "id": "step_label", "label": "Chip label" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "bill_label", "label": "Bill label", "default": "A typical paver patio bill" },
+    { "type": "text", "id": "depends_label", "label": "\"Depends on\" label", "default": "Depends on" },
+    { "type": "image_picker", "id": "image", "label": "Kit image" },
+    { "type": "text", "id": "kit_label", "label": "Kit box label", "default": "What an engineered deck kit changes" },
+    { "type": "textarea", "id": "note", "label": "Footnote" }
+  ],
+  "blocks": [
+    {
+      "type": "line_item",
+      "name": "Bill line item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Line item" },
+        { "type": "textarea", "id": "text", "label": "Description" },
+        { "type": "text", "id": "depends_on", "label": "Depends on" }
+      ]
+    },
+    {
+      "type": "kit_item",
+      "name": "Kit benefit",
+      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [{ "name": "PvD · Cost" }]
+}
+{% endschema %}
