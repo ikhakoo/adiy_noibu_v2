@@ -1,0 +1,99 @@
+{{ 'sdp.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Size deck page · "What fits" use cases: section header, one image card per `use`
+  block, and an optional customer quote block underneath.
+{%- endcomment -%}
+
+<div class="sdp sdp-fits sdp--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="sdp__inner sdp-fits__inner">
+    <div class="sdp-header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="sdp-intro">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- assign uses = section.blocks | where: 'type', 'use' -%}
+    {%- if uses.size > 0 -%}
+      <div class="sdp-fits__grid">
+        {%- for block in uses -%}
+          <article class="sdp-use" {{ block.shopify_attributes }}>
+            {%- render 'sdp-image',
+              image: block.settings.image,
+              class: 'sdp-use__media',
+              sizes: '(min-width: 990px) 406px, calc(100vw - 48px)',
+              focal: block.settings.image_focal,
+              alt: block.settings.title
+            -%}
+            <h3 class="sdp-use__title">{{ block.settings.title | escape }}</h3>
+            <p class="sdp-use__text">{{ block.settings.text | escape }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'quote' -%}
+        <blockquote class="sdp-quote" {{ block.shopify_attributes }}>
+          <p class="sdp-quote__text">{{ block.settings.quote | escape }}</p>
+          {%- if block.settings.cite != blank -%}
+            <cite class="sdp-quote__cite sdp-label">{{ block.settings.cite | escape }}</cite>
+          {%- endif -%}
+        </blockquote>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SDP · What fits",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["product", "collection", "page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Space planning" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What fits on a 12x12 deck?" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "144 square feet is the sweet spot for a backyard that works hard without taking over the lawn. Here is what A-DIY customers actually put on theirs." }
+  ],
+  "blocks": [
+    {
+      "type": "use",
+      "name": "Use case",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "50% 50%" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Outdoor lounge" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "A sofa set or four Adirondack chairs with side tables, with a fire pit in the middle and room to walk around it." }
+      ]
+    },
+    {
+      "type": "quote",
+      "name": "Customer quote",
+      "limit": 1,
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "“12' x 12' is large enough for 4 Adirondack chairs, 2 footstools, 2 small tables and a small square firepit.”" },
+        { "type": "text", "id": "cite", "label": "Attribution", "default": "Sandra · Trustpilot review · 12×12 deck" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SDP · What fits",
+      "blocks": [
+        { "type": "use", "settings": { "title": "Outdoor lounge", "text": "A sofa set or four Adirondack chairs with side tables, with a fire pit in the middle and room to walk around it." } },
+        { "type": "use", "settings": { "title": "Bistro dining & family time", "text": "A table for four to six, a grill at the edge and still enough floor for the kids to move." } },
+        { "type": "use", "settings": { "title": "Sauna or hot tub platform", "text": "Engineered to hold 15,000 lbs, so a barrel sauna, hot tub or pergola sits on it with confidence." } },
+        { "type": "quote" }
+      ]
+    }
+  ]
+}
+{% endschema %}

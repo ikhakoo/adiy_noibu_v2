@@ -1,0 +1,152 @@
+{{ 'sdp.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Size deck page · Other sizes. Blocks: `group` headings (Standard series / Compact
+  series) followed by `size` tiles that belong to them. Each tile draws its footprint to
+  scale (3px per foot) as inline SVG from the width/length settings, so a new size
+  needs no artwork. The tile marked "current page" renders dark with a badge instead
+  of a link. A green chat CTA closes the section.
+{%- endcomment -%}
+
+<div class="sdp sdp-sizes sdp--sand" id="{{ section.settings.anchor_id | default: 'sizes' | handle }}">
+  <div class="sdp__inner sdp-sizes__inner">
+    <div class="sdp-header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+      Groups: each `group` block owns the `size` blocks that follow it, up to the next
+      `group`. Sizes placed before any heading render in a heading-less group.
+    {%- endcomment -%}
+    {%- assign total = section.blocks.size -%}
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign is_group = false
+        if block.type == 'group'
+          assign is_group = true
+        endif
+        assign starts_group = false
+        if is_group
+          assign starts_group = true
+        elsif forloop.first
+          assign starts_group = true
+        endif
+      -%}
+      {%- if starts_group -%}
+        {%- liquid
+          if is_group
+            assign first_size = forloop.index0 | plus: 1
+          else
+            assign first_size = forloop.index0
+          endif
+          assign last_size = total
+          for probe in section.blocks offset: first_size
+            if probe.type == 'group'
+              assign last_size = first_size | plus: forloop.index0
+              break
+            endif
+          endfor
+          assign count = last_size | minus: first_size
+        -%}
+        <div class="sdp-sizes__group" {% if is_group %}{{ block.shopify_attributes }}{% endif %}>
+          {%- if is_group -%}
+            <h3 class="sdp-label sdp-rule">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if count > 0 -%}
+            <div class="sdp-sizes__grid">
+              {%- for size in section.blocks offset: first_size limit: count -%}
+                {%- render 'sdp-size-tile', block: size, current_label: section.settings.current_label -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if section.settings.cta_heading != blank or section.settings.cta_button_label != blank -%}
+      <div class="sdp-sizes__cta">
+        <div class="sdp-sizes__cta-copy">
+          {%- if section.settings.cta_heading != blank -%}
+            <h3 class="sdp-sizes__cta-title">{{ section.settings.cta_heading | escape }}</h3>
+          {%- endif -%}
+          {%- if section.settings.cta_text != blank -%}
+            <p class="sdp-sizes__cta-text">{{ section.settings.cta_text | escape }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.cta_button_label != blank -%}
+          <a class="sdp-btn sdp-btn--light" href="{{ section.settings.cta_button_link | default: '#chat' }}">{{ section.settings.cta_button_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SDP · Other sizes",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["product", "collection", "page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "sizes", "info": "The hero's \"Show more sizes\" link points at #sizes." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Every backyard has a fit" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Need more room? Other popular deck kit sizes" },
+    { "type": "text", "id": "current_label", "label": "Badge on the current size", "default": "This page" },
+    { "type": "header", "content": "Closing CTA" },
+    { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Don’t see your size? We build many more." },
+    { "type": "textarea", "id": "cta_text", "label": "Text", "default": "Plenty of sizes aren’t listed here. Chat with a deck specialist to find out what we can build for your yard." },
+    { "type": "text", "id": "cta_button_label", "label": "Button label", "default": "Chat now" },
+    { "type": "url", "id": "cta_button_link", "label": "Button link", "info": "Defaults to #chat (opens live chat)." }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Series heading",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Standard series" }
+      ]
+    },
+    {
+      "type": "size",
+      "name": "Size",
+      "settings": [
+        { "type": "number", "id": "width", "label": "Width (ft)", "default": 12 },
+        { "type": "number", "id": "length", "label": "Length (ft)", "default": 18 },
+        { "type": "text", "id": "label", "label": "Label override", "info": "Defaults to \"W × L\"." },
+        { "type": "text", "id": "area", "label": "Area text override", "info": "Defaults to width × length sq ft." },
+        { "type": "url", "id": "link", "label": "Link to that size's page" },
+        { "type": "checkbox", "id": "current", "label": "This is the current page's size", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SDP · Other sizes",
+      "blocks": [
+        { "type": "group", "settings": { "title": "Standard series" } },
+        { "type": "size", "settings": { "width": 12, "length": 12, "current": true } },
+        { "type": "size", "settings": { "width": 12, "length": 18 } },
+        { "type": "size", "settings": { "width": 12, "length": 20 } },
+        { "type": "size", "settings": { "width": 12, "length": 24 } },
+        { "type": "size", "settings": { "width": 12, "length": 28 } },
+        { "type": "size", "settings": { "width": 16, "length": 16 } },
+        { "type": "size", "settings": { "width": 16, "length": 20 } },
+        { "type": "size", "settings": { "width": 16, "length": 24 } },
+        { "type": "size", "settings": { "width": 16, "length": 28 } },
+        { "type": "group", "settings": { "title": "Compact series" } },
+        { "type": "size", "settings": { "width": 6, "length": 12 } },
+        { "type": "size", "settings": { "width": 6, "length": 16 } },
+        { "type": "size", "settings": { "width": 6, "length": 20 } },
+        { "type": "size", "settings": { "width": 8, "length": 12 } },
+        { "type": "size", "settings": { "width": 8, "length": 16 } },
+        { "type": "size", "settings": { "width": 8, "length": 20 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

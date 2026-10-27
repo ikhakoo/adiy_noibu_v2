@@ -1,0 +1,150 @@
+{{ 'sdp.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Size deck page · Kit inclusions & specs. Image + copy + button on top, a row of
+  "in the crate" feature cards (one per `feature` block), then a two-column spec sheet
+  (one row per `spec` block, split evenly between the columns).
+{%- endcomment -%}
+
+<div class="sdp sdp-kit sdp--stone"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="sdp__inner sdp-kit__inner">
+    <div class="sdp-kit__top">
+      {%- render 'sdp-image',
+        image: section.settings.image,
+        class: 'sdp-kit__media',
+        sizes: '(min-width: 990px) 605px, calc(100vw - 48px)',
+        focal: section.settings.image_focal,
+        alt: section.settings.heading
+      -%}
+      <div class="sdp-kit__copy">
+        <div class="sdp-header">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.intro != blank -%}
+            <p class="sdp-intro">{{ section.settings.intro | escape }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.button_label != blank -%}
+          <a class="sdp-btn" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- assign features = section.blocks | where: 'type', 'feature' -%}
+    {%- if features.size > 0 -%}
+      <div class="sdp-kit__crate">
+        {%- if section.settings.features_title != blank -%}
+          <h3 class="sdp-label sdp-rule">{{ section.settings.features_title | escape }}</h3>
+        {%- endif -%}
+        <ul class="sdp-kit__features">
+          {%- for block in features -%}
+            <li class="sdp-feature" {{ block.shopify_attributes }}>
+              <span class="sdp-feature__icon">
+                {%- if block.settings.icon != blank -%}
+                  {{ block.settings.icon | image_url: width: 140 | image_tag: loading: 'lazy', alt: block.settings.title, widths: '70, 140' }}
+                {%- endif -%}
+              </span>
+              <span class="sdp-feature__body">
+                <span class="sdp-feature__title">{{ block.settings.title | escape }}</span>
+                <span class="sdp-feature__text">{{ block.settings.text | escape }}</span>
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- assign specs = section.blocks | where: 'type', 'spec' -%}
+    {%- if specs.size > 0 -%}
+      {%- assign half = specs.size | plus: 1 | divided_by: 2 -%}
+      <div class="sdp-specs">
+        {%- if section.settings.specs_title != blank -%}
+          <h3 class="sdp-label sdp-rule">{{ section.settings.specs_title | escape }}</h3>
+        {%- endif -%}
+        <div class="sdp-specs__cols">
+          <dl>
+            {%- for block in specs limit: half -%}
+              <div class="sdp-specs__row" {{ block.shopify_attributes }}>
+                <dt>{{ block.settings.label | escape }}</dt>
+                <dd>{{ block.settings.value | escape }}</dd>
+              </div>
+            {%- endfor -%}
+          </dl>
+          <dl>
+            {%- for block in specs offset: half -%}
+              <div class="sdp-specs__row" {{ block.shopify_attributes }}>
+                <dt>{{ block.settings.label | escape }}</dt>
+                <dd>{{ block.settings.value | escape }}</dd>
+              </div>
+            {%- endfor -%}
+          </dl>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SDP · Kit & specs",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["product", "collection", "page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "40% 50%" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kit inclusions" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What’s included in the 12x12 deck kit" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Skip the lumber-yard runs and the cut list. The 12x12 pressure-treated deck kit ships complete, engineered for a more straightforward build before it reaches your door." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the 12×12 wood deck" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Use # to scroll back to the top of the page." },
+    { "type": "text", "id": "features_title", "label": "Feature row title", "default": "In the crate" },
+    { "type": "text", "id": "specs_title", "label": "Spec sheet title", "default": "12×12 specifications" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "In-the-crate feature",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Engineered Lumber Parts" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Premium Grade 1, kiln-dried and pressure-treated for maximum strength and longevity." }
+      ]
+    },
+    {
+      "type": "spec",
+      "name": "Spec row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Nominal size" },
+        { "type": "textarea", "id": "value", "label": "Value", "default": "12 ft × 12 ft · 144 sq ft" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SDP · Kit & specs",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Engineered Lumber Parts", "text": "Premium Grade 1, kiln-dried and pressure-treated for maximum strength and longevity." } },
+        { "type": "feature", "settings": { "title": "Screw & Metal Brackets", "text": "Galvanized parts for superior durability and long-lasting performance." } },
+        { "type": "feature", "settings": { "title": "Tuff Blocks", "text": "Tuff Blocks deliver a lightweight, durable, and easy-to-install deck foundation built to last." } },
+        { "type": "feature", "settings": { "title": "3D Instructional App", "text": "Assemble with confidence using our 3D instructional app, guiding you step by step for a seamless build." } },
+        { "type": "spec", "settings": { "label": "Nominal size", "value": "12 ft × 12 ft · 144 sq ft" } },
+        { "type": "spec", "settings": { "label": "Material", "value": "Grade 1 Southern Yellow Pine, pressure-treated, kiln-dried" } },
+        { "type": "spec", "settings": { "label": "Decking", "value": "5.5 in. pre-sealed boards with a picture-frame border" } },
+        { "type": "spec", "settings": { "label": "Joists", "value": "2×8, set 13–14 in. on center" } },
+        { "type": "spec", "settings": { "label": "Beams", "value": "6×6" } },
+        { "type": "spec", "settings": { "label": "Footings", "value": "Tuff Block foundation blocks (included)" } },
+        { "type": "spec", "settings": { "label": "Hardware", "value": "Galvanized screws and metal brackets" } },
+        { "type": "spec", "settings": { "label": "Standard height", "value": "15–17 in. off the ground" } },
+        { "type": "spec", "settings": { "label": "Load rating", "value": "Engineered for 15,000 lbs" } },
+        { "type": "spec", "settings": { "label": "Add-ons", "value": "Railings, steps and different-height post kits are available. Chat with a design specialist to add them to your 12x12." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

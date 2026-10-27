@@ -1,0 +1,142 @@
+{{ 'sdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sdp.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  Size deck page · FAQ. Sticky intro + "still have a question" card on the left, one
+  accordion item per `question` block on the right. Emits FAQPage JSON-LD for the
+  rich-result eligibility the SEO plan relies on.
+{%- endcomment -%}
+
+<div class="sdp sdp-faq sdp--cloud" data-sdp-faq{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="sdp__inner sdp-faq__inner">
+    <div class="sdp-faq__aside">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sdp-faq__title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.card_heading != blank -%}
+        <div class="sdp-faq__card">
+          {%- if section.settings.card_kicker != blank -%}
+            <p class="sdp-faq__card-kicker">{{ section.settings.card_kicker | escape }}</p>
+          {%- endif -%}
+          <h3 class="sdp-faq__card-title">{{ section.settings.card_heading | escape }}</h3>
+          {%- if section.settings.card_text != blank -%}
+            <p class="sdp-faq__card-text">{{ section.settings.card_text | escape }}</p>
+          {%- endif -%}
+          <div class="sdp-faq__contacts">
+            {%- if section.settings.phone != blank -%}
+              {%- assign tel = section.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' -%}
+              <a class="sdp-faq__contact" href="tel:{{ tel }}">
+                {%- render 'sdp-icon', name: 'phone' -%}
+                <span>{{ section.settings.phone | escape }}</span>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.chat_label != blank -%}
+              <a class="sdp-faq__contact" href="{{ section.settings.chat_link | default: '#chat' }}">
+                {%- render 'sdp-icon', name: 'chat' -%}
+                <span>{{ section.settings.chat_label | escape }}</span>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="sdp-faq__list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign open = false
+          if section.settings.open_all
+            assign open = true
+          elsif section.settings.open_first and forloop.first
+            assign open = true
+          endif
+        -%}
+        <div class="sdp-faq__item" {{ block.shopify_attributes }}>
+          <button type="button" class="sdp-faq__q" aria-expanded="{{ open }}" aria-controls="sdp-faq-{{ section.id }}-{{ block.id }}">
+            <h3>{{ block.settings.question | escape }}</h3>
+            <span class="sdp-faq__sign" aria-hidden="true"></span>
+          </button>
+          <div class="sdp-faq__a" id="sdp-faq-{{ section.id }}-{{ block.id }}"{% unless open %} hidden{% endunless %}>
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | strip | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SDP · FAQ",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["product", "collection", "page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "12×12 wood deck kit FAQ" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Questions homeowners ask before buying a 12x12 deck kit" },
+    { "type": "checkbox", "id": "open_all", "label": "Show every answer expanded", "default": true },
+    { "type": "checkbox", "id": "open_first", "label": "Expand only the first answer", "default": false },
+    { "type": "header", "content": "Still have a question card" },
+    { "type": "text", "id": "card_kicker", "label": "Kicker", "default": "Still have a question?" },
+    { "type": "text", "id": "card_heading", "label": "Heading", "default": "Talk to an A-DIY deck specialist" },
+    { "type": "textarea", "id": "card_text", "label": "Text", "default": "Send a photo of your yard and we will tell you if a 12x12 fits, how high it should sit and what it will cost delivered." },
+    { "type": "text", "id": "phone", "label": "Phone number", "default": "1 (786) 358-2872" },
+    { "type": "text", "id": "chat_label", "label": "Chat link label", "default": "Start a live chat" },
+    { "type": "url", "id": "chat_link", "label": "Chat link", "info": "Defaults to #chat (opens live chat)." }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How big is a 12x12 deck, really?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>It is a nominal 12 ft × 12 ft, about 144 sq ft of finished deck.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SDP · FAQ",
+      "blocks": [
+        { "type": "question", "settings": { "question": "How big is a 12x12 deck, really?", "answer": "<p>It is a nominal 12 ft × 12 ft, about 144 sq ft of finished deck. Final assembled dimensions can vary slightly because of framing, board spacing and the picture-frame border, so leave a little clearance at your site.</p>" } },
+        { "type": "question", "settings": { "question": "How much does a 12x12 deck cost?", "answer": "<p>The A-DIY 12x12 pressure-treated wood deck kit is $4,899, with taxes and shipping calculated at checkout. During the Fall Sale the code FALL1500 brings it to $3,399. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor.</p>" } },
+        { "type": "question", "settings": { "question": "How long does it take to build a 12x12 wood deck kit?", "answer": "<p>Most standard kits assemble in 8–16 hours, typically one weekend. One 12x12 customer finished in about 16 hours spread over four evenings, including site prep.</p>" } },
+        { "type": "question", "settings": { "question": "Do I need experience or special tools?", "answer": "<p>No. A standard power drill is the only tool, the drill bit, step-by-step instructions and the 3D instructional app are included. There is no cutting and no measuring.</p>" } },
+        { "type": "question", "settings": { "question": "How high does the deck sit, and can I change it?", "answer": "<p>Each kit is ready to assemble at 15–17 inches off the ground. Longer post kits with bracing raise it; digging a few inches where the footings sit lowers it.</p>" } },
+        { "type": "question", "settings": { "question": "What if my yard isn’t flat?", "answer": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:</strong><br/>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:</strong><br/>Each kit includes the posts and bracing. Contact our design team for more details.</p>" } },
+        { "type": "question", "settings": { "question": "Do I need a permit for a 12x12 deck?", "answer": "<p>Permit rules are set by your local municipality and depend on height, size and placement, so check with your building department. Engineering diagrams are available to support an application.</p>" } },
+        { "type": "question", "settings": { "question": "How does the kit arrive?", "answer": "<p>In one crate by LTL ground freight, typically within 10–14 business days. The carrier contacts you to schedule curbside delivery.</p>" } },
+        { "type": "question", "settings": { "question": "Wood or composite: which 12x12 deck kit should I choose?", "answer": "<p>Both use the same engineered system. The pressure-treated wood 12x12 is $4,899, carries a 5-year structural warranty and can be stained to match your home. The composite 12x12 is $5,700 in Amazon Gray or Forest Wood, with a 25-year warranty on the composite deck boards, and minimal maintenance. See the 12x12 composite deck page for the full details.</p>" } },
+        { "type": "question", "settings": { "question": "What warranty comes with the wood kit?", "answer": "<p>Every pressure-treated wood kit carries a 5-year structural warranty.</p>" } },
+        { "type": "question", "settings": { "question": "Can I pay for my 12x12 over time?", "answer": "<p>Yes. Choose A-DIY’s 0% interest payment plan in 4, 6 or 8 monthly payments (ships after the final payment), or finance through Affirm, Klarna or Shop Pay with 0% APR options up to 24 months, subject to credit approval.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

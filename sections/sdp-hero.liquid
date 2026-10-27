@@ -1,0 +1,430 @@
+{{ 'sdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'sdp.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  Size deck page · Hero. Replaces main-product on the SEO size templates: copy + live
+  price/discount/financing on the left, one hero image on the right, and the theme's own
+  <product-form> underneath so Add to cart opens the cart drawer like every other PDP.
+
+  Prices come from the product: regular price is the selected variant's price, the "with
+  code" price subtracts the variant's custom.discount_value metafield (dollars) or, when
+  that is empty, the section's fallback discount. Monthly figures are derived from the
+  sale price. Every payment row/card is a block so the customizer can reorder or drop them.
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign product_form_id = 'sdp-product-form-' | append: section.id
+
+  assign promo_code = section.settings.promo_code
+  if product.metafields.custom.promo_code != blank
+    assign promo_code = product.metafields.custom.promo_code.value | default: product.metafields.custom.promo_code
+  endif
+
+  assign discount_dollars = section.settings.discount_amount | default: 0
+  assign variant_discount = variant.metafields.custom.discount_value.value | default: variant.metafields.custom.discount_value
+  assign variant_discount_num = variant_discount | plus: 0
+  if variant_discount_num > 0
+    assign discount_dollars = variant_discount_num
+  endif
+  assign discount_cents = discount_dollars | times: 100 | round
+
+  assign regular_price = variant.price
+  assign sale_price = regular_price | minus: discount_cents
+  if sale_price < 0 or discount_cents <= 0
+    assign sale_price = regular_price
+  endif
+  assign has_discount = false
+  if discount_cents > 0 and promo_code != blank and sale_price < regular_price
+    assign has_discount = true
+  endif
+
+  assign financing_months = section.settings.financing_months | default: 24
+  assign monthly_sale = sale_price | divided_by: financing_months | divided_by: 100.0 | round | times: 100
+  assign monthly_regular = regular_price | divided_by: financing_months | divided_by: 100.0 | round | times: 100
+
+  assign sale_str = sale_price | money_without_trailing_zeros
+  assign regular_str = regular_price | money_without_trailing_zeros
+  assign monthly_str = monthly_sale | money_without_trailing_zeros
+  assign monthly_regular_str = monthly_regular | money_without_trailing_zeros
+  capture monthly_html
+    echo '<span data-sdp-monthly>' | append: monthly_str | append: '</span>'
+  endcapture
+
+  assign heading = section.settings.heading
+  if heading == blank
+    assign heading = product.title
+  endif
+-%}
+
+<div class="sdp sdp-hero sdp--sand" data-sdp-hero data-section-id="{{ section.id }}"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="sdp__inner sdp-hero__wrap">
+    <div class="sdp-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      <h1 class="sdp-hero__title">{{ heading | escape }}</h1>
+
+      {%- if section.settings.lede != blank -%}
+        <p class="sdp-hero__lede">{{ section.settings.lede | escape }}</p>
+      {%- endif -%}
+
+      {%- if product.has_only_default_variant == false and product.variants.size > 1 -%}
+        <div class="sdp-hero__variants">
+          <label for="sdp-variant-{{ section.id }}">{{ section.settings.variant_label | default: 'Choose your option' | escape }}</label>
+          <select id="sdp-variant-{{ section.id }}" data-sdp-variant-select>
+            {%- for v in product.variants -%}
+              <option value="{{ v.id }}"{% if v.id == variant.id %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>
+                {{ v.title }}{% unless v.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+        <script type="application/json" data-sdp-variants>
+          {
+            "fallbackDiscount": {{ section.settings.discount_amount | default: 0 }},
+            "months": {{ financing_months }},
+            "variants": [
+              {%- for v in product.variants -%}
+                {%- assign vd = v.metafields.custom.discount_value.value | default: v.metafields.custom.discount_value | default: 0 -%}
+                { "id": {{ v.id }}, "price": {{ v.price }}, "discount": {{ vd | plus: 0 }}, "available": {{ v.available }} }{% unless forloop.last %},{% endunless %}
+              {%- endfor -%}
+            ]
+          }
+        </script>
+      {%- endif -%}
+
+      <div class="sdp-price">
+        {%- if section.settings.price_label != blank -%}
+          <p class="sdp-price__label">{{ section.settings.price_label | escape }}</p>
+        {%- endif -%}
+        <p class="sdp-price__amount" data-sdp-regular>{{ regular_price | money }}</p>
+
+        <div class="sdp-price__promo" data-sdp-promo{% unless has_discount %} hidden{% endunless %}>
+          <span>{{ section.settings.promo_prefix | default: 'or' | escape }} <span data-sdp-sale>{{ sale_price | money }}</span> {{ section.settings.promo_suffix | default: 'with code' | escape }}</span>
+          <button type="button" class="sdp-code" data-sdp-copy="{{ promo_code | escape }}" aria-label="Copy code {{ promo_code | escape }}">
+            <span>{{ promo_code | escape }}</span>
+            {%- render 'sdp-icon', name: 'copy' -%}
+            <span class="sdp-code__done" aria-hidden="true">Copied</span>
+          </button>
+        </div>
+
+        {%- if section.settings.financing_text != blank -%}
+          <p class="sdp-price__financing">
+            {{- section.settings.financing_text
+              | escape
+              | replace: '[monthly]', monthly_html
+              | replace: '[months]', financing_months
+              | replace: '[code]', promo_code
+            -}}
+          </p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <button type="button" class="sdp-toggle" data-sdp-toggle aria-expanded="{{ section.settings.payments_open }}" aria-controls="sdp-payments-{{ section.id }}">
+            <span class="sdp-toggle__open">{{ section.settings.toggle_hide | default: 'Hide payment options' | escape }}</span>
+            <span class="sdp-toggle__closed">{{ section.settings.toggle_show | default: 'See payment options' | escape }}</span>
+            {%- render 'sdp-icon', name: 'chevron-up' -%}
+          </button>
+
+          <div class="sdp-payments" id="sdp-payments-{{ section.id }}"{% unless section.settings.payments_open %} hidden{% endunless %}>
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'pay_row' -%}
+                  {%- if block.settings.link != blank -%}
+                    <a class="sdp-payrow" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+                  {%- else -%}
+                    <div class="sdp-payrow" {{ block.shopify_attributes }}>
+                  {%- endif -%}
+                    <span class="sdp-payrow__logo"{% if block.settings.logo_background != blank %} style="background: {{ block.settings.logo_background }}; border-color: {{ block.settings.logo_background }};"{% endif %}>
+                      {%- if block.settings.logo != blank -%}
+                        {{ block.settings.logo | image_url: width: 240 | image_tag: loading: 'lazy', alt: block.settings.text, widths: '120, 240' }}
+                      {%- else -%}
+                        <span>{{ block.settings.logo_text | escape }}</span>
+                      {%- endif -%}
+                    </span>
+                    <span>{{ block.settings.text | escape }}</span>
+                  {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+                {%- when 'payment_plan' -%}
+                  {%- liquid
+                    assign plan_base = sale_price
+                    if block.settings.base_on_regular
+                      assign plan_base = regular_price
+                    endif
+                    assign n1 = block.settings.payments_1 | default: 4
+                    assign n2 = block.settings.payments_2 | default: 6
+                    assign n3 = block.settings.payments_3 | default: 8
+                    assign amt1 = plan_base | divided_by: n1 | divided_by: 100.0 | round | times: 100
+                    assign amt2 = plan_base | divided_by: n2 | divided_by: 100.0 | round | times: 100
+                    assign amt3 = plan_base | divided_by: n3 | divided_by: 100.0 | round | times: 100
+                  -%}
+                  <div class="sdp-plan" data-sdp-plan{% if block.settings.base_on_regular %} data-sdp-plan-regular{% endif %} {{ block.shopify_attributes }}>
+                    <div class="sdp-plan__head">
+                      <span class="sdp-payrow__logo sdp-payrow__logo--brand">
+                        {%- if block.settings.logo != blank -%}
+                          {{ block.settings.logo | image_url: width: 160 | image_tag: loading: 'lazy', alt: 'A-DIY', widths: '80, 160' }}
+                        {%- else -%}
+                          <span>A-DIY</span>
+                        {%- endif -%}
+                      </span>
+                      <div class="sdp-plan__title">
+                        <strong>{{ block.settings.title | escape | replace: '[sale_price]', sale_str | replace: '[regular_price]', regular_str }}</strong>
+                        {%- if block.settings.kicker != blank -%}
+                          <span>{{ block.settings.kicker | escape | replace: '[code]', promo_code }}</span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                    <div class="sdp-plan__tiles">
+                      <div class="sdp-tile{% if block.settings.highlight == '1' %} sdp-tile--highlight{% endif %}">
+                        <span class="sdp-tile__label">{{ n1 }} payments</span>
+                        <span class="sdp-tile__value" data-sdp-plan-amount="{{ n1 }}">{{ amt1 | money_without_trailing_zeros }}</span>
+                        <span class="sdp-tile__sub">{{ block.settings.sub_1 | default: 'per month' | escape }}</span>
+                      </div>
+                      <div class="sdp-tile{% if block.settings.highlight == '2' %} sdp-tile--highlight{% endif %}">
+                        <span class="sdp-tile__label">{{ n2 }} payments</span>
+                        <span class="sdp-tile__value" data-sdp-plan-amount="{{ n2 }}">{{ amt2 | money_without_trailing_zeros }}</span>
+                        <span class="sdp-tile__sub">{{ block.settings.sub_2 | default: 'per month' | escape }}</span>
+                      </div>
+                      <div class="sdp-tile{% if block.settings.highlight == '3' %} sdp-tile--highlight{% endif %}">
+                        <span class="sdp-tile__label">{{ n3 }} payments</span>
+                        <span class="sdp-tile__value" data-sdp-plan-amount="{{ n3 }}">{{ amt3 | money_without_trailing_zeros }}</span>
+                        <span class="sdp-tile__sub">{{ block.settings.sub_3 | default: 'per month · lowest' | escape }}</span>
+                      </div>
+                    </div>
+                    {%- if block.settings.how != blank or block.settings.link_label != blank -%}
+                      <p class="sdp-plan__how">
+                        {{ block.settings.how | escape }}
+                        {%- if block.settings.link_label != blank %} <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
+                      </p>
+                    {%- endif -%}
+                  </div>
+
+                {%- when 'reserve' -%}
+                  <div class="sdp-plan sdp-plan--reserve" {{ block.shopify_attributes }}>
+                    <div class="sdp-plan__head">
+                      <span class="sdp-payrow__logo sdp-payrow__logo--brand">
+                        {%- if block.settings.logo != blank -%}
+                          {{ block.settings.logo | image_url: width: 160 | image_tag: loading: 'lazy', alt: 'A-DIY', widths: '80, 160' }}
+                        {%- else -%}
+                          <span>A-DIY</span>
+                        {%- endif -%}
+                      </span>
+                      <div class="sdp-plan__title">
+                        <strong>{{ block.settings.title | escape }}</strong>
+                        {%- if block.settings.kicker != blank -%}
+                          <span>{{ block.settings.kicker | escape }}</span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                    <div class="sdp-plan__tiles">
+                      {%- for i in (1..3) -%}
+                        {%- assign label_key = 'label_' | append: i -%}
+                        {%- assign value_key = 'value_' | append: i -%}
+                        {%- assign sub_key = 'sub_' | append: i -%}
+                        {%- if block.settings[value_key] != blank -%}
+                          <div class="sdp-tile">
+                            <span class="sdp-tile__label">{{ block.settings[label_key] | escape }}</span>
+                            <span class="sdp-tile__value">{{ block.settings[value_key] | escape }}</span>
+                            <span class="sdp-tile__sub">{{ block.settings[sub_key] | escape }}</span>
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                    {%- if block.settings.how != blank or block.settings.link_label != blank -%}
+                      <p class="sdp-plan__how">
+                        {{ block.settings.how | escape }}
+                        {%- if block.settings.link_label != blank %} <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
+                      </p>
+                    {%- endif -%}
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.fineprint != blank -%}
+          <p class="sdp-price__fineprint">
+            {{- section.settings.fineprint
+              | escape
+              | replace: '[sale_price]', sale_str
+              | replace: '[regular_price]', regular_str
+              | replace: '[monthly_regular]', monthly_regular_str
+              | replace: '[monthly]', monthly_str
+              | replace: '[months]', financing_months
+              | replace: '[code]', promo_code
+            -}}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div class="sdp-hero__ctas">
+        <product-form class="product-form" data-hide-errors="false" data-section-id="{{ section.id }}">
+          <div class="product-form__error-message-wrapper" role="alert" hidden>
+            <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+            <span class="product-form__error-message"></span>
+          </div>
+          {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" value="{{ variant.id }}" class="product-variant-id" data-sdp-variant-id{% if variant == null or variant.available == false %} disabled{% endif %}>
+            <input type="hidden" name="quantity" value="1">
+            <div class="product-form__buttons">
+              <button
+                id="ProductSubmitButton-{{ section.id }}"
+                type="submit"
+                name="add"
+                class="sdp-add product-form__submit"
+                {% if variant == null or variant.available == false %}disabled{% endif %}
+              >
+                {%- render 'sdp-icon', name: 'cart' -%}
+                <span>
+                  {%- if variant == null -%}
+                    {{ 'products.product.unavailable' | t }}
+                  {%- elsif variant.available == false -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- else -%}
+                    {{ section.settings.add_label | default: 'Add to cart' | escape }}{% if section.settings.add_show_price %} · <span data-sdp-cta-price>{{ regular_price | money }}</span>{% endif %}
+                  {%- endif -%}
+                </span>
+                {%- render 'loading-spinner' -%}
+              </button>
+            </div>
+          {%- endform -%}
+        </product-form>
+
+        {%- if section.settings.secondary_label != blank -%}
+          <a class="sdp-link" href="{{ section.settings.secondary_link | default: '#sizes' }}">
+            {{ section.settings.secondary_label | escape }}
+            {%- render 'sdp-icon', name: 'arrow-right' -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- liquid
+      assign hero_image = section.settings.image
+      if hero_image == blank and section.settings.use_product_image
+        assign hero_image = product.featured_image
+      endif
+    -%}
+    {%- render 'sdp-image',
+      image: hero_image,
+      class: 'sdp-hero__media',
+      sizes: '(min-width: 990px) 591px, calc(100vw - 48px)',
+      eager: true,
+      focal: section.settings.image_focal,
+      alt: heading
+    -%}
+  </div>
+</div>
+
+{% render 'structured-data-product', product: product %}
+
+{% schema %}
+{
+  "name": "SDP · Hero (product)",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "header", "content": "Copy" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "12 × 12 Pressure-treated wood deck · 144 sq ft" },
+    { "type": "textarea", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the product title.", "default": "12x12 Deck — build it yourself, delivered as a pressure treated kit" },
+    { "type": "textarea", "id": "lede", "label": "Intro paragraph", "default": "A 12x12 deck from A-DIY costs $4,899. That one price covers a professionally engineered, pressure treated deck kit in which every part goes together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and is backed by a 5-year structural warranty." },
+    { "type": "text", "id": "variant_label", "label": "Variant dropdown label", "info": "Only shown when the product has more than one variant.", "default": "Choose your option" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "checkbox", "id": "use_product_image", "label": "Fall back to the product's featured image", "default": true },
+    { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "50% 40%" },
+    { "type": "header", "content": "Price & promo code" },
+    { "type": "text", "id": "price_label", "label": "Price label", "default": "Regular price" },
+    { "type": "text", "id": "promo_code", "label": "Promo code", "info": "Overridden by the product metafield custom.promo_code when set.", "default": "FALL1500" },
+    { "type": "number", "id": "discount_amount", "label": "Fallback discount (whole dollars)", "info": "Used when the selected variant has no custom.discount_value metafield.", "default": 1500 },
+    { "type": "text", "id": "promo_prefix", "label": "Text before the sale price", "default": "or" },
+    { "type": "text", "id": "promo_suffix", "label": "Text after the sale price", "default": "with code" },
+    { "type": "header", "content": "Financing line" },
+    { "type": "number", "id": "financing_months", "label": "Financing term (months)", "default": 24 },
+    { "type": "text", "id": "financing_text", "label": "Financing text", "info": "Placeholders: [monthly], [months], [code].", "default": "Starting at [monthly]/mo at 0% APR over [months] months if approved, with code [code]" },
+    { "type": "header", "content": "Payment options panel" },
+    { "type": "checkbox", "id": "payments_open", "label": "Open by default", "default": true },
+    { "type": "text", "id": "toggle_hide", "label": "Toggle label (open)", "default": "Hide payment options" },
+    { "type": "text", "id": "toggle_show", "label": "Toggle label (closed)", "default": "See payment options" },
+    { "type": "textarea", "id": "fineprint", "label": "Fine print", "info": "Placeholders: [sale_price], [regular_price], [monthly], [monthly_regular], [months], [code].", "default": "*Financing payment based on the [sale_price] sale price (code [code]) over [months] months at 0% APR; about [monthly_regular]/mo at the regular [regular_price] price. Subject to eligibility check and approval; terms and conditions apply. Estimated payment excludes taxes and shipping." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },
+    { "type": "checkbox", "id": "add_show_price", "label": "Show price in the button", "default": true },
+    { "type": "text", "id": "secondary_label", "label": "Secondary link label", "default": "Show more sizes" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link", "info": "Defaults to #sizes (the Other sizes section)." }
+  ],
+  "blocks": [
+    {
+      "type": "pay_row",
+      "name": "Financing row",
+      "settings": [
+        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "text", "id": "logo_text", "label": "Logo text (if no image)", "default": "affirm" },
+        { "type": "color", "id": "logo_background", "label": "Logo box background" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Pay Monthly With Affirm" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "payment_plan",
+      "name": "A-DIY payment plan",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "logo", "label": "Logo (white A-DIY mark)" },
+        { "type": "text", "id": "title", "label": "Title", "info": "Placeholders: [sale_price], [regular_price].", "default": "Split the [sale_price] sale price with A-DIY’s own payment plan" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "info": "Placeholder: [code].", "default": "0% interest · No fees · Guaranteed approval · Code [code]" },
+        { "type": "checkbox", "id": "base_on_regular", "label": "Split the regular price instead of the sale price", "default": false },
+        { "type": "number", "id": "payments_1", "label": "Tile 1 · number of payments", "default": 4 },
+        { "type": "text", "id": "sub_1", "label": "Tile 1 · caption", "default": "per month" },
+        { "type": "number", "id": "payments_2", "label": "Tile 2 · number of payments", "default": 6 },
+        { "type": "text", "id": "sub_2", "label": "Tile 2 · caption", "default": "per month" },
+        { "type": "number", "id": "payments_3", "label": "Tile 3 · number of payments", "default": 8 },
+        { "type": "text", "id": "sub_3", "label": "Tile 3 · caption", "default": "per month · lowest" },
+        { "type": "select", "id": "highlight", "label": "Highlighted tile", "options": [ { "value": "0", "label": "None" }, { "value": "1", "label": "Tile 1" }, { "value": "2", "label": "Tile 2" }, { "value": "3", "label": "Tile 3" } ], "default": "3" },
+        { "type": "textarea", "id": "how", "label": "How it works", "default": "How it works: pay the first installment today, the rest is charged monthly to the same card. No interest, no fees. Your deck ships as soon as the last payment clears." },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "See Details" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "reserve",
+      "name": "A-DIY Reserve",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "logo", "label": "Logo (white A-DIY mark)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "A-DIY Reserve - lock in today’s price, deliver when you’re ready" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "$250 deposit · Price locked · You pick the delivery date" },
+        { "type": "text", "id": "label_1", "label": "Tile 1 · label", "default": "Today" },
+        { "type": "text", "id": "value_1", "label": "Tile 1 · value", "default": "$250" },
+        { "type": "text", "id": "sub_1", "label": "Tile 1 · caption", "default": "non-refundable deposit" },
+        { "type": "text", "id": "label_2", "label": "Tile 2 · label", "default": "Your price" },
+        { "type": "text", "id": "value_2", "label": "Tile 2 · value", "default": "Locked" },
+        { "type": "text", "id": "sub_2", "label": "Tile 2 · caption", "default": "at today’s price" },
+        { "type": "text", "id": "label_3", "label": "Tile 3 · label", "default": "Delivery" },
+        { "type": "text", "id": "value_3", "label": "Tile 3 · value", "default": "You choose" },
+        { "type": "text", "id": "sub_3", "label": "Tile 3 · caption", "default": "a future date" },
+        { "type": "textarea", "id": "how", "label": "How it works", "default": "How it works: pay a $250 non-refundable deposit today and your 12x12 deck is reserved at today’s price. Pick the delivery date that suits you, next month or next spring and pay the remaining balance before it ships." },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Reserve Now" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SDP · Hero (product)",
+      "blocks": [
+        { "type": "pay_row", "settings": { "logo_text": "affirm", "text": "Pay Monthly With Affirm" } },
+        { "type": "pay_row", "settings": { "logo_text": "Klarna.", "logo_background": "#ffb3c7", "text": "Shop Now. Pay With Klarna." } },
+        { "type": "pay_row", "settings": { "logo_text": "shop Pay", "logo_background": "#5a31f4", "text": "Buy Now, Pay Later With Shop Pay" } },
+        { "type": "payment_plan" },
+        { "type": "reserve" }
+      ]
+    }
+  ]
+}
+{% endschema %}

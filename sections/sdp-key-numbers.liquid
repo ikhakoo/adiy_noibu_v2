@@ -1,0 +1,52 @@
+{{ 'sdp.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Size deck page · Key numbers strip. One stat per block on a green band.
+{%- endcomment -%}
+
+<div class="sdp sdp-numbers sdp--green"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="sdp__inner">
+    <ul class="sdp-numbers__grid" style="--sdp-numbers-cols: {{ section.blocks.size | at_least: 1 | at_most: 4 }};">
+      {%- for block in section.blocks -%}
+        <li class="sdp-number" {{ block.shopify_attributes }}>
+          <span class="sdp-number__value">{{ block.settings.value | escape }}</span>
+          <span class="sdp-number__label">{{ block.settings.label | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SDP · Key numbers",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["product", "collection", "page"] },
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Number",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "144 sq ft" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Finished deck area" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SDP · Key numbers",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "144 sq ft", "label": "Finished deck area" } },
+        { "type": "stat", "settings": { "value": "8–16 hrs", "label": "Typical build, one weekend" } },
+        { "type": "stat", "settings": { "value": "15,000 lbs", "label": "Engineered load capacity" } },
+        { "type": "stat", "settings": { "value": "5 years", "label": "Structural warranty" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

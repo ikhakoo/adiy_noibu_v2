@@ -1,0 +1,84 @@
+{%- comment -%}
+  One size tile for sections/sdp-other-sizes.liquid. Draws the footprint to scale
+  (3px per foot, long side horizontal) as inline SVG, so a new size needs no artwork.
+
+  Accepts:
+  - block: {Object} a `size` block (width, length, label, area, link, current)
+  - current_label: {String} badge text for the current page's size
+{%- endcomment -%}
+{%- liquid
+  assign scale = 3
+  assign box_w = 90
+  assign box_h = 54
+
+  assign w = block.settings.width | default: 12
+  assign l = block.settings.length | default: 12
+  if w > l
+    assign long = w
+    assign short = l
+  else
+    assign long = l
+    assign short = w
+  endif
+  assign rect_w = long | times: scale | at_most: 84
+  assign rect_h = short | times: scale | at_most: 48
+  assign rect_x = box_w | minus: rect_w | divided_by: 2
+  assign rect_y = box_h | minus: rect_h | divided_by: 2
+  assign area = w | times: l
+
+  assign name = block.settings.label
+  if name == blank
+    assign name = w | append: ' × ' | append: l
+  endif
+  assign area_text = block.settings.area
+  if area_text == blank
+    assign area_text = area | append: ' sq ft'
+  endif
+
+  assign is_current = block.settings.current
+  assign is_link = false
+  if is_current == false and block.settings.link != blank
+    assign is_link = true
+  endif
+
+  if is_current
+    assign fill = 'rgba(233,185,73,0.14)'
+    assign stroke = '#e9b949'
+    assign board = 'rgba(233,185,73,0.5)'
+  else
+    assign fill = '#f1e6d6'
+    assign stroke = '#c4a484'
+    assign board = '#dcc3a2'
+  endif
+  assign line_y = rect_y | plus: 6
+  assign line_end = rect_y | plus: rect_h | minus: 3
+  assign x1 = rect_x | plus: 3
+  assign x2 = rect_x | plus: rect_w | minus: 3
+-%}
+{%- capture tile -%}
+  <span class="sdp-size__footprint" aria-hidden="true">
+    <svg viewBox="0 0 {{ box_w }} {{ box_h }}" xmlns="http://www.w3.org/2000/svg">
+      <rect x="{{ rect_x }}" y="{{ rect_y }}" width="{{ rect_w }}" height="{{ rect_h }}" rx="3" fill="{{ fill }}" stroke="{{ stroke }}" stroke-width="1.2"/>
+      {%- for i in (1..16) -%}
+        {%- if line_y < line_end -%}
+          <line x1="{{ x1 }}" y1="{{ line_y }}" x2="{{ x2 }}" y2="{{ line_y }}" stroke="{{ board }}" stroke-width="1"/>
+          {%- assign line_y = line_y | plus: 6 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </svg>
+  </span>
+  <span class="sdp-size__meta">
+    <span class="sdp-size__name">{{ name }}</span>
+    <span class="sdp-size__area">{{ area_text }}</span>
+  </span>
+  {%- if is_current -%}
+    <span class="sdp-size__badge">{{ current_label | default: 'This page' | escape }}</span>
+  {%- elsif is_link -%}
+    <span class="sdp-size__arrow">{%- render 'sdp-icon', name: 'arrow-right' -%}</span>
+  {%- endif -%}
+{%- endcapture -%}
+{%- if is_link -%}
+  <a class="sdp-size" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ tile }}</a>
+{%- else -%}
+  <div class="sdp-size{% if is_current %} sdp-size--current{% endif %}" {{ block.shopify_attributes }}>{{ tile }}</div>
+{%- endif -%}
