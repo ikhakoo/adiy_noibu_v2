@@ -196,8 +196,13 @@
         "quote": {
           "type": "quote",
           "settings": {
-            "quote": "“We built a full 16x20 deck in one weekend with the A DIY kit. Just me, my wife, and a drill. No contractors, no measuring, no guessing.”",
-            "cite": "Kayla · Trustpilot review · 16×20 deck"
+            "name": "Kayla Zsilavetz",
+            "role": "Verified Buyer",
+            "source": "trustpilot",
+            "stars": 5,
+            "headline": "",
+            "quote": "We built a full 16x20 deck in one weekend with the A DIY kit. Just me, my wife, and a drill. No contractors, no measuring, no guessing.",
+            "cite": "Trustpilot review · 16×20 deck"
           }
         }
       },

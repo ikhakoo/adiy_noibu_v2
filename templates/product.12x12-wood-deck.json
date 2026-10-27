@@ -196,8 +196,13 @@
         "quote": {
           "type": "quote",
           "settings": {
-            "quote": "“12' x 12' is large enough for 4 Adirondack chairs, 2 footstools, 2 small tables and a small square firepit.”",
-            "cite": "Sandra · Trustpilot review · 12×12 deck"
+            "name": "Sandra",
+            "role": "Verified Buyer",
+            "source": "trustpilot",
+            "stars": 5,
+            "headline": "It will take two people, but so worth it.",
+            "quote": "12' x 12' is large enough for 4 Adirondack chairs, 2 footstools, 2 small tables and a small square firepit.",
+            "cite": "Trustpilot review · 12×12 deck"
           }
         }
       },

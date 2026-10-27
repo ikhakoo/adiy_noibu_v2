@@ -41,12 +41,48 @@
 
     {%- for block in section.blocks -%}
       {%- if block.type == 'quote' -%}
-        <blockquote class="sdp-quote" {{ block.shopify_attributes }}>
-          <p class="sdp-quote__text">{{ block.settings.quote | escape }}</p>
-          {%- if block.settings.cite != blank -%}
-            <cite class="sdp-quote__cite sdp-label">{{ block.settings.cite | escape }}</cite>
+        {%- comment -%}
+          Rendered as a review card (name, stars, source mark, verified label) so it reads
+          as the real review it is, matching the cards in the reviews wall.
+        {%- endcomment -%}
+        <figure class="sdp-review{% if block.settings.photo != blank %} sdp-review--with-photo{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.photo != blank -%}
+            {%- assign review_alt = block.settings.photo_alt | default: block.settings.name -%}
+            {%- render 'sdp-image', image: block.settings.photo, class: 'sdp-review__photo', sizes: '(min-width: 990px) 320px, calc(100vw - 48px)', focal: block.settings.photo_focal, alt: review_alt -%}
           {%- endif -%}
-        </blockquote>
+          <div class="sdp-review__body">
+            <div class="sdp-review__head">
+              <div class="sdp-review__who">
+                {%- if block.settings.name != blank -%}
+                  <span class="sdp-review__name">{{ block.settings.name | escape }}</span>
+                {%- endif -%}
+                {%- if block.settings.role != blank -%}
+                  <span class="sdp-review__role">{{ block.settings.role | escape }}</span>
+                {%- endif -%}
+              </div>
+              {%- case block.settings.source -%}
+                {%- when 'google' -%}
+                  <img class="sdp-review__source" src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_8602.png?v=1787786455&width=40" alt="Google review" width="20" height="20" loading="lazy">
+                {%- when 'trustpilot' -%}
+                  <img class="sdp-review__source sdp-review__source--wide" src="https://cdn.shopify.com/s/files/1/0456/9638/5046/files/image_4.png?v=1787847498&width=140" alt="Trustpilot review" width="70" height="20" loading="lazy">
+                {%- when 'facebook' -%}
+                  <svg class="sdp-review__source" viewBox="0 0 24 24" aria-label="Facebook review" role="img"><path fill="#1877f2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              {%- endcase -%}
+            </div>
+            {%- if block.settings.stars > 0 -%}
+              <div class="sdp-review__stars" aria-label="{{ block.settings.stars }} out of 5 stars">
+                {%- for i in (1..block.settings.stars) -%}★{%- endfor -%}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.headline != blank -%}
+              <p class="sdp-review__headline">{{ block.settings.headline | escape }}</p>
+            {%- endif -%}
+            <blockquote class="sdp-review__text">{{ block.settings.quote | escape }}</blockquote>
+            {%- if block.settings.cite != blank -%}
+              <figcaption class="sdp-review__cite sdp-label">{{ block.settings.cite | escape }}</figcaption>
+            {%- endif -%}
+          </div>
+        </figure>
       {%- endif -%}
     {%- endfor -%}
   </div>
@@ -78,11 +114,20 @@
     },
     {
       "type": "quote",
-      "name": "Customer quote",
+      "name": "Customer review",
       "limit": 1,
       "settings": [
-        { "type": "textarea", "id": "quote", "label": "Quote", "default": "“12' x 12' is large enough for 4 Adirondack chairs, 2 footstools, 2 small tables and a small square firepit.”" },
-        { "type": "text", "id": "cite", "label": "Attribution", "default": "Sandra · Trustpilot review · 12×12 deck" }
+        { "type": "paragraph", "content": "Use a real review from the reviews page, word for word." },
+        { "type": "text", "id": "name", "label": "Reviewer name", "default": "Sandra" },
+        { "type": "text", "id": "role", "label": "Label under the name", "default": "Verified Buyer" },
+        { "type": "select", "id": "source", "label": "Source", "options": [ { "value": "trustpilot", "label": "Trustpilot" }, { "value": "google", "label": "Google" }, { "value": "facebook", "label": "Facebook" }, { "value": "none", "label": "None" } ], "default": "trustpilot" },
+        { "type": "range", "id": "stars", "label": "Stars", "min": 0, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "headline", "label": "Review headline (optional)" },
+        { "type": "textarea", "id": "quote", "label": "Review text", "default": "12' x 12' is large enough for 4 Adirondack chairs, 2 footstools, 2 small tables and a small square firepit." },
+        { "type": "text", "id": "cite", "label": "Caption", "default": "Trustpilot review · 12×12 deck" },
+        { "type": "image_picker", "id": "photo", "label": "Customer photo (optional)" },
+        { "type": "text", "id": "photo_focal", "label": "Photo focal point (CSS object-position)", "default": "50% 50%" },
+        { "type": "text", "id": "photo_alt", "label": "Photo alt text" }
       ]
     }
   ],
