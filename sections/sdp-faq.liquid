@@ -56,10 +56,12 @@
           endif
         -%}
         <div class="sdp-faq__item" {{ block.shopify_attributes }}>
-          <button type="button" class="sdp-faq__q" aria-expanded="{{ open }}" aria-controls="sdp-faq-{{ section.id }}-{{ block.id }}">
-            <h3>{{ block.settings.question | escape }}</h3>
-            <span class="sdp-faq__sign" aria-hidden="true"></span>
-          </button>
+          <h3 class="sdp-faq__h">
+            <button type="button" class="sdp-faq__q" aria-expanded="{{ open }}" aria-controls="sdp-faq-{{ section.id }}-{{ block.id }}">
+              <span>{{ block.settings.question | escape }}</span>
+              <span class="sdp-faq__sign" aria-hidden="true"></span>
+            </button>
+          </h3>
           <div class="sdp-faq__a" id="sdp-faq-{{ section.id }}-{{ block.id }}"{% unless open %} hidden{% endunless %}>
             {{ block.settings.answer }}
           </div>

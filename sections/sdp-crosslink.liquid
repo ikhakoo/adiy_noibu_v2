@@ -8,12 +8,13 @@
 <div class="sdp sdp-crosslink sdp--sand"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner">
     <div class="sdp-crosslink__card">
+      {%- assign image_alt = section.settings.image_alt | default: section.settings.heading -%}
       {%- render 'sdp-image',
         image: section.settings.image,
         class: 'sdp-crosslink__media',
         sizes: '(min-width: 990px) 295px, calc(100vw - 48px)',
         focal: section.settings.image_focal,
-        alt: section.settings.heading
+        alt: image_alt
       -%}
       <div class="sdp-crosslink__body">
         <div class="sdp-crosslink__copy">
@@ -48,6 +49,7 @@
     { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "50% 50%" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "12x12 A-DIY composite deck kit beside a pool" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Prefer low maintenance?" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The same 12x12 deck is also available in composite" },
     { "type": "textarea", "id": "text", "label": "Text", "default": "$5,700 · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the structure and boards. Same engineered frame, same weekend build." },

@@ -9,12 +9,13 @@
 <div class="sdp sdp-kit sdp--stone"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-kit__inner">
     <div class="sdp-kit__top">
+      {%- assign image_alt = section.settings.image_alt | default: section.settings.heading -%}
       {%- render 'sdp-image',
         image: section.settings.image,
         class: 'sdp-kit__media',
         sizes: '(min-width: 990px) 605px, calc(100vw - 48px)',
         focal: section.settings.image_focal,
-        alt: section.settings.heading
+        alt: image_alt
       -%}
       <div class="sdp-kit__copy">
         <div class="sdp-header">
@@ -45,12 +46,12 @@
             <li class="sdp-feature" {{ block.shopify_attributes }}>
               <span class="sdp-feature__icon">
                 {%- if block.settings.icon != blank -%}
-                  {{ block.settings.icon | image_url: width: 140 | image_tag: loading: 'lazy', alt: block.settings.title, widths: '70, 140' }}
+                  {{ block.settings.icon | image_url: width: 140 | image_tag: loading: 'lazy', alt: block.settings.icon_alt | default: block.settings.title, widths: '70, 140' }}
                 {%- endif -%}
               </span>
               <span class="sdp-feature__body">
-                <span class="sdp-feature__title">{{ block.settings.title | escape }}</span>
-                <span class="sdp-feature__text">{{ block.settings.text | escape }}</span>
+                <h4 class="sdp-feature__title">{{ block.settings.title | escape }}</h4>
+                <p class="sdp-feature__text">{{ block.settings.text | escape }}</p>
               </span>
             </li>
           {%- endfor -%}
@@ -98,6 +99,7 @@
     { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "40% 50%" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "Engineered pressure-treated lumber pieces from the A-DIY 12x12 deck kit" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kit inclusions" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "What’s included in the 12x12 deck kit" },
     { "type": "textarea", "id": "intro", "label": "Intro", "default": "Skip the lumber-yard runs and the cut list. The 12x12 pressure-treated deck kit ships complete, engineered for a more straightforward build before it reaches your door." },
@@ -112,6 +114,7 @@
       "name": "In-the-crate feature",
       "settings": [
         { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "icon_alt", "label": "Icon alt text", "info": "Defaults to the title." },
         { "type": "text", "id": "title", "label": "Title", "default": "Engineered Lumber Parts" },
         { "type": "textarea", "id": "text", "label": "Text", "default": "Premium Grade 1, kiln-dried and pressure-treated for maximum strength and longevity." }
       ]

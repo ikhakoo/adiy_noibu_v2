@@ -98,7 +98,8 @@
         "add_show_price": true,
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
-        "show_variant_picker": false
+        "show_variant_picker": false,
+        "image_alt": "12x12 pressure-treated wood deck kit from A-DIY set up as an outdoor lounge"
       }
     },
     "crosslink": {
@@ -110,7 +111,8 @@
         "heading": "The same 12x12 deck is also available in composite",
         "text": "$5,700 · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the structure and boards. Same engineered frame, same weekend build.",
         "button_label": "See the 12×12 composite deck",
-        "button_link": "shopify://products/a-diy-composite-deck-kit"
+        "button_link": "shopify://products/a-diy-composite-deck-kit",
+        "image_alt": "12x12 A-DIY composite deck kit beside a pool"
       }
     },
     "numbers": {
@@ -151,7 +153,10 @@
         "n3",
         "n4"
       ],
-      "settings": {}
+      "settings": {
+        "heading": "The 12x12 wood deck kit at a glance",
+        "show_heading": false
+      }
     },
     "fits": {
       "type": "sdp-what-fits",
@@ -162,7 +167,8 @@
             "image": "shopify://shop_images/sdp-12x12-outdoor-lounge.png",
             "image_focal": "50% 50%",
             "title": "Outdoor lounge",
-            "text": "A sofa set or four Adirondack chairs with side tables, with a fire pit in the middle and room to walk around it."
+            "text": "A sofa set or four Adirondack chairs with side tables, with a fire pit in the middle and room to walk around it.",
+            "image_alt": "Outdoor lounge furniture and fire pit on a 12x12 wood deck"
           }
         },
         "dining": {
@@ -171,7 +177,8 @@
             "image": "shopify://shop_images/sdp-12x12-bistro-dining.png",
             "image_focal": "50% 60%",
             "title": "Bistro dining & family time",
-            "text": "A table for four to six, a grill at the edge and still enough floor for the kids to move."
+            "text": "A table for four to six, a grill at the edge and still enough floor for the kids to move.",
+            "image_alt": "Family eating at a picnic table on an A-DIY deck"
           }
         },
         "sauna": {
@@ -180,7 +187,8 @@
             "image": "shopify://shop_images/sdp-12x12-sauna-platform.png",
             "image_focal": "50% 50%",
             "title": "Sauna or hot tub platform",
-            "text": "Engineered to hold 15,000 lbs, so a barrel sauna, hot tub or pergola sits on it with confidence."
+            "text": "Engineered to hold 15,000 lbs, so a barrel sauna, hot tub or pergola sits on it with confidence.",
+            "image_alt": "Barrel sauna sitting on an A-DIY deck platform"
           }
         },
         "quote": {
@@ -723,7 +731,8 @@
         "button_label": "Shop the 12×12 wood deck",
         "button_link": "#",
         "features_title": "In the crate",
-        "specs_title": "12×12 specifications"
+        "specs_title": "12×12 specifications",
+        "image_alt": "Engineered pressure-treated lumber pieces from the A-DIY 12x12 deck kit"
       }
     },
     "layers": {
@@ -786,7 +795,8 @@
         "eyebrow": "What’s under a deck matters more than what’s on top",
         "heading": "The five layers of a 12x12 A-DIY deck",
         "intro": "A floor that bounces, a rail that sways, a corner that sinks, the problem is always underneath. Every layer below ships in the crate, engineered to fit.",
-        "image": "shopify://shop_images/sdp-exploded-deck-kit.jpg"
+        "image": "shopify://shop_images/sdp-exploded-deck-kit.jpg",
+        "image_alt": "Exploded view of the A-DIY 12x12 wood deck kit: decking, frame, joists, beams and Tuff Block footings"
       }
     },
     "tailored": {
@@ -2383,7 +2393,7 @@
           "type": "question",
           "settings": {
             "question": "How much does a 12x12 deck cost?",
-            "answer": "<p>The A-DIY 12x12 pressure-treated wood deck kit is $4,899, with taxes and shipping calculated at checkout. During the Fall Sale the code FALL1500 brings it to $3,399. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor.</p>"
+            "answer": "<p>The A-DIY 12x12 pressure-treated wood deck kit is $4,899, with taxes and shipping calculated at checkout. During the Fall Sale the code FALL1500 brings it to $3,399. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
           }
         },
         "q3": {
@@ -2432,7 +2442,7 @@
           "type": "question",
           "settings": {
             "question": "Wood or composite: which 12x12 deck kit should I choose?",
-            "answer": "<p>Both use the same engineered system. The pressure-treated wood 12x12 is $4,899, carries a 5-year structural warranty and can be stained to match your home. The composite 12x12 is $5,700 in Amazon Gray or Forest Wood, with a 25-year warranty on the composite deck boards, and minimal maintenance. See the 12x12 composite deck page for the full details.</p>"
+            "answer": "<p>Both use the same engineered system. The pressure-treated wood 12x12 is $4,899, carries a 5-year structural warranty and can be stained to match your home. The composite 12x12 is $5,700 in Amazon Gray or Forest Wood, with a 25-year warranty on the composite deck boards, and minimal maintenance. See the <a href=\"/products/a-diy-composite-deck-kit\">12x12 composite deck page</a> for the full details.</p>"
           }
         },
         "q10": {
@@ -2446,7 +2456,7 @@
           "type": "question",
           "settings": {
             "question": "Can I pay for my 12x12 over time?",
-            "answer": "<p>Yes. Choose A-DIY’s 0% interest payment plan in 4, 6 or 8 monthly payments (ships after the final payment), or finance through Affirm, Klarna or Shop Pay with 0% APR options up to 24 months, subject to credit approval.</p>"
+            "answer": "<p>Yes. Choose <a href=\"/products/pressure-treated-kiln-dried-wood-deck-kit-split-payments\">A-DIY’s 0% interest payment plan</a> in 4, 6 or 8 monthly payments (ships after the final payment), or finance through Affirm, Klarna or Shop Pay with 0% APR options up to 24 months, subject to credit approval.</p>"
           }
         }
       },

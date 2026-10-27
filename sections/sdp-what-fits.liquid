@@ -24,12 +24,13 @@
       <div class="sdp-fits__grid">
         {%- for block in uses -%}
           <article class="sdp-use" {{ block.shopify_attributes }}>
+            {%- assign use_alt = block.settings.image_alt | default: block.settings.title -%}
             {%- render 'sdp-image',
               image: block.settings.image,
               class: 'sdp-use__media',
               sizes: '(min-width: 990px) 406px, calc(100vw - 48px)',
               focal: block.settings.image_focal,
-              alt: block.settings.title
+              alt: use_alt
             -%}
             <h3 class="sdp-use__title">{{ block.settings.title | escape }}</h3>
             <p class="sdp-use__text">{{ block.settings.text | escape }}</p>
@@ -70,6 +71,7 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "50% 50%" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "info": "Defaults to the title." },
         { "type": "text", "id": "title", "label": "Title", "default": "Outdoor lounge" },
         { "type": "textarea", "id": "text", "label": "Text", "default": "A sofa set or four Adirondack chairs with side tables, with a fire pit in the middle and room to walk around it." }
       ]

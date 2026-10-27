@@ -331,6 +331,7 @@
     </div>
 
     {%- liquid
+      assign hero_alt = section.settings.image_alt | default: heading
       assign hero_image = section.settings.image
       if hero_image == blank and section.settings.use_product_image
         assign hero_image = product.featured_image
@@ -342,7 +343,7 @@
       sizes: '(min-width: 990px) 591px, calc(100vw - 48px)',
       eager: true,
       focal: section.settings.image_focal,
-      alt: heading
+      alt: hero_alt
     -%}
   </div>
 </div>
@@ -367,6 +368,7 @@
     { "type": "image_picker", "id": "image", "label": "Hero image" },
     { "type": "checkbox", "id": "use_product_image", "label": "Fall back to the product's featured image", "default": true },
     { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "50% 40%" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "12x12 pressure-treated wood deck kit from A-DIY set up as an outdoor lounge" },
     { "type": "header", "content": "Price & promo code" },
     { "type": "text", "id": "price_label", "label": "Price label", "default": "Regular price" },
     { "type": "text", "id": "promo_code", "label": "Promo code", "info": "Overridden by the product metafield custom.promo_code when set.", "default": "FALL1500" },
