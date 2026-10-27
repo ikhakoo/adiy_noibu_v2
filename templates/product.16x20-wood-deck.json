@@ -81,7 +81,7 @@
         "eyebrow": "16 × 20 Pressure-treated wood deck · 320 sq ft",
         "heading": "16x20 Deck — build it yourself, delivered as a pressure treated kit",
         "lede": "A 16x20 deck from A-DIY costs $7,600. That one price covers a professionally engineered, pressure treated deck kit — 320 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, builds in a weekend with a drill as the only tool, and is backed by a 5-year structural warranty.",
-        "variant_label": "Choose your option",
+        "variant_label": "Choose your color",
         "image": "shopify://shop_images/IMG_5631.webp",
         "use_product_image": true,
         "image_focal": "50% 65%",
@@ -111,10 +111,10 @@
         "image_focal": "50% 60%",
         "eyebrow": "Prefer low maintenance?",
         "heading": "The same 16x20 deck is also available in composite",
-        "text": "$10,199 · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the structure and boards. Same engineered frame, same weekend build — and on 320 square feet, the no-staining difference adds up.",
+        "text": "$10,199 · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
         "button_label": "See the 16×20 composite deck",
         "button_link": "shopify://products/a-diy-composite-deck-kit",
-        "image_alt": "16x20 A-DIY composite deck kit in Amazon Gray, built by a customer"
+        "image_alt": "16x20 A-DIY composite deck kit"
       }
     },
     "numbers": {
@@ -156,7 +156,7 @@
         "n4"
       ],
       "settings": {
-        "heading": "The 16x20 wood deck kit at a glance",
+        "heading": "The 16x20 pressure-treated wood deck kit at a glance",
         "show_heading": false
       }
     },
@@ -170,7 +170,7 @@
             "image_focal": "50% 50%",
             "title": "Outdoor living room",
             "text": "A full sectional, coffee table and fire pit on one side, with a clear walkway to the door — the layout a 12x12 can’t quite hold.",
-            "image_alt": "Outdoor sectional and fire pit set up on a large A-DIY wood deck"
+            "image_alt": "Outdoor sectional and fire pit set up on a large A-DIY deck"
           }
         },
         "dining": {
@@ -202,7 +202,10 @@
             "stars": 5,
             "headline": "",
             "quote": "We built a full 16x20 deck in one weekend with the A DIY kit. Just me, my wife, and a drill. No contractors, no measuring, no guessing.",
-            "cite": "Trustpilot review · 16×20 deck"
+            "cite": "Trustpilot review · 16×20 deck",
+            "photo": "",
+            "photo_focal": "50% 50%",
+            "photo_alt": ""
           }
         }
       },
@@ -604,7 +607,7 @@
         "cta_text": "Plenty of sizes aren’t listed here. Chat with a deck specialist to find out what we can build for your yard.",
         "cta_button_label": "Chat now",
         "cta_button_link": "#chat",
-        "fallback_link": "shopify://collections/all"
+        "fallback_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
       }
     },
     "kit": {
@@ -708,6 +711,13 @@
         "spec_10": {
           "type": "spec",
           "settings": {
+            "label": "Warranty",
+            "value": "5-year structural warranty"
+          }
+        },
+        "spec_11": {
+          "type": "spec",
+          "settings": {
             "label": "Add-ons",
             "value": "Railings, steps and different-height post kits are available. Chat with a design specialist to add them to your 16x20."
           }
@@ -727,7 +737,8 @@
         "spec_7",
         "spec_8",
         "spec_9",
-        "spec_10"
+        "spec_10",
+        "spec_11"
       ],
       "settings": {
         "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
@@ -739,7 +750,7 @@
         "button_link": "#",
         "features_title": "In the crate",
         "specs_title": "16×20 specifications",
-        "image_alt": "Engineered pressure-treated lumber pieces from the A-DIY 12x12 deck kit"
+        "image_alt": "Engineered pressure-treated lumber pieces from the A-DIY 16x20 deck kit"
       }
     },
     "layers": {
@@ -803,7 +814,7 @@
         "heading": "The five layers of a 16x20 A-DIY deck",
         "intro": "The bigger the deck, the more the structure matters. A floor that bounces, a rail that sways, a corner that sinks: the problem is always underneath. Every layer below ships in the crate, engineered to fit.",
         "image": "shopify://shop_images/sdp-exploded-deck-kit.jpg",
-        "image_alt": "Exploded view of an A-DIY wood deck kit: decking, frame, joists, beams and Tuff Block footings"
+        "image_alt": "Exploded view of an A-DIY deck kit: decking, frame, joists, beams and Tuff Block footings"
       }
     },
     "tailored": {
@@ -2454,7 +2465,7 @@
           "type": "question",
           "settings": {
             "question": "How big is a 16x20 deck, really?",
-            "answer": "<p>It is a nominal 16 ft × 20 ft, about 320 sq ft of finished deck — more than double a 12x12. Final assembled dimensions can vary slightly because of framing, board spacing and the picture-frame border, so leave a little clearance at your site.</p>"
+            "answer": "<p>It is a nominal 16 ft × 20 ft, about 320 sq ft of finished deck. Final assembled dimensions can vary slightly because of framing, board spacing and the picture-frame border, so leave a little clearance at your site.</p>"
           }
         },
         "q2": {

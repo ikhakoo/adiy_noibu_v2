@@ -1137,7 +1137,7 @@ a.sdp-size:hover {
 
 .sdp-kit__features {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 13px;
 }
 
