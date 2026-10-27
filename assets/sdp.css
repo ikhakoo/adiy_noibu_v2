@@ -489,6 +489,23 @@
   letter-spacing: 1px;
 }
 
+/* Full-pill logo image: the artwork carries its own background and border */
+.sdp-payrow__logo--image,
+.sdp-payrow__logo--image[style] {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.sdp-payrow__logo--image img {
+  width: 96px;
+  height: 36px;
+  max-width: none;
+  max-height: none;
+  object-fit: fill;
+  border-radius: 4px;
+}
+
 .sdp-plan {
   display: flex;
   flex-direction: column;

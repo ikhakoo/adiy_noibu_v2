@@ -6,7 +6,7 @@
         "affirm": {
           "type": "pay_row",
           "settings": {
-            "logo": "shopify://shop_images/Untitled_design_32.png-2.png",
+            "logo": "shopify://shop_images/sdp-logo-affirm.png",
             "logo_text": "affirm",
             "text": "Pay Monthly With Affirm",
             "link": "#klarna"
@@ -15,7 +15,7 @@
         "klarna": {
           "type": "pay_row",
           "settings": {
-            "logo": "shopify://shop_images/Untitled_design_32.png-1.png",
+            "logo": "shopify://shop_images/sdp-logo-klarna.png",
             "logo_text": "Klarna.",
             "logo_background": "#ffb3c7",
             "text": "Shop Now. Pay With Klarna.",
@@ -25,7 +25,7 @@
         "shoppay": {
           "type": "pay_row",
           "settings": {
-            "logo": "shopify://shop_images/Untitled_design_32_png_1624df21-e928-4e67-9587-aa3c52112551.png",
+            "logo": "shopify://shop_images/sdp-logo-shoppay.png",
             "logo_text": "shop Pay",
             "logo_background": "#5a31f4",
             "text": "Buy Now, Pay Later With Shop Pay",
@@ -46,7 +46,8 @@
             "sub_3": "per month · lowest",
             "highlight": "3",
             "how": "How it works: pay the first installment today, the rest is charged monthly to the same card. No interest, no fees. Your deck ships as soon as the last payment clears.",
-            "link_label": "See Details"
+            "link_label": "See Details",
+            "logo": "shopify://shop_images/sdp-logo-adiy.png"
           }
         },
         "reserve": {
@@ -64,7 +65,8 @@
             "value_3": "You choose",
             "sub_3": "a future date",
             "how": "How it works: pay a $250 non-refundable deposit today and your 12x12 deck is reserved at today’s price. Pick the delivery date that suits you, next month or next spring and pay the remaining balance before it ships.",
-            "link_label": "Reserve Now"
+            "link_label": "Reserve Now",
+            "logo": "shopify://shop_images/sdp-logo-adiy.png"
           }
         }
       },
