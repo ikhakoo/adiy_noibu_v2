@@ -44,8 +44,9 @@
     assign href = fallback_link
     if product != blank
       assign size_key = w | append: ' x ' | append: l
+      assign size_key_alt = l | append: ' x ' | append: w
       for v in product.variants
-        if v.title contains size_key
+        if v.option1 == size_key or v.option2 == size_key or v.option1 == size_key_alt or v.option2 == size_key_alt
           assign href = product.url | append: '?variant=' | append: v.id
           break
         endif
