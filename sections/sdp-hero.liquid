@@ -150,9 +150,9 @@
                   {%- else -%}
                     <div class="sdp-payrow" {{ block.shopify_attributes }}>
                   {%- endif -%}
-                    <span class="sdp-payrow__logo"{% if block.settings.logo_background != blank %} style="background: {{ block.settings.logo_background }}; border-color: {{ block.settings.logo_background }};"{% endif %}>
+                    <span class="sdp-payrow__logo{% if block.settings.logo != blank %} sdp-payrow__logo--image{% endif %}"{% if block.settings.logo_background != blank %} style="background: {{ block.settings.logo_background }}; border-color: {{ block.settings.logo_background }};"{% endif %}>
                       {%- if block.settings.logo != blank -%}
-                        {{ block.settings.logo | image_url: width: 240 | image_tag: loading: 'lazy', alt: block.settings.text, widths: '120, 240' }}
+                        {{ block.settings.logo | image_url: width: 288 | image_tag: loading: 'lazy', alt: block.settings.text, widths: '96, 192, 288', sizes: '96px' }}
                       {%- else -%}
                         <span>{{ block.settings.logo_text | escape }}</span>
                       {%- endif -%}
@@ -175,9 +175,9 @@
                   -%}
                   <div class="sdp-plan" data-sdp-plan{% if block.settings.base_on_regular %} data-sdp-plan-regular{% endif %} {{ block.shopify_attributes }}>
                     <div class="sdp-plan__head">
-                      <span class="sdp-payrow__logo sdp-payrow__logo--brand">
+                      <span class="sdp-payrow__logo sdp-payrow__logo--brand{% if block.settings.logo != blank %} sdp-payrow__logo--image{% endif %}">
                         {%- if block.settings.logo != blank -%}
-                          {{ block.settings.logo | image_url: width: 160 | image_tag: loading: 'lazy', alt: 'A-DIY', widths: '80, 160' }}
+                          {{ block.settings.logo | image_url: width: 288 | image_tag: loading: 'lazy', alt: 'A-DIY', widths: '96, 192, 288', sizes: '96px' }}
                         {%- else -%}
                           <span>A-DIY</span>
                         {%- endif -%}
@@ -225,9 +225,9 @@
                 {%- when 'reserve' -%}
                   <div class="sdp-plan sdp-plan--reserve" {{ block.shopify_attributes }}>
                     <div class="sdp-plan__head">
-                      <span class="sdp-payrow__logo sdp-payrow__logo--brand">
+                      <span class="sdp-payrow__logo sdp-payrow__logo--brand{% if block.settings.logo != blank %} sdp-payrow__logo--image{% endif %}">
                         {%- if block.settings.logo != blank -%}
-                          {{ block.settings.logo | image_url: width: 160 | image_tag: loading: 'lazy', alt: 'A-DIY', widths: '80, 160' }}
+                          {{ block.settings.logo | image_url: width: 288 | image_tag: loading: 'lazy', alt: 'A-DIY', widths: '96, 192, 288', sizes: '96px' }}
                         {%- else -%}
                           <span>A-DIY</span>
                         {%- endif -%}
@@ -394,7 +394,7 @@
       "type": "pay_row",
       "name": "Financing row",
       "settings": [
-        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Upload the full 96×36 pill (background included); it fills the box edge to edge." },
         { "type": "text", "id": "logo_text", "label": "Logo text (if no image)", "default": "affirm" },
         { "type": "color", "id": "logo_background", "label": "Logo box background" },
         { "type": "text", "id": "text", "label": "Text", "default": "Pay Monthly With Affirm" },
@@ -406,7 +406,7 @@
       "name": "A-DIY payment plan",
       "limit": 1,
       "settings": [
-        { "type": "image_picker", "id": "logo", "label": "Logo (white A-DIY mark)" },
+        { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Upload the full 96×36 green pill; it fills the box edge to edge." },
         { "type": "text", "id": "title", "label": "Title", "info": "Placeholders: [sale_price], [regular_price].", "default": "Split the [sale_price] sale price with A-DIY’s own payment plan" },
         { "type": "text", "id": "kicker", "label": "Kicker", "info": "Placeholder: [code].", "default": "0% interest · No fees · Guaranteed approval · Code [code]" },
         { "type": "checkbox", "id": "base_on_regular", "label": "Split the regular price instead of the sale price", "default": false },
@@ -428,7 +428,7 @@
       "name": "A-DIY Reserve",
       "limit": 1,
       "settings": [
-        { "type": "image_picker", "id": "logo", "label": "Logo (white A-DIY mark)" },
+        { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Upload the full 96×36 green pill; it fills the box edge to edge." },
         { "type": "text", "id": "title", "label": "Title", "default": "A-DIY Reserve - lock in today’s price, deliver when you’re ready" },
         { "type": "text", "id": "kicker", "label": "Kicker", "default": "$250 deposit · Price locked · You pick the delivery date" },
         { "type": "text", "id": "label_1", "label": "Tile 1 · label", "default": "Today" },
