@@ -52,6 +52,18 @@
     echo '<span data-sdp-monthly>' | append: monthly_str | append: '</span>'
   endcapture
 
+  comment
+    Sibling products for the plan cards. The split-payments and $250 reserve products
+    are separate SKUs per material (handle convention: "<handle>-split-payments" and
+    "250-<handle>"), so when a block has no product picked and no URL, we derive the
+    sibling from the current product's handle. Both products are unlisted, which is
+    fine for a direct link.
+  endcomment
+  assign split_handle = product.handle | append: '-split-payments'
+  assign reserve_handle = '250-' | append: product.handle
+  assign split_product = all_products[split_handle]
+  assign reserve_product = all_products[reserve_handle]
+
   assign heading = section.settings.heading
   if heading == blank
     assign heading = product.title
@@ -71,7 +83,7 @@
         <p class="sdp-hero__lede">{{ section.settings.lede | escape }}</p>
       {%- endif -%}
 
-      {%- if product.has_only_default_variant == false and product.variants.size > 1 -%}
+      {%- if section.settings.show_variant_picker and product.has_only_default_variant == false and product.variants.size > 1 -%}
         <div class="sdp-hero__variants">
           <label for="sdp-variant-{{ section.id }}">{{ section.settings.variant_label | default: 'Choose your option' | escape }}</label>
           <select id="sdp-variant-{{ section.id }}" data-sdp-variant-select>
@@ -194,10 +206,18 @@
                         <span class="sdp-tile__sub">{{ block.settings.sub_3 | default: 'per month · lowest' | escape }}</span>
                       </div>
                     </div>
+                    {%- liquid
+                      assign plan_url = block.settings.link
+                      if block.settings.product != blank
+                        assign plan_url = block.settings.product.url
+                      elsif plan_url == blank and split_product != blank
+                        assign plan_url = split_product.url
+                      endif
+                    -%}
                     {%- if block.settings.how != blank or block.settings.link_label != blank -%}
                       <p class="sdp-plan__how">
                         {{ block.settings.how | escape }}
-                        {%- if block.settings.link_label != blank %} <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
+                        {%- if block.settings.link_label != blank and plan_url != blank %} <a href="{{ plan_url }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
                       </p>
                     {%- endif -%}
                   </div>
@@ -233,10 +253,18 @@
                         {%- endif -%}
                       {%- endfor -%}
                     </div>
+                    {%- liquid
+                      assign reserve_url = block.settings.link
+                      if block.settings.product != blank
+                        assign reserve_url = block.settings.product.url
+                      elsif reserve_url == blank and reserve_product != blank
+                        assign reserve_url = reserve_product.url
+                      endif
+                    -%}
                     {%- if block.settings.how != blank or block.settings.link_label != blank -%}
                       <p class="sdp-plan__how">
                         {{ block.settings.how | escape }}
-                        {%- if block.settings.link_label != blank %} <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
+                        {%- if block.settings.link_label != blank and reserve_url != blank %} <a href="{{ reserve_url }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
                       </p>
                     {%- endif -%}
                   </div>
@@ -333,7 +361,8 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "12 × 12 Pressure-treated wood deck · 144 sq ft" },
     { "type": "textarea", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the product title.", "default": "12x12 Deck — build it yourself, delivered as a pressure treated kit" },
     { "type": "textarea", "id": "lede", "label": "Intro paragraph", "default": "A 12x12 deck from A-DIY costs $4,899. That one price covers a professionally engineered, pressure treated deck kit in which every part goes together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and is backed by a 5-year structural warranty." },
-    { "type": "text", "id": "variant_label", "label": "Variant dropdown label", "info": "Only shown when the product has more than one variant.", "default": "Choose your option" },
+    { "type": "checkbox", "id": "show_variant_picker", "label": "Show variant dropdown", "info": "Off by default: the page is for one size, so the product's first available variant is sold. Turn on for products with several sizes/colours.", "default": false },
+    { "type": "text", "id": "variant_label", "label": "Variant dropdown label", "default": "Choose your option" },
     { "type": "header", "content": "Image" },
     { "type": "image_picker", "id": "image", "label": "Hero image" },
     { "type": "checkbox", "id": "use_product_image", "label": "Fall back to the product's featured image", "default": true },
@@ -388,7 +417,8 @@
         { "type": "select", "id": "highlight", "label": "Highlighted tile", "options": [ { "value": "0", "label": "None" }, { "value": "1", "label": "Tile 1" }, { "value": "2", "label": "Tile 2" }, { "value": "3", "label": "Tile 3" } ], "default": "3" },
         { "type": "textarea", "id": "how", "label": "How it works", "default": "How it works: pay the first installment today, the rest is charged monthly to the same card. No interest, no fees. Your deck ships as soon as the last payment clears." },
         { "type": "text", "id": "link_label", "label": "Link label", "default": "See Details" },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "product", "id": "product", "label": "Split-payments product", "info": "Leave empty to use the current product's split-payments twin automatically (handle ending in -split-payments)." },
+        { "type": "url", "id": "link", "label": "Link override" }
       ]
     },
     {
@@ -410,7 +440,8 @@
         { "type": "text", "id": "sub_3", "label": "Tile 3 · caption", "default": "a future date" },
         { "type": "textarea", "id": "how", "label": "How it works", "default": "How it works: pay a $250 non-refundable deposit today and your 12x12 deck is reserved at today’s price. Pick the delivery date that suits you, next month or next spring and pay the remaining balance before it ships." },
         { "type": "text", "id": "link_label", "label": "Link label", "default": "Reserve Now" },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "product", "id": "product", "label": "$250 reserve product", "info": "Leave empty to use the current product's $250 twin automatically (handle starting with 250-)." },
+        { "type": "url", "id": "link", "label": "Link override" }
       ]
     }
   ],

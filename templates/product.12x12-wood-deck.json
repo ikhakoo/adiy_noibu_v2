@@ -46,8 +46,7 @@
             "sub_3": "per month · lowest",
             "highlight": "3",
             "how": "How it works: pay the first installment today, the rest is charged monthly to the same card. No interest, no fees. Your deck ships as soon as the last payment clears.",
-            "link_label": "See Details",
-            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit-split-payments"
+            "link_label": "See Details"
           }
         },
         "reserve": {
@@ -65,8 +64,7 @@
             "value_3": "You choose",
             "sub_3": "a future date",
             "how": "How it works: pay a $250 non-refundable deposit today and your 12x12 deck is reserved at today’s price. Pick the delivery date that suits you, next month or next spring and pay the remaining balance before it ships.",
-            "link_label": "Reserve Now",
-            "link": "shopify://products/250-pressure-treated-kiln-dried-wood-deck-kit"
+            "link_label": "Reserve Now"
           }
         }
       },
@@ -99,7 +97,8 @@
         "add_label": "Add to cart",
         "add_show_price": true,
         "secondary_label": "Show more sizes",
-        "secondary_link": "#sizes"
+        "secondary_link": "#sizes",
+        "show_variant_picker": false
       }
     },
     "crosslink": {
@@ -589,7 +588,8 @@
         "cta_heading": "Don’t see your size? We build many more.",
         "cta_text": "Plenty of sizes aren’t listed here. Chat with a deck specialist to find out what we can build for your yard.",
         "cta_button_label": "Chat now",
-        "cta_button_link": "#chat"
+        "cta_button_link": "#chat",
+        "fallback_link": "shopify://collections/all"
       }
     },
     "kit": {

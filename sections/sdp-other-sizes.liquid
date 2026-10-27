@@ -60,7 +60,7 @@
           {%- if count > 0 -%}
             <div class="sdp-sizes__grid">
               {%- for size in section.blocks offset: first_size limit: count -%}
-                {%- render 'sdp-size-tile', block: size, current_label: section.settings.current_label -%}
+                {%- render 'sdp-size-tile', block: size, current_label: section.settings.current_label, fallback_link: section.settings.fallback_link, product: product -%}
               {%- endfor -%}
             </div>
           {%- endif -%}
@@ -97,6 +97,7 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Every backyard has a fit" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Need more room? Other popular deck kit sizes" },
     { "type": "text", "id": "current_label", "label": "Badge on the current size", "default": "This page" },
+    { "type": "url", "id": "fallback_link", "label": "Fallback link for sizes without their own page", "info": "Until each size has its own product page, tiles link to the current product with that size's variant preselected; this link is used when no matching variant exists." },
     { "type": "header", "content": "Closing CTA" },
     { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Don’t see your size? We build many more." },
     { "type": "textarea", "id": "cta_text", "label": "Text", "default": "Plenty of sizes aren’t listed here. Chat with a deck specialist to find out what we can build for your yard." },
@@ -119,7 +120,7 @@
         { "type": "number", "id": "length", "label": "Length (ft)", "default": 18 },
         { "type": "text", "id": "label", "label": "Label override", "info": "Defaults to \"W × L\"." },
         { "type": "text", "id": "area", "label": "Area text override", "info": "Defaults to width × length sq ft." },
-        { "type": "url", "id": "link", "label": "Link to that size's page" },
+        { "type": "url", "id": "link", "label": "Link to that size's page", "info": "Leave empty to fall back to this product with the matching variant selected." },
         { "type": "checkbox", "id": "current", "label": "This is the current page's size", "default": false }
       ]
     }

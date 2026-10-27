@@ -5,6 +5,9 @@
   Accepts:
   - block: {Object} a `size` block (width, length, label, area, link, current)
   - current_label: {String} badge text for the current page's size
+  - fallback_link: {String} href used when the block has no link of its own
+  - product: {Object} current product; a variant whose title matches "W x L" is
+    preselected in the fallback link when it points at this product
 {%- endcomment -%}
 {%- liquid
   assign scale = 3
@@ -36,9 +39,25 @@
   endif
 
   assign is_current = block.settings.current
-  assign is_link = false
-  if is_current == false and block.settings.link != blank
-    assign is_link = true
+  assign href = block.settings.link
+  if href == blank
+    assign href = fallback_link
+    if product != blank
+      assign size_key = w | append: ' x ' | append: l
+      for v in product.variants
+        if v.title contains size_key
+          assign href = product.url | append: '?variant=' | append: v.id
+          break
+        endif
+      endfor
+    endif
+  endif
+  if href == blank
+    assign href = '#'
+  endif
+  assign is_link = true
+  if is_current
+    assign is_link = false
   endif
 
   if is_current
@@ -78,7 +97,7 @@
   {%- endif -%}
 {%- endcapture -%}
 {%- if is_link -%}
-  <a class="sdp-size" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ tile }}</a>
+  <a class="sdp-size" href="{{ href }}" {{ block.shopify_attributes }}>{{ tile }}</a>
 {%- else -%}
   <div class="sdp-size{% if is_current %} sdp-size--current{% endif %}" {{ block.shopify_attributes }}>{{ tile }}</div>
 {%- endif -%}
