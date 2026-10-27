@@ -273,6 +273,11 @@
 
 .sdp-hero__media {
   aspect-ratio: 591 / 452;
+  /* Stays in view while the buy box on the left scrolls; the grid's align-items:
+     start gives it the full column height to stick within. --header-height is set
+     by the theme header script so the image clears the sticky nav. */
+  position: sticky;
+  top: calc(var(--header-height, 90px) + 24px);
 }
 
 .sdp-hero__media img {
@@ -1497,7 +1502,7 @@ a.sdp-size:hover {
 
   .sdp-hero { padding: 32px 0 56px; }
   .sdp-hero__wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .sdp-hero__media { order: -1; max-width: 640px; }
+  .sdp-hero__media { order: -1; max-width: 640px; position: static; }
   .sdp-hero__title { font-size: 36px; }
   .sdp-hero__lede { font-size: 17px; }
 
