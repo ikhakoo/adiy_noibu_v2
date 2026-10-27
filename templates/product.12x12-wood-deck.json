@@ -80,7 +80,7 @@
       "settings": {
         "eyebrow": "12 × 12 Pressure-treated wood deck · 144 sq ft",
         "heading": "12x12 Deck — build it yourself, delivered as a pressure treated kit",
-        "lede": "A 12x12 deck from A-DIY costs $4,899. That one price covers a professionally engineered, pressure treated deck kit — 144 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, builds in a day with a drill as the only tool, and is backed by a 5-year structural warranty.",
+        "lede": "A 12x12 deck from A-DIY costs $4,899. That one price covers a professionally engineered, pressure treated deck kit — 144 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and is backed by a 5-year structural warranty.",
         "variant_label": "Choose your color",
         "image": "shopify://shop_images/sdp-12x12-wood-hero-render.png",
         "use_product_image": true,
@@ -130,8 +130,8 @@
         "n2": {
           "type": "stat",
           "settings": {
-            "value": "1 day",
-            "label": "Typical build, one person"
+            "value": "8–16 hrs",
+            "label": "Typical build, one weekend"
           }
         },
         "n3": {
@@ -166,11 +166,11 @@
         "lounge": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/IMG_5631.webp",
-            "image_focal": "50% 65%",
-            "title": "Entry or RV landing",
-            "text": "A clean, level step-out from a sliding door, camper or tiny home, with room for a bench and planters.",
-            "image_alt": "Customer-built A-DIY wood deck beside an RV"
+            "image": "shopify://shop_images/sdp-12x12-outdoor-lounge.png",
+            "image_focal": "50% 50%",
+            "title": "Outdoor lounge",
+            "text": "A sofa set or four Adirondack chairs with side tables, with a fire pit in the middle and room to walk around it.",
+            "image_alt": "Outdoor lounge furniture and fire pit on an A-DIY deck"
           }
         },
         "dining": {
@@ -178,9 +178,9 @@
           "settings": {
             "image": "shopify://shop_images/sdp-12x12-bistro-dining.png",
             "image_focal": "50% 60%",
-            "title": "Bistro for two",
-            "text": "A café table, two chairs and a side table — morning coffee without stepping onto wet grass.",
-            "image_alt": "Table and chairs on an A-DIY deck"
+            "title": "Bistro dining & family time",
+            "text": "A table for four to six, a grill at the edge and still enough floor for the kids to move.",
+            "image_alt": "Family eating at a picnic table on an A-DIY deck"
           }
         },
         "sauna": {
@@ -188,9 +188,9 @@
           "settings": {
             "image": "shopify://shop_images/sdp-12x12-sauna-platform.png",
             "image_focal": "50% 50%",
-            "title": "Hot tub pad",
-            "text": "Engineered to hold 15,000 lbs, so a hot tub sits level and off the ground with a walkway beside it.",
-            "image_alt": "Hot tub-ready A-DIY deck platform"
+            "title": "Sauna or hot tub platform",
+            "text": "Engineered to hold 15,000 lbs, so a barrel sauna, hot tub or pergola sits on it with confidence.",
+            "image_alt": "Barrel sauna sitting on an A-DIY deck platform"
           }
         },
         "quote": {
@@ -218,7 +218,7 @@
       "settings": {
         "eyebrow": "Space planning",
         "heading": "What fits on a 12x12 deck?",
-        "intro": "144 square feet is a platform with a purpose: an entry landing, a spot for two chairs by the door, or the deck for an RV or tiny home. Here is how A-DIY customers use theirs."
+        "intro": "144 square feet is the sweet spot for a backyard that works hard without taking over the lawn. Here is what A-DIY customers actually put on theirs."
       }
     },
     "video_carousel": {
@@ -2433,8 +2433,8 @@
           "type": "step",
           "settings": {
             "icon": "drill",
-            "title": "Build in\na day",
-            "text": "A drill, the included bit and the 3D app. One 6x20 customer assembled his compact kit alone in a day."
+            "title": "Build in\n8–16 hours",
+            "text": "A drill, the included bit and the 3D app. Most people finish in one weekend; many in an afternoon."
           }
         },
         "step_4": {
@@ -2479,7 +2479,7 @@
           "type": "question",
           "settings": {
             "question": "How long does it take to build a 12x12 wood deck kit?",
-            "answer": "<p>Compact kits are typically a one-day build. One customer assembled a 6 x 20 alone in a day, including unpacking.</p>"
+            "answer": "<p>Most standard kits assemble in 8–16 hours, typically one weekend. One 12x18 customer called it a one-weekend job; a 12x12 customer finished in about 16 hours spread over four evenings, including site prep.</p>"
           }
         },
         "q4": {
