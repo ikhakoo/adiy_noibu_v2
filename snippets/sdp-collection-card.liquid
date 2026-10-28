@@ -97,17 +97,18 @@
 >
   <div class="sdpc-card__media">
     {%- if media != blank -%}
-      {{
-        media.preview_image
-        | image_url: width: 900
-        | image_tag:
-          widths: '300, 450, 600, 900',
-          sizes: '(min-width: 1200px) 300px, (min-width: 750px) calc((100vw - 120px) / 2), calc(100vw - 32px)',
-          loading: 'lazy',
-          alt: media.alt | default: product.title,
-          class: 'sdpc-card__img',
-          data-sdpc-img: ''
-      }}
+      {%- assign img = media.preview_image -%}
+      <img
+        class="sdpc-card__img"
+        data-sdpc-img
+        src="{{ img | image_url: width: 800 }}"
+        srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 800 }} 800w, {{ img | image_url: width: 1100 }} 1100w"
+        sizes="(min-width: 1200px) 330px, (min-width: 750px) 50vw, 100vw"
+        width="{{ img.width }}"
+        height="{{ img.height }}"
+        alt="{{ media.alt | default: product.title | escape }}"
+        loading="{% if index <= 4 %}eager{% else %}lazy{% endif %}"
+      >
     {%- else -%}
       {{ 'image' | placeholder_svg_tag: 'sdpc-card__img sdpc-card__img--placeholder' }}
     {%- endif -%}
@@ -156,7 +157,7 @@
             type="button"
             class="sdpc-swatch{% if forloop.first %} is-active{% endif %}"
             data-sdpc-swatch
-            data-src="{{ vmedia.preview_image | image_url: width: 900 }}"
+            data-src="{{ vmedia.preview_image | image_url: width: 800 }}"
             data-url="{{ variant.url }}"
             aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
             title="{{ color | escape }}"
