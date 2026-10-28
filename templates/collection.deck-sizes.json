@@ -3,12 +3,45 @@
     "main": {
       "type": "sdp-collection",
       "blocks": {
-        "usp_delivery": { "type": "usp", "settings": { "icon": "truck", "title": "Delivered in 10–14 days", "text": "Packed in order of use" } },
-        "usp_drill": { "type": "usp", "settings": { "icon": "drill", "title": "Built with just a drill", "text": "No cutting, no measuring" } },
-        "usp_engineered": { "type": "usp", "settings": { "icon": "shield", "title": "Engineered to fit", "text": "Footings and hardware included" } },
-        "usp_help": { "type": "usp", "settings": { "icon": "chat", "title": "Free design help", "text": "Talk to a deck specialist" } }
+        "usp_delivery": {
+          "type": "usp",
+          "settings": {
+            "icon": "truck",
+            "title": "Delivered in 10–14 days",
+            "text": "Packed in order of use"
+          }
+        },
+        "usp_drill": {
+          "type": "usp",
+          "settings": {
+            "icon": "drill",
+            "title": "Built with just a drill",
+            "text": "No cutting, no measuring"
+          }
+        },
+        "usp_engineered": {
+          "type": "usp",
+          "settings": {
+            "icon": "shield",
+            "title": "Engineered to fit",
+            "text": "Footings and hardware included"
+          }
+        },
+        "usp_help": {
+          "type": "usp",
+          "settings": {
+            "icon": "chat",
+            "title": "Free design help",
+            "text": "Talk to a deck specialist"
+          }
+        }
       },
-      "block_order": ["usp_delivery", "usp_drill", "usp_engineered", "usp_help"],
+      "block_order": [
+        "usp_delivery",
+        "usp_drill",
+        "usp_engineered",
+        "usp_help"
+      ],
       "settings": {
         "eyebrow": "Shop by size",
         "heading": "",
@@ -20,9 +53,12 @@
         "tab_compact": "Compact series",
         "columns_desktop": 4,
         "columns_mobile": "1",
-        "background": "sand"
+        "background": "sand",
+        "sizes": "wood-12x12,wood-12x18,wood-12x20,wood-12x24,wood-12x28,wood-16x16,wood-16x20,wood-16x24,wood-16x28,composite-12x12,composite-12x16,composite-12x20,composite-12x24,composite-12x28,composite-16x16,composite-16x20,composite-16x24,composite-16x28,wood-6x12,wood-6x16,wood-6x20,wood-8x12,wood-8x16,wood-8x20"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
