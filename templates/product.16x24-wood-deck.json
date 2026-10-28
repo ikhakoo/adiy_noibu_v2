@@ -106,14 +106,15 @@
         "secondary_link": "#sizes",
         "show_variant_picker": false,
         "image_alt": "16x24 pressure-treated wood deck kit from A-DIY, set up as an outdoor lounge",
-        "size_option": "16 x 24"
+        "size_option": "16 x 24",
+        "use_custom_image": false
       }
     },
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
-        "image": "shopify://shop_images/sdp-12x12-composite-poolside.jpg",
-        "image_focal": "50% 55%",
+        "image": "shopify://shop_images/sdp-fit-composite-family.png",
+        "image_focal": "50% 50%",
         "eyebrow": "Prefer low maintenance?",
         "heading": "The same 16x24 deck is also available in composite",
         "text": "[twin_price] · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
@@ -173,31 +174,31 @@
         "lounge": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/image_56.png",
-            "image_focal": "50% 60%",
+            "image": "shopify://shop_images/sdp-fit-wood-party.png",
+            "image_focal": "50% 50%",
             "title": "Dining and lounge as separate rooms",
-            "text": "A ten-seat table at one end and a full sectional with a fire pit at the other, with a real walkway between them.",
-            "image_alt": "Dining table on a large A-DIY deck"
+            "text": "A long dinner table at one end and lounge chairs at the other, with a real walkway between them.",
+            "image_alt": "Backyard dinner party on a large A-DIY wood deck"
           }
         },
         "dining": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-12x12-bistro-dining.png",
-            "image_focal": "50% 60%",
-            "title": "Outdoor kitchen and bar",
-            "text": "A grill island, prep counter and bar-height seating along one edge, without crowding the people sitting down.",
-            "image_alt": "Family eating at a picnic table on an A-DIY deck"
+            "image": "shopify://shop_images/sdp-fit-wood-kitchen.png",
+            "image_focal": "50% 50%",
+            "title": "Outdoor kitchen",
+            "text": "A grill station and a dining table along one edge, without crowding the people sitting down.",
+            "image_alt": "Grill station and dining table on an A-DIY wood deck"
           }
         },
         "sauna": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-12x12-sauna-platform.png",
+            "image": "shopify://shop_images/sdp-fit-wood-pergola-dining.png",
             "image_focal": "50% 50%",
-            "title": "Pergola, hot tub and still room to move",
-            "text": "Engineered to hold 15,000 lbs, so a hot tub under a pergola fits at one end while the rest of the deck stays open.",
-            "image_alt": "Barrel sauna sitting on an A-DIY deck platform"
+            "title": "Pergola dining",
+            "text": "Engineered to hold 15,000 lbs, so a pergola — or a hot tub — fits at one end while the rest of the deck stays open.",
+            "image_alt": "Dining under a pergola on an A-DIY wood deck"
           }
         },
         "quote": {
@@ -2488,7 +2489,7 @@
           "type": "question",
           "settings": {
             "question": "How much does a 16x24 deck cost?",
-            "answer": "<p>The A-DIY 16x24 pressure-treated wood deck kit is [price], with taxes and shipping calculated at checkout. During the Fall Sale the code [code] brings it to [sale_price]. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
+            "answer": "<p>The A-DIY 16x24 pressure-treated wood deck kit is [price], with taxes and shipping calculated at checkout. During the Fall Sale the code [code] brings it to [sale_price]. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor.</p>"
           }
         },
         "q3": {

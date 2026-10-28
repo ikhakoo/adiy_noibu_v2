@@ -31,7 +31,7 @@
           {{ 'image' | placeholder_svg_tag }}
         {%- endif -%}
         {%- for block in section.blocks -%}
-          <span class="sdp-pin" data-for="{{ block.id }}" style="left: {{ block.settings.pin_x | default: 85 }}%; top: {{ block.settings.pin_y | default: 50 }}%;"></span>
+          <span class="sdp-pin" data-for="{{ block.id }}" data-n="{{ forloop.index }}" style="left: {{ block.settings.pin_x | default: 85 }}%; top: {{ block.settings.pin_y | default: 50 }}%;"></span>
         {%- endfor -%}
       </div>
 

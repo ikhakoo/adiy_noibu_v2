@@ -354,9 +354,16 @@
 
     {%- liquid
       assign hero_alt = section.settings.image_alt | default: heading
-      assign hero_image = section.settings.image
-      if hero_image == blank and section.settings.use_product_image
-        assign hero_image = product.featured_image
+      comment
+        Main image = the product's first photo (so each size product shows its own
+        gallery lead), unless "Use the custom image" is ticked.
+      endcomment
+      assign hero_image = product.featured_media.preview_image
+      if section.settings.use_custom_image and section.settings.image != blank
+        assign hero_image = section.settings.image
+      endif
+      if hero_image == blank
+        assign hero_image = section.settings.image
       endif
     -%}
     {%- render 'sdp-image',
@@ -388,8 +395,9 @@
     { "type": "checkbox", "id": "show_variant_picker", "label": "Show variant dropdown", "info": "Off by default: the page is for one size, so the product's first available variant is sold. Turn on for products with several sizes/colours.", "default": false },
     { "type": "text", "id": "variant_label", "label": "Variant dropdown label", "default": "Choose your option" },
     { "type": "header", "content": "Image" },
-    { "type": "image_picker", "id": "image", "label": "Hero image" },
-    { "type": "checkbox", "id": "use_product_image", "label": "Fall back to the product's featured image", "default": true },
+    { "type": "paragraph", "content": "The main image is the product's first photo. Pick an image below and tick the box to override it." },
+    { "type": "image_picker", "id": "image", "label": "Custom image" },
+    { "type": "checkbox", "id": "use_custom_image", "label": "Use the custom image instead of the product photo", "default": false },
     { "type": "text", "id": "image_focal", "label": "Image focal point (CSS object-position)", "default": "50% 40%" },
     { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "12x12 pressure-treated wood deck kit from A-DIY set up as an outdoor lounge" },
     { "type": "header", "content": "Price & promo code" },
