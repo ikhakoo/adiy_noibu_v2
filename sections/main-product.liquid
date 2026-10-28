@@ -4180,6 +4180,7 @@
                                       limit: block.settings.products_per_page
                                       offset: continue
                                     -%}
+                                      {%- if product.tags contains 'hide-product' -%}{%- continue -%}{%- endif -%}
                                       <li>
                                         {%- if block.settings.enable_quick_add -%}
                                           {% assign quick_add = 'standard' %}
