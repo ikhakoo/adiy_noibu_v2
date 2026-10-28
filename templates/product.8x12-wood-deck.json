@@ -111,15 +111,14 @@
         "image": "shopify://shop_images/sdp-12x12-composite-poolside.jpg",
         "image_focal": "50% 55%",
         "eyebrow": "Prefer low maintenance?",
-        "heading": "The same 12x12 deck is also available in composite",
-        "text": "[twin_price] · Same engineered frame, same build.",
-        "button_label": "See the 12×12 composite deck",
+        "heading": "A-DIY decks also come in composite, from 12x12 up to 16x28",
+        "text": "12x12 from [twin_price] · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
+        "button_label": "See the composite deck kits",
         "button_link": "",
-        "image_alt": "12x12 A-DIY composite deck kit",
-        "twin_product": "",
-        "size_option": "8 x 12"
-      },
-      "disabled": true
+        "image_alt": "A-DIY composite deck kit beside a pool",
+        "twin_product": "a-diy-composite-deck-kit",
+        "size_option": "12 x 12"
+      }
     },
     "numbers": {
       "type": "sdp-key-numbers",

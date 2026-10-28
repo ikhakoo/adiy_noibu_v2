@@ -108,18 +108,17 @@
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
-        "image": "shopify://shop_images/sdp-12x12-composite-poolside.jpg",
-        "image_focal": "50% 55%",
-        "eyebrow": "Prefer low maintenance?",
-        "heading": "The same 12x12 deck is also available in composite",
-        "text": "[twin_price] · Same engineered frame, same build.",
-        "button_label": "See the 12×12 composite deck",
+        "image": "shopify://shop_images/sdp-12x12-wood-hero-render.png",
+        "image_focal": "50% 40%",
+        "eyebrow": "Prefer real wood?",
+        "heading": "A-DIY decks also come in pressure-treated wood, from 6x12 up to 16x28",
+        "text": "12x12 from [twin_price] · Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated · stain it to match your home · 5-year structural warranty. Same engineered frame, same build.",
+        "button_label": "See the wood deck kits",
         "button_link": "",
-        "image_alt": "12x12 A-DIY composite deck kit",
-        "twin_product": "",
-        "size_option": "12 x 16"
-      },
-      "disabled": true
+        "image_alt": "A-DIY pressure-treated wood deck kit",
+        "twin_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "size_option": "12 x 12"
+      }
     },
     "numbers": {
       "type": "sdp-key-numbers",
