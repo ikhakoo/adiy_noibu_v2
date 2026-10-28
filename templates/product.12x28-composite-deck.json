@@ -47,7 +47,9 @@
             "highlight": "3",
             "how": "How it works: pay the first installment today, the rest is charged monthly to the same card. No interest, no fees. Your deck ships as soon as the last payment clears.",
             "link_label": "See Details",
-            "logo": "shopify://shop_images/sdp-logo-adiy.png"
+            "logo": "shopify://shop_images/sdp-logo-adiy.png",
+            "product": "a-diy-composite-deck-kit-split-payments",
+            "link": ""
           }
         },
         "reserve": {
@@ -66,7 +68,9 @@
             "sub_3": "a future date",
             "how": "How it works: pay a $250 non-refundable deposit today and your 12x28 deck is reserved at today’s price. Pick the delivery date that suits you, next month or next spring and pay the remaining balance before it ships.",
             "link_label": "Reserve Now",
-            "logo": "shopify://shop_images/sdp-logo-adiy.png"
+            "logo": "shopify://shop_images/sdp-logo-adiy.png",
+            "product": "250-a-diy-composite-deck-kit",
+            "link": ""
           }
         }
       },
@@ -426,6 +430,7 @@
             "length": 12,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162265845782",
             "current": false
           }
         },
@@ -436,6 +441,7 @@
             "length": 16,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162265911318",
             "current": false
           }
         },
@@ -446,6 +452,7 @@
             "length": 20,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162265976854",
             "current": false
           }
         },
@@ -456,6 +463,7 @@
             "length": 24,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162266042390",
             "current": false
           }
         },
@@ -466,6 +474,7 @@
             "length": 28,
             "label": "",
             "area": "",
+            "link": "",
             "current": true
           }
         },
@@ -476,6 +485,7 @@
             "length": 16,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162266173462",
             "current": false
           }
         },
@@ -486,6 +496,7 @@
             "length": 20,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162266238998",
             "current": false
           }
         },
@@ -496,6 +507,7 @@
             "length": 24,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162266304534",
             "current": false
           }
         },
@@ -506,6 +518,7 @@
             "length": 28,
             "label": "",
             "area": "",
+            "link": "/products/a-diy-composite-deck-kit?variant=51162266370070",
             "current": false
           }
         }
