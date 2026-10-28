@@ -1,0 +1,15 @@
+{%- comment -%}
+  Outputs the storefront URL of a "Deck size page" entry: its collection (collection.deck-size)
+  when one is linked, otherwise its page (page.deck-size).
+
+  Accepts:
+  - entry: {Metaobject} deck_size_page entry
+{%- endcomment -%}
+{%- liquid
+  assign eu_collection = entry.collection.value
+  if eu_collection.url != blank
+    echo eu_collection.url
+  else
+    echo entry.page.value.url
+  endif
+-%}

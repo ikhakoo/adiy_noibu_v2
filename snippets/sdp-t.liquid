@@ -73,7 +73,7 @@
             assign val = 'Wood'
           endif
         when 'title'
-          assign val = page.title
+          assign val = page.title | default: collection.title
         when 'warranty_years'
           if t_mat == 'composite'
             assign val = '25 years'

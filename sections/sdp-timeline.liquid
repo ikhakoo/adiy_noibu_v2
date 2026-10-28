@@ -5,7 +5,12 @@
   green disc, "Step N" kicker, two-line title, short text.
 {%- endcomment -%}
 
-{%- assign sdp = page.metafields.custom.deck_size.value -%}
+{%- liquid
+  assign sdp = page.metafields.custom.deck_size.value
+  if template.name == 'collection'
+    assign sdp = collection.metafields.custom.deck_size.value
+  endif
+-%}
 <div class="sdp sdp-timeline sdp--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-timeline__inner">
     <div class="sdp-header sdp-header--center">

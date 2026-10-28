@@ -8,7 +8,12 @@
   of a link. A green chat CTA closes the section.
 {%- endcomment -%}
 
-{%- assign sdp = page.metafields.custom.deck_size.value -%}
+{%- liquid
+  assign sdp = page.metafields.custom.deck_size.value
+  if template.name == 'collection'
+    assign sdp = collection.metafields.custom.deck_size.value
+  endif
+-%}
 <div class="sdp sdp-sizes sdp--sand" id="{{ section.settings.anchor_id | default: 'sizes' | handle }}">
   <div class="sdp__inner sdp-sizes__inner">
     <div class="sdp-header">
@@ -41,10 +46,11 @@
             {%- assign key = material | append: '-' | append: size | strip -%}
             {%- assign entry = shop.metaobjects.deck_size_page[key] -%}
             {%- if entry == blank -%}{%- continue -%}{%- endif -%}
-            {%- assign entry_page = entry.page.value -%}
+            {%- capture entry_url -%}{%- render 'sdp-entry-url', entry: entry -%}{%- endcapture -%}
+            {%- assign entry_url = entry_url | strip -%}
             {%- assign is_current = false -%}
-            {%- if entry_page.id == page.id -%}{%- assign is_current = true -%}{%- endif -%}
-            {%- render 'sdp-size-tile', width: entry.width.value, length: entry.length.value, link: entry_page.url, current: is_current, current_label: section.settings.current_label -%}
+            {%- if entry.system.handle == sdp.system.handle -%}{%- assign is_current = true -%}{%- endif -%}
+            {%- render 'sdp-size-tile', width: entry.width.value, length: entry.length.value, link: entry_url, current: is_current, current_label: section.settings.current_label -%}
           {%- endfor -%}
         {%- endcapture -%}
         {%- if tiles != blank -%}

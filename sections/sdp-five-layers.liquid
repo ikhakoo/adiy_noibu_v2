@@ -9,7 +9,12 @@
   the image.
 {%- endcomment -%}
 
-{%- assign sdp = page.metafields.custom.deck_size.value -%}
+{%- liquid
+  assign sdp = page.metafields.custom.deck_size.value
+  if template.name == 'collection'
+    assign sdp = collection.metafields.custom.deck_size.value
+  endif
+-%}
 <div class="sdp sdp-layers sdp--white" data-sdp-layers{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-layers__inner">
     <div class="sdp-header sdp-header--center">

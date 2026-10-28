@@ -733,6 +733,9 @@
             ("12x12", "12 x 12", "12×12") are listed first, the rest keep their order.
           endcomment
           assign rw_sdp = page.metafields.custom.deck_size.value
+          if template.name == 'collection'
+            assign rw_sdp = collection.metafields.custom.deck_size.value
+          endif
           assign rw_first = ''
           assign rw_rest = ''
           for b in section.blocks

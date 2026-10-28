@@ -8,6 +8,9 @@
 
 {%- liquid
   assign sdp = page.metafields.custom.deck_size.value
+  if template.name == 'collection'
+    assign sdp = collection.metafields.custom.deck_size.value
+  endif
   assign kit_image = section.settings.image
   if sdp != blank and sdp.kit_image != blank
     assign kit_image = sdp.kit_image.value

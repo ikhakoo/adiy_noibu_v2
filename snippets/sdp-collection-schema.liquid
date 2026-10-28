@@ -1,0 +1,63 @@
+{%- comment -%}
+  Product + Offer structured data for a size collection (collection.deck-size), built from
+  the variant pinned by the collection metafield custom.seo_variant_id. It sits alongside
+  the CollectionPage markup; the offer points at the product URL with that variant selected.
+  The rating is the product's reviews.rating / reviews.rating_count, as on the product page.
+
+  Accepts:
+  - sdp: {Metaobject} deck_size_page entry, optional
+  - product: {Object} the pinned variant's product
+  - variant: {Object} the pinned variant
+  - heading: {String} page H1
+  - image: {Object} hero image
+{%- endcomment -%}
+{%- liquid
+  assign product_url = request.origin | append: variant.url
+  assign item_name = collection.title
+  for opt in variant.options
+    unless opt contains ' x '
+      if product.variants.size > 1 and variant.options.size > 1
+        assign item_name = item_name | append: ' (' | append: opt | append: ')'
+      endif
+    endunless
+  endfor
+  assign description = collection.metafields.global.description_tag | default: heading
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign item_image = image | default: variant.featured_media.preview_image | default: product.featured_media.preview_image
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ item_name | json }},
+    "url": {{ product_url | json }},
+    "description": {{ description | strip_html | json }},
+    "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+    {%- if item_image != blank %}
+    "image": [{{ item_image | image_url: width: 1600 | prepend: 'https:' | json }}],
+    {%- endif %}
+    {%- if variant.sku != blank %}
+    "sku": {{ variant.sku | json }},
+    {%- endif %}
+    {%- if rating != blank and rating_count > 0 %}
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ rating.value | json }},
+      "ratingCount": {{ rating_count | json }},
+      "bestRating": {{ rating.scale_max | json }},
+      "worstRating": {{ rating.scale_min | json }}
+    },
+    {%- endif %}
+    "offers": {
+      "@type": "Offer",
+      {%- if variant.sku != blank %}"sku": {{ variant.sku | json }},{% endif %}
+      "price": {{ variant.price | divided_by: 100.0 | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "url": {{ product_url | json }},
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
+    }
+  }
+</script>

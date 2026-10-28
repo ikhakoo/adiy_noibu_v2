@@ -20,10 +20,28 @@
     On product templates there is no entry and everything below works as before.
   endcomment
   assign sdp = page.metafields.custom.deck_size.value
+  if template.name == 'collection'
+    assign sdp = collection.metafields.custom.deck_size.value
+  endif
   assign sdp_variants = ''
   if sdp != blank
     assign product = sdp.product.value
     assign sdp_variants = sdp.variants.value
+  endif
+
+  comment
+    Size collections (collection.deck-size): the collection metafield custom.seo_variant_id
+    pins the variant this page sells; its product is the one in the add-to-cart form.
+  endcomment
+  assign pinned_variant = nil
+  if template.name == 'collection'
+    assign pinned_variant = collection.metafields.custom.seo_variant_id.value
+    if pinned_variant != blank
+      assign product = pinned_variant.product
+      if sdp_variants == blank
+        assign sdp_variants = product.variants | where: 'id', pinned_variant.id
+      endif
+    endif
   endif
 
   comment
@@ -32,7 +50,9 @@
     add-to-cart form and structured data; otherwise fall back to the first available.
   endcomment
   assign variant = product.selected_variant
-  if sdp != blank
+  if pinned_variant != blank
+    assign variant = pinned_variant
+  elsif sdp != blank
     assign variant = sdp_variants | first
     for candidate in sdp_variants
       if candidate.available
@@ -105,7 +125,7 @@
   endcapture
   assign heading = heading | strip
   if heading == blank
-    assign heading = page.title | default: product.title
+    assign heading = page.title | default: collection.title | default: product.title
   endif
   capture t_eyebrow
     render 'sdp-t', text: section.settings.eyebrow, sdp: sdp
@@ -125,7 +145,7 @@
   assign t_lede = t_lede | strip
 
   assign hero_variants = product.variants
-  if sdp != blank
+  if sdp != blank or pinned_variant != blank
     assign hero_variants = sdp_variants
   endif
 -%}
@@ -453,7 +473,9 @@
   </div>
 </div>
 
-{%- if sdp != blank -%}
+{%- if template.name == 'collection' and pinned_variant != blank -%}
+  {%- render 'sdp-collection-schema', sdp: sdp, product: product, variant: pinned_variant, heading: heading, image: hero_image -%}
+{%- elsif sdp != blank -%}
   {%- render 'sdp-page-schema', sdp: sdp, product: product, variants: hero_variants, heading: heading, description: t_lede, image: hero_image, promo_price: sale_price, has_discount: has_discount -%}
 {%- else -%}
   {% render 'structured-data-product', product: product %}
@@ -464,7 +486,7 @@
   "name": "SDP · Hero (product)",
   "tag": "section",
   "class": "section",
-  "enabled_on": { "templates": ["product", "page"] },
+  "enabled_on": { "templates": ["product", "page", "collection"] },
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
     { "type": "header", "content": "Copy" },

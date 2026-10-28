@@ -24,6 +24,9 @@
     and the entry's link (usually the Deck Kits by Size collection, opened on that tab).
   endcomment
   assign sdp = page.metafields.custom.deck_size.value
+  if template.name == 'collection'
+    assign sdp = collection.metafields.custom.deck_size.value
+  endif
   if sdp != blank
     assign product = sdp.product.value
     assign twin = sdp.twin.value
@@ -38,7 +41,10 @@
     if twin != blank
       assign twin_product = twin.product.value
       assign twin_size = twin.width.value | append: ' x ' | append: twin.length.value
-      assign xlink = twin.page.value.url
+      capture xlink
+        render 'sdp-entry-url', entry: twin
+      endcapture
+      assign xlink = xlink | strip
       assign link_filter = 'none'
     else
       assign xlink = sdp.xl_link.value | default: xlink

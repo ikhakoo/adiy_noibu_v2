@@ -12,6 +12,9 @@
   assign twin_product = section.settings.twin_product
   assign code = section.settings.promo_code
   assign sdp = page.metafields.custom.deck_size.value
+  if template.name == 'collection'
+    assign sdp = collection.metafields.custom.deck_size.value
+  endif
   assign entry_faqs = ''
   if sdp != blank
     comment
