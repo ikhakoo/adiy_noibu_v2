@@ -1,4 +1,4 @@
-/* Deck Kits by Size — tabs, sort and colour swatches for sections/sdp-collection.liquid */
+/* Deck Kits by Size — tabs (with ?material= preset), sort and colour swatches for sections/sdp-collection.liquid */
 (function () {
   function init(root) {
     if (root.dataset.sdpcReady) return;
