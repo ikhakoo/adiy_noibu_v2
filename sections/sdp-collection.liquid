@@ -4,32 +4,37 @@
 
 {%- comment -%}
   Deck Kits by Size: collection header, USP strip (blocks), material tabs, sort and a
-  product grid of size cards (snippets/sdp-collection-card). Tabs and sort run client-side
+  grid of size cards (snippets/sdp-collection-card), one per deck size page. Tabs and sort run client-side
   on the rendered cards, so the page stays one crawlable list of every size.
 {%- endcomment -%}
 {%- liquid
+  comment
+    The grid lists the deck size pages: one "Deck size page" metaobject entry per size,
+    in the order of the "Sizes" setting (handles such as wood-12x12). Each card links to
+    that entry's page and prices from the entry's product variants.
+  endcomment
   assign count_all = 0
   assign count_wood = 0
   assign count_composite = 0
   assign count_compact = 0
--%}
-{%- paginate collection.products by 48 -%}
-  {%- for p in collection.products -%}
-    {%- liquid
-      assign count_all = count_all | plus: 1
-      if p.handle contains 'composite'
-        assign count_composite = count_composite | plus: 1
-      else
-        assign count_wood = count_wood | plus: 1
-        assign pv = p.selected_or_first_available_variant
-        assign pw = pv.option1 | split: ' x ' | first | plus: 0
-        if pw < 12
-          assign count_compact = count_compact | plus: 1
-        endif
+  assign entry_handles = section.settings.sizes | strip_newlines | remove: ' ' | split: ','
+  for h in entry_handles
+    assign e = shop.metaobjects.deck_size_page[h]
+    if e == blank or e.page.value == blank
+      continue
+    endif
+    assign count_all = count_all | plus: 1
+    if e.material.value == 'composite'
+      assign count_composite = count_composite | plus: 1
+    else
+      assign count_wood = count_wood | plus: 1
+      assign ew = e.width.value | plus: 0
+      if ew < 12
+        assign count_compact = count_compact | plus: 1
       endif
-    -%}
-  {%- endfor -%}
-
+    endif
+  endfor
+-%}
   <div
     class="sdp sdpc sdp--{{ section.settings.background }}"
     data-sdpc
@@ -100,21 +105,20 @@
       <p class="sdpc__count" aria-live="polite"><span data-sdpc-count>{{ count_all }}</span> deck kits</p>
 
       <div class="sdpc__grid" data-sdpc-grid>
-        {%- for p in collection.products -%}
-          {%- render 'sdp-collection-card', product: p, promo_code: section.settings.promo_code, index: forloop.index, heading_tag: 'h2' -%}
+        {%- assign card_index = 0 -%}
+        {%- for h in entry_handles -%}
+          {%- assign e = shop.metaobjects.deck_size_page[h] -%}
+          {%- if e == blank or e.page.value == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign card_index = card_index | plus: 1 -%}
+          {%- render 'sdp-collection-card', entry: e, promo_code: section.settings.promo_code, index: card_index, heading_tag: 'h2' -%}
         {%- endfor -%}
       </div>
 
-      {%- if collection.products_count == 0 -%}
-        <p class="sdpc__empty">No deck kits in this collection yet.</p>
-      {%- endif -%}
-
-      {%- if paginate.pages > 1 -%}
-        {%- render 'pagination', paginate: paginate -%}
+      {%- if count_all == 0 -%}
+        <p class="sdpc__empty">No deck kits to show yet.</p>
       {%- endif -%}
     </div>
   </div>
-{%- endpaginate -%}
 
 {%- comment -%} ItemList structured data for the size grid {%- endcomment -%}
 <script type="application/ld+json">
@@ -123,13 +127,18 @@
     "@type": "ItemList",
     "name": {{ collection.title | json }},
     "itemListElement": [
-      {%- for p in collection.products limit: 48 -%}
+      {%- assign ld_i = 0 -%}
+      {%- for h in entry_handles -%}
+        {%- assign e = shop.metaobjects.deck_size_page[h] -%}
+        {%- if e == blank or e.page.value == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign ld_i = ld_i | plus: 1 -%}
+        {%- if ld_i > 1 -%},{%- endif -%}
         {
           "@type": "ListItem",
-          "position": {{ forloop.index }},
-          "url": {{ shop.url | append: p.url | json }},
-          "name": {{ p.title | json }}
-        }{% unless forloop.last %},{% endunless %}
+          "position": {{ ld_i }},
+          "url": {{ shop.url | append: e.page.value.url | json }},
+          "name": {{ e.page.value.title | json }}
+        }
       {%- endfor -%}
     ]
   }
@@ -144,6 +153,7 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by size" },
     { "type": "text", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the collection title." },
+    { "type": "textarea", "id": "sizes", "label": "Sizes", "info": "Comma-separated Deck size page handles (Content > Metaobjects > Deck size page), in display order.", "default": "wood-12x12,wood-12x18,wood-12x20,wood-12x24,wood-12x28,wood-16x16,wood-16x20,wood-16x24,wood-16x28,composite-12x12,composite-12x16,composite-12x20,composite-12x24,composite-12x28,composite-16x16,composite-16x20,composite-16x24,composite-16x28,wood-6x12,wood-6x16,wood-6x20,wood-8x12,wood-8x16,wood-8x20" },
     { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },
     { "type": "text", "id": "promo_code", "label": "Promo code shown with sale prices", "info": "Sale price = price minus each variant's custom.discount_value. Leave blank to show regular prices only.", "default": "FALL1500" },
     { "type": "header", "content": "Tabs" },

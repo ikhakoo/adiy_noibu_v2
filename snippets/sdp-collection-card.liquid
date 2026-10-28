@@ -1,8 +1,8 @@
 {%- comment -%}
-  Deck-size product card for the "Deck Kits by Size" collection.
+  Deck-size card for the "Deck Kits by Size" collection: one card per deck size page.
 
   Accepts:
-  - product: {Object}
+  - entry: {Metaobject} "Deck size page" entry (product, variants, page, width, length, material)
   - promo_code: {String} shown with the sale price; blank = regular price only
   - index: {Number} position in the collection (keeps the manual order as a tiebreaker)
   - heading_tag: {String} h2 | h3
@@ -11,21 +11,23 @@
   smart.size_series, and each variant's featured media (size- and colour-specific image).
 {%- endcomment -%}
 {%- liquid
-  assign v = product.selected_or_first_available_variant
+  assign product = entry.product.value
+  assign card_variants = entry.variants.value
+  assign card_url = entry.page.value.url
+  assign v = card_variants | first
+  for candidate in card_variants
+    if candidate.available
+      assign v = candidate
+      break
+    endif
+  endfor
   assign is_composite = false
-  if product.handle contains 'composite'
+  if entry.material.value == 'composite'
     assign is_composite = true
   endif
 
-  assign size_value = ''
-  for opt in v.options
-    if opt contains ' x '
-      assign size_value = opt
-    endif
-  endfor
-  assign dims = size_value | split: ' x '
-  assign w = dims[0] | plus: 0
-  assign l = dims[1] | plus: 0
+  assign w = entry.width.value | plus: 0
+  assign l = entry.length.value | plus: 0
   assign area = v.metafields.custom.sqfootage.value | default: v.metafields.custom.sqfootage | plus: 0
   if area == 0
     assign area = w | times: l
@@ -68,7 +70,7 @@
     assign material_key = 'wood'
   endif
 
-  assign media = v.featured_media | default: product.featured_media
+  assign media = entry.hero_image.value | default: v.featured_media | default: product.featured_media
   assign tag = heading_tag | default: 'h3'
 
   comment
@@ -106,7 +108,7 @@
         sizes="(min-width: 1200px) 330px, (min-width: 750px) 50vw, 100vw"
         width="{{ img.width }}"
         height="{{ img.height }}"
-        alt="{{ media.alt | default: product.title | escape }}"
+        alt="{{ media.alt | default: entry.page.value.title | escape }}"
         loading="{% if index <= 4 %}eager{% else %}lazy{% endif %}"
       >
     {%- else -%}
@@ -125,7 +127,7 @@
   <div class="sdpc-card__body">
     <p class="sdpc-card__material sdp-label">{{ material }}</p>
     <{{ tag }} class="sdpc-card__title">
-      <a href="{{ product.url }}" class="sdpc-card__link">{{ w }}×{{ l }} {% if is_composite %}Composite{% else %}Wood{% endif %} Deck Kit</a>
+      <a href="{{ card_url }}" class="sdpc-card__link">{{ w }}×{{ l }} {% if is_composite %}Composite{% else %}Wood{% endif %} Deck Kit</a>
     </{{ tag }}>
 
     <ul class="sdpc-card__specs">
@@ -141,9 +143,9 @@
       </li>
     </ul>
 
-    {%- if is_composite and product.variants.size > 1 -%}
+    {%- if is_composite and card_variants.size > 1 -%}
       <div class="sdpc-card__swatches" role="group" aria-label="Board colour">
-        {%- for variant in product.variants -%}
+        {%- for variant in card_variants -%}
           {%- liquid
             assign color = ''
             for opt in variant.options
@@ -158,7 +160,7 @@
             class="sdpc-swatch{% if forloop.first %} is-active{% endif %}"
             data-sdpc-swatch
             data-src="{{ vmedia.preview_image | image_url: width: 800 }}"
-            data-url="{{ variant.url }}"
+            data-url="{{ card_url }}"
             aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
             title="{{ color | escape }}"
           >
