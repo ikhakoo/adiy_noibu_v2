@@ -54,6 +54,10 @@
     });
     if (sort) sort.addEventListener('change', function () { applySort(sort.value); });
 
+    // ?material=wood|composite|compact preselects a tab (used by the size pages' cross-link).
+    var preset = (new URLSearchParams(window.location.search).get('material') || '').toLowerCase();
+    if (preset && root.querySelector('[data-sdpc-filter="' + preset + '"]')) applyFilter(preset);
+
     // Colour swatches swap the card image and point the card link at that colour.
     grid.addEventListener('click', function (event) {
       var swatch = event.target.closest('[data-sdpc-swatch]');
