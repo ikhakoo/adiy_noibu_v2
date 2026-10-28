@@ -174,31 +174,31 @@
         "lounge": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-family-lounge.png",
-            "image_focal": "50% 50%",
+            "image": "shopify://shop_images/sdp-real-wood-living-room.jpg",
+            "image_focal": "50% 65%",
             "title": "Outdoor living room",
-            "text": "A full seating group and coffee table on one side, with floor left over for the family to spread out.",
-            "image_alt": "Family relaxing on a large A-DIY wood deck"
+            "text": "A sectional, a fire pit and lounge chairs, with floor left over for a dining table at the far end.",
+            "image_alt": "Large customer-built A-DIY wood deck set up as an outdoor living room"
           }
         },
         "dining": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-dining-ten.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.30_3fba2d48.webp",
             "image_focal": "50% 50%",
-            "title": "Dining for eight to ten",
-            "text": "A long table, a grill station at the edge and room to pull chairs out without stepping off the deck.",
-            "image_alt": "Long dining table for ten on a large A-DIY wood deck"
+            "title": "Gazebo and hot tub together",
+            "text": "Engineered to hold 15,000 lbs, so a gazebo and a hot tub can share the space rather than compete for it.",
+            "image_alt": "Customer-built A-DIY wood deck with a gazebo, beside a hot tub"
           }
         },
         "sauna": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-hot-tub.png",
+            "image": "shopify://shop_images/sdp-real-wood-12x20-railing.jpg",
             "image_focal": "50% 50%",
-            "title": "Hot tub and lounge together",
-            "text": "Engineered to hold 15,000 lbs, so a hot tub can share the deck with loungers rather than taking it over.",
-            "image_alt": "Hot tub on an A-DIY pressure-treated wood deck"
+            "title": "Raised, with stairs and a railing",
+            "text": "Add stairs and a railing and the deck becomes a true extension of the house.",
+            "image_alt": "Customer-built 12x20 A-DIY wood deck with railing and stairs"
           }
         },
         "quote": {
@@ -758,8 +758,8 @@
         "spec_11"
       ],
       "settings": {
-        "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
-        "image_focal": "40% 50%",
+        "image": "shopify://shop_images/sdp-real-wood-kit-unpacked.jpg",
+        "image_focal": "50% 60%",
         "eyebrow": "Kit inclusions",
         "heading": "What’s included in the 16x20 deck kit",
         "intro": "Skip the lumber-yard runs and the cut list. The 16x20 pressure-treated deck kit ships complete: 320 square feet of engineered parts, labeled and packed in order of use, so the build stays straightforward from the first joist to the last board.",
@@ -767,7 +767,7 @@
         "button_link": "#",
         "features_title": "In the crate",
         "specs_title": "16×20 specifications",
-        "image_alt": "Engineered pressure-treated lumber pieces from the A-DIY 16x20 deck kit"
+        "image_alt": "A-DIY wood deck kit parts unpacked and laid out by a customer"
       }
     },
     "layers": {
@@ -841,7 +841,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-deck-underneat_rgwzURBxtc.png",
+            "image": "shopify://shop_images/sdp-real-raised-deck-posts.jpg",
             "title": "Deck Height",
             "text": "<p><strong>Standard Height:</strong><br/>Each kit comes ready to assemble at 15–17 inches off the ground.</p><p><strong>Increase Height:</strong><br/>Use longer posts to raise the deck. We also offer longer post kits with bracing. Chat with our design specialists for details.</p><p><strong>Decrease Height:</strong><br/>Dig a few inches where the footings sit to lower the deck.</p><p><strong>We offer different height post kits:</strong><br/>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
@@ -852,7 +852,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL.png",
+            "image": "shopify://shop_images/sdp-real-sloped-yard-stairs.jpg",
             "title": "Uneven Ground",
             "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",

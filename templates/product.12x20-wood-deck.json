@@ -86,9 +86,9 @@
         "heading": "12x20 Deck — build it yourself, delivered as a pressure treated kit",
         "lede": "A 12x20 deck from A-DIY costs [price]. That one price covers a professionally engineered, pressure treated deck kit — 240 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and is backed by a 5-year structural warranty.",
         "variant_label": "Choose your color",
-        "image": "shopify://shop_images/sdp-12x12-wood-hero-render.png",
+        "image": "shopify://shop_images/sdp-real-wood-lounge-umbrella.jpg",
         "use_product_image": true,
-        "image_focal": "50% 40%",
+        "image_focal": "50% 60%",
         "price_label": "Regular price",
         "promo_code": "FALL1500",
         "discount_amount": 1500,
@@ -105,7 +105,7 @@
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
         "show_variant_picker": false,
-        "image_alt": "12x20 pressure-treated wood deck kit from A-DIY, set up as an outdoor lounge",
+        "image_alt": "12x20 pressure-treated wood deck kit from A-DIY, built by a customer and set up as an outdoor lounge",
         "size_option": "12 x 20",
         "use_custom_image": false
       }
@@ -113,8 +113,8 @@
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
-        "image": "shopify://shop_images/sdp-fit-composite-family.png",
-        "image_focal": "50% 50%",
+        "image": "shopify://shop_images/sdp-real-composite-gray-lounge.jpg",
+        "image_focal": "50% 55%",
         "eyebrow": "Prefer low maintenance?",
         "heading": "The same 12x20 deck is also available in composite",
         "text": "[twin_price] · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
@@ -174,31 +174,31 @@
         "lounge": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-lounge.png",
-            "image_focal": "50% 50%",
+            "image": "shopify://shop_images/sdp-real-wood-lounge-umbrella.jpg",
+            "image_focal": "50% 60%",
             "title": "Outdoor lounge",
-            "text": "A sofa set or four Adirondack chairs with side tables, with a fire pit in the middle and room to walk around it.",
-            "image_alt": "Outdoor lounge seating on an A-DIY pressure-treated wood deck"
+            "text": "A full sofa set and a market umbrella, with room to walk around the furniture.",
+            "image_alt": "Customer-built A-DIY wood deck with an outdoor sofa set and umbrella"
           }
         },
         "dining": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-dining-six.png",
-            "image_focal": "50% 50%",
-            "title": "Dining for six",
-            "text": "A table for four to six, a grill at the edge and still enough floor for the kids to move.",
-            "image_alt": "Dining table for six on an A-DIY pressure-treated wood deck"
+            "image": "shopify://shop_images/sdp-real-wood-bistro-chiminea.jpg",
+            "image_focal": "50% 55%",
+            "title": "Bistro chairs and a chiminea",
+            "text": "A couple of chairs, an umbrella and a chiminea for cool evenings, right outside the back door.",
+            "image_alt": "Customer-built A-DIY wood deck with chairs, umbrella and chiminea"
           }
         },
         "sauna": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-hot-tub.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.30_3fba2d48.webp",
             "image_focal": "50% 50%",
-            "title": "Hot tub platform",
-            "text": "Engineered to hold 15,000 lbs, so a hot tub, barrel sauna or pergola sits on it with confidence.",
-            "image_alt": "Hot tub on an A-DIY pressure-treated wood deck"
+            "title": "Gazebo or hot tub platform",
+            "text": "Engineered to hold 15,000 lbs, so a hard-top gazebo or a hot tub sits on it with confidence.",
+            "image_alt": "Customer-built A-DIY wood deck with a gazebo, beside a hot tub"
           }
         },
         "quote": {
@@ -758,8 +758,8 @@
         "spec_11"
       ],
       "settings": {
-        "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
-        "image_focal": "40% 50%",
+        "image": "shopify://shop_images/sdp-real-wood-kit-unpacked.jpg",
+        "image_focal": "50% 60%",
         "eyebrow": "Kit inclusions",
         "heading": "What’s included in the 12x20 deck kit",
         "intro": "Skip the lumber-yard runs and the cut list. The 12x20 pressure-treated deck kit ships complete: 240 square feet of engineered parts, labeled and packed in order of use, so the build stays straightforward from the first joist to the last board.",
@@ -767,7 +767,7 @@
         "button_link": "#",
         "features_title": "In the crate",
         "specs_title": "12×20 specifications",
-        "image_alt": "Engineered pressure-treated lumber pieces from the A-DIY 12x20 deck kit"
+        "image_alt": "A-DIY wood deck kit parts unpacked and laid out by a customer"
       }
     },
     "layers": {
@@ -841,7 +841,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-deck-underneat_rgwzURBxtc.png",
+            "image": "shopify://shop_images/sdp-real-raised-deck-posts.jpg",
             "title": "Deck Height",
             "text": "<p><strong>Standard Height:</strong><br/>Each kit comes ready to assemble at 15–17 inches off the ground.</p><p><strong>Increase Height:</strong><br/>Use longer posts to raise the deck. We also offer longer post kits with bracing. Chat with our design specialists for details.</p><p><strong>Decrease Height:</strong><br/>Dig a few inches where the footings sit to lower the deck.</p><p><strong>We offer different height post kits:</strong><br/>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
@@ -852,7 +852,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL.png",
+            "image": "shopify://shop_images/sdp-real-sloped-yard-stairs.jpg",
             "title": "Uneven Ground",
             "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",

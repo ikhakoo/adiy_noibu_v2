@@ -86,9 +86,9 @@
         "heading": "6x12 Deck — build it yourself, delivered as a pressure treated kit",
         "lede": "A 6x12 deck from A-DIY costs [price]. That one price covers a professionally engineered, pressure treated deck kit — 72 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, builds in a day with a drill as the only tool, and is backed by a 5-year structural warranty.",
         "variant_label": "Choose your color",
-        "image": "shopify://shop_images/sdp-12x12-wood-hero-render.png",
+        "image": "shopify://shop_images/sdp-real-wood-lounge-umbrella.jpg",
         "use_product_image": true,
-        "image_focal": "50% 40%",
+        "image_focal": "50% 60%",
         "price_label": "Regular price",
         "promo_code": "",
         "discount_amount": 0,
@@ -105,7 +105,7 @@
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
         "show_variant_picker": false,
-        "image_alt": "6x12 pressure-treated wood deck kit from A-DIY, set up as an outdoor lounge",
+        "image_alt": "6x12 pressure-treated wood deck kit from A-DIY, built by a customer and set up as an outdoor lounge",
         "size_option": "6 x 12",
         "use_custom_image": false
       }
@@ -113,14 +113,14 @@
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
-        "image": "shopify://shop_images/sdp-fit-composite-family.png",
-        "image_focal": "50% 50%",
+        "image": "shopify://shop_images/sdp-real-composite-gray-lounge.jpg",
+        "image_focal": "50% 55%",
         "eyebrow": "Prefer low maintenance?",
         "heading": "A-DIY decks also come in composite, from 12x12 up to 16x28",
         "text": "12x12 from [twin_price] · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
         "button_label": "See the composite deck kits",
         "button_link": "",
-        "image_alt": "Family on an A-DIY Amazon Gray composite deck",
+        "image_alt": "Customer-built A-DIY Amazon Gray composite deck",
         "twin_product": "a-diy-composite-deck-kit",
         "size_option": "12 x 12"
       }
@@ -174,31 +174,31 @@
         "lounge": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-entry-landing.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.42.29_122ab7f1.webp",
             "image_focal": "50% 50%",
             "title": "Entry or step-out landing",
-            "text": "A clean, level step-out from a sliding door, camper or tiny home, with room for two chairs and a planter.",
-            "image_alt": "Couple on a compact A-DIY wood deck outside a sliding door"
+            "text": "A clean, level step-out from a back door, with room for a couple of chairs and a planter.",
+            "image_alt": "Customer-built compact A-DIY wood deck at a back door"
           }
         },
         "dining": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-loungers-two.png",
-            "image_focal": "50% 50%",
-            "title": "Seating for two",
-            "text": "Two loungers and a side table — morning coffee or an evening read without stepping onto wet grass.",
-            "image_alt": "Two loungers on a compact A-DIY wood deck"
+            "image": "shopify://shop_images/IMG_3028.jpg",
+            "image_focal": "50% 55%",
+            "title": "Seating along the house",
+            "text": "A long, narrow deck that runs the length of the wall, with room for a row of rocking chairs and planters.",
+            "image_alt": "Rocking chairs on a customer-built 6 ft wide A-DIY wood deck"
           }
         },
         "sauna": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-wood-grill.png",
-            "image_focal": "50% 50%",
-            "title": "Grill and prep station",
-            "text": "A grill at one end, a prep table at the other, and a dry, level floor underfoot all season.",
-            "image_alt": "Grill and loungers on an A-DIY wood deck"
+            "image": "shopify://shop_images/sdp-real-wood-airstream.jpg",
+            "image_focal": "50% 60%",
+            "title": "RV, camper or tiny-home deck",
+            "text": "A level outdoor floor beside the trailer that sits on its own footings and can move with you.",
+            "image_alt": "Customer-built A-DIY wood deck beside an Airstream trailer"
           }
         },
         "quote": {
@@ -758,8 +758,8 @@
         "spec_11"
       ],
       "settings": {
-        "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
-        "image_focal": "40% 50%",
+        "image": "shopify://shop_images/sdp-real-wood-kit-unpacked.jpg",
+        "image_focal": "50% 60%",
         "eyebrow": "Kit inclusions",
         "heading": "What’s included in the 6x12 deck kit",
         "intro": "Skip the lumber-yard runs and the cut list. The 6x12 pressure-treated deck kit ships complete: 72 square feet of engineered parts, labeled and packed in order of use, so the build stays straightforward from the first joist to the last board.",
@@ -767,7 +767,7 @@
         "button_link": "#",
         "features_title": "In the crate",
         "specs_title": "6×12 specifications",
-        "image_alt": "Engineered pressure-treated lumber pieces from the A-DIY 6x12 deck kit"
+        "image_alt": "A-DIY wood deck kit parts unpacked and laid out by a customer"
       }
     },
     "layers": {
@@ -841,7 +841,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-deck-underneat_rgwzURBxtc.png",
+            "image": "shopify://shop_images/sdp-real-raised-deck-posts.jpg",
             "title": "Deck Height",
             "text": "<p><strong>Standard Height:</strong><br/>Each kit comes ready to assemble at 15–17 inches off the ground.</p><p><strong>Increase Height:</strong><br/>Use longer posts to raise the deck. We also offer longer post kits with bracing. Chat with our design specialists for details.</p><p><strong>Decrease Height:</strong><br/>Dig a few inches where the footings sit to lower the deck.</p><p><strong>We offer different height post kits:</strong><br/>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
@@ -852,7 +852,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL.png",
+            "image": "shopify://shop_images/sdp-real-sloped-yard-stairs.jpg",
             "title": "Uneven Ground",
             "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",

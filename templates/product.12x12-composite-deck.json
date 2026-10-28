@@ -113,8 +113,8 @@
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
-        "image": "shopify://shop_images/sdp-fit-wood-family-lounge.png",
-        "image_focal": "50% 50%",
+        "image": "shopify://shop_images/sdp-real-wood-lounge-umbrella.jpg",
+        "image_focal": "50% 60%",
         "eyebrow": "Prefer real wood?",
         "heading": "The same 12x12 deck is also available in pressure-treated wood",
         "text": "[twin_price] · Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated · stain it to match your home · 5-year structural warranty. Same engineered frame, same build.",
@@ -174,31 +174,31 @@
         "lounge": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-composite-family.png",
-            "image_focal": "50% 50%",
+            "image": "shopify://shop_images/sdp-real-composite-gray-lounge.jpg",
+            "image_focal": "50% 55%",
             "title": "Outdoor lounge",
-            "text": "Two lounge chairs and a coffee table, with room on the boards for the kids to play.",
-            "image_alt": "Family relaxing on an A-DIY Amazon Gray composite deck"
+            "text": "Lounge chairs, a coffee table and a sofa, on boards that never need staining.",
+            "image_alt": "Customer-built A-DIY Amazon Gray composite deck with lounge chairs"
           }
         },
         "dining": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-composite-dining.png",
-            "image_focal": "50% 50%",
-            "title": "Family dining",
-            "text": "A table for six with chairs that pull out without dropping off the edge.",
-            "image_alt": "Family dining on an A-DIY Amazon Gray composite deck"
+            "image": "shopify://shop_images/sdp-real-composite-family.jpg",
+            "image_focal": "50% 55%",
+            "title": "Room for family and friends",
+            "text": "Enough floor for a circle of chairs and a couple of side tables when everyone comes over.",
+            "image_alt": "Family and friends on a customer-built A-DIY gray composite deck"
           }
         },
         "sauna": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-composite-hot-tub.png",
-            "image_focal": "50% 50%",
-            "title": "Hot tub platform",
-            "text": "Engineered to hold 15,000 lbs, so a hot tub sits level on boards that won’t splinter around wet feet.",
-            "image_alt": "Hot tub on an A-DIY Amazon Gray composite deck"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-08-25_at_12.18.22_PM.jpg",
+            "image_focal": "50% 60%",
+            "title": "Gazebo platform",
+            "text": "Engineered to hold 15,000 lbs, so a hard-top gazebo sits level on boards that won’t splinter.",
+            "image_alt": "Customer-built A-DIY gray composite deck with a gazebo"
           }
         },
         "quote": {
@@ -771,7 +771,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-deck-underneat_rgwzURBxtc.png",
+            "image": "shopify://shop_images/sdp-real-raised-deck-posts.jpg",
             "title": "Deck Height",
             "text": "<p><strong>Standard Height:</strong><br/>Each kit comes ready to assemble at 15–17 inches off the ground.</p><p><strong>Increase Height:</strong><br/>Use longer posts to raise the deck. We also offer longer post kits with bracing. Chat with our design specialists for details.</p><p><strong>Decrease Height:</strong><br/>Dig a few inches where the footings sit to lower the deck.</p><p><strong>We offer different height post kits:</strong><br/>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
@@ -782,7 +782,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL.png",
+            "image": "shopify://shop_images/sdp-real-sloped-yard-stairs.jpg",
             "title": "Uneven Ground",
             "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",

@@ -86,7 +86,7 @@
         "heading": "16x16 Composite Deck — build it yourself, delivered as a kit",
         "lede": "A 16x16 composite deck from A-DIY costs [price]. That one price covers a professionally engineered deck kit: fade and stain resistant composite boards in Amazon Gray or Forest Wood on a kiln-dried, pressure-treated frame, with every part going together seamlessly. It is delivered in 10–14 business days, builds in a weekend with a drill as the only tool, and the boards are backed by a 25-year warranty.",
         "variant_label": "Choose your color",
-        "image": "shopify://shop_images/sdp-12x12-composite-poolside.jpg",
+        "image": "shopify://shop_images/sdp-real-composite-gray-lounge.jpg",
         "use_product_image": true,
         "image_focal": "50% 55%",
         "price_label": "Regular price",
@@ -105,7 +105,7 @@
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
         "show_variant_picker": true,
-        "image_alt": "16x16 composite deck kit from A-DIY, beside a pool",
+        "image_alt": "16x16 composite deck kit from A-DIY, in Amazon Gray, built by a customer",
         "size_option": "16 x 16",
         "use_custom_image": false
       }
@@ -113,8 +113,8 @@
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
-        "image": "shopify://shop_images/sdp-fit-wood-family-lounge.png",
-        "image_focal": "50% 50%",
+        "image": "shopify://shop_images/sdp-real-wood-lounge-umbrella.jpg",
+        "image_focal": "50% 60%",
         "eyebrow": "Prefer real wood?",
         "heading": "The same 16x16 deck is also available in pressure-treated wood",
         "text": "[twin_price] · Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated · stain it to match your home · 5-year structural warranty. Same engineered frame, same build.",
@@ -174,31 +174,31 @@
         "lounge": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-composite-family.png",
-            "image_focal": "50% 50%",
-            "title": "Outdoor living room",
-            "text": "Lounge chairs, a coffee table and open floor for the family, on boards that never need staining.",
-            "image_alt": "Family relaxing on an A-DIY Amazon Gray composite deck"
+            "image": "shopify://shop_images/sdp-real-composite-poolside.jpg",
+            "image_focal": "50% 60%",
+            "title": "Poolside platform",
+            "text": "A level, splinter-free deck beside the pool for loungers and Adirondack chairs.",
+            "image_alt": "Customer-built A-DIY composite deck beside a pool"
           }
         },
         "dining": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-composite-dining.png",
-            "image_focal": "50% 50%",
-            "title": "Dining for eight",
-            "text": "A long table for the whole family, with room behind every chair.",
-            "image_alt": "Family dining on an A-DIY Amazon Gray composite deck"
+            "image": "shopify://shop_images/sdp-real-composite-dining-railing.jpg",
+            "image_focal": "50% 55%",
+            "title": "Dining with a railing",
+            "text": "A table for eight under an umbrella, with a railing and steps down to the yard.",
+            "image_alt": "Customer-built A-DIY gray composite deck with dining table, railing and umbrella"
           }
         },
         "sauna": {
           "type": "use",
           "settings": {
-            "image": "shopify://shop_images/sdp-fit-composite-hot-tub.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-13_at_21.31.41_2d8be7b1.webp",
             "image_focal": "50% 50%",
-            "title": "Hot tub and lounge together",
-            "text": "Engineered to hold 15,000 lbs, so a hot tub can share the deck with loungers rather than taking it over.",
-            "image_alt": "Hot tub on an A-DIY Amazon Gray composite deck"
+            "title": "Sun loungers",
+            "text": "Two loungers and a side table, with plenty of open floor left around them.",
+            "image_alt": "Loungers on a customer-built A-DIY composite deck"
           }
         },
         "quote": {
@@ -771,7 +771,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-deck-underneat_rgwzURBxtc.png",
+            "image": "shopify://shop_images/sdp-real-raised-deck-posts.jpg",
             "title": "Deck Height",
             "text": "<p><strong>Standard Height:</strong><br/>Each kit comes ready to assemble at 15–17 inches off the ground.</p><p><strong>Increase Height:</strong><br/>Use longer posts to raise the deck. We also offer longer post kits with bracing. Chat with our design specialists for details.</p><p><strong>Decrease Height:</strong><br/>Dig a few inches where the footings sit to lower the deck.</p><p><strong>We offer different height post kits:</strong><br/>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
@@ -782,7 +782,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL.png",
+            "image": "shopify://shop_images/sdp-real-sloped-yard-stairs.jpg",
             "title": "Uneven Ground",
             "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
