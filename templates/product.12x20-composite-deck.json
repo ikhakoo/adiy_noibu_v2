@@ -121,7 +121,7 @@
         "button_label": "See the 12×20 wood deck",
         "button_link": "",
         "image_alt": "12x20 A-DIY pressure-treated wood deck kit",
-        "twin_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "twin_product": "12x20-pressure-treated-wood-deck-kit",
         "size_option": "12 x 20"
       }
     },
@@ -431,7 +431,7 @@
             "length": 12,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162265845782",
+            "link": "shopify://products/12x12-composite-deck-kit",
             "current": false
           }
         },
@@ -442,7 +442,7 @@
             "length": 16,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162265911318",
+            "link": "shopify://products/12x16-composite-deck-kit",
             "current": false
           }
         },
@@ -464,7 +464,7 @@
             "length": 24,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266042390",
+            "link": "shopify://products/12x24-composite-deck-kit",
             "current": false
           }
         },
@@ -475,7 +475,7 @@
             "length": 28,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266107926",
+            "link": "shopify://products/12x28-composite-deck-kit",
             "current": false
           }
         },
@@ -486,7 +486,7 @@
             "length": 16,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266173462",
+            "link": "shopify://products/16x16-composite-deck-kit",
             "current": false
           }
         },
@@ -497,7 +497,7 @@
             "length": 20,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266238998",
+            "link": "shopify://products/16x20-composite-deck-kit",
             "current": false
           }
         },
@@ -508,7 +508,7 @@
             "length": 24,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266304534",
+            "link": "shopify://products/16x24-composite-deck-kit",
             "current": false
           }
         },
@@ -519,7 +519,7 @@
             "length": 28,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266370070",
+            "link": "shopify://products/16x28-composite-deck-kit",
             "current": false
           }
         }
@@ -2468,7 +2468,7 @@
           "type": "question",
           "settings": {
             "question": "Composite or wood: which 12x20 deck kit should I choose?",
-            "answer": "<p>Both use the same engineered system. The composite 12x20 is [price] in Amazon Gray or Forest Wood, with a 25-year warranty on the boards and no staining or sealing to keep up with. The pressure-treated wood 12x20 is [twin_price], carries a 5-year structural warranty and can be stained to match your home. See the <a href=\"/products/pressure-treated-kiln-dried-wood-deck-kit\">12x20 wood deck page</a> for the full details.</p>"
+            "answer": "<p>Both use the same engineered system. The composite 12x20 is [price] in Amazon Gray or Forest Wood, with a 25-year warranty on the boards and no staining or sealing to keep up with. The pressure-treated wood 12x20 is [twin_price], carries a 5-year structural warranty and can be stained to match your home. See the <a href=\"/products/12x20-pressure-treated-wood-deck-kit\">12x20 wood deck page</a> for the full details.</p>"
           }
         },
         "q10": {
@@ -2514,7 +2514,7 @@
         "size_option": "12 x 20",
         "promo_code": "FALL1500",
         "discount_amount": 1500,
-        "twin_product": "pressure-treated-kiln-dried-wood-deck-kit"
+        "twin_product": "12x20-pressure-treated-wood-deck-kit"
       }
     }
   },

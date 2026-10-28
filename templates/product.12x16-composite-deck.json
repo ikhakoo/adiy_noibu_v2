@@ -121,7 +121,7 @@
         "button_label": "See the wood deck kits",
         "button_link": "",
         "image_alt": "Customer-built A-DIY pressure-treated wood deck",
-        "twin_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "twin_product": "12x12-pressure-treated-wood-deck-kit",
         "size_option": "12 x 12"
       }
     },
@@ -431,7 +431,7 @@
             "length": 12,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162265845782",
+            "link": "shopify://products/12x12-composite-deck-kit",
             "current": false
           }
         },
@@ -453,7 +453,7 @@
             "length": 20,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162265976854",
+            "link": "shopify://products/12x20-composite-deck-kit",
             "current": false
           }
         },
@@ -464,7 +464,7 @@
             "length": 24,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266042390",
+            "link": "shopify://products/12x24-composite-deck-kit",
             "current": false
           }
         },
@@ -475,7 +475,7 @@
             "length": 28,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266107926",
+            "link": "shopify://products/12x28-composite-deck-kit",
             "current": false
           }
         },
@@ -486,7 +486,7 @@
             "length": 16,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266173462",
+            "link": "shopify://products/16x16-composite-deck-kit",
             "current": false
           }
         },
@@ -497,7 +497,7 @@
             "length": 20,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266238998",
+            "link": "shopify://products/16x20-composite-deck-kit",
             "current": false
           }
         },
@@ -508,7 +508,7 @@
             "length": 24,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266304534",
+            "link": "shopify://products/16x24-composite-deck-kit",
             "current": false
           }
         },
@@ -519,7 +519,7 @@
             "length": 28,
             "label": "",
             "area": "",
-            "link": "/products/a-diy-composite-deck-kit?variant=51162266370070",
+            "link": "shopify://products/16x28-composite-deck-kit",
             "current": false
           }
         }

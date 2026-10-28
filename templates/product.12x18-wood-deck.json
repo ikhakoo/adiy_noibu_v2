@@ -121,7 +121,7 @@
         "button_label": "See the composite deck kits",
         "button_link": "",
         "image_alt": "Customer-built A-DIY Amazon Gray composite deck",
-        "twin_product": "a-diy-composite-deck-kit",
+        "twin_product": "12x12-composite-deck-kit",
         "size_option": "12 x 12"
       }
     },
@@ -431,7 +431,7 @@
             "length": 12,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138088894486",
+            "link": "shopify://products/12x12-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -453,7 +453,7 @@
             "length": 20,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138088960022",
+            "link": "shopify://products/12x20-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -464,7 +464,7 @@
             "length": 24,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138088992790",
+            "link": "shopify://products/12x24-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -475,7 +475,7 @@
             "length": 28,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138089025558",
+            "link": "shopify://products/12x28-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -486,7 +486,7 @@
             "length": 16,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138089058326",
+            "link": "shopify://products/16x16-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -497,7 +497,7 @@
             "length": 20,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138089091094",
+            "link": "shopify://products/16x20-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -508,7 +508,7 @@
             "length": 24,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138089123862",
+            "link": "shopify://products/16x24-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -519,7 +519,7 @@
             "length": 28,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=51138089156630",
+            "link": "shopify://products/16x28-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -536,7 +536,7 @@
             "length": 12,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=70982257344534",
+            "link": "shopify://products/6x12-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -547,7 +547,7 @@
             "length": 16,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=70982262685718",
+            "link": "shopify://products/6x16-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -558,7 +558,7 @@
             "length": 20,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=70982265503766",
+            "link": "shopify://products/6x20-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -569,7 +569,7 @@
             "length": 12,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=70982260326422",
+            "link": "shopify://products/8x12-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -580,7 +580,7 @@
             "length": 16,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=70982264029206",
+            "link": "shopify://products/8x16-pressure-treated-wood-deck-kit",
             "current": false
           }
         },
@@ -591,7 +591,7 @@
             "length": 20,
             "label": "",
             "area": "",
-            "link": "/products/pressure-treated-kiln-dried-wood-deck-kit?variant=70982268092438",
+            "link": "shopify://products/8x20-pressure-treated-wood-deck-kit",
             "current": false
           }
         }
