@@ -43,7 +43,7 @@
     {%- if rating != blank and rating_count > 0 %}
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": {{ rating.value | json }},
+      "ratingValue": {{ rating.rating | json }},
       "ratingCount": {{ rating_count | json }},
       "bestRating": {{ rating.scale_max | json }},
       "worstRating": {{ rating.scale_min | json }}
