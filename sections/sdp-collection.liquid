@@ -18,8 +18,19 @@
   assign count_composite = 0
   assign count_compact = 0
   assign entry_handles = section.settings.sizes | default: 'wood-12x12,wood-12x18,wood-12x20,wood-12x24,wood-12x28,wood-16x16,wood-16x20,wood-16x24,wood-16x28,composite-12x12,composite-12x16,composite-12x20,composite-12x24,composite-12x28,composite-16x16,composite-16x20,composite-16x24,composite-16x28,wood-6x12,wood-6x16,wood-6x20,wood-8x12,wood-8x16,wood-8x20' | strip_newlines | remove: ' ' | split: ','
+  comment
+    Entries are read once from the full list (direct handle lookups are capped per render)
+    and matched to the handle order here.
+  endcomment
+  assign all_entries = shop.metaobjects.deck_size_page.values
   for h in entry_handles
-    assign e = shop.metaobjects.deck_size_page[h]
+    assign e = nil
+    for candidate in all_entries
+      if candidate.system.handle == h
+        assign e = candidate
+        break
+      endif
+    endfor
     if e == blank or e.page.value.url == blank
       continue
     endif
@@ -107,7 +118,8 @@
       <div class="sdpc__grid" data-sdpc-grid>
         {%- assign card_index = 0 -%}
         {%- for h in entry_handles -%}
-          {%- assign e = shop.metaobjects.deck_size_page[h] -%}
+          {%- assign e = nil -%}
+          {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- break -%}{%- endif -%}{%- endfor -%}
           {%- if e == blank or e.page.value.url == blank -%}{%- continue -%}{%- endif -%}
           {%- assign card_index = card_index | plus: 1 -%}
           {%- render 'sdp-collection-card', entry: e, promo_code: section.settings.promo_code, index: card_index, heading_tag: 'h2' -%}
@@ -129,7 +141,8 @@
     "itemListElement": [
       {%- assign ld_i = 0 -%}
       {%- for h in entry_handles -%}
-        {%- assign e = shop.metaobjects.deck_size_page[h] -%}
+        {%- assign e = nil -%}
+        {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- break -%}{%- endif -%}{%- endfor -%}
         {%- if e == blank or e.page.value.url == blank -%}{%- continue -%}{%- endif -%}
         {%- assign ld_i = ld_i | plus: 1 -%}
         {%- if ld_i > 1 -%},{%- endif -%}
