@@ -758,8 +758,8 @@
         "spec_11"
       ],
       "settings": {
-        "image": "shopify://shop_images/sdp-real-wood-kit-unpacked.jpg",
-        "image_focal": "50% 60%",
+        "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
+        "image_focal": "40% 50%",
         "eyebrow": "Kit inclusions",
         "heading": "What’s included in the 6x12 deck kit",
         "intro": "Skip the lumber-yard runs and the cut list. The 6x12 pressure-treated deck kit ships complete: 72 square feet of engineered parts, labeled and packed in order of use, so the build stays straightforward from the first joist to the last board.",
@@ -767,7 +767,7 @@
         "button_link": "#",
         "features_title": "In the crate",
         "specs_title": "6×12 specifications",
-        "image_alt": "A-DIY wood deck kit parts unpacked and laid out by a customer"
+        "image_alt": "Engineered pressure-treated lumber pieces from the A-DIY 6x12 deck kit"
       }
     },
     "layers": {
@@ -841,7 +841,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/sdp-real-raised-deck-posts.jpg",
+            "image": "shopify://shop_images/magnific_remove-the-deck-underneat_rgwzURBxtc.png",
             "title": "Deck Height",
             "text": "<p><strong>Standard Height:</strong><br/>Each kit comes ready to assemble at 15–17 inches off the ground.</p><p><strong>Increase Height:</strong><br/>Use longer posts to raise the deck. We also offer longer post kits with bracing. Chat with our design specialists for details.</p><p><strong>Decrease Height:</strong><br/>Dig a few inches where the footings sit to lower the deck.</p><p><strong>We offer different height post kits:</strong><br/>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
@@ -852,7 +852,7 @@
           "type": "column",
           "settings": {
             "enable_autoplay": false,
-            "image": "shopify://shop_images/sdp-real-sloped-yard-stairs.jpg",
+            "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL.png",
             "title": "Uneven Ground",
             "text": "<p>Even if your yard isn’t perfectly flat, your deck can be. Just cut the posts to level things out, or use our longer post when you need more height.</p><p><strong>Pro Tip:<br/></strong>On slightly uneven ground, use gravel or cement tiles under the posts to even out the height.</p><p><strong>We offer different height post kits:<br/></strong>Each kit includes the posts and bracing. Contact our design team for more details.</p>",
             "link_label": "",
