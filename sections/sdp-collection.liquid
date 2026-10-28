@@ -7,6 +7,7 @@
   grid of size cards (snippets/sdp-collection-card), one per deck size page. Tabs and sort run client-side
   on the rendered cards, so the page stays one crawlable list of every size.
 {%- endcomment -%}
+{%- paginate shop.metaobjects.deck_size_page.values by 100 -%}
 {%- liquid
   comment
     The grid lists the deck size pages: one "Deck size page" metaobject entry per size,
@@ -24,14 +25,15 @@
   endcomment
   assign all_entries = shop.metaobjects.deck_size_page.values
   for h in entry_handles
-    assign e = nil
+    assign found = false
     for candidate in all_entries
       if candidate.system.handle == h
         assign e = candidate
+        assign found = true
         break
       endif
     endfor
-    if e == blank or e.page.value.url == blank
+    if found == false or e.page.value.url == blank
       continue
     endif
     assign count_all = count_all | plus: 1
@@ -118,9 +120,9 @@
       <div class="sdpc__grid" data-sdpc-grid>
         {%- assign card_index = 0 -%}
         {%- for h in entry_handles -%}
-          {%- assign e = nil -%}
-          {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- break -%}{%- endif -%}{%- endfor -%}
-          {%- if e == blank or e.page.value.url == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign found = false -%}
+          {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+          {%- if found == false or e.page.value.url == blank -%}{%- continue -%}{%- endif -%}
           {%- assign card_index = card_index | plus: 1 -%}
           {%- render 'sdp-collection-card', entry: e, promo_code: section.settings.promo_code, index: card_index, heading_tag: 'h2' -%}
         {%- endfor -%}
@@ -141,9 +143,9 @@
     "itemListElement": [
       {%- assign ld_i = 0 -%}
       {%- for h in entry_handles -%}
-        {%- assign e = nil -%}
-        {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- break -%}{%- endif -%}{%- endfor -%}
-        {%- if e == blank or e.page.value.url == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign found = false -%}
+        {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+        {%- if found == false or e.page.value.url == blank -%}{%- continue -%}{%- endif -%}
         {%- assign ld_i = ld_i | plus: 1 -%}
         {%- if ld_i > 1 -%},{%- endif -%}
         {
@@ -156,6 +158,7 @@
     ]
   }
 </script>
+{%- endpaginate -%}
 
 {% schema %}
 {
