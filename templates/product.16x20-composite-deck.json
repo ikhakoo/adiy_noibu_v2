@@ -92,7 +92,7 @@
         "promo_suffix": "with code",
         "financing_months": 24,
         "financing_text": "Starting at [monthly]/mo at 0% APR over [months] months if approved, with code [code]",
-        "payments_open": true,
+        "payments_open": false,
         "toggle_hide": "Hide payment options",
         "toggle_show": "See payment options",
         "fineprint": "*Financing payment based on the [sale_price] sale price (code [code]) over [months] months at 0% APR; about [monthly_regular]/mo at the regular [regular_price] price. Subject to eligibility check and approval; terms and conditions apply. Estimated payment excludes taxes and shipping.",
