@@ -12,7 +12,7 @@
   comment
     The grid lists the deck size pages: one "Deck size page" metaobject entry per size,
     in the order of the "Sizes" setting (handles such as wood-12x12). Each card links to
-    that entry's page and prices from the entry's product variants.
+    the main kit with that size preselected and prices from the entry's product variants.
   endcomment
   assign count_all = 0
   assign count_wood = 0
@@ -151,7 +151,8 @@
         {
           "@type": "ListItem",
           "position": {{ ld_i }},
-          "url": {{ shop.url | append: e.page.value.url | json }},
+          {%- assign ld_v = e.variants.value | first -%}
+          "url": {{ shop.url | append: ld_v.url | json }},
           "name": {{ e.page.value.title | json }}
         }
       {%- endfor -%}

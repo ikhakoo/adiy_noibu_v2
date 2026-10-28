@@ -13,7 +13,6 @@
 {%- liquid
   assign product = entry.product.value
   assign card_variants = entry.variants.value
-  assign card_url = entry.page.value.url
   assign v = card_variants | first
   for candidate in card_variants
     if candidate.available
@@ -21,6 +20,10 @@
       break
     endif
   endfor
+  comment
+    Cards link to the main kit with this size (and colour) preselected.
+  endcomment
+  assign card_url = v.url
   assign is_composite = false
   if entry.material.value == 'composite'
     assign is_composite = true
@@ -160,7 +163,7 @@
             class="sdpc-swatch{% if forloop.first %} is-active{% endif %}"
             data-sdpc-swatch
             data-src="{{ vmedia.preview_image | image_url: width: 800 }}"
-            data-url="{{ card_url }}"
+            data-url="{{ variant.url }}"
             aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
             title="{{ color | escape }}"
           >
