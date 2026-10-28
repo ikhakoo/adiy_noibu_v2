@@ -10,7 +10,11 @@
 
 {%- liquid
   assign list_items = ''
-  if request.page_type == 'collection'
+  comment
+    The deck-sizes template emits its own ItemList (sections/sdp-collection.liquid).
+    Products tagged hide-product (the size SEO pages) are left out of every other list.
+  endcomment
+  if request.page_type == 'collection' and collection.template_suffix != 'deck-sizes'
     assign list_items = collection.products
     assign list_name = collection.title
   endif
@@ -23,15 +27,18 @@
       "@type": "ItemList",
       "name": {{ list_name | strip_html | json }},
       "url": {{ request.origin | append: collection.url | json }},
-      "numberOfItems": {{ collection.products_count | default: list_items.size }},
       "itemListElement": [
+        {%- assign list_position = 0 -%}
         {%- for item in list_items limit: 30 -%}
+          {%- if item.tags contains 'hide-product' -%}{%- continue -%}{%- endif -%}
+          {%- assign list_position = list_position | plus: 1 -%}
+          {%- if list_position > 1 -%},{%- endif -%}
           {
             "@type": "ListItem",
-            "position": {{ forloop.index }},
+            "position": {{ list_position }},
             "url": {{ request.origin | append: item.url | json }},
             "name": {{ item.title | strip_html | json }}
-          }{%- unless forloop.last -%},{%- endunless -%}
+          }
         {%- endfor -%}
       ]
     }
