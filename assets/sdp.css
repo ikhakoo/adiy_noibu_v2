@@ -1602,6 +1602,15 @@ a.sdp-size:hover {
 
 @media screen and (max-width: 600px) {
   .sdp-hero__title { font-size: 32px; }
+
+  /* "or $3,399.00 with code [FALL1500]" stays on one line */
+  .sdp-price__promo { flex-wrap: nowrap; gap: 8px; font-size: 15px; white-space: nowrap; }
+  .sdp-code { padding: 6px 10px; font-size: 12px; letter-spacing: 0.8px; }
+  .sdp-price__amount { font-size: 32px; }
+  .sdp-price__financing { font-size: 14px; }
+
+  /* cross-link button: full width, text may wrap */
+  .sdp-crosslink__body .sdp-btn { width: 100%; white-space: normal; text-align: center; line-height: 1.3; }
   .sdp-add { width: 100%; }
 
   /* payment plan + reserve: keep the three tiles side by side */
