@@ -80,7 +80,7 @@
       "settings": {
         "eyebrow": "8 × 20 Pressure-treated wood deck · 160 sq ft",
         "heading": "8x20 Deck — build it yourself, delivered as a pressure treated kit",
-        "lede": "A 8x20 deck from A-DIY costs $4,799. That one price covers a professionally engineered, pressure treated deck kit — 160 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, builds in a day with a drill as the only tool, and is backed by a 5-year structural warranty.",
+        "lede": "A 8x20 deck from A-DIY costs [price]. That one price covers a professionally engineered, pressure treated deck kit — 160 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, builds in a day with a drill as the only tool, and is backed by a 5-year structural warranty.",
         "variant_label": "Choose your color",
         "image": "shopify://shop_images/sdp-12x12-wood-hero-render.png",
         "use_product_image": true,
@@ -101,7 +101,8 @@
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
         "show_variant_picker": false,
-        "image_alt": "8x20 pressure-treated wood deck kit from A-DIY, set up as an outdoor lounge"
+        "image_alt": "8x20 pressure-treated wood deck kit from A-DIY, set up as an outdoor lounge",
+        "size_option": "8 x 20"
       }
     },
     "crosslink": {
@@ -111,10 +112,12 @@
         "image_focal": "50% 55%",
         "eyebrow": "Prefer low maintenance?",
         "heading": "The same 12x12 deck is also available in composite",
-        "text": "$5,700 · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
+        "text": "[twin_price] · Same engineered frame, same build.",
         "button_label": "See the 12×12 composite deck",
-        "button_link": "shopify://products/a-diy-composite-deck-kit",
-        "image_alt": "12x12 A-DIY composite deck kit"
+        "button_link": "",
+        "image_alt": "12x12 A-DIY composite deck kit",
+        "twin_product": "",
+        "size_option": "8 x 20"
       },
       "disabled": true
     },
@@ -197,16 +200,10 @@
         "quote": {
           "type": "quote",
           "settings": {
-            "name": "FRANK",
-            "role": "Verified Buyer",
-            "source": "trustpilot",
-            "stars": 5,
-            "headline": "",
             "quote": "Every board is clearly marked for quick assembly. The fitment was good, impressed with the strength of the deck. Overall appearance was excellent.",
-            "cite": "Trustpilot review · A-DIY deck kit",
-            "photo": "",
-            "photo_focal": "50% 50%",
-            "photo_alt": ""
+            "name": "FRANK",
+            "source": "trustpilot",
+            "cite": "A-DIY deck kit"
           }
         }
       },
@@ -2473,7 +2470,7 @@
           "type": "question",
           "settings": {
             "question": "How much does a 8x20 deck cost?",
-            "answer": "<p>The A-DIY 8x20 pressure-treated wood deck kit is $4,799, with taxes and shipping calculated at checkout. During the Fall Sale the code FALL1500 brings it to $3,299. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
+            "answer": "<p>The A-DIY 8x20 pressure-treated wood deck kit is [price], with taxes and shipping calculated at checkout. During the Fall Sale the code [code] brings it to [sale_price]. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
           }
         },
         "q3": {
@@ -2522,7 +2519,7 @@
           "type": "question",
           "settings": {
             "question": "Is the 8x20 available in composite?",
-            "answer": "<p>The compact series (6 and 8 ft wide) is built in pressure-treated wood. Composite kits start at 12x12 ($5,700). If you need a composite platform smaller than that, chat with a design specialist about a custom size.</p>"
+            "answer": "<p>The compact series (6 and 8 ft wide) is built in pressure-treated wood. Composite kits start at <a href=\"/products/a-diy-composite-deck-kit\">12x12</a>. If you need a composite platform smaller than that, chat with a design specialist about a custom size.</p>"
           }
         },
         "q10": {
@@ -2564,7 +2561,11 @@
         "card_text": "Send a photo of your yard and we will tell you if a 8x20 fits, how high it should sit and what it will cost delivered.",
         "phone": "1 (786) 358-2872",
         "chat_label": "Start a live chat",
-        "chat_link": "#chat"
+        "chat_link": "#chat",
+        "size_option": "8 x 20",
+        "promo_code": "FALL1500",
+        "discount_amount": 1500,
+        "twin_product": ""
       }
     }
   },

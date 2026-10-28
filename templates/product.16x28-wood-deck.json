@@ -80,7 +80,7 @@
       "settings": {
         "eyebrow": "16 × 28 Pressure-treated wood deck · 448 sq ft",
         "heading": "16x28 Deck — build it yourself, delivered as a pressure treated kit",
-        "lede": "A 16x28 deck from A-DIY costs $10,199. That one price covers a professionally engineered, pressure treated deck kit — 448 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, builds in a weekend with a drill as the only tool, and is backed by a 5-year structural warranty.",
+        "lede": "A 16x28 deck from A-DIY costs [price]. That one price covers a professionally engineered, pressure treated deck kit — 448 square feet of it — in which every part goes together seamlessly. It is delivered in 10–14 business days, builds in a weekend with a drill as the only tool, and is backed by a 5-year structural warranty.",
         "variant_label": "Choose your color",
         "image": "shopify://shop_images/sdp-12x12-wood-hero-render.png",
         "use_product_image": true,
@@ -101,7 +101,8 @@
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
         "show_variant_picker": false,
-        "image_alt": "16x28 pressure-treated wood deck kit from A-DIY, set up as an outdoor lounge"
+        "image_alt": "16x28 pressure-treated wood deck kit from A-DIY, set up as an outdoor lounge",
+        "size_option": "16 x 28"
       }
     },
     "crosslink": {
@@ -111,10 +112,12 @@
         "image_focal": "50% 55%",
         "eyebrow": "Prefer low maintenance?",
         "heading": "The same 16x28 deck is also available in composite",
-        "text": "$12,799 · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
+        "text": "[twin_price] · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
         "button_label": "See the 16×28 composite deck",
-        "button_link": "shopify://products/a-diy-composite-deck-kit",
-        "image_alt": "16x28 A-DIY composite deck kit"
+        "button_link": "",
+        "image_alt": "16x28 A-DIY composite deck kit",
+        "twin_product": "a-diy-composite-deck-kit",
+        "size_option": "16 x 28"
       }
     },
     "numbers": {
@@ -196,16 +199,10 @@
         "quote": {
           "type": "quote",
           "settings": {
-            "name": "Rob C.",
-            "role": "Verified Buyer",
-            "source": "google",
-            "stars": 5,
-            "headline": "I did it myself",
             "quote": "I recently built my own deck kit from A-DIY, and the experience was beyond my expectations! I’m not a DIY expert by any means, but the instructions were incredibly user-friendly, and all the materials arrived securely packaged and ready for assembly. The most impressive part? I didn’t have to hire a contractor!",
-            "cite": "Google review · A-DIY deck kit",
-            "photo": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.30_3fba2d48.webp",
-            "photo_focal": "50% 50%",
-            "photo_alt": "Rob C.'s A-DIY deck"
+            "name": "Rob",
+            "source": "google",
+            "cite": "A-DIY deck kit"
           }
         }
       },
@@ -2472,7 +2469,7 @@
           "type": "question",
           "settings": {
             "question": "How much does a 16x28 deck cost?",
-            "answer": "<p>The A-DIY 16x28 pressure-treated wood deck kit is $10,199, with taxes and shipping calculated at checkout. During the Fall Sale the code FALL1500 brings it to $8,699. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
+            "answer": "<p>The A-DIY 16x28 pressure-treated wood deck kit is [price], with taxes and shipping calculated at checkout. During the Fall Sale the code [code] brings it to [sale_price]. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
           }
         },
         "q3": {
@@ -2521,7 +2518,7 @@
           "type": "question",
           "settings": {
             "question": "Wood or composite: which 16x28 deck kit should I choose?",
-            "answer": "<p>Both use the same engineered system. The pressure-treated wood 16x28 is $10,199, carries a 5-year structural warranty and can be stained to match your home. The composite 16x28 is $12,799 in Amazon Gray or Forest Wood, with a 25-year warranty on the composite deck boards and minimal maintenance — on a deck this size, skipping the re-staining is worth weighing. See the <a href=\"/products/a-diy-composite-deck-kit\">16x28 composite deck page</a> for the full details.</p>"
+            "answer": "<p>Both use the same engineered system. The pressure-treated wood 16x28 is [price], carries a 5-year structural warranty and can be stained to match your home. The composite 16x28 is [twin_price] in Amazon Gray or Forest Wood, with a 25-year warranty on the composite deck boards and minimal maintenance — on a deck this size, skipping the re-staining is worth weighing. See the <a href=\"/products/a-diy-composite-deck-kit\">16x28 composite deck page</a> for the full details.</p>"
           }
         },
         "q10": {
@@ -2563,7 +2560,11 @@
         "card_text": "Send a photo of your yard and we will tell you if a 16x28 fits, how high it should sit and what it will cost delivered.",
         "phone": "1 (786) 358-2872",
         "chat_label": "Start a live chat",
-        "chat_link": "#chat"
+        "chat_link": "#chat",
+        "size_option": "16 x 28",
+        "promo_code": "FALL1500",
+        "discount_amount": 1500,
+        "twin_product": "a-diy-composite-deck-kit"
       }
     }
   },

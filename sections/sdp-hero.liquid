@@ -14,7 +14,23 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign variant = product.selected_or_first_available_variant
+  comment
+    The page is for one size. Unless the URL already selects a variant, use the variant
+    whose option matches the "Size variant" setting (e.g. "16 x 20") for pricing, the
+    add-to-cart form and structured data; otherwise fall back to the first available.
+  endcomment
+  assign variant = product.selected_variant
+  if variant == blank
+    assign variant = product.selected_or_first_available_variant
+    if section.settings.size_option != blank
+      for candidate in product.variants
+        if candidate.option1 == section.settings.size_option or candidate.option2 == section.settings.size_option
+          assign variant = candidate
+          break
+        endif
+      endfor
+    endif
+  endif
   assign product_form_id = 'sdp-product-form-' | append: section.id
 
   assign promo_code = section.settings.promo_code
@@ -80,7 +96,13 @@
       <h1 class="sdp-hero__title">{{ heading | escape }}</h1>
 
       {%- if section.settings.lede != blank -%}
-        <p class="sdp-hero__lede">{{ section.settings.lede | escape }}</p>
+        <p class="sdp-hero__lede">
+          {{- section.settings.lede | escape
+            | replace: '[sale_price]', sale_str
+            | replace: '[price]', regular_str
+            | replace: '[code]', promo_code
+          -}}
+        </p>
       {%- endif -%}
 
       {%- if section.settings.show_variant_picker and product.has_only_default_variant == false and product.variants.size > 1 -%}
@@ -361,7 +383,8 @@
     { "type": "header", "content": "Copy" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "12 × 12 Pressure-treated wood deck · 144 sq ft" },
     { "type": "textarea", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the product title.", "default": "12x12 Deck — build it yourself, delivered as a pressure treated kit" },
-    { "type": "textarea", "id": "lede", "label": "Intro paragraph", "default": "A 12x12 deck from A-DIY costs $4,899. That one price covers a professionally engineered, pressure treated deck kit in which every part goes together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and is backed by a 5-year structural warranty." },
+    { "type": "textarea", "id": "lede", "label": "Intro paragraph", "info": "Placeholders: [price], [sale_price], [code] are filled from the product so the copy always matches the live price.", "default": "A 12x12 deck from A-DIY costs [price]. That one price covers a professionally engineered, pressure treated deck kit in which every part goes together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and is backed by a 5-year structural warranty." },
+    { "type": "text", "id": "size_option", "label": "Size variant", "info": "The variant option value for this page's size, e.g. \"12 x 12\". Used for the price and Add to cart when the URL doesn't pick a variant.", "default": "12 x 12" },
     { "type": "checkbox", "id": "show_variant_picker", "label": "Show variant dropdown", "info": "Off by default: the page is for one size, so the product's first available variant is sold. Turn on for products with several sizes/colours.", "default": false },
     { "type": "text", "id": "variant_label", "label": "Variant dropdown label", "default": "Choose your option" },
     { "type": "header", "content": "Image" },

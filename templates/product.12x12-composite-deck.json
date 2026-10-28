@@ -80,7 +80,7 @@
       "settings": {
         "eyebrow": "12 × 12 Composite deck · 144 sq ft",
         "heading": "12x12 Composite Deck — build it yourself, delivered as a kit",
-        "lede": "A 12x12 composite deck from A-DIY costs $5,700. That one price covers a professionally engineered deck kit: fade and stain resistant composite boards in Amazon Gray or Forest Wood on a kiln-dried, pressure-treated frame, with every part going together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and the boards are backed by a 25-year warranty.",
+        "lede": "A 12x12 composite deck from A-DIY costs [price]. That one price covers a professionally engineered deck kit: fade and stain resistant composite boards in Amazon Gray or Forest Wood on a kiln-dried, pressure-treated frame, with every part going together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and the boards are backed by a 25-year warranty.",
         "variant_label": "Choose your color",
         "image": "shopify://shop_images/b19ef24e-604f-482b-ba58-7e221a219c69.jpg",
         "use_product_image": true,
@@ -101,7 +101,8 @@
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
         "show_variant_picker": true,
-        "image_alt": "12x12 composite deck kit from A-DIY, built by a customer"
+        "image_alt": "12x12 composite deck kit from A-DIY, built by a customer",
+        "size_option": "12 x 12"
       }
     },
     "crosslink": {
@@ -111,10 +112,12 @@
         "image_focal": "50% 40%",
         "eyebrow": "Prefer real wood?",
         "heading": "The same 12x12 deck is also available in pressure-treated wood",
-        "text": "$4,899 · Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated · stain it to match your home · 5-year structural warranty. Same engineered frame, same build.",
+        "text": "[twin_price] · Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated · stain it to match your home · 5-year structural warranty. Same engineered frame, same build.",
         "button_label": "See the 12×12 wood deck",
-        "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
-        "image_alt": "12x12 A-DIY pressure-treated wood deck kit"
+        "button_link": "",
+        "image_alt": "12x12 A-DIY pressure-treated wood deck kit",
+        "twin_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "size_option": "12 x 12"
       }
     },
     "numbers": {
@@ -196,16 +199,10 @@
         "quote": {
           "type": "quote",
           "settings": {
-            "name": "Lori V.",
-            "role": "Verified Buyer",
-            "source": "google",
-            "stars": 5,
-            "headline": "Composite Deck - 12x12",
             "quote": "We are so proud of our deck! We saved a ton of money by building it ourselves, giving us a sense of accomplishment. Thanks to A-DIY, the directions were easy to follow and materials well packed and arranged. We have been able to enjoy sitting out with a drink and have had a family gathering all ready.",
-            "cite": "Google review · 12×12 deck",
-            "photo": "shopify://shop_images/b19ef24e-604f-482b-ba58-7e221a219c69.jpg",
-            "photo_focal": "50% 50%",
-            "photo_alt": "Lori V.'s A-DIY deck"
+            "name": "Lori",
+            "source": "google",
+            "cite": "12×12 deck"
           }
         }
       },
@@ -2408,7 +2405,7 @@
           "type": "question",
           "settings": {
             "question": "How much does a 12x12 deck cost?",
-            "answer": "<p>The A-DIY 12x12 composite deck kit is $5,700, with taxes and shipping calculated at checkout. During the Fall Sale the code FALL1500 brings it to $4,200. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
+            "answer": "<p>The A-DIY 12x12 composite deck kit is [price], with taxes and shipping calculated at checkout. During the Fall Sale the code [code] brings it to [sale_price]. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
           }
         },
         "q3": {
@@ -2457,7 +2454,7 @@
           "type": "question",
           "settings": {
             "question": "Composite or wood: which 12x12 deck kit should I choose?",
-            "answer": "<p>Both use the same engineered system. The composite 12x12 is $5,700 in Amazon Gray or Forest Wood, with a 25-year warranty on the boards and no staining or sealing to keep up with. The pressure-treated wood 12x12 is $4,899, carries a 5-year structural warranty and can be stained to match your home. See the <a href=\"/products/pressure-treated-kiln-dried-wood-deck-kit\">12x12 wood deck page</a> for the full details.</p>"
+            "answer": "<p>Both use the same engineered system. The composite 12x12 is [price] in Amazon Gray or Forest Wood, with a 25-year warranty on the boards and no staining or sealing to keep up with. The pressure-treated wood 12x12 is [twin_price], carries a 5-year structural warranty and can be stained to match your home. See the <a href=\"/products/pressure-treated-kiln-dried-wood-deck-kit\">12x12 wood deck page</a> for the full details.</p>"
           }
         },
         "q10": {
@@ -2499,7 +2496,11 @@
         "card_text": "Send a photo of your yard and we will tell you if a 12x12 fits, how high it should sit and what it will cost delivered.",
         "phone": "1 (786) 358-2872",
         "chat_label": "Start a live chat",
-        "chat_link": "#chat"
+        "chat_link": "#chat",
+        "size_option": "12 x 12",
+        "promo_code": "FALL1500",
+        "discount_amount": 1500,
+        "twin_product": "pressure-treated-kiln-dried-wood-deck-kit"
       }
     }
   },

@@ -1,0 +1,59 @@
+{%- comment -%}
+  Live prices for the size deck page sections, so copy never carries a hardcoded
+  number. Outputs one line: price|sale_price|twin_price|code|has_discount
+  (money strings, no trailing zeros). Capture it and split on "|".
+
+  Accepts:
+  - product: {Object} current product
+  - size: {String} option value that identifies this page's size, e.g. "16 x 20";
+    the variant whose option1/option2 equals it is used (unless the URL already
+    selects a variant). Blank = selected or first available variant.
+  - discount_fallback: {Number} whole dollars, used when the variant has no
+    custom.discount_value metafield
+  - code: {String} promo code; blank disables the sale price
+  - twin: {Object} the same size in the other material (product picker), optional
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_variant
+  if v == blank
+    assign v = product.selected_or_first_available_variant
+    if size != blank
+      for candidate in product.variants
+        if candidate.option1 == size or candidate.option2 == size
+          assign v = candidate
+          break
+        endif
+      endfor
+    endif
+  endif
+
+  assign discount = discount_fallback | default: 0
+  assign vd = v.metafields.custom.discount_value.value | default: v.metafields.custom.discount_value
+  assign vd_num = vd | plus: 0
+  if vd_num > 0
+    assign discount = vd_num
+  endif
+  assign discount_cents = discount | times: 100 | round
+  assign sale = v.price | minus: discount_cents
+  assign has_discount = 0
+  if discount_cents > 0 and code != blank and sale > 0 and sale < v.price
+    assign has_discount = 1
+  else
+    assign sale = v.price
+  endif
+
+  assign twin_price = ''
+  if twin != blank
+    assign tv = twin.selected_or_first_available_variant
+    if size != blank
+      for candidate in twin.variants
+        if candidate.option1 == size or candidate.option2 == size
+          assign tv = candidate
+          break
+        endif
+      endfor
+    endif
+    assign twin_price = tv.price | money_without_trailing_zeros
+  endif
+-%}
+{{ v.price | money_without_trailing_zeros }}|{{ sale | money_without_trailing_zeros }}|{{ twin_price }}|{{ code }}|{{ has_discount }}

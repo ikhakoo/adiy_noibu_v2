@@ -7,6 +7,17 @@
   rich-result eligibility the SEO plan relies on.
 {%- endcomment -%}
 
+{%- liquid
+  capture price_line
+    render 'sdp-prices', product: product, size: section.settings.size_option, discount_fallback: section.settings.discount_amount, code: section.settings.promo_code, twin: section.settings.twin_product
+  endcapture
+  assign price_parts = price_line | strip | split: '|'
+  assign p_price = price_parts[0]
+  assign p_sale = price_parts[1]
+  assign p_twin = price_parts[2]
+  assign p_code = price_parts[3]
+-%}
+
 <div class="sdp sdp-faq sdp--cloud" data-sdp-faq{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-faq__inner">
     <div class="sdp-faq__aside">
@@ -63,7 +74,7 @@
             </button>
           </h3>
           <div class="sdp-faq__a" id="sdp-faq-{{ section.id }}-{{ block.id }}"{% unless open %} hidden{% endunless %}>
-            {{ block.settings.answer }}
+            {{ block.settings.answer | replace: '[sale_price]', p_sale | replace: '[twin_price]', p_twin | replace: '[price]', p_price | replace: '[code]', p_code }}
           </div>
         </div>
       {%- endfor -%}
@@ -83,7 +94,7 @@
             "name": {{ block.settings.question | json }},
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": {{ block.settings.answer | strip_html | strip | json }}
+              "text": {{ block.settings.answer | replace: '[sale_price]', p_sale | replace: '[twin_price]', p_twin | replace: '[price]', p_price | replace: '[code]', p_code | strip_html | strip | json }}
             }
           }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
@@ -100,6 +111,11 @@
   "enabled_on": { "templates": ["product", "collection", "page"] },
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq" },
+    { "type": "header", "content": "Live prices", "info": "Answers can use [price], [sale_price], [code] and [twin_price]; they are filled from the products at render time." },
+    { "type": "text", "id": "size_option", "label": "Size variant", "info": "e.g. \"12 x 12\" — picks the variant used for [price].", "default": "12 x 12" },
+    { "type": "text", "id": "promo_code", "label": "Promo code", "default": "FALL1500" },
+    { "type": "number", "id": "discount_amount", "label": "Fallback discount (whole dollars)", "default": 1500 },
+    { "type": "product", "id": "twin_product", "label": "Same size in the other material", "info": "Used for [twin_price]." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "12×12 wood deck kit FAQ" },
     { "type": "textarea", "id": "heading", "label": "Heading", "default": "Questions homeowners ask before buying a 12x12 deck kit" },
     { "type": "checkbox", "id": "open_all", "label": "Show every answer expanded", "default": true },

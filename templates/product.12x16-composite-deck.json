@@ -80,7 +80,7 @@
       "settings": {
         "eyebrow": "12 × 16 Composite deck · 192 sq ft",
         "heading": "12x16 Composite Deck — build it yourself, delivered as a kit",
-        "lede": "A 12x16 composite deck from A-DIY costs $6,600. That one price covers a professionally engineered deck kit: fade and stain resistant composite boards in Amazon Gray or Forest Wood on a kiln-dried, pressure-treated frame, with every part going together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and the boards are backed by a 25-year warranty.",
+        "lede": "A 12x16 composite deck from A-DIY costs [price]. That one price covers a professionally engineered deck kit: fade and stain resistant composite boards in Amazon Gray or Forest Wood on a kiln-dried, pressure-treated frame, with every part going together seamlessly. It is delivered in 10–14 business days, assembles in 8–16 hours with a drill as the only tool, and the boards are backed by a 25-year warranty.",
         "variant_label": "Choose your color",
         "image": "shopify://shop_images/sdp-12x12-composite-poolside.jpg",
         "use_product_image": true,
@@ -101,7 +101,8 @@
         "secondary_label": "Show more sizes",
         "secondary_link": "#sizes",
         "show_variant_picker": true,
-        "image_alt": "12x16 composite deck kit from A-DIY, beside a pool"
+        "image_alt": "12x16 composite deck kit from A-DIY, beside a pool",
+        "size_option": "12 x 16"
       }
     },
     "crosslink": {
@@ -111,10 +112,12 @@
         "image_focal": "50% 55%",
         "eyebrow": "Prefer low maintenance?",
         "heading": "The same 12x12 deck is also available in composite",
-        "text": "$5,700 · Amazon Gray or Forest Wood · stain and fade resistant · 25-year warranty on the composite boards. Same engineered frame, same build.",
+        "text": "[twin_price] · Same engineered frame, same build.",
         "button_label": "See the 12×12 composite deck",
-        "button_link": "shopify://products/a-diy-composite-deck-kit",
-        "image_alt": "12x12 A-DIY composite deck kit"
+        "button_link": "",
+        "image_alt": "12x12 A-DIY composite deck kit",
+        "twin_product": "",
+        "size_option": "12 x 16"
       },
       "disabled": true
     },
@@ -197,16 +200,10 @@
         "quote": {
           "type": "quote",
           "settings": {
-            "name": "Gee A.",
-            "role": "Verified Buyer",
-            "source": "google",
-            "stars": 5,
-            "headline": "Customer support is great",
             "quote": "My spouse & I built this A-DIY 12 x 16 deck for our Airstream. It took as about 8 hours, that includes level the ground. Customer support is great.",
-            "cite": "Google review · 12×16 deck",
-            "photo": "shopify://shop_images/WhatsApp_Image_2025-09-13_at_21.31.41_2d8be7b1.webp",
-            "photo_focal": "50% 50%",
-            "photo_alt": "Gee A.'s A-DIY deck"
+            "name": "Gee",
+            "source": "google",
+            "cite": "12×16 deck"
           }
         }
       },
@@ -2409,7 +2406,7 @@
           "type": "question",
           "settings": {
             "question": "How much does a 12x16 deck cost?",
-            "answer": "<p>The A-DIY 12x16 composite deck kit is $6,600, with taxes and shipping calculated at checkout. During the Fall Sale the code FALL1500 brings it to $5,100. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
+            "answer": "<p>The A-DIY 12x16 composite deck kit is [price], with taxes and shipping calculated at checkout. During the Fall Sale the code [code] brings it to [sale_price]. The price includes all engineered parts, Tuff Block footings, galvanized hardware and drill bit, so there is no separate materials list, and A-DIY kits run 30–50% less than hiring a contractor (see <a href=\"/pages/deck-cost\">how much a deck costs</a> in your state).</p>"
           }
         },
         "q3": {
@@ -2458,7 +2455,7 @@
           "type": "question",
           "settings": {
             "question": "Is the 12x16 available in pressure-treated wood?",
-            "answer": "<p>Not as a stock size. The closest wood kits are the 12x12 ($4,899) and 12x18 ($5,969), Grade 1 Southern Yellow Pine with a 5-year structural warranty. If it has to be 12x16 in wood, chat with a design specialist about a custom size — the sales team quotes sizes that aren’t on the site.</p>"
+            "answer": "<p>Not as a stock size. The closest <a href=\"/products/pressure-treated-kiln-dried-wood-deck-kit\">wood kits</a> are the 12x12 and 12x18, Grade 1 Southern Yellow Pine with a 5-year structural warranty. If it has to be 12x16 in wood, chat with a design specialist about a custom size — the sales team quotes sizes that aren’t on the site.</p>"
           }
         },
         "q10": {
@@ -2500,7 +2497,11 @@
         "card_text": "Send a photo of your yard and we will tell you if a 12x16 fits, how high it should sit and what it will cost delivered.",
         "phone": "1 (786) 358-2872",
         "chat_label": "Start a live chat",
-        "chat_link": "#chat"
+        "chat_link": "#chat",
+        "size_option": "12 x 16",
+        "promo_code": "FALL1500",
+        "discount_amount": 1500,
+        "twin_product": ""
       }
     }
   },
