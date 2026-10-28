@@ -8,8 +8,27 @@
 {%- endcomment -%}
 
 {%- liquid
+  assign size_option = section.settings.size_option
+  assign twin_product = section.settings.twin_product
+  assign code = section.settings.promo_code
+  assign sdp = page.metafields.custom.deck_size.value
+  assign entry_faqs = ''
+  if sdp != blank
+    comment
+      Deck size page: price, twin and questions come from the page's entry.
+    endcomment
+    assign product = sdp.product.value
+    assign size_option = sdp.width.value | append: ' x ' | append: sdp.length.value
+    assign twin_product = sdp.twin.value.product.value
+    assign entry_faqs = sdp.faqs.value
+    assign first_variant = sdp.variants.value | first
+    assign fv_discount = first_variant.metafields.custom.discount_value.value | default: first_variant.metafields.custom.discount_value | plus: 0
+    if fv_discount <= 0
+      assign code = ''
+    endif
+  endif
   capture price_line
-    render 'sdp-prices', product: product, size: section.settings.size_option, discount_fallback: section.settings.discount_amount, code: section.settings.promo_code, twin: section.settings.twin_product
+    render 'sdp-prices', product: product, size: size_option, discount_fallback: section.settings.discount_amount, code: code, twin: twin_product
   endcapture
   assign price_parts = price_line | strip | split: '|'
   assign p_price = price_parts[0]
@@ -21,11 +40,13 @@
 <div class="sdp sdp-faq sdp--cloud" data-sdp-faq{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-faq__inner">
     <div class="sdp-faq__aside">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- capture t_eyebrow -%}{%- render 'sdp-t', text: section.settings.eyebrow, sdp: sdp -%}{%- endcapture -%}
+      {%- capture t_heading -%}{%- render 'sdp-t', text: section.settings.heading, sdp: sdp -%}{%- endcapture -%}
+      {%- if t_eyebrow != blank -%}
+        <p class="sdp-eyebrow">{{ t_eyebrow | escape }}</p>
       {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="sdp-faq__title">{{ section.settings.heading | escape }}</h2>
+      {%- if t_heading != blank -%}
+        <h2 class="sdp-faq__title">{{ t_heading | escape }}</h2>
       {%- endif -%}
 
       {%- if section.settings.card_heading != blank -%}
@@ -34,8 +55,9 @@
             <p class="sdp-faq__card-kicker">{{ section.settings.card_kicker | escape }}</p>
           {%- endif -%}
           <h3 class="sdp-faq__card-title">{{ section.settings.card_heading | escape }}</h3>
-          {%- if section.settings.card_text != blank -%}
-            <p class="sdp-faq__card-text">{{ section.settings.card_text | escape }}</p>
+          {%- capture t_card -%}{%- render 'sdp-t', text: section.settings.card_text, sdp: sdp -%}{%- endcapture -%}
+          {%- if t_card != blank -%}
+            <p class="sdp-faq__card-text">{{ t_card | escape }}</p>
           {%- endif -%}
           <div class="sdp-faq__contacts">
             {%- if section.settings.phone != blank -%}
@@ -57,6 +79,31 @@
     </div>
 
     <div class="sdp-faq__list">
+      {%- if sdp != blank and entry_faqs.size > 0 -%}
+        {%- for faq in entry_faqs -%}
+          {%- liquid
+            assign open = false
+            if section.settings.open_all
+              assign open = true
+            elsif section.settings.open_first and forloop.first
+              assign open = true
+            endif
+          -%}
+          {%- capture faq_q -%}{%- render 'sdp-t', text: faq.question.value, sdp: sdp -%}{%- endcapture -%}
+          {%- capture faq_a -%}{%- render 'sdp-t', text: faq.answer.value, sdp: sdp -%}{%- endcapture -%}
+          <div class="sdp-faq__item">
+            <h3 class="sdp-faq__h">
+              <button type="button" class="sdp-faq__q" aria-expanded="{{ open }}" aria-controls="sdp-faq-{{ section.id }}-{{ forloop.index }}">
+                <span>{{ faq_q | escape }}</span>
+                <span class="sdp-faq__sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="sdp-faq__a" id="sdp-faq-{{ section.id }}-{{ forloop.index }}"{% unless open %} hidden{% endunless %}>
+              {{ faq_a | replace: '[sale_price]', p_sale | replace: '[twin_price]', p_twin | replace: '[price]', p_price | replace: '[code]', p_code }}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
       {%- for block in section.blocks -%}
         {%- liquid
           assign open = false
@@ -78,11 +125,33 @@
           </div>
         </div>
       {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </div>
 
-{%- if section.blocks.size > 0 -%}
+{%- if sdp != blank and entry_faqs.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq in entry_faqs -%}
+          {%- capture faq_q -%}{%- render 'sdp-t', text: faq.question.value, sdp: sdp -%}{%- endcapture -%}
+          {%- capture faq_a -%}{%- render 'sdp-t', text: faq.answer.value, sdp: sdp -%}{%- endcapture -%}
+          {
+            "@type": "Question",
+            "name": {{ faq_q | strip | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ faq_a | replace: '[sale_price]', p_sale | replace: '[twin_price]', p_twin | replace: '[price]', p_price | replace: '[code]', p_code | strip_html | strip | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- elsif section.blocks.size > 0 -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",

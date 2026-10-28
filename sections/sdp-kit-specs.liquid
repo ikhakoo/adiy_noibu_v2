@@ -6,12 +6,47 @@
   (one row per `spec` block, split evenly between the columns).
 {%- endcomment -%}
 
+{%- liquid
+  assign sdp = page.metafields.custom.deck_size.value
+  assign kit_image = section.settings.image
+  if sdp != blank and sdp.kit_image != blank
+    assign kit_image = sdp.kit_image.value
+  endif
+  capture t_alt
+    render 'sdp-t', text: section.settings.image_alt, sdp: sdp
+  endcapture
+  if sdp != blank and sdp.kit_image_alt != blank
+    assign t_alt = sdp.kit_image_alt.value
+  endif
+  capture t_heading
+    render 'sdp-t', text: section.settings.heading, sdp: sdp
+  endcapture
+  capture t_intro
+    render 'sdp-t', text: section.settings.intro, sdp: sdp
+  endcapture
+  capture t_button
+    render 'sdp-t', text: section.settings.button_label, sdp: sdp
+  endcapture
+  capture t_specs_title
+    render 'sdp-t', text: section.settings.specs_title, sdp: sdp
+  endcapture
+  assign t_alt = t_alt | strip
+  assign t_heading = t_heading | strip
+  assign t_intro = t_intro | strip
+  assign t_button = t_button | strip
+  assign t_specs_title = t_specs_title | strip
+  assign button_link = section.settings.button_link | default: '#'
+  if sdp != blank and section.settings.button_link == blank
+    assign button_link = '#buy'
+  endif
+  assign material = sdp.material.value | default: 'all'
+-%}
 <div class="sdp sdp-kit sdp--stone"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-kit__inner">
     <div class="sdp-kit__top">
-      {%- assign image_alt = section.settings.image_alt | default: section.settings.heading -%}
+      {%- assign image_alt = t_alt | default: t_heading -%}
       {%- render 'sdp-image',
-        image: section.settings.image,
+        image: kit_image,
         class: 'sdp-kit__media',
         sizes: '(min-width: 990px) 605px, calc(100vw - 48px)',
         focal: section.settings.image_focal,
@@ -22,15 +57,15 @@
           {%- if section.settings.eyebrow != blank -%}
             <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
           {%- endif -%}
-          {%- if section.settings.heading != blank -%}
-            <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+          {%- if t_heading != blank -%}
+            <h2 class="sdp-h2">{{ t_heading | escape }}</h2>
           {%- endif -%}
-          {%- if section.settings.intro != blank -%}
-            <p class="sdp-intro">{{ section.settings.intro | escape }}</p>
+          {%- if t_intro != blank -%}
+            <p class="sdp-intro">{{ t_intro | escape }}</p>
           {%- endif -%}
         </div>
-        {%- if section.settings.button_label != blank -%}
-          <a class="sdp-btn" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label | escape }}</a>
+        {%- if t_button != blank -%}
+          <a class="sdp-btn" href="{{ button_link }}">{{ t_button | escape }}</a>
         {%- endif -%}
       </div>
     </div>
@@ -43,6 +78,8 @@
         {%- endif -%}
         <ul class="sdp-kit__features">
           {%- for block in features -%}
+            {%- assign only = block.settings.material | default: 'all' -%}
+            {%- if only != 'all' and material != 'all' and only != material -%}{%- continue -%}{%- endif -%}
             <li class="sdp-feature" {{ block.shopify_attributes }}>
               <span class="sdp-feature__icon">
                 {%- if block.settings.icon != blank -%}
@@ -59,30 +96,56 @@
       </div>
     {%- endif -%}
 
-    {%- assign specs = section.blocks | where: 'type', 'spec' -%}
-    {%- if specs.size > 0 -%}
-      {%- assign half = specs.size | plus: 1 | divided_by: 2 -%}
+    {%- liquid
+      assign specs = section.blocks | where: 'type', 'spec'
+      assign entry_specs = sdp.specs.value
+      assign use_entry_specs = false
+      if sdp != blank and entry_specs.size > 0
+        assign use_entry_specs = true
+        assign spec_count = entry_specs.size
+      else
+        assign spec_count = specs.size
+      endif
+      assign half = spec_count | plus: 1 | divided_by: 2
+    -%}
+    {%- if spec_count > 0 -%}
       <div class="sdp-specs">
-        {%- if section.settings.specs_title != blank -%}
-          <h3 class="sdp-label sdp-rule">{{ section.settings.specs_title | escape }}</h3>
+        {%- if t_specs_title != blank -%}
+          <h3 class="sdp-label sdp-rule">{{ t_specs_title | escape }}</h3>
         {%- endif -%}
         <div class="sdp-specs__cols">
-          <dl>
-            {%- for block in specs limit: half -%}
-              <div class="sdp-specs__row" {{ block.shopify_attributes }}>
-                <dt>{{ block.settings.label | escape }}</dt>
-                <dd>{{ block.settings.value | escape }}</dd>
-              </div>
-            {%- endfor -%}
-          </dl>
-          <dl>
-            {%- for block in specs offset: half -%}
-              <div class="sdp-specs__row" {{ block.shopify_attributes }}>
-                <dt>{{ block.settings.label | escape }}</dt>
-                <dd>{{ block.settings.value | escape }}</dd>
-              </div>
-            {%- endfor -%}
-          </dl>
+          {%- if use_entry_specs -%}
+            {%- comment -%} Entry rows are "Label | Value". {%- endcomment -%}
+            <dl>
+              {%- for row in entry_specs limit: half -%}
+                {%- assign bits = row | split: ' | ' -%}
+                <div class="sdp-specs__row"><dt>{{ bits[0] | escape }}</dt><dd>{{ row | remove_first: bits[0] | remove_first: ' | ' | escape }}</dd></div>
+              {%- endfor -%}
+            </dl>
+            <dl>
+              {%- for row in entry_specs offset: half -%}
+                {%- assign bits = row | split: ' | ' -%}
+                <div class="sdp-specs__row"><dt>{{ bits[0] | escape }}</dt><dd>{{ row | remove_first: bits[0] | remove_first: ' | ' | escape }}</dd></div>
+              {%- endfor -%}
+            </dl>
+          {%- else -%}
+            <dl>
+              {%- for block in specs limit: half -%}
+                <div class="sdp-specs__row" {{ block.shopify_attributes }}>
+                  <dt>{{ block.settings.label | escape }}</dt>
+                  <dd>{{ block.settings.value | escape }}</dd>
+                </div>
+              {%- endfor -%}
+            </dl>
+            <dl>
+              {%- for block in specs offset: half -%}
+                <div class="sdp-specs__row" {{ block.shopify_attributes }}>
+                  <dt>{{ block.settings.label | escape }}</dt>
+                  <dd>{{ block.settings.value | escape }}</dd>
+                </div>
+              {%- endfor -%}
+            </dl>
+          {%- endif -%}
         </div>
       </div>
     {%- endif -%}
@@ -115,6 +178,7 @@
       "settings": [
         { "type": "image_picker", "id": "icon", "label": "Icon" },
         { "type": "text", "id": "icon_alt", "label": "Icon alt text", "info": "Defaults to the title." },
+        { "type": "select", "id": "material", "label": "Show on", "info": "Deck size pages only: limit this card to one material.", "options": [ { "value": "all", "label": "All decks" }, { "value": "wood", "label": "Wood pages" }, { "value": "composite", "label": "Composite pages" } ], "default": "all" },
         { "type": "text", "id": "title", "label": "Title", "default": "Engineered Lumber Parts" },
         { "type": "textarea", "id": "text", "label": "Text", "default": "Premium Grade 1, kiln-dried and pressure-treated for maximum strength and longevity." }
       ]

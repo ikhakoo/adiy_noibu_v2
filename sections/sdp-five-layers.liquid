@@ -9,17 +9,20 @@
   the image.
 {%- endcomment -%}
 
+{%- assign sdp = page.metafields.custom.deck_size.value -%}
 <div class="sdp sdp-layers sdp--white" data-sdp-layers{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-layers__inner">
     <div class="sdp-header sdp-header--center">
       {%- if section.settings.eyebrow != blank -%}
         <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- capture t_heading -%}{%- render 'sdp-t', text: section.settings.heading, sdp: sdp -%}{%- endcapture -%}
+      {%- capture t_intro -%}{%- render 'sdp-t', text: section.settings.intro, sdp: sdp -%}{%- endcapture -%}
+      {%- if t_heading != blank -%}
+        <h2 class="sdp-h2">{{ t_heading | escape }}</h2>
       {%- endif -%}
-      {%- if section.settings.intro != blank -%}
-        <p class="sdp-intro">{{ section.settings.intro | escape }}</p>
+      {%- if t_intro != blank -%}
+        <p class="sdp-intro">{{ t_intro | escape }}</p>
       {%- endif -%}
     </div>
 
@@ -41,7 +44,7 @@
             <span class="sdp-layer__badge">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
             <span class="sdp-layer__body">
               <h3 class="sdp-layer__title">{{ block.settings.title | escape }}</h3>
-              <p class="sdp-layer__text">{{ block.settings.text | escape }}</p>
+              <p class="sdp-layer__text">{%- render 'sdp-t', text: block.settings.text, sdp: sdp -%}</p>
             </span>
           </li>
         {%- endfor -%}

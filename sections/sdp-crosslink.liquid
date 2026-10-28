@@ -6,44 +6,107 @@
 {%- endcomment -%}
 
 {%- liquid
+  assign twin_product = section.settings.twin_product
+  assign twin_size = section.settings.size_option
+  assign xlink = section.settings.button_link
+  assign link_filter = section.settings.link_filter
+  assign x_image = section.settings.image
+  assign x_focal = section.settings.image_focal
+  assign x_alt = section.settings.image_alt
+  assign x_eyebrow = section.settings.eyebrow
+  assign x_heading = section.settings.heading
+  assign x_text = section.settings.text
+  assign x_label = section.settings.button_label
+
+  comment
+    Deck size page: the entry's twin (same size, other material) gives the price and the
+    link; without a twin, the other material's main product priced from its first size
+    and the entry's link (usually the Deck Kits by Size collection, opened on that tab).
+  endcomment
+  assign sdp = page.metafields.custom.deck_size.value
+  if sdp != blank
+    assign product = sdp.product.value
+    assign twin = sdp.twin.value
+    if sdp.material.value == 'composite'
+      assign other_material = 'wood'
+      assign twin_product = all_products['pressure-treated-kiln-dried-wood-deck-kit']
+    else
+      assign other_material = 'composite'
+      assign twin_product = all_products['a-diy-composite-deck-kit']
+    endif
+    assign twin_size = ''
+    if twin != blank
+      assign twin_product = twin.product.value
+      assign twin_size = twin.width.value | append: ' x ' | append: twin.length.value
+      assign xlink = twin.page.value.url
+      assign link_filter = 'none'
+    else
+      assign xlink = sdp.xl_link.value | default: xlink
+      assign link_filter = other_material
+    endif
+    if sdp.xl_image != blank
+      assign x_image = sdp.xl_image.value
+    endif
+  endif
+
   capture price_line
-    render 'sdp-prices', product: product, size: section.settings.size_option, discount_fallback: 0, code: '', twin: section.settings.twin_product
+    render 'sdp-prices', product: product, size: twin_size, discount_fallback: 0, code: '', twin: twin_product
   endcapture
   assign price_parts = price_line | strip | split: '|'
   assign p_twin = price_parts[2]
+
+  capture x_alt
+    render 'sdp-t', text: x_alt, sdp: sdp
+  endcapture
+  capture x_eyebrow
+    render 'sdp-t', text: x_eyebrow, sdp: sdp
+  endcapture
+  capture x_heading
+    render 'sdp-t', text: x_heading, sdp: sdp
+  endcapture
+  capture x_text
+    render 'sdp-t', text: x_text, sdp: sdp
+  endcapture
+  capture x_label
+    render 'sdp-t', text: x_label, sdp: sdp
+  endcapture
+  assign x_alt = x_alt | strip
+  assign x_eyebrow = x_eyebrow | strip
+  assign x_heading = x_heading | strip
+  assign x_text = x_text | strip
+  assign x_label = x_label | strip
 -%}
 
 <div class="sdp sdp-crosslink sdp--sand"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner">
     <div class="sdp-crosslink__card">
-      {%- assign image_alt = section.settings.image_alt | default: section.settings.heading -%}
+      {%- assign image_alt = x_alt | default: x_heading -%}
       {%- render 'sdp-image',
-        image: section.settings.image,
+        image: x_image,
         class: 'sdp-crosslink__media',
         sizes: '(min-width: 990px) 295px, calc(100vw - 48px)',
-        focal: section.settings.image_focal,
+        focal: x_focal,
         alt: image_alt
       -%}
       <div class="sdp-crosslink__body">
         <div class="sdp-crosslink__copy">
-          {%- if section.settings.eyebrow != blank -%}
-            <p class="sdp-label">{{ section.settings.eyebrow | escape }}</p>
+          {%- if x_eyebrow != blank -%}
+            <p class="sdp-label">{{ x_eyebrow | escape }}</p>
           {%- endif -%}
-          {%- if section.settings.heading != blank -%}
-            <h2 class="sdp-crosslink__title">{{ section.settings.heading | escape }}</h2>
+          {%- if x_heading != blank -%}
+            <h2 class="sdp-crosslink__title">{{ x_heading | escape }}</h2>
           {%- endif -%}
-          {%- if section.settings.text != blank -%}
-            <p class="sdp-crosslink__text">{{ section.settings.text | escape | replace: '[twin_price]', p_twin }}</p>
+          {%- if x_text != blank -%}
+            <p class="sdp-crosslink__text">{{ x_text | escape | replace: '[twin_price]', p_twin }}</p>
           {%- endif -%}
         </div>
-        {%- if section.settings.button_label != blank -%}
-          {%- assign xlink = section.settings.button_link -%}
+        {%- if x_label != blank -%}
           {%- if xlink == blank and section.settings.twin_product != blank -%}{%- assign xlink = section.settings.twin_product.url -%}{%- endif -%}
-          {%- if xlink != blank and section.settings.link_filter != 'none' and section.settings.link_filter != blank -%}
-            {%- assign xlink = xlink | append: '?material=' | append: section.settings.link_filter -%}
+          {%- if xlink != blank and link_filter != 'none' and link_filter != blank and xlink contains '/collections/' -%}
+            {%- assign xlink = xlink | append: '?material=' | append: link_filter -%}
           {%- endif -%}
           <a class="sdp-btn sdp-btn--sm" href="{{ xlink | default: '#' }}">
-            {{ section.settings.button_label | escape }}
+            {{ x_label | escape }}
             {%- render 'sdp-icon', name: 'arrow-right' -%}
           </a>
         {%- endif -%}

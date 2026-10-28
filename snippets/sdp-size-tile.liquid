@@ -4,6 +4,7 @@
 
   Accepts:
   - block: {Object} a `size` block (width, length, label, area, link, current)
+  - width, length, link, current: explicit values instead of a block (deck size pages)
   - current_label: {String} badge text for the current page's size
   - fallback_link: {String} href used when the block has no link of its own
   - product: {Object} current product; a variant whose title matches "W x L" is
@@ -14,8 +15,8 @@
   assign box_w = 90
   assign box_h = 54
 
-  assign w = block.settings.width | default: 12
-  assign l = block.settings.length | default: 12
+  assign w = width | default: block.settings.width | default: 12
+  assign l = length | default: block.settings.length | default: 12
   if w > l
     assign long = w
     assign short = l
@@ -39,7 +40,10 @@
   endif
 
   assign is_current = block.settings.current
-  assign href = block.settings.link
+  if current
+    assign is_current = true
+  endif
+  assign href = link | default: block.settings.link
   if href == blank
     assign href = fallback_link
     if product != blank

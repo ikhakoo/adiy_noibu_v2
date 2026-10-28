@@ -15,12 +15,32 @@
 
 {%- liquid
   comment
+    Deck size pages (page.deck-size template): the page's "Deck size page" metaobject entry
+    supplies the main product, the size variant(s) to sell and the size-specific copy.
+    On product templates there is no entry and everything below works as before.
+  endcomment
+  assign sdp = page.metafields.custom.deck_size.value
+  assign sdp_variants = ''
+  if sdp != blank
+    assign product = sdp.product.value
+    assign sdp_variants = sdp.variants.value
+  endif
+
+  comment
     The page is for one size. Unless the URL already selects a variant, use the variant
     whose option matches the "Size variant" setting (e.g. "16 x 20") for pricing, the
     add-to-cart form and structured data; otherwise fall back to the first available.
   endcomment
   assign variant = product.selected_variant
-  if variant == blank
+  if sdp != blank
+    assign variant = sdp_variants | first
+    for candidate in sdp_variants
+      if candidate.available
+        assign variant = candidate
+        break
+      endif
+    endfor
+  elsif variant == blank
     assign variant = product.selected_or_first_available_variant
     if section.settings.size_option != blank
       for candidate in product.variants
@@ -80,24 +100,48 @@
   assign split_product = all_products[split_handle]
   assign reserve_product = all_products[reserve_handle]
 
-  assign heading = section.settings.heading
+  capture heading
+    render 'sdp-t', text: section.settings.heading, sdp: sdp
+  endcapture
+  assign heading = heading | strip
   if heading == blank
-    assign heading = product.title
+    assign heading = page.title | default: product.title
+  endif
+  capture t_eyebrow
+    render 'sdp-t', text: section.settings.eyebrow, sdp: sdp
+  endcapture
+  capture t_lede
+    render 'sdp-t', text: section.settings.lede, sdp: sdp
+  endcapture
+  assign t_financing = section.settings.financing_text
+  assign t_fineprint = section.settings.fineprint
+  unless has_discount
+    if section.settings.fineprint_no_code != blank
+      assign t_fineprint = section.settings.fineprint_no_code
+    endif
+    assign t_financing = t_financing | remove: ', with code [code]' | remove: ' with code [code]'
+  endunless
+  assign t_eyebrow = t_eyebrow | strip
+  assign t_lede = t_lede | strip
+
+  assign hero_variants = product.variants
+  if sdp != blank
+    assign hero_variants = sdp_variants
   endif
 -%}
 
 <div class="sdp sdp-hero sdp--sand" data-sdp-hero data-section-id="{{ section.id }}"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-hero__wrap">
     <div class="sdp-hero__copy">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- if t_eyebrow != blank -%}
+        <p class="sdp-eyebrow">{{ t_eyebrow | escape }}</p>
       {%- endif -%}
 
       <h1 class="sdp-hero__title">{{ heading | escape }}</h1>
 
-      {%- if section.settings.lede != blank -%}
+      {%- if t_lede != blank -%}
         <p class="sdp-hero__lede">
-          {{- section.settings.lede | escape
+          {{- t_lede | escape
             | replace: '[sale_price]', sale_str
             | replace: '[price]', regular_str
             | replace: '[code]', promo_code
@@ -105,13 +149,23 @@
         </p>
       {%- endif -%}
 
-      {%- if section.settings.show_variant_picker and product.has_only_default_variant == false and product.variants.size > 1 -%}
+      {%- if section.settings.show_variant_picker and product.has_only_default_variant == false and hero_variants.size > 1 -%}
         <div class="sdp-hero__variants">
           <label for="sdp-variant-{{ section.id }}">{{ section.settings.variant_label | default: 'Choose your option' | escape }}</label>
           <select id="sdp-variant-{{ section.id }}" data-sdp-variant-select>
-            {%- for v in product.variants -%}
+            {%- for v in hero_variants -%}
+              {%- liquid
+                assign v_label = v.title
+                if sdp != blank
+                  for opt in v.options
+                    unless opt contains ' x '
+                      assign v_label = opt
+                    endunless
+                  endfor
+                endif
+              -%}
               <option value="{{ v.id }}"{% if v.id == variant.id %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>
-                {{ v.title }}{% unless v.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}
+                {{ v_label }}{% unless v.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}
               </option>
             {%- endfor -%}
           </select>
@@ -121,7 +175,7 @@
             "fallbackDiscount": {{ section.settings.discount_amount | default: 0 }},
             "months": {{ financing_months }},
             "variants": [
-              {%- for v in product.variants -%}
+              {%- for v in hero_variants -%}
                 {%- assign vd = v.metafields.custom.discount_value.value | default: v.metafields.custom.discount_value | default: 0 -%}
                 { "id": {{ v.id }}, "price": {{ v.price }}, "discount": {{ vd | plus: 0 }}, "available": {{ v.available }} }{% unless forloop.last %},{% endunless %}
               {%- endfor -%}
@@ -145,9 +199,9 @@
           </button>
         </div>
 
-        {%- if section.settings.financing_text != blank -%}
+        {%- if t_financing != blank -%}
           <p class="sdp-price__financing">
-            {{- section.settings.financing_text
+            {{- t_financing
               | escape
               | replace: '[monthly]', monthly_html
               | replace: '[months]', financing_months
@@ -205,9 +259,17 @@
                         {%- endif -%}
                       </span>
                       <div class="sdp-plan__title">
-                        <strong>{{ block.settings.title | escape | replace: '[sale_price]', sale_str | replace: '[regular_price]', regular_str }}</strong>
-                        {%- if block.settings.kicker != blank -%}
-                          <span>{{ block.settings.kicker | escape | replace: '[code]', promo_code }}</span>
+                        {%- liquid
+                          assign plan_title = block.settings.title
+                          assign plan_kicker = block.settings.kicker
+                          unless has_discount
+                            assign plan_title = plan_title | replace: '[sale_price] sale price', '[regular_price] price'
+                            assign plan_kicker = plan_kicker | remove: ' · Code [code]'
+                          endunless
+                        -%}
+                        <strong>{{ plan_title | escape | replace: '[sale_price]', sale_str | replace: '[regular_price]', regular_str }}</strong>
+                        {%- if plan_kicker != blank -%}
+                          <span>{{ plan_kicker | escape | replace: '[code]', promo_code }}</span>
                         {%- endif -%}
                       </div>
                     </div>
@@ -238,7 +300,8 @@
                     -%}
                     {%- if block.settings.how != blank or block.settings.link_label != blank -%}
                       <p class="sdp-plan__how">
-                        {{ block.settings.how | escape }}
+                        {%- capture how_text -%}{%- render 'sdp-t', text: block.settings.how, sdp: sdp -%}{%- endcapture -%}
+                        {{ how_text | escape }}
                         {%- if block.settings.link_label != blank and plan_url != blank %} <a href="{{ plan_url }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
                       </p>
                     {%- endif -%}
@@ -285,7 +348,8 @@
                     -%}
                     {%- if block.settings.how != blank or block.settings.link_label != blank -%}
                       <p class="sdp-plan__how">
-                        {{ block.settings.how | escape }}
+                        {%- capture how_text -%}{%- render 'sdp-t', text: block.settings.how, sdp: sdp -%}{%- endcapture -%}
+                        {{ how_text | escape }}
                         {%- if block.settings.link_label != blank and reserve_url != blank %} <a href="{{ reserve_url }}">{{ block.settings.link_label | escape }} →</a>{% endif -%}
                       </p>
                     {%- endif -%}
@@ -295,9 +359,9 @@
           </div>
         {%- endif -%}
 
-        {%- if section.settings.fineprint != blank -%}
+        {%- if t_fineprint != blank -%}
           <p class="sdp-price__fineprint">
-            {{- section.settings.fineprint
+            {{- t_fineprint
               | escape
               | replace: '[sale_price]', sale_str
               | replace: '[regular_price]', regular_str
@@ -353,7 +417,10 @@
     </div>
 
     {%- liquid
-      assign hero_alt = section.settings.image_alt | default: heading
+      capture hero_alt
+        render 'sdp-t', text: section.settings.image_alt, sdp: sdp
+      endcapture
+      assign hero_alt = hero_alt | strip | default: heading
       comment
         Main image = the product's first photo (so each size product shows its own
         gallery lead), unless "Use the custom image" is ticked.
@@ -364,6 +431,15 @@
       endif
       if hero_image == blank
         assign hero_image = section.settings.image
+      endif
+      if sdp != blank
+        comment
+          Deck size page: the entry's hero image, else the size variant's own image.
+        endcomment
+        assign hero_image = sdp.hero_image.value | default: variant.featured_media.preview_image | default: hero_image
+        if sdp.hero_image_alt != blank
+          assign hero_alt = sdp.hero_image_alt.value
+        endif
       endif
     -%}
     {%- render 'sdp-image',
@@ -377,14 +453,18 @@
   </div>
 </div>
 
-{% render 'structured-data-product', product: product %}
+{%- if sdp != blank -%}
+  {%- render 'sdp-page-schema', sdp: sdp, product: product, variants: hero_variants, heading: heading, description: t_lede, image: hero_image, promo_price: sale_price, has_discount: has_discount -%}
+{%- else -%}
+  {% render 'structured-data-product', product: product %}
+{%- endif -%}
 
 {% schema %}
 {
   "name": "SDP · Hero (product)",
   "tag": "section",
   "class": "section",
-  "enabled_on": { "templates": ["product"] },
+  "enabled_on": { "templates": ["product", "page"] },
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
     { "type": "header", "content": "Copy" },
@@ -413,6 +493,7 @@
     { "type": "checkbox", "id": "payments_open", "label": "Open by default", "default": false },
     { "type": "text", "id": "toggle_hide", "label": "Toggle label (open)", "default": "Hide payment options" },
     { "type": "text", "id": "toggle_show", "label": "Toggle label (closed)", "default": "See payment options" },
+    { "type": "textarea", "id": "fineprint_no_code", "label": "Fine print without a promo code", "info": "Used when the variant has no discount. Placeholders: [regular_price], [monthly_regular], [months]." },
     { "type": "textarea", "id": "fineprint", "label": "Fine print", "info": "Placeholders: [sale_price], [regular_price], [monthly], [monthly_regular], [months], [code].", "default": "*Financing payment based on the [sale_price] sale price (code [code]) over [months] months at 0% APR; about [monthly_regular]/mo at the regular [regular_price] price. Subject to eligibility check and approval; terms and conditions apply. Estimated payment excludes taxes and shipping." },
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },

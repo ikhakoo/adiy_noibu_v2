@@ -5,22 +5,44 @@
   block, and an optional customer quote block underneath.
 {%- endcomment -%}
 
+{%- assign sdp = page.metafields.custom.deck_size.value -%}
 <div class="sdp sdp-fits sdp--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-fits__inner">
     <div class="sdp-header">
       {%- if section.settings.eyebrow != blank -%}
         <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- capture t_heading -%}{%- render 'sdp-t', text: section.settings.heading, sdp: sdp -%}{%- endcapture -%}
+      {%- capture t_intro -%}{%- render 'sdp-t', text: section.settings.intro, sdp: sdp -%}{%- endcapture -%}
+      {%- if t_heading != blank -%}
+        <h2 class="sdp-h2">{{ t_heading | escape }}</h2>
       {%- endif -%}
-      {%- if section.settings.intro != blank -%}
-        <p class="sdp-intro">{{ section.settings.intro | escape }}</p>
+      {%- if t_intro != blank -%}
+        <p class="sdp-intro">{{ t_intro | escape }}</p>
       {%- endif -%}
     </div>
 
     {%- assign uses = section.blocks | where: 'type', 'use' -%}
-    {%- if uses.size > 0 -%}
+    {%- assign entry_uses = sdp.use_cases.value -%}
+    {%- if sdp != blank and entry_uses.size > 0 -%}
+      {%- comment -%} Deck size page: the entry's own use-case cards. {%- endcomment -%}
+      <div class="sdp-fits__grid">
+        {%- for use in entry_uses -%}
+          <article class="sdp-use">
+            {%- assign use_alt = use.image_alt.value | default: use.title.value -%}
+            {%- render 'sdp-image',
+              image: use.image.value,
+              class: 'sdp-use__media',
+              sizes: '(min-width: 990px) 406px, calc(100vw - 48px)',
+              focal: use.focal.value,
+              alt: use_alt
+            -%}
+            <h3 class="sdp-use__title">{{ use.title.value | escape }}</h3>
+            <p class="sdp-use__text">{{ use.text.value | escape }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- elsif uses.size > 0 -%}
       <div class="sdp-fits__grid">
         {%- for block in uses -%}
           <article class="sdp-use" {{ block.shopify_attributes }}>
@@ -46,28 +68,38 @@
           then "NAME · SOURCE REVIEW · SIZE" as the attribution line.
         {%- endcomment -%}
         {%- liquid
-          assign cite_parts = ''
-          if block.settings.name != blank
-            assign cite_parts = block.settings.name
+          assign q_text = block.settings.quote
+          assign q_name = block.settings.name
+          assign q_source = block.settings.source
+          assign q_cite = block.settings.cite
+          if sdp != blank and sdp.quote_text != blank
+            assign q_text = sdp.quote_text.value
+            assign q_name = sdp.quote_name.value
+            assign q_source = sdp.quote_source.value
+            assign q_cite = sdp.quote_cite.value
           endif
-          if block.settings.source != blank and block.settings.source != 'none'
-            assign src_label = block.settings.source | capitalize | append: ' review'
+          assign cite_parts = ''
+          if q_name != blank
+            assign cite_parts = q_name
+          endif
+          if q_source != blank and q_source != 'none'
+            assign src_label = q_source | capitalize | append: ' review'
             if cite_parts != blank
               assign cite_parts = cite_parts | append: ' · ' | append: src_label
             else
               assign cite_parts = src_label
             endif
           endif
-          if block.settings.cite != blank
+          if q_cite != blank
             if cite_parts != blank
-              assign cite_parts = cite_parts | append: ' · ' | append: block.settings.cite
+              assign cite_parts = cite_parts | append: ' · ' | append: q_cite
             else
-              assign cite_parts = block.settings.cite
+              assign cite_parts = q_cite
             endif
           endif
         -%}
         <figure class="sdp-quote" {{ block.shopify_attributes }}>
-          <blockquote class="sdp-quote__text">“{{ block.settings.quote | escape }}”</blockquote>
+          <blockquote class="sdp-quote__text">“{{ q_text | escape }}”</blockquote>
           {%- if cite_parts != blank -%}
             <figcaption class="sdp-quote__cite sdp-label">{{ cite_parts | escape }}</figcaption>
           {%- endif -%}

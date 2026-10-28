@@ -5,6 +5,7 @@
   green disc, "Step N" kicker, two-line title, short text.
 {%- endcomment -%}
 
+{%- assign sdp = page.metafields.custom.deck_size.value -%}
 <div class="sdp sdp-timeline sdp--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="sdp__inner sdp-timeline__inner">
     <div class="sdp-header sdp-header--center">
@@ -27,8 +28,10 @@
             {%- endif -%}
           </span>
           <span class="sdp-step__kicker">{{ section.settings.step_word | default: 'Step' | escape }} {{ forloop.index }}</span>
-          <h3 class="sdp-step__title">{{ block.settings.title | escape }}</h3>
-          <p class="sdp-step__text">{{ block.settings.text | escape }}</p>
+          {%- capture t_title -%}{%- render 'sdp-t', text: block.settings.title, sdp: sdp -%}{%- endcapture -%}
+          {%- capture t_text -%}{%- render 'sdp-t', text: block.settings.text, sdp: sdp -%}{%- endcapture -%}
+          <h3 class="sdp-step__title">{{ t_title | escape }}</h3>
+          <p class="sdp-step__text">{{ t_text | escape }}</p>
         </li>
       {%- endfor -%}
     </ol>

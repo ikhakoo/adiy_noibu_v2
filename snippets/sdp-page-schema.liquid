@@ -1,0 +1,57 @@
+{%- comment -%}
+  Product structured data for a deck size page (page.deck-size). Describes the one size
+  the page sells: offers are only that size's variant(s), the URL is the page itself.
+
+  Accepts:
+  - sdp: {Metaobject} deck_size_page entry
+  - product: {Object} main product the variants belong to
+  - variants: {Array} the size variant(s)
+  - heading: {String} page H1
+  - image: {Object} hero image
+{%- endcomment -%}
+{%- liquid
+  assign page_url = request.origin | append: page.url
+  assign description = page.metafields.global.description_tag | default: heading
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ heading | json }},
+    "url": {{ page_url | json }},
+    "description": {{ description | strip_html | json }},
+    "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+    {%- if image != blank %}
+    "image": [{{ image | image_url: width: 1600 | prepend: 'https:' | json }}],
+    {%- endif %}
+    {%- assign first_variant = variants | first -%}
+    {%- if first_variant.sku != blank %}
+    "sku": {{ first_variant.sku | json }},
+    {%- endif %}
+    {%- if rating != blank and rating_count > 0 %}
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ rating.value | json }},
+      "bestRating": {{ rating.scale_max | json }},
+      "worstRating": {{ rating.scale_min | json }},
+      "reviewCount": {{ rating_count }}
+    },
+    {%- endif %}
+    "offers": [
+      {%- for v in variants -%}
+        {
+          "@type": "Offer",
+          "name": {{ v.title | json }},
+          {%- if v.sku != blank %}"sku": {{ v.sku | json }},{% endif %}
+          "price": {{ v.price | divided_by: 100.0 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "availability": "http://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}",
+          "url": {{ page_url | json }},
+          "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>

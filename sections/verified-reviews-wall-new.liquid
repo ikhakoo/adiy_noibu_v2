@@ -727,7 +727,39 @@
       <div class="reviews-isotope-grid reviews-grid-prejs">
         <div class="grid-sizer"></div>
 
-        {%- for block in section.blocks -%}
+        {%- liquid
+          comment
+            Deck size pages (page.deck-size): reviews that mention the page's size
+            ("12x12", "12 x 12", "12×12") are listed first, the rest keep their order.
+          endcomment
+          assign rw_sdp = page.metafields.custom.deck_size.value
+          assign rw_first = ''
+          assign rw_rest = ''
+          for b in section.blocks
+            assign rw_hit = false
+            if rw_sdp != blank
+              assign rw_w = rw_sdp.width.value | append: ''
+              assign rw_l = rw_sdp.length.value | append: ''
+              assign rw_k1 = rw_w | append: 'x' | append: rw_l
+              assign rw_k2 = rw_w | append: ' x ' | append: rw_l
+              assign rw_k3 = rw_w | append: '×' | append: rw_l
+              assign rw_k4 = rw_w | append: "' x " | append: rw_l
+              assign rw_hay = b.settings.review_text | append: ' ' | append: b.settings.headline | downcase
+              if rw_hay contains rw_k1 or rw_hay contains rw_k2 or rw_hay contains rw_k3 or rw_hay contains rw_k4
+                assign rw_hit = true
+              endif
+            endif
+            if rw_hit
+              assign rw_first = rw_first | append: forloop.index0 | append: ','
+            else
+              assign rw_rest = rw_rest | append: forloop.index0 | append: ','
+            endif
+          endfor
+          assign rw_order = rw_first | append: rw_rest | split: ','
+        -%}
+        {%- for rw_idx in rw_order -%}
+          {%- assign rw_i = rw_idx | plus: 0 -%}
+          {%- assign block = section.blocks[rw_i] -%}
           {%- assign class_list = "card-box" -%}
           {%- if block.settings.is_5_star -%}{%- assign class_list = class_list | append: " star5" -%}{%- endif -%}
           {%- if block.settings.is_4_star -%}{%- assign class_list = class_list | append: " star4" -%}{%- endif -%}

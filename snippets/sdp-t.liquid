@@ -1,0 +1,101 @@
+{%- comment -%}
+  Token expansion for the deck size pages (page.deck-size template).
+
+  Renders `text` with every [token] replaced from the page's "Deck size page" metaobject
+  entry (`sdp`). Any field of the entry can be used as a token by its key, e.g. [hero_lede],
+  plus these derived tokens:
+    [size] 12x12 · [size_x] 12×12 · [size_option] 12 x 12 · [w] [l] [area]
+    [material] pressure-treated wood | composite · [Material] Pressure-treated wood | Composite
+    [material_word] wood | composite · [Material_word] Wood | Composite · [title] page title
+  Unknown tokens such as [price] or [code] are left in place for the section to fill in.
+  Without an entry (product templates) the text is returned unchanged.
+
+  Accepts:
+  - text: {String}
+  - sdp: {Metaobject} deck_size_page entry, optional
+{%- endcomment -%}
+{%- liquid
+  if sdp == blank or text == blank
+    echo text
+  else
+    assign t_w = sdp.width.value
+    assign t_l = sdp.length.value
+    assign t_area = t_w | times: t_l
+    assign t_mat = sdp.material.value
+    assign parts = text | split: '['
+    for part in parts
+      if forloop.first
+        echo part
+        continue
+      endif
+      unless part contains ']'
+        echo '[' | append: part
+        continue
+      endunless
+      assign key = part | split: ']' | first
+      assign rest = part | remove_first: key | remove_first: ']'
+      assign val = ''
+      case key
+        when 'size'
+          assign val = t_w | append: 'x' | append: t_l
+        when 'size_x'
+          assign val = t_w | append: '×' | append: t_l
+        when 'size_option'
+          assign val = t_w | append: ' x ' | append: t_l
+        when 'w'
+          assign val = t_w
+        when 'l'
+          assign val = t_l
+        when 'area'
+          assign val = t_area
+        when 'material'
+          if t_mat == 'composite'
+            assign val = 'composite'
+          else
+            assign val = 'pressure-treated wood'
+          endif
+        when 'Material'
+          if t_mat == 'composite'
+            assign val = 'Composite'
+          else
+            assign val = 'Pressure-treated wood'
+          endif
+        when 'material_word'
+          if t_mat == 'composite'
+            assign val = 'composite'
+          else
+            assign val = 'wood'
+          endif
+        when 'Material_word'
+          if t_mat == 'composite'
+            assign val = 'Composite'
+          else
+            assign val = 'Wood'
+          endif
+        when 'title'
+          assign val = page.title
+        when 'warranty_years'
+          if t_mat == 'composite'
+            assign val = '25 years'
+          else
+            assign val = '5 years'
+          endif
+        when 'warranty_label'
+          if t_mat == 'composite'
+            assign val = 'Composite board warranty'
+          else
+            assign val = 'Structural warranty'
+          endif
+        else
+          if key != blank and sdp[key] != blank
+            assign val = sdp[key].value
+          endif
+      endcase
+      if val == blank
+        echo '[' | append: key | append: ']' | append: rest
+      else
+        echo val | append: rest
+      endif
+    endfor
+  endif
+-%}

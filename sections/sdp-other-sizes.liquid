@@ -8,16 +8,55 @@
   of a link. A green chat CTA closes the section.
 {%- endcomment -%}
 
+{%- assign sdp = page.metafields.custom.deck_size.value -%}
 <div class="sdp sdp-sizes sdp--sand" id="{{ section.settings.anchor_id | default: 'sizes' | handle }}">
   <div class="sdp__inner sdp-sizes__inner">
     <div class="sdp-header">
       {%- if section.settings.eyebrow != blank -%}
         <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- capture t_heading -%}{%- render 'sdp-t', text: section.settings.heading, sdp: sdp -%}{%- endcapture -%}
+      {%- if t_heading != blank -%}
+        <h2 class="sdp-h2">{{ t_heading | escape }}</h2>
       {%- endif -%}
     </div>
+
+    {%- if sdp != blank -%}
+      {%- comment -%}
+        Deck size page: tiles come from the "Deck size page" entries of the same material
+        (handles "<material>-<W>x<L>"), in the order of the size lists below, each linking
+        to its own page.
+      {%- endcomment -%}
+      {%- liquid
+        assign material = sdp.material.value
+        assign groups = section.settings.standard_sizes | append: '|' | append: section.settings.compact_sizes
+        assign group_titles = section.settings.standard_title | append: '|' | append: section.settings.compact_title
+        assign group_titles = group_titles | split: '|'
+        assign group_list = groups | split: '|'
+      -%}
+      {%- for group in group_list -%}
+        {%- capture tiles -%}
+          {%- assign sizes = group | split: ',' -%}
+          {%- for size in sizes -%}
+            {%- assign key = material | append: '-' | append: size | strip -%}
+            {%- assign entry = shop.metaobjects.deck_size_page[key] -%}
+            {%- if entry == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign entry_page = entry.page.value -%}
+            {%- assign is_current = false -%}
+            {%- if entry_page.id == page.id -%}{%- assign is_current = true -%}{%- endif -%}
+            {%- render 'sdp-size-tile', width: entry.width.value, length: entry.length.value, link: entry_page.url, current: is_current, current_label: section.settings.current_label -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if tiles != blank -%}
+          <div class="sdp-sizes__group">
+            {%- if group_titles[forloop.index0] != blank -%}
+              <h3 class="sdp-label sdp-rule">{{ group_titles[forloop.index0] | escape }}</h3>
+            {%- endif -%}
+            <div class="sdp-sizes__grid">{{ tiles }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
 
     {%- comment -%}
       Groups: each `group` block owns the `size` blocks that follow it, up to the next
@@ -67,6 +106,7 @@
         </div>
       {%- endif -%}
     {%- endfor -%}
+    {%- endif -%}
 
     {%- if section.settings.cta_heading != blank or section.settings.cta_button_label != blank -%}
       <div class="sdp-sizes__cta">
@@ -98,6 +138,12 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Need more room? Other popular deck kit sizes" },
     { "type": "text", "id": "current_label", "label": "Badge on the current size", "default": "This page" },
     { "type": "url", "id": "fallback_link", "label": "Fallback link for sizes without their own page", "info": "Until each size has its own product page, tiles link to the current product with that size's variant preselected; this link is used when no matching variant exists." },
+    { "type": "header", "content": "Deck size pages" },
+    { "type": "paragraph", "content": "On the deck size page template the tiles are built from the Deck size page entries (handle \"wood-12x12\", \"composite-16x20\"…) of the page's material, in this order. Blocks below are used on product pages." },
+    { "type": "text", "id": "standard_title", "label": "Standard group title", "default": "Standard series" },
+    { "type": "text", "id": "standard_sizes", "label": "Standard sizes", "default": "12x12,12x16,12x18,12x20,12x24,12x28,16x16,16x20,16x24,16x28" },
+    { "type": "text", "id": "compact_title", "label": "Compact group title", "default": "Compact series" },
+    { "type": "text", "id": "compact_sizes", "label": "Compact sizes", "default": "6x12,6x16,6x20,8x12,8x16,8x20" },
     { "type": "header", "content": "Closing CTA" },
     { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Don’t see your size? We build many more." },
     { "type": "textarea", "id": "cta_text", "label": "Text", "default": "Plenty of sizes aren’t listed here. Chat with a deck specialist to find out what we can build for your yard." },
