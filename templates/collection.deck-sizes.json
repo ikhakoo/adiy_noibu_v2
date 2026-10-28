@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "main": {
+      "type": "sdp-collection",
+      "blocks": {
+        "usp_delivery": { "type": "usp", "settings": { "icon": "truck", "title": "Delivered in 10–14 days", "text": "Packed in order of use" } },
+        "usp_drill": { "type": "usp", "settings": { "icon": "drill", "title": "Built with just a drill", "text": "No cutting, no measuring" } },
+        "usp_engineered": { "type": "usp", "settings": { "icon": "shield", "title": "Engineered to fit", "text": "Footings and hardware included" } },
+        "usp_help": { "type": "usp", "settings": { "icon": "chat", "title": "Free design help", "text": "Talk to a deck specialist" } }
+      },
+      "block_order": ["usp_delivery", "usp_drill", "usp_engineered", "usp_help"],
+      "settings": {
+        "eyebrow": "Shop by size",
+        "heading": "",
+        "show_description": true,
+        "promo_code": "FALL1500",
+        "tab_all": "All sizes",
+        "tab_wood": "Pressure-treated wood",
+        "tab_composite": "Composite",
+        "tab_compact": "Compact series",
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "background": "sand"
+      }
+    }
+  },
+  "order": ["main"]
+}

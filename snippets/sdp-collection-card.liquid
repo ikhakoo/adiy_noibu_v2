@@ -1,0 +1,186 @@
+{%- comment -%}
+  Deck-size product card for the "Deck Kits by Size" collection.
+
+  Accepts:
+  - product: {Object}
+  - promo_code: {String} shown with the sale price; blank = regular price only
+  - index: {Number} position in the collection (keeps the manual order as a tiebreaker)
+  - heading_tag: {String} h2 | h3
+
+  Reads: variant option "W x L", variant metafields custom.discount_value / custom.sqfootage /
+  smart.size_series, and each variant's featured media (size- and colour-specific image).
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign is_composite = false
+  if product.handle contains 'composite'
+    assign is_composite = true
+  endif
+
+  assign size_value = ''
+  for opt in v.options
+    if opt contains ' x '
+      assign size_value = opt
+    endif
+  endfor
+  assign dims = size_value | split: ' x '
+  assign w = dims[0] | plus: 0
+  assign l = dims[1] | plus: 0
+  assign area = v.metafields.custom.sqfootage.value | default: v.metafields.custom.sqfootage | plus: 0
+  if area == 0
+    assign area = w | times: l
+  endif
+
+  assign series = v.metafields.smart.size_series.value | default: v.metafields.smart.size_series
+  assign compact = false
+  if w < 12 and w > 0
+    assign compact = true
+  endif
+  if series == blank
+    if compact
+      assign series = 'Compact Series'
+    else
+      assign series = 'Standard Series'
+    endif
+  endif
+
+  if compact
+    assign build = 'Builds in a day'
+  elsif area <= 240
+    assign build = 'Builds in 8–16 hrs'
+  else
+    assign build = 'Builds in a weekend'
+  endif
+
+  assign discount = v.metafields.custom.discount_value.value | default: v.metafields.custom.discount_value | plus: 0
+  assign discount_cents = discount | times: 100
+  assign sale = v.price | minus: discount_cents
+  assign has_sale = false
+  if promo_code != blank and discount_cents > 0 and sale > 0
+    assign has_sale = true
+  endif
+
+  if is_composite
+    assign material = 'Composite'
+    assign material_key = 'composite'
+  else
+    assign material = 'Pressure-treated wood'
+    assign material_key = 'wood'
+  endif
+
+  assign media = v.featured_media | default: product.featured_media
+  assign tag = heading_tag | default: 'h3'
+
+  comment
+    Footprint drawn to scale: the long side spans 24px of a 26px box.
+  endcomment
+  assign long_side = w
+  assign short_side = l
+  if l > w
+    assign long_side = l
+    assign short_side = w
+  endif
+  if long_side == 0
+    assign long_side = 1
+  endif
+  assign fh = short_side | times: 24.0 | divided_by: long_side | round: 1
+  assign fy = 26 | minus: fh | divided_by: 2.0 | round: 1
+-%}
+<article
+  class="sdpc-card"
+  data-sdpc-card
+  data-material="{{ material_key }}"
+  data-series="{% if compact %}compact{% else %}standard{% endif %}"
+  data-price="{% if has_sale %}{{ sale }}{% else %}{{ v.price }}{% endif %}"
+  data-area="{{ area }}"
+  data-index="{{ index }}"
+>
+  <div class="sdpc-card__media">
+    {%- if media != blank -%}
+      {{
+        media.preview_image
+        | image_url: width: 900
+        | image_tag:
+          widths: '300, 450, 600, 900',
+          sizes: '(min-width: 1200px) 300px, (min-width: 750px) calc((100vw - 120px) / 2), calc(100vw - 32px)',
+          loading: 'lazy',
+          alt: media.alt | default: product.title,
+          class: 'sdpc-card__img',
+          data-sdpc-img: ''
+      }}
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'sdpc-card__img sdpc-card__img--placeholder' }}
+    {%- endif -%}
+    <div class="sdpc-card__badges">
+      {%- if has_sale -%}
+        <span class="sdpc-badge sdpc-badge--sale">Save {{ discount_cents | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+      {%- if compact -%}
+        <span class="sdpc-badge">Compact</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="sdpc-card__body">
+    <p class="sdpc-card__material sdp-label">{{ material }}</p>
+    <{{ tag }} class="sdpc-card__title">
+      <a href="{{ product.url }}" class="sdpc-card__link">{{ w }}×{{ l }} {% if is_composite %}Composite{% else %}Wood{% endif %} Deck Kit</a>
+    </{{ tag }}>
+
+    <ul class="sdpc-card__specs">
+      <li>
+        <svg class="sdpc-card__footprint" viewBox="0 0 26 26" aria-hidden="true">
+          <rect x="1" y="{{ fy }}" width="24" height="{{ fh }}" rx="1.5" />
+        </svg>
+        {{ area }} sq ft
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+        {{ build }}
+      </li>
+    </ul>
+
+    {%- if is_composite and product.variants.size > 1 -%}
+      <div class="sdpc-card__swatches" role="group" aria-label="Board colour">
+        {%- for variant in product.variants -%}
+          {%- liquid
+            assign color = ''
+            for opt in variant.options
+              unless opt contains ' x '
+                assign color = opt
+              endunless
+            endfor
+            assign vmedia = variant.featured_media | default: media
+          -%}
+          <button
+            type="button"
+            class="sdpc-swatch{% if forloop.first %} is-active{% endif %}"
+            data-sdpc-swatch
+            data-src="{{ vmedia.preview_image | image_url: width: 900 }}"
+            data-url="{{ variant.url }}"
+            aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+            title="{{ color | escape }}"
+          >
+            <span class="sdpc-swatch__dot sdpc-swatch__dot--{{ color | handle }}"></span>
+            <span class="sdpc-swatch__name">{{ color | escape }}</span>
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sdpc-card__foot">
+      <div class="sdpc-card__price">
+        {%- if has_sale -%}
+          <span class="sdpc-card__now">{{ sale | money_without_trailing_zeros }}</span>
+          <span class="sdpc-card__was"><s>{{ v.price | money_without_trailing_zeros }}</s></span>
+          <span class="sdpc-card__code">with code <b>{{ promo_code | escape }}</b></span>
+        {%- else -%}
+          <span class="sdpc-card__now">{{ v.price | money_without_trailing_zeros }}</span>
+        {%- endif -%}
+      </div>
+      <span class="sdpc-card__cta" aria-hidden="true">
+        {%- render 'sdp-icon', name: 'arrow-right' -%}
+      </span>
+    </div>
+  </div>
+</article>
