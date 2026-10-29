@@ -92,6 +92,15 @@
             if (span && !v.available) span.textContent = window.variantStrings && window.variantStrings.soldOut ? window.variantStrings.soldOut : 'Sold out';
           }
 
+          if (v.image) {
+            var heroImg = root.querySelector('.sdp-hero__media img');
+            if (heroImg) {
+              heroImg.removeAttribute('srcset');
+              heroImg.src = v.image;
+              if (v.srcset) heroImg.srcset = v.srcset;
+            }
+          }
+
           var url = new URL(window.location.href);
           url.searchParams.set('variant', v.id);
           window.history.replaceState({}, '', url.toString());
