@@ -88,7 +88,7 @@
         "reserve"
       ],
       "settings": {
-        "eyebrow": "A professionally engineered wood deck. Built by you.",
+        "eyebrow": "A professionally engineered [material_word] deck. Built by you.",
         "heading": "[hero_heading]",
         "lede": "[hero_lede]",
         "variant_label": "Choose your color",
@@ -584,7 +584,7 @@
         "heading": "How Is a [size_x] [material_title] Deck Built?",
         "intro": "[layers_intro]",
         "image": "shopify://shop_images/sdp-exploded-deck-kit.jpg",
-        "image_alt": "Exploded diagram of an A-DIY pressure-treated deck showing deck boards, frame, joists, beams and Tuff Block footings"
+        "image_alt": "Exploded diagram of an A-DIY [material_short] deck showing deck boards, frame, joists, beams and Tuff Block footings"
       }
     },
     "tailored": {
@@ -2226,7 +2226,7 @@
         "eyebrow": "Order today. Build it the weekend it arrives.",
         "heading": "How to Build Your [size_x] Deck with A-DIY",
         "step_word": "Step",
-        "intro": "Building a [size] pressure-treated deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered DIY deck kit and step-by-step assembly guidance."
+        "intro": "Building a [size] [material_short] deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered DIY deck kit and step-by-step assembly guidance."
       }
     },
     "faq": {
