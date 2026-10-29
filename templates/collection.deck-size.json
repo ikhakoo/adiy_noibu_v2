@@ -2234,7 +2234,7 @@
         "anchor_id": "faq",
         "eyebrow": "[size_x] [material_word] deck kit FAQ",
         "heading": "Questions homeowners ask before buying a [size] [material_word] deck kit",
-        "open_all": true,
+        "open_all": false,
         "open_first": false,
         "card_kicker": "Still have a question?",
         "card_heading": "Talk to an A-DIY deck specialist",
