@@ -9,6 +9,9 @@
   - fallback_link: {String} href used when the block has no link of its own
   - product: {Object} current product; a variant whose title matches "W x L" is
     preselected in the fallback link when it points at this product
+  - name_suffix: {String} optional words added to the size name for screen readers and
+    search engines only (e.g. "Pressure-Treated Deck"), so the link reads "12 × 18
+    Pressure-Treated Deck"; blank on every template except deck-size-seo
 {%- endcomment -%}
 {%- liquid
   assign scale = 3
@@ -92,7 +95,7 @@
     </svg>
   </span>
   <span class="sdp-size__meta">
-    <span class="sdp-size__name">{{ name }}</span>
+    <span class="sdp-size__name">{{ name }}{% if name_suffix != blank %}<span class="visually-hidden"> {{ name_suffix | escape }}</span>{% endif %}</span>
     <span class="sdp-size__area">{{ area_text }}</span>
   </span>
   {%- if is_current -%}

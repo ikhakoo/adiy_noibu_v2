@@ -3,6 +3,8 @@
   the variant pinned by the collection metafield custom.seo_variant_id. It sits alongside
   the CollectionPage markup; the offer points at the product URL with that variant selected.
   The rating is the product's reviews.rating / reviews.rating_count, as on the product page.
+  On the deck-size-seo test template the name and description come from the SEO entry and
+  the offer carries the store's 30-day return policy.
 
   Accepts:
   - sdp: {Metaobject} deck_size_page entry, optional
@@ -22,6 +24,12 @@
     endunless
   endfor
   assign description = collection.metafields.global.description_tag | default: heading
+  assign seo_template = false
+  if template.suffix == 'deck-size-seo' and sdp != blank
+    assign seo_template = true
+    assign item_name = sdp.name.value | default: item_name
+    assign description = sdp.seo_description.value | default: description
+  endif
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value | default: 0
   assign item_image = image | default: variant.featured_media.preview_image | default: product.featured_media.preview_image
@@ -57,6 +65,17 @@
       "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
       "url": {{ product_url | json }},
       "itemCondition": "https://schema.org/NewCondition",
+      {%- if seo_template %}
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "US",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
+        "merchantReturnLink": {{ request.origin | append: '/policies/refund-policy' | json }}
+      },
+      {%- endif %}
       "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
     }
   }

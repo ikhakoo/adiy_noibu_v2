@@ -26,6 +26,9 @@
   assign sdp = page.metafields.custom.deck_size.value
   if template.name == 'collection'
     assign sdp = collection.metafields.custom.deck_size.value
+    if template.suffix == 'deck-size-seo' and collection.metafields.custom.deck_size_seo.value != blank
+      assign sdp = collection.metafields.custom.deck_size_seo.value
+    endif
   endif
   if sdp != blank
     assign product = sdp.product.value

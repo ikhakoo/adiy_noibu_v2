@@ -24,18 +24,35 @@
     {%- endcomment -%}
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
+    {%- liquid
+      comment
+        Size collection SEO test template (collection.deck-size-seo): its title, meta
+        description and share preview come from the collection's custom.deck_size_seo entry.
+        Every other page uses Shopify's own values unchanged.
+      endcomment
+      assign seo_entry = nil
+      assign seo_title = page_title
+      assign seo_description = page_description
+      if template.name == 'collection' and template.suffix == 'deck-size-seo'
+        assign seo_entry = collection.metafields.custom.deck_size_seo.value
+      endif
+      if seo_entry != blank
+        assign seo_title = seo_entry.seo_title.value | default: page_title
+        assign seo_description = seo_entry.seo_description.value | default: page_description
+      endif
+    -%}
     <title>
-      {{- page_title -}}
+      {{- seo_title -}}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- unless seo_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
+    {% if seo_description %}
+      <meta name="description" content="{{ seo_description | escape }}">
     {% endif %}
 
-    {% render 'meta-tags' %}
+    {% render 'meta-tags', seo_entry: seo_entry %}
 
     {% render 'meta-robots' %}
     {% render 'structured-data-breadcrumbs' %}

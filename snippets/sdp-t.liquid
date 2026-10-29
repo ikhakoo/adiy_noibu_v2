@@ -6,7 +6,8 @@
   plus these derived tokens:
     [size] 12x12 · [size_x] 12×12 · [size_option] 12 x 12 · [w] [l] [area]
     [material] pressure-treated wood | composite · [Material] Pressure-treated wood | Composite
-    [material_word] wood | composite · [Material_word] Wood | Composite · [title] page title
+    [material_word] wood | composite · [Material_word] Wood | Composite
+    [material_title] Pressure-Treated | Composite · [material_short] pressure-treated | composite · [title] page title
   Unknown tokens such as [price] or [code] are left in place for the section to fill in.
   Without an entry (product templates) the text is returned unchanged.
 
@@ -71,6 +72,18 @@
             assign val = 'Composite'
           else
             assign val = 'Wood'
+          endif
+        when 'material_title'
+          if t_mat == 'composite'
+            assign val = 'Composite'
+          else
+            assign val = 'Pressure-Treated'
+          endif
+        when 'material_short'
+          if t_mat == 'composite'
+            assign val = 'composite'
+          else
+            assign val = 'pressure-treated'
           endif
         when 'title'
           assign val = page.title | default: collection.title

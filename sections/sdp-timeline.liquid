@@ -9,6 +9,9 @@
   assign sdp = page.metafields.custom.deck_size.value
   if template.name == 'collection'
     assign sdp = collection.metafields.custom.deck_size.value
+    if template.suffix == 'deck-size-seo' and collection.metafields.custom.deck_size_seo.value != blank
+      assign sdp = collection.metafields.custom.deck_size_seo.value
+    endif
   endif
 -%}
 <div class="sdp sdp-timeline sdp--white"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
@@ -18,7 +21,12 @@
         <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
-        <h2 class="sdp-h2">{{ section.settings.heading | escape }}</h2>
+        {%- capture t_heading -%}{%- render 'sdp-t', text: section.settings.heading, sdp: sdp -%}{%- endcapture -%}
+        <h2 class="sdp-h2">{{ t_heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        {%- capture t_intro -%}{%- render 'sdp-t', text: section.settings.intro, sdp: sdp -%}{%- endcapture -%}
+        <p class="sdp-intro">{{ t_intro | escape }}</p>
       {%- endif -%}
     </div>
 
@@ -54,6 +62,7 @@
     { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "From order to first evening outside" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Order today. Build it the weekend it arrives." },
+    { "type": "textarea", "id": "intro", "label": "Intro text", "info": "Optional. Shown under the heading." },
     { "type": "text", "id": "step_word", "label": "Step kicker word", "default": "Step" }
   ],
   "blocks": [
