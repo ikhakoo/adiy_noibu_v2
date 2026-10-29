@@ -24,7 +24,7 @@
     Cards link to the size's own collection (collection.deck-size); the main kit with
     this size preselected is the fallback when an entry has no collection yet.
   endcomment
-  assign card_url = entry.collection.value.url | default: v.url
+  assign card_url = v.url | default: entry.collection.value.url
   assign is_composite = false
   if entry.material.value == 'composite'
     assign is_composite = true
@@ -164,7 +164,7 @@
             class="sdpc-swatch{% if forloop.first %} is-active{% endif %}"
             data-sdpc-swatch
             data-src="{{ vmedia.preview_image | image_url: width: 800 }}"
-            data-url="{{ card_url }}"
+            data-url="{{ variant.url | default: card_url }}"
             aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
             title="{{ color | escape }}"
           >
