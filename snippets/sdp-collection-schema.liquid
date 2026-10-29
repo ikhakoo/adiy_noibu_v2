@@ -28,7 +28,7 @@
   if template.suffix == 'deck-size-seo' and sdp != blank
     assign seo_template = true
     assign item_name = sdp.name.value | default: item_name
-    assign description = sdp.seo_description.value | default: description
+    assign description = sdp.seo_meta.value.description | default: description
   endif
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value | default: 0

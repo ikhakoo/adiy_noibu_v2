@@ -24,8 +24,9 @@
     collection's custom.deck_size_seo entry (image = the pinned size variant's photo).
   endcomment
   if seo_entry != blank
-    assign og_title = seo_entry.og_title.value | default: seo_entry.seo_title.value | default: og_title
-    assign og_description = seo_entry.og_description.value | default: seo_entry.seo_description.value | default: og_description
+    assign seo_meta = seo_entry.seo_meta.value
+    assign og_title = seo_meta.og_title | default: seo_meta.title | default: og_title
+    assign og_description = seo_meta.og_description | default: seo_meta.description | default: og_description
     assign seo_variant = collection.metafields.custom.seo_variant_id.value
     assign seo_share_image = seo_variant.featured_media.preview_image | default: seo_variant.product.featured_media.preview_image
     if seo_share_image != blank

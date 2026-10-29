@@ -37,8 +37,8 @@
         assign seo_entry = collection.metafields.custom.deck_size_seo.value
       endif
       if seo_entry != blank
-        assign seo_title = seo_entry.seo_title.value | default: page_title
-        assign seo_description = seo_entry.seo_description.value | default: page_description
+        assign seo_title = seo_entry.seo_meta.value.title | default: page_title
+        assign seo_description = seo_entry.seo_meta.value.description | default: page_description
       endif
     -%}
     <title>
