@@ -514,7 +514,7 @@
         "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
         "image_focal": "40% 50%",
         "eyebrow": "Kit inclusions",
-        "heading": "What’s Included in a [size_x] [material_title] Deck?",
+        "heading": "What’s Included in Your [size_x] [material_title] Deck Kit?",
         "intro": "[kit_intro]",
         "button_label": "Shop the [size_x] [material_word] deck",
         "button_link": "",
@@ -2226,7 +2226,7 @@
         "eyebrow": "Order today. Build it the weekend it arrives.",
         "heading": "How to Build Your [size_x] Deck with A-DIY",
         "step_word": "Step",
-        "intro": "Building a [size] pressure-treated deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered deck system and step-by-step assembly guidance."
+        "intro": "Building a [size] pressure-treated deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered DIY deck kit and step-by-step assembly guidance."
       }
     },
     "faq": {
