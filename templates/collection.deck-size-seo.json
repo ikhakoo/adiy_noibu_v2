@@ -441,7 +441,8 @@
         "standard_sizes": "12x12,12x16,12x18,12x20,12x24,12x28,16x16,16x20,16x24,16x28",
         "compact_sizes": "6x12,6x16,6x20,8x12,8x16,8x20",
         "intro": "Looking for something bigger or smaller than a [size_x] deck? Explore additional [material] deck sizes to find the right amount of space for your backyard.",
-        "tile_name_suffix": "[material_title] Deck"
+        "tile_name_suffix": "[material_title] Deck",
+        "tile_link": "product"
       }
     },
     "kit": {
