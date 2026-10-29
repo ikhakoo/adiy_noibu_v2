@@ -512,7 +512,7 @@
         "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
         "image_focal": "40% 50%",
         "eyebrow": "Kit inclusions",
-        "heading": "What’s included in the [size] [material_word] deck kit",
+        "heading": "What’s included in the [size] deck kit",
         "intro": "[kit_intro]",
         "button_label": "Shop the [size_x] [material_word] deck",
         "button_link": "",
@@ -2194,7 +2194,7 @@
           "settings": {
             "icon": "truck",
             "title": "Delivered in 10–14\nbusiness days",
-            "text": "Ships crated by LTL ground freight. The carrier calls to schedule curbside delivery, and the parts are packed in order of use."
+            "text": "Ships by LTL ground freight. The carrier calls to schedule curbside delivery of one crate, packed in order of use."
           }
         },
         "step_3": {
@@ -2233,7 +2233,7 @@
       "settings": {
         "anchor_id": "faq",
         "eyebrow": "[size_x] [material_word] deck kit FAQ",
-        "heading": "Questions homeowners ask before buying a [size] [material_word] deck kit",
+        "heading": "Questions homeowners ask before buying a [size] deck kit",
         "open_all": false,
         "open_first": false,
         "card_kicker": "Still have a question?",
