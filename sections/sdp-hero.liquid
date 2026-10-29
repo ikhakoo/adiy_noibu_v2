@@ -201,8 +201,9 @@
               {%- for v in hero_variants -%}
                 {%- assign vd = v.metafields.custom.discount_value.value | default: v.metafields.custom.discount_value | default: 0 -%}
                 {%- assign vimg = v.featured_media.preview_image -%}
+                {%- capture vsrcset -%}{%- if vimg != blank -%}{{ vimg | image_url: width: 600 }} 600w, {{ vimg | image_url: width: 1100 }} 1100w, {{ vimg | image_url: width: 1500 }} 1500w, {{ vimg | image_url: width: 2400 }} 2400w{%- endif -%}{%- endcapture -%}
                 { "id": {{ v.id }}, "price": {{ v.price }}, "discount": {{ vd | plus: 0 }}, "available": {{ v.available }}
-                  {%- if vimg != blank and sdp.hero_image.value == blank -%}, "image": {{ vimg | image_url: width: 1500 | json }}, "srcset": {{ vimg | image_url: width: 600 | append: ' 600w, ' | append: vimg | image_url: width: 1100 | append: ' 1100w, ' | append: vimg | image_url: width: 1500 | append: ' 1500w, ' | append: vimg | image_url: width: 2400 | append: ' 2400w' | json }}{%- endif -%} }{% unless forloop.last %},{% endunless %}
+                  {%- if vimg != blank and sdp.hero_image.value == blank -%}, "image": {{ vimg | image_url: width: 1500 | json }}, "srcset": {{ vsrcset | json }}{%- endif -%} }{% unless forloop.last %},{% endunless %}
               {%- endfor -%}
             ]
           }
