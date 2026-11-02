@@ -134,7 +134,7 @@
           "type": "countdown_timer",
           "settings": {
             "heading": "Fall Sale Ends in:",
-            "end_date": "2026-10-31",
+            "end_date": "2026-11-06",
             "end_time": "23:59:59",
             "bg_color": "#a33429",
             "text_color": "#ffffff"
