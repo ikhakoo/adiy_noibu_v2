@@ -50,7 +50,8 @@
           {%- assign sizes = group | split: ',' -%}
           {%- for size in sizes -%}
             {%- assign key = material | append: '-' | append: size | strip -%}
-            {%- assign entry = shop.metaobjects.deck_size_page[key | append: '-seo'] -%}
+            {%- assign key_seo = key | append: '-seo' -%}
+            {%- assign entry = shop.metaobjects.deck_size_page[key_seo] -%}
             {%- if entry == blank -%}{%- assign entry = shop.metaobjects.deck_size_page[key] -%}{%- endif -%}
             {%- if entry == blank -%}{%- continue -%}{%- endif -%}
             {%- capture entry_url -%}{%- render 'sdp-entry-url', entry: entry -%}{%- endcapture -%}
