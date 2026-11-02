@@ -41,6 +41,10 @@
     if twin != blank
       assign twin_product = twin.product.value
       assign twin_size = twin.width.value | append: ' x ' | append: twin.length.value
+      if twin.width.value == blank
+        assign twin_first = twin.variants.value | first
+        assign twin_size = twin_first.option1
+      endif
       capture xlink
         render 'sdp-entry-url', entry: twin
       endcapture

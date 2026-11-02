@@ -25,6 +25,9 @@
     assign twin_product = sdp.twin.value.product.value
     assign entry_faqs = sdp.faqs.value
     assign first_variant = sdp.variants.value | first
+    if sdp.width.value == blank
+      assign size_option = first_variant.option1
+    endif
     assign fv_discount = first_variant.metafields.custom.discount_value.value | default: first_variant.metafields.custom.discount_value | plus: 0
     if fv_discount <= 0
       assign code = ''

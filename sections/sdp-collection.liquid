@@ -24,6 +24,16 @@
     and matched to the handle order here.
   endcomment
   assign all_entries = shop.metaobjects.deck_size_page.values
+  comment
+    Material collections (collection.deck-material): the collection's custom.deck_size entry
+    is a material entry (no width/length), so the grid lists only that material's sizes and
+    the header copy comes from the entry.
+  endcomment
+  assign sdp = collection.metafields.custom.deck_size.value
+  assign material_only = ''
+  if sdp != blank and sdp.width.value == blank
+    assign material_only = sdp.material.value
+  endif
   for h in entry_handles
     comment
       Each size reads the same entry as its collection page (handle + "-seo"), falling
@@ -50,6 +60,9 @@
     if found == false or e.collection.value.url == blank
       continue
     endif
+    if material_only != blank and e.material.value != material_only
+      continue
+    endif
     assign count_all = count_all | plus: 1
     if e.material.value == 'composite'
       assign count_composite = count_composite | plus: 1
@@ -70,11 +83,17 @@
     <div class="sdp__inner">
       <header class="sdpc__header">
         <div class="sdpc__intro">
-          {%- if section.settings.eyebrow != blank -%}
-            <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- capture t_eyebrow -%}{%- render 'sdp-t', text: section.settings.eyebrow, sdp: sdp -%}{%- endcapture -%}
+          {%- capture t_heading -%}{%- render 'sdp-t', text: section.settings.heading, sdp: sdp -%}{%- endcapture -%}
+          {%- assign t_heading = t_heading | strip -%}
+          {%- if t_eyebrow != blank -%}
+            <p class="sdp-eyebrow">{{ t_eyebrow | escape }}</p>
           {%- endif -%}
-          <h1 class="sdpc__title">{{ section.settings.heading | default: collection.title | escape }}</h1>
-          {%- if section.settings.show_description and collection.description != blank -%}
+          <h1 class="sdpc__title">{{ t_heading | default: collection.title | escape }}</h1>
+          {%- if material_only != blank and sdp.hero_lede != blank -%}
+            {%- capture t_lede -%}{%- render 'sdp-t', text: sdp.hero_lede.value, sdp: sdp -%}{%- endcapture -%}
+            <div class="sdpc__desc"><p>{{ t_lede | escape }}</p></div>
+          {%- elsif section.settings.show_description and collection.description != blank -%}
             <div class="sdpc__desc">{{ collection.description }}</div>
           {%- endif -%}
         </div>
@@ -100,12 +119,12 @@
           <button type="button" class="sdpc__tab is-active" role="tab" aria-selected="true" data-sdpc-filter="all">
             {{ section.settings.tab_all | escape }} <span>{{ count_all }}</span>
           </button>
-          {%- if count_wood > 0 -%}
+          {%- if count_wood > 0 and material_only == blank -%}
             <button type="button" class="sdpc__tab" role="tab" aria-selected="false" data-sdpc-filter="wood">
               {{ section.settings.tab_wood | escape }} <span>{{ count_wood }}</span>
             </button>
           {%- endif -%}
-          {%- if count_composite > 0 -%}
+          {%- if count_composite > 0 and material_only == blank -%}
             <button type="button" class="sdpc__tab" role="tab" aria-selected="false" data-sdpc-filter="composite">
               {{ section.settings.tab_composite | escape }} <span>{{ count_composite }}</span>
             </button>
@@ -137,6 +156,7 @@
           {%- assign found = false -%}
           {%- assign h_seo = h | append: '-seo' -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h_seo -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- unless found -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- endunless -%}
           {%- if found == false or e.collection.value.url == blank -%}{%- continue -%}{%- endif -%}
+          {%- if material_only != blank and e.material.value != material_only -%}{%- continue -%}{%- endif -%}
           {%- assign card_index = card_index | plus: 1 -%}
           {%- render 'sdp-collection-card', entry: e, promo_code: section.settings.promo_code, index: card_index, heading_tag: 'h2' -%}
         {%- endfor -%}
@@ -160,6 +180,7 @@
         {%- assign found = false -%}
         {%- assign h_seo = h | append: '-seo' -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h_seo -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- unless found -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- endunless -%}
         {%- if found == false or e.collection.value.url == blank -%}{%- continue -%}{%- endif -%}
+          {%- if material_only != blank and e.material.value != material_only -%}{%- continue -%}{%- endif -%}
         {%- assign ld_i = ld_i | plus: 1 -%}
         {%- if ld_i > 1 -%},{%- endif -%}
         {

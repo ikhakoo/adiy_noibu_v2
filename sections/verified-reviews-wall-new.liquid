@@ -740,7 +740,7 @@
           assign rw_rest = ''
           for b in section.blocks
             assign rw_hit = false
-            if rw_sdp != blank
+            if rw_sdp != blank and rw_sdp.width.value != blank
               assign rw_w = rw_sdp.width.value | append: ''
               assign rw_l = rw_sdp.length.value | append: ''
               assign rw_k1 = rw_w | append: 'x' | append: rw_l

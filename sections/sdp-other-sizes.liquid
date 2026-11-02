@@ -130,6 +130,20 @@
     {%- endfor -%}
     {%- endif -%}
 
+    {%- comment -%}
+      Size pages link up to their material collection (the "<material>-material" entry's
+      collection); the material collection itself has no width and skips this link.
+    {%- endcomment -%}
+    {%- if sdp != blank and sdp.width.value != blank and section.settings.all_link_label != blank -%}
+      {%- assign all_key = sdp.material.value | append: '-material' -%}
+      {%- assign all_entry = shop.metaobjects.deck_size_page[all_key] -%}
+      {%- assign all_url = all_entry.collection.value.url -%}
+      {%- if all_url != blank -%}
+        {%- capture all_label -%}{%- render 'sdp-t', text: section.settings.all_link_label, sdp: sdp -%}{%- endcapture -%}
+        <p class="sdp-sizes__all"><a class="sdp-link" href="{{ all_url }}">{{ all_label | strip | escape }} <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      {%- endif -%}
+    {%- endif -%}
+
     {%- if section.settings.cta_heading != blank or section.settings.cta_button_label != blank -%}
       <div class="sdp-sizes__cta">
         <div class="sdp-sizes__cta-copy">
@@ -161,6 +175,7 @@
     { "type": "textarea", "id": "intro", "label": "Intro text", "info": "Optional. Shown under the heading." },
     { "type": "text", "id": "current_label", "label": "Badge on the current size", "default": "This page" },
     { "type": "select", "id": "tile_link", "label": "Size tiles link to", "options": [ { "value": "page", "label": "That size's page" }, { "value": "product", "label": "The product, with that size preselected" } ], "default": "page" },
+    { "type": "text", "id": "all_link_label", "label": "Link to the material collection", "info": "Size pages only. Links to all deck kits in the page's material, e.g. \"See all [material_title] deck kits\". Leave blank to hide." },
     { "type": "text", "id": "tile_name_suffix", "label": "Tile link text for search engines", "info": "Optional. Added after each size for screen readers and search engines only, e.g. \"Pressure-Treated Deck\" makes the link read \"12 × 18 Pressure-Treated Deck\". Not shown on the page." },
     { "type": "url", "id": "fallback_link", "label": "Fallback link for sizes without their own page", "info": "Until each size has its own product page, tiles link to the current product with that size's variant preselected; this link is used when no matching variant exists." },
     { "type": "header", "content": "Deck size pages" },

@@ -1638,3 +1638,8 @@ a.sdp-size:hover {
   .sdp-step__title { font-size: 17px; }
   .sdp-step__text { font-size: 13px; }
 }
+
+.sdp-sizes__all {
+  margin: 4px 0 0;
+  text-align: center;
+}

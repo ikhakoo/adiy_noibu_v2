@@ -430,6 +430,7 @@
       "block_order": [],
       "settings": {
         "anchor_id": "sizes",
+        "all_link_label": "See all [material_title] deck kits",
         "eyebrow": "Every backyard has a fit",
         "heading": "Explore Other [material_title] Deck Sizes",
         "current_label": "This page",
