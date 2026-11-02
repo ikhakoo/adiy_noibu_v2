@@ -138,7 +138,7 @@
           "type": "button",
           "settings": {
             "button_label": "Build Your Deck",
-            "button_link": "shopify://collections/start-your-new-deck",
+            "button_link": "shopify://collections/deck-kits",
             "button_style_secondary": false,
             "button_label_2": "Learn More",
             "button_link_2": "#chat",
