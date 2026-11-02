@@ -1,6 +1,6 @@
 /*
  * Deck Kits by Material (/collections/deck-kits-by-material): one card per material collection
- * (Pressure-Treated Wood Deck Kits, Composite Deck Kits) and a comparison table. Card copy,
+ * (Pressure-Treated Wood Deck Kits, Composite Deck Kits) and a comparison table (section: sections/sdp-material-hub.liquid). Card copy,
  * images, starting prices, size counts and table rows come from the material entries
  * (Content > Metaobjects > Deck size page: wood-material, composite-material).
  */
