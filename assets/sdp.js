@@ -59,7 +59,8 @@
           var id = Number(select.value);
           var v = data.variants.filter(function (x) { return x.id === id; })[0];
           if (!v) return;
-          var discount = (v.discount > 0 ? v.discount : data.fallbackDiscount) * 100;
+          var discount = data.hasCode === false ? 0 : (v.discount > 0 ? v.discount : data.fallbackDiscount) * 100;
+          if (data.minPrice && v.price < data.minPrice) discount = 0;
           var sale = discount > 0 && v.price - discount > 0 ? v.price - discount : v.price;
           var hasDiscount = sale < v.price;
 

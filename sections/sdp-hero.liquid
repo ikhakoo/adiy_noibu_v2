@@ -94,10 +94,14 @@
   if sale_price < 0 or discount_cents <= 0
     assign sale_price = regular_price
   endif
+  assign promo_min_cents = section.settings.promo_min_subtotal | default: 0 | times: 100
   assign has_discount = false
-  if discount_cents > 0 and promo_code != blank and sale_price < regular_price
+  if discount_cents > 0 and promo_code != blank and sale_price < regular_price and regular_price >= promo_min_cents
     assign has_discount = true
   endif
+  unless has_discount
+    assign sale_price = regular_price
+  endunless
 
   assign financing_months = section.settings.financing_months | default: 24
   assign monthly_sale = sale_price | divided_by: financing_months | divided_by: 100.0 | round | times: 100
@@ -195,7 +199,9 @@
         </div>
         <script type="application/json" data-sdp-variants>
           {
-            "fallbackDiscount": {{ section.settings.discount_amount | default: 0 }},
+            "fallbackDiscount": {% if promo_code != blank %}{{ section.settings.discount_amount | default: 0 }}{% else %}0{% endif %},
+            "hasCode": {% if promo_code != blank %}true{% else %}false{% endif %},
+            "minPrice": {{ promo_min_cents }},
             "months": {{ financing_months }},
             "variants": [
               {%- for v in hero_variants -%}
@@ -480,7 +486,7 @@
 </div>
 
 {%- if template.name == 'collection' and pinned_variant != blank -%}
-  {%- render 'sdp-collection-schema', sdp: sdp, product: product, variant: pinned_variant, heading: heading, image: hero_image -%}
+  {%- render 'sdp-collection-schema', sdp: sdp, product: product, variant: pinned_variant, heading: heading, image: hero_image, rating_value: section.settings.schema_rating_value, rating_count: section.settings.schema_rating_count -%}
 {%- elsif sdp != blank -%}
   {%- render 'sdp-page-schema', sdp: sdp, product: product, variants: hero_variants, heading: heading, description: t_lede, image: hero_image, promo_price: sale_price, has_discount: has_discount -%}
 {%- else -%}
@@ -510,10 +516,14 @@
     { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "12x12 pressure-treated wood deck kit from A-DIY set up as an outdoor lounge" },
     { "type": "header", "content": "Price & promo code" },
     { "type": "text", "id": "price_label", "label": "Price label", "default": "Regular price" },
-    { "type": "text", "id": "promo_code", "label": "Promo code", "info": "Overridden by the product metafield custom.promo_code when set.", "default": "FALL1500" },
-    { "type": "number", "id": "discount_amount", "label": "Fallback discount (whole dollars)", "info": "Used when the selected variant has no custom.discount_value metafield.", "default": 1500 },
+    { "type": "text", "id": "promo_code", "label": "Promo code", "info": "Overridden by the product metafield custom.promo_code when set.", "default": "" },
+    { "type": "number", "id": "discount_amount", "label": "Fallback discount (whole dollars)", "info": "Used when the selected variant has no custom.discount_value metafield.", "default": 0 },
+    { "type": "number", "id": "promo_min_subtotal", "label": "Code minimum (whole dollars)", "info": "The code's minimum purchase. Kits priced below it never show a code price.", "default": 4000 },
     { "type": "text", "id": "promo_prefix", "label": "Text before the sale price", "default": "or" },
     { "type": "text", "id": "promo_suffix", "label": "Text after the sale price", "default": "with code" },
+    { "type": "header", "content": "Structured data rating" },
+    { "type": "text", "id": "schema_rating_value", "label": "Rating (schema)", "info": "Match the review wall on this page. Blank uses the product's review metafields.", "default": "4.8" },
+    { "type": "text", "id": "schema_rating_count", "label": "Review count (schema)", "default": "1821" },
     { "type": "header", "content": "Financing line" },
     { "type": "number", "id": "financing_months", "label": "Financing term (months)", "default": 24 },
     { "type": "text", "id": "financing_text", "label": "Financing text", "info": "Placeholders: [monthly], [months], [code].", "default": "Starting at [monthly]/mo at 0% APR over [months] months if approved, with code [code]" },

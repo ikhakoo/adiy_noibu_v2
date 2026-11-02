@@ -334,7 +334,7 @@
             "variant_match": "12 x 12",
             "title": "12×12 Pressure-Treated Deck",
             "description": "<p>144 sq ft. Grade 1 Southern Yellow Pine, pressure-treated and kiln-dried.</p>",
-            "specs": "Beams | 6×6\nJoists | 2×6, 13–14 in. on center\nBoards | Pre-sealed, 5.5 in. wide",
+            "specs": "Beams | 6×6\nJoists | 2×8, 13–14 in. on center\nBoards | Pre-sealed, 5.5 in. wide",
             "button_label": "Shop Now →"
           }
         },
@@ -346,7 +346,7 @@
             "variant_match": "12 x 16",
             "title": "12×16 Pressure-Treated Deck",
             "description": "<p>192 sq ft. Grade 1 Southern Yellow Pine, pressure-treated and kiln-dried.</p>",
-            "specs": "Beams | 6×6\nJoists | 2×6, 13–14 in. on center\nBoards | Pre-sealed, 5.5 in. wide",
+            "specs": "Beams | 6×6\nJoists | 2×8, 13–14 in. on center\nBoards | Pre-sealed, 5.5 in. wide",
             "missing_text": "[ADD VERIFIED 12×16 PRESSURE-TREATED PRICE AND AVAILABILITY HERE]",
             "fallback_button_label": "See Pressure-Treated Sizes →",
             "image": "shopify://shop_images/pressure-treated-kiln-dried-wood-deck-kit-648657.jpg"
@@ -593,7 +593,7 @@
             "column": "right",
             "style": "ground",
             "title": "What A-DIY Engineering Information May Provide",
-            "body": "<p>A-DIY provides engineering diagrams to support a permit application. They document the deck system itself: its dimensions and structural layout, including 6×6 beams and 2×6 joists spaced 13 to 14 inches on center. [ADD VERIFIED LIST OF WHAT THE DIAGRAMS INCLUDE HERE]</p><p>Your building department may still ask for property-specific items that a deck system cannot supply, such as a survey or site plan, setbacks, footing details, stair and guard details, or stamped drawings. In NYC, a licensed engineer or architect must prepare and file the plans.</p>"
+            "body": "<p>A-DIY provides engineering diagrams to support a permit application. They document the deck system itself: its dimensions and structural layout, including 6×6 beams and 2×8 joists spaced 13 to 14 inches on center. [ADD VERIFIED LIST OF WHAT THE DIAGRAMS INCLUDE HERE]</p><p>Your building department may still ask for property-specific items that a deck system cannot supply, such as a survey or site plan, setbacks, footing details, stair and guard details, or stamped drawings. In NYC, a licensed engineer or architect must prepare and file the plans.</p>"
           }
         },
         "pm6": {
@@ -803,7 +803,7 @@
             "width": "4",
             "style": "ground",
             "title": "Structure and Materials",
-            "body": "<p>Pressure-treated kits use Grade 1 Southern Yellow Pine that is pressure-treated and kiln-dried, with 6×6 beams, 2×6 joists spaced 13 to 14 inches on center, pre-sealed 5.5-inch deck boards and galvanized screws and hardware.</p>"
+            "body": "<p>Pressure-treated kits use Grade 1 Southern Yellow Pine that is pressure-treated and kiln-dried, with 6×6 beams, 2×8 joists spaced 13 to 14 inches on center, pre-sealed 5.5-inch deck boards and galvanized screws and hardware.</p>"
           }
         },
         "e2": {

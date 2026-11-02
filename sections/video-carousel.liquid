@@ -130,7 +130,7 @@
                     class: 'pb-video-card__poster',
                     widths: '270, 310, 540, 620, 810, 930',
                     sizes: '(min-width: 750px) 310px, 270px',
-                    alt: '',
+                    alt: block.settings.video_title | default: 'A-DIY customer deck build video',
                     loading: 'lazy'
                 }}
               {%- endif -%}
@@ -165,7 +165,7 @@
                       class: 'pb-video-card__poster',
                       widths: '270, 310, 540, 620, 810, 930',
                       sizes: '(min-width: 750px) 310px, 270px',
-                      alt: '',
+                      alt: block.settings.video_title | default: 'A-DIY customer deck build video',
                       loading: 'lazy'
                   }}
                 {%- endif -%}
