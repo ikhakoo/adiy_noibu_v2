@@ -1,0 +1,299 @@
+{{ 'sdp.css' | asset_url | stylesheet_tag }}
+{{ 'sdp-collection.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck Kits by Material (collection.deck-material-hub). Four parts:
+  1. Header (eyebrow, H1 = collection title, collection description).
+  2. Two full-bleed photo panels, one per material collection, with the starting price and
+     number of sizes.
+  3. A side-by-side matrix built from `row` blocks. A row either shows its own text or pulls
+     a value from the material entries: starting price, number of sizes, or a line of the
+     entry's specs list ("Label | value").
+  4. "Choose … if" lists (`wood_point` / `composite_point` blocks) and a "same in both" strip
+     (`shared` blocks).
+  Material data comes from the "Deck size page" entries wood-material and composite-material
+  (Content > Metaobjects), so prices, size counts, photos and specs stay in one place.
+{%- endcomment -%}
+{%- paginate shop.metaobjects.deck_size_page.values by 100 -%}
+{%- liquid
+  assign all_entries = shop.metaobjects.deck_size_page.values
+  assign wood = nil
+  assign composite = nil
+  for candidate in all_entries
+    if candidate.system.handle == section.settings.wood_entry
+      assign wood = candidate
+    elsif candidate.system.handle == section.settings.composite_entry
+      assign composite = candidate
+    endif
+  endfor
+  assign wood_sizes = 0
+  assign composite_sizes = 0
+  for e in all_entries
+    if e.width.value != blank and e.collection.value.url != blank
+      if e.material.value == 'composite'
+        assign composite_sizes = composite_sizes | plus: 1
+      else
+        assign wood_sizes = wood_sizes | plus: 1
+      endif
+    endif
+  endfor
+  assign wood_from = wood.variants.value | first
+  assign composite_from = composite.variants.value | first
+  assign wood_price = wood_from.price | money_without_trailing_zeros
+  assign composite_price = composite_from.price | money_without_trailing_zeros
+  assign mats = 'wood,composite' | split: ','
+-%}
+<div class="sdp sdpx sdp--{{ section.settings.background }}">
+  <div class="sdp__inner">
+    <header class="sdpx__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 class="sdpx__title">{{ section.settings.heading | default: collection.title | escape }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="sdpx__lede">{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- comment -%} 2. Photo panels {%- endcomment -%}
+    <div class="sdpx__panels">
+      {%- for key in mats -%}
+        {%- liquid
+          if key == 'wood'
+            assign m = wood
+            assign m_price = wood_price
+            assign m_sizes = wood_sizes
+            assign m_kicker = section.settings.wood_kicker
+            assign m_button = section.settings.wood_button
+          else
+            assign m = composite
+            assign m_price = composite_price
+            assign m_sizes = composite_sizes
+            assign m_kicker = section.settings.composite_kicker
+            assign m_button = section.settings.composite_button
+          endif
+        -%}
+        {%- if m == nil or m.collection.value.url == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign mcol = m.collection.value -%}
+        {%- assign mimg = m.hero_image.value | default: mcol.image -%}
+        <a class="sdpx-panel sdpx-panel--{{ key }}" href="{{ mcol.url }}">
+          {%- if mimg != blank -%}
+            <img
+              class="sdpx-panel__img"
+              src="{{ mimg | image_url: width: 1400 }}"
+              srcset="{{ mimg | image_url: width: 700 }} 700w, {{ mimg | image_url: width: 1000 }} 1000w, {{ mimg | image_url: width: 1400 }} 1400w, {{ mimg | image_url: width: 1800 }} 1800w"
+              sizes="(min-width: 990px) 50vw, 100vw"
+              width="{{ mimg.width }}"
+              height="{{ mimg.height }}"
+              alt="{{ m.hero_image_alt.value | default: mcol.title | escape }}"
+              loading="eager"
+            >
+          {%- endif -%}
+          <span class="sdpx-panel__shade" aria-hidden="true"></span>
+          <span class="sdpx-panel__copy">
+            {%- if m_kicker != blank -%}<span class="sdpx-panel__kicker">{{ m_kicker | escape }}</span>{%- endif -%}
+            <span class="sdpx-panel__name">{{ m.name.value | default: mcol.title | escape }}</span>
+            <span class="sdpx-panel__meta">From {{ m_price }} · {{ m_sizes }} sizes</span>
+            <span class="sdpx-panel__go">{{ m_button | default: 'Shop' | escape }} {%- render 'sdp-icon', name: 'arrow-right' -%}</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} 3. Matrix {%- endcomment -%}
+    {%- assign rows = section.blocks | where: 'type', 'row' -%}
+    {%- if rows.size > 0 -%}
+      <section class="sdpx__block" aria-labelledby="sdpx-matrix-{{ section.id }}">
+        <div class="sdpx__block-head">
+          {%- if section.settings.matrix_eyebrow != blank -%}<p class="sdp-eyebrow">{{ section.settings.matrix_eyebrow | escape }}</p>{%- endif -%}
+          <h2 class="sdp-h2" id="sdpx-matrix-{{ section.id }}">{{ section.settings.matrix_heading | escape }}</h2>
+        </div>
+        <div class="sdpx-matrix" role="table" aria-label="{{ section.settings.matrix_heading | escape }}">
+          <div class="sdpx-matrix__row sdpx-matrix__row--head" role="row">
+            <span role="columnheader" class="sdpx-matrix__label"><span class="visually-hidden">Feature</span></span>
+            <span role="columnheader" class="sdpx-matrix__col sdpx-matrix__col--wood"><a href="{{ wood.collection.value.url }}">{{ section.settings.wood_short | escape }}</a></span>
+            <span role="columnheader" class="sdpx-matrix__col sdpx-matrix__col--composite"><a href="{{ composite.collection.value.url }}">{{ section.settings.composite_short | escape }}</a></span>
+          </div>
+          {%- for block in rows -%}
+            {%- liquid
+              assign cells = ''
+              for key in mats
+                if key == 'wood'
+                  assign m = wood
+                  assign cell = block.settings.wood_text
+                  assign c_price = wood_price
+                  assign c_sizes = wood_sizes
+                else
+                  assign m = composite
+                  assign cell = block.settings.composite_text
+                  assign c_price = composite_price
+                  assign c_sizes = composite_sizes
+                endif
+                case block.settings.source
+                  when 'price'
+                    assign cell = 'From ' | append: c_price
+                  when 'sizes'
+                    assign cell = c_sizes | append: ' sizes'
+                  when 'spec'
+                    assign spec_keys = block.settings.spec_key | split: '/'
+                    for sk in spec_keys
+                      assign sk = sk | strip
+                      for line in m.specs.value
+                        assign lk = line | split: '|' | first | strip
+                        if lk == sk
+                          assign cell = line | remove_first: lk | remove_first: '|' | strip
+                          break
+                        endif
+                      endfor
+                    endfor
+                endcase
+                if cell == blank
+                  assign cell = '—'
+                endif
+                assign cells = cells | append: cell | append: '§§'
+              endfor
+              assign cells = cells | split: '§§'
+            -%}
+            <div class="sdpx-matrix__row" role="row" {{ block.shopify_attributes }}>
+              <span role="rowheader" class="sdpx-matrix__label">{{ block.settings.label | escape }}</span>
+              <span role="cell" class="sdpx-matrix__col sdpx-matrix__col--wood" data-label="{{ section.settings.wood_short | escape }}">{{ cells[0] | escape }}</span>
+              <span role="cell" class="sdpx-matrix__col sdpx-matrix__col--composite" data-label="{{ section.settings.composite_short | escape }}">{{ cells[1] | escape }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+
+    {%- comment -%} 4. Choose … if {%- endcomment -%}
+    {%- assign wood_points = section.blocks | where: 'type', 'wood_point' -%}
+    {%- assign composite_points = section.blocks | where: 'type', 'composite_point' -%}
+    {%- if wood_points.size > 0 or composite_points.size > 0 -%}
+      <section class="sdpx__block">
+        <div class="sdpx__block-head">
+          <h2 class="sdp-h2">{{ section.settings.choose_heading | escape }}</h2>
+        </div>
+        <div class="sdpx-choose">
+          {%- for key in mats -%}
+            {%- liquid
+              if key == 'wood'
+                assign m = wood
+                assign pts = wood_points
+                assign ch_title = section.settings.wood_choose_title
+                assign ch_button = section.settings.wood_button
+              else
+                assign m = composite
+                assign pts = composite_points
+                assign ch_title = section.settings.composite_choose_title
+                assign ch_button = section.settings.composite_button
+              endif
+            -%}
+            {%- if pts.size == 0 or m == nil -%}{%- continue -%}{%- endif -%}
+            <div class="sdpx-choose__col sdpx-choose__col--{{ key }}">
+              <h3 class="sdpx-choose__title">{{ ch_title | escape }}</h3>
+              <ul class="sdpx-choose__list">
+                {%- for block in pts -%}
+                  <li {{ block.shopify_attributes }}>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>{{ block.settings.text | escape }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+              <a class="sdp-btn sdpx-choose__btn" href="{{ m.collection.value.url }}">{{ ch_button | escape }}</a>
+            </div>
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+
+    {%- assign shared = section.blocks | where: 'type', 'shared' -%}
+    {%- if shared.size > 0 -%}
+      <section class="sdpx-shared">
+        <h2 class="sdpx-shared__title">{{ section.settings.shared_heading | escape }}</h2>
+        <ul class="sdpx-shared__list">
+          {%- for block in shared -%}
+            <li class="sdpx-shared__item" {{ block.shopify_attributes }}>
+              <span class="sdpx-shared__icon">{%- render 'sdp-icon', name: block.settings.icon -%}</span>
+              <span><strong>{{ block.settings.title | escape }}</strong>{%- if block.settings.text != blank -%}<span>{{ block.settings.text | escape }}</span>{%- endif -%}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+  </div>
+</div>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": {{ collection.title | json }},
+    "itemListElement": [
+      {%- assign ld_i = 0 -%}
+      {%- for m in all_entries -%}
+        {%- unless m.system.handle == section.settings.wood_entry or m.system.handle == section.settings.composite_entry -%}{%- continue -%}{%- endunless -%}
+        {%- if m.collection.value.url == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign ld_i = ld_i | plus: 1 -%}
+        {%- if ld_i > 1 -%},{%- endif -%}
+        { "@type": "ListItem", "position": {{ ld_i }}, "url": {{ request.origin | append: m.collection.value.url | json }}, "name": {{ m.collection.value.title | json }} }
+      {%- endfor -%}
+    ]
+  }
+</script>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "SDP · Material compare",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by material" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the collection title." },
+    { "type": "select", "id": "background", "label": "Background", "options": [ { "value": "sand", "label": "Sand" }, { "value": "white", "label": "White" } ], "default": "sand" },
+    { "type": "header", "content": "Materials" },
+    { "type": "text", "id": "wood_entry", "label": "Wood entry handle", "default": "wood-material" },
+    { "type": "text", "id": "composite_entry", "label": "Composite entry handle", "default": "composite-material" },
+    { "type": "text", "id": "wood_short", "label": "Wood column name", "default": "Pressure-treated wood" },
+    { "type": "text", "id": "composite_short", "label": "Composite column name", "default": "Composite" },
+    { "type": "text", "id": "wood_kicker", "label": "Wood panel kicker", "default": "Real timber" },
+    { "type": "text", "id": "composite_kicker", "label": "Composite panel kicker", "default": "Low upkeep" },
+    { "type": "text", "id": "wood_button", "label": "Wood button", "default": "Shop pressure-treated kits" },
+    { "type": "text", "id": "composite_button", "label": "Composite button", "default": "Shop composite kits" },
+    { "type": "header", "content": "Matrix" },
+    { "type": "text", "id": "matrix_eyebrow", "label": "Eyebrow", "default": "Side by side" },
+    { "type": "text", "id": "matrix_heading", "label": "Heading", "default": "How the two deck kits differ" },
+    { "type": "header", "content": "Choose lists" },
+    { "type": "text", "id": "choose_heading", "label": "Heading", "default": "Still deciding?" },
+    { "type": "text", "id": "wood_choose_title", "label": "Wood title", "default": "Go with pressure-treated if…" },
+    { "type": "text", "id": "composite_choose_title", "label": "Composite title", "default": "Go with composite if…" },
+    { "type": "header", "content": "Same in both" },
+    { "type": "text", "id": "shared_heading", "label": "Heading", "default": "Whichever you pick, every kit comes with" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Matrix row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Deck surface" },
+        { "type": "select", "id": "source", "label": "Values", "options": [ { "value": "text", "label": "Text below" }, { "value": "price", "label": "Starting price" }, { "value": "sizes", "label": "Number of sizes" }, { "value": "spec", "label": "Line from the entry's specs" } ], "default": "text" },
+        { "type": "text", "id": "spec_key", "label": "Spec label", "info": "For \"Line from the entry's specs\": the label before | (e.g. Warranty). Use / for alternatives." },
+        { "type": "text", "id": "wood_text", "label": "Wood" },
+        { "type": "text", "id": "composite_text", "label": "Composite" }
+      ]
+    },
+    { "type": "wood_point", "name": "Choose wood if", "settings": [ { "type": "text", "id": "text", "label": "Text" } ] },
+    { "type": "composite_point", "name": "Choose composite if", "settings": [ { "type": "text", "id": "text", "label": "Text" } ] },
+    {
+      "type": "shared",
+      "name": "Same in both",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [ { "value": "shield", "label": "Shield" }, { "value": "drill", "label": "Drill" }, { "value": "truck", "label": "Truck" }, { "value": "chat", "label": "Chat" }, { "value": "cart", "label": "Cart" }, { "value": "phone", "label": "Phone" } ], "default": "shield" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "SDP · Material compare" } ]
+}
+{% endschema %}
