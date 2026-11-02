@@ -54,7 +54,7 @@
           "disabled": true,
           "settings": {
             "button_label_1": "Shop the Collection",
-            "button_link_1": "shopify://collections/deck-kits",
+            "button_link_1": "shopify://collections/deck-kit",
             "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
