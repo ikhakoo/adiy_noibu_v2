@@ -46,7 +46,7 @@
           "type": "button",
           "settings": {
             "button_label": "EXPLORE DECK OPTIONS",
-            "button_link": "shopify://collections/deck-kits",
+            "button_link": "shopify://collections/deck-kit",
             "button_style_secondary": false,
             "button_label_2": "SEE HOW A-DIY WORKS",
             "button_link_2": "shopify://pages/design-consultation",
