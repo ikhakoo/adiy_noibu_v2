@@ -805,6 +805,7 @@
 
 .sdpx-shared__title {
   margin-bottom: 28px;
+  color: #fff;
   font-size: 26px;
   font-weight: 600;
   line-height: 1.2;
@@ -827,6 +828,7 @@
 
 .sdpx-shared__item strong {
   display: block;
+  color: #fff;
   margin-bottom: 4px;
   font-size: 16px;
   font-weight: 600;
