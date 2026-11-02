@@ -12,9 +12,6 @@
   assign sdp = page.metafields.custom.deck_size.value
   if template.name == 'collection'
     assign sdp = collection.metafields.custom.deck_size.value
-    if template.suffix == 'deck-size-seo' and collection.metafields.custom.deck_size_seo.value != blank
-      assign sdp = collection.metafields.custom.deck_size_seo.value
-    endif
   endif
 -%}
 <div class="sdp sdp-sizes sdp--sand" id="{{ section.settings.anchor_id | default: 'sizes' | handle }}">
@@ -53,7 +50,8 @@
           {%- assign sizes = group | split: ',' -%}
           {%- for size in sizes -%}
             {%- assign key = material | append: '-' | append: size | strip -%}
-            {%- assign entry = shop.metaobjects.deck_size_page[key] -%}
+            {%- assign entry = shop.metaobjects.deck_size_page[key | append: '-seo'] -%}
+            {%- if entry == blank -%}{%- assign entry = shop.metaobjects.deck_size_page[key] -%}{%- endif -%}
             {%- if entry == blank -%}{%- continue -%}{%- endif -%}
             {%- capture entry_url -%}{%- render 'sdp-entry-url', entry: entry -%}{%- endcapture -%}
             {%- assign entry_url = entry_url | strip -%}

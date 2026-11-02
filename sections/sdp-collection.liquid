@@ -25,14 +25,28 @@
   endcomment
   assign all_entries = shop.metaobjects.deck_size_page.values
   for h in entry_handles
+    comment
+      Each size reads the same entry as its collection page (handle + "-seo"), falling
+      back to the plain handle.
+    endcomment
     assign found = false
+    assign h_seo = h | append: '-seo'
     for candidate in all_entries
-      if candidate.system.handle == h
+      if candidate.system.handle == h_seo
         assign e = candidate
         assign found = true
         break
       endif
     endfor
+    if found == false
+      for candidate in all_entries
+        if candidate.system.handle == h
+          assign e = candidate
+          assign found = true
+          break
+        endif
+      endfor
+    endif
     if found == false or e.collection.value.url == blank
       continue
     endif
@@ -121,7 +135,7 @@
         {%- assign card_index = 0 -%}
         {%- for h in entry_handles -%}
           {%- assign found = false -%}
-          {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+          {%- assign h_seo = h | append: '-seo' -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h_seo -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- unless found -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- endunless -%}
           {%- if found == false or e.collection.value.url == blank -%}{%- continue -%}{%- endif -%}
           {%- assign card_index = card_index | plus: 1 -%}
           {%- render 'sdp-collection-card', entry: e, promo_code: section.settings.promo_code, index: card_index, heading_tag: 'h2' -%}
@@ -144,7 +158,7 @@
       {%- assign ld_i = 0 -%}
       {%- for h in entry_handles -%}
         {%- assign found = false -%}
-        {%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+        {%- assign h_seo = h | append: '-seo' -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h_seo -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- unless found -%}{%- for candidate in all_entries -%}{%- if candidate.system.handle == h -%}{%- assign e = candidate -%}{%- assign found = true -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- endunless -%}
         {%- if found == false or e.collection.value.url == blank -%}{%- continue -%}{%- endif -%}
         {%- assign ld_i = ld_i | plus: 1 -%}
         {%- if ld_i > 1 -%},{%- endif -%}

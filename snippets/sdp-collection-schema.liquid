@@ -1,10 +1,10 @@
 {%- comment -%}
-  Product + Offer structured data for a size collection (collection.deck-size), built from
+  Product + Offer structured data for a size collection (collection.deck-size-master), built from
   the variant pinned by the collection metafield custom.seo_variant_id. It sits alongside
   the CollectionPage markup; the offer points at the product URL with that variant selected.
   The rating is the product's reviews.rating / reviews.rating_count, as on the product page.
-  On the deck-size-seo test template the name and description come from the SEO entry and
-  the offer carries the store's 30-day return policy.
+  When the entry has SEO data (seo_meta), the name and description come from it and the
+  offer carries the store's 30-day return policy.
 
   Accepts:
   - sdp: {Metaobject} deck_size_page entry, optional
@@ -25,7 +25,7 @@
   endfor
   assign description = collection.metafields.global.description_tag | default: heading
   assign seo_template = false
-  if template.suffix == 'deck-size-seo' and sdp != blank
+  if sdp != blank and sdp.seo_meta.value != blank
     assign seo_template = true
     assign item_name = sdp.name.value | default: item_name
     assign description = sdp.seo_meta.value.schema_description | default: sdp.seo_meta.value.description | default: description

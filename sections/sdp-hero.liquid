@@ -22,9 +22,6 @@
   assign sdp = page.metafields.custom.deck_size.value
   if template.name == 'collection'
     assign sdp = collection.metafields.custom.deck_size.value
-    if template.suffix == 'deck-size-seo' and collection.metafields.custom.deck_size_seo.value != blank
-      assign sdp = collection.metafields.custom.deck_size_seo.value
-    endif
   endif
   assign sdp_variants = ''
   if sdp != blank
@@ -33,7 +30,7 @@
   endif
 
   comment
-    Size collections (collection.deck-size): the collection metafield custom.seo_variant_id
+    Size collections (collection.deck-size-master): the collection metafield custom.seo_variant_id
     pins the variant this page sells; its product is the one in the add-to-cart form.
   endcomment
   assign pinned_variant = nil

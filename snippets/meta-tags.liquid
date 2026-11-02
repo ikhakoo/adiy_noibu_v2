@@ -20,8 +20,8 @@
   assign share_image = page_image | default: settings.logo
 
   comment
-    Size collection SEO test template: share title, description and image from the
-    collection's custom.deck_size_seo entry (image = the pinned size variant's photo).
+    Size collections: share title, description and image from the collection's
+    custom.deck_size entry (image = the pinned size variant's photo).
   endcomment
   if seo_entry != blank
     assign seo_meta = seo_entry.seo_meta.value

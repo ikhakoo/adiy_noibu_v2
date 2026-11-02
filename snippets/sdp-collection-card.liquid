@@ -21,7 +21,7 @@
     endif
   endfor
   comment
-    Cards link to the size's own collection (collection.deck-size); the main kit with
+    Cards link to the size's own collection (collection.deck-size-master); the main kit with
     this size preselected is the fallback when an entry has no collection yet.
   endcomment
   assign card_url = v.url | default: entry.collection.value.url

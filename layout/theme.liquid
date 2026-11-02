@@ -26,15 +26,15 @@
 
     {%- liquid
       comment
-        Size collection SEO test template (collection.deck-size-seo): its title, meta
-        description and share preview come from the collection's custom.deck_size_seo entry.
-        Every other page uses Shopify's own values unchanged.
+        Size collections (master template collection.deck-size-master): when the collection's
+        custom.deck_size entry has SEO data (seo_meta), the title, meta description and share
+        preview come from it. Every other page uses Shopify's own values unchanged.
       endcomment
       assign seo_entry = nil
       assign seo_title = page_title
       assign seo_description = page_description
-      if template.name == 'collection' and template.suffix == 'deck-size-seo'
-        assign seo_entry = collection.metafields.custom.deck_size_seo.value
+      if template.name == 'collection' and collection.metafields.custom.deck_size.value.seo_meta.value != blank
+        assign seo_entry = collection.metafields.custom.deck_size.value
       endif
       if seo_entry != blank
         assign seo_title = seo_entry.seo_meta.value.title | default: page_title
