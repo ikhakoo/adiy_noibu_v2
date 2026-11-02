@@ -14,7 +14,7 @@
     The deck-sizes and deck-material templates emit their own ItemList (sections/sdp-collection.liquid).
     Products tagged hide-product (the size SEO pages) are left out of every other list.
   endcomment
-  if request.page_type == 'collection' and collection.template_suffix != 'deck-sizes' and collection.template_suffix != 'deck-material'
+  if request.page_type == 'collection' and collection.template_suffix != 'deck-sizes' and collection.template_suffix != 'deck-material' and collection.template_suffix != 'deck-material-hub'
     assign list_items = collection.products
     assign list_name = collection.title
   endif

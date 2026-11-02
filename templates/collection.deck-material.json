@@ -51,6 +51,7 @@
       ],
       "settings": {
         "eyebrow": "Shop by material",
+        "eyebrow_link": "shopify://collections/deck-kits-by-material",
         "heading": "[hero_heading]",
         "show_description": false,
         "promo_code": "FALL1500",

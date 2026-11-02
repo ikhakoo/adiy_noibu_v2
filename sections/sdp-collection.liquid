@@ -87,7 +87,7 @@
           {%- capture t_heading -%}{%- render 'sdp-t', text: section.settings.heading, sdp: sdp -%}{%- endcapture -%}
           {%- assign t_heading = t_heading | strip -%}
           {%- if t_eyebrow != blank -%}
-            <p class="sdp-eyebrow">{{ t_eyebrow | escape }}</p>
+            <p class="sdp-eyebrow">{%- if section.settings.eyebrow_link != blank -%}<a href="{{ section.settings.eyebrow_link }}" class="sdpc__eyebrow-link">{{ t_eyebrow | escape }}</a>{%- else -%}{{ t_eyebrow | escape }}{%- endif -%}</p>
           {%- endif -%}
           <h1 class="sdpc__title">{{ t_heading | default: collection.title | escape }}</h1>
           {%- if material_only != blank and sdp.hero_lede != blank -%}
@@ -203,6 +203,7 @@
   "enabled_on": { "templates": ["collection"] },
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by size" },
+    { "type": "url", "id": "eyebrow_link", "label": "Eyebrow link", "info": "Optional, e.g. the Deck Kits by Material collection." },
     { "type": "text", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the collection title." },
     { "type": "textarea", "id": "sizes", "label": "Sizes", "info": "Comma-separated Deck size page handles (Content > Metaobjects > Deck size page), in display order.", "default": "wood-12x12,wood-12x18,wood-12x20,wood-12x24,wood-12x28,wood-16x16,wood-16x20,wood-16x24,wood-16x28,composite-12x12,composite-12x16,composite-12x20,composite-12x24,composite-12x28,composite-16x16,composite-16x20,composite-16x24,composite-16x28,wood-6x12,wood-6x16,wood-6x20,wood-8x12,wood-8x16,wood-8x20" },
     { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },

@@ -24,9 +24,14 @@
       if collection.handle != blank
         assign crumbs = home_crumb
         comment
-          Size collections: Home > material collection (e.g. Pressure-Treated Deck Kits) > size.
+          Size and material collections: Home > Deck Kits by Material > material collection (e.g.
+          Pressure-Treated Wood Deck Kits) > size.
         endcomment
         assign crumb_sdp = collection.metafields.custom.deck_size.value
+        assign crumb_hub = collections['deck-kits-by-material']
+        if crumb_sdp != blank and crumb_hub.url != blank and crumb_hub.id != collection.id
+          assign crumbs = crumbs | append: '~~' | append: crumb_hub.url | append: '|' | append: crumb_hub.title
+        endif
         if crumb_sdp != blank and crumb_sdp.width.value != blank
           assign crumb_key = crumb_sdp.material.value | append: '-material'
           assign crumb_parent = shop.metaobjects.deck_size_page[crumb_key].collection.value

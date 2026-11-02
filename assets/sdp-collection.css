@@ -516,3 +516,185 @@
     transform: none;
   }
 }
+
+
+/* ---------- Deck Kits by Material (sections/sdp-material-hub.liquid) ---------- */
+
+.sdpm__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.sdpm-card__media {
+  aspect-ratio: 16 / 9;
+}
+
+.sdpm-card__body {
+  gap: 12px;
+  padding: 24px 26px 26px;
+}
+
+.sdpm-card__title {
+  font-size: 30px;
+}
+
+.sdpm-card__lede {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--sdp-text);
+}
+
+.sdpm-card__points {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 2px 0 6px;
+  font-size: 15px;
+  color: var(--sdp-ink);
+}
+
+.sdpm-card__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.sdpm-card__points svg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--sdp-ring);
+  color: var(--sdp-green);
+}
+
+.sdpm-card .sdpc-card__foot {
+  align-items: center;
+}
+
+.sdpm-card__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--sdp-green);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  transition: background 0.2s ease;
+}
+
+.sdpm-card__button svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.sdpm-card:hover .sdpm-card__button {
+  background: var(--sdp-green-dark);
+}
+
+.sdpm-card:hover .sdpm-card__button svg {
+  transform: translateX(3px);
+}
+
+.sdpm__compare {
+  margin-top: 64px;
+}
+
+.sdpm__compare-title {
+  margin-bottom: 24px;
+}
+
+.sdpm__table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--sdp-line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.sdpm__table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--sdp-text);
+}
+
+.sdpm__table th,
+.sdpm__table td {
+  padding: 16px 20px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--sdp-line);
+}
+
+.sdpm__table tbody tr:last-child th,
+.sdpm__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.sdpm__table thead th {
+  background: var(--sdp-sand);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sdp-ink);
+}
+
+.sdpm__table thead a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sdpm__table tbody th {
+  width: 22%;
+  font-weight: 600;
+  color: var(--sdp-ink);
+}
+
+.sdpm__table td {
+  width: 39%;
+}
+
+@media (max-width: 989px) {
+  .sdpm__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 749px) {
+  .sdpm-card__body {
+    padding: 20px;
+  }
+
+  .sdpm-card__title {
+    font-size: 24px;
+  }
+
+  .sdpm-card .sdpc-card__foot {
+    flex-wrap: wrap;
+  }
+
+  .sdpm__compare {
+    margin-top: 48px;
+  }
+
+  .sdpm__table th,
+  .sdpm__table td {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}
+
+.sdpc__eyebrow-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
