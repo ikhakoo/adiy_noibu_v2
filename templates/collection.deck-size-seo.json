@@ -96,7 +96,7 @@
         "use_product_image": true,
         "image_focal": "50% 60%",
         "price_label": "Regular price",
-        "promo_code": "FALL1500",
+        "promo_code": "",
         "discount_amount": 0,
         "promo_prefix": "or",
         "promo_suffix": "with code",
@@ -234,15 +234,6 @@
     "video_carousel": {
       "type": "video-carousel",
       "blocks": {
-        "video_card_ahYgct": {
-          "type": "video_card",
-          "settings": {
-            "external_video_url": "https://cdn.shopify.com/videos/c/o/v/8da1c0c9e7844c41b194c3f72f5bba72.mp4",
-            "video_title": "Built solo in about six hours, six weeks postpartum",
-            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
-            "video_upload_date": ""
-          }
-        },
         "video_card_jBfw7r": {
           "type": "video_card",
           "settings": {
@@ -263,13 +254,13 @@
             "video_upload_date": ""
           }
         },
-        "video_card_BpVMTz": {
+        "video_card_cTW3eq": {
           "type": "video_card",
           "settings": {
-            "video": "shopify://files/videos/Comment “deck” and I’ll send you the deets & a discount code! 😍We totally needed a deck to make.mp4",
+            "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
             "external_video_url": "",
-            "video_title": "Why we finally added a deck",
-            "video_description": "A customer explains why they added a deck to their backyard and which A-DIY kit they used.",
+            "video_title": "A 16x20 deck that transformed a backyard",
+            "video_description": "A customer builds a 16 x 20 composite A-DIY deck and shows how one project changed their backyard.",
             "video_upload_date": ""
           }
         },
@@ -283,23 +274,13 @@
             "video_upload_date": ""
           }
         },
-        "video_card_zecQyF": {
+        "video_card_nUPXFF": {
           "type": "video_card",
           "settings": {
-            "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
+            "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
             "external_video_url": "",
-            "video_title": "Creating a dream backyard with a kit shipped to the door",
-            "video_description": "A customer transforms their backyard with a custom A-DIY deck kit delivered to their door.",
-            "video_upload_date": ""
-          }
-        },
-        "video_card_8wbEp3": {
-          "type": "video_card",
-          "settings": {
-            "video": "shopify://files/videos/DIY deck walkway ✔️One of the biggest goals for our backyard makeover has been creating better f.mp4",
-            "external_video_url": "",
-            "video_title": "A DIY deck walkway for better backyard flow",
-            "video_description": "A customer builds a deck walkway as part of a backyard makeover, to improve how the space connects.",
+            "video_title": "Almost hired a contractor, built it instead",
+            "video_description": "A customer explains why they chose an A-DIY kit over hiring a contractor to build their deck.",
             "video_upload_date": ""
           }
         },
@@ -313,46 +294,6 @@
             "video_upload_date": ""
           }
         },
-        "video_card_nUPXFF": {
-          "type": "video_card",
-          "settings": {
-            "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
-            "external_video_url": "",
-            "video_title": "Almost hired a contractor, built it instead",
-            "video_description": "A customer explains why they chose an A-DIY kit over hiring a contractor to build their deck.",
-            "video_upload_date": ""
-          }
-        },
-        "video_card_cTW3eq": {
-          "type": "video_card",
-          "settings": {
-            "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
-            "external_video_url": "",
-            "video_title": "A 16x20 deck that transformed a backyard",
-            "video_description": "A customer builds a 16 x 20 composite A-DIY deck and shows how one project changed their backyard.",
-            "video_upload_date": ""
-          }
-        },
-        "video_card_XCCyQn": {
-          "type": "video_card",
-          "settings": {
-            "video": "shopify://files/videos/Our new deck is finally done thanks to A-DIY @decks 🤍✨I wanted something that looked beautiful .mp4",
-            "external_video_url": "",
-            "video_title": "A finished deck that looks the part",
-            "video_description": "A customer shares their completed A-DIY deck, chosen because they wanted something that looked beautiful.",
-            "video_upload_date": ""
-          }
-        },
-        "video_card_hVELcx": {
-          "type": "video_card",
-          "settings": {
-            "video": "shopify://files/videos/Had a great time assembling my new deck by @decks! So satisfying and the results are amazing! So.mp4",
-            "external_video_url": "",
-            "video_title": "Satisfying to assemble, and the result shows",
-            "video_description": "A customer describes assembling their A-DIY deck and the finished result.",
-            "video_upload_date": ""
-          }
-        },
         "video_card_XGXdVn": {
           "type": "video_card",
           "settings": {
@@ -363,54 +304,26 @@
             "video_upload_date": ""
           }
         },
-        "video_card_cDGiX9": {
+        "video_card_zecQyF": {
           "type": "video_card",
           "settings": {
-            "video": "shopify://files/videos/We loved seeing our deck come to life for the Maker’s Mark activation in Orlando! If you’re in t.mp4",
+            "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
             "external_video_url": "",
-            "video_title": "A-DIY deck built for the Maker's Mark activation in Orlando",
-            "video_description": "An A-DIY deck assembled on site for the Maker's Mark brand activation in Orlando.",
-            "video_upload_date": ""
-          }
-        },
-        "video_card_bQiEmk": {
-          "type": "video_card",
-          "settings": {
-            "video": "shopify://files/videos/Another A-DIYer officially in their deck era ✨Nothing better than happy customers, fresh lumber,.mp4",
-            "external_video_url": "",
-            "video_title": "Another finished A-DIY deck",
-            "video_description": "A customer's completed A-DIY deck: fresh lumber and a finished backyard space.",
-            "video_upload_date": ""
-          }
-        },
-        "video_card_h7wfe6": {
-          "type": "video_card",
-          "settings": {
-            "video": "shopify://files/videos/e96d071f82fe44dbb1c955b55dbc6f08.mp4",
-            "external_video_url": "",
-            "video_title": "",
-            "video_description": "",
+            "video_title": "Creating a dream backyard with a kit shipped to the door",
+            "video_description": "A customer transforms their backyard with a custom A-DIY deck kit delivered to their door.",
             "video_upload_date": ""
           }
         }
       },
       "block_order": [
-        "video_card_ahYgct",
         "video_card_jBfw7r",
         "video_card_xtzmkU",
-        "video_card_BpVMTz",
-        "video_card_FdxxkQ",
-        "video_card_zecQyF",
-        "video_card_8wbEp3",
-        "video_card_73gEM7",
-        "video_card_nUPXFF",
         "video_card_cTW3eq",
-        "video_card_XCCyQn",
-        "video_card_hVELcx",
+        "video_card_FdxxkQ",
+        "video_card_nUPXFF",
+        "video_card_73gEM7",
         "video_card_XGXdVn",
-        "video_card_cDGiX9",
-        "video_card_bQiEmk",
-        "video_card_h7wfe6"
+        "video_card_zecQyF"
       ],
       "name": "Video Carousel",
       "settings": {
@@ -442,7 +355,7 @@
         "compact_sizes": "6x12,6x16,6x20,8x12,8x16,8x20",
         "intro": "Looking for something bigger or smaller than a [size_x] deck? Explore additional [material] deck sizes to find the right amount of space for your backyard.",
         "tile_name_suffix": "[material_title] Deck",
-        "tile_link": "product"
+        "tile_link": "page"
       }
     },
     "kit": {
@@ -716,18 +629,6 @@
             "review_text": ""
           }
         },
-        "video_review_WtK483": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/Comment “deck” and I’ll send you the deets & a discount code! 😍We totally needed a deck to make.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "image_review_3D7kkJ": {
           "type": "image_review",
           "settings": {
@@ -767,18 +668,6 @@
             "is_4_star": false,
             "is_3_star": false,
             "video": "shopify://files/videos/16 Home Carousel Video Portrait 1.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
-        "video_review_pNQm3a": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/I built this entire @decks by myself… six weeks postpartum in about 6 hours! The best part This .mp4",
             "aspect_ratio": "tall",
             "author_name": "",
             "author_role": ""
@@ -922,18 +811,6 @@
             "review_text": "A great product well put together will definitely refer you to other people and I might buy an extension for another 12 x 12 platform to go off the one I have. Thank you so much for a great product."
           }
         },
-        "video_review_FwLeyP": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/From overgrown patio area to deck extension! As easy as 1,2,3 thanks to @decks. Their deck kits .mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "text_review_TKd9Lt": {
           "type": "text_review",
           "settings": {
@@ -1030,23 +907,11 @@
             "author_role": ""
           }
         },
-        "video_review_nkyxfn": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/We loved seeing our deck come to life for the Maker’s Mark activation in Orlando! If you’re in t.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "text_review_rHjQE8": {
           "type": "text_review",
           "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
+            "is_5_star": false,
+            "is_4_star": true,
             "is_3_star": false,
             "author_name": "MS",
             "author_handle": "",
@@ -1092,18 +957,6 @@
             "headline": "Very nice deck. 16x16 I put together myself. Great product.",
             "social_icon": "trustpilot",
             "review_text": "It was a lot cheaper and of the best quality. THANK YOU!"
-          }
-        },
-        "video_review_MXckDA": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/Another A-DIYer officially in their deck era ✨Nothing better than happy customers, fresh lumber,.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
           }
         },
         "text_review_Vhk4P7": {
@@ -1443,18 +1296,6 @@
             "review_text": "Cant wait for the grandkids to enjoy it now!"
           }
         },
-        "video_review_qfUKay": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/DIY deck walkway ✔️One of the biggest goals for our backyard makeover has been creating better f.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "text_review_jhzJcD": {
           "type": "text_review",
           "settings": {
@@ -1517,18 +1358,6 @@
             "headline": "10/10 recommend",
             "social_icon": "trustpilot",
             "review_text": "It’s amazing. So easy and quick to put together, super efficient, amazing quality. 10/10"
-          }
-        },
-        "video_review_fiiDqm": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
           }
         },
         "text_review_kJWr63": {
@@ -1628,18 +1457,6 @@
             "review_text": "What made it a project that I could do myself is that everything and the box beams were pre-cut and partially assembled.\nThe step by step instructions left very little guesswork. I think almost anyone could build from one of these kits.\nThe only part that took experience or knowledge beforehand was leveling the locations of the footing pads"
           }
         },
-        "video_review_pWHrBq": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/Had a great time assembling my new deck by @decks! So satisfying and the results are amazing! So.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "text_review_nDBJU8": {
           "type": "text_review",
           "settings": {
@@ -1653,18 +1470,6 @@
             "review_text": "Easy to follow the steps to install. The customer service team was great as well."
           }
         },
-        "video_review_amBgDD": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/Our new deck is finally done thanks to A-DIY @decks 🤍✨I wanted something that looked beautiful .mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "text_review_McHPaB": {
           "type": "text_review",
           "settings": {
@@ -1676,18 +1481,6 @@
             "headline": "",
             "social_icon": "trustpilot",
             "review_text": "We built a full 16x20 deck in one weekend with the A DIY kit.  Just me, my wife, and a drill. No contractors, no measuring, no guessing. Every single piece was labeled, organized, and easy to follow.\n\nThe best part? It goes together like legos for adults. We saved thousands doing it ourselves and actually enjoyed the process. Well… most of it. These kinds of projects definitely test your marriage 🤣🤣\n\nThe instructions were clear, the kit was complete, and the results look like something we waited months for… but we built it ourselves. I’ve never seen a DIY product this well thought out and user-friendly. If you want a deck fast and don’t want to deal with contractors, this is it.\n\nWe are blown away. Thank you for giving us our favorite space in our new home."
-          }
-        },
-        "video_review_yUEftz": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/This project got a billion times easier… @decks 12x20 deck kit was like building a Lego set. So .mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
           }
         },
         "text_review_YrLkdJ": {
@@ -1748,18 +1541,6 @@
             "review_text": "All the pieces fit together like lego. At first I was sceptical, but once I started assembling the deck, everything came together so seamlessly. I was able to add railings and a step to the deck myself. This is a great product and absolutely love the customer support team."
           }
         },
-        "video_review_bdWMM4": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/We got the deck kit from @decks and customized it to be 18x28 ft and we havent gotten to it yet.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "text_review_DWEHBm": {
           "type": "text_review",
           "settings": {
@@ -1818,30 +1599,6 @@
             "review_text": "It was a fun project! I'm no carpenter by any means! I've always wanted a deck for my small backyard but 10s of thousands of dollars will never be in my budget. My 93 year old grandmother stays with me and now she can walk comfortably out the back door and enjoy the outside gathering. My friend and I put it up in a day and a half. We raised it from its designed height and built steps. Everything was in the neatly organized crate!! I didn't see a single board! My friend and I had fun and my Grandma was over the moon. Just need Deck railing and possibly a pergola. The price was right!!"
           }
         },
-        "video_review_fpqHBY": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
-        "video_review_aaTiGb": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/We built a deck in TWO DAYS!!! 🤯 If you’re in the market for a new deck, check out A-DIY @decks.mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
-          }
-        },
         "text_review_AbbJNL": {
           "type": "text_review",
           "settings": {
@@ -1853,18 +1610,6 @@
             "headline": "Composite Deck 16x16",
             "social_icon": "google",
             "review_text": "This is the only way to go if you're considering replacing your old deck. High quality materials delivered to your home. Comes with everything you need and is pretty easy to construct. I love mine!"
-          }
-        },
-        "video_review_ExVHh3": {
-          "type": "video_review",
-          "settings": {
-            "is_5_star": true,
-            "is_4_star": false,
-            "is_3_star": false,
-            "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
-            "aspect_ratio": "tall",
-            "author_name": "",
-            "author_role": ""
           }
         },
         "text_review_GHfnP6": {
@@ -2071,11 +1816,9 @@
         "video_review_kizCHf",
         "image_review_Hj6ggb",
         "image_review_Ky6Kz6",
-        "video_review_WtK483",
         "image_review_3D7kkJ",
         "image_review_ytM49X",
         "video_review_TzV76F",
-        "video_review_pNQm3a",
         "image_review_cFfg8g",
         "image_review_RxGbTF",
         "text_review_3aTUTa",
@@ -2083,19 +1826,16 @@
         "video_review_nrTFyH",
         "image_review_PTYLBx",
         "text_review_gTwEBK",
-        "video_review_FwLeyP",
         "text_review_TKd9Lt",
         "text_review_tbiGPt",
         "text_review_HAHtMH",
         "text_review_47eeGF",
         "image_review_D3Mpkb",
         "video_review_zmaJXi",
-        "video_review_nkyxfn",
         "text_review_rHjQE8",
         "text_review_Um7zqj",
         "text_review_jUcznj",
         "text_review_M8rFUc",
-        "video_review_MXckDA",
         "text_review_Vhk4P7",
         "image_review_Uacc3V",
         "text_review_awtzx8",
@@ -2118,13 +1858,11 @@
         "video_review_FaFYQR",
         "text_review_WmExcn",
         "image_review_MnbTqY",
-        "video_review_qfUKay",
         "text_review_jhzJcD",
         "text_review_MVVbzD",
         "video_review_TTBwiX",
         "text_review_pgM6fF",
         "text_review_gqhMFY",
-        "video_review_fiiDqm",
         "text_review_kJWr63",
         "text_review_J3E8nH",
         "image_review_bqLNYR",
@@ -2132,24 +1870,17 @@
         "image_review_jiickr",
         "text_review_KtnPtA",
         "text_review_k7x4bp",
-        "video_review_pWHrBq",
         "text_review_nDBJU8",
-        "video_review_amBgDD",
         "text_review_McHPaB",
-        "video_review_yUEftz",
         "text_review_YrLkdJ",
         "text_review_cPd87M",
         "image_review_QLatmr",
         "image_review_648xEN",
-        "video_review_bdWMM4",
         "text_review_DWEHBm",
         "image_review_TJ6iM7",
         "image_review_39mfeR",
         "text_review_z66eCk",
-        "video_review_fpqHBY",
-        "video_review_aaTiGb",
         "text_review_AbbJNL",
-        "video_review_ExVHh3",
         "text_review_jBjkRi",
         "image_review_3MRQyU",
         "text_review_maJk6M",
@@ -2197,7 +1928,7 @@
           "settings": {
             "icon": "truck",
             "title": "Receive your\ndeck",
-            "text": "Ships in one crate by LTL ground freight, typically in 10–14 business days. The carrier schedules curbside delivery."
+            "text": "Ships in one crate by LTL ground freight, typically in 10–14 business days and longer in peak season. The carrier schedules curbside delivery."
           }
         },
         "step_3": {
@@ -2247,7 +1978,7 @@
         "chat_label": "Start a live chat",
         "chat_link": "#chat",
         "size_option": "",
-        "promo_code": "FALL1500",
+        "promo_code": "",
         "discount_amount": 0,
         "twin_product": ""
       }

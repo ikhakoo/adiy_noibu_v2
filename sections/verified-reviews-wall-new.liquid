@@ -739,6 +739,12 @@
               assign rw_sdp = collection.metafields.custom.deck_size_seo.value
             endif
           endif
+          comment
+            Material of this page ("wood" or "composite"); a review that names the size and
+            this material ranks above one that names only the size.
+          endcomment
+          assign rw_mat = rw_sdp.material.value | default: '' | downcase
+          assign rw_best = ''
           assign rw_first = ''
           assign rw_rest = ''
           for b in section.blocks
@@ -755,13 +761,27 @@
                 assign rw_hit = true
               endif
             endif
-            if rw_hit
+            assign rw_mat_hit = false
+            if rw_hit and rw_mat != blank
+              if rw_mat == 'composite' and rw_hay contains 'composite'
+                assign rw_mat_hit = true
+              elsif rw_mat == 'wood' and rw_hay contains 'composite'
+                assign rw_mat_hit = false
+              elsif rw_mat == 'wood'
+                if rw_hay contains 'wood' or rw_hay contains 'pressure'
+                  assign rw_mat_hit = true
+                endif
+              endif
+            endif
+            if rw_mat_hit
+              assign rw_best = rw_best | append: forloop.index0 | append: ','
+            elsif rw_hit
               assign rw_first = rw_first | append: forloop.index0 | append: ','
             else
               assign rw_rest = rw_rest | append: forloop.index0 | append: ','
             endif
           endfor
-          assign rw_order = rw_first | append: rw_rest | split: ','
+          assign rw_order = rw_best | append: rw_first | append: rw_rest | split: ','
         -%}
         {%- for rw_idx in rw_order -%}
           {%- assign rw_i = rw_idx | plus: 0 -%}
@@ -794,7 +814,7 @@
                       src="{{ block.settings.video.preview_image | image_url: width: 600 }}"
                       width="{{ block.settings.video.preview_image.width }}"
                       height="{{ block.settings.video.preview_image.height }}"
-                      alt=""
+                      alt="{% if block.settings.author_name != blank %}Video review from {{ block.settings.author_name | escape }}, an A-DIY customer{% else %}Customer video review of an A-DIY deck{% endif %}"
                       loading="lazy">
                   {%- endif -%}
                   <div class="review-play-button"></div>
@@ -1080,7 +1100,7 @@
       "type": "text",
       "id": "total_reviews",
       "label": "Total Reviews Count",
-      "default": "1,751"
+      "default": "1,821"
     },
     {
       "type": "color",

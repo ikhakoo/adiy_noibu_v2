@@ -3,8 +3,9 @@
   the variant pinned by the collection metafield custom.seo_variant_id. It sits alongside
   the CollectionPage markup; the offer points at the product URL with that variant selected.
   The rating is the product's reviews.rating / reviews.rating_count, as on the product page.
-  On the deck-size-seo test template the name and description come from the SEO entry and
-  the offer carries the store's 30-day return policy.
+  On the deck-size-seo template the name and description come from the SEO entry. No return
+  policy is declared: the store's policy (freight returns, deductions, promo orders final
+  sale) can't be expressed accurately in MerchantReturnPolicy.
 
   Accepts:
   - sdp: {Metaobject} deck_size_page entry, optional
@@ -12,9 +13,11 @@
   - variant: {Object} the pinned variant
   - heading: {String} page H1
   - image: {Object} hero image
+  - rating_value / rating_count: {String} the store-wide rating shown on the page's review
+    wall; used instead of the product's review metafields so schema matches what is visible
 {%- endcomment -%}
 {%- liquid
-  assign product_url = request.origin | append: variant.url
+  assign product_url = request.origin | append: collection.url
   assign item_name = collection.title
   for opt in variant.options
     unless opt contains ' x '
@@ -30,8 +33,8 @@
     assign item_name = sdp.name.value | default: item_name
     assign description = sdp.seo_meta.value.schema_description | default: sdp.seo_meta.value.description | default: description
   endif
-  assign rating = product.metafields.reviews.rating.value
-  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign rating_value = rating_value | default: product.metafields.reviews.rating.value.rating
+  assign rating_count = rating_count | default: product.metafields.reviews.rating_count.value | default: 0 | remove: ',' | plus: 0
   assign item_image = image | default: variant.featured_media.preview_image | default: product.featured_media.preview_image
 -%}
 <script type="application/ld+json">
@@ -48,13 +51,13 @@
     {%- if variant.sku != blank %}
     "sku": {{ variant.sku | json }},
     {%- endif %}
-    {%- if rating != blank and rating_count > 0 %}
+    {%- if rating_value != blank and rating_count > 0 %}
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": {{ rating.rating | json }},
+      "ratingValue": {{ rating_value | append: '' | json }},
       "ratingCount": {{ rating_count | json }},
-      "bestRating": {{ rating.scale_max | json }},
-      "worstRating": {{ rating.scale_min | json }}
+      "bestRating": "5",
+      "worstRating": "1"
     },
     {%- endif %}
     "offers": {
@@ -65,17 +68,6 @@
       "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
       "url": {{ product_url | json }},
       "itemCondition": "https://schema.org/NewCondition",
-      {%- if seo_template %}
-      "hasMerchantReturnPolicy": {
-        "@type": "MerchantReturnPolicy",
-        "applicableCountry": "US",
-        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-        "merchantReturnDays": 30,
-        "returnMethod": "https://schema.org/ReturnByMail",
-        "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
-        "merchantReturnLink": {{ request.origin | append: '/policies/refund-policy' | json }}
-      },
-      {%- endif %}
       "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
     }
   }
