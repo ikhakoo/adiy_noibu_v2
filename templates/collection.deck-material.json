@@ -1,9 +1,11 @@
 /*
- * Master template for the material collections (/collections/pressure-treated-wood-deck-kits and
- * /collections/composite-deck-kits). Same design as the size pages; the grid lists every size in
- * the collection's material. Copy, images, FAQs, prices and SEO come from the collection's
- * custom.deck_size metafield (a "Deck size page" entry with no width/length: wood-material or
- * composite-material). [material_title] etc. are filled per page.
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
  */
 {
   "sections": {
@@ -53,6 +55,7 @@
         "eyebrow": "Shop by material",
         "eyebrow_link": "shopify://collections/deck-kits-by-material",
         "heading": "[hero_heading]",
+        "sizes": "wood-12x12,wood-12x18,wood-12x20,wood-12x24,wood-12x28,wood-16x16,wood-16x20,wood-16x24,wood-16x28,composite-12x12,composite-12x16,composite-12x20,composite-12x24,composite-12x28,composite-16x16,composite-16x20,composite-16x24,composite-16x28,wood-6x12,wood-6x16,wood-6x20,wood-8x12,wood-8x16,wood-8x20",
         "show_description": false,
         "promo_code": "FALL1500",
         "tab_all": "All sizes",
@@ -61,45 +64,42 @@
         "tab_compact": "Compact series",
         "columns_desktop": 4,
         "columns_mobile": "1",
-        "background": "sand",
-        "sizes": "wood-12x12,wood-12x18,wood-12x20,wood-12x24,wood-12x28,wood-16x16,wood-16x20,wood-16x24,wood-16x28,composite-12x12,composite-12x16,composite-12x20,composite-12x24,composite-12x28,composite-16x16,composite-16x20,composite-16x24,composite-16x28,wood-6x12,wood-6x16,wood-6x20,wood-8x12,wood-8x16,wood-8x20"
+        "background": "sand"
       }
     },
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
+        "twin_product": "",
+        "size_option": "",
         "image": "shopify://shop_images/sdp-real-composite-gray-lounge.jpg",
         "image_focal": "50% 55%",
+        "image_alt": "[xl_image_alt]",
         "eyebrow": "[xl_eyebrow]",
         "heading": "[xl_heading]",
         "text": "[xl_text]",
         "button_label": "[xl_button_label]",
-        "button_link": "",
-        "image_alt": "[xl_image_alt]",
-        "twin_product": "",
-        "size_option": ""
+        "button_link": ""
       }
     },
     "sizes": {
       "type": "sdp-other-sizes",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "anchor_id": "sizes",
         "eyebrow": "Find your fit",
         "heading": "Shop [material_title] Deck Kits by Size",
+        "intro": "Every size has its own page: what fits on it, what ships in the kit, how long it takes to build and what it costs.",
         "current_label": "This page",
+        "tile_link": "page",
+        "tile_name_suffix": "[material_title] Deck",
+        "standard_title": "Standard series",
+        "standard_sizes": "12x12,12x16,12x18,12x20,12x24,12x28,16x16,16x20,16x24,16x28",
+        "compact_title": "Compact series",
+        "compact_sizes": "6x12,6x16,6x20,8x12,8x16,8x20",
         "cta_heading": "Don’t see your size? We build many more.",
         "cta_text": "Plenty of sizes aren’t listed here. Chat with a deck specialist to find out what we can build for your yard.",
         "cta_button_label": "Chat now",
-        "cta_button_link": "#chat",
-        "standard_title": "Standard series",
-        "compact_title": "Compact series",
-        "standard_sizes": "12x12,12x16,12x18,12x20,12x24,12x28,16x16,16x20,16x24,16x28",
-        "compact_sizes": "6x12,6x16,6x20,8x12,8x16,8x20",
-        "intro": "Every size has its own page: what fits on it, what ships in the kit, how long it takes to build and what it costs.",
-        "tile_name_suffix": "[material_title] Deck",
-        "tile_link": "page"
+        "cta_button_link": "#chat"
       }
     },
     "kit": {
@@ -109,54 +109,54 @@
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Feat-Icon_8aaa5ffc-9318-4b50-8bc2-b68bbb0b633c.png",
+            "material": "wood",
             "title": "Engineered Wood Components",
-            "text": "Grade 1 Southern Yellow Pine beams, joists and deck boards, kiln-dried and pressure-treated, cut to fit.",
-            "material": "wood"
+            "text": "Grade 1 Southern Yellow Pine beams, joists and deck boards, kiln-dried and pressure-treated, cut to fit."
           }
         },
         "comp_boards": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/composite_boards-removebg-preview.png",
+            "material": "composite",
             "title": "Composite Deck Boards",
-            "text": "Fade, stain and moisture resistant boards in Amazon Gray or Forest Wood, with a 25-year warranty.",
-            "material": "composite"
+            "text": "Fade, stain and moisture resistant boards in Amazon Gray or Forest Wood, with a 25-year warranty."
           }
         },
         "comp_frame": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Feat-Icon_8aaa5ffc-9318-4b50-8bc2-b68bbb0b633c.png",
+            "material": "composite",
             "title": "Engineered Frame Lumber",
-            "text": "Premium Grade 1, kiln-dried and pressure-treated substructure beneath the boards.",
-            "material": "composite"
+            "text": "Premium Grade 1, kiln-dried and pressure-treated substructure beneath the boards."
           }
         },
         "brackets": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Picture_a8c6bc61-3422-4b88-8ed2-1ff0bd3e6db6.png",
+            "material": "all",
             "title": "Structural Hardware",
-            "text": "Galvanized metal brackets, connectors and screws that join the frame and fasten the boards.",
-            "material": "all"
+            "text": "Galvanized metal brackets, connectors and screws that join the frame and fasten the boards."
           }
         },
         "tuff": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Picture-1.png",
+            "material": "all",
             "title": "Deck Foundation",
-            "text": "Tuff Block foundation blocks carry the beams on prepared, level ground, subject to your site.",
-            "material": "all"
+            "text": "Tuff Block foundation blocks carry the beams on prepared, level ground, subject to your site."
           }
         },
         "app": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Feat-Icon-1.png",
+            "material": "all",
             "title": "Assembly Instructions",
-            "text": "Step-by-step instructions and a 3D instructional app guide each stage of the build.",
-            "material": "all"
+            "text": "Step-by-step instructions and a 3D instructional app guide each stage of the build."
           }
         }
       },
@@ -171,14 +171,14 @@
       "settings": {
         "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
         "image_focal": "40% 50%",
+        "image_alt": "[kit_image_alt]",
         "eyebrow": "Kit inclusions",
         "heading": "What’s Included in an A-DIY [material_title] Deck Kit?",
         "intro": "[kit_intro]",
         "button_label": "Choose your size",
         "button_link": "#sizes",
         "features_title": "In the crate",
-        "specs_title": "[material_title] deck kit specifications",
-        "image_alt": "[kit_image_alt]"
+        "specs_title": "[material_title] deck kit specifications"
       }
     },
     "layers": {
@@ -2075,16 +2075,18 @@
       "settings": {
         "eyebrow": "Order today. Build it the weekend it arrives.",
         "heading": "How to Build Your [material_title] Deck with A-DIY",
-        "step_word": "Step",
-        "intro": "Building a [material_short] deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered DIY deck kit and step-by-step assembly guidance."
+        "intro": "Building a [material_short] deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered DIY deck kit and step-by-step assembly guidance.",
+        "step_word": "Step"
       }
     },
     "faq": {
       "type": "sdp-faq",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "anchor_id": "faq",
+        "size_option": "",
+        "promo_code": "FALL1500",
+        "discount_amount": 0,
+        "twin_product": "",
         "eyebrow": "[material_title] deck FAQ",
         "heading": "Frequently Asked Questions About [material_title] Deck Kits",
         "open_all": false,
@@ -2094,11 +2096,7 @@
         "card_text": "Send a photo of your yard and we will tell you which size fits, how high it should sit and what it will cost delivered.",
         "phone": "1 (786) 358-2872",
         "chat_label": "Start a live chat",
-        "chat_link": "#chat",
-        "size_option": "",
-        "promo_code": "FALL1500",
-        "discount_amount": 0,
-        "twin_product": ""
+        "chat_link": "#chat"
       }
     }
   },

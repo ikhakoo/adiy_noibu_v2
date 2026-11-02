@@ -1,9 +1,11 @@
 /*
- * Master template for all 24 deck size collections (/collections/<size>-wood-deck and
- * /collections/<size>-composite-deck). One layout for every size: all copy, headings, images,
- * FAQs, prices, variants and SEO come from the collection's custom.deck_size metafield
- * (a "Deck size page" metaobject entry). [size], [material] etc. in the text below are filled
- * per page. To change one size, edit its entry; to change every size, edit this template.
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
  */
 {
   "sections": {
@@ -42,6 +44,7 @@
         "plan": {
           "type": "payment_plan",
           "settings": {
+            "logo": "shopify://shop_images/sdp-logo-adiy.png",
             "title": "Split the [sale_price] sale price with A-DIY’s own payment plan",
             "kicker": "0% interest · No fees · Guaranteed approval · Code [code]",
             "base_on_regular": false,
@@ -54,7 +57,6 @@
             "highlight": "3",
             "how": "How it works: pay the first installment today, the rest is charged monthly to the same card. No interest, no fees. Your deck ships as soon as the last payment clears.",
             "link_label": "See Details",
-            "logo": "shopify://shop_images/sdp-logo-adiy.png",
             "product": "",
             "link": ""
           }
@@ -62,6 +64,7 @@
         "reserve": {
           "type": "reserve",
           "settings": {
+            "logo": "shopify://shop_images/sdp-logo-adiy.png",
             "title": "A-DIY Reserve - lock in today’s price, deliver when you’re ready",
             "kicker": "$250 deposit · Price locked · You pick the delivery date",
             "label_1": "Today",
@@ -75,7 +78,6 @@
             "sub_3": "a future date",
             "how": "How it works: pay a $250 non-refundable deposit today and your [size] deck is reserved at today’s price. Pick the delivery date that suits you, next month or next spring and pay the remaining balance before it ships.",
             "link_label": "Reserve Now",
-            "logo": "shopify://shop_images/sdp-logo-adiy.png",
             "product": "",
             "link": ""
           }
@@ -89,13 +91,17 @@
         "reserve"
       ],
       "settings": {
+        "anchor_id": "buy",
         "eyebrow": "A professionally engineered [material_word] deck. Built by you.",
         "heading": "[hero_heading]",
         "lede": "[hero_lede]",
+        "size_option": "",
+        "show_variant_picker": true,
         "variant_label": "Choose your color",
         "image": "shopify://shop_images/sdp-real-wood-lounge-umbrella.jpg",
-        "use_product_image": true,
+        "use_custom_image": false,
         "image_focal": "50% 60%",
+        "image_alt": "[hero_image_alt]",
         "price_label": "Regular price",
         "promo_code": "FALL1500",
         "discount_amount": 0,
@@ -106,32 +112,27 @@
         "payments_open": false,
         "toggle_hide": "Hide payment options",
         "toggle_show": "See payment options",
+        "fineprint_no_code": "*Financing payment based on the [regular_price] price over [months] months at 0% APR. Subject to eligibility check and approval; terms and conditions apply. Estimated payment excludes taxes and shipping.",
         "fineprint": "*Financing payment based on the [sale_price] sale price (code [code]) over [months] months at 0% APR; about [monthly_regular]/mo at the regular [regular_price] price. Subject to eligibility check and approval; terms and conditions apply. Estimated payment excludes taxes and shipping.",
         "add_label": "Add to cart",
         "add_show_price": true,
         "secondary_label": "Show more sizes",
-        "secondary_link": "#sizes",
-        "show_variant_picker": true,
-        "image_alt": "[hero_image_alt]",
-        "size_option": "",
-        "use_custom_image": false,
-        "fineprint_no_code": "*Financing payment based on the [regular_price] price over [months] months at 0% APR. Subject to eligibility check and approval; terms and conditions apply. Estimated payment excludes taxes and shipping.",
-        "anchor_id": "buy"
+        "secondary_link": "#sizes"
       }
     },
     "crosslink": {
       "type": "sdp-crosslink",
       "settings": {
+        "twin_product": "",
+        "size_option": "",
         "image": "shopify://shop_images/sdp-real-composite-gray-lounge.jpg",
         "image_focal": "50% 55%",
+        "image_alt": "[xl_image_alt]",
         "eyebrow": "[xl_eyebrow]",
         "heading": "[xl_heading]",
         "text": "[xl_text]",
         "button_label": "[xl_button_label]",
-        "button_link": "",
-        "image_alt": "[xl_image_alt]",
-        "twin_product": "",
-        "size_option": ""
+        "button_link": ""
       }
     },
     "numbers": {
@@ -185,9 +186,9 @@
           "settings": {
             "image": "shopify://shop_images/sdp-real-wood-lounge-umbrella.jpg",
             "image_focal": "50% 60%",
+            "image_alt": "Customer-built A-DIY wood deck with an outdoor sofa set and umbrella",
             "title": "Outdoor lounge",
-            "text": "A full sofa set and a market umbrella, with room to walk around the furniture.",
-            "image_alt": "Customer-built A-DIY wood deck with an outdoor sofa set and umbrella"
+            "text": "A full sofa set and a market umbrella, with room to walk around the furniture."
           }
         },
         "dining": {
@@ -195,9 +196,9 @@
           "settings": {
             "image": "shopify://shop_images/sdp-real-wood-bistro-chiminea.jpg",
             "image_focal": "50% 55%",
+            "image_alt": "Customer-built A-DIY wood deck with chairs, umbrella and chiminea",
             "title": "Bistro chairs and a chiminea",
-            "text": "A couple of chairs, an umbrella and a chiminea for cool evenings, right outside the back door.",
-            "image_alt": "Customer-built A-DIY wood deck with chairs, umbrella and chiminea"
+            "text": "A couple of chairs, an umbrella and a chiminea for cool evenings, right outside the back door."
           }
         },
         "sauna": {
@@ -205,9 +206,9 @@
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.30_3fba2d48.webp",
             "image_focal": "50% 50%",
+            "image_alt": "Customer-built A-DIY wood deck with a gazebo, beside a hot tub",
             "title": "Gazebo or hot tub platform",
-            "text": "Engineered to hold 15,000 lbs, so a hard-top gazebo or a hot tub sits on it with confidence.",
-            "image_alt": "Customer-built A-DIY wood deck with a gazebo, beside a hot tub"
+            "text": "Engineered to hold 15,000 lbs, so a hard-top gazebo or a hot tub sits on it with confidence."
           }
         },
         "quote": {
@@ -426,25 +427,23 @@
     },
     "sizes": {
       "type": "sdp-other-sizes",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "anchor_id": "sizes",
-        "all_link_label": "See all [material_title] deck kits",
         "eyebrow": "Every backyard has a fit",
         "heading": "Explore Other [material_title] Deck Sizes",
+        "intro": "Looking for something bigger or smaller than a [size_x] deck? Explore additional [material] deck sizes to find the right amount of space for your backyard.",
         "current_label": "This page",
+        "tile_link": "product",
+        "all_link_label": "See all [material_title] deck kits",
+        "tile_name_suffix": "[material_title] Deck",
+        "standard_title": "Standard series",
+        "standard_sizes": "12x12,12x16,12x18,12x20,12x24,12x28,16x16,16x20,16x24,16x28",
+        "compact_title": "Compact series",
+        "compact_sizes": "6x12,6x16,6x20,8x12,8x16,8x20",
         "cta_heading": "Don’t see your size? We build many more.",
         "cta_text": "Plenty of sizes aren’t listed here. Chat with a deck specialist to find out what we can build for your yard.",
         "cta_button_label": "Chat now",
-        "cta_button_link": "#chat",
-        "standard_title": "Standard series",
-        "compact_title": "Compact series",
-        "standard_sizes": "12x12,12x16,12x18,12x20,12x24,12x28,16x16,16x20,16x24,16x28",
-        "compact_sizes": "6x12,6x16,6x20,8x12,8x16,8x20",
-        "intro": "Looking for something bigger or smaller than a [size_x] deck? Explore additional [material] deck sizes to find the right amount of space for your backyard.",
-        "tile_name_suffix": "[material_title] Deck",
-        "tile_link": "product"
+        "cta_button_link": "#chat"
       }
     },
     "kit": {
@@ -454,54 +453,54 @@
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Feat-Icon_8aaa5ffc-9318-4b50-8bc2-b68bbb0b633c.png",
+            "material": "wood",
             "title": "Engineered Wood Components",
-            "text": "Grade 1 Southern Yellow Pine beams, joists and deck boards, kiln-dried and pressure-treated, cut to fit.",
-            "material": "wood"
+            "text": "Grade 1 Southern Yellow Pine beams, joists and deck boards, kiln-dried and pressure-treated, cut to fit."
           }
         },
         "comp_boards": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/composite_boards-removebg-preview.png",
+            "material": "composite",
             "title": "Composite Deck Boards",
-            "text": "Fade, stain and moisture resistant boards in Amazon Gray or Forest Wood, with a 25-year warranty.",
-            "material": "composite"
+            "text": "Fade, stain and moisture resistant boards in Amazon Gray or Forest Wood, with a 25-year warranty."
           }
         },
         "comp_frame": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Feat-Icon_8aaa5ffc-9318-4b50-8bc2-b68bbb0b633c.png",
+            "material": "composite",
             "title": "Engineered Frame Lumber",
-            "text": "Premium Grade 1, kiln-dried and pressure-treated substructure beneath the boards.",
-            "material": "composite"
+            "text": "Premium Grade 1, kiln-dried and pressure-treated substructure beneath the boards."
           }
         },
         "brackets": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Picture_a8c6bc61-3422-4b88-8ed2-1ff0bd3e6db6.png",
+            "material": "all",
             "title": "Structural Hardware",
-            "text": "Galvanized metal brackets, connectors and screws that join the frame and fasten the boards.",
-            "material": "all"
+            "text": "Galvanized metal brackets, connectors and screws that join the frame and fasten the boards."
           }
         },
         "tuff": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Picture-1.png",
+            "material": "all",
             "title": "Deck Foundation",
-            "text": "Tuff Block foundation blocks carry the beams on prepared, level ground, subject to your site.",
-            "material": "all"
+            "text": "Tuff Block foundation blocks carry the beams on prepared, level ground, subject to your site."
           }
         },
         "app": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Feat-Icon-1.png",
+            "material": "all",
             "title": "Assembly Instructions",
-            "text": "Step-by-step instructions and a 3D instructional app guide each stage of the build.",
-            "material": "all"
+            "text": "Step-by-step instructions and a 3D instructional app guide each stage of the build."
           }
         }
       },
@@ -516,14 +515,14 @@
       "settings": {
         "image": "shopify://shop_images/sdp-engineered-lumber-pieces.png",
         "image_focal": "40% 50%",
+        "image_alt": "[kit_image_alt]",
         "eyebrow": "Kit inclusions",
         "heading": "What’s Included in Your [size_x] [material_title] Deck Kit?",
         "intro": "[kit_intro]",
         "button_label": "Shop the [size_x] [material_word] deck",
         "button_link": "",
         "features_title": "In the crate",
-        "specs_title": "[size_x] [material_short] deck specifications",
-        "image_alt": "[kit_image_alt]"
+        "specs_title": "[size_x] [material_short] deck specifications"
       }
     },
     "layers": {
@@ -2228,16 +2227,18 @@
       "settings": {
         "eyebrow": "Order today. Build it the weekend it arrives.",
         "heading": "How to Build Your [size_x] Deck with A-DIY",
-        "step_word": "Step",
-        "intro": "Building a [size] [material_short] deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered DIY deck kit and step-by-step assembly guidance."
+        "intro": "Building a [size] [material_short] deck traditionally involves material planning, measuring, cutting, framing, and installation. A-DIY simplifies the process with an engineered DIY deck kit and step-by-step assembly guidance.",
+        "step_word": "Step"
       }
     },
     "faq": {
       "type": "sdp-faq",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "anchor_id": "faq",
+        "size_option": "",
+        "promo_code": "FALL1500",
+        "discount_amount": 0,
+        "twin_product": "",
         "eyebrow": "[size_x] [material_short] deck FAQ",
         "heading": "Frequently Asked Questions About [size_x] [material_title] Decks",
         "open_all": false,
@@ -2247,11 +2248,7 @@
         "card_text": "Send a photo of your yard and we will tell you if a [size] fits, how high it should sit and what it will cost delivered.",
         "phone": "1 (786) 358-2872",
         "chat_label": "Start a live chat",
-        "chat_link": "#chat",
-        "size_option": "",
-        "promo_code": "FALL1500",
-        "discount_amount": 0,
-        "twin_product": ""
+        "chat_link": "#chat"
       }
     }
   },
