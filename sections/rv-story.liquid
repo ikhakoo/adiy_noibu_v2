@@ -10,10 +10,13 @@
 {%- liquid
   assign video_box_id = 'RvVideo-' | append: section.id
   assign embed = ''
+  assign provider = ''
   if section.settings.video_url != blank
     if section.settings.video_url.type == 'youtube'
-      assign embed = 'https://www.youtube-nocookie.com/embed/' | append: section.settings.video_url.id | append: '?autoplay=1&rel=0&playsinline=1'
+      assign provider = 'youtube'
+      assign embed = 'https://www.youtube.com/embed/' | append: section.settings.video_url.id | append: '?autoplay=1&rel=0&playsinline=1&modestbranding=1'
     elsif section.settings.video_url.type == 'vimeo'
+      assign provider = 'vimeo'
       assign embed = 'https://player.vimeo.com/video/' | append: section.settings.video_url.id | append: '?autoplay=1'
     endif
   endif
@@ -42,7 +45,7 @@
       <div
         class="rv-video"
         id="{{ video_box_id }}"
-        {% if embed != blank %}data-embed="{{ embed }}"{% endif %}
+        {% if embed != blank %}data-embed="{{ embed }}" data-provider="{{ provider }}"{% endif %}
         data-title="{{ section.settings.video_title | escape }}"
       >
         {%- if has_video -%}
@@ -57,6 +60,7 @@
           {%- endif -%}
           {%- if has_video -%}
             <span class="rv-video__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span>
+            <span class="rv-video__spinner" aria-hidden="true"></span>
           </button>
         {%- else -%}
           </div>
