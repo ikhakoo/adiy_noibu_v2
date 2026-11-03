@@ -83,8 +83,21 @@
           <div class="rv-body">{{ section.settings.text }}</div>
         {%- endif -%}
         <div class="rv-btns">
-          {%- if has_video and section.settings.watch_label != blank -%}
-            <button type="button" class="rv-btn" data-rv-play="{{ video_box_id }}">{{ section.settings.watch_label | escape }}</button>
+          {%- liquid
+            assign watch_link = section.settings.watch_link
+            if watch_link == blank and section.settings.video_url != blank
+              assign watch_link = section.settings.video_url
+            endif
+          -%}
+          {%- if section.settings.watch_label != blank -%}
+            {%- if watch_link != blank -%}
+              <a class="rv-btn" href="{{ watch_link }}" target="_blank" rel="noopener">
+                {{- section.settings.watch_label | escape -}}
+                <span class="visually-hidden"> (opens YouTube in a new tab)</span>
+              </a>
+            {%- elsif has_video -%}
+              <button type="button" class="rv-btn" data-rv-play="{{ video_box_id }}">{{ section.settings.watch_label | escape }}</button>
+            {%- endif -%}
           {%- endif -%}
           {%- render 'rv-button', label: section.settings.reviews_label, link: section.settings.reviews_link, style: 'outline' -%}
         </div>
@@ -137,7 +150,8 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Sin City Country on YouTube" },
     { "type": "text", "id": "card_heading", "label": "Heading", "default": "Nader & Alena's A-DIY RV Deck" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Nader and Alena decided to transform the space outside their RV with an A-DIY deck kit, creating a dedicated outdoor area to relax, gather, and enjoy life beyond the camper walls.</p><p>Their RV deck project shows how a thoughtfully designed deck can turn an ordinary RV or camper setup into a more inviting outdoor living space, without the complexity of traditional deck construction.</p>" },
-    { "type": "text", "id": "watch_label", "label": "Play button label", "default": "Watch the Build Video" },
+    { "type": "text", "id": "watch_label", "label": "Watch button label", "default": "Watch the Build Video" },
+    { "type": "url", "id": "watch_link", "label": "Watch button link", "info": "Opens in a new tab. Leave blank to use the YouTube or Vimeo link above." },
     { "type": "text", "id": "reviews_label", "label": "Second button label", "default": "Read Customer Reviews" },
     { "type": "url", "id": "reviews_link", "label": "Second button link" }
   ],
