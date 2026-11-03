@@ -1,0 +1,61 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  RV landing page · Steps, railings & covered decks. Figma › Section - Steps, Railings &
+  Covered Decks (6617:593): image + copy + CTA on the left, green "shade and shelter"
+  panel on the right.
+{%- endcomment -%}
+
+<div class="rv rv--white rv-steps"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner rv-steps__row">
+    <div class="rv-steps__col">
+      {%- render 'rv-image', image: section.settings.image, alt: section.settings.image_alt, sizes: '(min-width: 1920px) 696px, (min-width: 990px) calc((100vw - 128px) / 2), calc(100vw - 40px)' -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rv-h3">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="rv-body">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- render 'rv-button', label: section.settings.button_label, link: section.settings.button_link, style: 'caps' -%}
+    </div>
+
+    <div class="rv-panel">
+      {%- if section.settings.panel_eyebrow != blank -%}
+        <p class="rv-eyebrow">{{ section.settings.panel_eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.panel_heading != blank -%}
+        <h2 class="rv-h3">{{ section.settings.panel_heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.panel_text != blank -%}
+        <p class="rv-body">{{ section.settings.panel_text | escape }}</p>
+      {%- endif -%}
+      {%- render 'rv-image', image: section.settings.panel_image, alt: section.settings.panel_image_alt, sizes: '(min-width: 1920px) 608px, (min-width: 990px) calc((100vw - 216px) / 2), calc(100vw - 96px)' -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RV · Steps & covered",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "header", "content": "Steps and railings" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "A-DIY deck with steps and railings leading to an RV door" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "RV Deck Steps, Railings and Porch Entry" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "RV doors often sit higher than the deck. Steps make the walk from door to deck to ground easy and safe, and railings add a finished look, like a porch for your camper. Our team will match steps and railings to your deck height." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Chat with design team" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Use #chat to open live chat." },
+    { "type": "header", "content": "Covered decks panel" },
+    { "type": "text", "id": "panel_eyebrow", "label": "Eyebrow", "default": "Shade and shelter" },
+    { "type": "text", "id": "panel_heading", "label": "Heading", "default": "Covered RV Decks: Adding a Gazebo or Shelter" },
+    { "type": "textarea", "id": "panel_text", "label": "Text", "default": "You can make a permanent-feeling RV shelter by setting a freestanding gazebo or pergola over a 12x12 or 16x16 A-DIY deck. It adds shade and shelter from rain without attaching anything to your RV. Check your campground's rules on covered structures first." },
+    { "type": "image_picker", "id": "panel_image", "label": "Image" },
+    { "type": "text", "id": "panel_image_alt", "label": "Image alt text (SEO)", "default": "Freestanding gazebo set over an A-DIY deck" }
+  ],
+  "presets": [{ "name": "RV · Steps & covered" }]
+}
+{% endschema %}

@@ -1,0 +1,76 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  RV landing page · Wood or composite. Figma › Section - Wood or Composite (6617:606).
+  One `kit` block per material card. Pick the product so the button always points at the
+  live product page; "Show starting price" reads the product's live lowest price.
+{%- endcomment -%}
+
+<div class="rv rv--mist rv-materials"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner rv-materials__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="rv-h2 rv-center">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="rv-materials__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign kit = block.settings.product
+          assign kit_link = block.settings.link
+          if kit_link == blank and kit != blank
+            assign kit_link = kit.url
+          endif
+          assign kit_title = block.settings.title | default: kit.title
+        -%}
+        <article class="rv-card" {{ block.shopify_attributes }}>
+          {%- render 'rv-image', image: block.settings.image, alt: block.settings.image_alt, sizes: '(min-width: 1920px) 706px, (min-width: 750px) calc((100vw - 108px) / 2), calc(100vw - 40px)' -%}
+          <div class="rv-card__body">
+            <h3 class="rv-card__title">{{ kit_title | escape }}</h3>
+            {%- if block.settings.show_price and kit != blank -%}
+              <p class="rv-card__price">From {{ kit.price_min | money_without_trailing_zeros }}</p>
+            {%- endif -%}
+            {%- render 'rv-button', label: block.settings.button_label, link: kit_link -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.link_label != blank and section.settings.link != blank -%}
+      <a class="rv-link" href="{{ section.settings.link }}">{{ section.settings.link_label | escape }}&nbsp;&nbsp;→</a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RV · Wood or composite",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wood or Composite for a Camper Deck?" },
+    { "type": "text", "id": "link_label", "label": "Bottom link label", "default": "Compare Pressure-Treated and Composite Decking" },
+    { "type": "url", "id": "link", "label": "Bottom link" }
+  ],
+  "blocks": [
+    {
+      "type": "kit",
+      "name": "Kit card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title", "label": "Title", "info": "Leave blank to use the product title." },
+        { "type": "checkbox", "id": "show_price", "label": "Show starting price", "default": false },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Wood Deck Kit" },
+        { "type": "url", "id": "link", "label": "Button link", "info": "Leave blank to link to the product." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "RV · Wood or composite", "blocks": [{ "type": "kit" }, { "type": "kit" }] }
+  ]
+}
+{% endschema %}

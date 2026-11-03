@@ -1,0 +1,26 @@
+{%- comment -%}
+  RV landing page · responsive image inside a .rv-media box (cover-fit).
+  Falls back to a placeholder until an image is picked in the theme editor.
+
+  Accepts:
+  - image: {Object} image_picker value
+  - alt: {String} SEO alt text (falls back to the file's alt)
+  - sizes: {String}
+  - eager: {Boolean} load eagerly with high fetch priority (hero only)
+  - class: {String} extra classes for the wrapper
+  - style: {String} inline style for the wrapper
+  - attrs: {String} extra attributes for the wrapper (block.shopify_attributes)
+{%- endcomment -%}
+<div class="rv-media {{ class }}"{% if style != blank %} style="{{ style }}"{% endif %} {{ attrs }}>
+  {%- if image != blank -%}
+    {%- assign rv_alt = alt | default: image.alt -%}
+    {%- assign rv_pos = 'object-position: ' | append: image.presentation.focal_point -%}
+    {%- if eager -%}
+      {{ image | image_url: width: 1800 | image_tag: widths: '480, 720, 960, 1200, 1500, 1800', sizes: sizes, loading: 'eager', fetchpriority: 'high', alt: rv_alt, style: rv_pos }}
+    {%- else -%}
+      {{ image | image_url: width: 1800 | image_tag: widths: '360, 480, 720, 960, 1200, 1500, 1800', sizes: sizes, loading: 'lazy', alt: rv_alt, style: rv_pos }}
+    {%- endif -%}
+  {%- else -%}
+    {{ 'lifestyle-1' | placeholder_svg_tag }}
+  {%- endif -%}
+</div>

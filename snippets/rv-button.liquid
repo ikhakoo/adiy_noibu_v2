@@ -1,0 +1,20 @@
+{%- comment -%}
+  RV landing page · pill button.
+  A link containing "#chat" opens the chat widget (delegated handler in theme.liquid), so it
+  renders as a <button data-chat-trigger> rather than a same-page link (WCAG 2.4.4).
+
+  Accepts:
+  - label: {String}
+  - link: {String} url setting value
+  - style: {String} 'solid' (default) | 'outline' | 'caps'
+{%- endcomment -%}
+{%- if label != blank -%}
+  {%- assign rv_btn_class = 'rv-btn' -%}
+  {%- if style == 'outline' -%}{%- assign rv_btn_class = 'rv-btn rv-btn--outline' -%}{%- endif -%}
+  {%- if style == 'caps' -%}{%- assign rv_btn_class = 'rv-btn rv-btn--caps' -%}{%- endif -%}
+  {%- if link contains '#chat' -%}
+    <button type="button" class="{{ rv_btn_class }}" data-chat-trigger>{{ label | escape }}</button>
+  {%- elsif link != blank -%}
+    <a class="{{ rv_btn_class }}" href="{{ link }}">{{ label | escape }}</a>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,893 @@
+/* ---------------------------------------------------------------------------
+   RV deck landing page — sections/rv-*.liquid (template page.rv-deck-kits-v2.json).
+   Built from Figma "SEO — RV Deck Kits v2 (Desktop 1920)" in A-DIY DESIGN BOARD:
+   1920 frame, 240px side padding, 1440 content column. Type and spacing scale
+   down with the viewport and reach the mobile frame values (390) below 750px.
+   --------------------------------------------------------------------------- */
+
+.rv {
+  --rv-ink: #0f2d22;
+  --rv-ink-2: #18201c;
+  --rv-ink-3: #20221d;
+  --rv-text: #3e4a44;
+  --rv-text-2: #4f453f;
+  --rv-green: #194636;
+  --rv-green-dark: #123426;
+  --rv-gold: #6b5a2e;
+  --rv-gold-light: #e2c792;
+  --rv-mint-text: #d6e3dc;
+  --rv-line: #dde1da;
+  --rv-mist: #f4f5f2;
+  --rv-sand: #faf9f6;
+  --rv-stone: #ecebeb;
+  --rv-note: #eef3f0;
+  --rv-note-bar: #3a6958;
+  --rv-width: 1440px;
+  --rv-gutter: 40px;
+  --rv-pad-y: clamp(64px, 6.25vw, 120px);
+
+  font-family: var(--font-body-family);
+  color: var(--rv-text);
+  -webkit-font-smoothing: antialiased;
+  padding-block: var(--rv-pad-y);
+}
+
+.rv *,
+.rv *::before,
+.rv *::after {
+  box-sizing: border-box;
+}
+
+.rv :where(h1, h2, h3, p, ul, ol, figure, details, summary) {
+  margin: 0;
+  padding: 0;
+}
+
+.rv :where(h1, h2, h3) {
+  font-family: var(--font-heading-family);
+  color: var(--rv-ink);
+  letter-spacing: 0;
+}
+
+.rv :where(ul, ol) {
+  list-style: none;
+}
+
+.rv :where(img) {
+  display: block;
+  max-width: 100%;
+}
+
+.rv--white { background: #fff; }
+.rv--mist { background: var(--rv-mist); }
+.rv--sand { background: var(--rv-sand); }
+.rv--stone { background: var(--rv-stone); }
+
+.rv__inner {
+  width: min(var(--rv-width), calc(100% - 2 * var(--rv-gutter)));
+  margin: 0 auto;
+}
+
+/* ---------- Shared type ---------- */
+
+.rv-eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 1.96px;
+  text-transform: uppercase;
+  color: var(--rv-gold);
+}
+
+.rv-h2 {
+  font-size: clamp(32px, 2.71vw, 52px);
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.rv-h3 {
+  font-size: clamp(28px, 2.08vw, 40px);
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.rv-body {
+  font-size: clamp(16px, 0.94vw, 18px);
+  line-height: 1.5;
+  color: var(--rv-text);
+}
+
+.rv-body p + p {
+  margin-top: 1.5em;
+}
+
+.rv-center {
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* ---------- Buttons ---------- */
+
+.rv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 30px;
+  border: 1px solid var(--rv-green);
+  border-radius: 999px;
+  background: var(--rv-green);
+  color: #fff;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.rv-btn:hover {
+  background: var(--rv-green-dark);
+  border-color: var(--rv-green-dark);
+  color: #fff;
+}
+
+.rv-btn--outline {
+  background: transparent;
+  color: var(--rv-green);
+}
+
+.rv-btn--outline:hover {
+  background: var(--rv-green);
+  color: #fff;
+}
+
+.rv-btn--caps {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.rv-btn:focus-visible,
+.rv-link:focus-visible,
+.rv-faq__q:focus-visible,
+.rv-video__play:focus-visible {
+  outline: 2px solid var(--rv-green);
+  outline-offset: 3px;
+}
+
+.rv-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.rv-link {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--rv-green);
+  text-decoration: none;
+}
+
+.rv-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Media ---------- */
+
+.rv-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--rv-line);
+}
+
+.rv-media > img,
+.rv-media > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rv-media > svg {
+  fill: #b9c1bb;
+  background: #e8ebe6;
+}
+
+/* ---------- Hero ---------- */
+
+.rv-hero {
+  padding-top: clamp(20px, 1.67vw, 32px);
+  padding-bottom: clamp(48px, 5vw, 96px);
+}
+
+.rv-hero__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 3.75vw, 72px);
+  align-items: center;
+}
+
+.rv-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 26px;
+}
+
+.rv-hero__title {
+  font-size: clamp(40px, 3.54vw, 68px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.rv-hero__lede {
+  font-size: clamp(18px, 1.09vw, 21px);
+  line-height: 1.55;
+  color: var(--rv-text);
+}
+
+.rv-hero__media {
+  height: clamp(320px, 31.25vw, 600px);
+  border-radius: 24px;
+}
+
+/* ---------- Story (reviews & build video) ---------- */
+
+.rv-story__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.rv-story__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.rv-story__head .rv-h2 {
+  font-size: clamp(32px, 2.5vw, 48px);
+}
+
+.rv-story__head .rv-body {
+  max-width: 732px;
+  font-size: 17px;
+}
+
+.rv-story__card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 32px;
+  border: 1px solid var(--rv-line);
+  border-radius: 24px;
+  background: #fff;
+}
+
+.rv-story__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.rv-story__title {
+  font-size: clamp(26px, 1.67vw, 32px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--rv-ink-2);
+}
+
+.rv-story__copy .rv-body {
+  font-size: 18px;
+}
+
+.rv-story__copy .rv-btns {
+  gap: 12px;
+}
+
+.rv-video {
+  position: relative;
+  aspect-ratio: 700 / 394;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--rv-ink);
+}
+
+.rv-video__play {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rv-video__play img,
+.rv-video__play > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rv-video__play > svg {
+  fill: #2c4a3d;
+}
+
+.rv-video__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease;
+}
+
+.rv-video__play:hover .rv-video__icon {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.rv-video__icon svg {
+  width: 30px;
+  height: 30px;
+  margin-left: 4px;
+  fill: var(--rv-ink);
+}
+
+.rv-video iframe,
+.rv-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  background: #000;
+}
+
+.rv-story__photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.rv-story__photos .rv-media {
+  height: clamp(180px, 13.54vw, 260px);
+  border-radius: 16px;
+}
+
+/* ---------- Materials (wood or composite) ---------- */
+
+.rv-materials {
+  padding-block: clamp(64px, 5.21vw, 100px);
+}
+
+.rv-materials__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.rv-materials__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  width: 100%;
+}
+
+.rv-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--rv-line);
+  border-radius: 24px;
+  background: #fff;
+}
+
+.rv-card .rv-media {
+  height: clamp(240px, 19.79vw, 380px);
+}
+
+.rv-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 30px 32px 34px;
+}
+
+.rv-card__title {
+  font-size: clamp(24px, 1.88vw, 36px);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--rv-ink-2);
+}
+
+.rv-card__price {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--rv-text);
+}
+
+/* ---------- Steps, railings & covered decks ---------- */
+
+.rv-steps {
+  padding-block: clamp(64px, 5.21vw, 100px);
+}
+
+.rv-steps__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+}
+
+.rv-steps__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.rv-steps__col .rv-media {
+  width: 100%;
+  height: clamp(260px, 23.96vw, 460px);
+  border-radius: 20px;
+}
+
+.rv-steps__col .rv-btn {
+  margin-top: auto;
+}
+
+.rv-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(28px, 2.29vw, 44px);
+  border-radius: 24px;
+  background: var(--rv-green);
+}
+
+.rv-panel .rv-eyebrow {
+  color: var(--rv-gold-light);
+}
+
+.rv-panel .rv-h3 {
+  color: #fff;
+}
+
+.rv-panel .rv-body {
+  color: var(--rv-mint-text);
+}
+
+.rv-panel .rv-media {
+  flex: 1 0 auto;
+  min-height: clamp(240px, 22.7vw, 436px);
+  border-radius: 16px;
+}
+
+/* ---------- Delivery ---------- */
+
+.rv-delivery {
+  padding-block: clamp(64px, 5.21vw, 100px);
+}
+
+.rv-delivery__row {
+  display: grid;
+  grid-template-columns: minmax(0, 744fr) minmax(0, 600fr);
+  gap: clamp(40px, 5vw, 96px);
+  align-items: center;
+}
+
+.rv-delivery__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.rv-delivery__title {
+  font-size: clamp(28px, 2.29vw, 44px);
+  font-weight: 500;
+  line-height: 1.18;
+  color: var(--rv-ink-3);
+}
+
+.rv-delivery__copy .rv-body {
+  max-width: 700px;
+  color: var(--rv-text-2);
+  line-height: 1.61;
+}
+
+.rv-note {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  padding: 24px 28px 24px 24px;
+  border-radius: 14px;
+  background: var(--rv-note);
+  font-size: 17px;
+  line-height: 1.59;
+  color: var(--rv-ink-3);
+}
+
+.rv-note::before {
+  content: "";
+  flex: 0 0 4px;
+  background: var(--rv-note-bar);
+}
+
+.rv-delivery .rv-media {
+  height: clamp(320px, 26.88vw, 516px);
+  border-radius: 16px;
+}
+
+/* ---------- Best deck for an RV ---------- */
+
+.rv-best__row {
+  display: grid;
+  grid-template-columns: minmax(0, 680fr) minmax(0, 728fr);
+  gap: clamp(32px, 1.67vw, 32px);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rv-best__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.rv-best__lede {
+  font-size: clamp(18px, 1.04vw, 20px);
+  line-height: 1.55;
+  color: var(--rv-ink-2);
+}
+
+.rv-best__copy .rv-body {
+  line-height: 1.6;
+}
+
+.rv-benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.rv-benefit {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 22px;
+  border: 1px solid var(--rv-line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.rv-benefit__title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--rv-ink-2);
+}
+
+.rv-benefit__text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--rv-text);
+}
+
+.rv-best .rv-media {
+  height: clamp(360px, 39.58vw, 760px);
+  border-radius: 24px;
+}
+
+/* ---------- Gallery ---------- */
+
+.rv-gallery {
+  padding-block: clamp(64px, 4.69vw, 90px);
+}
+
+.rv-gallery__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+}
+
+.rv-gallery__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.rv-gallery__head .rv-body {
+  max-width: 1064px;
+  font-size: clamp(16px, 0.99vw, 19px);
+}
+
+.rv-gallery__grid {
+  display: grid;
+  grid-template-columns: 511fr 274fr 274fr 274fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 8.5px;
+  width: min(100%, 1360px);
+  aspect-ratio: 1360 / 502;
+}
+
+.rv-gallery__grid .rv-media:first-child {
+  grid-row: span 2;
+}
+
+/* ---------- FAQ ---------- */
+
+.rv-faq__row {
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+  gap: 80px;
+  align-items: start;
+}
+
+.rv-faq__aside {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.rv-faq__aside .rv-body {
+  font-size: 17px;
+}
+
+.rv-faq__list {
+  border-top: 1px solid var(--rv-line);
+}
+
+.rv-faq__item {
+  border-bottom: 1px solid var(--rv-line);
+}
+
+.rv-faq__q {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-heading-family);
+  font-size: clamp(17px, 1.04vw, 20px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--rv-ink-2);
+}
+
+.rv-faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.rv-faq__q h3 {
+  flex: 1 1 auto;
+  font: inherit;
+  color: inherit;
+}
+
+.rv-faq__sign {
+  position: relative;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.rv-faq__sign::before,
+.rv-faq__sign::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 1.5px;
+  background: var(--rv-green);
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
+}
+
+.rv-faq__sign::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.rv-faq__item[open] .rv-faq__sign::after {
+  transform: translateY(-50%) rotate(0deg);
+}
+
+.rv-faq__a {
+  padding: 0 40px 24px 0;
+  margin-top: -14px;
+  font-size: clamp(16px, 0.89vw, 17px);
+  line-height: 1.5;
+  color: var(--rv-text);
+}
+
+/* ---------- Tablet ---------- */
+
+@media screen and (max-width: 989px) {
+  .rv-hero__row,
+  .rv-story__card,
+  .rv-steps__row,
+  .rv-delivery__row,
+  .rv-best__row,
+  .rv-faq__row {
+    grid-template-columns: 1fr;
+  }
+
+  .rv-faq__row {
+    gap: 32px;
+  }
+
+  .rv-faq__aside {
+    position: static;
+  }
+
+  .rv-story__photos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---------- Mobile (Figma 390 frame) ---------- */
+
+@media screen and (max-width: 749px) {
+  .rv {
+    --rv-gutter: 20px;
+  }
+
+  .rv-hero__copy {
+    gap: 20px;
+  }
+
+  .rv-hero__media {
+    height: 300px;
+    border-radius: 16px;
+  }
+
+  .rv-btns {
+    width: 100%;
+  }
+
+  .rv-btns .rv-btn {
+    flex: 1 1 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .rv-story__inner,
+  .rv-materials__inner,
+  .rv-gallery__inner {
+    gap: 32px;
+  }
+
+  .rv-story__card {
+    gap: 24px;
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .rv-video {
+    border-radius: 12px;
+  }
+
+  .rv-video__icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .rv-story__copy .rv-body,
+  .rv-story__head .rv-body,
+  .rv-faq__aside .rv-body {
+    font-size: 16px;
+  }
+
+  .rv-story__photos {
+    gap: 12px;
+  }
+
+  .rv-story__photos .rv-media {
+    height: 160px;
+    border-radius: 12px;
+  }
+
+  .rv-materials__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .rv-card {
+    border-radius: 16px;
+  }
+
+  .rv-card__body {
+    padding: 22px 20px 26px;
+  }
+
+  .rv-card__title {
+    line-height: 1.25;
+  }
+
+  .rv-steps__row {
+    gap: 40px;
+  }
+
+  .rv-steps__col .rv-btn {
+    margin-top: 4px;
+  }
+
+  .rv-panel {
+    border-radius: 16px;
+  }
+
+  .rv-note {
+    padding: 18px 18px 18px 16px;
+    font-size: 16px;
+  }
+
+  .rv-benefits {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .rv-best .rv-media {
+    border-radius: 16px;
+  }
+
+  .rv-gallery__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    aspect-ratio: auto;
+    gap: 8px;
+  }
+
+  .rv-gallery__grid .rv-media {
+    aspect-ratio: 1;
+  }
+
+  .rv-gallery__grid .rv-media:first-child {
+    grid-column: span 2;
+    grid-row: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .rv-faq__a {
+    padding-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-btn,
+  .rv-video__icon,
+  .rv-faq__sign::before,
+  .rv-faq__sign::after {
+    transition: none;
+  }
+}

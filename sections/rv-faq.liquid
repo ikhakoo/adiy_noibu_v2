@@ -1,0 +1,122 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  RV landing page · FAQ. Figma › Section - FAQ (6619:647): sticky intro + CTA on the left,
+  one `question` block per item on the right (native <details>, so it works without JS).
+  Emits FAQPage JSON-LD (one per page) for answer engines.
+
+  Price tokens keep answers matched to live store prices; set the two products below:
+    [wood_from]       lowest price of the wood product, e.g. $3,699
+    [wood_from_size]  size of that cheapest wood variant, e.g. 6x12
+    [composite_from]  lowest price of the composite product
+    [composite_from_size]
+{%- endcomment -%}
+
+{%- liquid
+  assign wood = section.settings.wood_product
+  assign composite = section.settings.composite_product
+  assign wood_from = ''
+  assign wood_size = ''
+  assign comp_from = ''
+  assign comp_size = ''
+  if wood != blank
+    assign wood_from = wood.price_min | money_without_trailing_zeros
+    assign cheapest = wood.variants | sort: 'price' | first
+    assign wood_size = cheapest.option1 | remove: ' '
+  endif
+  if composite != blank
+    assign comp_from = composite.price_min | money_without_trailing_zeros
+    assign cheapest = composite.variants | sort: 'price' | first
+    assign comp_size = cheapest.option1 | remove: ' '
+  endif
+-%}
+
+{%- capture faq_items -%}
+  {%- for block in section.blocks -%}
+    {%- assign answer = block.settings.answer
+      | replace: '[wood_from_size]', wood_size
+      | replace: '[wood_from]', wood_from
+      | replace: '[composite_from_size]', comp_size
+      | replace: '[composite_from]', comp_from
+    -%}
+    <details class="rv-faq__item" {{ block.shopify_attributes }}{% if section.settings.open_first and forloop.first %} open{% endif %}>
+      <summary class="rv-faq__q">
+        <h3>{{ block.settings.question | escape }}</h3>
+        <span class="rv-faq__sign" aria-hidden="true"></span>
+      </summary>
+      <div class="rv-faq__a">{{ answer }}</div>
+    </details>
+  {%- endfor -%}
+{%- endcapture -%}
+
+<div class="rv rv--white rv-faq"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner rv-faq__row">
+    <div class="rv-faq__aside">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rv-h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="rv-body">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+      {%- render 'rv-button', label: section.settings.button_label, link: section.settings.button_link, style: 'outline' -%}
+    </div>
+    <div class="rv-faq__list">{{ faq_items }}</div>
+  </div>
+</div>
+
+{%- if section.settings.faq_schema and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {%- assign answer = block.settings.answer
+            | replace: '[wood_from_size]', wood_size
+            | replace: '[wood_from]', wood_from
+            | replace: '[composite_from_size]', comp_size
+            | replace: '[composite_from]', comp_from
+          -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ answer | strip_html | strip | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "RV · FAQ",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 30,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "RV Deck Kit FAQs" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Still deciding? A deck specialist can answer anything your park office asks." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Talk to a Deck Specialist" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Use #chat to open live chat." },
+    { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": false },
+    { "type": "checkbox", "id": "faq_schema", "label": "Output FAQPage schema", "default": true, "info": "Keep on for one FAQ section per page only." },
+    { "type": "header", "content": "Live prices", "info": "Answers can use [wood_from], [wood_from_size], [composite_from] and [composite_from_size]." },
+    { "type": "product", "id": "wood_product", "label": "Wood deck product" },
+    { "type": "product", "id": "composite_product", "label": "Composite deck product" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What is an RV deck kit?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>An RV deck kit is a complete, ready-to-assemble deck that you build beside your camper.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "RV · FAQ", "blocks": [{ "type": "question" }] }]
+}
+{% endschema %}

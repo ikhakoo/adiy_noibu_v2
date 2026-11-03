@@ -1,0 +1,43 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  RV landing page · Delivery. Figma › Section - Delivery (6599:516).
+{%- endcomment -%}
+
+<div class="rv rv--sand rv-delivery"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner rv-delivery__row">
+    <div class="rv-delivery__copy">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rv-delivery__title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="rv-body">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.note != blank -%}
+        <p class="rv-note">{{ section.settings.note | escape }}</p>
+      {%- endif -%}
+      {%- render 'rv-button', label: section.settings.button_label, link: section.settings.button_link, style: 'caps' -%}
+    </div>
+    {%- render 'rv-image', image: section.settings.image, alt: section.settings.image_alt, sizes: '(min-width: 1920px) 600px, (min-width: 990px) 42vw, calc(100vw - 40px)' -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RV · Delivery",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Delivered to Your Door or Your Campground" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Your kit ships by LTL ground freight nationwide. Delivery is typically within 10–14 business days, and the carrier calls ahead to schedule it." },
+    { "type": "textarea", "id": "note", "label": "Highlighted note", "default": "Shipping to a campground? Let your park office know a freight delivery is coming, and tell our team if a truck can’t reach your site. We’ll help you plan the drop off." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Build your RV deck" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "A-DIY customers sitting on their deck kit shipping crate after delivery" }
+  ],
+  "presets": [{ "name": "RV · Delivery" }]
+}
+{% endschema %}

@@ -1,0 +1,56 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  RV landing page · Hero. Figma "SEO — RV Deck Kits v2" › Section - Hero (6615:621).
+  Holds the page's only H1. The lede is written as the direct answer to "what is an RV
+  deck kit" so answer engines can lift it.
+{%- endcomment -%}
+
+<div class="rv rv--white rv-hero"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner rv-hero__row">
+    <div class="rv-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="rv-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 class="rv-hero__title">{{ section.settings.heading | default: page.title | escape }}</h1>
+      {%- if section.settings.lede != blank -%}
+        <p class="rv-hero__lede">{{ section.settings.lede | escape }}</p>
+      {%- endif -%}
+      <div class="rv-btns">
+        {%- render 'rv-button', label: section.settings.primary_label, link: section.settings.primary_link -%}
+        {%- render 'rv-button', label: section.settings.secondary_label, link: section.settings.secondary_link, style: 'outline' -%}
+      </div>
+    </div>
+    {%- render 'rv-image',
+      image: section.settings.image,
+      alt: section.settings.image_alt,
+      class: 'rv-hero__media',
+      sizes: '(min-width: 1920px) 684px, (min-width: 990px) calc((100vw - 152px) / 2), calc(100vw - 40px)',
+      eager: true
+    -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RV · Hero",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Floating deck kits" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "RV and Camper Decks for Seasonal Campsites" },
+    { "type": "textarea", "id": "lede", "label": "Intro", "default": "An A-DIY RV deck kit is a floating wood or composite deck that you build beside your camper or travel trailer at a seasonal site. It stands on its own footings, assembles with one drill in 8–16 hours, and ships to your door in 10–14 business days." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "primary_label", "label": "Primary label", "default": "Shop RV Deck Sizes" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary label", "default": "Plan My Deck With an Expert" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link", "info": "Use #chat to open live chat." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "A-DIY pressure-treated wood deck beside a travel trailer at a campground" }
+  ],
+  "presets": [{ "name": "RV · Hero" }]
+}
+{% endschema %}

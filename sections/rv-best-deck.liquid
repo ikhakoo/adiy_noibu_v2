@@ -1,0 +1,67 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  RV landing page · Best deck for an RV. Figma › Section - Best Deck for an RV (6615:687).
+  The first paragraph is the direct answer to the heading's question; one `benefit` block
+  per card in the 2-column grid.
+{%- endcomment -%}
+
+<div class="rv rv--mist rv-best"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner rv-best__row">
+    <div class="rv-best__copy">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rv-h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.answer != blank -%}
+        <p class="rv-best__lede">{{ section.settings.answer | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="rv-body">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="rv-benefits">
+          {%- for block in section.blocks -%}
+            <li class="rv-benefit" {{ block.shopify_attributes }}>
+              <h3 class="rv-benefit__title">{{ block.settings.title | escape }}</h3>
+              <p class="rv-benefit__text">{{ block.settings.text | escape }}</p>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+    <div class="rv-best__media">
+      {%- render 'rv-image', image: section.settings.image, alt: section.settings.image_alt, sizes: '(min-width: 1920px) 728px, (min-width: 990px) 48vw, calc(100vw - 40px)' -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RV · Best deck for an RV",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What's the Best Deck for an RV or Camper?" },
+    { "type": "textarea", "id": "answer", "label": "Direct answer", "default": "For a seasonal or long stay site, the best deck for an RV is a floating deck on its own footings, sized to the door side of your rig. It feels like a real deck, never puts load on the RV, and keeps the trailer free to move. Portable fold out platforms suit travelers who change campsites every few days." },
+    { "type": "textarea", "id": "text", "label": "Supporting text", "default": "Your seasonal site is where mornings start slow and evenings run long. It deserves more than a mat on the grass. Every A-DIY kit is a professionally engineered deck system: the structure is designed in advance, the parts arrive ready to assemble, and the footings and hardware come in the box." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "Two dogs relaxing on an A-DIY wood deck outside a camper" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Floating" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Stands on its own footings beside your RV and is never fastened to it." }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "RV · Best deck for an RV", "blocks": [{ "type": "benefit" }, { "type": "benefit" }] }
+  ]
+}
+{% endschema %}
