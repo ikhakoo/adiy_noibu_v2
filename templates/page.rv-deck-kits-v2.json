@@ -15,7 +15,8 @@
         "primary_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
         "secondary_label": "Plan My Deck With an Expert",
         "secondary_link": "shopify://pages/free-design-consultation",
-        "image_alt": "A-DIY pressure-treated wood deck beside a travel trailer at a campground"
+        "image_alt": "A-DIY pressure-treated wood deck beside a travel trailer at a campground",
+        "image": "shopify://shop_images/rv-hero-travel-trailer-deck.png"
       }
     },
     "story": {
@@ -24,25 +25,29 @@
         "photo_1": {
           "type": "photo",
           "settings": {
-            "alt": "A-DIY deck kit delivery arriving at the Sin City Country homestead"
+            "alt": "A-DIY deck kit delivery arriving at the Sin City Country homestead",
+            "image": "shopify://shop_images/rv-sin-city-delivery.png"
           }
         },
         "photo_2": {
           "type": "photo",
           "settings": {
-            "alt": "Nader and Alena unpacking their A-DIY deck kit"
+            "alt": "Nader and Alena unpacking their A-DIY deck kit",
+            "image": "shopify://shop_images/rv-sin-city-unboxing.png"
           }
         },
         "photo_3": {
           "type": "photo",
           "settings": {
-            "alt": "Assembling the A-DIY deck frame beside an RV"
+            "alt": "Assembling the A-DIY deck frame beside an RV",
+            "image": "shopify://shop_images/rv-sin-city-framing.png"
           }
         },
         "photo_4": {
           "type": "photo",
           "settings": {
-            "alt": "Finished A-DIY wood deck with chairs at the Sin City Country homestead"
+            "alt": "Finished A-DIY wood deck with chairs at the Sin City Country homestead",
+            "image": "shopify://shop_images/rv-sin-city-finished-deck.png"
           }
         }
       },
@@ -56,15 +61,16 @@
         "anchor_id": "build-video",
         "heading": "From RV Living to Outdoor Living.",
         "intro": "The couple behind Sin City Country Homestead, transformed the space outside their RV in rural Tennessee with an A-DIY deck kit.",
-        "video": "shopify://files/videos/NaderReview_NoText.mov",
-        "video_title": "Nader and Alena's A-DIY RV deck",
+        "video_title": "Easiest Deck You'll Ever Build | Anyone Can Do This",
         "upload_date": "",
         "eyebrow": "Sin City Country on YouTube",
         "card_heading": "Nader & Alena's A-DIY RV Deck",
         "text": "<p>Nader and Alena decided to transform the space outside their RV with an A-DIY deck kit, creating a dedicated outdoor area to relax, gather, and enjoy life beyond the camper walls.</p><p>Their RV deck project shows how a thoughtfully designed deck can turn an ordinary RV or camper setup into a more inviting outdoor living space, without the complexity of traditional deck construction.</p>",
         "watch_label": "Watch the Build Video",
         "reviews_label": "Read Customer Reviews",
-        "reviews_link": "shopify://pages/reviews"
+        "reviews_link": "shopify://pages/reviews",
+        "video_url": "https://www.youtube.com/watch?v=ZQPzYIkML_0",
+        "poster": "shopify://shop_images/rv-sin-city-country-video-thumb.png"
       }
     },
     "layers": {
@@ -143,7 +149,8 @@
             "show_price": false,
             "button_label": "Shop Wood Deck Kit",
             "link": "",
-            "image_alt": "A-DIY pressure-treated wood deck kit with steps beside a travel trailer"
+            "image_alt": "A-DIY pressure-treated wood deck kit with steps beside a travel trailer",
+            "image": "shopify://shop_images/rv-pressure-treated-deck-camper.png"
           }
         },
         "kit_composite": {
@@ -154,7 +161,8 @@
             "show_price": false,
             "button_label": "Shop Composite Deck Kit",
             "link": "",
-            "image_alt": "A-DIY composite deck kit beside a travel trailer at a wooded campsite"
+            "image_alt": "A-DIY composite deck kit beside a travel trailer at a wooded campsite",
+            "image": "shopify://shop_images/rv-composite-deck-camper.png"
           }
         }
       },
@@ -373,7 +381,9 @@
         "panel_eyebrow": "Shade and shelter",
         "panel_heading": "Covered RV Decks: Adding a Gazebo or Shelter",
         "panel_text": "You can make a permanent-feeling RV shelter by setting a freestanding gazebo or pergola over a 12x12 or 16x16 A-DIY deck. It adds shade and shelter from rain without attaching anything to your RV. Check your campground's rules on covered structures first.",
-        "panel_image_alt": "Freestanding gazebo set over an A-DIY deck"
+        "panel_image_alt": "Freestanding gazebo set over an A-DIY deck",
+        "image": "shopify://shop_images/rv-deck-steps-railings.png",
+        "panel_image": "shopify://shop_images/rv-deck-gazebo.png"
       }
     },
     "delivery": {
@@ -385,7 +395,8 @@
         "note": "Shipping to a campground? Let your park office know a freight delivery is coming, and tell our team if a truck can’t reach your site. We’ll help you plan the drop off.",
         "button_label": "Build your RV deck",
         "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
-        "image_alt": "A-DIY customers sitting on their deck kit shipping crate after delivery"
+        "image_alt": "A-DIY customers sitting on their deck kit shipping crate after delivery",
+        "image": "shopify://shop_images/rv-deck-kit-crate-delivery.png"
       }
     },
     "best": {
@@ -447,7 +458,8 @@
         "heading": "What's the Best Deck for an RV or Camper?",
         "answer": "For a seasonal or long stay site, the best deck for an RV is a floating deck on its own footings, sized to the door side of your rig. It feels like a real deck, never puts load on the RV, and keeps the trailer free to move. Portable fold out platforms suit travelers who change campsites every few days.",
         "text": "Your seasonal site is where mornings start slow and evenings run long. It deserves more than a mat on the grass. Every A-DIY kit is a professionally engineered deck system: the structure is designed in advance, the parts arrive ready to assemble, and the footings and hardware come in the box.",
-        "image_alt": "Two dogs relaxing on an A-DIY wood deck outside a camper"
+        "image_alt": "Two dogs relaxing on an A-DIY wood deck outside a camper",
+        "image": "shopify://shop_images/rv-deck-camper-dogs.png"
       }
     },
     "gallery": {
@@ -456,43 +468,50 @@
         "photo_1": {
           "type": "photo",
           "settings": {
-            "alt": "A-DIY deck with dining and lounge seating beside a fifth-wheel camper at dusk"
+            "alt": "A-DIY deck with dining and lounge seating beside a fifth-wheel camper at dusk",
+            "image": "shopify://shop_images/rv-gallery-dining-deck-evening.png"
           }
         },
         "photo_2": {
           "type": "photo",
           "settings": {
-            "alt": "A-DIY composite deck beside a travel trailer at a wooded campsite"
+            "alt": "A-DIY composite deck beside a travel trailer at a wooded campsite",
+            "image": "shopify://shop_images/rv-composite-deck-camper.png"
           }
         },
         "photo_3": {
           "type": "photo",
           "settings": {
-            "alt": "A-DIY wood deck with bistro set beside a motorhome"
+            "alt": "A-DIY wood deck with bistro set beside a motorhome",
+            "image": "shopify://shop_images/rv-gallery-motorhome-deck.png"
           }
         },
         "photo_4": {
           "type": "photo",
           "settings": {
-            "alt": "A-DIY wood deck beside a travel trailer at sunset"
+            "alt": "A-DIY wood deck beside a travel trailer at sunset",
+            "image": "shopify://shop_images/rv-gallery-trailer-sunset-deck.png"
           }
         },
         "photo_5": {
           "type": "photo",
           "settings": {
-            "alt": "A-DIY pressure-treated wood deck beside an Airstream trailer"
+            "alt": "A-DIY pressure-treated wood deck beside an Airstream trailer",
+            "image": "shopify://shop_images/rv-hero-travel-trailer-deck.png"
           }
         },
         "photo_6": {
           "type": "photo",
           "settings": {
-            "alt": "Two dogs relaxing on an A-DIY wood deck outside a camper"
+            "alt": "Two dogs relaxing on an A-DIY wood deck outside a camper",
+            "image": "shopify://shop_images/rv-deck-camper-dogs.png"
           }
         },
         "photo_7": {
           "type": "photo",
           "settings": {
-            "alt": "A-DIY wood deck beside an overland truck camper"
+            "alt": "A-DIY wood deck beside an overland truck camper",
+            "image": "shopify://shop_images/rv-gallery-overland-camper-deck.png"
           }
         }
       },
