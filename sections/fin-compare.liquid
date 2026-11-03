@@ -1,0 +1,93 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+{{ 'fin-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck Financing page · Comparison table. Figma › Section - Comparison Table (6665:574).
+  A real <table> (row headers per option) so search and answer engines can read it.
+  Column headings are section settings; one `row` block per payment option.
+  Scrolls sideways on small screens with the option column pinned.
+{%- endcomment -%}
+
+<div class="rv fin rv--mist fin-compare"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner">
+    <div class="fin-head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rv-h2" id="fin-compare-title-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="fin-head__sub">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="fin-compare__scroll" role="region" aria-labelledby="fin-compare-title-{{ section.id }}" tabindex="0">
+      <table class="fin-compare__table">
+        <colgroup><col><col><col><col><col><col></colgroup>
+        <thead>
+          <tr>
+            <th scope="col">{{ section.settings.col_1 | escape }}</th>
+            <th scope="col">{{ section.settings.col_2 | escape }}</th>
+            <th scope="col">{{ section.settings.col_3 | escape }}</th>
+            <th scope="col">{{ section.settings.col_4 | escape }}</th>
+            <th scope="col">{{ section.settings.col_5 | escape }}</th>
+            <th scope="col">{{ section.settings.col_6 | escape }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row">{{ block.settings.option | escape }}</th>
+              <td>{{ block.settings.best_for | escape }}</td>
+              <td>{{ block.settings.schedule | escape }}</td>
+              <td>{{ block.settings.apr | escape }}</td>
+              <td>{{ block.settings.credit | escape }}</td>
+              <td>{{ block.settings.ships | escape }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <p class="fin-compare__note">{{ section.settings.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Financing · Compare Table",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "compare" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Compare Deck Financing Options" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Same kit price whichever way you pay. Here is how each plan works." },
+    { "type": "header", "content": "Column headings" },
+    { "type": "text", "id": "col_1", "label": "Column 1", "default": "Option" },
+    { "type": "text", "id": "col_2", "label": "Column 2", "default": "Best for" },
+    { "type": "text", "id": "col_3", "label": "Column 3", "default": "Payment schedule" },
+    { "type": "text", "id": "col_4", "label": "Column 4", "default": "Interest (APR)" },
+    { "type": "text", "id": "col_5", "label": "Column 5", "default": "Credit check" },
+    { "type": "text", "id": "col_6", "label": "Column 6", "default": "When your deck ships" },
+    { "type": "header", "content": "Footnote" },
+    { "type": "textarea", "id": "note", "label": "Note", "default": "Lender terms come from Affirm, Klarna and Shopify and can change. Your exact rate, term and any down payment are shown before you confirm." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "option", "label": "Option", "default": "Affirm" },
+        { "type": "textarea", "id": "best_for", "label": "Best for" },
+        { "type": "textarea", "id": "schedule", "label": "Payment schedule" },
+        { "type": "textarea", "id": "apr", "label": "Interest (APR)" },
+        { "type": "textarea", "id": "credit", "label": "Credit check" },
+        { "type": "textarea", "id": "ships", "label": "When your deck ships" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Financing · Compare Table", "blocks": [{ "type": "row" }] }]
+}
+{% endschema %}

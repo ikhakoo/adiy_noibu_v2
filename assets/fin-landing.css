@@ -1,0 +1,402 @@
+/* ---------------------------------------------------------------------------
+   Deck Financing landing page — sections/fin-*.liquid (template page.deck-financing.json).
+   Built from Figma "SEO — Deck Kit Financing (Desktop 1920)" (6664:574) in A-DIY DESIGN BOARD.
+   Loads after rv-landing.css and reuses its tokens, type, buttons and FAQ styles
+   (.rv, .rv__inner, .rv-h2, .rv-btn, .rv-faq__*). Only financing-specific parts live here.
+   --------------------------------------------------------------------------- */
+
+.fin {
+  --fin-card: #faf9f6;
+  --fin-border: #e2e5de;
+  --fin-muted: #5c6862;
+  --fin-first-col: #eef3ef;
+}
+
+.fin .rv-btn--outline {
+  border-width: 1.5px;
+}
+
+/* ---------- Section heads ---------- */
+
+.fin-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.fin-head .rv-h2 {
+  max-width: 1100px;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.fin-head__sub {
+  max-width: 880px;
+  font-size: clamp(17px, 1.04vw, 20px);
+  line-height: 1.55;
+  color: var(--rv-text);
+}
+
+/* ---------- Hero ---------- */
+
+.fin-hero {
+  padding-top: clamp(24px, 2.08vw, 40px);
+  padding-bottom: clamp(48px, 5vw, 96px);
+}
+
+.fin-hero__visual {
+  position: relative;
+}
+
+.fin-hero__price {
+  position: absolute;
+  left: 28px;
+  bottom: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: calc(100% - 56px);
+  padding: 22px 24px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+}
+
+.fin-hero__price-label {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--fin-muted);
+}
+
+.fin-hero__price-amount {
+  font-family: var(--font-heading-family);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--rv-ink);
+}
+
+.fin-hero__price-monthly {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--rv-green);
+}
+
+.fin-hero__price-note {
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--fin-muted);
+}
+
+/* ---------- 6 ways to pay ---------- */
+
+.fin-options__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.fin-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 400px;
+  padding: 32px;
+  border: 1px solid var(--fin-border);
+  border-radius: 20px;
+  background: var(--fin-card);
+}
+
+.fin-option__badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.fin-option__kicker {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rv-gold);
+}
+
+.fin-option__title {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.fin-option__body {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--rv-text);
+}
+
+.fin-option__link {
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 16px;
+}
+
+/* ---------- Comparison table ---------- */
+
+.fin-compare__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--fin-border);
+  border-radius: 20px;
+  background: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fin-compare__table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.fin-compare__table col:nth-child(1),
+.fin-compare__table col:nth-child(2) { width: 16%; }
+.fin-compare__table col:nth-child(3),
+.fin-compare__table col:nth-child(4) { width: 17.4%; }
+.fin-compare__table col:nth-child(5),
+.fin-compare__table col:nth-child(6) { width: 16.6%; }
+
+.fin-compare__table th,
+.fin-compare__table td {
+  padding: 24px 20px 24px 24px;
+  vertical-align: top;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--rv-text);
+}
+
+.fin-compare__table thead th {
+  padding-block: 20px;
+  background: var(--rv-green);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.fin-compare__table tbody tr {
+  border-top: 1px solid var(--fin-border);
+}
+
+.fin-compare__table tbody tr:nth-child(even) {
+  background: var(--fin-card);
+}
+
+.fin-compare__table tbody th {
+  background: var(--fin-first-col);
+  font-family: var(--font-heading-family);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--rv-ink);
+}
+
+.fin-compare__note {
+  max-width: 1000px;
+  margin: 48px auto 0;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fin-muted);
+}
+
+/* ---------- How to finance (steps) ---------- */
+
+.fin-steps__list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.fin-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 272px;
+  padding: 28px 24px;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.fin-step__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--rv-green);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.fin-step__title {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.fin-step__text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--rv-text);
+}
+
+/* ---------- FAQ (on top of .rv-faq) ---------- */
+
+.fin-faq {
+  padding-top: 48px;
+}
+
+.fin-faq .rv-faq__row {
+  grid-template-columns: 420px minmax(0, 1fr);
+}
+
+.fin-faq .rv-faq__aside {
+  gap: 20px;
+}
+
+.fin-faq .rv-faq__aside .rv-body {
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.fin-faq .rv-faq__list {
+  border-top: 0;
+}
+
+.fin-faq .rv-faq__item {
+  border-color: var(--fin-border);
+}
+
+.fin-faq .rv-faq__q {
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--rv-ink);
+}
+
+.fin-faq .rv-faq__a {
+  margin-top: -14px;
+  padding-right: 40px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+/* ---------- Tablet ---------- */
+
+@media screen and (max-width: 1199px) {
+  .fin-options__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fin-steps__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .fin-faq .rv-faq__row {
+    grid-template-columns: 1fr;
+  }
+
+  .fin-option {
+    min-height: 0;
+  }
+}
+
+/* ---------- Mobile ---------- */
+
+@media screen and (max-width: 749px) {
+  .fin-head {
+    margin-bottom: 32px;
+  }
+
+  .fin-hero__price {
+    left: 16px;
+    bottom: 16px;
+    max-width: calc(100% - 32px);
+    padding: 16px 18px;
+    border-radius: 14px;
+  }
+
+  .fin-hero__price-amount {
+    font-size: 28px;
+  }
+
+  .fin-hero__price-monthly {
+    font-size: 15px;
+  }
+
+  .fin-options__grid,
+  .fin-steps__list {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .fin-option {
+    padding: 24px;
+  }
+
+  .fin-option__title {
+    font-size: 22px;
+  }
+
+  .fin-option__body {
+    font-size: 16px;
+  }
+
+  .fin-step {
+    min-height: 0;
+    padding: 22px 20px;
+  }
+
+  .fin-compare__scroll {
+    border-radius: 14px;
+  }
+
+  .fin-compare__table th,
+  .fin-compare__table td {
+    padding: 16px 14px;
+    font-size: 15px;
+  }
+
+  .fin-compare__table tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    font-size: 16px;
+  }
+
+  .fin-compare__note {
+    margin-top: 24px;
+    font-size: 14px;
+  }
+
+  .fin-faq .rv-faq__q {
+    font-size: 17px;
+  }
+
+  .fin-faq .rv-faq__a {
+    padding-right: 0;
+    font-size: 16px;
+  }
+}

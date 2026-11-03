@@ -1,0 +1,115 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+{{ 'fin-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck Financing page · Hero. Figma "SEO — Deck Kit Financing" › Section - Hero (H1) (6664:621).
+  Holds the page's only H1. The price card reads the live price of the chosen product variant,
+  so it always matches the store.
+{%- endcomment -%}
+
+{%- liquid
+  assign product_ref = section.settings.price_product
+  assign price_variant = blank
+  if product_ref != blank
+    assign size_key = section.settings.price_variant_title | remove: ' ' | downcase
+    for v in product_ref.variants
+      assign vt = v.title | remove: ' ' | downcase
+      if vt contains size_key
+        assign price_variant = v
+        break
+      endif
+    endfor
+    if price_variant == blank
+      assign price_variant = product_ref.selected_or_first_available_variant
+    endif
+  endif
+-%}
+
+<div class="rv fin rv--white fin-hero"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner rv-hero__row">
+    <div class="rv-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="rv-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 class="rv-hero__title">{{ section.settings.heading | default: page.title | escape }}</h1>
+      {%- if section.settings.lede != blank -%}
+        <p class="rv-hero__lede">{{ section.settings.lede | escape }}</p>
+      {%- endif -%}
+      <div class="rv-btns">
+        {%- render 'rv-button', label: section.settings.primary_label, link: section.settings.primary_link -%}
+        {%- render 'rv-button', label: section.settings.secondary_label, link: section.settings.secondary_link, style: 'outline' -%}
+      </div>
+    </div>
+
+    <div class="fin-hero__visual">
+      {%- if section.settings.image != blank -%}
+        {%- render 'rv-image',
+          image: section.settings.image,
+          alt: section.settings.image_alt,
+          class: 'rv-hero__media',
+          sizes: '(min-width: 1920px) 684px, (min-width: 990px) calc((100vw - 152px) / 2), calc(100vw - 40px)',
+          eager: true
+        -%}
+      {%- else -%}
+        <div class="rv-media rv-hero__media">
+          <img
+            src="{{ 'fin-hero-wood-deck.webp' | asset_url }}"
+            alt="{{ section.settings.image_alt | escape }}"
+            width="684"
+            height="600"
+            loading="eager"
+            fetchpriority="high"
+          >
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_price_card -%}
+        <div class="fin-hero__price">
+          {%- if section.settings.price_label != blank -%}
+            <p class="fin-hero__price-label">{{ section.settings.price_label | escape }}</p>
+          {%- endif -%}
+          {%- if price_variant != blank -%}
+            <p class="fin-hero__price-amount">{{ price_variant.price | money_without_trailing_zeros }}</p>
+          {%- endif -%}
+          {%- if section.settings.price_monthly != blank -%}
+            <p class="fin-hero__price-monthly">{{ section.settings.price_monthly | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.price_note != blank -%}
+            <p class="fin-hero__price-note">{{ section.settings.price_note | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Financing · Hero",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A-DIY Deck Kit Financing" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "A-DIY Deck Financing & Monthly Payment Plans" },
+    { "type": "textarea", "id": "lede", "label": "Intro", "default": "Build your A-DIY deck now and pay over time. Choose Affirm, Klarna or Shop Pay Installments at checkout, split your kit into 4, 6 or 8 interest free A-DIY payments, or lock today's price with a $250 A-DIY Reserve." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "primary_label", "label": "Primary label", "default": "Shop Wood Deck Kits" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary label", "default": "Shop Composite Deck Kits" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Leave empty to use the photo from the Figma design." },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "A-DIY pressure-treated wood deck kit assembled in a backyard" },
+    { "type": "header", "content": "Price card" },
+    { "type": "checkbox", "id": "show_price_card", "label": "Show price card", "default": true },
+    { "type": "text", "id": "price_label", "label": "Label", "default": "Wood Deck 12×12" },
+    { "type": "product", "id": "price_product", "label": "Product", "info": "Price is read live from this product." },
+    { "type": "text", "id": "price_variant_title", "label": "Variant (size)", "default": "12 x 12" },
+    { "type": "text", "id": "price_monthly", "label": "Monthly line", "default": "Starting at $205/mo or 0% APR with Affirm" },
+    { "type": "text", "id": "price_note", "label": "Small print", "default": "Subject to eligibility. Estimate excludes taxes and shipping." }
+  ],
+  "presets": [{ "name": "Financing · Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,398 @@
+/*
+ * Deck Financing page — from Figma "SEO — Deck Kit Financing (Desktop 1920)" (6664:574).
+ * Development theme only; not assigned to any page yet (awaiting approval).
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "fin-hero",
+      "settings": {
+        "anchor_id": "",
+        "eyebrow": "A-DIY Deck Kit Financing",
+        "heading": "A-DIY Deck Financing & Monthly Payment Plans",
+        "lede": "Build your A-DIY deck now and pay over time. Choose Affirm, Klarna or Shop Pay Installments at checkout, split your kit into 4, 6 or 8 interest free A-DIY payments, or lock today's price with a $250 A-DIY Reserve.",
+        "primary_label": "Shop Wood Deck Kits",
+        "primary_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+        "secondary_label": "Shop Composite Deck Kits",
+        "secondary_link": "shopify://products/a-diy-composite-deck-kit",
+        "image_alt": "A-DIY pressure-treated wood deck kit assembled in a backyard",
+        "show_price_card": true,
+        "price_label": "Wood Deck 12×12",
+        "price_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "price_variant_title": "12 x 12",
+        "price_monthly": "Starting at $205/mo or 0% APR with Affirm",
+        "price_note": "Subject to eligibility. Estimate excludes taxes and shipping."
+      }
+    },
+    "ways": {
+      "type": "fin-options",
+      "blocks": {
+        "option_1": {
+          "type": "option",
+          "settings": {
+            "badge": "Affirm",
+            "badge_bg": "#4a4af4",
+            "badge_text": "#ffffff",
+            "kicker": "Build now, pay monthly",
+            "title": "Affirm — Build Now, Pay Monthly",
+            "body": "",
+            "link_label": "See if you qualify",
+            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+          }
+        },
+        "option_2": {
+          "type": "option",
+          "settings": {
+            "badge": "Klarna",
+            "badge_bg": "#ffa8cd",
+            "badge_text": "#0b051d",
+            "kicker": "Pay in 4 or over time",
+            "title": "Klarna — Pay in 4 or Pay Over Time",
+            "body": "Split eligible purchases into 4 interest-free payments every 2 weeks, or finance monthly for 3–24 months at 0.00–35.99% APR (issued by WebBank). Options shown depend on your order and eligibility.",
+            "link_label": "Pay with Klarna at checkout",
+            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+          }
+        },
+        "option_3": {
+          "type": "option",
+          "settings": {
+            "badge": "Shop Pay",
+            "badge_bg": "#5a31f4",
+            "badge_text": "#ffffff",
+            "kicker": "Powered by Affirm",
+            "title": "Shop Pay Installments",
+            "body": "Pay monthly over 3, 6, 12, 18 or 24 months on orders from $150 to $30,000, at 0–36% APR depending on eligibility. Choose installments inside your Shop Pay checkout; your first payment is due at checkout.",
+            "link_label": "Choose Shop Pay at checkout",
+            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+          }
+        },
+        "option_4": {
+          "type": "option",
+          "settings": {
+            "badge": "A-DIY",
+            "badge_bg": "#194636",
+            "badge_text": "#ffffff",
+            "kicker": "0% interest · no fees",
+            "title": "A-DIY Split Payments",
+            "body": "Split your kit into 4, 6 or 8 equal monthly payments. The first is charged today, the rest go to the same card each month. No fees or interest — your deck ships after your final payment.",
+            "link_label": "Choose a split-payment kit",
+            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+          }
+        },
+        "option_5": {
+          "type": "option",
+          "settings": {
+            "badge": "A-DIY",
+            "badge_bg": "#6b5a2e",
+            "badge_text": "#ffffff",
+            "kicker": "Build later, lock the price",
+            "title": "A-DIY Reserve — $250",
+            "body": "Planning a spring build? Reserve your kit with a $250 non-refundable deposit, lock today's price and choose your future delivery date. The $250 comes off your kit price when you pay the balance.",
+            "link_label": "Reserve my deck",
+            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+          }
+        },
+        "option_6": {
+          "type": "option",
+          "settings": {
+            "badge": "Pay in full",
+            "badge_bg": "#18201c",
+            "badge_text": "#ffffff",
+            "kicker": "Card, wallet or bank",
+            "title": "Pay in Full",
+            "body": "Visa, Mastercard, American Express and more, plus Shop Pay, Google Pay and Apple Pay. Orders over $3,000 can also pay by ACH bank transfer with Bank Deposit at checkout.",
+            "link_label": "Shop deck kits",
+            "link": "shopify://collections/deck-kits"
+          }
+        }
+      },
+      "block_order": [
+        "option_1",
+        "option_2",
+        "option_3",
+        "option_4",
+        "option_5",
+        "option_6"
+      ],
+      "settings": {
+        "anchor_id": "ways-to-pay",
+        "heading": "6 Ways to Pay for Your Deck Kit",
+        "intro": "Pick the one that fits your budget and your build date."
+      }
+    },
+    "compare": {
+      "type": "fin-compare",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "option": "Affirm",
+            "best_for": "Building now and spreading the cost",
+            "schedule": "Monthly plans; Pay in 4 on eligible orders",
+            "apr": "0–36% APR · 0% offers for qualified buyers",
+            "credit": "Eligibility check that won't affect your credit score",
+            "ships": "Immediately after your order is placed"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "option": "Klarna",
+            "best_for": "Shoppers who already use Klarna",
+            "schedule": "Pay in 4 every 2 weeks, or 3–24 monthly payments",
+            "apr": "Pay in 4: 0% · Financing 0.00–35.99% APR",
+            "credit": "Soft check for Pay in 4; credit check for Pay over time",
+            "ships": "Immediately after your order is placed"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "option": "Shop Pay Installments",
+            "best_for": "A fast Shop Pay checkout",
+            "schedule": "3, 6, 12, 18 or 24 monthly payments",
+            "apr": "0–36% APR",
+            "credit": "Eligibility check by Affirm",
+            "ships": "Immediately after your order is placed"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "option": "A-DIY Split Payments",
+            "best_for": "Paying no interest at all",
+            "schedule": "4, 6 or 8 monthly payments",
+            "apr": "0% · no fees",
+            "credit": "None",
+            "ships": "After your final payment"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "option": "A-DIY Reserve",
+            "best_for": "Building later at today's price",
+            "schedule": "$250 deposit today, balance before delivery",
+            "apr": "None",
+            "credit": "None",
+            "ships": "On the future date you choose"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "option": "Pay in Full",
+            "best_for": "Visa, Mastercard, AMEX and more, plus Shop Pay, Google Pay and Apple Pay. Orders over $3,000 can also pay by ACH bank transfer with Bank Deposit.",
+            "schedule": "Paid upfront",
+            "apr": "None",
+            "credit": "None",
+            "ships": "Immediately after your order is placed"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ],
+      "settings": {
+        "anchor_id": "compare",
+        "heading": "Compare Deck Financing Options",
+        "intro": "Same kit price whichever way you pay. Here is how each plan works.",
+        "col_1": "Option",
+        "col_2": "Best for",
+        "col_3": "Payment schedule",
+        "col_4": "Interest (APR)",
+        "col_5": "Credit check",
+        "col_6": "When your deck ships",
+        "note": "Lender terms come from Affirm, Klarna and Shopify and can change. Your exact rate, term and any down payment are shown before you confirm."
+      }
+    },
+    "steps": {
+      "type": "fin-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Choose your deck kit",
+            "text": "Pick pressure-treated wood or composite and your size."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Add to cart and check out",
+            "text": "Enter your delivery address in the continental US."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Select your payment method",
+            "text": "Choose Affirm, Klarna or Shop Pay installments, or open the split-payment version of your kit."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Get a quick decision",
+            "text": "Affirm and Klarna ask a few details and show your plan, rate and total before you agree."
+          }
+        },
+        "step_5": {
+          "type": "step",
+          "settings": {
+            "title": "Confirm and track your deck",
+            "text": "Follow every stage, from manufacturing to delivery, in My A-DIY Hub."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "step_5"
+      ],
+      "settings": {
+        "anchor_id": "how-it-works",
+        "eyebrow": "Step by step",
+        "heading": "How to Finance Your Deck in 5 Steps",
+        "intro": "Most shoppers are done in a few minutes, right inside checkout.",
+        "howto_schema": true
+      }
+    },
+    "faq": {
+      "type": "fin-faq",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "Does A-DIY offer 0% APR financing?",
+            "answer": "<p>Yes. Through Affirm, qualified buyers see offers as low as 0% APR, such as $205/mo for the [price] 12×12 wood deck. A-DIY Split Payments are always 0% with no fees.</p>"
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Will checking my rate affect my credit score?",
+            "answer": "<p>Checking eligibility with Affirm won't affect your credit score, and Klarna Pay in 4 uses a soft check. Klarna's Pay over time runs a credit check when you apply.</p>"
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "What do I need to apply?",
+            "answer": "<p>Affirm and Klarna require you to be at least 18, live in the US, and verify by text; you may be asked for your Social Security number.</p>"
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "How long can I finance a deck?",
+            "answer": "<p>Affirm and Shop Pay Installments offer monthly plans up to 24 months or longer depending on eligibility; Klarna offers 3–24 months; A-DIY Split Payments run 4, 6 or 8 months.</p>"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "What is A-DIY Split Payments?",
+            "answer": "<p>An interest-free plan where your kit price is divided into 4, 6 or 8 monthly charges to one card. There are no fees, and your deck ships after the last payment.</p>"
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "What is A-DIY Reserve?",
+            "answer": "<p>A $250 non-refundable deposit that locks today's kit price and lets you choose a future delivery date. The deposit comes off your balance.</p>"
+          }
+        },
+        "question_7": {
+          "type": "question",
+          "settings": {
+            "question": "Are there fees or prepayment penalties?",
+            "answer": "<p>Affirm doesn't charge late fees, and you can pay Klarna financing off early at no extra cost. Klarna Pay in 4 may charge a late fee of up to $7. A-DIY Split Payments have no fees.</p>"
+          }
+        },
+        "question_8": {
+          "type": "question",
+          "settings": {
+            "question": "Is a down payment required?",
+            "answer": "<p>Lenders may ask for a down payment depending on your order and eligibility; you'll see it before you confirm.</p>"
+          }
+        },
+        "question_9": {
+          "type": "question",
+          "settings": {
+            "question": "Can I combine financing with a discount code?",
+            "answer": "<p>Yes. Apply your code at checkout and the financed amount is your discounted total.</p>"
+          }
+        },
+        "question_10": {
+          "type": "question",
+          "settings": {
+            "question": "Does the monthly estimate include tax and shipping?",
+            "answer": "<p>No. Estimates exclude taxes and shipping; your lender shows the final amount at checkout.</p>"
+          }
+        },
+        "question_11": {
+          "type": "question",
+          "settings": {
+            "question": "Can I pay by bank transfer?",
+            "answer": "<p>Yes, for orders over $3,000 choose Bank Deposit. Your order stays pending until the transfer arrives and ships within 10–14 business days of receipt; transfers not received within 7 business days are cancelled.</p>"
+          }
+        },
+        "question_12": {
+          "type": "question",
+          "settings": {
+            "question": "What happens if I return a financed deck?",
+            "answer": "<p>Refunds go back to your lender. With Shop Pay Installments monthly plans, interest already paid isn't refunded.</p>"
+          }
+        },
+        "question_13": {
+          "type": "question",
+          "settings": {
+            "question": "Can I finance a custom-size deck?",
+            "answer": "<p>Yes. Our deck specialists can create a custom order you pay with the same checkout options.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5",
+        "question_6",
+        "question_7",
+        "question_8",
+        "question_9",
+        "question_10",
+        "question_11",
+        "question_12",
+        "question_13"
+      ],
+      "settings": {
+        "anchor_id": "faq",
+        "heading": "Deck Financing FAQs",
+        "intro": "Still deciding? A deck specialist can walk you through every payment option.",
+        "button_label": "Talk to a Deck Specialist",
+        "button_link": "#chat",
+        "open_first": true,
+        "faq_schema": true,
+        "price_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "price_variant_title": "12 x 12"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "ways",
+    "compare",
+    "steps",
+    "faq"
+  ]
+}

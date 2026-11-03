@@ -1,0 +1,83 @@
+{{ 'rv-landing.css' | asset_url | stylesheet_tag }}
+{{ 'fin-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck Financing page · 6 Ways to Pay. Figma › Section - 6 Ways to Pay (6664:673).
+  One `option` block per payment method card (badge, kicker, H3, text, link).
+{%- endcomment -%}
+
+<div class="rv fin rv--white fin-options"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="rv__inner">
+    <div class="fin-head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rv-h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="fin-head__sub">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <ul class="fin-options__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="fin-option" {{ block.shopify_attributes }}>
+          {%- if block.settings.badge != blank -%}
+            <span
+              class="fin-option__badge"
+              style="background: {{ block.settings.badge_bg }}; color: {{ block.settings.badge_text }};"
+            >
+              {{- block.settings.badge | escape -}}
+            </span>
+          {%- endif -%}
+          {%- if block.settings.kicker != blank -%}
+            <p class="fin-option__kicker">{{ block.settings.kicker | escape }}</p>
+          {%- endif -%}
+          {%- if block.settings.title != blank -%}
+            <h3 class="fin-option__title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.body != blank -%}
+            <p class="fin-option__body">{{ block.settings.body | escape }}</p>
+          {%- endif -%}
+          {%- if block.settings.link_label != blank -%}
+            {%- if block.settings.link contains '#chat' -%}
+              <button type="button" class="rv-link fin-option__link" data-chat-trigger>{{ block.settings.link_label | escape }} →</button>
+            {%- elsif block.settings.link != blank -%}
+              <a class="rv-link fin-option__link" href="{{ block.settings.link }}">{{ block.settings.link_label | escape }} <span aria-hidden="true">→</span></a>
+            {%- endif -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Financing · Ways to Pay",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "ways-to-pay" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "6 Ways to Pay for Your Deck Kit" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Pick the one that fits your budget and your build date." }
+  ],
+  "blocks": [
+    {
+      "type": "option",
+      "name": "Payment option",
+      "settings": [
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Affirm" },
+        { "type": "color", "id": "badge_bg", "label": "Badge background", "default": "#4a4af4" },
+        { "type": "color", "id": "badge_text", "label": "Badge text", "default": "#ffffff" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Build now, pay monthly" },
+        { "type": "text", "id": "title", "label": "Title (H3)", "default": "Affirm — Build Now, Pay Monthly" },
+        { "type": "textarea", "id": "body", "label": "Text" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "See if you qualify" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Use #chat to open live chat." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Financing · Ways to Pay", "blocks": [{ "type": "option" }] }]
+}
+{% endschema %}
