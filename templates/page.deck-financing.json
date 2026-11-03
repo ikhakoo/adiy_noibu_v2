@@ -76,7 +76,7 @@
             "title": "A-DIY Split Payments",
             "body": "Split your kit into 4, 6 or 8 equal monthly payments. The first is charged today, the rest go to the same card each month. No fees or interest — your deck ships after your final payment.",
             "link_label": "Choose a split-payment kit",
-            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+            "link": "https://a-diy.com/products/pressure-treated-kiln-dried-wood-deck-kit-split-payments"
           }
         },
         "option_5": {
@@ -89,7 +89,7 @@
             "title": "A-DIY Reserve — $250",
             "body": "Planning a spring build? Reserve your kit with a $250 non-refundable deposit, lock today's price and choose your future delivery date. The $250 comes off your kit price when you pay the balance.",
             "link_label": "Reserve my deck",
-            "link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit"
+            "link": "https://a-diy.com/products/250-pressure-treated-kiln-dried-wood-deck-kit"
           }
         },
         "option_6": {
@@ -300,14 +300,14 @@
           "type": "question",
           "settings": {
             "question": "What is A-DIY Split Payments?",
-            "answer": "<p>An interest-free plan where your kit price is divided into 4, 6 or 8 monthly charges to one card. There are no fees, and your deck ships after the last payment.</p>"
+            "answer": "<p>An interest-free plan where your kit price is divided into 4, 6 or 8 monthly charges to one card. There are no fees, and your deck ships after the last payment. <a href=\"https://a-diy.com/products/pressure-treated-kiln-dried-wood-deck-kit-split-payments\" title=\"A-DIY Split Payments deck kit\">Choose a split-payment kit</a>.</p>"
           }
         },
         "question_6": {
           "type": "question",
           "settings": {
             "question": "What is A-DIY Reserve?",
-            "answer": "<p>A $250 non-refundable deposit that locks today's kit price and lets you choose a future delivery date. The deposit comes off your balance.</p>"
+            "answer": "<p>A $250 non-refundable deposit that locks today's kit price and lets you choose a future delivery date. The deposit comes off your balance. <a href=\"https://a-diy.com/products/250-pressure-treated-kiln-dried-wood-deck-kit\" title=\"A-DIY Reserve $250 deck kit\">Reserve your deck</a>.</p>"
           }
         },
         "question_7": {

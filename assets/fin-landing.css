@@ -301,6 +301,13 @@
   line-height: 1.55;
 }
 
+.fin-faq .rv-faq__a a {
+  font-weight: 600;
+  color: var(--rv-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ---------- Tablet ---------- */
 
 @media screen and (max-width: 1199px) {
