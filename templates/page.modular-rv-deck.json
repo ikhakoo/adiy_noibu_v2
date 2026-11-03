@@ -1,372 +1,2176 @@
+/*
+ * RV Decks page (/pages/rv-decks) — v2 design from Figma "SEO — RV Deck Kits v2 (Desktop 1920)".
+ * Development theme only; the live theme keeps its own page.modular-rv-deck.json until release.
+ */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {}
-    },
-    "intro": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_intro": {
-          "type": "heading",
-          "settings": {
-            "heading": "Modular RV Decks — A Real Deck for a Seasonal Site",
-            "class_heading": ""
-          }
-        },
-        "text_intro": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Seasonal and RV sites rarely allow anything attached to the unit, which rules out most deck plans. A freestanding modular deck solves it: the structure stands on its own footings and sits beside the RV rather than fixed to it.</p><p>A-DIY kits are built for exactly that. Tuff Block foundations, 6 x 6 beams, 2 x 8 joists at 13 to 14 inches on centre, and boards cut to length — assembled with a power drill in 8 to 16 hours, with no cutting or measuring on site.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_intro",
-        "text_intro"
-      ],
-      "name": "t:sections.rich-text.presets.name",
+    "hero": {
+      "type": "rv-hero",
       "settings": {
-        "custom_class": "",
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "padding_top": 64,
-        "padding_bottom": 36
+        "anchor_id": "",
+        "eyebrow": "Floating deck kits",
+        "heading": "RV and Camper Decks for Seasonal Campsites",
+        "lede": "An A-DIY RV deck kit is a floating wood or composite deck that you build beside your camper or travel trailer at a seasonal site. It stands on its own footings, assembles with one drill in 8–16 hours, and ships to your door in 10–14 business days.",
+        "primary_label": "Shop RV Deck Sizes",
+        "primary_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+        "secondary_label": "Plan My Deck With an Expert",
+        "secondary_link": "shopify://pages/free-design-consultation",
+        "image_alt": "A-DIY pressure-treated wood deck beside a travel trailer at a campground",
+        "image": "shopify://shop_images/rv-hero-travel-trailer-deck.png"
       }
     },
-    "proof": {
-      "type": "featured-icon-scrolling",
+    "story": {
+      "type": "rv-story",
       "blocks": {
-        "marquee_item_1": {
-          "type": "marquee_item",
+        "photo_1": {
+          "type": "photo",
           "settings": {
-            "image_icon": "",
-            "custom_svg": "",
-            "text": "Professionally engineered system"
+            "alt": "A-DIY deck kit delivery arriving at the Sin City Country homestead",
+            "image": "shopify://shop_images/rv-sin-city-delivery.png"
           }
         },
-        "marquee_item_2": {
-          "type": "marquee_item",
+        "photo_2": {
+          "type": "photo",
           "settings": {
-            "image_icon": "",
-            "custom_svg": "",
-            "text": "Assembles in 8 to 16 hours"
+            "alt": "Nader and Alena unpacking their A-DIY deck kit",
+            "image": "shopify://shop_images/rv-sin-city-unboxing.png"
           }
         },
-        "marquee_item_3": {
-          "type": "marquee_item",
+        "photo_3": {
+          "type": "photo",
           "settings": {
-            "image_icon": "",
-            "custom_svg": "",
-            "text": "Engineered for 15,000+ lbs"
+            "alt": "Assembling the A-DIY deck frame beside an RV",
+            "image": "shopify://shop_images/rv-sin-city-framing.png"
           }
         },
-        "marquee_item_4": {
-          "type": "marquee_item",
+        "photo_4": {
+          "type": "photo",
           "settings": {
-            "image_icon": "",
-            "custom_svg": "",
-            "text": "5-year structural warranty"
-          }
-        },
-        "marquee_item_5": {
-          "type": "marquee_item",
-          "settings": {
-            "image_icon": "",
-            "custom_svg": "",
-            "text": "Ships nationwide in 10 to 14 business days"
-          }
-        },
-        "marquee_item_6": {
-          "type": "marquee_item",
-          "settings": {
-            "image_icon": "",
-            "custom_svg": "",
-            "text": "Sourced and manufactured in the USA"
+            "alt": "Finished A-DIY wood deck with chairs at the Sin City Country homestead",
+            "image": "shopify://shop_images/rv-sin-city-finished-deck.png"
           }
         }
       },
       "block_order": [
-        "marquee_item_1",
-        "marquee_item_2",
-        "marquee_item_3",
-        "marquee_item_4",
-        "marquee_item_5",
-        "marquee_item_6"
+        "photo_1",
+        "photo_2",
+        "photo_3",
+        "photo_4"
       ],
-      "name": "Icon Scrolling Marquee",
       "settings": {
-        "bg_color": "#f5f3ee",
-        "text_color": "#4a554a",
-        "speed": 30,
-        "pause_on_hover": true,
-        "item_gap": 50,
-        "font_size": 14,
-        "font_weight": "600",
-        "icon_size": 28,
-        "padding_top": 16,
-        "padding_bottom": 16
+        "anchor_id": "build-video",
+        "heading": "From RV Living to Outdoor Living.",
+        "intro": "The couple behind Sin City Country Homestead, transformed the space outside their RV in rural Tennessee with an A-DIY deck kit.",
+        "video_title": "Easiest Deck You'll Ever Build | Anyone Can Do This",
+        "upload_date": "2025-10-01",
+        "eyebrow": "Sin City Country on YouTube",
+        "card_heading": "Nader & Alena's A-DIY RV Deck",
+        "text": "<p>Nader and Alena decided to transform the space outside their RV with an A-DIY deck kit, creating a dedicated outdoor area to relax, gather, and enjoy life beyond the camper walls.</p><p>Their RV deck project shows how a thoughtfully designed deck can turn an ordinary RV or camper setup into a more inviting outdoor living space, without the complexity of traditional deck construction.</p>",
+        "watch_label": "Watch the Build Video",
+        "reviews_label": "Read Customer Reviews",
+        "reviews_link": "shopify://pages/reviews",
+        "video_url": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",
+        "poster": "shopify://shop_images/rv-build-video-easiest-deck-thumb.jpg"
       }
     },
-    "kit": {
-      "type": "multicolumn",
+    "layers": {
+      "type": "sdp-five-layers",
       "blocks": {
-        "column_kit_1": {
-          "type": "column",
+        "layer_1": {
+          "type": "layer",
           "settings": {
-            "image": "",
-            "title": "Engineered lumber, cut to size",
-            "text": "<p>Every board arrives cut to length. Wood kits use Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated so it resists warping, cracking and moisture. Composite kits use a blend of wood fibres and recycled plastics.</p><p>6 x 6 beams carry the load, 2 x 8 joists sit 13 to 14 inches on centre to meet standard deck codes, and 5.5-inch pre-sealed boards finish the surface.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
+            "title": "Decking",
+            "text": "Premium Grade 1 Southern Yellow Pine & Kiln Dried",
+            "pin_x": 83,
+            "pin_y": 16
           }
         },
-        "column_kit_2": {
-          "type": "column",
+        "layer_2": {
+          "type": "layer",
           "settings": {
-            "image": "",
-            "title": "Hardware and foundation included",
-            "text": "<p>Galvanized, corrosion-resistant screws and brackets come in the box, along with Tuff Block foundation blocks. There is no separate parts list to source and no trip to the lumber yard.</p><p>The deck is engineered for 15,000+ lbs and ships ready to assemble at 15 to 17 inches off the ground.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
+            "title": "Frame",
+            "text": "Rim that keeps it square",
+            "pin_x": 86,
+            "pin_y": 33
           }
         },
-        "column_kit_3": {
-          "type": "column",
+        "layer_3": {
+          "type": "layer",
           "settings": {
-            "image": "",
-            "title": "Instructions built for one person",
-            "text": "<p>A standard power drill is the only tool you need. There is no cutting and no measuring on site.</p><p>Every kit ships with step-by-step instructions and access to the 3D instructional app, which walks you through the build one component at a time.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
+            "title": "Joists",
+            "text": "2×8, set 13–14\" apart",
+            "pin_x": 85,
+            "pin_y": 51
+          }
+        },
+        "layer_4": {
+          "type": "layer",
+          "settings": {
+            "title": "Beams",
+            "text": "6×6, notched for joists",
+            "pin_x": 88,
+            "pin_y": 61
+          }
+        },
+        "layer_5": {
+          "type": "layer",
+          "settings": {
+            "title": "Footings",
+            "text": "Tuff Block foundation. You have flexibility to use in ground footings, sono tubes, helical piles.",
+            "pin_x": 86,
+            "pin_y": 73
           }
         }
       },
       "block_order": [
-        "column_kit_1",
-        "column_kit_2",
-        "column_kit_3"
+        "layer_1",
+        "layer_2",
+        "layer_3",
+        "layer_4",
+        "layer_5"
       ],
-      "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "custom_class": "",
-        "title": "What arrives in the box",
-        "title_content": "",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
+        "eyebrow": "What’s under a deck matters more than what’s on top",
+        "heading": "How an A-DIY RV Deck Kit Is Built",
+        "intro": "An A-DIY deck is built the way a lasting deck should be: on its own foundation, with a real wood frame, and with nothing fastened to your RV.",
+        "image": "shopify://shop_images/sdp-exploded-deck-kit.jpg",
+        "image_alt": "Exploded view of an A-DIY RV deck kit: decking, frame, joists, beams and Tuff Block footings",
+        "anchor_id": "how-its-built"
+      }
+    },
+    "materials": {
+      "type": "rv-materials",
+      "blocks": {
+        "kit_wood": {
+          "type": "kit",
+          "settings": {
+            "product": "pressure-treated-kiln-dried-wood-deck-kit",
+            "title": "Pressure Treated Wood Deck Kit",
+            "show_price": false,
+            "button_label": "Shop Wood Deck Kit",
+            "link": "",
+            "image_alt": "A-DIY pressure-treated wood deck kit with steps beside a travel trailer",
+            "image": "shopify://shop_images/rv-pressure-treated-deck-camper.png"
+          }
+        },
+        "kit_composite": {
+          "type": "kit",
+          "settings": {
+            "product": "a-diy-composite-deck-kit",
+            "title": "Composite Deck Kit",
+            "show_price": false,
+            "button_label": "Shop Composite Deck Kit",
+            "link": "",
+            "image_alt": "A-DIY composite deck kit beside a travel trailer at a wooded campsite",
+            "image": "shopify://shop_images/rv-composite-deck-camper.png"
+          }
+        }
+      },
+      "block_order": [
+        "kit_wood",
+        "kit_composite"
+      ],
+      "settings": {
+        "anchor_id": "wood-or-composite",
+        "heading": "Wood or Composite for a Camper Deck?",
+        "link_label": "Compare Pressure Treated and Composite Decking",
+        "link": "shopify://collections/deck-kits"
+      }
+    },
+    "video_carousel": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_card_ahYgct": {
+          "type": "video_card",
+          "settings": {
+            "external_video_url": "https://cdn.shopify.com/videos/c/o/v/8da1c0c9e7844c41b194c3f72f5bba72.mp4",
+            "video_title": "Built solo in about six hours, six weeks postpartum",
+            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_jBfw7r": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/I built this entire @decks by myself… six weeks postpartum in about 6 hours! The best part This .mp4",
+            "external_video_url": "",
+            "video_title": "Built solo in about six hours, six weeks postpartum",
+            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_xtzmkU": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/This project got a billion times easier… @decks 12x20 deck kit was like building a Lego set. So .mp4",
+            "external_video_url": "",
+            "video_title": "A 12x20 deck kit that goes together like Lego",
+            "video_description": "A customer assembles the 12 x 20 A-DIY deck kit and compares the process to building a Lego set.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_BpVMTz": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Comment “deck” and I’ll send you the deets & a discount code! 😍We totally needed a deck to make.mp4",
+            "external_video_url": "",
+            "video_title": "Why we finally added a deck",
+            "video_description": "A customer explains why they added a deck to their backyard and which A-DIY kit they used.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_FdxxkQ": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/We built a deck in TWO DAYS!!! 🤯 If you’re in the market for a new deck, check out A-DIY @decks.mp4",
+            "external_video_url": "",
+            "video_title": "A deck built in two days",
+            "video_description": "A customer builds an A-DIY deck over two days and recommends the kit to anyone shopping for a new deck.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_zecQyF": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
+            "external_video_url": "",
+            "video_title": "Creating a dream backyard with a kit shipped to the door",
+            "video_description": "A customer transforms their backyard with a custom A-DIY deck kit delivered to their door.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_8wbEp3": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/DIY deck walkway ✔️One of the biggest goals for our backyard makeover has been creating better f.mp4",
+            "external_video_url": "",
+            "video_title": "A DIY deck walkway for better backyard flow",
+            "video_description": "A customer builds a deck walkway as part of a backyard makeover, to improve how the space connects.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_73gEM7": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/From overgrown patio area to deck extension! As easy as 1,2,3 thanks to @decks. Their deck kits .mp4",
+            "external_video_url": "",
+            "video_title": "From overgrown patio to deck extension",
+            "video_description": "A customer turns an overgrown patio area into a deck extension using an A-DIY kit.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_nUPXFF": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
+            "external_video_url": "",
+            "video_title": "Almost hired a contractor, built it instead",
+            "video_description": "A customer explains why they chose an A-DIY kit over hiring a contractor to build their deck.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_cTW3eq": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
+            "external_video_url": "",
+            "video_title": "A 16x20 deck that transformed a backyard",
+            "video_description": "A customer builds a 16 x 20 composite A-DIY deck and shows how one project changed their backyard.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_XCCyQn": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Our new deck is finally done thanks to A-DIY @decks 🤍✨I wanted something that looked beautiful .mp4",
+            "external_video_url": "",
+            "video_title": "A finished deck that looks the part",
+            "video_description": "A customer shares their completed A-DIY deck, chosen because they wanted something that looked beautiful.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_hVELcx": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Had a great time assembling my new deck by @decks! So satisfying and the results are amazing! So.mp4",
+            "external_video_url": "",
+            "video_title": "Satisfying to assemble, and the result shows",
+            "video_description": "A customer describes assembling their A-DIY deck and the finished result.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_XGXdVn": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/We got the deck kit from @decks and customized it to be 18x28 ft and we havent gotten to it yet.mp4",
+            "external_video_url": "",
+            "video_title": "A deck kit customized to 18 x 28 feet",
+            "video_description": "A customer customizes an A-DIY deck kit to 18 x 28 feet for their backyard.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_cDGiX9": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/We loved seeing our deck come to life for the Maker’s Mark activation in Orlando! If you’re in t.mp4",
+            "external_video_url": "",
+            "video_title": "A-DIY deck built for the Maker's Mark activation in Orlando",
+            "video_description": "An A-DIY deck assembled on site for the Maker's Mark brand activation in Orlando.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_bQiEmk": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Another A-DIYer officially in their deck era ✨Nothing better than happy customers, fresh lumber,.mp4",
+            "external_video_url": "",
+            "video_title": "Another finished A-DIY deck",
+            "video_description": "A customer's completed A-DIY deck: fresh lumber and a finished backyard space.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_h7wfe6": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/e96d071f82fe44dbb1c955b55dbc6f08.mp4",
+            "external_video_url": "",
+            "video_title": "",
+            "video_description": "",
+            "video_upload_date": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_card_ahYgct",
+        "video_card_jBfw7r",
+        "video_card_xtzmkU",
+        "video_card_BpVMTz",
+        "video_card_FdxxkQ",
+        "video_card_zecQyF",
+        "video_card_8wbEp3",
+        "video_card_73gEM7",
+        "video_card_nUPXFF",
+        "video_card_cTW3eq",
+        "video_card_XCCyQn",
+        "video_card_hVELcx",
+        "video_card_XGXdVn",
+        "video_card_cDGiX9",
+        "video_card_bQiEmk",
+        "video_card_h7wfe6"
+      ],
+      "name": "Video Carousel",
+      "settings": {
+        "subheading": "",
+        "heading": "RV Deck Ideas. Endless Possibilities.",
+        "description": "Turn the space outside your RV, camper, or travel trailer into your favorite place to be. Explore real A-DIY deck builds, discover inspiring outdoor spaces, and see how our RV deck kits make it easier to create a home away from home.",
+        "bg_color": "#ffffff",
         "color_scheme": "",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "steps": {
+      "type": "rv-steps-covered",
+      "settings": {
+        "anchor_id": "steps-railings",
+        "image_alt": "A-DIY deck with steps and railings leading to an RV door",
+        "heading": "RV Deck Steps, Railings and Porch Entry",
+        "text": "RV doors often sit higher than the deck. Steps make the walk from door to deck to ground easy and safe, and railings add a finished look, like a porch for your camper. Our team will match steps and railings to your deck height.",
+        "button_label": "Chat with design team",
+        "button_link": "#chat",
+        "panel_eyebrow": "Shade and shelter",
+        "panel_heading": "Covered RV Decks: Adding a Gazebo or Shelter",
+        "panel_text": "You can make a permanent-feeling RV shelter by setting a freestanding gazebo or pergola over a 12x12 or 16x16 A-DIY deck. It adds shade and shelter from rain without attaching anything to your RV. Check your campground's rules on covered structures first.",
+        "panel_image_alt": "Freestanding gazebo set over an A-DIY deck",
+        "image": "shopify://shop_images/rv-deck-steps-railings.png",
+        "panel_image": "shopify://shop_images/rv-deck-gazebo.png"
+      }
+    },
+    "delivery": {
+      "type": "rv-delivery",
+      "settings": {
+        "anchor_id": "delivery",
+        "heading": "Delivered to Your Door or Your Campground",
+        "text": "Your kit ships by LTL ground freight nationwide. Delivery is typically within 10–14 business days, and the carrier calls ahead to schedule it.",
+        "note": "Shipping to a campground? Let your park office know a freight delivery is coming, and tell our team if a truck can’t reach your site. We’ll help you plan the drop off.",
+        "button_label": "Build your RV deck",
+        "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+        "image_alt": "A-DIY customers sitting on their deck kit shipping crate after delivery",
+        "image": "shopify://shop_images/rv-deck-kit-crate-delivery.png"
+      }
+    },
+    "best": {
+      "type": "rv-best-deck",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Floating",
+            "text": "Stands on its own footings beside your RV and is never fastened to it."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Sized for door sides",
+            "text": "Narrow 6-foot and 8-foot widths run along the length of your rig."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Built strong",
+            "text": "Engineered for 15,000+ lbs with galvanized, corrosion-resistant hardware."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "title": "One tool",
+            "text": "A power drill is all you need, and the custom drill bit is included."
+          }
+        },
+        "benefit_5": {
+          "type": "benefit",
+          "settings": {
+            "title": "A weekend build",
+            "text": "Most kits go together in 8–16 hours."
+          }
+        },
+        "benefit_6": {
+          "type": "benefit",
+          "settings": {
+            "title": "Real help",
+            "text": "Talk to a deck specialist by chat or phone before and during your build."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "benefit_5",
+        "benefit_6"
+      ],
+      "settings": {
+        "anchor_id": "best-deck-for-rv",
+        "heading": "What's the Best Deck for an RV or Camper?",
+        "answer": "For a seasonal or long stay site, the best deck for an RV is a floating deck on its own footings, sized to the door side of your rig. It feels like a real deck, never puts load on the RV, and keeps the trailer free to move. Portable fold out platforms suit travelers who change campsites every few days.",
+        "text": "Your seasonal site is where mornings start slow and evenings run long. It deserves more than a mat on the grass. Every A-DIY kit is a professionally engineered deck system: the structure is designed in advance, the parts arrive ready to assemble, and the footings and hardware come in the box.",
+        "image_alt": "Two dogs relaxing on an A-DIY wood deck outside a camper",
+        "image": "shopify://shop_images/rv-deck-camper-dogs.png"
+      }
+    },
+    "gallery": {
+      "type": "rv-gallery",
+      "blocks": {
+        "photo_1": {
+          "type": "photo",
+          "settings": {
+            "alt": "A-DIY deck with dining and lounge seating beside a fifth-wheel camper at dusk",
+            "image": "shopify://shop_images/rv-gallery-dining-deck-evening.png"
+          }
+        },
+        "photo_2": {
+          "type": "photo",
+          "settings": {
+            "alt": "A-DIY composite deck beside a travel trailer at a wooded campsite",
+            "image": "shopify://shop_images/rv-composite-deck-camper.png"
+          }
+        },
+        "photo_3": {
+          "type": "photo",
+          "settings": {
+            "alt": "A-DIY wood deck with bistro set beside a motorhome",
+            "image": "shopify://shop_images/rv-gallery-motorhome-deck.png"
+          }
+        },
+        "photo_4": {
+          "type": "photo",
+          "settings": {
+            "alt": "A-DIY wood deck beside a travel trailer at sunset",
+            "image": "shopify://shop_images/rv-gallery-trailer-sunset-deck.png"
+          }
+        },
+        "photo_5": {
+          "type": "photo",
+          "settings": {
+            "alt": "A-DIY pressure-treated wood deck beside an Airstream trailer",
+            "image": "shopify://shop_images/rv-hero-travel-trailer-deck.png"
+          }
+        },
+        "photo_6": {
+          "type": "photo",
+          "settings": {
+            "alt": "Two dogs relaxing on an A-DIY wood deck outside a camper",
+            "image": "shopify://shop_images/rv-deck-camper-dogs.png"
+          }
+        },
+        "photo_7": {
+          "type": "photo",
+          "settings": {
+            "alt": "A-DIY wood deck beside an overland truck camper",
+            "image": "shopify://shop_images/rv-gallery-overland-camper-deck.png"
+          }
+        }
+      },
+      "block_order": [
+        "photo_1",
+        "photo_2",
+        "photo_3",
+        "photo_4",
+        "photo_5",
+        "photo_6",
+        "photo_7"
+      ],
+      "settings": {
+        "anchor_id": "rv-deck-ideas",
+        "heading": "RV and Camper Deck Ideas for Your Seasonal Site",
+        "intro": "The best RV deck ideas start with how you'll use the space. Here are four layouts you can build with A-DIY's standard kit sizes."
+      }
+    },
+    "reviews": {
+      "type": "verified-reviews-wall-new",
+      "blocks": {
+        "image_review_8JLBTL": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/review_3.png",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_handle": "",
+            "author_role": "",
+            "headline": "",
+            "social_icon": "none",
+            "review_text": ""
+          }
+        },
+        "image_review_CYm84C": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/review_5.png",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_handle": "",
+            "author_role": "",
+            "headline": "",
+            "social_icon": "none",
+            "review_text": ""
+          }
+        },
+        "video_review_kizCHf": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/VicenteReview_Captions.mov",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "video_review_WtK483": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/Comment “deck” and I’ll send you the deets & a discount code! 😍We totally needed a deck to make.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "image_review_3D7kkJ": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/review_4.png",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_handle": "",
+            "author_role": "",
+            "headline": "",
+            "social_icon": "none",
+            "review_text": ""
+          }
+        },
+        "image_review_ytM49X": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/review_7.png",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_handle": "",
+            "author_role": "",
+            "headline": "",
+            "social_icon": "none",
+            "review_text": ""
+          }
+        },
+        "video_review_TzV76F": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/16 Home Carousel Video Portrait 1.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "video_review_pNQm3a": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/I built this entire @decks by myself… six weeks postpartum in about 6 hours! The best part This .mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "image_review_cFfg8g": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/review_6.png",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_handle": "",
+            "author_role": "",
+            "headline": "",
+            "social_icon": "none",
+            "review_text": ""
+          }
+        },
+        "image_review_RxGbTF": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/review_1.png",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_handle": "",
+            "author_role": "",
+            "headline": "",
+            "social_icon": "none",
+            "review_text": ""
+          }
+        },
+        "text_review_3aTUTa": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "FRANK",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "Every board is clearly marked for quick assembly. The fitment was good, impressed with the strength of the deck.Overall appearance was excellent."
+          }
+        },
+        "text_review_37MmyY": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Mary O.",
+            "author_handle": "",
+            "headline": "Wood Deck - 12x12",
+            "social_icon": "google",
+            "review_text": "I’m a 62yr old nurse. I put this together by myself . The instructions are wonderful. I feel blessed to have this space for rest and relaxation."
+          }
+        },
+        "video_review_nrTFyH": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/NaderReview_NoText.mov",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "image_review_PTYLBx": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.30_3fba2d48.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Rob C.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "I did it myself",
+            "social_icon": "google",
+            "review_text": "I recently built my own deck kit from A-DIY, and the experience was beyond my expectations! I’m not a DIY expert by any means, but the instructions were incredibly user-friendly, and all the materials arrived securely packaged and ready for assembly. The most impressive part? I didn’t have to hire a contractor! The assembly process was smooth, ..."
+          }
+        },
+        "text_review_gTwEBK": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Paula Y.",
+            "author_handle": "",
+            "headline": "Wood Deck 16x32",
+            "social_icon": "facebook",
+            "review_text": "Deck was perfect. My landscapers installed it and one of them happens to be a framer by trade. He was impressed by how it went together rather quickly. It took them about 2 hours to put together. Whereas if they would have built it from scratch would have taken a full day. He said he would recommend this deck if anyone was looking to have one built. That speaks volumes! I am glad I found your company and I will recommend that people purchase this item from you if they are looking for a deck. And just as advertised with all the bits and pieces that went to put it together. Everything was there and everything went smoothly. I couldn't be more pleased!"
+          }
+        },
+        "text_review_t8YhLf": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "John Taylor",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "A great product well put together will definitely refer you to other people and I might buy an extension for another 12 x 12 platform to go off the one I have. Thank you so much for a great product."
+          }
+        },
+        "video_review_FwLeyP": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/From overgrown patio area to deck extension! As easy as 1,2,3 thanks to @decks. Their deck kits .mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_TKd9Lt": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Darrell",
+            "author_handle": "",
+            "headline": "Everything was as Promised",
+            "social_icon": "google",
+            "review_text": "Everything was as promised with the quality and ease of putting pieces together. The delivery personnel were very courteous and professional."
+          }
+        },
+        "text_review_tbiGPt": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Arick Hedin",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "They worked to create my custom size."
+          }
+        },
+        "text_review_HAHtMH": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Steven hall",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "Quality, PROFESSIONAL service, Quality materials...I even had extra pieces 👏 👌...PROFESSIONAL and timely delivery"
+          }
+        },
+        "text_review_47eeGF": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Thomas",
+            "author_handle": "",
+            "headline": "Very Impressive Deck",
+            "social_icon": "trustpilot",
+            "review_text": "I’m just the person to prove this product is foolproof. Very easy to follow and build. I highly recommend using A-DIY. They are easy to work with and they use a great carrier in Estes."
+          }
+        },
+        "image_review_Hj6ggb": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/b19ef24e-604f-482b-ba58-7e221a219c69.jpg",
+            "aspect_ratio": "tall",
+            "author_name": "Lori V.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Composite Deck - 12x12",
+            "social_icon": "google",
+            "review_text": "We are so proud of our deck! We saved a ton of money by building it ourselves, giving us a sense of accomplishment. Thanks to A-DIY, the directions were easy to follow and materials well packed and arranged. We have been able to enjoy sitting out with a drink and have had a family gathering all ready."
+          }
+        },
+        "image_review_D3Mpkb": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/IMG_0566_1.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Vicente B.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Great Product",
+            "social_icon": "google",
+            "review_text": "Great product and the customer support is the best . Went out of there way to make sure everything was right ."
+          }
+        },
+        "video_review_zmaJXi": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/16 Home Carousel Video Portrait 2.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "video_review_nkyxfn": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/We loved seeing our deck come to life for the Maker’s Mark activation in Orlando! If you’re in t.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_rHjQE8": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "MS",
+            "author_handle": "",
+            "headline": "I'm going to be totally honest",
+            "social_icon": "trustpilot",
+            "review_text": "I'm going to be totally honest. The end result makes me so happy. My deck is beautiful and sturdy but the installation was frustrating.A shout out and big appreciation to Jay. Once she escalated my problems to upper management, they were resolved and I was a very happy customer. When a business explodes like A-DIY did, some manufacturing oversight gets lost. They promised they were going to do better.\nTheir product is fabulous. My husband and I did not kill each other during installation so that is a big plus. I gave 4 stars because of the initial frustration. The finished deck is perfect."
+          }
+        },
+        "text_review_Um7zqj": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "DONAWA FLOWLER",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "Directions were good with the addition of the app. Everything lined up and it looks great. The quality is good."
+          }
+        },
+        "text_review_jUcznj": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "MARTIN",
+            "author_handle": "",
+            "headline": "Very easy",
+            "social_icon": "trustpilot",
+            "review_text": "Very easy, quality wood. Very, very good customer service."
+          }
+        },
+        "text_review_M8rFUc": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Gary Fagan",
+            "author_handle": "",
+            "headline": "Very nice deck. 16x16 I put together myself. Great product.",
+            "social_icon": "trustpilot",
+            "review_text": "It was a lot cheaper and of the best quality. THANK YOU!"
+          }
+        },
+        "video_review_MXckDA": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/Another A-DIYer officially in their deck era ✨Nothing better than happy customers, fresh lumber,.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_Vhk4P7": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Steven hall",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "professional, quality 👌 👏 materials"
+          }
+        },
+        "image_review_Uacc3V": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.37.46_6d7298f1.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Charly M.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Customer support is great!",
+            "social_icon": "google",
+            "review_text": "They customer support it's great, I had a little issue and they helped me to get it done right away! Thank you!"
+          }
+        },
+        "text_review_awtzx8": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Andrea M.",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "The deck materials were delivered and there was no damage. Nice looking boards and easy to assemble. A little disappointed that 6 divider boards were missing and had to wait 2 weeks to get them to finish assembly, but pleased nonetheless."
+          }
+        },
+        "image_review_KTRV7i": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/IMG_5631.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Nader Sharif",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Just finished building our 16x20 deck…",
+            "social_icon": "google",
+            "review_text": "Just finished building our 16x20 deck and I couldn’t be happier with the experience from start to finish. Everything we needed came in the kit, even the bit for the impact driver. The only thing we had to supply was the screw gun or impact driver itself. The deck turned out solid and all of the wood arrived in excellent condition."
+          }
+        },
+        "text_review_c6Kffa": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "William Vasalofsky",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "Overall the project came together but I did a lot of research on building decks before building this deck and I was looking for areas where it said to level the foundation or make sure the whole project was square before moving from one step to another but I felt the directions lacked those caveats. I built the deck for about 2 hours a day after work in the hot sun and between heat exhaustion, heavy beams, and just being a little sick it took about 10 hours or would have if not taking the occasional day off"
+          }
+        },
+        "text_review_FQRRdJ": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "John Moreau",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "I got a great quality deck kit at a great price. Assembly and directions were easy to follow."
+          }
+        },
+        "video_review_AEkmRk": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/PasadenaReview_NoText.mov",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_ktTgBa": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Daniel Gifford",
+            "author_handle": "",
+            "headline": "Great product!",
+            "social_icon": "trustpilot",
+            "review_text": "The ease of ordering my new deck, the cost was in line with my budget. The staff was professional and answered all my questions."
+          }
+        },
+        "image_review_rmfVeb": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/image_58.png",
+            "aspect_ratio": "tall",
+            "author_name": "Anthony V.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Wood Deck 12x12",
+            "social_icon": "google",
+            "review_text": "The deck itself seems to be good quality and once I got the footings in place went together pretty easily.  Yes, all and all I would definitely recommend this kit. Happy building peeps!!!"
+          }
+        },
+        "text_review_cyF4WU": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Travis Ramsdell",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "The customer service from day one was great. I had not seen the specific size deck I wanted so reached out and the team was very responsive and said it wasn't a problem at all accommodating the size I needed.\n\nAbsolutely everything needed came with the kit. I didn't need to get anything extra. The build process could not have been simpler."
+          }
+        },
+        "text_review_RRdQaQ": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Charlene Vallee",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "The deck expert answered all my questions. I was able to track my order easily. When it arrived there was one cracked board. I took a picture and responded to the email they sent asking if the order had arrived in good condition. I received my new board within a week. The quality of the wood was outstanding! The instructions are clear and all the pieces are clearly marked. We have already highly recommended ADIY to our friends. We will be putting it together next week and are beyond excited!"
+          }
+        },
+        "image_review_UPD3wD": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.47.30_cf04d30f.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Tal D.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Very easy to assemble.",
+            "social_icon": "google",
+            "review_text": "Very easy to assemble! Greta consumer service!! The price was great! Highly recommend!"
+          }
+        },
+        "text_review_BbwFE7": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "David Owens",
+            "author_handle": "",
+            "headline": "Easy build 12x12 pressure treated deck",
+            "social_icon": "trustpilot",
+            "review_text": "I bought a 12x12 pressure treated deck. Great company communication throughout. All materials come packaged in a crate. The material is packaged in order of use as you take from the top, allowing us to time our build over several evenings without having lumber scattered across the yard and remaining protected in the crate. Instructions are clear and there’s also an online step by step video guide.\nI’m not a construction oriented individual, but my wife and I put it all together (including site prep) in four evenings. About 16 hours, including beer breaks - and it still came out level and great looking. We put a sauna on it and now it’s our favorite place in the yard.\nEasy, painless, cost effective. I am planning on a second deck and will use A-Diy again."
+          }
+        },
+        "text_review_Mam6NF": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "BILLI-JO S",
+            "author_handle": "",
+            "headline": "16 x 28 grey composite deck",
+            "social_icon": "trustpilot",
+            "review_text": "I ordered the 16 x 28 composite deck in grey, with 39 inch risers, for my front porch. It went together very well. I love it. I am so happy with it that I ordered another 16 x 28 for my back porch. The front is finished except the gazebo and rod iron railings ( which will be later).\nThe back porch is almost finished, and I ordered another smaller deck for my sliding glass door. 5 star."
+          }
+        },
+        "image_review_4ReVRp": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/image_56.png",
+            "aspect_ratio": "tall",
+            "author_name": "Michael B.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Composite Deck 16x20 ",
+            "social_icon": "google",
+            "review_text": "Great service with a real effort towards the customer. Can’t complain a bit. I loved the approach of “here is what we understand and how we are proceeding, if this doesn’t work for you please let us know, no need to get back with us if everything is ok”. I missed a call or two along the way and this was the approach taken. Information provided in the messages was detailed so I was well informed, I had the opportunity to make a correction if necessary and if all was good then there was no need to follow up. I hate when companies just say to call them back with no info and it was something completely trivial and wasting my time. The A-DIY approach was PERFECT for me as it progressed the order and I was fully informed even if I missed the call."
+          }
+        },
+        "text_review_zbXBcT": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Cindy A. Siller",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "Precut and color coded pieces were extremely easy to work with. Good quality material."
+          }
+        },
+        "image_review_pG8iHg": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.49.19_4962fb08.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Monica W.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "I absolutely love my deck",
+            "social_icon": "google",
+            "review_text": "I absolutely love my deck. From the start, the A DIY team was super helpful. They gave me great advice on what size would work best for my space and made the whole process really smooth. The kit arrived in about 10 days, packaged securely in a solid case. One of the parts looked a little damaged, so I reached out and they sent me a replacement t..."
+          }
+        },
+        "image_review_xfBHMb": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/image_8349_7255ec6a-9c2b-4e2f-ac74-b7c6ab871e4f.png",
+            "aspect_ratio": "tall",
+            "author_name": "Steven M.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Coming along great!",
+            "social_icon": "google",
+            "review_text": "I am almost done assembling the deck kit. I had to stop in between and give a review and share my progress, as I was so surprised by how easy the process has been so far. My wife cant believe that I am able to build a deck myself :). Thank you A-DIY."
+          }
+        },
+        "text_review_wtyVwQ": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "David Owens",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "Good communication. Easy construction with clear instructions. Looks good, functions great."
+          }
+        },
+        "image_review_6xMDPB": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_11.05.12_11aa0e6c_3680dc4a-c0ee-47f6-b135-bf2af2b8bd47.jpg",
+            "aspect_ratio": "tall",
+            "author_name": "Megan",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "I am glad I found your product",
+            "social_icon": "google",
+            "review_text": "I am a single mom to a 12 year old autistic son. I work full time and am always strapped for time and resources. I got this deck up myself! I am glad I found your product."
+          }
+        },
+        "text_review_9NgyNw": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Ryker Walker",
+            "author_handle": "",
+            "headline": "Great company, great quality",
+            "social_icon": "trustpilot",
+            "review_text": "The customer service from the start was useful and very thorough. I needed to see if my space would be a good match for the kit and was guided through the process. And, yes it works and it looks great. The instructions were clear and straightforward."
+          }
+        },
+        "video_review_FaFYQR": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/reelUp_4tt3gvxgh0m1731437157245_original.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_WmExcn": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Chris Gilligan",
+            "author_handle": "",
+            "headline": "It went together so easily and nothing…",
+            "social_icon": "trustpilot",
+            "review_text": "It went together so easily and nothing was missing. Great quality and satisfying experience.Looks perfect in its place."
+          }
+        },
+        "image_review_MnbTqY": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-22_at_10.42.45_5384d9a4.webp",
+            "aspect_ratio": "tall",
+            "author_name": "karen",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "It's done",
+            "social_icon": "google",
+            "review_text": "Cant wait for the grandkids to enjoy it now!"
+          }
+        },
+        "video_review_qfUKay": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/DIY deck walkway ✔️One of the biggest goals for our backyard makeover has been creating better f.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_jhzJcD": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Beth",
+            "author_handle": "",
+            "headline": "Can be built by one person",
+            "social_icon": "trustpilot",
+            "review_text": "As a 61-year-old retiree, I was able to assemble my 12 x 24 composite deck completely by myself (on a compound slope, no less). This is a credit to their design team's ability to make the build process nearly \"Lincoln Log\" esque. The fit was spot on for the most part, and only minor adjustments were needed. Typical of any large construction project. I came up short of a few composite screws and plugs, but their customer service quickly sent me the missing parts. They even reimbursed me for one board I had to replace due to warpage. I saved enough money by doing it myself, it was like getting the hot tub I put on it for free."
+          }
+        },
+        "text_review_MVVbzD": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Marina",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "I had a fantastic experience from start to finish and can highly recommend this company. The whole process was smooth, professional and stress free. Customer service was excellent, always available, even after the initial purchase and delivery. That level of support really made a difference. The delivery was also great. Everything arrived exactly as expected and in perfect condition. Most importantly, the deck looks amazing. It was fairly easy to install, being this my first ever big DIY project (never used a drill and never worked with wood before). I am extremely happy with the final results and would definitely recommend them to anyone looking for quality products and outstanding service."
+          }
+        },
+        "video_review_TTBwiX": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/16 Home Carousel Video Portrait 3.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_pgM6fF": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Andre Huggins",
+            "author_handle": "",
+            "headline": "Great service all around!",
+            "social_icon": "trustpilot",
+            "review_text": "From start to finish the service was great. I was constantly updated on the status of my order and it was delivered on time. All parts were there and no damage."
+          }
+        },
+        "text_review_gqhMFY": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Alexa Luria",
+            "author_handle": "",
+            "headline": "10/10 recommend",
+            "social_icon": "trustpilot",
+            "review_text": "It’s amazing. So easy and quick to put together, super efficient, amazing quality. 10/10"
+          }
+        },
+        "video_review_fiiDqm": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_kJWr63": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Patrick Mungovan",
+            "author_handle": "",
+            "headline": "14x14 deck",
+            "social_icon": "trustpilot",
+            "review_text": "The deck came beautifully packaged and all in great shape. I printed the instructions and read them a couple times and then we started the process of putting everything together. The instructions were spot on and every piece fit perfectly. It was so easy to build…just like a Lego set. I highly recommend A-DIY! I wish I could add photos but it won’t let me"
+          }
+        },
+        "text_review_J3E8nH": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "richard",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "It saves me a lot of time putting it together."
+          }
+        },
+        "image_review_bqLNYR": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/image_8361_6b661a47-1c0f-474a-a201-77f06bb919bd.png",
+            "aspect_ratio": "tall",
+            "author_name": "Henry G.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "I love my deck",
+            "social_icon": "google",
+            "review_text": "I love my deck, thanks A-DIY."
+          }
+        },
+        "text_review_kfbBwq": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Sandra",
+            "author_handle": "",
+            "headline": "It will take two people, but so worth it.",
+            "social_icon": "trustpilot",
+            "review_text": "The communication was great during the order and shipping process. The boards were cut perfectly and once we found the video instructions it was fairly easy to assemble. You will need 2 people to assemble the base, but one person can easily finish the top and skirt boards.\nI also used a sealant because I live in Florida and summers are wicked.\nIt took quite a while to receive my kit, but they updated me quickly when I made inquiries. I have a gravel driveway. The driver chose to wait until the end of the day, to unload my crate so that he could back down my driveway and not leave it sitting on the curb. I really appreciated that. He was gracious and did the best he could to get it as close to the site as possible.\nThe deck is amazing. I love using it. I put a protective pad under my firepit and plan on using it until it gets too hot.\n12' X 12' is large enough for 4 Adirondack chairs, 2 footstools, 2 small tables and a small square firepit."
+          }
+        },
+        "image_review_jiickr": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_11.24.10_d84eae16.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Imran K.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "I am far from a handyman",
+            "social_icon": "google",
+            "review_text": "I am far from a handyman but the wife wanted a deck in the backyard and I couldn’t see myself dishing out $20,000 for someone to come build it for us. I ended up seeing an ad for this company and was blown away by the price and ease of install. 2 of our neighbours ended up ordering as well!"
+          }
+        },
+        "text_review_KtnPtA": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "jeb",
+            "author_handle": "",
+            "headline": "It comes together",
+            "social_icon": "trustpilot",
+            "review_text": "The quality of the material was not compromised and customer service stepped up for a few pcs. that were damaged."
+          }
+        },
+        "text_review_k7x4bp": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Holland A Mertell",
+            "author_handle": "",
+            "headline": "A good project that I did myself.",
+            "social_icon": "trustpilot",
+            "review_text": "What made it a project that I could do myself is that everything and the box beams were pre-cut and partially assembled.\nThe step by step instructions left very little guesswork. I think almost anyone could build from one of these kits.\nThe only part that took experience or knowledge beforehand was leveling the locations of the footing pads"
+          }
+        },
+        "video_review_pWHrBq": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/Had a great time assembling my new deck by @decks! So satisfying and the results are amazing! So.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_nDBJU8": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Chad",
+            "author_handle": "",
+            "headline": "Easy peasy",
+            "social_icon": "trustpilot",
+            "review_text": "Easy to follow the steps to install. The customer service team was great as well."
+          }
+        },
+        "video_review_amBgDD": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/Our new deck is finally done thanks to A-DIY @decks 🤍✨I wanted something that looked beautiful .mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_McHPaB": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Kayla Zsilavetz",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "We built a full 16x20 deck in one weekend with the A DIY kit.  Just me, my wife, and a drill. No contractors, no measuring, no guessing. Every single piece was labeled, organized, and easy to follow.\n\nThe best part? It goes together like legos for adults. We saved thousands doing it ourselves and actually enjoyed the process. Well… most of it. These kinds of projects definitely test your marriage 🤣🤣\n\nThe instructions were clear, the kit was complete, and the results look like something we waited months for… but we built it ourselves. I’ve never seen a DIY product this well thought out and user-friendly. If you want a deck fast and don’t want to deal with contractors, this is it.\n\nWe are blown away. Thank you for giving us our favorite space in our new home."
+          }
+        },
+        "video_review_yUEftz": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/This project got a billion times easier… @decks 12x20 deck kit was like building a Lego set. So .mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_YrLkdJ": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Rick H",
+            "author_handle": "",
+            "headline": "Deck went together easy and looks great",
+            "social_icon": "trustpilot",
+            "review_text": "The deck went together easily and looks great. Had one little issue and A-DIY made it right fast."
+          }
+        },
+        "text_review_cPd87M": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Danny",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "Precut lumber is amazing and makes for fast assembly."
+          }
+        },
+        "image_review_QLatmr": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.40.16_1d63bec2.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Roy M.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Love mine, Getting another for my parents!",
+            "social_icon": "google",
+            "review_text": "I love my composite deck. The Amazon grey color is beautiful. The assembly of the kit is very easy. Just purchase another one for my parents house."
+          }
+        },
+        "image_review_648xEN": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.42.29_122ab7f1.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Greg P.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Lego!",
+            "social_icon": "google",
+            "review_text": "All the pieces fit together like lego. At first I was sceptical, but once I started assembling the deck, everything came together so seamlessly. I was able to add railings and a step to the deck myself. This is a great product and absolutely love the customer support team."
+          }
+        },
+        "video_review_bdWMM4": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/We got the deck kit from @decks and customized it to be 18x28 ft and we havent gotten to it yet.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_DWEHBm": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "charles",
+            "author_handle": "",
+            "headline": "",
+            "social_icon": "trustpilot",
+            "review_text": "The price was great and the delivery time was great. Will look great once I get it installed."
+          }
+        },
+        "image_review_TJ6iM7": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_11.00.01_63f99c9e.webp",
+            "aspect_ratio": "tall",
+            "author_name": "John H.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Love my Deck!",
+            "social_icon": "google",
+            "review_text": "Easy to assemble and love my deck."
+          }
+        },
+        "image_review_39mfeR": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2025-09-13_at_21.31.41_2d8be7b1.webp",
+            "aspect_ratio": "tall",
+            "author_name": "Gee A.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Customer support is great",
+            "social_icon": "google",
+            "review_text": "My spouse & I built this A-DIY 12 x 16 deck for our Airstream. It took as about 8 hours, that includes level the ground. Customer support is great."
+          }
+        },
+        "text_review_z66eCk": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "eric chambers",
+            "author_handle": "",
+            "headline": "Was a fun project",
+            "social_icon": "trustpilot",
+            "review_text": "It was a fun project! I'm no carpenter by any means! I've always wanted a deck for my small backyard but 10s of thousands of dollars will never be in my budget. My 93 year old grandmother stays with me and now she can walk comfortably out the back door and enjoy the outside gathering. My friend and I put it up in a day and a half. We raised it from its designed height and built steps. Everything was in the neatly organized crate!! I didn't see a single board! My friend and I had fun and my Grandma was over the moon. Just need Deck railing and possibly a pergola. The price was right!!"
+          }
+        },
+        "video_review_fpqHBY": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "video_review_aaTiGb": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/We built a deck in TWO DAYS!!! 🤯 If you’re in the market for a new deck, check out A-DIY @decks.mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_AbbJNL": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Timothy G.",
+            "author_handle": "",
+            "headline": "Composite Deck 16x16",
+            "social_icon": "google",
+            "review_text": "This is the only way to go if you're considering replacing your old deck. High quality materials delivered to your home. Comes with everything you need and is pretty easy to construct. I love mine!"
+          }
+        },
+        "video_review_ExVHh3": {
+          "type": "video_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_role": ""
+          }
+        },
+        "text_review_GHfnP6": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Cindy S.",
+            "author_handle": "",
+            "headline": "Composite Deck 12 x 12",
+            "social_icon": "google",
+            "review_text": "I loved the pre-cut and pre-measured pieces to this deck. I feel it's very good quality. The color coating of the parts was very helpful."
+          }
+        },
+        "text_review_VmbxAe": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "David O.",
+            "author_handle": "",
+            "headline": "Wood Deck 12 x 12",
+            "social_icon": "google",
+            "review_text": "Easy"
+          }
+        },
+        "text_review_jBjkRi": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Chris G.",
+            "author_handle": "",
+            "headline": "Composite Deck Kit 12x16",
+            "social_icon": "google",
+            "review_text": "Super easy and awesome quality"
+          }
+        },
+        "image_review_3MRQyU": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/image_8361.png",
+            "aspect_ratio": "tall",
+            "author_name": "Cheryl G.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Wood Deck 12x18",
+            "social_icon": "google",
+            "review_text": "Great product. Awesome quality."
+          }
+        },
+        "text_review_maJk6M": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Ryker w.",
+            "author_handle": "",
+            "headline": "Wood Deck 12x18",
+            "social_icon": "google",
+            "review_text": "Beautiful, easy, one weekend job!"
+          }
+        },
+        "image_review_ymbNpP": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/review_2.png",
+            "aspect_ratio": "tall",
+            "author_name": "",
+            "author_handle": "",
+            "author_role": "",
+            "headline": "",
+            "social_icon": "none",
+            "review_text": ""
+          }
+        },
+        "text_review_HMNKqb": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Scott H.",
+            "author_handle": "",
+            "headline": "Wood Deck 12x20",
+            "social_icon": "google",
+            "review_text": "Went together real easy. Plans were easy to follow."
+          }
+        },
+        "image_review_VcaReV": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/IMG_3028.jpg",
+            "aspect_ratio": "tall",
+            "author_name": "Shane M.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Wood Deck - 6x20",
+            "social_icon": "google",
+            "review_text": "Ordering was easy, shipping took a little longer than originally expected, but wasn't an issue. The materials were well packed and protected, assembly was easy. I was able to assemble a 6' x 20' deck myself in a day. Highly recommended."
+          }
+        },
+        "image_review_7btqUY": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/image_57_1.png",
+            "aspect_ratio": "tall",
+            "author_name": "Keith W.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Wood Deck 12x18",
+            "social_icon": "google",
+            "review_text": "The deck turned out great. I built it on my own and added a few small custom touches, like stairs and supports for a future pergola. The overall process was pretty straightforward, and I didn’t have to worry about the engineering side of things. All in all, it took about five days, including staining and building the pergola."
+          }
+        },
+        "text_review_mjtE9G": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Debra N.",
+            "author_handle": "",
+            "headline": "Composite Deck - 16x20",
+            "social_icon": "google",
+            "review_text": "Great product. Looks beautiful!"
+          }
+        },
+        "text_review_eDkfFq": {
+          "type": "text_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "author_name": "Frank M.",
+            "author_handle": "",
+            "headline": "Wood Deck - 12x12",
+            "social_icon": "google",
+            "review_text": "As easy to assemble as advertised. Nice fitment. Friends have complimented on it."
+          }
+        },
+        "image_review_rTiRRX": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/image_52.png",
+            "aspect_ratio": "tall",
+            "author_name": "Brian H.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Wood Deck Kit - 12x12",
+            "social_icon": "google",
+            "review_text": "We love the finished product and will be using it for years to come."
+          }
+        },
+        "image_review_gRwkef": {
+          "type": "image_review",
+          "settings": {
+            "is_5_star": true,
+            "is_4_star": false,
+            "is_3_star": false,
+            "review_image": "shopify://shop_images/WhatsApp_Image_2026-08-25_at_12.18.22_PM.jpg",
+            "aspect_ratio": "tall",
+            "author_name": "Steven S.",
+            "author_handle": "",
+            "author_role": "Verified Buyer",
+            "headline": "Composite Deck - 12x18",
+            "social_icon": "google",
+            "review_text": "I have been very satisfied with the quality and structure of this deck. I would definitely recommend it to anyone looking to upgrade their backyard!"
+          }
+        }
+      },
+      "block_order": [
+        "image_review_8JLBTL",
+        "image_review_CYm84C",
+        "video_review_kizCHf",
+        "video_review_WtK483",
+        "image_review_3D7kkJ",
+        "image_review_ytM49X",
+        "video_review_TzV76F",
+        "video_review_pNQm3a",
+        "image_review_cFfg8g",
+        "image_review_RxGbTF",
+        "text_review_3aTUTa",
+        "text_review_37MmyY",
+        "video_review_nrTFyH",
+        "image_review_PTYLBx",
+        "text_review_gTwEBK",
+        "text_review_t8YhLf",
+        "video_review_FwLeyP",
+        "text_review_TKd9Lt",
+        "text_review_tbiGPt",
+        "text_review_HAHtMH",
+        "text_review_47eeGF",
+        "image_review_Hj6ggb",
+        "image_review_D3Mpkb",
+        "video_review_zmaJXi",
+        "video_review_nkyxfn",
+        "text_review_rHjQE8",
+        "text_review_Um7zqj",
+        "text_review_jUcznj",
+        "text_review_M8rFUc",
+        "video_review_MXckDA",
+        "text_review_Vhk4P7",
+        "image_review_Uacc3V",
+        "text_review_awtzx8",
+        "image_review_KTRV7i",
+        "text_review_c6Kffa",
+        "text_review_FQRRdJ",
+        "video_review_AEkmRk",
+        "text_review_ktTgBa",
+        "image_review_rmfVeb",
+        "text_review_cyF4WU",
+        "text_review_RRdQaQ",
+        "image_review_UPD3wD",
+        "text_review_BbwFE7",
+        "text_review_Mam6NF",
+        "image_review_4ReVRp",
+        "text_review_zbXBcT",
+        "image_review_pG8iHg",
+        "image_review_xfBHMb",
+        "text_review_wtyVwQ",
+        "image_review_6xMDPB",
+        "text_review_9NgyNw",
+        "video_review_FaFYQR",
+        "text_review_WmExcn",
+        "image_review_MnbTqY",
+        "video_review_qfUKay",
+        "text_review_jhzJcD",
+        "text_review_MVVbzD",
+        "video_review_TTBwiX",
+        "text_review_pgM6fF",
+        "text_review_gqhMFY",
+        "video_review_fiiDqm",
+        "text_review_kJWr63",
+        "text_review_J3E8nH",
+        "image_review_bqLNYR",
+        "text_review_kfbBwq",
+        "image_review_jiickr",
+        "text_review_KtnPtA",
+        "text_review_k7x4bp",
+        "video_review_pWHrBq",
+        "text_review_nDBJU8",
+        "video_review_amBgDD",
+        "text_review_McHPaB",
+        "video_review_yUEftz",
+        "text_review_YrLkdJ",
+        "text_review_cPd87M",
+        "image_review_QLatmr",
+        "image_review_648xEN",
+        "video_review_bdWMM4",
+        "text_review_DWEHBm",
+        "image_review_TJ6iM7",
+        "image_review_39mfeR",
+        "text_review_z66eCk",
+        "video_review_fpqHBY",
+        "video_review_aaTiGb",
+        "text_review_AbbJNL",
+        "video_review_ExVHh3",
+        "text_review_GHfnP6",
+        "text_review_VmbxAe",
+        "text_review_jBjkRi",
+        "image_review_3MRQyU",
+        "text_review_maJk6M",
+        "image_review_ymbNpP",
+        "text_review_HMNKqb",
+        "image_review_VcaReV",
+        "image_review_7btqUY",
+        "text_review_mjtE9G",
+        "text_review_eDkfFq",
+        "image_review_rTiRRX",
+        "image_review_gRwkef"
+      ],
+      "name": "Verified Reviews Wall New",
+      "settings": {
+        "heading": "Loved by RV Owners Nationwide 🇺🇸",
+        "class_heading": "",
+        "sub_heading": "",
+        "rating_score": "4.8",
+        "total_reviews": "1,751",
+        "bg_color": "#f4f4f4",
+        "show_full_section": false,
+        "button_label": "See More",
+        "button_link": "shopify://pages/reviews",
+        "header_style": "header_2",
+        "columns_desktop": "4",
         "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "show_rating_breakdown": true,
+        "star_5_percent": 91,
+        "star_4_percent": 9,
+        "star_3_percent": 0,
+        "star_2_percent": 0,
+        "star_1_percent": 0
       }
     },
-    "detail": {
-      "type": "rich-text",
+    "faq": {
+      "type": "rv-faq",
       "blocks": {
-        "heading_detail": {
-          "type": "heading",
+        "q_1": {
+          "type": "question",
           "settings": {
-            "heading": "Before you order for a site",
-            "class_heading": ""
+            "question": "What is an RV deck kit?",
+            "answer": "<p>An RV deck kit is a complete, ready-to-assemble deck that you build beside your camper at a seasonal or long-stay site. An A-DIY RV deck kit includes the engineered lumber, Tuff Block footings, galvanized hardware, a custom drill bit and step-by-step instructions, so a power drill is the only tool you need.</p>"
           }
         },
-        "text_detail": {
-          "type": "text",
+        "q_2": {
+          "type": "question",
           "settings": {
-            "text": "<p>Check the site rules first. Many parks and campgrounds set their own limits on deck size, height and placement, separate from municipal permits. Measure the pad rather than the unit, and confirm what the site allows before choosing a footprint.</p>"
+            "question": "What's the best deck for an RV trailer?",
+            "answer": "<p>For a seasonal or long-stay site, the best deck for an RV trailer is a freestanding deck on its own footings, sized to the door side of your rig. Portable fold-out platforms suit travelers who change campsites every few days.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Does an RV deck attach to the camper?",
+            "answer": "<p>No. An A-DIY deck is freestanding. It stands on its own footings beside your RV and is never fastened to it, so your RV stays free to move.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "What size deck is best for a travel trailer or camper?",
+            "answer": "<p>Most travel trailers suit a long, narrow deck along the door side, such as 6x16, 8x16 or 8x20. Measure the open strip between your RV and the edge of your site, then check your campground's size limit. Wider lots can fit a 12x12 or larger standard deck.</p>"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "How do you build a deck for a camper?",
+            "answer": "<p>Check your campground's rules, choose a size, level the pad, set the included Tuff Block footings, assemble the frame and screw down the boards. A power drill is the only tool you need, and most owners finish in 8–16 hours.</p>"
+          }
+        },
+        "q_6": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need my campground's permission to put a deck on my site?",
+            "answer": "<p>Usually, yes. Many seasonal parks set their own deck rules for size, height and placement, and ask you to have your plan approved before you build. Check with your park office first. Engineering diagrams are available for every A-DIY kit to support your request.</p>"
+          }
+        },
+        "q_7": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need a building permit for an RV deck?",
+            "answer": "<p>It depends on your town or county. Permit requirements vary with deck height, size and placement, so check with your local building department as well as your campground. A-DIY engineering diagrams are available to support a permit application.</p>"
+          }
+        },
+        "q_8": {
+          "type": "question",
+          "settings": {
+            "question": "How high off the ground is an RV deck?",
+            "answer": "<p>Each A-DIY kit assembles at 15–17 inches off the ground. Longer post kits with bracing raise it, and digging a few inches where the footings sit lowers it. Steps can bridge the gap between your RV door and the deck.</p>"
+          }
+        },
+        "q_9": {
+          "type": "question",
+          "settings": {
+            "question": "Is an A-DIY RV deck portable?",
+            "answer": "<p>Not in the fold-up sense. An A-DIY deck is screwed together on footings rather than set in concrete, and it is built to last for years, not to fold up between trips. If you plan to move sites, talk to our team before you order about taking your deck apart and rebuilding it.</p>"
+          }
+        },
+        "q_10": {
+          "type": "question",
+          "settings": {
+            "question": "How much weight can an A-DIY RV deck hold?",
+            "answer": "<p>Every A-DIY deck system is engineered for 15,000+ lbs. The frame uses 6x6 beams and 2x8 joists spaced 13 to 14 inches on center, with galvanized, corrosion-resistant hardware throughout.</p>"
+          }
+        },
+        "q_11": {
+          "type": "question",
+          "settings": {
+            "question": "Can I build an RV deck on uneven ground?",
+            "answer": "<p>Yes, with a little site prep. Your deck sits on Tuff Block footings on a prepared, level pad, so you level the ground where the footings go before you start. If your site has a noticeable slope, our team will recommend the right setup before you order.</p>"
+          }
+        },
+        "q_12": {
+          "type": "question",
+          "settings": {
+            "question": "Can I add steps or railings to my RV deck?",
+            "answer": "<p>Yes. Steps and railings can be added to your A-DIY kit and matched to your deck height. Ask our team through chat or during your free design consultation.</p>"
+          }
+        },
+        "q_13": {
+          "type": "question",
+          "settings": {
+            "question": "Can I put a roof or gazebo over my camper deck?",
+            "answer": "<p>Yes. A freestanding gazebo or pergola can sit over your deck for shade and shelter. Check your campground's rules on covered structures, and talk to our team about the size and layout before you order.</p>"
+          }
+        },
+        "q_14": {
+          "type": "question",
+          "settings": {
+            "question": "How is an RV deck kit delivered to a campground?",
+            "answer": "<p>Kits ship by LTL ground freight within the continental US, typically in 10–14 business days, with curbside delivery scheduled by the carrier. Let your park office know a freight delivery is coming, and tell our team if a truck can't reach your site.</p>"
+          }
+        },
+        "q_15": {
+          "type": "question",
+          "settings": {
+            "question": "How much does an RV deck kit cost?",
+            "answer": "<p>A-DIY RV deck kits start at [wood_from] for a [wood_from_size] pressure-treated wood deck. Composite kits start at [composite_from] for a [composite_from_size]. Every kit includes the lumber, footings and hardware. Financing and a $250 A-DIY Reserve deposit are available.</p>"
+          }
+        },
+        "q_16": {
+          "type": "question",
+          "settings": {
+            "question": "Where are A-DIY deck kits made?",
+            "answer": "<p>Every A-DIY component is sourced and manufactured in the USA. A-DIY is a registered trademark of Laccoo Outdoors, LLC, based in Piscataway, New Jersey.</p>"
           }
         }
       },
       "block_order": [
-        "heading_detail",
-        "text_detail"
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5",
+        "q_6",
+        "q_7",
+        "q_8",
+        "q_9",
+        "q_10",
+        "q_11",
+        "q_12",
+        "q_13",
+        "q_14",
+        "q_15",
+        "q_16"
       ],
-      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "custom_class": "",
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "ways": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_ways_1": {
-          "type": "column",
-          "settings": {
-            "image": "",
-            "title": "Hire a deck contractor",
-            "text": "<p>A contractor handles design, materials, permits, foundation, construction and cleanup. It is the right answer for a complex build, and it is the most expensive: you are paying a premium for time and labour, and timelines run to weeks.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
-          }
-        },
-        "column_ways_2": {
-          "type": "column",
-          "settings": {
-            "image": "",
-            "title": "Build from raw materials",
-            "text": "<p>Buying lumber, hardware and decking separately gives you the lowest upfront cost and the most work. You own the design, the measurements, every cut and the structural layout — typically across several weekends.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
-          }
-        },
-        "column_ways_3": {
-          "type": "column",
-          "settings": {
-            "image": "",
-            "title": "Use an engineered deck kit",
-            "text": "<p>A-DIY sits between the two. The structural design is already done and the components arrive prepared for assembly, so a standard build takes 8 to 16 hours and costs 30 to 50% less than hiring a contractor.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
-          }
-        }
-      },
-      "block_order": [
-        "column_ways_1",
-        "column_ways_2",
-        "column_ways_3"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "custom_class": "",
-        "title": "Three ways to build a deck",
-        "title_content": "",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "buying": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_buying_1": {
-          "type": "column",
-          "settings": {
-            "image": "",
-            "title": "Delivery",
-            "text": "<p>Kits ship via LTL ground freight anywhere in the United States, typically arriving within 10 to 14 business days. The carrier contacts you to schedule curbside delivery.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
-          }
-        },
-        "column_buying_2": {
-          "type": "column",
-          "settings": {
-            "image": "",
-            "title": "Warranty",
-            "text": "<p>Wood kits carry a 5-year structural warranty. Composite kits carry a 25-year warranty that covers the structure as well as staining and fading on the boards.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
-          }
-        },
-        "column_buying_3": {
-          "type": "column",
-          "settings": {
-            "image": "",
-            "title": "Paying over time",
-            "text": "<p>Financing is available through Affirm, Klarna and Shop Pay, with $0 down and 0% interest options over terms of up to 24 months. Financing is subject to credit approval; terms and conditions apply.</p>",
-            "link_label": "",
-            "link": "",
-            "enable_autoplay": false
-          }
-        }
-      },
-      "block_order": [
-        "column_buying_1",
-        "column_buying_2",
-        "column_buying_3"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "custom_class": "",
-        "title": "Delivery, warranty and payment",
-        "title_content": "",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "cta": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_cta": {
-          "type": "heading",
-          "settings": {
-            "heading": "Ready to plan your deck?",
-            "class_heading": ""
-          }
-        },
-        "text_cta": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Book a free design consultation and an A-DIY specialist will size the deck to your space, or browse the kits and pick your size and finish.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_cta",
-        "text_cta"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "custom_class": "",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "padding_top": 44,
-        "padding_bottom": 64
+        "anchor_id": "faq",
+        "heading": "RV Deck Kit FAQs",
+        "intro": "Still deciding? A deck specialist can answer anything your park office asks.",
+        "button_label": "Talk to a Deck Specialist",
+        "button_link": "#chat",
+        "open_first": false,
+        "faq_schema": true,
+        "wood_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "composite_product": "a-diy-composite-deck-kit"
       }
     }
   },
   "order": [
-    "main",
-    "intro",
-    "proof",
-    "kit",
-    "detail",
-    "ways",
-    "buying",
-    "cta"
+    "hero",
+    "story",
+    "layers",
+    "materials",
+    "video_carousel",
+    "steps",
+    "delivery",
+    "best",
+    "gallery",
+    "reviews",
+    "faq"
   ]
 }
