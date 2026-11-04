@@ -1,0 +1,39 @@
+{%- comment -%}
+  State SEO landing pages · inline SVG icons (24px grid, currentColor), drawn to match the
+  line icons in Figma "SEO Strategy New York".
+
+  Accepts:
+  - name: {String} compass | tools | hammer | check-circle | check | info | list | bars |
+          chart | triangle | scissors | divider | bulb | arrow
+  - class: {String} extra classes
+{%- endcomment -%}
+{%- case name -%}
+  {%- when 'compass' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="4.5" r="2"/><path d="M11 6.4 5 21M13 6.4 19 21M7.2 15.5c1.4 1 3 1.5 4.8 1.5s3.4-.5 4.8-1.5"/></svg>
+  {%- when 'tools' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21 21 3M3 3l18 18M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></svg>
+  {%- when 'hammer' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14 10-9.5 9.5a1.8 1.8 0 0 0 2.5 2.5L16.5 12.5M12 8l4-4 2 2M14 6l6 6-2 2-6-6"/></svg>
+  {%- when 'check-circle' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a9 9 0 1 1-4.3-7.7"/><path d="m8.5 11.5 3 3L21 5"/></svg>
+  {%- when 'check' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="12" fill="#194636"/><path d="m7.5 12.2 2.9 2.9 6.1-6.2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  {%- when 'info' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="12" fill="#194636"/><circle cx="12" cy="7.2" r="1.4" fill="#fff"/><rect x="10.9" y="10.2" width="2.2" height="8" rx="1.1" fill="#fff"/></svg>
+  {%- when 'list' -%}
+    <svg class="{{ class }}" viewBox="0 0 52 52" fill="none" aria-hidden="true" focusable="false"><rect x="16" y="17.5" width="20" height="3" rx="1.5" fill="currentColor"/><rect x="16" y="24.5" width="20" height="3" rx="1.5" fill="currentColor"/><rect x="19" y="31.5" width="14" height="3" rx="1.5" fill="currentColor"/></svg>
+  {%- when 'bars' -%}
+    <svg class="{{ class }}" viewBox="0 0 52 52" fill="none" aria-hidden="true" focusable="false"><rect x="10" y="27" width="5" height="12" rx="1" fill="currentColor"/><rect x="19" y="17" width="5" height="22" rx="1" fill="currentColor"/><rect x="28" y="23" width="5" height="16" rx="1" fill="currentColor"/><rect x="37" y="13" width="5" height="26" rx="1" fill="currentColor"/></svg>
+  {%- when 'chart' -%}
+    <svg class="{{ class }}" viewBox="0 0 52 52" fill="none" aria-hidden="true" focusable="false"><rect x="16" y="30" width="4" height="8" rx="2" fill="currentColor"/><rect x="24" y="24" width="4" height="14" rx="2" fill="currentColor"/><rect x="32" y="18" width="4" height="20" rx="2" fill="currentColor"/></svg>
+  {%- when 'triangle' -%}
+    <svg class="{{ class }}" viewBox="0 0 52 52" fill="none" aria-hidden="true" focusable="false"><path d="M26 19 35 33H17z" fill="currentColor"/></svg>
+  {%- when 'scissors' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1l3.9 3.9"/></svg>
+  {%- when 'divider' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="4" r="1.8"/><path d="M11 5.7 5.5 20M13 5.7 18.5 20M8 14h8"/></svg>
+  {%- when 'bulb' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4M8.5 14.5a6 6 0 1 1 7 0c-.9.7-1.5 1.5-1.5 2.5h-4c0-1-.6-1.8-1.5-2.5Z"/></svg>
+  {%- when 'arrow' -%}
+    <svg class="{{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+{%- endcase -%}

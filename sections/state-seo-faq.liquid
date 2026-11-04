@@ -1,0 +1,91 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · FAQ. Figma › Frequently Asked Questions (1665:193).
+  One `question` block per item (native <details>). Emits FAQPage JSON-LD for answer engines.
+
+  Price tokens keep answers matched to live store prices when the two products are set:
+    [wood_from] [composite_from]
+{%- endcomment -%}
+
+{%- liquid
+  assign wood = section.settings.wood_product
+  assign composite = section.settings.composite_product
+  assign wood_from = ''
+  assign comp_from = ''
+  if wood != blank
+    assign wood_from = wood.price_min | money_without_trailing_zeros
+  endif
+  if composite != blank
+    assign comp_from = composite.price_min | money_without_trailing_zeros
+  endif
+-%}
+
+<div class="ss ss--white ss-faq"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ss-h2 ss-center" style="font-weight: 600;">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    <div class="ss-faq__list">
+      {%- for block in section.blocks -%}
+        {%- assign answer = block.settings.answer | replace: '[wood_from]', wood_from | replace: '[composite_from]', comp_from -%}
+        <details class="ss-faq__item" {{ block.shopify_attributes }}{% if section.settings.open_first and forloop.first %} open{% endif %}>
+          <summary class="ss-faq__q">
+            <h3>{{ block.settings.question | escape }}</h3>
+            <span class="ss-faq__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="ss-faq__a">{{ answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.faq_schema and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {%- assign answer = block.settings.answer | replace: '[wood_from]', wood_from | replace: '[composite_from]', comp_from -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ answer | strip_html | strip | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "State SEO · FAQ",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 30,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": true },
+    { "type": "checkbox", "id": "faq_schema", "label": "Output FAQPage schema", "default": true, "info": "Keep on for one FAQ section per page only." },
+    { "type": "header", "content": "Live prices", "info": "Answers can use [wood_from] and [composite_from]." },
+    { "type": "product", "id": "wood_product", "label": "Wood deck product" },
+    { "type": "product", "id": "composite_product", "label": "Composite deck product" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Who builds decks in New York?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>In New York, you can hire a local deck contractor, build from raw lumber yourself, or use an A-DIY engineered deck kit.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · FAQ", "blocks": [{ "type": "question" }] }]
+}
+{% endschema %}

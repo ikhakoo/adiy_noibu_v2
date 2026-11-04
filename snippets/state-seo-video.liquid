@@ -1,0 +1,53 @@
+{%- comment -%}
+  State SEO landing pages · poster + play button video. Clicking the play button swaps the
+  poster for the player: a Shopify-hosted video, a direct .mp4 URL, or a YouTube / Vimeo embed.
+
+  Accepts:
+  - video: {Object} video setting value (Shopify-hosted)
+  - external_url: {String} .mp4, YouTube or Vimeo URL (used when no Shopify video)
+  - poster: {Object} image_picker value
+  - poster_alt: {String}
+  - label: {String} small caption label, e.g. WATCH
+  - title: {String} caption title
+  - class: {String} extra wrapper classes
+  - sizes: {String} image sizes attribute
+{%- endcomment -%}
+{%- liquid
+  assign ss_embed = ''
+  assign ss_mp4 = ''
+  if video != blank
+    assign ss_source = 'shopify'
+  elsif external_url contains 'youtube.com' or external_url contains 'youtu.be'
+    assign ss_source = 'youtube'
+    assign ss_id = external_url | split: 'v=' | last | split: '&' | first | split: '/' | last | split: '?' | first
+    assign ss_embed = 'https://www.youtube.com/embed/' | append: ss_id | append: '?autoplay=1&rel=0&playsinline=1'
+  elsif external_url contains 'vimeo.com'
+    assign ss_source = 'vimeo'
+    assign ss_id = external_url | split: '/' | last | split: '?' | first
+    assign ss_embed = 'https://player.vimeo.com/video/' | append: ss_id | append: '?autoplay=1'
+  elsif external_url != blank
+    assign ss_source = 'mp4'
+    assign ss_mp4 = external_url
+  else
+    assign ss_source = ''
+  endif
+  assign ss_label_text = title | default: 'Play video'
+-%}
+<div class="ss-video {{ class }}" data-ss-video data-source="{{ ss_source }}"{% if ss_embed != blank %} data-embed="{{ ss_embed }}"{% endif %}{% if ss_mp4 != blank %} data-mp4="{{ ss_mp4 }}"{% endif %}>
+  {%- render 'state-seo-image', image: poster, alt: poster_alt, sizes: sizes, placeholder: 'lifestyle-2' -%}
+  <div class="ss-video__overlay" aria-hidden="true"></div>
+  {%- if ss_source != blank -%}
+    <button type="button" class="ss-video__play" aria-label="Play: {{ ss_label_text | escape }}"></button>
+  {%- endif -%}
+  {%- if label != blank or title != blank -%}
+    <div class="ss-video__caption">
+      {%- if label != blank -%}<span>{{ label | escape }}</span>{%- endif -%}
+      {%- if title != blank -%}<strong>{{ title | escape }}</strong>{%- endif -%}
+    </div>
+  {%- endif -%}
+  <div class="ss-video__player">
+    {%- if ss_source == 'shopify' -%}
+      {{ video | video_tag: controls: true, preload: 'none', playsinline: true, muted: false }}
+    {%- endif -%}
+  </div>
+</div>

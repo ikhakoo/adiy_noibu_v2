@@ -1,0 +1,93 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · Deck permits. Figma › Section - New York Deck Permits (6798:574).
+  Intro (heading, lead, body, callout) beside a framed diagram; below, a card of questions
+  for the building department (one `question` block each) and a dark city card.
+{%- endcomment -%}
+
+<div class="ss ss--white ss-permits"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner">
+    <div class="ss-split">
+      <div class="ss-split__text">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ss-h2 ss-h2--xl">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.lead != blank -%}
+          <p class="ss-split__sub">{{ section.settings.lead | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="ss-body">{{ section.settings.body }}</div>
+        {%- endif -%}
+        {%- if section.settings.callout != blank -%}
+          <p class="ss-callout">{%- render 'state-seo-icon', name: 'info' -%}<span>{{ section.settings.callout | escape }}</span></p>
+        {%- endif -%}
+      </div>
+      <figure class="ss-frame">
+        {%- render 'state-seo-image',
+          image: section.settings.image,
+          alt: section.settings.image_alt,
+          sizes: '(min-width: 1920px) 640px, (min-width: 990px) 45vw, calc(100vw - 80px)',
+          placeholder: 'product-1'
+        -%}
+      </figure>
+    </div>
+
+    <div class="ss-details ss-details--permits">
+      <div class="ss-tile">
+        <div class="ss-tile__head">
+          <span class="ss-tile__icon" aria-hidden="true">{%- render 'state-seo-icon', name: 'list' -%}</span>
+          <h3 class="ss-tile__title">{{ section.settings.card_heading | escape }}</h3>
+        </div>
+        {%- if section.blocks.size > 0 -%}
+          <ul class="ss-grid-tiles">
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}>{%- render 'state-seo-icon', name: 'check' -%}<span>{{ block.settings.question | escape }}</span></li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+      <div class="ss-tile ss-tile--green ss-tile--city">
+        <span class="ss-tile__icon" aria-hidden="true">{%- render 'state-seo-icon', name: 'bars' -%}</span>
+        <h3 class="ss-tile__title">{{ section.settings.city_heading | escape }}</h3>
+        <div class="ss-tile__divider" aria-hidden="true"></div>
+        <div class="ss-tile__text">{{ section.settings.city_text }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Permits",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "permits" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "New York Deck Permits" },
+    { "type": "textarea", "id": "lead", "label": "Lead", "default": "A permit may be required depending on the deck’s dimensions, height, location, attachment method and local rules." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>The New York State Uniform Code establishes minimum construction standards throughout the state except New York City. Local cities, towns, villages and counties generally administer and enforce the applicable codes. New York City maintains its own construction-code and permit system.</p>" },
+    { "type": "text", "id": "callout", "label": "Callout", "default": "Requirements may differ between neighboring municipalities." },
+    { "type": "header", "content": "Diagram" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "Exploded engineering diagram of an A-DIY deck kit showing decking, joists, beams and footings" },
+    { "type": "header", "content": "Questions card" },
+    { "type": "text", "id": "card_heading", "label": "Card heading", "default": "Questions to Ask the Building Department" },
+    { "type": "header", "content": "City card" },
+    { "type": "text", "id": "city_heading", "label": "City heading", "default": "New York City" },
+    { "type": "richtext", "id": "city_text", "label": "City text", "default": "<p>New York City homeowners must follow current Department of Buildings requirements. The city may require approved plans and design work completed by a New York State licensed professional engineer or registered architect.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Does the proposed deck require a permit?" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · Permits", "blocks": [{ "type": "question" }, { "type": "question" }, { "type": "question" }, { "type": "question" }] }]
+}
+{% endschema %}

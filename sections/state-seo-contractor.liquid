@@ -1,0 +1,72 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · How to find and hire a contractor. Figma › Contractor Section (1464:945).
+  Three `panel` blocks: title, one list item per line, optional note. The last panel can be
+  rendered in the dark style (tan title on charcoal).
+{%- endcomment -%}
+
+<div class="ss ss--cream ss-contractor"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner ss__inner--wide">
+    <div class="ss-contractor__intro ss-center">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ss-h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="ss-lead">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ss-contractor__grid">
+      {%- for block in section.blocks -%}
+        <article class="ss-panel{% if block.settings.dark %} ss-panel--dark{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3 class="ss-panel__title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.items != blank -%}
+            <ul class="ss-checklist">
+              {%- assign items = block.settings.items | newline_to_br | split: '<br />' -%}
+              {%- for item in items -%}
+                {%- assign item_text = item | strip -%}
+                {%- if item_text != blank -%}
+                  <li>{%- render 'state-seo-icon', name: 'check-circle' -%}<span>{{ item_text | escape }}</span></li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+          {%- if block.settings.note != blank -%}
+            <div class="ss-panel__note">{{ block.settings.note }}</div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Contractors",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "contractors" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How Do You Find and Hire a Deck Contractor in New York?" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work." }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Prepare a short written description containing:" },
+        { "type": "textarea", "id": "items", "label": "List items (one per line)", "default": "Approximate deck dimensions\nPreferred material\nProposed height" },
+        { "type": "richtext", "id": "note", "label": "Note (optional)" },
+        { "type": "checkbox", "id": "dark", "label": "Dark style", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · Contractors", "blocks": [{ "type": "panel" }, { "type": "panel" }, { "type": "panel", "settings": { "dark": true } }] }]
+}
+{% endschema %}

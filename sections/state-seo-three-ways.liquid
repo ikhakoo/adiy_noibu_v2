@@ -1,0 +1,72 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · Three ways to build. Figma › Section - Three Ways to Build (1464:1371).
+  One `card` block per option; the "featured" card gets the tan border, slight scale and a button.
+{%- endcomment -%}
+
+<div class="ss ss--cream ss-ways"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner ss__inner--wide">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ss-h2 ss-center">{{ section.settings.heading | escape }}</h2>
+      <div class="ss-bar" aria-hidden="true"></div>
+    {%- endif -%}
+
+    <div class="ss-ways__grid">
+      {%- for block in section.blocks -%}
+        <article class="ss-card{% if block.settings.featured %} ss-card--featured{% endif %}" {{ block.shopify_attributes }}>
+          <div class="ss-card__icon" aria-hidden="true">
+            {%- if block.settings.icon_image != blank -%}
+              {{ block.settings.icon_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {%- render 'state-seo-icon', name: block.settings.icon -%}
+            {%- endif -%}
+          </div>
+          {%- if block.settings.title != blank -%}
+            <h3 class="ss-card__title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="ss-card__text">{{ block.settings.text | escape }}</p>
+          {%- endif -%}
+          {%- render 'state-seo-button', label: block.settings.button_label, link: block.settings.button_link, style: 'ink' -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Three ways",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "options" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Three Ways to Build a Deck in New York" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Option card",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "compass", "options": [
+          { "value": "compass", "label": "Compass" },
+          { "value": "tools", "label": "Crossed tools" },
+          { "value": "hammer", "label": "Hammer" },
+          { "value": "divider", "label": "Divider" },
+          { "value": "check-circle", "label": "Check" }
+        ] },
+        { "type": "image_picker", "id": "icon_image", "label": "Custom icon image", "info": "Overrides the icon above." },
+        { "type": "text", "id": "title", "label": "Title", "default": "Hire a Full Service Deck Contractor" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "A deck builder can manage design, materials, permits, foundations, construction, inspections and cleanup." },
+        { "type": "checkbox", "id": "featured", "label": "Highlight this card", "default": false },
+        { "type": "text", "id": "button_label", "label": "Button label" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · Three ways", "blocks": [{ "type": "card" }, { "type": "card" }, { "type": "card" }] }]
+}
+{% endschema %}

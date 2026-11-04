@@ -1,0 +1,121 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · Uneven ground, elevated decks and foundation options. Figma › (6717:574).
+  Heading + intro beside a two-image collage with an elevation badge; below, a green card with
+  requirement chips (one per line) and a sand card with foundation systems (one per line).
+{%- endcomment -%}
+
+<div class="ss ss--white ss-elevation"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner">
+    <div class="ss-split">
+      <div class="ss-split__text">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ss-h2 ss-h2--xl">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="ss-body" style="font-size: clamp(16px, 1.04vw, 20px);">{{ section.settings.intro }}</div>
+        {%- endif -%}
+      </div>
+      <div class="ss-collage">
+        {%- render 'state-seo-image',
+          image: section.settings.image_1,
+          alt: section.settings.image_1_alt,
+          class: 'ss-collage__main',
+          sizes: '(min-width: 1920px) 620px, (min-width: 990px) 40vw, calc(100vw - 40px)'
+        -%}
+        {%- render 'state-seo-image',
+          image: section.settings.image_2,
+          alt: section.settings.image_2_alt,
+          class: 'ss-collage__inset',
+          sizes: '(min-width: 1920px) 380px, (min-width: 990px) 25vw, 50vw',
+          placeholder: 'lifestyle-2'
+        -%}
+        {%- if section.settings.badge_value != blank -%}
+          <div class="ss-collage__badge">
+            <small>{{ section.settings.badge_label | escape }}</small>
+            <strong>{{ section.settings.badge_value | escape }}<span>{{ section.settings.badge_unit | escape }}</span></strong>
+            <em>{{ section.settings.badge_caption | escape }}</em>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ss-details ss-details--elevation">
+      <div class="ss-tile ss-tile--green">
+        <div class="ss-tile__head">
+          <span class="ss-tile__icon" aria-hidden="true">{%- render 'state-seo-icon', name: 'triangle' -%}</span>
+          <h3 class="ss-tile__title">{{ section.settings.card_1_heading | escape }}</h3>
+        </div>
+        {%- if section.settings.card_1_text != blank -%}
+          <p class="ss-tile__text">{{ section.settings.card_1_text | escape }}</p>
+        {%- endif -%}
+        <div class="ss-tile__divider" aria-hidden="true"></div>
+        {%- if section.settings.card_1_label != blank -%}
+          <p class="ss-tile__label">{{ section.settings.card_1_label | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.card_1_items != blank -%}
+          <ul class="ss-chips">
+            {%- assign items = section.settings.card_1_items | newline_to_br | split: '<br />' -%}
+            {%- for item in items -%}
+              {%- assign item_text = item | strip -%}
+              {%- if item_text != blank -%}<li>{{ item_text | escape }}</li>{%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+      <div class="ss-tile">
+        <div class="ss-tile__head">
+          <span class="ss-tile__icon" aria-hidden="true">{%- render 'state-seo-icon', name: 'chart' -%}</span>
+          <h3 class="ss-tile__title">{{ section.settings.card_2_heading | escape }}</h3>
+        </div>
+        {%- if section.settings.card_2_text != blank -%}
+          <p class="ss-tile__text">{{ section.settings.card_2_text | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.card_2_items != blank -%}
+          <ul class="ss-grid-tiles ss-grid-tiles--square">
+            {%- assign items = section.settings.card_2_items | newline_to_br | split: '<br />' -%}
+            {%- for item in items -%}
+              {%- assign item_text = item | strip -%}
+              {%- if item_text != blank -%}<li>{{ item_text | escape }}</li>{%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Elevation",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "foundations" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Uneven Ground, Elevated Decks and Foundation Options" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>An A-DIY deck may be installed over sloped or uneven ground by adjusting the supporting post heights to establish a level deck surface.</p>" },
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "image_1", "label": "Main image" },
+    { "type": "text", "id": "image_1_alt", "label": "Main image alt text", "default": "Elevated A-DIY deck with stairs and railings" },
+    { "type": "image_picker", "id": "image_2", "label": "Inset image" },
+    { "type": "text", "id": "image_2_alt", "label": "Inset image alt text", "default": "A-DIY deck on adjustable posts over sloped ground" },
+    { "type": "header", "content": "Badge" },
+    { "type": "text", "id": "badge_label", "label": "Label", "default": "UP TO APPROX." },
+    { "type": "text", "id": "badge_value", "label": "Value", "default": "40" },
+    { "type": "text", "id": "badge_unit", "label": "Unit", "default": "inches" },
+    { "type": "text", "id": "badge_caption", "label": "Caption", "default": "Supported elevation" },
+    { "type": "header", "content": "Elevation card" },
+    { "type": "text", "id": "card_1_heading", "label": "Heading", "default": "Supported Elevation" },
+    { "type": "textarea", "id": "card_1_text", "label": "Text", "default": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing." },
+    { "type": "text", "id": "card_1_label", "label": "List label", "default": "Depending on the height and configuration, the project may also require:" },
+    { "type": "textarea", "id": "card_1_items", "label": "Requirements (one per line)", "default": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval" },
+    { "type": "header", "content": "Foundation card" },
+    { "type": "text", "id": "card_2_heading", "label": "Heading", "default": "Foundation and Footing Options" },
+    { "type": "textarea", "id": "card_2_text", "label": "Text", "default": "Depending on the property, configuration and local approval, suitable systems may include:" },
+    { "type": "textarea", "id": "card_2_items", "label": "Systems (one per line)", "default": "Sonotubes\nHelical piles\nGround screws\nIn-ground posts\nApproved surface footing systems\nOther site-specific foundations" }
+  ],
+  "presets": [{ "name": "State SEO · Elevation" }]
+}
+{% endschema %}

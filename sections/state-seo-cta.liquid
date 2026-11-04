@@ -1,0 +1,78 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · Closing CTA. Figma › Section - How it works & Engineering (1490:767).
+  Charcoal band: tan heading, two lines of copy, three `feature` cards and two buttons.
+{%- endcomment -%}
+
+<div class="ss ss--ink ss-cta"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner ss__inner--wide ss-center">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ss-h2">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="ss-cta__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="ss-cta__grid">
+        {%- for block in section.blocks -%}
+          <article class="ss-cta__card" {{ block.shopify_attributes }}>
+            <span class="ss-cta__icon" aria-hidden="true">
+              {%- if block.settings.icon_image != blank -%}
+                {{ block.settings.icon_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              {%- else -%}
+                {%- render 'state-seo-icon', name: block.settings.icon -%}
+              {%- endif -%}
+            </span>
+            <h3>{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.text != blank -%}<p>{{ block.settings.text | escape }}</p>{%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ss-btns">
+      {%- render 'state-seo-button', label: section.settings.primary_label, link: section.settings.primary_link -%}
+      {%- render 'state-seo-button', label: section.settings.secondary_label, link: section.settings.secondary_link, style: 'white' -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Closing CTA",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Build the Deck You Need. Your Way." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A-DIY gives New York homeowners another option beyond commissioning a completely custom deck or building from loose raw materials.</p><p>Choose the size and material, review the available engineering information and decide whether to assemble it yourself or hire local help.</p>" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "primary_label", "label": "Primary label", "default": "Explore Deck Kits" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary label", "default": "Chat With a Design Consultant" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link", "info": "Use #chat to open live chat." }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "scissors", "options": [
+          { "value": "scissors", "label": "Scissors (no cutting)" },
+          { "value": "divider", "label": "Divider (no measuring)" },
+          { "value": "bulb", "label": "Bulb (no guesswork)" },
+          { "value": "check-circle", "label": "Check" }
+        ] },
+        { "type": "image_picker", "id": "icon_image", "label": "Custom icon image", "info": "Overrides the icon above." },
+        { "type": "text", "id": "title", "label": "Title", "default": "No cutting" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Every part is precision cut and engineered to fit seamlessly." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · Closing CTA", "blocks": [{ "type": "feature" }, { "type": "feature" }, { "type": "feature" }] }]
+}
+{% endschema %}

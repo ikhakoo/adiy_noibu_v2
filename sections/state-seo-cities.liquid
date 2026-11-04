@@ -1,0 +1,101 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'state-seo.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  State SEO landing page · Building a deck across the state. Figma › Section - Locations (1495:1173).
+  One `city` block per card (image, name, optional link to the city page). The first
+  "Cities shown before Load more" cards are visible; the rest reveal on click.
+
+  Shopify allows 50 blocks per section. For more cities, add a second instance of this
+  section right after this one and tick "Continuation": it hides its heading and stays
+  hidden until "Load more cities" is pressed.
+{%- endcomment -%}
+
+{%- liquid
+  assign visible = section.settings.initial_count
+  assign continued = section.settings.continuation
+  assign hidden_count = 0
+-%}
+
+<div class="ss ss--cream ss-cities{% if continued %} ss-cities--continued is-hidden{% endif %}"{% if section.settings.anchor_id != blank and continued == false %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner ss__inner--wide">
+    {%- unless continued -%}
+      <div class="ss-cities__intro ss-center">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ss-h2">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="ss-lead">{{ section.settings.intro | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    <ul class="ss-cities__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign hide = false
+          if continued == false and forloop.index > visible
+            assign hide = true
+            assign hidden_count = hidden_count | plus: 1
+          endif
+          assign city_alt = block.settings.image_alt | default: block.settings.name
+        -%}
+        <li {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a class="ss-city{% if hide %} is-hidden{% endif %}" href="{{ block.settings.link }}">
+          {%- else -%}
+            <div class="ss-city{% if hide %} is-hidden{% endif %}">
+          {%- endif -%}
+            {%- render 'state-seo-image', image: block.settings.image, alt: city_alt, class: 'ss-city__media', sizes: '(min-width: 1920px) 303px, (min-width: 990px) 20vw, 45vw', placeholder: 'image' -%}
+            <span class="ss-city__name">{{ block.settings.name | escape }}{%- render 'state-seo-icon', name: 'arrow' -%}</span>
+          {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- unless continued -%}
+      {%- if hidden_count > 0 or section.settings.has_continuation -%}
+        <div class="ss-cities__more">
+          <button type="button" class="ss-btn ss-btn--small" data-ss-cities-more>{{ section.settings.more_label | default: 'Load more cities' | escape }}</button>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.footnote != blank -%}
+        <p class="ss-cities__foot">{{ section.settings.footnote | escape }}</p>
+      {%- endif -%}
+    {%- endunless -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Cities",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 50,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "cities" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Building a Deck Across New York" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography." },
+    { "type": "range", "id": "initial_count", "label": "Cities shown before Load more", "min": 5, "max": 50, "step": 5, "default": 10 },
+    { "type": "text", "id": "more_label", "label": "Load more label", "default": "Load more cities" },
+    { "type": "text", "id": "footnote", "label": "Footnote", "default": "Don’t see your community? A-DIY can still deliver to your area." },
+    { "type": "header", "content": "More than 50 cities" },
+    { "type": "checkbox", "id": "has_continuation", "label": "A continuation section follows", "default": false, "info": "Keeps the Load more button even when all cards here are visible." },
+    { "type": "checkbox", "id": "continuation", "label": "Continuation", "default": false, "info": "Tick on a second Cities section placed right after the first: no heading, revealed by Load more." }
+  ],
+  "blocks": [
+    {
+      "type": "city",
+      "name": "City",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "name", "label": "Name", "default": "NYC" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "url", "id": "link", "label": "Link (city page)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · Cities", "blocks": [{ "type": "city" }, { "type": "city" }, { "type": "city" }, { "type": "city" }, { "type": "city" }] }]
+}
+{% endschema %}

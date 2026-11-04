@@ -1,0 +1,31 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · Customer quote. Figma › Success Story Section (1487:348).
+{%- endcomment -%}
+
+<div class="ss ss--white ss-quote"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner">
+    <blockquote>
+      <p class="ss-quote__text">{{ section.settings.quote | escape }}</p>
+      {%- if section.settings.attribution != blank -%}
+        <cite class="ss-quote__cite">— {{ section.settings.attribution | escape }}</cite>
+      {%- endif -%}
+    </blockquote>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Quote",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"" },
+    { "type": "text", "id": "attribution", "label": "Attribution", "default": "David Miller, Scarsdale" }
+  ],
+  "presets": [{ "name": "State SEO · Quote" }]
+}
+{% endschema %}

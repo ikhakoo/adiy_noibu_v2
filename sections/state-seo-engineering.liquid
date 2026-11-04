@@ -1,0 +1,84 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'state-seo.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  State SEO landing page · Engineering, strength and warranty. Figma › (6715:574).
+  Dark green band: poster video on the left, two glass cards on the right (tag, title, text,
+  small print, optional link).
+{%- endcomment -%}
+
+<div class="ss ss--green ss-eng"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner">
+    <div class="ss-center">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ss-h2 ss-h2--xl">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="ss-lead">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ss-eng__row">
+      {%- render 'state-seo-video',
+        video: section.settings.video,
+        external_url: section.settings.external_video_url,
+        poster: section.settings.poster,
+        poster_alt: section.settings.poster_alt,
+        title: section.settings.heading,
+        sizes: '(min-width: 1920px) 708px, (min-width: 990px) 50vw, calc(100vw - 40px)'
+      -%}
+      <div class="ss-eng__cards">
+        {%- for block in section.blocks -%}
+          <article class="ss-eng__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.tag != blank -%}<span class="ss-tag">{{ block.settings.tag | escape }}</span>{%- endif -%}
+            <h3>{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.text != blank -%}<p>{{ block.settings.text | escape }}</p>{%- endif -%}
+            {%- if block.settings.note != blank -%}
+              {%- if block.settings.note_divider -%}<div class="ss-tile__divider" aria-hidden="true"></div>{%- endif -%}
+              <small>{{ block.settings.note | escape }}</small>
+            {%- endif -%}
+            {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+              <a class="ss-link" href="{{ block.settings.link }}">{{ block.settings.link_label | escape }}</a>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Engineering",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "engineering" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Engineering, Strength and Warranty" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "A-DIY deck configurations are professionally engineered." },
+    { "type": "header", "content": "Video" },
+    { "type": "video", "id": "video", "label": "Video (Shopify-hosted)" },
+    { "type": "text", "id": "external_video_url", "label": "Or video URL", "info": "YouTube, Vimeo or a direct .mp4 link. Used when no Shopify video is set." },
+    { "type": "image_picker", "id": "poster", "label": "Poster image" },
+    { "type": "text", "id": "poster_alt", "label": "Poster alt text", "default": "A pickup truck parked on an A-DIY deck during a load test" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "text", "id": "tag", "label": "Tag", "default": "STRUCTURAL RATING" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Verified Structural Rating" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Applicable A-DIY deck configurations are engineered to hold up to 15,000 pounds when properly assembled, supported and installed according to the applicable specifications." },
+        { "type": "textarea", "id": "note", "label": "Small print" },
+        { "type": "checkbox", "id": "note_divider", "label": "Divider above small print", "default": true },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · Engineering", "blocks": [{ "type": "card" }, { "type": "card" }] }]
+}
+{% endschema %}

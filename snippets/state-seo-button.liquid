@@ -1,0 +1,24 @@
+{%- comment -%}
+  State SEO landing pages · button.
+  A link containing "#chat" opens the chat widget (delegated handler in theme.liquid), so it
+  renders as a <button data-chat-trigger> rather than a same-page link.
+
+  Accepts:
+  - label: {String}
+  - link: {String} url setting value
+  - style: {String} 'solid' (default) | 'dark' | 'ink' | 'white' | 'small'
+  - class: {String} extra classes
+{%- endcomment -%}
+{%- if label != blank -%}
+  {%- assign ss_btn_class = 'ss-btn' -%}
+  {%- if style == 'dark' -%}{%- assign ss_btn_class = 'ss-btn ss-btn--dark' -%}{%- endif -%}
+  {%- if style == 'ink' -%}{%- assign ss_btn_class = 'ss-btn ss-btn--ink' -%}{%- endif -%}
+  {%- if style == 'white' -%}{%- assign ss_btn_class = 'ss-btn ss-btn--white' -%}{%- endif -%}
+  {%- if style == 'small' -%}{%- assign ss_btn_class = 'ss-btn ss-btn--small' -%}{%- endif -%}
+  {%- if class != blank -%}{%- assign ss_btn_class = ss_btn_class | append: ' ' | append: class -%}{%- endif -%}
+  {%- if link contains '#chat' -%}
+    <button type="button" class="{{ ss_btn_class }}" data-chat-trigger>{{ label | escape }}</button>
+  {%- elsif link != blank -%}
+    <a class="{{ ss_btn_class }}" href="{{ link }}">{{ label | escape }}</a>
+  {%- endif -%}
+{%- endif -%}

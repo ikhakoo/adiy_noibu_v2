@@ -1,0 +1,58 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · Essential questions to ask a contractor. Figma › FAQ Section (1474:1812).
+  One `question` block per row. A row with an answer becomes a native <details> accordion;
+  without one it is a plain row, as in the design.
+{%- endcomment -%}
+
+<div class="ss ss--cream ss-questions"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ss-h2 ss-center">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="ss-questions__list">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.answer != blank -%}
+          <details class="ss-questions__item" data-expandable {{ block.shopify_attributes }}>
+            <summary class="ss-questions__q">
+              <span>{{ block.settings.question | escape }}</span>
+              <span class="ss-faq__sign" aria-hidden="true"></span>
+            </summary>
+            <div class="ss-questions__a">{{ block.settings.answer }}</div>
+          </details>
+        {%- else -%}
+          <div class="ss-questions__item" {{ block.shopify_attributes }}>
+            <p class="ss-questions__q">{{ block.settings.question | escape }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Questions",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 20,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Essential Questions to Ask" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Have you completed similar decks in this city or county?" },
+        { "type": "richtext", "id": "answer", "label": "Answer (optional)", "info": "Leave empty to show the question as a plain row." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · Questions", "blocks": [{ "type": "question" }, { "type": "question" }, { "type": "question" }] }]
+}
+{% endschema %}

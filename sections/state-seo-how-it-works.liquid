@@ -1,0 +1,104 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'state-seo.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  State SEO landing page · How does A-DIY work. Figma › (6713:574).
+  Numbered timeline of `step` blocks (phase tag, title, text) and a poster video below.
+  Emits HowTo JSON-LD from the steps.
+{%- endcomment -%}
+
+<div class="ss ss--sand ss-how"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="ss__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ss-h2 ss-h2--xl">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="ss-how__steps">
+        {%- for block in section.blocks -%}
+          <li class="ss-step" {{ block.shopify_attributes }}>
+            <span class="ss-step__marker" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <div class="ss-step__card">
+              {%- if block.settings.phase != blank -%}
+                {%- assign tag_class = 'ss-tag' -%}
+                {%- if block.settings.phase_style == 'solid' -%}{%- assign tag_class = 'ss-tag ss-tag--solid' -%}{%- endif -%}
+                {%- if block.settings.phase_style == 'grey' -%}{%- assign tag_class = 'ss-tag ss-tag--grey' -%}{%- endif -%}
+                <span class="{{ tag_class }}">{{ block.settings.phase | escape }}</span>
+              {%- endif -%}
+              <h3 class="ss-step__title">{{ block.settings.title | escape }}</h3>
+              {%- if block.settings.text != blank -%}
+                <p class="ss-step__text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+
+    {%- if section.settings.video != blank or section.settings.external_video_url != blank or section.settings.poster != blank -%}
+      {%- render 'state-seo-video',
+        video: section.settings.video,
+        external_url: section.settings.external_video_url,
+        poster: section.settings.poster,
+        poster_alt: section.settings.poster_alt,
+        label: section.settings.video_label,
+        title: section.settings.video_title,
+        sizes: '(min-width: 1920px) 1440px, calc(100vw - 80px)'
+      -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.howto_schema and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": {{ section.settings.heading | json }},
+      "step": [
+        {%- for block in section.blocks -%}
+          { "@type": "HowToStep", "position": {{ forloop.index }}, "name": {{ block.settings.title | json }}, "text": {{ block.settings.text | json }} }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "State SEO · How it works",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "how-it-works" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How Does A-DIY Work?" },
+    { "type": "header", "content": "Video" },
+    { "type": "video", "id": "video", "label": "Video (Shopify-hosted)" },
+    { "type": "text", "id": "external_video_url", "label": "Or video URL", "info": "YouTube, Vimeo or a direct .mp4 link. Used when no Shopify video is set." },
+    { "type": "image_picker", "id": "poster", "label": "Poster image" },
+    { "type": "text", "id": "poster_alt", "label": "Poster alt text", "default": "A homeowner assembling A-DIY deck joists" },
+    { "type": "text", "id": "video_label", "label": "Caption label", "default": "WATCH" },
+    { "type": "text", "id": "video_title", "label": "Caption title", "default": "How Does A-DIY Work" },
+    { "type": "checkbox", "id": "howto_schema", "label": "Output HowTo schema", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "phase", "label": "Phase tag", "default": "PLAN" },
+        { "type": "select", "id": "phase_style", "label": "Tag style", "default": "mint", "options": [
+          { "value": "mint", "label": "Mint" },
+          { "value": "grey", "label": "Grey" },
+          { "value": "solid", "label": "Solid green" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "Choose the Size and Material" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Select an available deck size, pressure treated or composite surface and applicable options." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "State SEO · How it works", "blocks": [{ "type": "step" }, { "type": "step" }, { "type": "step" }] }]
+}
+{% endschema %}

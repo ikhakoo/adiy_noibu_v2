@@ -108,6 +108,31 @@
     border-bottom: none;
   }
 
+  .comparison-table__cta-row td {
+    padding: 6px;
+  }
+
+  .comparison-table__cta {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background-color: #3a6958;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .comparison-table__cta:hover {
+    background-color: #194636;
+    color: #ffffff;
+  }
+
   /* ALPINE/PRECISION-THEME STYLE SCROLLBAR */
   .scrollbar-navigation {
     margin-top: 2.5rem;
@@ -221,6 +246,14 @@
             <td class="col-standard">{{ block.settings.col_4_val }}</td>
           </tr>
         {%- endfor -%}
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <tr class="comparison-table__cta-row">
+            <td class="col-feature"></td>
+            <td class="col-highlight"><a class="comparison-table__cta" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a></td>
+            <td class="col-standard"></td>
+            <td class="col-standard"></td>
+          </tr>
+        {%- endif -%}
       </tbody>
     </table>
   </div>
@@ -459,6 +492,20 @@
       "id": "col_4_heading",
       "label": "Column 4 Header",
       "default": "BIG BOX DIY"
+    },
+    {
+      "type": "header",
+      "content": "Button under the A-DIY column (optional)"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
     },
     {
       "type": "range",

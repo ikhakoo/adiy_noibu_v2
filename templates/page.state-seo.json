@@ -1,0 +1,1810 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "state-seo-hero",
+      "settings": {
+        "heading": "Building a Deck in New York: Contractors, Costs, Permits and Deck Kit Options",
+        "intro": "<p>Planning a deck in New York usually begins with a few big questions: Should you hire a deck builder, purchase the materials yourself or use a professionally engineered system that arrives prepared for assembly?</p><p>This guide explains the main options, what affects the cost, how permits work, what to ask a contractor and how to choose between pressure-treated wood and composite decking.</p><p>A-DIY offers a third way to complete the project: a professionally engineered deck system delivered with coordinated components prepared for assembly. You can build it yourself or hire a local handyman, carpenter or contractor to help.</p>",
+        "primary_label": "Explore Deck Options",
+        "primary_link": "shopify://collections/deck-kits",
+        "secondary_label": "See How A-DIY Works",
+        "secondary_link": "#how-it-works",
+        "image": "shopify://shop_images/state-seo-new-york-hero.png",
+        "image_alt": "A-DIY pressure-treated wood deck with outdoor lounge seating and a fire pit in a New York backyard",
+        "image_position": "50% 65%",
+        "article_schema": true,
+        "region_name": "New York, United States"
+      }
+    },
+    "three_ways": {
+      "type": "state-seo-three-ways",
+      "blocks": {
+        "way_1": {
+          "type": "card",
+          "settings": {
+            "icon": "compass",
+            "title": "Hire a Full Service Deck Contractor",
+            "text": "A deck builder can manage design, materials, permits, foundations, construction, inspections and cleanup. This is often the best choice when the project is highly customized or the homeowner wants one company to manage the entire job.",
+            "featured": false,
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "way_2": {
+          "type": "card",
+          "settings": {
+            "icon": "tools",
+            "title": "Build From Raw Materials",
+            "text": "The homeowner or builder purchases lumber, hardware and decking separately, then handles the design, measurements, cuts, structural layout and assembly. This approach offers flexibility but requires more planning and construction knowledge.",
+            "featured": false,
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "way_3": {
+          "type": "card",
+          "settings": {
+            "icon": "hammer",
+            "title": "Use a Professionally Engineered Deck System",
+            "text": "A ready-to-assemble system uses a standardized design and coordinated components prepared for assembly. A-DIY is designed for homeowners who want a real structural deck without beginning with a loose pile of raw materials or completing every cut at the property.",
+            "featured": true,
+            "button_label": "See Deck Kit Options",
+            "button_link": "shopify://collections/deck-kits"
+          }
+        }
+      },
+      "block_order": [
+        "way_1",
+        "way_2",
+        "way_3"
+      ],
+      "settings": {
+        "anchor_id": "options",
+        "heading": "Three Ways to Build a Deck in New York"
+      }
+    },
+    "video_carousel": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_card_jBfw7r": {
+          "type": "video_card",
+          "settings": {
+            "external_video_url": "https://cdn.shopify.com/videos/c/o/v/8da1c0c9e7844c41b194c3f72f5bba72.mp4",
+            "poster_image": "shopify://shop_images/truck_ss.png",
+            "video_title": "Built solo in about six hours, six weeks postpartum",
+            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_NXytct": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/I built this entire @decks by myself… six weeks postpartum in about 6 hours! The best part This .mp4",
+            "external_video_url": "",
+            "video_title": "Built solo in about six hours, six weeks postpartum",
+            "video_description": "A customer assembles a complete A-DIY deck on her own, six weeks postpartum, in about six hours.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_xtzmkU": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/This project got a billion times easier… @decks 12x20 deck kit was like building a Lego set. So .mp4",
+            "external_video_url": "",
+            "video_title": "A 12x20 deck kit that goes together like Lego",
+            "video_description": "A customer assembles the 12 x 20 A-DIY deck kit and compares the process to building a Lego set.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_BpVMTz": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Comment “deck” and I’ll send you the deets & a discount code! 😍We totally needed a deck to make.mp4",
+            "external_video_url": "",
+            "video_title": "Why we finally added a deck",
+            "video_description": "A customer explains why they added a deck to their backyard and which A-DIY kit they used.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_FdxxkQ": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/We built a deck in TWO DAYS!!! 🤯 If you’re in the market for a new deck, check out A-DIY @decks.mp4",
+            "external_video_url": "",
+            "video_title": "A deck built in two days",
+            "video_description": "A customer builds an A-DIY deck over two days and recommends the kit to anyone shopping for a new deck.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_zecQyF": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Creating my DREAM backyard with the help from A-DIY @decks and their custom, ship to your door, .mp4",
+            "external_video_url": "",
+            "video_title": "Creating a dream backyard with a kit shipped to the door",
+            "video_description": "A customer transforms their backyard with a custom A-DIY deck kit delivered to their door.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_8wbEp3": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/DIY deck walkway ✔️One of the biggest goals for our backyard makeover has been creating better f.mp4",
+            "external_video_url": "",
+            "video_title": "A DIY deck walkway for better backyard flow",
+            "video_description": "A customer builds a deck walkway as part of a backyard makeover, to improve how the space connects.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_73gEM7": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/From overgrown patio area to deck extension! As easy as 1,2,3 thanks to @decks. Their deck kits .mp4",
+            "external_video_url": "",
+            "video_title": "From overgrown patio to deck extension",
+            "video_description": "A customer turns an overgrown patio area into a deck extension using an A-DIY kit.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_nUPXFF": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/✨Follow + Type YES DIY and I’ll DM you a link  I almost hired a contractor to build our deck, un.mp4",
+            "external_video_url": "",
+            "video_title": "Almost hired a contractor, built it instead",
+            "video_description": "A customer explains why they chose an A-DIY kit over hiring a contractor to build their deck.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_cTW3eq": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/✨ One project completely transformed our backyard.We partnered with @decks to build this 16x20 c.mp4",
+            "external_video_url": "",
+            "video_title": "A 16x20 deck that transformed a backyard",
+            "video_description": "A customer builds a 16 x 20 composite A-DIY deck and shows how one project changed their backyard.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_XCCyQn": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Our new deck is finally done thanks to A-DIY @decks 🤍✨I wanted something that looked beautiful .mp4",
+            "external_video_url": "",
+            "video_title": "A finished deck that looks the part",
+            "video_description": "A customer shares their completed A-DIY deck, chosen because they wanted something that looked beautiful.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_hVELcx": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Had a great time assembling my new deck by @decks! So satisfying and the results are amazing! So.mp4",
+            "external_video_url": "",
+            "video_title": "Satisfying to assemble, and the result shows",
+            "video_description": "A customer describes assembling their A-DIY deck and the finished result.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_XGXdVn": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/We got the deck kit from @decks and customized it to be 18x28 ft and we havent gotten to it yet.mp4",
+            "external_video_url": "",
+            "video_title": "A deck kit customized to 18 x 28 feet",
+            "video_description": "A customer customizes an A-DIY deck kit to 18 x 28 feet for their backyard.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_cDGiX9": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/We loved seeing our deck come to life for the Maker’s Mark activation in Orlando! If you’re in t.mp4",
+            "external_video_url": "",
+            "video_title": "A-DIY deck built for the Maker's Mark activation in Orlando",
+            "video_description": "An A-DIY deck assembled on site for the Maker's Mark brand activation in Orlando.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_bQiEmk": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Another A-DIYer officially in their deck era ✨Nothing better than happy customers, fresh lumber,.mp4",
+            "external_video_url": "",
+            "video_title": "Another finished A-DIY deck",
+            "video_description": "A customer's completed A-DIY deck: fresh lumber and a finished backyard space.",
+            "video_upload_date": ""
+          }
+        },
+        "video_card_h7wfe6": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/e96d071f82fe44dbb1c955b55dbc6f08.mp4",
+            "external_video_url": "",
+            "video_title": "",
+            "video_description": "",
+            "video_upload_date": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_card_jBfw7r",
+        "video_card_NXytct",
+        "video_card_xtzmkU",
+        "video_card_BpVMTz",
+        "video_card_FdxxkQ",
+        "video_card_zecQyF",
+        "video_card_8wbEp3",
+        "video_card_73gEM7",
+        "video_card_nUPXFF",
+        "video_card_cTW3eq",
+        "video_card_XCCyQn",
+        "video_card_hVELcx",
+        "video_card_XGXdVn",
+        "video_card_cDGiX9",
+        "video_card_bQiEmk",
+        "video_card_h7wfe6"
+      ],
+      "name": "Video Carousel",
+      "settings": {
+        "subheading": "",
+        "heading": "Every Deck Has a Story",
+        "description": "From the first piece coming together to your new favorite place, see the A-DIY experience through the people who’ve built it.",
+        "bg_color": "#ffffff",
+        "color_scheme": "",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "comparison": {
+      "type": "old-comparison-table",
+      "blocks": {
+        "row_jmXyxB": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Price",
+            "col_2_val": "30-50% less",
+            "col_3_val": "Costs vary, often higher than expected",
+            "col_4_val": "Paying premium for time and labor"
+          }
+        },
+        "row_xDArgc": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Time to Build",
+            "col_2_val": "Few Hours",
+            "col_3_val": "Endless weekends, losing precious time",
+            "col_4_val": "Weeks of waiting and delays"
+          }
+        },
+        "row_EQ3Rgf": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Family Time",
+            "col_2_val": "More time to create memories",
+            "col_3_val": "Missed moments with loved ones",
+            "col_4_val": "Time spent coordinating and stressing"
+          }
+        },
+        "row_awfwPJ": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Ease & Convenience",
+            "col_2_val": "Like LEGO for adults",
+            "col_3_val": "Frustrating and overwhelming",
+            "col_4_val": "Stressful scheduling and oversight"
+          }
+        },
+        "row_iHVE3M": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Fulfillment",
+            "col_2_val": "Instant gratification",
+            "col_3_val": "Frustrating trial and error",
+            "col_4_val": "Watching someone else do it"
+          }
+        },
+        "row_GjPGEU": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Customization",
+            "col_2_val": "Tailored to your dreams",
+            "col_3_val": "Depends on skill and time",
+            "col_4_val": "Limited by budget and contractor"
+          }
+        },
+        "row_tYWenr": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Stress Level",
+            "col_2_val": "Low — focus on what matters",
+            "col_3_val": "High — unexpected complications",
+            "col_4_val": "High — unforeseen challenges"
+          }
+        },
+        "row_wzynxp": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Memories",
+            "col_2_val": "Building together, bonding",
+            "col_3_val": "Struggling, less time to enjoy",
+            "col_4_val": "Waiting, watching, worrying"
+          }
+        }
+      },
+      "block_order": [
+        "row_jmXyxB",
+        "row_xDArgc",
+        "row_EQ3Rgf",
+        "row_awfwPJ",
+        "row_iHVE3M",
+        "row_GjPGEU",
+        "row_tYWenr",
+        "row_wzynxp"
+      ],
+      "name": "Old Comparison Table",
+      "settings": {
+        "heading": "There’s the old way. And there’s A-DIY.",
+        "col_1_heading": "FEATURE",
+        "col_2_image": "shopify://shop_images/logotype.png",
+        "col_3_heading": "Traditional DIY",
+        "col_4_heading": "Contractor",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "button_label": "Learn more",
+        "button_link": "shopify://pages/why-a-diy"
+      }
+    },
+    "contractor": {
+      "type": "state-seo-contractor",
+      "blocks": {
+        "panel_1": {
+          "type": "panel",
+          "settings": {
+            "title": "Prepare a short written description containing:",
+            "items": "Approximate deck dimensions\nPreferred material\nProposed height\nAttached or freestanding design\nStairs and railings\nExisting deck removal\nSite conditions\nPermit responsibility",
+            "note": "<p>Then collect multiple written estimates and compare the same scope.<br/>The New York Attorney General recommends obtaining multiple estimates, checking references, confirming insurance and understanding permit responsibilities before hiring a home-improvement contractor.</p>",
+            "dark": false
+          }
+        },
+        "panel_2": {
+          "type": "panel",
+          "settings": {
+            "title": "What Should You Verify?",
+            "items": "Business identity and address\nRequired license or registration\nLiability and workers’ compensation coverage\nRecent references and completed projects\nWritten project scope\nPayment schedule\nWarranty terms\nExpected start and completion dates",
+            "note": "<p>Home improvement contractor licensing requirements apply in certain New York jurisdictions, including New York City and several counties and municipalities. Confirm current requirements with the applicable local authority.</p>",
+            "dark": false
+          }
+        },
+        "panel_3": {
+          "type": "panel",
+          "settings": {
+            "title": "What Should a Written Deck Quote Include?",
+            "items": "Deck dimensions and layout\nLumber grade and framing dimensions\nSurface material and brand\nHardware and connectors\nFootings, posts and bracing\nStairs and railings\nPermit and engineering responsibility\nDemolition, disposal and cleanup\nSchedule, payments and warranty\nAll exclusions and allowances",
+            "note": "",
+            "dark": true
+          }
+        }
+      },
+      "block_order": [
+        "panel_1",
+        "panel_2",
+        "panel_3"
+      ],
+      "settings": {
+        "anchor_id": "contractors",
+        "heading": "How Do You Find and Hire a Deck Contractor in New York?",
+        "intro": "Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work."
+      }
+    },
+    "questions": {
+      "type": "state-seo-questions",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Have you completed similar decks in this city or county?",
+            "answer": ""
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Are you licensed or registered where required?",
+            "answer": ""
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Can you provide current proof of insurance?",
+            "answer": ""
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "What lumber, framing dimensions and decking product are included?",
+            "answer": ""
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "What foundation system is proposed?",
+            "answer": ""
+          }
+        },
+        "q_6": {
+          "type": "question",
+          "settings": {
+            "question": "Who handles permits, plans and inspections?",
+            "answer": ""
+          }
+        },
+        "q_7": {
+          "type": "question",
+          "settings": {
+            "question": "Are stairs, railings, demolition and cleanup included?",
+            "answer": ""
+          }
+        },
+        "q_8": {
+          "type": "question",
+          "settings": {
+            "question": "How are changes and unexpected work priced?",
+            "answer": ""
+          }
+        },
+        "q_9": {
+          "type": "question",
+          "settings": {
+            "question": "What is the payment schedule?",
+            "answer": ""
+          }
+        },
+        "q_10": {
+          "type": "question",
+          "settings": {
+            "question": "What workmanship and material warranties apply?",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5",
+        "q_6",
+        "q_7",
+        "q_8",
+        "q_9",
+        "q_10"
+      ],
+      "settings": {
+        "anchor_id": "",
+        "heading": "Essential Questions to Ask"
+      }
+    },
+    "permits": {
+      "type": "state-seo-permits",
+      "blocks": {
+        "pq_1": {
+          "type": "question",
+          "settings": {
+            "question": "Does the proposed deck require a permit?"
+          }
+        },
+        "pq_2": {
+          "type": "question",
+          "settings": {
+            "question": "Is zoning approval, a site plan or a survey required?"
+          }
+        },
+        "pq_3": {
+          "type": "question",
+          "settings": {
+            "question": "What setbacks apply?"
+          }
+        },
+        "pq_4": {
+          "type": "question",
+          "settings": {
+            "question": "Are stamped plans required?"
+          }
+        },
+        "pq_5": {
+          "type": "question",
+          "settings": {
+            "question": "What footing information must be submitted?"
+          }
+        },
+        "pq_6": {
+          "type": "question",
+          "settings": {
+            "question": "What inspections are required?"
+          }
+        },
+        "pq_7": {
+          "type": "question",
+          "settings": {
+            "question": "Are stairs or railings required at the proposed height?"
+          }
+        },
+        "pq_8": {
+          "type": "question",
+          "settings": {
+            "question": "Can the homeowner perform the work?"
+          }
+        }
+      },
+      "block_order": [
+        "pq_1",
+        "pq_2",
+        "pq_3",
+        "pq_4",
+        "pq_5",
+        "pq_6",
+        "pq_7",
+        "pq_8"
+      ],
+      "settings": {
+        "anchor_id": "permits",
+        "heading": "New York Deck Permits",
+        "lead": "A permit may be required depending on the deck’s dimensions, height, location, attachment method and local rules.",
+        "body": "<p>The New York State Uniform Code establishes minimum construction standards throughout the state except New York City. Local cities, towns, villages and counties generally administer and enforce the applicable codes. New York City maintains its own construction-code and permit system.</p>",
+        "callout": "Requirements may differ between neighboring municipalities.",
+        "image": "shopify://shop_images/state-seo-permits-diagram.png",
+        "image_alt": "Exploded engineering diagram of an A-DIY deck kit showing decking, joists, beams and footings",
+        "card_heading": "Questions to Ask the Building Department",
+        "city_heading": "New York City",
+        "city_text": "<p>New York City homeowners must follow current Department of Buildings requirements. The city may require approved plans and design work completed by a New York State licensed professional engineer or registered architect.</p>"
+      }
+    },
+    "diagrams": {
+      "type": "state-seo-diagrams",
+      "settings": {
+        "anchor_id": "diagrams",
+        "heading": "What Do A-DIY Engineering Diagrams Show?",
+        "image": "shopify://shop_images/state-seo-engineering-diagrams.png",
+        "image_alt": "Pressure-treated A-DIY deck sections stacked before assembly",
+        "list": "<p><strong>Diagrams for an applicable A-DIY configuration may show:</strong></p><ul><li>Overall dimensions and structural layout</li><li>Beam and joist locations</li><li>Post locations</li><li>Lumber dimensions and type</li><li>Major connections</li><li>Assembly configuration</li></ul>",
+        "text": "<p>The building department may still request property specific information, such as a survey, site plan, setbacks, foundation details, stairs, railings, attachment details or professionally stamped documents.</p><p>Requirements vary by municipality, and the local building department has final authority. A-DIY diagrams can support a permit application but do not guarantee approval.</p>"
+      }
+    },
+    "quote": {
+      "type": "state-seo-quote",
+      "settings": {
+        "quote": "\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"",
+        "attribution": "David Miller, Scarsdale"
+      }
+    },
+    "which_deck_intro": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_qtHkXG": {
+          "type": "heading",
+          "settings": {
+            "heading": "Which deck is right for you?",
+            "class_heading": ""
+          }
+        },
+        "text_VT96iP": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Wood or composite. Two ways to make it yours. One remarkably simple way to build it.</p>"
+          }
+        },
+        "heading_4ben7f": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Every A-DIY deck includes:</strong>",
+            "class_heading": "collection-top-sec"
+          }
+        }
+      },
+      "block_order": [
+        "heading_qtHkXG",
+        "text_VT96iP",
+        "heading_4ben7f"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "custom_class": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 8
+      }
+    },
+    "which_deck_icons": {
+      "type": "feature-icons-bar-2",
+      "blocks": {
+        "feature_item_BPwmfw": {
+          "type": "feature_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/fi_1996144_10c23e3c-6762-47b9-a861-652a4ba15cde.png",
+            "title": "Engineered for",
+            "subtitle": "15,000+ lbs"
+          }
+        },
+        "feature_item_nikkcK": {
+          "type": "feature_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/fi_4211155.png",
+            "title": "Assembles in a",
+            "subtitle": "few hours"
+          }
+        },
+        "feature_item_GtdeYU": {
+          "type": "feature_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/fi_2105376_e4bf45ff-5d3c-4cfa-8c63-2195c87119c0.png",
+            "title": "Grade 1 Treated &",
+            "subtitle": "Kiln-Dried Lumber"
+          }
+        },
+        "feature_item_JFDxU4": {
+          "type": "feature_item",
+          "disabled": true,
+          "settings": {
+            "icon_image": "shopify://shop_images/fi_9078956_ec267bc8-0871-46d9-bde6-61396d242947.png",
+            "title": "Contractor-grade",
+            "subtitle": "hardware"
+          }
+        },
+        "feature_item_nyXRwD": {
+          "type": "feature_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/fi_9078956_ec267bc8-0871-46d9-bde6-61396d242947.png",
+            "title": "Professional-grade",
+            "subtitle": "structural system"
+          }
+        },
+        "feature_item_DJ9mQg": {
+          "type": "feature_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/fi_10428795_d8dca2c0-2399-4994-8fbd-585a6deeaf24.png",
+            "title": "5-year structural",
+            "subtitle": "warranty"
+          }
+        }
+      },
+      "block_order": [
+        "feature_item_BPwmfw",
+        "feature_item_nikkcK",
+        "feature_item_GtdeYU",
+        "feature_item_JFDxU4",
+        "feature_item_nyXRwD",
+        "feature_item_DJ9mQg"
+      ],
+      "name": "Feature Icons Bar 2",
+      "settings": {
+        "border_radius": 16,
+        "enable_mobile_marquee": true,
+        "marquee_speed": 20,
+        "mobile_layout": "1fr",
+        "icon_width": 32,
+        "bg_color": "#f8f8f8",
+        "inner_bg_color": "#e9e9e9",
+        "title_color": "#111111",
+        "subtitle_color": "#111111",
+        "title_font_size": 13,
+        "subtitle_font_size": 13,
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
+    },
+    "which_deck": {
+      "type": "deck-comparison",
+      "blocks": {
+        "card_qVK4Yk": {
+          "type": "card",
+          "settings": {
+            "custom_class": "card-1 wood-deck hide",
+            "bg_color": "#ffffff",
+            "product": "pressure-treated-kiln-dried-wood-deck-kit",
+            "badge_text": "Best Selling",
+            "title": "Wood Deck Kit",
+            "price": "",
+            "compare_at_price": "",
+            "discount_tag": "",
+            "description": "Grade 1 Southern Yellow Pine. Pressure Treated and Kiln Dried.",
+            "button_label": "SHOP NOW",
+            "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
+            "show_financing": true,
+            "financing_text_before": "Starting at $184/mo or 0% APR with",
+            "financing_logo": "shopify://shop_images/Untitled_design_32_png_f393bc2c-1b8e-45f6-9e17-3bc9f47c23e7.png",
+            "financing_link_text": "See if you qualify",
+            "financing_link_url": "#affirm",
+            "card_image": "shopify://shop_images/Slice_1_1.png",
+            "feature_1_icon": "shopify://shop_images/fi_2400561.png",
+            "feature_1_title": "Real wood beauty",
+            "feature_1_desc": "Authentic Southern Yellow Pine with the warmth, texture, and character only real wood can offer.",
+            "feature_2_icon": "shopify://shop_images/fi_2105376_9c708284-5876-4a16-ba6b-8371a1bbd753.png",
+            "feature_2_title": "Kiln-dried, pressure-treated lumber",
+            "feature_2_desc": "Grade 1 lumber engineered to help reduce warping, twisting, and shrinking over time.",
+            "feature_3_icon": "shopify://shop_images/fi_5848780.png",
+            "feature_3_title": "Finish it your way",
+            "feature_3_desc": "Can be stained or sealed to match your home, your backyard, and your style.",
+            "feature_4_icon": "shopify://shop_images/fi_2394090.png",
+            "feature_4_title": "Lower upfront investment",
+            "feature_4_desc": "A more budget-friendly way to get a professional-grade deck system.",
+            "feature_5_icon": "shopify://shop_images/fi_4497559.png",
+            "feature_5_title": "Ongoing maintenance required",
+            "feature_5_desc": "Best for homeowners who don’t mind occasional sealing, staining, and upkeep.",
+            "feature_6_icon": "shopify://shop_images/fi_4692414.png",
+            "feature_6_title": "Best for:",
+            "feature_6_desc": "Homeowners who want the natural look of real wood and more flexibility at a lower starting price.",
+            "feature_7_title": "",
+            "feature_7_desc": "",
+            "feature_8_title": "",
+            "feature_8_desc": ""
+          }
+        },
+        "card_HcBPTe": {
+          "type": "card",
+          "settings": {
+            "custom_class": "card-2 composite-deck show",
+            "bg_color": "#ebeceb",
+            "product": "a-diy-composite-deck-kit",
+            "badge_text": "LOW MAINTENANCE",
+            "title": "Composite Deck Kit",
+            "price": "",
+            "compare_at_price": "",
+            "discount_tag": "",
+            "description": "Engineered For Lasting Beauty.",
+            "button_label": "SHOP NOW",
+            "button_link": "shopify://products/a-diy-composite-deck-kit",
+            "show_financing": true,
+            "financing_text_before": "Starting at $184/mo or 0% APR with",
+            "financing_logo": "shopify://shop_images/Untitled_design_32_png_f393bc2c-1b8e-45f6-9e17-3bc9f47c23e7.png",
+            "financing_link_text": "See if you qualify",
+            "financing_link_url": "#affirm",
+            "card_image": "shopify://shop_images/Slice_2.png",
+            "feature_1_icon": "shopify://shop_images/fi_9873586_24882e8a-3fbd-4785-a1f9-41caee37f7bf.png",
+            "feature_1_title": "Premium wood-inspired finish",
+            "feature_1_desc": "Rich, natural-looking colors designed to deliver the look of wood with a more refined finish.",
+            "feature_2_icon": "shopify://shop_images/fi_17293052.png",
+            "feature_2_title": "Low-maintenance surface",
+            "feature_2_desc": "No sanding, staining, or sealing required",
+            "feature_3_icon": "shopify://shop_images/fi_11531296.png",
+            "feature_3_title": "Fade and splinter resistant",
+            "feature_3_desc": "Built to stay beautiful season after season with less upkeep.",
+            "feature_4_icon": "shopify://shop_images/magnific_just-need-same-icons-on-w_SyyQ4hvUb8_6.png",
+            "feature_4_title": "25-Year Warranty",
+            "feature_4_desc": "Structural, stain & fade warranty on composite boards.",
+            "feature_5_icon": "shopify://shop_images/fi_4497559.png",
+            "feature_5_title": "Premium long-term ownership",
+            "feature_5_desc": "A higher-end option for homeowners who want less maintenance and more convenience.",
+            "feature_6_icon": "shopify://shop_images/fi_4692414.png",
+            "feature_6_title": "Best for:",
+            "feature_6_desc": "Homeowners who want the look of wood without the regular upkeep.",
+            "feature_7_title": "",
+            "feature_7_desc": "",
+            "feature_8_title": "",
+            "feature_8_desc": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_qVK4Yk",
+        "card_HcBPTe"
+      ],
+      "name": "Deck Comparison Vertical",
+      "settings": {
+        "heading": "",
+        "subheading": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "elevation": {
+      "type": "state-seo-elevation",
+      "settings": {
+        "anchor_id": "foundations",
+        "heading": "Uneven Ground, Elevated Decks and Foundation Options",
+        "intro": "<p>An A-DIY deck may be installed over sloped or uneven ground by adjusting the supporting post heights to establish a level deck surface.</p>",
+        "image_1": "shopify://shop_images/state-seo-elevated-deck.png",
+        "image_1_alt": "Elevated A-DIY deck with stairs and railings beside a home",
+        "image_2": "shopify://shop_images/state-seo-sloped-ground-deck.png",
+        "image_2_alt": "A-DIY deck on adjustable posts over sloped ground",
+        "badge_label": "UP TO APPROX.",
+        "badge_value": "40",
+        "badge_unit": "inches",
+        "badge_caption": "Supported elevation",
+        "card_1_heading": "Supported Elevation",
+        "card_1_text": "Supported configurations may be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.",
+        "card_1_label": "Depending on the height and configuration, the project may also require:",
+        "card_1_items": "Longer posts\nAdditional bracing\nStairs\nRailings\nAdditional engineering\nPermit approval",
+        "card_2_heading": "Foundation and Footing Options",
+        "card_2_text": "Depending on the property, configuration and local approval, suitable systems may include:",
+        "card_2_items": "Sonotubes\nHelical piles\nGround screws\nIn-ground posts\nApproved surface footing systems\nOther site-specific foundations"
+      }
+    },
+    "how_it_works": {
+      "type": "state-seo-how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "phase": "PLAN",
+            "phase_style": "mint",
+            "title": "Choose the Size and Material",
+            "text": "Select an available deck size, pressure treated or composite surface and applicable options."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "phase": "PLAN",
+            "phase_style": "mint",
+            "title": "Review the Property",
+            "text": "Confirm the available space, ground conditions, slope, proposed height, drainage and delivery access."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "phase": "PLAN",
+            "phase_style": "mint",
+            "title": "Confirm Permits and Foundations",
+            "text": "Contact the local building department and select a suitable foundation system for the property."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "phase": "DELIVER",
+            "phase_style": "grey",
+            "title": "Receive the Deck Kit",
+            "text": "The coordinated components are delivered to the property."
+          }
+        },
+        "step_5": {
+          "type": "step",
+          "settings": {
+            "phase": "BUILD",
+            "phase_style": "solid",
+            "title": "Assemble It or Hire Local Help",
+            "text": "Complete the assembly yourself or hire a local handyman."
+          }
+        },
+        "step_6": {
+          "type": "step",
+          "settings": {
+            "phase": "BUILD",
+            "phase_style": "solid",
+            "title": "Complete Required Inspections",
+            "text": "Arrange any inspections or final approvals required by the municipality."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "step_5",
+        "step_6"
+      ],
+      "settings": {
+        "anchor_id": "how-it-works",
+        "heading": "How Does A-DIY Work?",
+        "external_video_url": "https://www.youtube.com/watch?v=X3tNt4ZaIwY",
+        "poster": "shopify://shop_images/state-seo-how-it-works-poster.png",
+        "poster_alt": "A homeowner assembling A-DIY deck joists beside a travel trailer",
+        "video_label": "WATCH",
+        "video_title": "How Does A-DIY Work",
+        "howto_schema": true
+      }
+    },
+    "engineering": {
+      "type": "state-seo-engineering",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "tag": "STRUCTURAL RATING",
+            "title": "Verified Structural Rating",
+            "text": "Applicable A-DIY deck configurations are engineered to hold up to 15,000 pounds when properly assembled, supported and installed according to the applicable specifications.",
+            "note": "Structural performance depends on correct assembly, the selected configuration, suitable foundations, footing installation, site conditions, post height, bracing, connections and compliance with applicable engineering information.",
+            "note_divider": true,
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "tag": "WARRANTY",
+            "title": "Five-Year Structural Warranty",
+            "text": "A-DIY deck systems include a five-year structural warranty, subject to the written terms, approved uses, correct installation, limitations and exclusions.",
+            "note": "Composite surface boards come with a 25 years manufacturer warranty.",
+            "note_divider": false,
+            "link_label": "Review warranty",
+            "link": "shopify://pages/a-diy-warranty"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2"
+      ],
+      "settings": {
+        "anchor_id": "engineering",
+        "heading": "Engineering, Strength and Warranty",
+        "subheading": "A-DIY deck configurations are professionally engineered.",
+        "external_video_url": "https://cdn.shopify.com/videos/c/o/v/8da1c0c9e7844c41b194c3f72f5bba72.mp4",
+        "poster": "shopify://shop_images/state-seo-load-test-poster.png",
+        "poster_alt": "A pickup truck parked on an A-DIY deck during a load test"
+      }
+    },
+    "cities": {
+      "type": "state-seo-cities",
+      "blocks": {
+        "city_1": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-nyc.png",
+            "name": "NYC",
+            "image_alt": "NYC, New York",
+            "link": ""
+          }
+        },
+        "city_2": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-buffalo.png",
+            "name": "Buffalo",
+            "image_alt": "Buffalo, New York",
+            "link": ""
+          }
+        },
+        "city_3": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-rochester.png",
+            "name": "Rochester",
+            "image_alt": "Rochester, New York",
+            "link": ""
+          }
+        },
+        "city_4": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-yonkers.png",
+            "name": "Yonkers",
+            "image_alt": "Yonkers, New York",
+            "link": ""
+          }
+        },
+        "city_5": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-syracuse.png",
+            "name": "Syracuse",
+            "image_alt": "Syracuse, New York",
+            "link": ""
+          }
+        },
+        "city_6": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-albany.png",
+            "name": "Albany",
+            "image_alt": "Albany, New York",
+            "link": ""
+          }
+        },
+        "city_7": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-new-rochelle.png",
+            "name": "New Rochelle",
+            "image_alt": "New Rochelle, New York",
+            "link": ""
+          }
+        },
+        "city_8": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-mount-vernon.png",
+            "name": "Mount Vernon",
+            "image_alt": "Mount Vernon, New York",
+            "link": ""
+          }
+        },
+        "city_9": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-schenectady.png",
+            "name": "Schenectady",
+            "image_alt": "Schenectady, New York",
+            "link": ""
+          }
+        },
+        "city_10": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-utica.png",
+            "name": "Utica",
+            "image_alt": "Utica, New York",
+            "link": ""
+          }
+        },
+        "city_11": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-amsterdam.jpg",
+            "name": "Amsterdam",
+            "image_alt": "Amsterdam, New York",
+            "link": ""
+          }
+        },
+        "city_12": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-auburn.jpg",
+            "name": "Auburn",
+            "image_alt": "Auburn, New York",
+            "link": ""
+          }
+        },
+        "city_13": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-batavia.jpg",
+            "name": "Batavia",
+            "image_alt": "Batavia, New York",
+            "link": ""
+          }
+        },
+        "city_14": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-beacon.jpg",
+            "name": "Beacon",
+            "image_alt": "Beacon, New York",
+            "link": ""
+          }
+        },
+        "city_15": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-binghamton.jpg",
+            "name": "Binghamton",
+            "image_alt": "Binghamton, New York",
+            "link": ""
+          }
+        },
+        "city_16": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-canandaigua.jpg",
+            "name": "Canandaigua",
+            "image_alt": "Canandaigua, New York",
+            "link": ""
+          }
+        },
+        "city_17": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-cohoes.jpg",
+            "name": "Cohoes",
+            "image_alt": "Cohoes, New York",
+            "link": ""
+          }
+        },
+        "city_18": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-corning.jpg",
+            "name": "Corning",
+            "image_alt": "Corning, New York",
+            "link": ""
+          }
+        },
+        "city_19": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-cortland.jpg",
+            "name": "Cortland",
+            "image_alt": "Cortland, New York",
+            "link": ""
+          }
+        },
+        "city_20": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-dunkirk.jpg",
+            "name": "Dunkirk",
+            "image_alt": "Dunkirk, New York",
+            "link": ""
+          }
+        },
+        "city_21": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-elmira.jpg",
+            "name": "Elmira",
+            "image_alt": "Elmira, New York",
+            "link": ""
+          }
+        },
+        "city_22": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-fulton.jpg",
+            "name": "Fulton",
+            "image_alt": "Fulton, New York",
+            "link": ""
+          }
+        },
+        "city_23": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-geneva.jpg",
+            "name": "Geneva",
+            "image_alt": "Geneva, New York",
+            "link": ""
+          }
+        },
+        "city_24": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-glen-cove.jpg",
+            "name": "Glen Cove",
+            "image_alt": "Glen Cove, New York",
+            "link": ""
+          }
+        },
+        "city_25": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-glens-falls.jpg",
+            "name": "Glens Falls",
+            "image_alt": "Glens Falls, New York",
+            "link": ""
+          }
+        },
+        "city_26": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-gloversville.jpg",
+            "name": "Gloversville",
+            "image_alt": "Gloversville, New York",
+            "link": ""
+          }
+        },
+        "city_27": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-hornell.jpg",
+            "name": "Hornell",
+            "image_alt": "Hornell, New York",
+            "link": ""
+          }
+        },
+        "city_28": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-hudson.jpg",
+            "name": "Hudson",
+            "image_alt": "Hudson, New York",
+            "link": ""
+          }
+        },
+        "city_29": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-ithaca.jpg",
+            "name": "Ithaca",
+            "image_alt": "Ithaca, New York",
+            "link": ""
+          }
+        },
+        "city_30": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-jamestown.jpg",
+            "name": "Jamestown",
+            "image_alt": "Jamestown, New York",
+            "link": ""
+          }
+        },
+        "city_31": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-johnstown.jpg",
+            "name": "Johnstown",
+            "image_alt": "Johnstown, New York",
+            "link": ""
+          }
+        },
+        "city_32": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-kingston.jpg",
+            "name": "Kingston",
+            "image_alt": "Kingston, New York",
+            "link": ""
+          }
+        },
+        "city_33": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-lackawanna.jpg",
+            "name": "Lackawanna",
+            "image_alt": "Lackawanna, New York",
+            "link": ""
+          }
+        },
+        "city_34": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-little-falls.jpg",
+            "name": "Little Falls",
+            "image_alt": "Little Falls, New York",
+            "link": ""
+          }
+        },
+        "city_35": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-lockport.jpg",
+            "name": "Lockport",
+            "image_alt": "Lockport, New York",
+            "link": ""
+          }
+        },
+        "city_36": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-long-beach.jpg",
+            "name": "Long Beach",
+            "image_alt": "Long Beach, New York",
+            "link": ""
+          }
+        },
+        "city_37": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-mechanicville.jpg",
+            "name": "Mechanicville",
+            "image_alt": "Mechanicville, New York",
+            "link": ""
+          }
+        },
+        "city_38": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-middletown.jpg",
+            "name": "Middletown",
+            "image_alt": "Middletown, New York",
+            "link": ""
+          }
+        },
+        "city_39": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-newburgh.jpg",
+            "name": "Newburgh",
+            "image_alt": "Newburgh, New York",
+            "link": ""
+          }
+        },
+        "city_40": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-niagara-falls.jpg",
+            "name": "Niagara Falls",
+            "image_alt": "Niagara Falls, New York",
+            "link": ""
+          }
+        },
+        "city_41": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-north-tonawanda.jpg",
+            "name": "North Tonawanda",
+            "image_alt": "North Tonawanda, New York",
+            "link": ""
+          }
+        },
+        "city_42": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-norwich.jpg",
+            "name": "Norwich",
+            "image_alt": "Norwich, New York",
+            "link": ""
+          }
+        },
+        "city_43": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-ogdensburg.jpg",
+            "name": "Ogdensburg",
+            "image_alt": "Ogdensburg, New York",
+            "link": ""
+          }
+        },
+        "city_44": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-olean.jpg",
+            "name": "Olean",
+            "image_alt": "Olean, New York",
+            "link": ""
+          }
+        },
+        "city_45": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-oneida.jpg",
+            "name": "Oneida",
+            "image_alt": "Oneida, New York",
+            "link": ""
+          }
+        },
+        "city_46": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-oneonta.jpg",
+            "name": "Oneonta",
+            "image_alt": "Oneonta, New York",
+            "link": ""
+          }
+        },
+        "city_47": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-oswego.jpg",
+            "name": "Oswego",
+            "image_alt": "Oswego, New York",
+            "link": ""
+          }
+        },
+        "city_48": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-peekskill.jpg",
+            "name": "Peekskill",
+            "image_alt": "Peekskill, New York",
+            "link": ""
+          }
+        },
+        "city_49": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-plattsburgh.jpg",
+            "name": "Plattsburgh",
+            "image_alt": "Plattsburgh, New York",
+            "link": ""
+          }
+        },
+        "city_50": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-port-jervis.png",
+            "name": "Port Jervis",
+            "image_alt": "Port Jervis, New York",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "city_1",
+        "city_2",
+        "city_3",
+        "city_4",
+        "city_5",
+        "city_6",
+        "city_7",
+        "city_8",
+        "city_9",
+        "city_10",
+        "city_11",
+        "city_12",
+        "city_13",
+        "city_14",
+        "city_15",
+        "city_16",
+        "city_17",
+        "city_18",
+        "city_19",
+        "city_20",
+        "city_21",
+        "city_22",
+        "city_23",
+        "city_24",
+        "city_25",
+        "city_26",
+        "city_27",
+        "city_28",
+        "city_29",
+        "city_30",
+        "city_31",
+        "city_32",
+        "city_33",
+        "city_34",
+        "city_35",
+        "city_36",
+        "city_37",
+        "city_38",
+        "city_39",
+        "city_40",
+        "city_41",
+        "city_42",
+        "city_43",
+        "city_44",
+        "city_45",
+        "city_46",
+        "city_47",
+        "city_48",
+        "city_49",
+        "city_50"
+      ],
+      "settings": {
+        "anchor_id": "cities",
+        "heading": "Building a Deck Across New York",
+        "intro": "From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography.",
+        "initial_count": 10,
+        "more_label": "Load more cities",
+        "footnote": "Don’t see your community? A-DIY can still deliver to your area.",
+        "has_continuation": true,
+        "continuation": false
+      }
+    },
+    "cities_more": {
+      "type": "state-seo-cities",
+      "blocks": {
+        "city_1": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-poughkeepsie.jpg",
+            "name": "Poughkeepsie",
+            "image_alt": "Poughkeepsie, New York",
+            "link": ""
+          }
+        },
+        "city_2": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-rensselaer.jpg",
+            "name": "Rensselaer",
+            "image_alt": "Rensselaer, New York",
+            "link": ""
+          }
+        },
+        "city_3": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-rome.jpg",
+            "name": "Rome",
+            "image_alt": "Rome, New York",
+            "link": ""
+          }
+        },
+        "city_4": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-rye.jpg",
+            "name": "Rye",
+            "image_alt": "Rye, New York",
+            "link": ""
+          }
+        },
+        "city_5": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-salamanca.jpg",
+            "name": "Salamanca",
+            "image_alt": "Salamanca, New York",
+            "link": ""
+          }
+        },
+        "city_6": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-saratoga-springs.jpg",
+            "name": "Saratoga Springs",
+            "image_alt": "Saratoga Springs, New York",
+            "link": ""
+          }
+        },
+        "city_7": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-sherrill.jpg",
+            "name": "Sherrill",
+            "image_alt": "Sherrill, New York",
+            "link": ""
+          }
+        },
+        "city_8": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-tonawanda.jpg",
+            "name": "Tonawanda",
+            "image_alt": "Tonawanda, New York",
+            "link": ""
+          }
+        },
+        "city_9": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-troy.jpg",
+            "name": "Troy",
+            "image_alt": "Troy, New York",
+            "link": ""
+          }
+        },
+        "city_10": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-watertown.jpg",
+            "name": "Watertown",
+            "image_alt": "Watertown, New York",
+            "link": ""
+          }
+        },
+        "city_11": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-watervliet.jpg",
+            "name": "Watervliet",
+            "image_alt": "Watervliet, New York",
+            "link": ""
+          }
+        },
+        "city_12": {
+          "type": "city",
+          "settings": {
+            "image": "shopify://shop_images/state-seo-ny-city-white-plains.jpg",
+            "name": "White Plains",
+            "image_alt": "White Plains, New York",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "city_1",
+        "city_2",
+        "city_3",
+        "city_4",
+        "city_5",
+        "city_6",
+        "city_7",
+        "city_8",
+        "city_9",
+        "city_10",
+        "city_11",
+        "city_12"
+      ],
+      "settings": {
+        "anchor_id": "",
+        "heading": "",
+        "intro": "",
+        "initial_count": 50,
+        "more_label": "",
+        "footnote": "",
+        "has_continuation": false,
+        "continuation": true
+      }
+    },
+    "faq": {
+      "type": "state-seo-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "question",
+          "settings": {
+            "question": "Who builds decks in New York?",
+            "answer": "<p>In New York, you can hire a local deck contractor, build from raw lumber yourself, or use an A-DIY engineered deck kit. A-DIY delivers a complete deck system to your door, and you, a friend or a local handyman can assemble it in a few hours with just a drill.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "question",
+          "settings": {
+            "question": "How much does it cost to build a deck in New York?",
+            "answer": "<p>Contractor prices in New York depend on your region, deck size, materials, height and local labor rates, and quotes in the NYC metro area are usually the highest. A-DIY deck kits start at $3,699 for pressure-treated wood and $5,700 for composite, typically 30–50% less than hiring a contractor. Use our deck cost calculator to compare prices in your area.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "question",
+          "settings": {
+            "question": "Is there a cheaper alternative to hiring a deck builder in New York?",
+            "answer": "<p>Yes. An engineered deck kit gives you a real, structural deck without paying for a contractor’s design time and full labor. A-DIY kits arrive with everything you need, footings included, so there is no cutting, measuring or sourcing of materials.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "question",
+          "settings": {
+            "question": "Is A-DIY a New York deck contractor?",
+            "answer": "<p>No. A-DIY does not install decks. We design, engineer and deliver complete deck kits anywhere in New York State. You can build it yourself or hire any local handyman, carpenter or contractor to assemble it for you.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "question",
+          "settings": {
+            "question": "Can I hire someone to assemble an A-DIY deck?",
+            "answer": "<p>Yes. Many New York homeowners hire a local handyman to assemble their A-DIY kit. Because the parts arrive ready to assemble with step-by-step instructions, assembly takes far less time than a custom build, which helps keep labor costs low.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need a permit to build a deck in New York?",
+            "answer": "<p>Often, yes. It depends on the deck’s size, height, location, whether it is attached to the house and your local rules. The New York State Uniform Code applies throughout the state except New York City, and your city, town or village enforces it. Always check with your local building department before you build.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "question",
+          "settings": {
+            "question": "What are the deck permit rules in New York City?",
+            "answer": "<p>New York City has its own construction code and permit system, administered by the Department of Buildings. The city may require approved plans prepared by a New York State licensed professional engineer or registered architect, so contact the Department of Buildings before you order or build.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "question",
+          "settings": {
+            "question": "How deep do deck footings need to be in New York?",
+            "answer": "<p>Under the Residential Code of New York State, footings for decks attached to a house must be protected from frost, which usually means extending below the local frost line set by your building department. Freestanding decks are exempt from the frost-line requirement, but some municipalities add their own rules, so always confirm locally.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "question",
+          "settings": {
+            "question": "Can I build a deck on uneven or sloped ground in New York?",
+            "answer": "<p>Yes. An A-DIY deck can be installed over sloped or uneven ground by adjusting the supporting post heights to create a level deck surface. Supported configurations can be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.</p>"
+          }
+        },
+        "faq_10": {
+          "type": "question",
+          "settings": {
+            "question": "Which footings come with an A-DIY deck?",
+            "answer": "<p>Every A-DIY kit includes Tuff Block footings. Depending on your property, deck height and local requirements, other foundation systems may be used instead, such as sonotubes, helical piles, ground screws, in-ground posts or approved surface footing systems.</p>"
+          }
+        },
+        "faq_11": {
+          "type": "question",
+          "settings": {
+            "question": "Is pressure-treated wood or composite better for New York weather?",
+            "answer": "<p>Both work well in New York. Pressure-treated wood costs less upfront and can be stained or sealed, but it needs regular upkeep through snow, freeze-thaw cycles and humid summers. Composite costs more but needs no sanding, staining or sealing, resists fading and splintering, and its boards carry a 25-year warranty.</p>"
+          }
+        },
+        "faq_12": {
+          "type": "question",
+          "settings": {
+            "question": "How strong is an A-DIY deck?",
+            "answer": "<p>Applicable A-DIY deck configurations are engineered to hold up to 15,000 pounds when properly assembled, supported and installed according to the applicable specifications. Every A-DIY deck system also includes a five-year structural warranty.</p>"
+          }
+        },
+        "faq_13": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery to New York take?",
+            "answer": "<p>A-DIY delivers to cities and towns across New York State, typically within 10–14 business days. Your deck arrives with all components and hardware included, so you can start building as soon as it arrives.</p>"
+          }
+        },
+        "faq_14": {
+          "type": "question",
+          "settings": {
+            "question": "Can I finance a deck in New York?",
+            "answer": "<p>Yes. You can choose Build Now, Pay Later financing through Affirm (subject to approval), 0% split payments over up to eight months, or A-DIY Reserve, a $250 deposit that locks in today’s price for a future delivery date.</p>"
+          }
+        },
+        "faq_15": {
+          "type": "question",
+          "settings": {
+            "question": "Can A-DIY engineering diagrams help with my permit?",
+            "answer": "<p>Yes. Diagrams for an applicable A-DIY configuration show dimensions, structural layout, beam, joist and post locations, lumber sizes and major connections, which can support your permit application. Your building department may still request a survey, site plan or stamped documents, and approval is not guaranteed.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10",
+        "faq_11",
+        "faq_12",
+        "faq_13",
+        "faq_14",
+        "faq_15"
+      ],
+      "settings": {
+        "anchor_id": "faq",
+        "heading": "Frequently Asked Questions",
+        "open_first": true,
+        "faq_schema": true,
+        "wood_product": "pressure-treated-kiln-dried-wood-deck-kit",
+        "composite_product": "a-diy-composite-deck-kit"
+      }
+    },
+    "cta": {
+      "type": "state-seo-cta",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "scissors",
+            "title": "No cutting",
+            "text": "Every part is precision cut and engineered to fit seamlessly."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "divider",
+            "title": "No measuring",
+            "text": "Follow the step by step instructions and all parts fit together like lego."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "bulb",
+            "title": "No guesswork",
+            "text": "3D instructional app, guiding you step by step for a seamless build."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
+      "settings": {
+        "heading": "Build the Deck You Need. Your Way.",
+        "text": "<p>A-DIY gives New York homeowners another option beyond commissioning a completely custom deck or building from loose raw materials.</p><p>Choose the size and material, review the available engineering information and decide whether to assemble it yourself or hire local help.</p>",
+        "primary_label": "Explore Deck Kits",
+        "primary_link": "shopify://collections/deck-kits",
+        "secondary_label": "Chat With a Design Consultant",
+        "secondary_link": "#chat"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "three_ways",
+    "video_carousel",
+    "comparison",
+    "contractor",
+    "questions",
+    "permits",
+    "diagrams",
+    "quote",
+    "which_deck_intro",
+    "which_deck_icons",
+    "which_deck",
+    "elevation",
+    "how_it_works",
+    "engineering",
+    "cities",
+    "cities_more",
+    "faq",
+    "cta"
+  ]
+}
