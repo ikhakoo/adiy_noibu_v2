@@ -2,7 +2,9 @@
 
 {%- comment -%}
   State SEO landing page · FAQ. Figma › Frequently Asked Questions (1665:193).
-  One `question` block per item (native <details>). Emits FAQPage JSON-LD for answer engines.
+  Items come from the "Questions" metaobject list (bind it to the page metafield state_seo.faq
+  so one template serves every state); `question` blocks are the fallback. Native <details>.
+  Emits FAQPage JSON-LD for answer engines.
 
   Price tokens keep answers matched to live store prices when the two products are set:
     [wood_from] [composite_from]
@@ -27,6 +29,19 @@
       <h2 class="ss-h2 ss-center" style="font-weight: 600;">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
     <div class="ss-faq__list">
+      {%- if section.settings.faq != blank and section.settings.faq.size > 0 -%}
+        {%- for item in section.settings.faq -%}
+          {%- capture answer -%}{{ item.answer | metafield_tag }}{%- endcapture -%}
+          {%- assign answer = answer | replace: '[wood_from]', wood_from | replace: '[composite_from]', comp_from -%}
+          <details class="ss-faq__item"{% if section.settings.open_first and forloop.first %} open{% endif %}>
+            <summary class="ss-faq__q">
+              <h3>{{ item.question.value | escape }}</h3>
+              <span class="ss-faq__sign" aria-hidden="true"></span>
+            </summary>
+            <div class="ss-faq__a">{{ answer }}</div>
+          </details>
+        {%- endfor -%}
+      {%- else -%}
       {%- for block in section.blocks -%}
         {%- assign answer = block.settings.answer | replace: '[wood_from]', wood_from | replace: '[composite_from]', comp_from -%}
         <details class="ss-faq__item" {{ block.shopify_attributes }}{% if section.settings.open_first and forloop.first %} open{% endif %}>
@@ -37,27 +52,31 @@
           <div class="ss-faq__a">{{ answer }}</div>
         </details>
       {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </div>
 
-{%- if section.settings.faq_schema and section.blocks.size > 0 -%}
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {%- for block in section.blocks -%}
-          {%- assign answer = block.settings.answer | replace: '[wood_from]', wood_from | replace: '[composite_from]', comp_from -%}
-          {
-            "@type": "Question",
-            "name": {{ block.settings.question | json }},
-            "acceptedAnswer": { "@type": "Answer", "text": {{ answer | strip_html | strip | json }} }
-          }{% unless forloop.last %},{% endunless %}
-        {%- endfor -%}
-      ]
-    }
-  </script>
+{%- if section.settings.faq_schema -%}
+  {%- capture faq_entities -%}
+    {%- if section.settings.faq != blank and section.settings.faq.size > 0 -%}
+      {%- for item in section.settings.faq -%}
+        {%- capture answer -%}{{ item.answer | metafield_tag }}{%- endcapture -%}
+        {%- assign answer = answer | replace: '[wood_from]', wood_from | replace: '[composite_from]', comp_from -%}
+        { "@type": "Question", "name": {{ item.question.value | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ answer | strip_html | strip | json }} } }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in section.blocks -%}
+        {%- assign answer = block.settings.answer | replace: '[wood_from]', wood_from | replace: '[composite_from]', comp_from -%}
+        { "@type": "Question", "name": {{ block.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ answer | strip_html | strip | json }} } }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- if faq_entities contains '@type' -%}
+    <script type="application/ld+json">
+      { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [ {{ faq_entities }} ] }
+    </script>
+  {%- endif -%}
 {%- endif -%}
 
 {% schema %}
@@ -70,6 +89,7 @@
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "metaobject_list", "id": "faq", "label": "Questions", "metaobject_type": "state_seo_faq", "info": "Connect to the page metafield State SEO · FAQ. Blocks below are used only when this is empty." },
     { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": true },
     { "type": "checkbox", "id": "faq_schema", "label": "Output FAQPage schema", "default": true, "info": "Keep on for one FAQ section per page only." },
     { "type": "header", "content": "Live prices", "info": "Answers can use [wood_from] and [composite_from]." },

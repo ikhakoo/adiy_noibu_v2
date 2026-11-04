@@ -12,18 +12,17 @@
     "hero": {
       "type": "state-seo-hero",
       "settings": {
-        "anchor_id": "",
-        "heading": "Building a Deck in New York: Contractors, Costs, Permits and Deck Kit Options",
-        "intro": "<p>Planning a deck in New York usually begins with a few big questions: Should you hire a deck builder, purchase the materials yourself or use a professionally engineered system that arrives prepared for assembly?</p><p>This guide explains the main options, what affects the cost, how permits work, what to ask a contractor and how to choose between pressure-treated wood and composite decking.</p><p>A-DIY offers a third way to complete the project: a professionally engineered deck system delivered with coordinated components prepared for assembly. You can build it yourself or hire a local handyman, carpenter or contractor to help.</p>",
+        "heading": "{{ page.metafields.state_seo.hero_heading }}",
+        "intro": "{{ page.metafields.state_seo.hero_intro }}",
         "primary_label": "Explore Deck Options",
         "primary_link": "shopify://collections/deck-kits",
         "secondary_label": "See How A-DIY Works",
         "secondary_link": "#how-it-works",
-        "image": "shopify://shop_images/state-seo-new-york-hero.png",
-        "image_alt": "A-DIY pressure-treated wood deck with outdoor lounge seating and a fire pit in a New York backyard",
+        "image": "{{ page.metafields.state_seo.hero_image }}",
+        "image_alt": "{{ page.metafields.state_seo.hero_image_alt }}",
         "image_position": "50% 65%",
         "article_schema": true,
-        "region_name": "New York, United States"
+        "region_name": "{{ page.metafields.state_seo.region_name }}"
       }
     },
     "three_ways": {
@@ -33,8 +32,8 @@
           "type": "card",
           "settings": {
             "icon": "compass",
-            "title": "Hire a Deck Contractor",
-            "text": "A deck builder can manage design, materials, permits, foundations, construction, inspections and cleanup. This is often the best choice when the project is highly customized or the homeowner wants one company to manage the entire job.",
+            "title": "{{ page.metafields.state_seo.way_1_title }}",
+            "text": "{{ page.metafields.state_seo.way_1_text }}",
             "featured": false,
             "button_label": "",
             "button_link": ""
@@ -44,8 +43,8 @@
           "type": "card",
           "settings": {
             "icon": "tools",
-            "title": "Build From Raw Materials",
-            "text": "The homeowner or builder purchases lumber, hardware and decking separately, then handles the design, measurements, cuts, structural layout and assembly. This approach offers flexibility but requires more planning and construction knowledge.",
+            "title": "{{ page.metafields.state_seo.way_2_title }}",
+            "text": "{{ page.metafields.state_seo.way_2_text }}",
             "featured": false,
             "button_label": "",
             "button_link": ""
@@ -55,8 +54,8 @@
           "type": "card",
           "settings": {
             "icon": "hammer",
-            "title": "Use a Professionally Engineered Deck System",
-            "text": "A ready-to-assemble system uses a standardized design and coordinated components prepared for assembly. A-DIY is designed for homeowners who want a real structural deck without beginning with a loose pile of raw materials or completing every cut at the property.",
+            "title": "{{ page.metafields.state_seo.way_3_title }}",
+            "text": "{{ page.metafields.state_seo.way_3_text }}",
             "featured": true,
             "button_label": "See Deck Kit Options",
             "button_link": "shopify://collections/deck-kits"
@@ -70,7 +69,7 @@
       ],
       "settings": {
         "anchor_id": "options",
-        "heading": "Three Ways to Build a Deck in New York"
+        "heading": "{{ page.metafields.state_seo.ways_heading }}"
       }
     },
     "video_carousel": {
@@ -359,10 +358,10 @@
         "col_2_image": "shopify://shop_images/logotype.png",
         "col_3_heading": "Traditional DIY",
         "col_4_heading": "Contractor",
-        "button_label": "Learn more",
-        "button_link": "shopify://pages/why-a-diy",
         "padding_top": 40,
-        "padding_bottom": 40
+        "padding_bottom": 40,
+        "button_label": "Learn more",
+        "button_link": "shopify://pages/why-a-diy"
       }
     },
     "contractor": {
@@ -371,27 +370,27 @@
         "panel_1": {
           "type": "panel",
           "settings": {
-            "title": "Prepare a short written description containing:",
-            "items": "Approximate deck dimensions\nPreferred material\nProposed height\nAttached or freestanding design\nStairs and railings\nExisting deck removal\nSite conditions\nPermit responsibility",
-            "note": "<p>Then collect multiple written estimates and compare the same scope.<br/>The New York Attorney General recommends obtaining multiple estimates, checking references, confirming insurance and understanding permit responsibilities before hiring a home-improvement contractor.</p>",
+            "title": "{{ page.metafields.state_seo.panel_1_title }}",
+            "items": "{{ page.metafields.state_seo.panel_1_items }}",
+            "note": "{{ page.metafields.state_seo.panel_1_note }}",
             "dark": false
           }
         },
         "panel_2": {
           "type": "panel",
           "settings": {
-            "title": "What Should You Verify?",
-            "items": "Business identity and address\nRequired license or registration\nLiability and workers’ compensation coverage\nRecent references and completed projects\nWritten project scope\nPayment schedule\nWarranty terms\nExpected start and completion dates",
-            "note": "<p>Home improvement contractor licensing requirements apply in certain New York jurisdictions, including New York City and several counties and municipalities. Confirm current requirements with the applicable local authority.</p>",
+            "title": "{{ page.metafields.state_seo.panel_2_title }}",
+            "items": "{{ page.metafields.state_seo.panel_2_items }}",
+            "note": "{{ page.metafields.state_seo.panel_2_note }}",
             "dark": false
           }
         },
         "panel_3": {
           "type": "panel",
           "settings": {
-            "title": "What Should a Written Deck Quote Include?",
-            "items": "Deck dimensions and layout\nLumber grade and framing dimensions\nSurface material and brand\nHardware and connectors\nFootings, posts and bracing\nStairs and railings\nPermit and engineering responsibility\nDemolition, disposal and cleanup\nSchedule, payments and warranty\nAll exclusions and allowances",
-            "note": "",
+            "title": "{{ page.metafields.state_seo.panel_3_title }}",
+            "items": "{{ page.metafields.state_seo.panel_3_items }}",
+            "note": "{{ page.metafields.state_seo.panel_3_note }}",
             "dark": true
           }
         }
@@ -403,174 +402,32 @@
       ],
       "settings": {
         "anchor_id": "contractors",
-        "heading": "How Do You Find and Hire a Deck Contractor in New York?",
-        "intro": "Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work."
+        "heading": "{{ page.metafields.state_seo.contractor_heading }}",
+        "intro": "{{ page.metafields.state_seo.contractor_intro }}"
       }
     },
     "questions": {
       "type": "state-seo-questions",
-      "blocks": {
-        "q_1": {
-          "type": "question",
-          "settings": {
-            "question": "Have you completed similar decks in this city or county?",
-            "answer": ""
-          }
-        },
-        "q_2": {
-          "type": "question",
-          "settings": {
-            "question": "Are you licensed or registered where required?",
-            "answer": ""
-          }
-        },
-        "q_3": {
-          "type": "question",
-          "settings": {
-            "question": "Can you provide current proof of insurance?",
-            "answer": ""
-          }
-        },
-        "q_4": {
-          "type": "question",
-          "settings": {
-            "question": "What lumber, framing dimensions and decking product are included?",
-            "answer": ""
-          }
-        },
-        "q_5": {
-          "type": "question",
-          "settings": {
-            "question": "What foundation system is proposed?",
-            "answer": ""
-          }
-        },
-        "q_6": {
-          "type": "question",
-          "settings": {
-            "question": "Who handles permits, plans and inspections?",
-            "answer": ""
-          }
-        },
-        "q_7": {
-          "type": "question",
-          "settings": {
-            "question": "Are stairs, railings, demolition and cleanup included?",
-            "answer": ""
-          }
-        },
-        "q_8": {
-          "type": "question",
-          "settings": {
-            "question": "How are changes and unexpected work priced?",
-            "answer": ""
-          }
-        },
-        "q_9": {
-          "type": "question",
-          "settings": {
-            "question": "What is the payment schedule?",
-            "answer": ""
-          }
-        },
-        "q_10": {
-          "type": "question",
-          "settings": {
-            "question": "What workmanship and material warranties apply?",
-            "answer": ""
-          }
-        }
-      },
-      "block_order": [
-        "q_1",
-        "q_2",
-        "q_3",
-        "q_4",
-        "q_5",
-        "q_6",
-        "q_7",
-        "q_8",
-        "q_9",
-        "q_10"
-      ],
       "settings": {
         "anchor_id": "",
-        "heading": "Essential Questions to Ask"
+        "heading": "{{ page.metafields.state_seo.questions_heading }}",
+        "items": "{{ page.metafields.state_seo.questions_items }}"
       }
     },
     "permits": {
       "type": "state-seo-permits",
-      "blocks": {
-        "pq_1": {
-          "type": "question",
-          "settings": {
-            "question": "Does the proposed deck require a permit?"
-          }
-        },
-        "pq_2": {
-          "type": "question",
-          "settings": {
-            "question": "Is zoning approval, a site plan or a survey required?"
-          }
-        },
-        "pq_3": {
-          "type": "question",
-          "settings": {
-            "question": "What setbacks apply?"
-          }
-        },
-        "pq_4": {
-          "type": "question",
-          "settings": {
-            "question": "Are stamped plans required?"
-          }
-        },
-        "pq_5": {
-          "type": "question",
-          "settings": {
-            "question": "What footing information must be submitted?"
-          }
-        },
-        "pq_6": {
-          "type": "question",
-          "settings": {
-            "question": "What inspections are required?"
-          }
-        },
-        "pq_7": {
-          "type": "question",
-          "settings": {
-            "question": "Are stairs or railings required at the proposed height?"
-          }
-        },
-        "pq_8": {
-          "type": "question",
-          "settings": {
-            "question": "Can the homeowner perform the work?"
-          }
-        }
-      },
-      "block_order": [
-        "pq_1",
-        "pq_2",
-        "pq_3",
-        "pq_4",
-        "pq_5",
-        "pq_6",
-        "pq_7",
-        "pq_8"
-      ],
       "settings": {
         "anchor_id": "permits",
-        "heading": "New York Deck Permits",
-        "lead": "A permit may be required depending on the deck’s dimensions, height, location, attachment method and local rules.",
-        "body": "<p>The New York State Uniform Code establishes minimum construction standards throughout the state except New York City. Local cities, towns, villages and counties generally administer and enforce the applicable codes. New York City maintains its own construction-code and permit system.</p>",
-        "callout": "Requirements may differ between neighboring municipalities.",
+        "heading": "{{ page.metafields.state_seo.permits_heading }}",
+        "lead": "{{ page.metafields.state_seo.permits_lead }}",
+        "body": "{{ page.metafields.state_seo.permits_body }}",
+        "callout": "{{ page.metafields.state_seo.permits_callout }}",
         "image": "shopify://shop_images/state-seo-permits-diagram.png",
         "image_alt": "Exploded engineering diagram of an A-DIY deck kit showing decking, joists, beams and footings",
-        "card_heading": "Questions to Ask the Building Department",
-        "city_heading": "New York City",
-        "city_text": "<p>New York City homeowners must follow current Department of Buildings requirements. The city may require approved plans and design work completed by a New York State licensed professional engineer or registered architect.</p>"
+        "card_heading": "{{ page.metafields.state_seo.permits_card_heading }}",
+        "questions": "{{ page.metafields.state_seo.permits_questions }}",
+        "city_heading": "{{ page.metafields.state_seo.permits_city_heading }}",
+        "city_text": "{{ page.metafields.state_seo.permits_city_text }}"
       }
     },
     "diagrams": {
@@ -587,9 +444,8 @@
     "quote": {
       "type": "state-seo-quote",
       "settings": {
-        "anchor_id": "",
-        "quote": "\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"",
-        "attribution": "David Miller, Scarsdale"
+        "quote": "{{ page.metafields.state_seo.quote_text }}",
+        "attribution": "{{ page.metafields.state_seo.quote_attribution }}"
       }
     },
     "which_deck_intro": {
@@ -958,787 +814,24 @@
     },
     "cities": {
       "type": "state-seo-cities",
-      "blocks": {
-        "city_1": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-nyc.png",
-            "name": "NYC",
-            "image_alt": "NYC, New York",
-            "link": ""
-          }
-        },
-        "city_2": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-buffalo.png",
-            "name": "Buffalo",
-            "image_alt": "Buffalo, New York",
-            "link": ""
-          }
-        },
-        "city_3": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-rochester.png",
-            "name": "Rochester",
-            "image_alt": "Rochester, New York",
-            "link": ""
-          }
-        },
-        "city_4": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-yonkers.png",
-            "name": "Yonkers",
-            "image_alt": "Yonkers, New York",
-            "link": ""
-          }
-        },
-        "city_5": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-syracuse.png",
-            "name": "Syracuse",
-            "image_alt": "Syracuse, New York",
-            "link": ""
-          }
-        },
-        "city_6": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-albany.png",
-            "name": "Albany",
-            "image_alt": "Albany, New York",
-            "link": ""
-          }
-        },
-        "city_7": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-new-rochelle.png",
-            "name": "New Rochelle",
-            "image_alt": "New Rochelle, New York",
-            "link": ""
-          }
-        },
-        "city_8": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-mount-vernon.png",
-            "name": "Mount Vernon",
-            "image_alt": "Mount Vernon, New York",
-            "link": ""
-          }
-        },
-        "city_9": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-schenectady.png",
-            "name": "Schenectady",
-            "image_alt": "Schenectady, New York",
-            "link": ""
-          }
-        },
-        "city_10": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-utica.png",
-            "name": "Utica",
-            "image_alt": "Utica, New York",
-            "link": ""
-          }
-        },
-        "city_11": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-amsterdam.jpg",
-            "name": "Amsterdam",
-            "image_alt": "Amsterdam, New York",
-            "link": ""
-          }
-        },
-        "city_12": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-auburn.jpg",
-            "name": "Auburn",
-            "image_alt": "Auburn, New York",
-            "link": ""
-          }
-        },
-        "city_13": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-batavia.jpg",
-            "name": "Batavia",
-            "image_alt": "Batavia, New York",
-            "link": ""
-          }
-        },
-        "city_14": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-beacon.jpg",
-            "name": "Beacon",
-            "image_alt": "Beacon, New York",
-            "link": ""
-          }
-        },
-        "city_15": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-binghamton.jpg",
-            "name": "Binghamton",
-            "image_alt": "Binghamton, New York",
-            "link": ""
-          }
-        },
-        "city_16": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-canandaigua.jpg",
-            "name": "Canandaigua",
-            "image_alt": "Canandaigua, New York",
-            "link": ""
-          }
-        },
-        "city_17": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-cohoes.jpg",
-            "name": "Cohoes",
-            "image_alt": "Cohoes, New York",
-            "link": ""
-          }
-        },
-        "city_18": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-corning.jpg",
-            "name": "Corning",
-            "image_alt": "Corning, New York",
-            "link": ""
-          }
-        },
-        "city_19": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-cortland.jpg",
-            "name": "Cortland",
-            "image_alt": "Cortland, New York",
-            "link": ""
-          }
-        },
-        "city_20": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-dunkirk.jpg",
-            "name": "Dunkirk",
-            "image_alt": "Dunkirk, New York",
-            "link": ""
-          }
-        },
-        "city_21": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-elmira.jpg",
-            "name": "Elmira",
-            "image_alt": "Elmira, New York",
-            "link": ""
-          }
-        },
-        "city_22": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-fulton.jpg",
-            "name": "Fulton",
-            "image_alt": "Fulton, New York",
-            "link": ""
-          }
-        },
-        "city_23": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-geneva.jpg",
-            "name": "Geneva",
-            "image_alt": "Geneva, New York",
-            "link": ""
-          }
-        },
-        "city_24": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-glen-cove.jpg",
-            "name": "Glen Cove",
-            "image_alt": "Glen Cove, New York",
-            "link": ""
-          }
-        },
-        "city_25": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-glens-falls.jpg",
-            "name": "Glens Falls",
-            "image_alt": "Glens Falls, New York",
-            "link": ""
-          }
-        },
-        "city_26": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-gloversville.jpg",
-            "name": "Gloversville",
-            "image_alt": "Gloversville, New York",
-            "link": ""
-          }
-        },
-        "city_27": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-hornell.jpg",
-            "name": "Hornell",
-            "image_alt": "Hornell, New York",
-            "link": ""
-          }
-        },
-        "city_28": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-hudson.jpg",
-            "name": "Hudson",
-            "image_alt": "Hudson, New York",
-            "link": ""
-          }
-        },
-        "city_29": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-ithaca.jpg",
-            "name": "Ithaca",
-            "image_alt": "Ithaca, New York",
-            "link": ""
-          }
-        },
-        "city_30": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-jamestown.jpg",
-            "name": "Jamestown",
-            "image_alt": "Jamestown, New York",
-            "link": ""
-          }
-        },
-        "city_31": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-johnstown.jpg",
-            "name": "Johnstown",
-            "image_alt": "Johnstown, New York",
-            "link": ""
-          }
-        },
-        "city_32": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-kingston.jpg",
-            "name": "Kingston",
-            "image_alt": "Kingston, New York",
-            "link": ""
-          }
-        },
-        "city_33": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-lackawanna.jpg",
-            "name": "Lackawanna",
-            "image_alt": "Lackawanna, New York",
-            "link": ""
-          }
-        },
-        "city_34": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-little-falls.jpg",
-            "name": "Little Falls",
-            "image_alt": "Little Falls, New York",
-            "link": ""
-          }
-        },
-        "city_35": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-lockport.jpg",
-            "name": "Lockport",
-            "image_alt": "Lockport, New York",
-            "link": ""
-          }
-        },
-        "city_36": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-long-beach.jpg",
-            "name": "Long Beach",
-            "image_alt": "Long Beach, New York",
-            "link": ""
-          }
-        },
-        "city_37": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-mechanicville.jpg",
-            "name": "Mechanicville",
-            "image_alt": "Mechanicville, New York",
-            "link": ""
-          }
-        },
-        "city_38": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-middletown.jpg",
-            "name": "Middletown",
-            "image_alt": "Middletown, New York",
-            "link": ""
-          }
-        },
-        "city_39": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-newburgh.jpg",
-            "name": "Newburgh",
-            "image_alt": "Newburgh, New York",
-            "link": ""
-          }
-        },
-        "city_40": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-niagara-falls.jpg",
-            "name": "Niagara Falls",
-            "image_alt": "Niagara Falls, New York",
-            "link": ""
-          }
-        },
-        "city_41": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-north-tonawanda.jpg",
-            "name": "North Tonawanda",
-            "image_alt": "North Tonawanda, New York",
-            "link": ""
-          }
-        },
-        "city_42": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-norwich.jpg",
-            "name": "Norwich",
-            "image_alt": "Norwich, New York",
-            "link": ""
-          }
-        },
-        "city_43": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-ogdensburg.jpg",
-            "name": "Ogdensburg",
-            "image_alt": "Ogdensburg, New York",
-            "link": ""
-          }
-        },
-        "city_44": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-olean.jpg",
-            "name": "Olean",
-            "image_alt": "Olean, New York",
-            "link": ""
-          }
-        },
-        "city_45": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-oneida.jpg",
-            "name": "Oneida",
-            "image_alt": "Oneida, New York",
-            "link": ""
-          }
-        },
-        "city_46": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-oneonta.jpg",
-            "name": "Oneonta",
-            "image_alt": "Oneonta, New York",
-            "link": ""
-          }
-        },
-        "city_47": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-oswego.jpg",
-            "name": "Oswego",
-            "image_alt": "Oswego, New York",
-            "link": ""
-          }
-        },
-        "city_48": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-peekskill.jpg",
-            "name": "Peekskill",
-            "image_alt": "Peekskill, New York",
-            "link": ""
-          }
-        },
-        "city_49": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-plattsburgh.jpg",
-            "name": "Plattsburgh",
-            "image_alt": "Plattsburgh, New York",
-            "link": ""
-          }
-        },
-        "city_50": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-port-jervis.png",
-            "name": "Port Jervis",
-            "image_alt": "Port Jervis, New York",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "city_1",
-        "city_2",
-        "city_3",
-        "city_4",
-        "city_5",
-        "city_6",
-        "city_7",
-        "city_8",
-        "city_9",
-        "city_10",
-        "city_11",
-        "city_12",
-        "city_13",
-        "city_14",
-        "city_15",
-        "city_16",
-        "city_17",
-        "city_18",
-        "city_19",
-        "city_20",
-        "city_21",
-        "city_22",
-        "city_23",
-        "city_24",
-        "city_25",
-        "city_26",
-        "city_27",
-        "city_28",
-        "city_29",
-        "city_30",
-        "city_31",
-        "city_32",
-        "city_33",
-        "city_34",
-        "city_35",
-        "city_36",
-        "city_37",
-        "city_38",
-        "city_39",
-        "city_40",
-        "city_41",
-        "city_42",
-        "city_43",
-        "city_44",
-        "city_45",
-        "city_46",
-        "city_47",
-        "city_48",
-        "city_49",
-        "city_50"
-      ],
       "settings": {
         "anchor_id": "cities",
-        "heading": "Building a Deck Across New York",
-        "intro": "From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography.",
+        "heading": "{{ page.metafields.state_seo.cities_heading }}",
+        "intro": "{{ page.metafields.state_seo.cities_intro }}",
+        "cities": "{{ page.metafields.state_seo.cities }}",
         "initial_count": 10,
         "more_label": "Load more cities",
-        "footnote": "Don’t see your community? A-DIY can still deliver to your area.",
-        "has_continuation": true,
-        "continuation": false
-      }
-    },
-    "cities_more": {
-      "type": "state-seo-cities",
-      "blocks": {
-        "city_1": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-poughkeepsie.jpg",
-            "name": "Poughkeepsie",
-            "image_alt": "Poughkeepsie, New York",
-            "link": ""
-          }
-        },
-        "city_2": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-rensselaer.jpg",
-            "name": "Rensselaer",
-            "image_alt": "Rensselaer, New York",
-            "link": ""
-          }
-        },
-        "city_3": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-rome.jpg",
-            "name": "Rome",
-            "image_alt": "Rome, New York",
-            "link": ""
-          }
-        },
-        "city_4": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-rye.jpg",
-            "name": "Rye",
-            "image_alt": "Rye, New York",
-            "link": ""
-          }
-        },
-        "city_5": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-salamanca.jpg",
-            "name": "Salamanca",
-            "image_alt": "Salamanca, New York",
-            "link": ""
-          }
-        },
-        "city_6": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-saratoga-springs.jpg",
-            "name": "Saratoga Springs",
-            "image_alt": "Saratoga Springs, New York",
-            "link": ""
-          }
-        },
-        "city_7": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-sherrill.jpg",
-            "name": "Sherrill",
-            "image_alt": "Sherrill, New York",
-            "link": ""
-          }
-        },
-        "city_8": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-tonawanda.jpg",
-            "name": "Tonawanda",
-            "image_alt": "Tonawanda, New York",
-            "link": ""
-          }
-        },
-        "city_9": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-troy.jpg",
-            "name": "Troy",
-            "image_alt": "Troy, New York",
-            "link": ""
-          }
-        },
-        "city_10": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-watertown.jpg",
-            "name": "Watertown",
-            "image_alt": "Watertown, New York",
-            "link": ""
-          }
-        },
-        "city_11": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-watervliet.jpg",
-            "name": "Watervliet",
-            "image_alt": "Watervliet, New York",
-            "link": ""
-          }
-        },
-        "city_12": {
-          "type": "city",
-          "settings": {
-            "image": "shopify://shop_images/state-seo-ny-city-white-plains.jpg",
-            "name": "White Plains",
-            "image_alt": "White Plains, New York",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "city_1",
-        "city_2",
-        "city_3",
-        "city_4",
-        "city_5",
-        "city_6",
-        "city_7",
-        "city_8",
-        "city_9",
-        "city_10",
-        "city_11",
-        "city_12"
-      ],
-      "settings": {
-        "anchor_id": "",
-        "heading": "",
-        "intro": "",
-        "initial_count": 50,
-        "more_label": "",
-        "footnote": "",
+        "footnote": "{{ page.metafields.state_seo.cities_footnote }}",
         "has_continuation": false,
-        "continuation": true
+        "continuation": false
       }
     },
     "faq": {
       "type": "state-seo-faq",
-      "blocks": {
-        "faq_1": {
-          "type": "question",
-          "settings": {
-            "question": "Who builds decks in New York?",
-            "answer": "<p>In New York, you can hire a local deck contractor, build from raw lumber yourself, or use an A-DIY engineered deck kit. A-DIY delivers a complete deck system to your door, and you, a friend or a local handyman can assemble it in a few hours with just a drill.</p>"
-          }
-        },
-        "faq_2": {
-          "type": "question",
-          "settings": {
-            "question": "How much does it cost to build a deck in New York?",
-            "answer": "<p>Contractor prices in New York depend on your region, deck size, materials, height and local labor rates, and quotes in the NYC metro area are usually the highest. A-DIY deck kits start at $3,699 for pressure-treated wood and $5,700 for composite, typically 30–50% less than hiring a contractor. Use our deck cost calculator to compare prices in your area.</p>"
-          }
-        },
-        "faq_3": {
-          "type": "question",
-          "settings": {
-            "question": "Is there a cheaper alternative to hiring a deck builder in New York?",
-            "answer": "<p>Yes. An engineered deck kit gives you a real, structural deck without paying for a contractor’s design time and full labor. A-DIY kits arrive with everything you need, footings included, so there is no cutting, measuring or sourcing of materials.</p>"
-          }
-        },
-        "faq_4": {
-          "type": "question",
-          "settings": {
-            "question": "Is A-DIY a New York deck contractor?",
-            "answer": "<p>No. A-DIY does not install decks. We design, engineer and deliver complete deck kits anywhere in New York State. You can build it yourself or hire any local handyman, carpenter or contractor to assemble it for you.</p>"
-          }
-        },
-        "faq_5": {
-          "type": "question",
-          "settings": {
-            "question": "Can I hire someone to assemble an A-DIY deck?",
-            "answer": "<p>Yes. Many New York homeowners hire a local handyman to assemble their A-DIY kit. Because the parts arrive ready to assemble with step-by-step instructions, assembly takes far less time than a custom build, which helps keep labor costs low.</p>"
-          }
-        },
-        "faq_6": {
-          "type": "question",
-          "settings": {
-            "question": "Do I need a permit to build a deck in New York?",
-            "answer": "<p>Often, yes. It depends on the deck’s size, height, location, whether it is attached to the house and your local rules. The New York State Uniform Code applies throughout the state except New York City, and your city, town or village enforces it. Always check with your local building department before you build.</p>"
-          }
-        },
-        "faq_7": {
-          "type": "question",
-          "settings": {
-            "question": "What are the deck permit rules in New York City?",
-            "answer": "<p>New York City has its own construction code and permit system, administered by the Department of Buildings. The city may require approved plans prepared by a New York State licensed professional engineer or registered architect, so contact the Department of Buildings before you order or build.</p>"
-          }
-        },
-        "faq_8": {
-          "type": "question",
-          "settings": {
-            "question": "How deep do deck footings need to be in New York?",
-            "answer": "<p>Under the Residential Code of New York State, footings for decks attached to a house must be protected from frost, which usually means extending below the local frost line set by your building department. Freestanding decks are exempt from the frost-line requirement, but some municipalities add their own rules, so always confirm locally.</p>"
-          }
-        },
-        "faq_9": {
-          "type": "question",
-          "settings": {
-            "question": "Can I build a deck on uneven or sloped ground in New York?",
-            "answer": "<p>Yes. An A-DIY deck can be installed over sloped or uneven ground by adjusting the supporting post heights to create a level deck surface. Supported configurations can be elevated to approximately 40 inches using the appropriate posts, foundations and bracing.</p>"
-          }
-        },
-        "faq_10": {
-          "type": "question",
-          "settings": {
-            "question": "Which footings come with an A-DIY deck?",
-            "answer": "<p>Every A-DIY kit includes Tuff Block footings. Depending on your property, deck height and local requirements, other foundation systems may be used instead, such as sonotubes, helical piles, ground screws, in-ground posts or approved surface footing systems.</p>"
-          }
-        },
-        "faq_11": {
-          "type": "question",
-          "settings": {
-            "question": "Is pressure-treated wood or composite better for New York weather?",
-            "answer": "<p>Both work well in New York. Pressure-treated wood costs less upfront and can be stained or sealed, but it needs regular upkeep through snow, freeze-thaw cycles and humid summers. Composite costs more but needs no sanding, staining or sealing, resists fading and splintering, and its boards carry a 25-year warranty.</p>"
-          }
-        },
-        "faq_12": {
-          "type": "question",
-          "settings": {
-            "question": "How strong is an A-DIY deck?",
-            "answer": "<p>Applicable A-DIY deck configurations are engineered to hold up to 15,000 pounds when properly assembled, supported and installed according to the applicable specifications. Every A-DIY deck system also includes a five-year structural warranty.</p>"
-          }
-        },
-        "faq_13": {
-          "type": "question",
-          "settings": {
-            "question": "How long does delivery to New York take?",
-            "answer": "<p>A-DIY delivers to cities and towns across New York State, typically within 10–14 business days. Your deck arrives with all components and hardware included, so you can start building as soon as it arrives.</p>"
-          }
-        },
-        "faq_14": {
-          "type": "question",
-          "settings": {
-            "question": "Can I finance a deck in New York?",
-            "answer": "<p>Yes. You can choose Build Now, Pay Later financing through Affirm (subject to approval), 0% split payments over up to eight months, or A-DIY Reserve, a $250 deposit that locks in today’s price for a future delivery date.</p>"
-          }
-        },
-        "faq_15": {
-          "type": "question",
-          "settings": {
-            "question": "Can A-DIY engineering diagrams help with my permit?",
-            "answer": "<p>Yes. Diagrams for an applicable A-DIY configuration show dimensions, structural layout, beam, joist and post locations, lumber sizes and major connections, which can support your permit application. Your building department may still request a survey, site plan or stamped documents, and approval is not guaranteed.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5",
-        "faq_6",
-        "faq_7",
-        "faq_8",
-        "faq_9",
-        "faq_10",
-        "faq_11",
-        "faq_12",
-        "faq_13",
-        "faq_14",
-        "faq_15"
-      ],
       "settings": {
         "anchor_id": "faq",
         "heading": "Frequently Asked Questions",
+        "faq": "{{ page.metafields.state_seo.faq }}",
         "open_first": true,
         "faq_schema": true,
         "wood_product": "pressure-treated-kiln-dried-wood-deck-kit",
@@ -1779,9 +872,8 @@
         "feature_3"
       ],
       "settings": {
-        "anchor_id": "",
-        "heading": "Build the Deck You Need. Your Way.",
-        "text": "<p>A-DIY gives New York homeowners another option beyond commissioning a completely custom deck or building from loose raw materials.</p><p>Choose the size and material, review the available engineering information and decide whether to assemble it yourself or hire local help.</p>",
+        "heading": "{{ page.metafields.state_seo.cta_heading }}",
+        "text": "{{ page.metafields.state_seo.cta_text }}",
         "primary_label": "Explore Deck Kits",
         "primary_link": "shopify://collections/deck-kits",
         "secondary_label": "Chat With a Design Consultant",
@@ -1806,7 +898,6 @@
     "how_it_works",
     "engineering",
     "cities",
-    "cities_more",
     "faq",
     "cta"
   ]
