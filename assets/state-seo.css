@@ -1667,3 +1667,10 @@ a.ss-city:hover {
     transition: none !important;
   }
 }
+
+/* Richtext / metafield-driven prose: keep inner <p>/<span> flush inside the styled wrapper */
+.ss-prose > p,
+.ss-prose > span { margin: 0; display: block; }
+.ss-prose > p + p,
+.ss-prose > span + span { margin-top: 0.6em; }
+.ss-prose > span.metafield-multi_line_text_field { display: block; }

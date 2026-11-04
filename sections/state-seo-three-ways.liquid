@@ -26,7 +26,7 @@
             <h3 class="ss-card__title">{{ block.settings.title | escape }}</h3>
           {%- endif -%}
           {%- if block.settings.text != blank -%}
-            <p class="ss-card__text">{{ block.settings.text | escape }}</p>
+            <div class="ss-card__text ss-prose">{{ block.settings.text }}</div>
           {%- endif -%}
           {%- render 'state-seo-button', label: block.settings.button_label, link: block.settings.button_link, style: 'ink' -%}
         </article>
@@ -60,7 +60,7 @@
         ] },
         { "type": "image_picker", "id": "icon_image", "label": "Custom icon image", "info": "Overrides the icon above." },
         { "type": "text", "id": "title", "label": "Title", "default": "Hire a Full Service Deck Contractor" },
-        { "type": "textarea", "id": "text", "label": "Text", "default": "A deck builder can manage design, materials, permits, foundations, construction, inspections and cleanup." },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A deck builder can manage design, materials, permits, foundations, construction, inspections and cleanup.</p>" },
         { "type": "checkbox", "id": "featured", "label": "Highlight this card", "default": false },
         { "type": "text", "id": "button_label", "label": "Button label" },
         { "type": "url", "id": "button_link", "label": "Button link" }

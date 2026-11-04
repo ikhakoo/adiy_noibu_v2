@@ -26,7 +26,7 @@
           <h2 class="ss-h2">{{ section.settings.heading | escape }}</h2>
         {%- endif -%}
         {%- if section.settings.intro != blank -%}
-          <p class="ss-lead">{{ section.settings.intro | escape }}</p>
+          <div class="ss-lead ss-prose">{{ section.settings.intro }}</div>
         {%- endif -%}
       </div>
     {%- endunless -%}
@@ -104,7 +104,7 @@
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "cities" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Building a Deck Across New York" },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography.</p>" },
     { "type": "metaobject_list", "id": "cities", "label": "City cards", "metaobject_type": "state_seo_city", "info": "Connect to the page metafield State SEO · City cards. Blocks below are used only when this is empty." },
     { "type": "range", "id": "initial_count", "label": "Cities shown before Load more", "min": 5, "max": 50, "step": 5, "default": 10 },
     { "type": "text", "id": "more_label", "label": "Load more label", "default": "Load more cities" },

@@ -14,7 +14,7 @@
           <h2 class="ss-h2 ss-h2--xl">{{ section.settings.heading | escape }}</h2>
         {%- endif -%}
         {%- if section.settings.lead != blank -%}
-          <p class="ss-split__sub">{{ section.settings.lead | escape }}</p>
+          <div class="ss-split__sub ss-prose">{{ section.settings.lead }}</div>
         {%- endif -%}
         {%- if section.settings.body != blank -%}
           <div class="ss-body">{{ section.settings.body }}</div>
@@ -41,7 +41,9 @@
         </div>
         {%- if section.settings.questions != blank -%}
           <ul class="ss-grid-tiles">
-            {%- assign items = section.settings.questions | newline_to_br | split: '<br />' -%}
+            {% capture nl %}
+{% endcapture %}
+{%- assign items = section.settings.questions | replace: '<br/>', nl | replace: '<br />', nl | replace: '<br>', nl | replace: '</p>', nl | replace: '</li>', nl | strip_html | newline_to_br | split: '<br />' -%}
             {%- for item in items -%}
               {%- assign item_text = item | strip -%}
               {%- if item_text != blank -%}
@@ -70,7 +72,7 @@
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "permits" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "New York Deck Permits" },
-    { "type": "textarea", "id": "lead", "label": "Lead", "default": "A permit may be required depending on the deck’s dimensions, height, location, attachment method and local rules." },
+    { "type": "richtext", "id": "lead", "label": "Lead", "default": "<p>A permit may be required depending on the deck’s dimensions, height, location, attachment method and local rules.</p>" },
     { "type": "richtext", "id": "body", "label": "Body", "default": "<p>The New York State Uniform Code establishes minimum construction standards throughout the state except New York City. Local cities, towns, villages and counties generally administer and enforce the applicable codes. New York City maintains its own construction-code and permit system.</p>" },
     { "type": "text", "id": "callout", "label": "Callout", "default": "Requirements may differ between neighboring municipalities." },
     { "type": "header", "content": "Diagram" },
@@ -78,7 +80,7 @@
     { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "Exploded engineering diagram of an A-DIY deck kit showing decking, joists, beams and footings" },
     { "type": "header", "content": "Questions card" },
     { "type": "text", "id": "card_heading", "label": "Card heading", "default": "Questions to Ask the Building Department" },
-    { "type": "textarea", "id": "questions", "label": "Questions (one per line)", "default": "Does the proposed deck require a permit?\nIs zoning approval, a site plan or a survey required?\nWhat setbacks apply?\nAre stamped plans required?" },
+    { "type": "richtext", "id": "questions", "label": "Questions (one per line)", "default": "<p>Does the proposed deck require a permit?<br>Is zoning approval, a site plan or a survey required?<br>What setbacks apply?<br>Are stamped plans required?</p>" },
     { "type": "header", "content": "City card" },
     { "type": "text", "id": "city_heading", "label": "City heading", "default": "New York City" },
     { "type": "richtext", "id": "city_text", "label": "City text", "default": "<p>New York City homeowners must follow current Department of Buildings requirements. The city may require approved plans and design work completed by a New York State licensed professional engineer or registered architect.</p>" }

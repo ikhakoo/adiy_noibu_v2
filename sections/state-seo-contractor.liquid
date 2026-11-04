@@ -13,7 +13,7 @@
         <h2 class="ss-h2">{{ section.settings.heading | escape }}</h2>
       {%- endif -%}
       {%- if section.settings.intro != blank -%}
-        <p class="ss-lead">{{ section.settings.intro | escape }}</p>
+        <div class="ss-lead ss-prose">{{ section.settings.intro }}</div>
       {%- endif -%}
     </div>
 
@@ -25,7 +25,9 @@
           {%- endif -%}
           {%- if block.settings.items != blank -%}
             <ul class="ss-checklist">
-              {%- assign items = block.settings.items | newline_to_br | split: '<br />' -%}
+              {% capture nl %}
+{% endcapture %}
+{%- assign items = block.settings.items | replace: '<br/>', nl | replace: '<br />', nl | replace: '<br>', nl | replace: '</p>', nl | replace: '</li>', nl | strip_html | newline_to_br | split: '<br />' -%}
               {%- for item in items -%}
                 {%- assign item_text = item | strip -%}
                 {%- if item_text != blank -%}
@@ -53,7 +55,7 @@
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "contractors" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "How Do You Find and Hire a Deck Contractor in New York?" },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work." }
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Start by defining the project before collecting estimates. Contractors cannot provide directly comparable quotes when each is pricing a different size, material, height or scope of work.</p>" }
   ],
   "blocks": [
     {
@@ -61,7 +63,7 @@
       "name": "Panel",
       "settings": [
         { "type": "text", "id": "title", "label": "Title", "default": "Prepare a short written description containing:" },
-        { "type": "textarea", "id": "items", "label": "List items (one per line)", "default": "Approximate deck dimensions\nPreferred material\nProposed height" },
+        { "type": "richtext", "id": "items", "label": "List items (one per line)", "default": "<p>Approximate deck dimensions<br>Preferred material<br>Proposed height</p>" },
         { "type": "richtext", "id": "note", "label": "Note (optional)" },
         { "type": "checkbox", "id": "dark", "label": "Dark style", "default": false }
       ]

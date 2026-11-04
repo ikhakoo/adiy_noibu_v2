@@ -7,7 +7,7 @@
 <div class="ss ss--white ss-quote"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
   <div class="ss__inner">
     <blockquote>
-      <p class="ss-quote__text">{{ section.settings.quote | escape }}</p>
+      <div class="ss-quote__text ss-prose">{{ section.settings.quote }}</div>
       {%- if section.settings.attribution != blank -%}
         <cite class="ss-quote__cite">— {{ section.settings.attribution | escape }}</cite>
       {%- endif -%}
@@ -23,7 +23,7 @@
   "enabled_on": { "templates": ["page"] },
   "settings": [
     { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
-    { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"" },
+    { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"</p>" },
     { "type": "text", "id": "attribution", "label": "Attribution", "default": "David Miller, Scarsdale" }
   ],
   "presets": [{ "name": "State SEO · Quote" }]

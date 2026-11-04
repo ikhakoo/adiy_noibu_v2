@@ -33,7 +33,7 @@
           "settings": {
             "icon": "compass",
             "title": "{{ page.metafields.state_seo.way_1_title.value }}",
-            "text": "{{ page.metafields.state_seo.way_1_text.value }}",
+            "text": "{{ page.metafields.state_seo.way_1_text | metafield_tag }}",
             "featured": false,
             "button_label": "",
             "button_link": ""
@@ -44,7 +44,7 @@
           "settings": {
             "icon": "tools",
             "title": "{{ page.metafields.state_seo.way_2_title.value }}",
-            "text": "{{ page.metafields.state_seo.way_2_text.value }}",
+            "text": "{{ page.metafields.state_seo.way_2_text | metafield_tag }}",
             "featured": false,
             "button_label": "",
             "button_link": ""
@@ -55,7 +55,7 @@
           "settings": {
             "icon": "hammer",
             "title": "{{ page.metafields.state_seo.way_3_title.value }}",
-            "text": "{{ page.metafields.state_seo.way_3_text.value }}",
+            "text": "{{ page.metafields.state_seo.way_3_text | metafield_tag }}",
             "featured": true,
             "button_label": "See Deck Kit Options",
             "button_link": "shopify://collections/deck-kits"
@@ -371,7 +371,7 @@
           "type": "panel",
           "settings": {
             "title": "{{ page.metafields.state_seo.panel_1_title.value }}",
-            "items": "{{ page.metafields.state_seo.panel_1_items.value }}",
+            "items": "{{ page.metafields.state_seo.panel_1_items | metafield_tag }}",
             "note": "{{ page.metafields.state_seo.panel_1_note | metafield_tag }}",
             "dark": false
           }
@@ -380,7 +380,7 @@
           "type": "panel",
           "settings": {
             "title": "{{ page.metafields.state_seo.panel_2_title.value }}",
-            "items": "{{ page.metafields.state_seo.panel_2_items.value }}",
+            "items": "{{ page.metafields.state_seo.panel_2_items | metafield_tag }}",
             "note": "{{ page.metafields.state_seo.panel_2_note | metafield_tag }}",
             "dark": false
           }
@@ -389,7 +389,7 @@
           "type": "panel",
           "settings": {
             "title": "{{ page.metafields.state_seo.panel_3_title.value }}",
-            "items": "{{ page.metafields.state_seo.panel_3_items.value }}",
+            "items": "{{ page.metafields.state_seo.panel_3_items | metafield_tag }}",
             "note": "{{ page.metafields.state_seo.panel_3_note | metafield_tag }}",
             "dark": true
           }
@@ -403,7 +403,7 @@
       "settings": {
         "anchor_id": "contractors",
         "heading": "{{ page.metafields.state_seo.contractor_heading.value }}",
-        "intro": "{{ page.metafields.state_seo.contractor_intro.value }}"
+        "intro": "{{ page.metafields.state_seo.contractor_intro | metafield_tag }}"
       }
     },
     "questions": {
@@ -411,7 +411,7 @@
       "settings": {
         "anchor_id": "",
         "heading": "{{ page.metafields.state_seo.questions_heading.value }}",
-        "items": "{{ page.metafields.state_seo.questions_items.value }}"
+        "items": "{{ page.metafields.state_seo.questions_items | metafield_tag }}"
       }
     },
     "permits": {
@@ -419,13 +419,13 @@
       "settings": {
         "anchor_id": "permits",
         "heading": "{{ page.metafields.state_seo.permits_heading.value }}",
-        "lead": "{{ page.metafields.state_seo.permits_lead.value }}",
+        "lead": "{{ page.metafields.state_seo.permits_lead | metafield_tag }}",
         "body": "{{ page.metafields.state_seo.permits_body | metafield_tag }}",
         "callout": "{{ page.metafields.state_seo.permits_callout.value }}",
         "image": "shopify://shop_images/state-seo-permits-diagram.png",
         "image_alt": "Exploded engineering diagram of an A-DIY deck kit showing decking, joists, beams and footings",
         "card_heading": "{{ page.metafields.state_seo.permits_card_heading.value }}",
-        "questions": "{{ page.metafields.state_seo.permits_questions.value }}",
+        "questions": "{{ page.metafields.state_seo.permits_questions | metafield_tag }}",
         "city_heading": "{{ page.metafields.state_seo.permits_city_heading.value }}",
         "city_text": "{{ page.metafields.state_seo.permits_city_text | metafield_tag }}"
       }
@@ -444,7 +444,7 @@
     "quote": {
       "type": "state-seo-quote",
       "settings": {
-        "quote": "{{ page.metafields.state_seo.quote_text.value }}",
+        "quote": "{{ page.metafields.state_seo.quote_text | metafield_tag }}",
         "attribution": "{{ page.metafields.state_seo.quote_attribution.value }}"
       }
     },
@@ -817,7 +817,7 @@
       "settings": {
         "anchor_id": "cities",
         "heading": "{{ page.metafields.state_seo.cities_heading.value }}",
-        "intro": "{{ page.metafields.state_seo.cities_intro.value }}",
+        "intro": "{{ page.metafields.state_seo.cities_intro | metafield_tag }}",
         "cities": "{{ page.metafields.state_seo.cities.value }}",
         "initial_count": 10,
         "more_label": "Load more cities",
