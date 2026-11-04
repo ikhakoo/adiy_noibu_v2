@@ -20,7 +20,7 @@
         "secondary_link": "#how-it-works",
         "image": "{{ page.metafields.state_seo.hero_image }}",
         "image_alt": "{{ page.metafields.state_seo.hero_image_alt }}",
-        "image_position": "50% 65%",
+        "image_position": "50% 60%",
         "article_schema": true,
         "region_name": "{{ page.metafields.state_seo.region_name }}"
       }
