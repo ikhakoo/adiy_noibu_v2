@@ -57,6 +57,14 @@
   list-style: none;
 }
 
+/* The theme sizes every <p> globally (1.8rem); inside these sections type is sized by the
+   wrapper, so paragraphs and list items inherit it. Same specificity as the theme's rule,
+   this sheet loads later. */
+:where(.ss) :is(p, li) {
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .ss :where(img, svg) {
   display: block;
   max-width: 100%;
@@ -124,6 +132,7 @@
 }
 
 .ss-bar {
+  display: block;
   width: 144px;
   height: 6px;
   margin: 24px auto 0;
@@ -284,6 +293,7 @@
 }
 
 .ss-video__overlay {
+  display: block;
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(18, 18, 18, 0.1) 0%, rgba(18, 18, 18, 0.75) 100%);
@@ -397,6 +407,11 @@
   flex: none;
   width: 31px;
   height: 30px;
+  color: var(--ss-green);
+}
+
+.ss-panel--dark .ss-checklist svg {
+  color: #fff;
 }
 
 /* =========================================================================
@@ -764,6 +779,7 @@
 }
 
 .ss-tile__divider {
+  display: block;
   height: 1px;
   background: rgba(18, 18, 18, 0.1);
 }
@@ -850,7 +866,7 @@
   background: var(--ss-green);
 }
 
-.ss-tile--city .ss-tile__title {
+.ss-tile--green .ss-tile__title {
   color: #fff;
 }
 
@@ -980,11 +996,15 @@
 .ss-quote blockquote {
   max-width: 1152px;
   margin: 0 auto;
+  padding: 0;
+  border: 0;
+  font-style: normal;
   text-align: center;
 }
 
 .ss-quote__text {
   font-family: var(--font-heading-family);
+  font-style: normal;
   font-size: clamp(22px, 1.88vw, 36px);
   font-weight: 600;
   line-height: 1.33;

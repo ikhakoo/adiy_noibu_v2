@@ -9,6 +9,7 @@
   - poster_alt: {String}
   - label: {String} small caption label, e.g. WATCH
   - title: {String} caption title
+  - aria: {String} accessible name for the play button when there is no caption
   - class: {String} extra wrapper classes
   - sizes: {String} image sizes attribute
 {%- endcomment -%}
@@ -31,11 +32,11 @@
   else
     assign ss_source = ''
   endif
-  assign ss_label_text = title | default: 'Play video'
+  assign ss_label_text = aria | default: title | default: 'Play video'
 -%}
 <div class="ss-video {{ class }}" data-ss-video data-source="{{ ss_source }}"{% if ss_embed != blank %} data-embed="{{ ss_embed }}"{% endif %}{% if ss_mp4 != blank %} data-mp4="{{ ss_mp4 }}"{% endif %}>
   {%- render 'state-seo-image', image: poster, alt: poster_alt, sizes: sizes, placeholder: 'lifestyle-2' -%}
-  <div class="ss-video__overlay" aria-hidden="true"></div>
+  <span class="ss-video__overlay" aria-hidden="true"></span>
   {%- if ss_source != blank -%}
     <button type="button" class="ss-video__play" aria-label="Play: {{ ss_label_text | escape }}"></button>
   {%- endif -%}

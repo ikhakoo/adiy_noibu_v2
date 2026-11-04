@@ -40,11 +40,11 @@
           endif
           assign city_alt = block.settings.image_alt | default: block.settings.name
         -%}
-        <li {{ block.shopify_attributes }}>
+        <li{% if hide %} class="is-hidden"{% endif %} {{ block.shopify_attributes }}>
           {%- if block.settings.link != blank -%}
-            <a class="ss-city{% if hide %} is-hidden{% endif %}" href="{{ block.settings.link }}">
+            <a class="ss-city" href="{{ block.settings.link }}">
           {%- else -%}
-            <div class="ss-city{% if hide %} is-hidden{% endif %}">
+            <div class="ss-city">
           {%- endif -%}
             {%- render 'state-seo-image', image: block.settings.image, alt: city_alt, class: 'ss-city__media', sizes: '(min-width: 1920px) 303px, (min-width: 990px) 20vw, 45vw', placeholder: 'image' -%}
             <span class="ss-city__name">{{ block.settings.name | escape }}{%- render 'state-seo-icon', name: 'arrow' -%}</span>

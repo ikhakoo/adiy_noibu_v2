@@ -43,7 +43,7 @@
       btn.addEventListener('click', function () {
         var section = btn.closest('.ss-cities');
         if (section) {
-          section.querySelectorAll('.ss-city.is-hidden').forEach(function (el) { el.classList.remove('is-hidden'); });
+          section.querySelectorAll('.ss-cities__grid > li.is-hidden').forEach(function (el) { el.classList.remove('is-hidden'); });
         }
         // Continuation sections (more than 50 cities) follow directly after this one.
         var next = section && section.closest('.shopify-section') ? section.closest('.shopify-section').nextElementSibling : null;

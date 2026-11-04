@@ -24,7 +24,7 @@
         external_url: section.settings.external_video_url,
         poster: section.settings.poster,
         poster_alt: section.settings.poster_alt,
-        title: section.settings.heading,
+        aria: section.settings.heading,
         sizes: '(min-width: 1920px) 708px, (min-width: 990px) 50vw, calc(100vw - 40px)'
       -%}
       <div class="ss-eng__cards">
@@ -34,7 +34,7 @@
             <h3>{{ block.settings.title | escape }}</h3>
             {%- if block.settings.text != blank -%}<p>{{ block.settings.text | escape }}</p>{%- endif -%}
             {%- if block.settings.note != blank -%}
-              {%- if block.settings.note_divider -%}<div class="ss-tile__divider" aria-hidden="true"></div>{%- endif -%}
+              {%- if block.settings.note_divider -%}<span class="ss-tile__divider" aria-hidden="true"></span>{%- endif -%}
               <small>{{ block.settings.note | escape }}</small>
             {%- endif -%}
             {%- if block.settings.link_label != blank and block.settings.link != blank -%}
