@@ -12,17 +12,17 @@
     "hero": {
       "type": "state-seo-hero",
       "settings": {
-        "heading": "{{ page.metafields.state_seo.hero_heading }}",
-        "intro": "{{ page.metafields.state_seo.hero_intro }}",
+        "heading": "{{ page.metafields.state_seo.hero_heading.value }}",
+        "intro": "{{ page.metafields.state_seo.hero_intro | metafield_tag }}",
         "primary_label": "Explore Deck Options",
         "primary_link": "shopify://collections/deck-kits",
         "secondary_label": "See How A-DIY Works",
         "secondary_link": "#how-it-works",
-        "image": "{{ page.metafields.state_seo.hero_image }}",
-        "image_alt": "{{ page.metafields.state_seo.hero_image_alt }}",
+        "image": "{{ page.metafields.state_seo.hero_image.value }}",
+        "image_alt": "{{ page.metafields.state_seo.hero_image_alt.value }}",
         "image_position": "50% 60%",
         "article_schema": true,
-        "region_name": "{{ page.metafields.state_seo.region_name }}"
+        "region_name": "{{ page.metafields.state_seo.region_name.value }}"
       }
     },
     "three_ways": {
@@ -32,8 +32,8 @@
           "type": "card",
           "settings": {
             "icon": "compass",
-            "title": "{{ page.metafields.state_seo.way_1_title }}",
-            "text": "{{ page.metafields.state_seo.way_1_text }}",
+            "title": "{{ page.metafields.state_seo.way_1_title.value }}",
+            "text": "{{ page.metafields.state_seo.way_1_text.value }}",
             "featured": false,
             "button_label": "",
             "button_link": ""
@@ -43,8 +43,8 @@
           "type": "card",
           "settings": {
             "icon": "tools",
-            "title": "{{ page.metafields.state_seo.way_2_title }}",
-            "text": "{{ page.metafields.state_seo.way_2_text }}",
+            "title": "{{ page.metafields.state_seo.way_2_title.value }}",
+            "text": "{{ page.metafields.state_seo.way_2_text.value }}",
             "featured": false,
             "button_label": "",
             "button_link": ""
@@ -54,8 +54,8 @@
           "type": "card",
           "settings": {
             "icon": "hammer",
-            "title": "{{ page.metafields.state_seo.way_3_title }}",
-            "text": "{{ page.metafields.state_seo.way_3_text }}",
+            "title": "{{ page.metafields.state_seo.way_3_title.value }}",
+            "text": "{{ page.metafields.state_seo.way_3_text.value }}",
             "featured": true,
             "button_label": "See Deck Kit Options",
             "button_link": "shopify://collections/deck-kits"
@@ -69,7 +69,7 @@
       ],
       "settings": {
         "anchor_id": "options",
-        "heading": "{{ page.metafields.state_seo.ways_heading }}"
+        "heading": "{{ page.metafields.state_seo.ways_heading.value }}"
       }
     },
     "video_carousel": {
@@ -370,27 +370,27 @@
         "panel_1": {
           "type": "panel",
           "settings": {
-            "title": "{{ page.metafields.state_seo.panel_1_title }}",
-            "items": "{{ page.metafields.state_seo.panel_1_items }}",
-            "note": "{{ page.metafields.state_seo.panel_1_note }}",
+            "title": "{{ page.metafields.state_seo.panel_1_title.value }}",
+            "items": "{{ page.metafields.state_seo.panel_1_items.value }}",
+            "note": "{{ page.metafields.state_seo.panel_1_note | metafield_tag }}",
             "dark": false
           }
         },
         "panel_2": {
           "type": "panel",
           "settings": {
-            "title": "{{ page.metafields.state_seo.panel_2_title }}",
-            "items": "{{ page.metafields.state_seo.panel_2_items }}",
-            "note": "{{ page.metafields.state_seo.panel_2_note }}",
+            "title": "{{ page.metafields.state_seo.panel_2_title.value }}",
+            "items": "{{ page.metafields.state_seo.panel_2_items.value }}",
+            "note": "{{ page.metafields.state_seo.panel_2_note | metafield_tag }}",
             "dark": false
           }
         },
         "panel_3": {
           "type": "panel",
           "settings": {
-            "title": "{{ page.metafields.state_seo.panel_3_title }}",
-            "items": "{{ page.metafields.state_seo.panel_3_items }}",
-            "note": "{{ page.metafields.state_seo.panel_3_note }}",
+            "title": "{{ page.metafields.state_seo.panel_3_title.value }}",
+            "items": "{{ page.metafields.state_seo.panel_3_items.value }}",
+            "note": "{{ page.metafields.state_seo.panel_3_note | metafield_tag }}",
             "dark": true
           }
         }
@@ -402,32 +402,32 @@
       ],
       "settings": {
         "anchor_id": "contractors",
-        "heading": "{{ page.metafields.state_seo.contractor_heading }}",
-        "intro": "{{ page.metafields.state_seo.contractor_intro }}"
+        "heading": "{{ page.metafields.state_seo.contractor_heading.value }}",
+        "intro": "{{ page.metafields.state_seo.contractor_intro.value }}"
       }
     },
     "questions": {
       "type": "state-seo-questions",
       "settings": {
         "anchor_id": "",
-        "heading": "{{ page.metafields.state_seo.questions_heading }}",
-        "items": "{{ page.metafields.state_seo.questions_items }}"
+        "heading": "{{ page.metafields.state_seo.questions_heading.value }}",
+        "items": "{{ page.metafields.state_seo.questions_items.value }}"
       }
     },
     "permits": {
       "type": "state-seo-permits",
       "settings": {
         "anchor_id": "permits",
-        "heading": "{{ page.metafields.state_seo.permits_heading }}",
-        "lead": "{{ page.metafields.state_seo.permits_lead }}",
-        "body": "{{ page.metafields.state_seo.permits_body }}",
-        "callout": "{{ page.metafields.state_seo.permits_callout }}",
+        "heading": "{{ page.metafields.state_seo.permits_heading.value }}",
+        "lead": "{{ page.metafields.state_seo.permits_lead.value }}",
+        "body": "{{ page.metafields.state_seo.permits_body | metafield_tag }}",
+        "callout": "{{ page.metafields.state_seo.permits_callout.value }}",
         "image": "shopify://shop_images/state-seo-permits-diagram.png",
         "image_alt": "Exploded engineering diagram of an A-DIY deck kit showing decking, joists, beams and footings",
-        "card_heading": "{{ page.metafields.state_seo.permits_card_heading }}",
-        "questions": "{{ page.metafields.state_seo.permits_questions }}",
-        "city_heading": "{{ page.metafields.state_seo.permits_city_heading }}",
-        "city_text": "{{ page.metafields.state_seo.permits_city_text }}"
+        "card_heading": "{{ page.metafields.state_seo.permits_card_heading.value }}",
+        "questions": "{{ page.metafields.state_seo.permits_questions.value }}",
+        "city_heading": "{{ page.metafields.state_seo.permits_city_heading.value }}",
+        "city_text": "{{ page.metafields.state_seo.permits_city_text | metafield_tag }}"
       }
     },
     "diagrams": {
@@ -444,8 +444,8 @@
     "quote": {
       "type": "state-seo-quote",
       "settings": {
-        "quote": "{{ page.metafields.state_seo.quote_text }}",
-        "attribution": "{{ page.metafields.state_seo.quote_attribution }}"
+        "quote": "{{ page.metafields.state_seo.quote_text.value }}",
+        "attribution": "{{ page.metafields.state_seo.quote_attribution.value }}"
       }
     },
     "which_deck_intro": {
@@ -816,12 +816,12 @@
       "type": "state-seo-cities",
       "settings": {
         "anchor_id": "cities",
-        "heading": "{{ page.metafields.state_seo.cities_heading }}",
-        "intro": "{{ page.metafields.state_seo.cities_intro }}",
-        "cities": "{{ page.metafields.state_seo.cities }}",
+        "heading": "{{ page.metafields.state_seo.cities_heading.value }}",
+        "intro": "{{ page.metafields.state_seo.cities_intro.value }}",
+        "cities": "{{ page.metafields.state_seo.cities.value }}",
         "initial_count": 10,
         "more_label": "Load more cities",
-        "footnote": "{{ page.metafields.state_seo.cities_footnote }}",
+        "footnote": "{{ page.metafields.state_seo.cities_footnote.value }}",
         "has_continuation": false,
         "continuation": false
       }
@@ -831,7 +831,7 @@
       "settings": {
         "anchor_id": "faq",
         "heading": "Frequently Asked Questions",
-        "faq": "{{ page.metafields.state_seo.faq }}",
+        "faq": "{{ page.metafields.state_seo.faq.value }}",
         "open_first": true,
         "faq_schema": true,
         "wood_product": "pressure-treated-kiln-dried-wood-deck-kit",
@@ -872,8 +872,8 @@
         "feature_3"
       ],
       "settings": {
-        "heading": "{{ page.metafields.state_seo.cta_heading }}",
-        "text": "{{ page.metafields.state_seo.cta_text }}",
+        "heading": "{{ page.metafields.state_seo.cta_heading.value }}",
+        "text": "{{ page.metafields.state_seo.cta_text | metafield_tag }}",
         "primary_label": "Explore Deck Kits",
         "primary_link": "shopify://collections/deck-kits",
         "secondary_label": "Chat With a Design Consultant",
