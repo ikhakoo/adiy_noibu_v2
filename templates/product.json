@@ -50,11 +50,10 @@
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
-          "disabled": true,
           "settings": {
             "prefix_text": "or",
             "middle_text": "with code",
-            "promo_code": "FALL1500"
+            "promo_code": "FALL500"
           }
         },
         "financing_widget_jbeqY8": {
@@ -133,10 +132,9 @@
         },
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
-          "disabled": true,
           "settings": {
-            "heading": "Labor Day Sale Ends in:",
-            "end_date": "2026-09-15",
+            "heading": "Fall Sale Ends in:",
+            "end_date": "2026-11-06",
             "end_time": "23:59:59",
             "bg_color": "#a33429",
             "text_color": "#ffffff"

@@ -733,7 +733,7 @@
         "gallery_image_wPqGC6": {
           "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-05-01_at_11.38.58_AM_1.jpg"
+            "image": "shopify://shop_images/image_shopify.jpg"
           }
         },
         "gallery_image_fXgLX6": {
@@ -1472,6 +1472,12 @@
           "settings": {
             "image": "shopify://shop_images/image_8340.png"
           }
+        },
+        "gallery_image_xiJTcG": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-01_at_11.38.58_AM_1.webp"
+          }
         }
       },
       "block_order": [
@@ -1600,7 +1606,8 @@
         "gallery_image_zitwhb",
         "gallery_image_6EHidE",
         "gallery_image_FWQ9nw",
-        "gallery_image_fV4Awp"
+        "gallery_image_fV4Awp",
+        "gallery_image_xiJTcG"
       ],
       "name": "A-DIY Real Life Gallery 2",
       "settings": {
