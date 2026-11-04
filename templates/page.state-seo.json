@@ -12,6 +12,7 @@
     "hero": {
       "type": "state-seo-hero",
       "settings": {
+        "anchor_id": "",
         "heading": "Building a Deck in New York: Contractors, Costs, Permits and Deck Kit Options",
         "intro": "<p>Planning a deck in New York usually begins with a few big questions: Should you hire a deck builder, purchase the materials yourself or use a professionally engineered system that arrives prepared for assembly?</p><p>This guide explains the main options, what affects the cost, how permits work, what to ask a contractor and how to choose between pressure-treated wood and composite decking.</p><p>A-DIY offers a third way to complete the project: a professionally engineered deck system delivered with coordinated components prepared for assembly. You can build it yourself or hire a local handyman, carpenter or contractor to help.</p>",
         "primary_label": "Explore Deck Options",
@@ -32,7 +33,7 @@
           "type": "card",
           "settings": {
             "icon": "compass",
-            "title": "Hire a Full Service Deck Contractor",
+            "title": "Hire a Deck Contractor",
             "text": "A deck builder can manage design, materials, permits, foundations, construction, inspections and cleanup. This is often the best choice when the project is highly customized or the homeowner wants one company to manage the entire job.",
             "featured": false,
             "button_label": "",
@@ -358,10 +359,10 @@
         "col_2_image": "shopify://shop_images/logotype.png",
         "col_3_heading": "Traditional DIY",
         "col_4_heading": "Contractor",
-        "padding_top": 40,
-        "padding_bottom": 40,
         "button_label": "Learn more",
-        "button_link": "shopify://pages/why-a-diy"
+        "button_link": "shopify://pages/why-a-diy",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "contractor": {
@@ -586,6 +587,7 @@
     "quote": {
       "type": "state-seo-quote",
       "settings": {
+        "anchor_id": "",
         "quote": "\"The structural engineering was so precise that even the municipal inspector was impressed. I never thought I could build something this solid on my own.\"",
         "attribution": "David Miller, Scarsdale"
       }
@@ -1777,6 +1779,7 @@
         "feature_3"
       ],
       "settings": {
+        "anchor_id": "",
         "heading": "Build the Deck You Need. Your Way.",
         "text": "<p>A-DIY gives New York homeowners another option beyond commissioning a completely custom deck or building from loose raw materials.</p><p>Choose the size and material, review the available engineering information and decide whether to assemble it yourself or hire local help.</p>",
         "primary_label": "Explore Deck Kits",
