@@ -1492,9 +1492,22 @@ a.ss-city:hover {
     grid-template-columns: 1fr;
   }
 
-  .ss-hero__media {
-    order: -1;
+  /* Mobile hero order (Figma 6804:581): title, image, intro, buttons. */
+  .ss-hero__row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
   }
+
+  .ss-hero__copy {
+    display: contents;
+  }
+
+  .ss-hero__title { order: 1; }
+  .ss-hero__media { order: 2; }
+  .ss-hero__lede { order: 3; margin-top: 0; }
+  .ss-hero .ss-btns { order: 4; margin-top: 4px; }
 
   .ss-ways__grid,
   .ss-cta__grid {
