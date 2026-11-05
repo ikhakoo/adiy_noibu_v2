@@ -117,7 +117,8 @@
         "add_label": "Add to cart",
         "add_show_price": true,
         "secondary_label": "Show more sizes",
-        "secondary_link": "#sizes"
+        "secondary_link": "#sizes",
+        "secondary_to_product": true
       }
     },
     "crosslink": {

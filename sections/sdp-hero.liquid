@@ -431,7 +431,9 @@
         </product-form>
 
         {%- if section.settings.secondary_label != blank -%}
-          <a class="sdp-link" href="{{ section.settings.secondary_link | default: '#sizes' }}">
+          {%- assign secondary_url = section.settings.secondary_link | default: '#sizes' -%}
+          {%- if section.settings.secondary_to_product and product.url != blank -%}{%- assign secondary_url = product.url -%}{%- endif -%}
+          <a class="sdp-link" href="{{ secondary_url }}">
             {{ section.settings.secondary_label | escape }}
             {%- render 'sdp-icon', name: 'arrow-right' -%}
           </a>
@@ -524,7 +526,8 @@
     { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },
     { "type": "checkbox", "id": "add_show_price", "label": "Show price in the button", "default": true },
     { "type": "text", "id": "secondary_label", "label": "Secondary link label", "default": "Show more sizes" },
-    { "type": "url", "id": "secondary_link", "label": "Secondary link", "info": "Defaults to #sizes (the Other sizes section)." }
+    { "type": "url", "id": "secondary_link", "label": "Secondary link", "info": "Defaults to #sizes (the Other sizes section)." },
+    { "type": "checkbox", "id": "secondary_to_product", "label": "Secondary link opens the product page", "info": "Links to the main deck kit product (all sizes) instead of the link above.", "default": false }
   ],
   "blocks": [
     {
