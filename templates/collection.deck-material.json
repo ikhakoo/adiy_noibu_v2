@@ -53,6 +53,7 @@
       ],
       "settings": {
         "eyebrow": "Shop by material",
+        "card_link": "page",
         "eyebrow_link": "shopify://collections/deck-kits-by-material",
         "heading": "[hero_heading]",
         "sizes": "wood-12x12,wood-12x18,wood-12x20,wood-12x24,wood-12x28,wood-16x16,wood-16x20,wood-16x24,wood-16x28,composite-12x12,composite-12x16,composite-12x20,composite-12x24,composite-12x28,composite-16x16,composite-16x20,composite-16x24,composite-16x28,wood-6x12,wood-6x16,wood-6x20,wood-8x12,wood-8x16,wood-8x20",

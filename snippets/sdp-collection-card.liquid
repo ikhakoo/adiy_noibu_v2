@@ -6,6 +6,8 @@
   - promo_code: {String} shown with the sale price; blank = regular price only
   - index: {Number} position in the collection (keeps the manual order as a tiebreaker)
   - heading_tag: {String} h2 | h3
+  - link_to: {String} 'page' links the card to the size's own collection page; otherwise the
+    product with that size (and colour) preselected
 
   Reads: variant option "W x L", variant metafields custom.discount_value / custom.sqfootage /
   smart.size_series, and each variant's featured media (size- and colour-specific image).
@@ -25,6 +27,9 @@
     this size preselected is the fallback when an entry has no collection yet.
   endcomment
   assign card_url = v.url | default: entry.collection.value.url
+  if link_to == 'page' and entry.collection.value.url != blank
+    assign card_url = entry.collection.value.url
+  endif
   assign is_composite = false
   if entry.material.value == 'composite'
     assign is_composite = true
@@ -164,7 +169,7 @@
             class="sdpc-swatch{% if forloop.first %} is-active{% endif %}"
             data-sdpc-swatch
             data-src="{{ vmedia.preview_image | image_url: width: 800 }}"
-            data-url="{{ variant.url | default: card_url }}"
+            data-url="{% if link_to == 'page' %}{{ card_url }}{% else %}{{ variant.url | default: card_url }}{% endif %}"
             aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
             title="{{ color | escape }}"
           >
