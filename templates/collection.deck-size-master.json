@@ -436,6 +436,7 @@
         "current_label": "This page",
         "tile_link": "product",
         "all_link_label": "See all [material_title] deck kits",
+        "all_link_target": "product",
         "tile_name_suffix": "[material_title] Deck",
         "standard_title": "Standard series",
         "standard_sizes": "12x12,12x16,12x18,12x20,12x24,12x28,16x16,16x20,16x24,16x28",
