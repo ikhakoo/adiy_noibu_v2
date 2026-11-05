@@ -44,6 +44,7 @@
       ],
       "settings": {
         "eyebrow": "Shop by size",
+        "card_link": "page",
         "heading": "",
         "show_description": true,
         "promo_code": "FALL1500",
