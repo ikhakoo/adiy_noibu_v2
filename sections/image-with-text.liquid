@@ -281,7 +281,7 @@
                 placeholder until the first frame decodes. Those sections replace
                 it with their own lazy <img>; this one has no such substitute.
               {%- endcomment -%}
-              {{ iwt_video_markup | replace: '<img src="', '<img data-unused-src="' }}
+              {{ iwt_video_markup | replace: '<img src="', '<img alt="" data-unused-src="' }}
             {%- elsif section.settings.image != blank -%}
               {%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
                 {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}

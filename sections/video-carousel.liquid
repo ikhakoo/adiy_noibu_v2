@@ -107,7 +107,7 @@
                 by any browser that supports <video>. The visible poster is the
                 lazy <img> below instead.
               {%- endcomment -%}
-              {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
+              {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img alt="" data-unused-src="' }}
               {%- if poster_source -%}
                 {%- comment -%}
                   Card geometry is fixed in section-video-carousel.css:

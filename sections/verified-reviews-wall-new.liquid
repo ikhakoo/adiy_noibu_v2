@@ -784,7 +784,7 @@
                   {%- capture rw_video_markup -%}
                     {{ block.settings.video | video_tag: image_size: '600x', loop: true, muted: true, playsinline: true, preload: 'none' }}
                   {%- endcapture -%}
-                  {{ rw_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img data-unused-src="' }}
+                  {{ rw_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img alt="" data-unused-src="' }}
                   {%- if block.settings.video.preview_image != blank -%}
                     <img
                       class="review-poster"

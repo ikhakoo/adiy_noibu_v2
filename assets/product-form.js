@@ -10,7 +10,6 @@ if (!customElements.get('product-form')) {
         if (!this.form) return;
         this.variantIdInput.disabled = false;
         this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
-        this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         this.submitButton = this.querySelector('[type="submit"]');
         this.submitButtonText = this.submitButton.querySelector('span');
 
@@ -32,6 +31,11 @@ if (!customElements.get('product-form')) {
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';
         delete config.headers['Content-Type'];
+
+        // Look the cart up at submit time and only use it once its custom element has
+        // upgraded. On slow mobile connections the <cart-drawer> tag can exist before
+        // cart-drawer.js has defined it, so its methods are missing (Noibu #702).
+        this.cart = this.getReadyCart();
 
         const formData = new FormData(this.form);
         if (this.cart) {
@@ -123,6 +127,16 @@ if (!customElements.get('product-form')) {
 
             CartPerformance.measureFromEvent("add:user-action", evt);
           });
+      }
+
+      getReadyCart() {
+        const cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        if (!cart) return null;
+        const ready =
+          typeof cart.getSectionsToRender === 'function' &&
+          typeof cart.renderContents === 'function' &&
+          typeof cart.setActiveElement === 'function';
+        return ready ? cart : null;
       }
 
       handleErrorMessage(errorMessage = false) {
