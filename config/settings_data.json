@@ -222,6 +222,16 @@
         "type": "shopify://apps/noibupixel/blocks/noibu-core/01a0abe7-a6bf-7b1c-ac89-69dee68e16b6",
         "disabled": false,
         "settings": {}
+      },
+      "adiy_partner_attribution": {
+        "type": "shopify://apps/adiy-payment-plans/blocks/partner-attribution/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
+        "disabled": false,
+        "settings": {}
+      },
+      "adiy_referred_banner": {
+        "type": "shopify://apps/adiy-payment-plans/blocks/referred-banner/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {

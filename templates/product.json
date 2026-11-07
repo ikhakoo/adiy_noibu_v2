@@ -223,6 +223,10 @@
             "content": "",
             "page": ""
           }
+        },
+        "adiy_trade_price_note": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/trade-price-note/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
+          "settings": {}
         }
       },
       "block_order": [
@@ -231,6 +235,7 @@
         "title",
         "text_ifcgmB",
         "price",
+        "adiy_trade_price_note",
         "discount_promo_YW9Hge",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
