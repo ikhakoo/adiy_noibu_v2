@@ -1,46 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "partners": {
       "type": "apps",
-      "blocks": {
-        "adiy_partner_hero": {
-          "type": "shopify://apps/adiy-payment-plans/blocks/partner-hero/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
-          "settings": {}
-        },
-        "adiy_partner_tracks": {
-          "type": "shopify://apps/adiy-payment-plans/blocks/partner-tracks/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
-          "settings": {}
-        },
-        "adiy_partner_how_it_works": {
-          "type": "shopify://apps/adiy-payment-plans/blocks/partner-how-it-works/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
-          "settings": {}
-        },
-        "adiy_partner_trade_tiers": {
-          "type": "shopify://apps/adiy-payment-plans/blocks/partner-trade-tiers/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
-          "settings": {}
-        },
-        "adiy_partner_promises": {
-          "type": "shopify://apps/adiy-payment-plans/blocks/partner-promises/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
-          "settings": {}
-        },
-        "adiy_partner_faq": {
-          "type": "shopify://apps/adiy-payment-plans/blocks/partner-faq/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
-          "settings": {}
-        },
-        "adiy_partner_cta": {
-          "type": "shopify://apps/adiy-payment-plans/blocks/partner-cta/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "adiy_partner_hero",
-        "adiy_partner_tracks",
-        "adiy_partner_how_it_works",
-        "adiy_partner_trade_tiers",
-        "adiy_partner_promises",
-        "adiy_partner_faq",
-        "adiy_partner_cta"
-      ],
       "settings": {
         "include_margins": true
       }

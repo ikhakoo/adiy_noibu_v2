@@ -223,15 +223,23 @@
         "disabled": false,
         "settings": {}
       },
-      "adiy_partner_attribution": {
-        "type": "shopify://apps/adiy-payment-plans/blocks/partner-attribution/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
+      "2556285104914985848": {
+        "type": "shopify://apps/adiy-payment-plans/blocks/partner-attribution/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
         "disabled": false,
         "settings": {}
       },
-      "adiy_referred_banner": {
-        "type": "shopify://apps/adiy-payment-plans/blocks/referred-banner/39212583-54ab-0aa5-679b-c87a34b0ba3e2e714912",
+      "10951743308475582648": {
+        "type": "shopify://apps/adiy-payment-plans/blocks/referred-banner/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
         "disabled": false,
-        "settings": {}
+        "settings": {
+          "enabled": true,
+          "position": "bottom",
+          "referred_text": "You were referred by {name}",
+          "show_incentive": true,
+          "incentive_text": "{incentive} applied at checkout",
+          "background": "#1B4D3E",
+          "text_color": "#FFFFFF"
+        }
       }
     },
     "color_schemes": {
