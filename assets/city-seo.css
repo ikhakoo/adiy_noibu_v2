@@ -40,8 +40,9 @@
 /* ---------- Deck builders ---------- */
 .cs-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .cs-option { display: flex; flex-direction: column; overflow: hidden; border: 1.5px solid rgba(210, 196, 188, .35); border-radius: 24px; background: #fff; box-shadow: var(--ss-shadow); }
-.cs-option__media { position: relative; aspect-ratio: 461 / 270; background: var(--ss-mint); }
-.cs-option__media img, .cs-option__media svg { width: 100%; height: 100%; object-fit: cover; }
+.cs-option__media { position: relative; overflow: hidden; aspect-ratio: 461 / 270; background: var(--ss-mint); }
+.cs-option__media img, .cs-option__media svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cs-option__media .cs-badge { z-index: 1; }
 .cs-option__body { display: flex; flex: 1; flex-direction: column; gap: 14px; padding: 30px 32px 32px; }
 .ss .cs-option__title { font-size: calc(var(--font-heading-scale, 1) * 2.8rem); font-weight: 400; line-height: 1.25; }
 .cs-option__text { font-size: 1.7rem; line-height: 1.6; }
@@ -106,6 +107,7 @@
 .cs-timeline strong { color: var(--ss-ink); font-size: 1.9rem; font-weight: 600; }
 .cs-timeline p { font-size: 1.5rem; line-height: 1.45; }
 .cs-season__cta { display: flex; align-items: center; gap: 20px; }
+.cs-season__cta .ss-btn { flex: none; white-space: nowrap; }
 .cs-season__cta p { font-size: 1.4rem; line-height: 1.45; opacity: .85; }
 
 /* ---------- What's included ---------- */
@@ -137,8 +139,9 @@
 .cs-quick__note { font-size: 1.3rem; line-height: 1.45; opacity: .85; }
 .cs-juris { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .cs-card { display: flex; flex-direction: column; overflow: hidden; border: 1.5px solid rgba(210, 196, 188, .35); border-radius: 24px; background: #fff; box-shadow: var(--ss-shadow); }
-.cs-card__media { position: relative; aspect-ratio: 461 / 220; }
-.cs-card__media img, .cs-card__media svg { width: 100%; height: 100%; object-fit: cover; }
+.cs-card__media { position: relative; overflow: hidden; aspect-ratio: 461 / 220; background: var(--ss-mint); }
+.cs-card__media img, .cs-card__media svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cs-card__media .cs-badge { z-index: 1; }
 .cs-card__body { display: grid; gap: 14px; padding: 28px 30px 30px; }
 .cs-card__body h4 { font-size: 2.4rem; font-weight: 400; line-height: 1.3; }
 .cs-card__body p { font-size: 1.6rem; line-height: 1.55; }
@@ -173,8 +176,8 @@
 .cs-area__img { aspect-ratio: 1; overflow: hidden; border-radius: 20px; }
 .cs-area__img img, .cs-area__img svg { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
 .cs-area__item a:hover img { transform: scale(1.04); }
-.cs-area__name { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--ss-ink); font-size: 1.7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
-.cs-area__name svg { width: 18px; height: 18px; }
+.cs-area__name { display: flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--ss-ink); font-size: 1.5rem; font-weight: 500; letter-spacing: .06em; line-height: 1.3; text-transform: uppercase; }
+.cs-area__name svg { width: 16px; height: 16px; flex: none; }
 
 /* ---------- Closing CTA ---------- */
 .cs-cta { color: #fff; }
