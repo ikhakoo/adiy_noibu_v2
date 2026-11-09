@@ -1,0 +1,254 @@
+/* ---------------------------------------------------------------------------
+   City SEO landing pages — sections/city-seo-*.liquid (template page.city-seo.json).
+   Built from Figma "SEO — Buffalo, NY City Page" (A-DIY DESIGN BOARD). Extends
+   state-seo.css (.ss tokens, .ss-h2/.ss-h3/.ss-lead/.ss-btn). One template, one CSS
+   file: every city page reuses it with content from the city_seo page metafields.
+   --------------------------------------------------------------------------- */
+
+.cs-head { display: grid; gap: 18px; max-width: 1100px; margin-bottom: clamp(32px, 3.2vw, 56px); }
+.cs-head--center { margin-inline: auto; text-align: center; justify-items: center; }
+.cs-head .ss-bar { margin: 0; }
+.cs-sub-h { margin: clamp(40px, 4vw, 64px) 0 28px; }
+.cs-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ss-tan); }
+.cs-kicker svg { width: 16px; height: 16px; }
+.cs-kicker--green { color: var(--ss-green-2); }
+.cs-badge { position: absolute; top: 16px; left: 16px; padding: 6px 14px; border-radius: 999px; background: var(--ss-tan); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.cs-badge--green { background: var(--ss-green); }
+.cs-iconbox { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; flex: none; border-radius: 12px; background: var(--ss-mint); color: var(--ss-green); }
+.cs-iconbox svg { width: 26px; height: 26px; }
+.cs-iconbox--tan { background: var(--ss-tan); color: #fff; }
+.cs-btn-outline { background: transparent; color: var(--ss-ink); border-color: rgba(32, 34, 29, .8); box-shadow: none; }
+.cs-btn-outline:hover { background: var(--ss-ink); color: #fff; }
+.cs-note { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-radius: 16px; font-size: 1.6rem; font-weight: 500; line-height: 1.45; }
+.cs-note--mint { background: var(--ss-mint); color: var(--ss-green); }
+.cs-note--full { margin-top: 40px; font-size: 1.5rem; border-radius: 12px; }
+.cs-note__icon { width: 24px; height: 24px; flex: none; }
+
+/* ---------- Hero ---------- */
+.cs-hero { padding: 24px 40px 0; background: #fff; }
+.cs-hero__box { position: relative; overflow: hidden; display: flex; align-items: flex-end; min-height: clamp(560px, 46vw, 880px); border-radius: 32px; background: var(--ss-green-dark); }
+.cs-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cs-hero__box::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 31, 23, .9) 0%, rgba(13, 31, 23, .62) 50%, rgba(13, 31, 23, .05) 100%); }
+.cs-hero__copy { position: relative; z-index: 1; display: grid; gap: 26px; justify-items: start; max-width: 840px; padding: clamp(48px, 5vw, 88px) clamp(28px, 5vw, 96px); }
+.cs-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.cs-eyebrow svg { width: 17px; height: 17px; color: var(--ss-tan); }
+.cs-eyebrow--glass, .cs-chip-glass { background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .28); color: #fff; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.ss .cs-hero__title { color: #fff; font-size: calc(var(--font-heading-scale, 1) * 5.6rem); font-weight: 500; line-height: 1.12; letter-spacing: -.02em; }
+.cs-hero__lede { color: rgba(255, 255, 255, .86); font-size: 2rem; line-height: 1.55; }
+.cs-hero__btns .ss-btn--white { box-shadow: none; }
+
+/* ---------- Deck builders ---------- */
+.cs-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.cs-option { display: flex; flex-direction: column; overflow: hidden; border: 1.5px solid rgba(210, 196, 188, .35); border-radius: 24px; background: #fff; box-shadow: var(--ss-shadow); }
+.cs-option__media { position: relative; aspect-ratio: 461 / 270; background: var(--ss-mint); }
+.cs-option__media img, .cs-option__media svg { width: 100%; height: 100%; object-fit: cover; }
+.cs-option__body { display: flex; flex: 1; flex-direction: column; gap: 14px; padding: 30px 32px 32px; }
+.ss .cs-option__title { font-size: calc(var(--font-heading-scale, 1) * 2.8rem); font-weight: 400; line-height: 1.25; }
+.cs-option__text { font-size: 1.7rem; line-height: 1.6; }
+.cs-meters { display: grid; gap: 10px; margin: auto 0 0; padding-top: 18px; border-top: 1px solid rgba(210, 196, 188, .5); }
+.cs-meter { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 1.5rem; }
+.cs-meter dd { display: flex; gap: 5px; margin: 0; }
+.cs-meter dd span { width: 28px; height: 6px; border-radius: 3px; background: rgba(210, 196, 188, .5); }
+.cs-meter dd span.is-on { background: var(--ss-tan); }
+.cs-option--featured { border-color: var(--ss-green); background: var(--ss-green); }
+.cs-option--featured :is(.cs-option__title, .cs-option__text, .cs-meter) { color: #fff; }
+.cs-option--featured .cs-option__text { color: rgba(255, 255, 255, .82); }
+.cs-option--featured .cs-meters { border-color: rgba(255, 255, 255, .18); }
+.cs-option--featured .cs-meter dd span { background: rgba(255, 255, 255, .2); }
+.cs-option--featured .cs-meter dd span.is-on { background: var(--ss-tan); }
+.cs-option__btn { width: 100%; margin-top: 6px; }
+
+.cs-panel { display: grid; grid-template-columns: 600px 1fr; margin-top: clamp(40px, 4vw, 64px); overflow: hidden; border-radius: 28px; background: var(--ss-cream); }
+.cs-panel__media { position: relative; display: flex; align-items: flex-end; padding: 28px; min-height: 520px; }
+.cs-panel__media > img, .cs-panel__media > svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cs-review { position: relative; display: grid; gap: 10px; padding: 22px 24px; border-radius: 16px; background: rgba(25, 70, 54, .86); color: #fff; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+.cs-review blockquote { margin: 0; font-size: 1.8rem; line-height: 1.5; }
+.cs-review figcaption { color: var(--ss-tan); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.cs-review__mark { width: 26px; height: 26px; color: var(--ss-tan); }
+.cs-panel__body { display: grid; align-content: center; gap: 22px; padding: 52px 56px; }
+.cs-numbered { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; counter-reset: none; }
+.cs-numbered li { display: flex; gap: 12px; font-size: 1.6rem; line-height: 1.45; color: var(--ss-ink); }
+.cs-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: #fff; color: var(--ss-green-2); font-size: 12px; font-weight: 600; }
+
+/* ---------- Climate ---------- */
+.cs-climate { color: #fff; }
+.cs-climate .ss-h2, .cs-climate .ss-h3 { color: #fff; }
+.cs-climate .cs-head .ss-lead { color: rgba(255, 255, 255, .8); }
+.cs-climate__split { display: grid; grid-template-columns: 700px 1fr; gap: 40px; }
+.cs-climate__media { position: relative; display: flex; align-items: flex-end; padding: 28px; overflow: hidden; border-radius: 28px; min-height: 480px; }
+.cs-climate__media > img, .cs-climate__media > svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cs-chip-glass { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: rgba(25, 70, 54, .85); font-size: 15px; font-weight: 500; }
+.cs-chip-glass svg { width: 18px; height: 18px; color: var(--ss-tan); }
+.cs-climate__cards { display: grid; gap: 16px; }
+.cs-climate__card { display: flex; gap: 20px; padding: 22px 26px; border: 1px solid rgba(255, 255, 255, .14); border-radius: 20px; background: rgba(255, 255, 255, .07); }
+.cs-climate__card h3 { color: #fff; font-size: 2.2rem; font-weight: 500; line-height: 1.3; }
+.cs-climate__card p { margin-top: 6px; color: rgba(255, 255, 255, .76); font-size: 1.6rem; line-height: 1.5; }
+.cs-climate__card .cs-iconbox { width: 48px; height: 48px; }
+.cs-stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 40px; padding: 8px; border: 1px solid rgba(255, 255, 255, .14); border-radius: 22px; background: rgba(255, 255, 255, .07); }
+.cs-stat { display: grid; gap: 6px; padding: 24px 30px; }
+.cs-stat + .cs-stat { border-left: 1px solid rgba(255, 255, 255, .14); }
+.cs-stat__top { display: flex; align-items: center; gap: 10px; color: var(--ss-tan); }
+.cs-stat__top svg { width: 30px; height: 30px; }
+.cs-stat strong { font-size: clamp(2.8rem, 2.4vw, 4rem); font-weight: 600; line-height: 1.2; }
+.cs-stat p { color: rgba(255, 255, 255, .78); font-size: 1.5rem; line-height: 1.4; }
+.cs-season { display: grid; grid-template-columns: 520px 1fr; margin-top: 40px; overflow: hidden; border-radius: 28px; background: #fff; color: var(--ss-text); }
+.cs-season__media { position: relative; min-height: 420px; }
+.cs-season__media > img, .cs-season__media > svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cs-season__body { display: grid; gap: 22px; padding: 48px 52px; }
+.cs-season .ss-h3 { color: var(--ss-ink); }
+.cs-season__text { font-size: 1.8rem; line-height: 1.55; }
+.cs-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.cs-timeline li { position: relative; display: grid; align-content: start; gap: 4px; padding-top: 30px; }
+.cs-timeline li::before { content: ""; position: absolute; top: 8px; left: 18px; right: -16px; height: 2px; background: rgba(210, 196, 188, .8); }
+.cs-timeline li:last-child::before { display: none; }
+.cs-timeline__dot { position: absolute; top: 0; left: 0; width: 18px; height: 18px; border: 3px solid #fff; border-radius: 50%; background: var(--ss-green-2); box-shadow: 0 0 0 1px rgba(210, 196, 188, .6); }
+.cs-timeline li:first-child .cs-timeline__dot { background: var(--ss-tan); }
+.cs-timeline strong { color: var(--ss-ink); font-size: 1.9rem; font-weight: 600; }
+.cs-timeline p { font-size: 1.5rem; line-height: 1.45; }
+.cs-season__cta { display: flex; align-items: center; gap: 20px; }
+.cs-season__cta p { font-size: 1.4rem; line-height: 1.45; opacity: .85; }
+
+/* ---------- What's included ---------- */
+.cs-included__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.cs-included__item { display: grid; align-content: start; gap: 12px; padding: 26px; border: 1.5px solid rgba(210, 196, 188, .35); border-radius: 20px; background: #fff; }
+.cs-included__item h3 { font-size: 2rem; font-weight: 600; line-height: 1.3; }
+.cs-included__item p { font-size: 1.5rem; line-height: 1.55; }
+.cs-addons { display: grid; grid-template-columns: 520px 1fr; align-items: center; gap: 48px; margin-top: 40px; padding: 32px 48px 32px 32px; border-radius: 24px; background: #fff; box-shadow: var(--ss-shadow); }
+.cs-addons__media img { width: 100%; height: auto; }
+.cs-addons__body { display: grid; gap: 18px; }
+
+/* ---------- Permits ---------- */
+.cs-permits__top { display: grid; grid-template-columns: 1fr 700px; align-items: center; gap: 72px; }
+.cs-permits__top .cs-head { margin-bottom: 0; }
+.cs-quick { display: grid; gap: 14px; justify-items: center; padding: 32px; border-radius: 28px; background: var(--ss-cream); }
+.cs-quick__title { justify-self: start; font-size: 2.6rem; font-weight: 600; }
+.cs-quick__sub { justify-self: start; margin-top: -10px; font-size: 1.5rem; }
+.cs-quick__q { width: 100%; padding: 14px 18px; border: 1.5px solid rgba(210, 196, 188, .6); border-radius: 14px; background: #fff; color: var(--ss-ink); font-size: 1.6rem; font-weight: 500; box-shadow: 0 12px 30px rgba(61, 43, 31, .09); }
+.cs-quick__branches { display: grid; grid-template-columns: 230px 1fr; gap: 20px; width: 100%; }
+.cs-quick__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.cs-quick__branch { display: flex; flex-direction: column; align-items: center; }
+.cs-link { position: relative; margin: 18px 0 14px; padding: 3px 10px; border: 1px solid rgba(196, 164, 132, .8); border-radius: 999px; background: #fff; color: var(--ss-tan); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.cs-link::before, .cs-link::after { content: ""; position: absolute; left: 50%; width: 2px; height: 14px; background: var(--ss-tan); }
+.cs-link::before { bottom: 100%; } .cs-link::after { top: 100%; height: 10px; }
+.cs-quick__out { display: flex; align-items: center; gap: 10px; width: 100%; padding: 14px 18px; border-radius: 14px; color: #fff; font-size: 1.6rem; font-weight: 600; line-height: 1.35; }
+.cs-quick__out svg { width: 18px; height: 18px; flex: none; }
+.cs-quick__out--yes { background: var(--ss-green); }
+.cs-quick__out--ex { background: var(--ss-tan); }
+.cs-quick__note { font-size: 1.3rem; line-height: 1.45; opacity: .85; }
+.cs-juris { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.cs-card { display: flex; flex-direction: column; overflow: hidden; border: 1.5px solid rgba(210, 196, 188, .35); border-radius: 24px; background: #fff; box-shadow: var(--ss-shadow); }
+.cs-card__media { position: relative; aspect-ratio: 461 / 220; }
+.cs-card__media img, .cs-card__media svg { width: 100%; height: 100%; object-fit: cover; }
+.cs-card__body { display: grid; gap: 14px; padding: 28px 30px 30px; }
+.cs-card__body h4 { font-size: 2.4rem; font-weight: 400; line-height: 1.3; }
+.cs-card__body p { font-size: 1.6rem; line-height: 1.55; }
+.cs-process { display: grid; gap: 32px; margin-top: clamp(40px, 4vw, 64px); padding: 44px 48px 48px; border-radius: 28px; background: var(--ss-cream); }
+.cs-process__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.cs-process__steps li { position: relative; display: grid; align-content: start; gap: 6px; }
+.cs-process__steps li::before { content: ""; position: absolute; top: 29px; left: 72px; right: -8px; height: 2px; background: rgba(196, 164, 132, .7); }
+.cs-process__steps li:last-child::before { display: none; }
+.cs-process__node { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; margin-bottom: 14px; border: 2px solid var(--ss-green-2); border-radius: 50%; background: #fff; color: var(--ss-green-2); }
+.cs-process__node svg { width: 24px; height: 24px; }
+.cs-process__steps strong { color: var(--ss-ink); font-size: 2rem; font-weight: 600; }
+.cs-process__steps p { font-size: 1.5rem; line-height: 1.5; }
+.cs-permits__pair { display: grid; grid-template-columns: 1fr 600px; gap: 28px; margin-top: 40px; }
+.cs-permits__qs { display: flex; flex-direction: column; gap: 20px; padding: 40px; border: 1.5px solid rgba(210, 196, 188, .5); border-radius: 28px; }
+.cs-checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cs-checklist li { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 12px; background: var(--ss-cream); color: var(--ss-ink); font-size: 1.6rem; }
+.cs-checklist svg { width: 20px; height: 20px; flex: none; color: var(--ss-green-2); }
+.cs-specialist { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: auto; padding: 20px 22px; border-radius: 16px; background: var(--ss-mint); }
+.cs-specialist strong { color: var(--ss-green); font-size: 1.9rem; }
+.cs-specialist p { margin-top: 4px; font-size: 1.5rem; }
+.cs-permits__diagram { display: grid; align-content: start; gap: 20px; padding: 40px; border-radius: 28px; background: var(--ss-green); color: rgba(255, 255, 255, .82); }
+.cs-permits__diagram .ss-h3 { color: #fff; }
+.cs-permits__diagram p { font-size: 1.7rem; line-height: 1.55; }
+.cs-blueprint { display: grid; gap: 12px; padding: 18px; border-radius: 16px; background: var(--ss-green-2); }
+.cs-blueprint svg { width: 100%; height: auto; }
+.cs-legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.cs-legend li { padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, .12); color: #fff; font-size: 13px; font-weight: 500; }
+
+/* ---------- Service area ---------- */
+.cs-area__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+.cs-area__item a { color: inherit; text-decoration: none; }
+.cs-area__img { aspect-ratio: 1; overflow: hidden; border-radius: 20px; }
+.cs-area__img img, .cs-area__img svg { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.cs-area__item a:hover img { transform: scale(1.04); }
+.cs-area__name { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--ss-ink); font-size: 1.7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.cs-area__name svg { width: 18px; height: 18px; }
+
+/* ---------- Closing CTA ---------- */
+.cs-cta { color: #fff; }
+.cs-cta .ss-h2 { color: var(--ss-tan); }
+.cs-cta .cs-head .ss-lead { color: rgba(255, 255, 255, .82); }
+.cs-cta__tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cs-cta__tile { display: grid; justify-items: center; gap: 12px; padding: 28px; border: 1px solid rgba(255, 255, 255, .12); border-radius: 16px; background: rgba(255, 255, 255, .06); text-align: center; }
+.cs-cta__icon { display: inline-flex; padding: 12px; border-radius: 50%; background: rgba(255, 255, 255, .1); color: var(--ss-tan); }
+.cs-cta__icon svg { width: 26px; height: 26px; }
+.cs-cta__tile strong { font-size: 2rem; font-weight: 500; }
+.cs-cta__tile p { color: rgba(255, 255, 255, .7); font-size: 1.6rem; line-height: 1.5; }
+.cs-cta__btns { justify-content: center; margin-top: 40px; }
+.cs-cta__phone { margin-top: 24px; text-align: center; color: rgba(255, 255, 255, .75); font-size: 1.7rem; }
+.cs-cta__phone a { color: #fff; }
+
+/* ---------- Tablet ---------- */
+@media screen and (max-width: 1199px) {
+  .cs-panel, .cs-climate__split, .cs-season, .cs-addons, .cs-permits__top, .cs-permits__pair { grid-template-columns: 1fr; }
+  .cs-included__grid { grid-template-columns: repeat(2, 1fr); }
+  .cs-area__grid { grid-template-columns: repeat(3, 1fr); }
+  .cs-panel__media { min-height: 380px; }
+}
+
+/* ---------- Mobile (Figma: Mobile 390) ---------- */
+@media screen and (max-width: 749px) {
+  .cs-hero { padding: 0; }
+  .cs-hero__box { flex-direction: column; align-items: stretch; min-height: 0; border-radius: 0; background: var(--ss-green); }
+  .cs-hero__img { position: relative; inset: auto; height: 320px; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  .cs-hero__box::after { display: none; }
+  .cs-hero__copy { gap: 18px; padding: 4px 20px 36px; }
+  .ss .cs-hero__title { font-size: calc(var(--font-heading-scale, 1) * 3.4rem); }
+  .cs-hero__lede { font-size: 1.6rem; }
+  .cs-hero__btns .ss-btn:first-child { background: #fff; border-color: #fff; color: var(--ss-ink); }
+  .cs-hero__btns .ss-btn--white { background: transparent; border-color: rgba(255, 255, 255, .7); color: #fff; }
+  .cs-head { gap: 14px; text-align: left; justify-items: start; margin-bottom: 28px; }
+  .cs-options, .cs-juris, .cs-process__steps, .cs-timeline, .cs-cta__tiles, .cs-numbered, .cs-checklist { grid-template-columns: 1fr; }
+  .cs-option__body { padding: 22px 22px 24px; }
+  .ss .cs-option__title { font-size: 2.2rem; }
+  .cs-option__text { font-size: 1.5rem; }
+  .cs-panel__media { min-height: 300px; padding: 16px; }
+  .cs-review blockquote { font-size: 1.5rem; }
+  .cs-panel__body { padding: 24px 20px 28px; }
+  .cs-climate__media { min-height: 250px; padding: 16px; border-radius: 20px; }
+  .cs-climate__card { gap: 14px; padding: 18px; }
+  .cs-climate__card h3 { font-size: 1.8rem; }
+  .cs-climate__card p { font-size: 1.4rem; }
+  .cs-stats { grid-template-columns: 1fr 1fr; margin-top: 28px; padding: 6px; }
+  .cs-stat { padding: 14px; }
+  .cs-stat + .cs-stat { border-left: 0; }
+  .cs-stat__top svg { width: 22px; height: 22px; }
+  .cs-stat p { font-size: 1.2rem; }
+  .cs-season { margin-top: 28px; border-radius: 20px; }
+  .cs-season__media { min-height: 220px; }
+  .cs-season__body { padding: 24px 20px 28px; gap: 16px; }
+  .cs-timeline { gap: 0; }
+  .cs-timeline li { padding: 0 0 18px 32px; }
+  .cs-timeline li::before { top: 18px; bottom: -2px; left: 8px; right: auto; width: 2px; height: auto; }
+  .cs-season__cta { flex-direction: column; align-items: stretch; }
+  .cs-included__grid { grid-template-columns: 1fr; gap: 12px; }
+  .cs-included__item { grid-template-columns: auto 1fr; padding: 18px; }
+  .cs-included__item .cs-iconbox { grid-row: span 2; }
+  .cs-addons { gap: 20px; padding: 20px 20px 24px; }
+  .cs-permits__top { gap: 24px; }
+  .cs-quick { padding: 22px 18px; }
+  .cs-quick__branches { grid-template-columns: 1fr; gap: 0; }
+  .cs-process { padding: 24px 20px; }
+  .cs-process__steps { gap: 0; }
+  .cs-process__steps li { padding: 0 0 22px 64px; min-height: 70px; }
+  .cs-process__node { position: absolute; top: 0; left: 0; width: 48px; height: 48px; }
+  .cs-process__steps li::before { top: 48px; bottom: 0; left: 23px; right: auto; width: 2px; height: auto; }
+  .cs-permits__qs, .cs-permits__diagram { padding: 24px 20px; }
+  .cs-specialist { flex-direction: column; align-items: stretch; }
+  .cs-area__grid { grid-template-columns: 1fr 1fr; gap: 16px 10px; }
+  .cs-area__name { font-size: 1.4rem; }
+  .cs-cta__tile { grid-template-columns: auto 1fr; justify-items: start; text-align: left; padding: 18px; }
+  .cs-cta__icon { grid-row: span 2; }
+}
