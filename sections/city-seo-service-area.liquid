@@ -2,9 +2,12 @@
 {{ 'city-seo.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
-  City SEO landing page · Service area (nearby city cards).
-  Page metafields: city_seo.service_heading, city_seo.service_intro, city_seo.service_cities
-  (list of "State SEO · City" metaobjects: name, image, image_alt, link).
+  City SEO landing page · Service area (other city cards).
+  Dynamic: when the page metafield city_seo.state points to a "City SEO · State" entry, the cards are
+  every city page in that state except the current one (linked to /pages/<handle>). Add a new city
+  once to the state entry and it appears on all the other pages of that state.
+  Fallback: city_seo.service_cities (list of "State SEO · City" metaobjects).
+  Heading/intro: city_seo.service_heading, city_seo.service_intro.
 {%- endcomment -%}
 
 {%- liquid
@@ -12,10 +15,30 @@
   assign city = m.city_name.value | default: 'your city'
   assign heading = m.service_heading.value | default: section.settings.heading | replace: '[city]', city
   assign intro = m.service_intro.value | default: section.settings.intro | replace: '[city]', city
-  assign cities = m.service_cities.value
+  assign state = m.state.value
+  assign state_cities = state.cities.value
+  assign dynamic = false
+  assign count = 0
+  if state_cities.size > 0
+    assign dynamic = true
+    for c in state_cities
+      if c.page_handle.value != page.handle
+        assign count = count | plus: 1
+      endif
+    endfor
+  else
+    assign cities = m.service_cities.value
+    assign count = cities.size
+  endif
 -%}
 
-{%- if cities.size > 0 -%}
+{%- if count > 0 -%}
+<style>
+  #shopify-section-{{ section.id }} .cs-area__grid--flex { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px 20px; }
+  #shopify-section-{{ section.id }} .cs-area__grid--flex .cs-area__item { width: calc((100% - 80px) / 5); }
+  @media screen and (max-width: 1199px) { #shopify-section-{{ section.id }} .cs-area__grid--flex .cs-area__item { width: calc((100% - 40px) / 3); } }
+  @media screen and (max-width: 749px) { #shopify-section-{{ section.id }} .cs-area__grid--flex { gap: 16px 10px; } #shopify-section-{{ section.id }} .cs-area__grid--flex .cs-area__item { width: calc((100% - 10px) / 2); } }
+</style>
 <div class="ss ss--white cs-area" id="{{ section.settings.anchor_id | default: 'service-area' | handle }}">
   <div class="ss__inner">
     <div class="cs-head cs-head--center">
@@ -23,19 +46,36 @@
       <span class="ss-bar" aria-hidden="true"></span>
       {%- if intro != blank -%}<p class="ss-lead">{{ intro | escape }}</p>{%- endif -%}
     </div>
-    <ul class="cs-area__grid">
-      {%- for c in cities -%}
-        {%- assign label = c.name.value | default: c.name -%}
-        <li class="cs-area__item">
-          {%- if c.link.value != blank -%}<a href="{{ c.link.value }}">{%- endif -%}
-          <div class="cs-area__img">
-            {%- if c.image.value != blank -%}{{ c.image.value | image_url: width: 600 | image_tag: widths: '300, 450, 600', sizes: '(min-width: 990px) 224px, 45vw', loading: 'lazy', alt: c.image_alt.value | default: label }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
-          </div>
-          <span class="cs-area__name">{{ label | escape }}{% render 'city-seo-icon', name: 'arrow' %}</span>
-          {%- if c.link.value != blank -%}</a>{%- endif -%}
-        </li>
-      {%- endfor -%}
-    </ul>
+    {%- if dynamic -%}
+      <ul class="cs-area__grid cs-area__grid--flex">
+        {%- for c in state_cities -%}
+          {%- if c.page_handle.value == page.handle -%}{%- continue -%}{%- endif -%}
+          {%- assign label = c.name.value -%}
+          <li class="cs-area__item">
+            <a href="/pages/{{ c.page_handle.value }}" title="Deck builders near me in {{ label | escape }}">
+              <div class="cs-area__img">
+                {%- if c.image.value != blank -%}{{ c.image.value | image_url: width: 600 | image_tag: widths: '300, 450, 600', sizes: '(min-width: 990px) 270px, 45vw', loading: 'lazy', alt: c.image_alt.value | default: label }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+              </div>
+              <span class="cs-area__name">{{ label | escape }}{% render 'city-seo-icon', name: 'arrow' %}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <ul class="cs-area__grid">
+        {%- for c in cities -%}
+          {%- assign label = c.name.value | default: c.name -%}
+          <li class="cs-area__item">
+            {%- if c.link.value != blank -%}<a href="{{ c.link.value }}">{%- endif -%}
+            <div class="cs-area__img">
+              {%- if c.image.value != blank -%}{{ c.image.value | image_url: width: 600 | image_tag: widths: '300, 450, 600', sizes: '(min-width: 990px) 224px, 45vw', loading: 'lazy', alt: c.image_alt.value | default: label }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+            </div>
+            <span class="cs-area__name">{{ label | escape }}{% render 'city-seo-icon', name: 'arrow' %}</span>
+            {%- if c.link.value != blank -%}</a>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
   </div>
 </div>
 {%- endif -%}
@@ -47,7 +87,7 @@
   "class": "section",
   "enabled_on": { "templates": ["page"] },
   "settings": [
-    { "type": "paragraph", "content": "Cards come from the page metafield City SEO · Service area cities. The section hides when it is empty." },
+    { "type": "paragraph", "content": "Cards show every other city page in the page's state (page metafield City · State). Falls back to City SEO · Service area cities. The section hides when there are no cards." },
     { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "service-area" },
     { "type": "text", "id": "heading", "label": "Heading fallback", "default": "Deck Kit Delivery Across [city]" },
     { "type": "textarea", "id": "intro", "label": "Intro fallback" }
