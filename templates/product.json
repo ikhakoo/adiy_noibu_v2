@@ -52,6 +52,7 @@
         },
         "adiy_trade_price_note": {
           "type": "shopify://apps/adiy-payment-plans/blocks/trade-price-note/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "disabled": true,
           "settings": {
             "product": "",
             "trade_label": "Your Trade price",
