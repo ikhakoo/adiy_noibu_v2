@@ -1,0 +1,110 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'city-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  City SEO landing page · Planning a deck: climate & weather (dark green).
+  Page metafields city_seo.*: climate_heading, climate_intro, climate_image, climate_image_tag,
+  climate_cards (JSON [{icon,title,text}]), climate_stats (JSON [{icon,value,label}]),
+  season_image, season_heading, season_text, seasons (JSON [{months,title,text}]).
+{%- endcomment -%}
+
+{%- liquid
+  assign m = page.metafields.city_seo
+  assign city = m.city_name.value | default: 'your city'
+  assign heading = m.climate_heading.value | default: section.settings.heading | replace: '[city]', city
+  assign intro = m.climate_intro.value | default: section.settings.intro | replace: '[city]', city
+  assign cimg = m.climate_image.value | default: section.settings.climate_image
+  assign ctag = m.climate_image_tag.value | default: section.settings.climate_image_tag | replace: '[city]', city
+  assign cards = m.climate_cards.value
+  assign stats = m.climate_stats.value
+  assign simg = m.season_image.value | default: section.settings.season_image
+  assign sheading = m.season_heading.value | default: section.settings.season_heading | replace: '[city]', city
+  assign stext = m.season_text.value | default: section.settings.season_text | replace: '[city]', city
+  assign seasons = m.seasons.value
+-%}
+
+<div class="ss ss--green cs-climate" id="{{ section.settings.anchor_id | default: 'climate' | handle }}">
+  <div class="ss__inner">
+    <div class="cs-head cs-head--center">
+      <h2 class="ss-h2">{{ heading | escape }}</h2>
+      {%- if intro != blank -%}<p class="ss-lead">{{ intro | escape }}</p>{%- endif -%}
+    </div>
+
+    <div class="cs-climate__split">
+      <div class="cs-climate__media">
+        {%- if cimg != blank -%}
+          {{ cimg | image_url: width: 1400 | image_tag: widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 700px, 100vw', loading: 'lazy', alt: ctag }}
+        {%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}
+        {%- if ctag != blank -%}<span class="cs-chip-glass">{% render 'city-seo-icon', name: 'map-pin' %}{{ ctag | escape }}</span>{%- endif -%}
+      </div>
+      <div class="cs-climate__cards">
+        {%- for c in cards -%}
+          <div class="cs-climate__card">
+            <span class="cs-iconbox cs-iconbox--tan">{% render 'city-seo-icon', name: c.icon %}</span>
+            <div><h3>{{ c.title | replace: '[city]', city | escape }}</h3><p>{{ c.text | replace: '[city]', city | escape }}</p></div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if stats.size > 0 -%}
+      <div class="cs-stats">
+        {%- for s in stats -%}
+          <div class="cs-stat">
+            <div class="cs-stat__top">{% render 'city-seo-icon', name: s.icon %}<strong>{{ s.value | escape }}</strong></div>
+            <p>{{ s.label | replace: '[city]', city | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="cs-season">
+      <div class="cs-season__media">
+        {%- if simg != blank -%}
+          {{ simg | image_url: width: 1100 | image_tag: widths: '500, 800, 1100', sizes: '(min-width: 990px) 520px, 100vw', loading: 'lazy', alt: section.settings.season_image_alt }}
+        {%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag }}{%- endif -%}
+      </div>
+      <div class="cs-season__body">
+        <span class="cs-kicker cs-kicker--green">{% render 'city-seo-icon', name: 'calendar' %}{{ section.settings.season_kicker | escape }}</span>
+        <h3 class="ss-h3">{{ sheading | escape }}</h3>
+        {%- if stext != blank -%}<p class="cs-season__text">{{ stext | escape }}</p>{%- endif -%}
+        <ol class="cs-timeline">
+          {%- for s in seasons -%}
+            <li><span class="cs-timeline__dot"></span><span class="cs-kicker">{{ s.months | escape }}</span><strong>{{ s.title | escape }}</strong><p>{{ s.text | replace: '[city]', city | escape }}</p></li>
+          {%- endfor -%}
+        </ol>
+        <div class="cs-season__cta">
+          {%- render 'state-seo-button', label: section.settings.reserve_label, link: section.settings.reserve_link -%}
+          {%- if section.settings.reserve_note != blank -%}<p>{{ section.settings.reserve_note | escape }}</p>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "City SEO · Climate planning",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "paragraph", "content": "Text, cards, stats, seasons and images come from the page metafields City SEO · Climate. [city] is replaced with the city name." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "climate" },
+    { "type": "text", "id": "heading", "label": "Heading fallback", "default": "Planning a Deck in [city]: Climate, Snow and Weather Considerations" },
+    { "type": "textarea", "id": "intro", "label": "Intro fallback" },
+    { "type": "image_picker", "id": "climate_image", "label": "Climate image fallback" },
+    { "type": "text", "id": "climate_image_tag", "label": "Climate image tag fallback", "default": "Built for four-season [city] backyards" },
+    { "type": "image_picker", "id": "season_image", "label": "Season image fallback" },
+    { "type": "text", "id": "season_image_alt", "label": "Season image alt text", "default": "Homeowners enjoying a finished A-DIY deck in spring" },
+    { "type": "text", "id": "season_kicker", "label": "Season kicker", "default": "Order in winter · build in spring" },
+    { "type": "text", "id": "season_heading", "label": "Season heading fallback", "default": "When Is the Best Time to Build a Deck in [city]?" },
+    { "type": "textarea", "id": "season_text", "label": "Season text fallback" },
+    { "type": "header", "content": "Reserve button" },
+    { "type": "text", "id": "reserve_label", "label": "Label", "default": "Reserve for Spring Delivery — $250" },
+    { "type": "url", "id": "reserve_link", "label": "Link" },
+    { "type": "text", "id": "reserve_note", "label": "Note", "default": "A-DIY Reserve: a non-refundable $250 deposit holds today’s price for a future delivery date you choose." }
+  ],
+  "presets": [{ "name": "City SEO · Climate planning" }]
+}
+{% endschema %}

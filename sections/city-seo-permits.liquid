@@ -1,0 +1,145 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'city-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  City SEO landing page · Permits and building codes.
+  Page metafields city_seo.*: permits_heading, permits_intro, permits_rule, permits_note,
+  jurisdictions_heading, jurisdictions (JSON [{tag,title,text}]), jurisdiction_images
+  (list of files, same order), process_heading, process_steps (JSON [{icon,title,text}]),
+  permit_questions (one per line).
+{%- endcomment -%}
+
+{%- liquid
+  assign m = page.metafields.city_seo
+  assign city = m.city_name.value | default: 'your city'
+  assign heading = m.permits_heading.value | default: section.settings.heading | replace: '[city]', city
+  assign intro = m.permits_intro.value | default: section.settings.intro | replace: '[city]', city
+  assign rule = m.permits_rule.value | default: section.settings.rule
+  assign note = m.permits_note.value | default: section.settings.note
+  assign j_heading = m.jurisdictions_heading.value | default: section.settings.jurisdictions_heading | replace: '[city]', city
+  assign juris = m.jurisdictions.value
+  assign j_imgs = m.jurisdiction_images.value
+  assign p_heading = m.process_heading.value | default: section.settings.process_heading | replace: '[city]', city
+  assign steps = m.process_steps.value
+  assign qs = m.permit_questions.value | default: section.settings.questions | newline_to_br | split: '<br />'
+-%}
+
+<div class="ss ss--white cs-permits" id="{{ section.settings.anchor_id | default: 'permits' | handle }}">
+  <div class="ss__inner">
+    <div class="cs-permits__top">
+      <div class="cs-head">
+        <h2 class="ss-h2">{{ heading | escape }}</h2>
+        {%- if intro != blank -%}<p class="ss-lead">{{ intro | escape }}</p>{%- endif -%}
+        {%- if rule != blank -%}<p class="cs-note cs-note--mint">{% render 'city-seo-icon', name: 'ruler', class: 'cs-note__icon' %}<span>{{ rule | escape }}</span></p>{%- endif -%}
+      </div>
+      <div class="cs-quick">
+        <h3 class="cs-quick__title">{{ section.settings.quick_title | escape }}</h3>
+        <p class="cs-quick__sub">{{ section.settings.quick_sub | replace: '[city]', city | escape }}</p>
+        <div class="cs-quick__q">{{ section.settings.q1 | escape }}</div>
+        <div class="cs-quick__branches">
+          <div class="cs-quick__branch"><span class="cs-link">Yes</span><div class="cs-quick__out cs-quick__out--yes">{% render 'city-seo-icon', name: 'clip' %}{{ section.settings.q1_yes | escape }}</div></div>
+          <div class="cs-quick__branch"><span class="cs-link">No</span>
+            <div class="cs-quick__q">{{ section.settings.q2 | escape }}</div>
+            <div class="cs-quick__pair">
+              <div class="cs-quick__branch"><span class="cs-link">Yes</span><div class="cs-quick__out cs-quick__out--yes">{% render 'city-seo-icon', name: 'clip' %}{{ section.settings.q2_yes | escape }}</div></div>
+              <div class="cs-quick__branch"><span class="cs-link">No</span><div class="cs-quick__out cs-quick__out--ex">{% render 'city-seo-icon', name: 'check' %}{{ section.settings.q2_no | escape }}</div></div>
+            </div>
+          </div>
+        </div>
+        {%- if note != blank -%}<p class="cs-quick__note">{{ note | escape }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    {%- if juris.size > 0 -%}
+      <h3 class="ss-h3 ss-center cs-sub-h">{{ j_heading | escape }}</h3>
+      <div class="cs-juris">
+        {%- for j in juris -%}
+          {%- assign ji = j_imgs[forloop.index0] -%}
+          <article class="cs-card">
+            <div class="cs-card__media">
+              {%- if ji != blank -%}{{ ji | image_url: width: 900 | image_tag: widths: '400, 600, 900', sizes: '(min-width: 990px) 460px, 100vw', loading: 'lazy', alt: j.title }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+              {%- if j.tag != blank -%}<span class="cs-badge cs-badge--green">{{ j.tag | escape }}</span>{%- endif -%}
+            </div>
+            <div class="cs-card__body"><h4>{{ j.title | replace: '[city]', city | escape }}</h4><p>{{ j.text | replace: '[city]', city | escape }}</p></div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if steps.size > 0 -%}
+      <div class="cs-process">
+        <h3 class="ss-h3">{{ p_heading | escape }}</h3>
+        <ol class="cs-process__steps">
+          {%- for s in steps -%}
+            <li><span class="cs-process__node">{% render 'city-seo-icon', name: s.icon %}</span><span class="cs-kicker">Step {{ forloop.index }}</span><strong>{{ s.title | escape }}</strong><p>{{ s.text | replace: '[city]', city | escape }}</p></li>
+          {%- endfor -%}
+        </ol>
+      </div>
+    {%- endif -%}
+
+    <div class="cs-permits__pair">
+      <div class="cs-permits__qs">
+        <h3 class="ss-h3">{{ section.settings.questions_heading | escape }}</h3>
+        <ul class="cs-checklist">
+          {%- for q in qs -%}{%- assign qq = q | strip -%}{%- if qq != blank -%}<li>{% render 'city-seo-icon', name: 'check' %}{{ qq | escape }}</li>{%- endif -%}{%- endfor -%}
+        </ul>
+        <div class="cs-specialist">
+          <div><strong>{{ section.settings.specialist_title | escape }}</strong><p>{{ section.settings.specialist_text | escape }}</p></div>
+          {%- render 'state-seo-button', label: section.settings.specialist_label, link: section.settings.specialist_link, style: 'small' -%}
+        </div>
+      </div>
+      <div class="cs-permits__diagram">
+        <div class="cs-blueprint">
+          <svg viewBox="0 0 480 220" fill="none" aria-hidden="true" focusable="false"><defs><pattern id="cs-grid-{{ section.id }}" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" stroke="#fff" stroke-opacity=".07"/></pattern></defs><rect width="480" height="220" fill="url(#cs-grid-{{ section.id }})"/><rect x="80" y="50" width="320" height="140" stroke="#fff" stroke-width="2.5"/>{%- for x in (0..12) -%}{%- assign xx = x | times: 26.7 | plus: 80 -%}<path d="M{{ xx }} 50V190" stroke="#fff" stroke-opacity=".55"/>{%- endfor -%}<path d="M76 80H404M76 160H404" stroke="#c4a484" stroke-width="4"/><g fill="#c4a484"><circle cx="96" cy="80" r="6"/><circle cx="240" cy="80" r="6"/><circle cx="384" cy="80" r="6"/><circle cx="96" cy="160" r="6"/><circle cx="240" cy="160" r="6"/><circle cx="384" cy="160" r="6"/></g><path d="M80 28H400M80 22V34M400 22V34M424 50V190M418 50H430M418 190H430" stroke="#fff" stroke-opacity=".8" stroke-width="1.5"/></svg>
+          <ul class="cs-legend"><li>Dimensions</li><li>2x8 joists</li><li>Beams</li><li>Post locations</li></ul>
+        </div>
+        <h3 class="ss-h3">{{ section.settings.diagram_heading | escape }}</h3>
+        <p>{{ section.settings.diagram_text | escape }}</p>
+        {%- render 'state-seo-button', label: section.settings.diagram_label, link: section.settings.diagram_link, style: 'white' -%}
+      </div>
+    </div>
+
+    {%- if section.settings.disclaimer != blank -%}<p class="cs-note cs-note--mint cs-note--full">{% render 'city-seo-icon', name: 'info', class: 'cs-note__icon' %}<span>{{ section.settings.disclaimer | escape }}</span></p>{%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "City SEO · Permits",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "paragraph", "content": "City text comes from the page metafields City SEO · Permits. [city] is replaced with the city name." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "permits" },
+    { "type": "text", "id": "heading", "label": "Heading fallback", "default": "[city] Deck Permits and Building Code Information" },
+    { "type": "textarea", "id": "intro", "label": "Intro fallback" },
+    { "type": "textarea", "id": "rule", "label": "Rule of thumb fallback", "default": "Rule of thumb: attached decks and decks more than 30 inches above grade usually need a building permit." },
+    { "type": "header", "content": "Permit quick check" },
+    { "type": "text", "id": "quick_title", "label": "Title", "default": "Permit quick check" },
+    { "type": "text", "id": "quick_sub", "label": "Subtitle", "default": "General guidance for [city]-area decks" },
+    { "type": "text", "id": "q1", "label": "Question 1", "default": "Is the deck attached to your house?" },
+    { "type": "text", "id": "q1_yes", "label": "Question 1 · Yes", "default": "A permit is usually required" },
+    { "type": "text", "id": "q2", "label": "Question 2", "default": "Is it more than 30 in. above grade?" },
+    { "type": "text", "id": "q2_yes", "label": "Question 2 · Yes", "default": "Permit usually required" },
+    { "type": "text", "id": "q2_no", "label": "Question 2 · No", "default": "Often exempt*" },
+    { "type": "textarea", "id": "note", "label": "Footnote fallback" },
+    { "type": "header", "content": "Jurisdictions and process" },
+    { "type": "text", "id": "jurisdictions_heading", "label": "Jurisdictions heading fallback", "default": "Deck Permits & Building Codes in [city]" },
+    { "type": "text", "id": "process_heading", "label": "Process heading fallback", "default": "How to Get a Deck Permit in [city]" },
+    { "type": "header", "content": "Questions and diagrams" },
+    { "type": "text", "id": "questions_heading", "label": "Questions heading", "default": "Questions to Ask Your Building Department" },
+    { "type": "textarea", "id": "questions", "label": "Questions fallback (one per line)", "default": "Does my deck need a permit?\nWhat setbacks apply to my lot?\nIs a site plan or survey required?\nHow deep must the footings be?\nAre stamped plans required?\nWhich inspections are required?\nAre guards required at this height?\nCan the homeowner do the work?" },
+    { "type": "text", "id": "specialist_title", "label": "Specialist title", "default": "Not sure what your lot allows?" },
+    { "type": "text", "id": "specialist_text", "label": "Specialist text", "default": "Our deck specialists can help you plan size, height and placement before you apply." },
+    { "type": "text", "id": "specialist_label", "label": "Specialist button", "default": "Talk to a Specialist" },
+    { "type": "url", "id": "specialist_link", "label": "Specialist link" },
+    { "type": "text", "id": "diagram_heading", "label": "Diagram heading", "default": "Can A-DIY Diagrams Help With My Permit?" },
+    { "type": "textarea", "id": "diagram_text", "label": "Diagram text", "default": "Yes. Engineering diagrams for applicable A-DIY configurations show dimensions, structural layout, beam and joist sizes and post locations to support your application. Your department may still ask for a survey, site plan or stamped documents." },
+    { "type": "text", "id": "diagram_label", "label": "Diagram button", "default": "Ask About Permit Diagrams" },
+    { "type": "url", "id": "diagram_link", "label": "Diagram link" },
+    { "type": "textarea", "id": "disclaimer", "label": "Disclaimer", "default": "Requirements change and can differ between neighboring municipalities. Always confirm current rules with your local building department before you build." }
+  ],
+  "presets": [{ "name": "City SEO · Permits" }]
+}
+{% endschema %}

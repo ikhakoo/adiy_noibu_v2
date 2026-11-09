@@ -1,0 +1,66 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'city-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  City SEO landing page · Closing CTA (dark). Page metafields city_seo.cta_heading / cta_text;
+  tiles are blocks shared by every city ([city] is replaced with the city name).
+{%- endcomment -%}
+
+{%- liquid
+  assign m = page.metafields.city_seo
+  assign city = m.city_name.value | default: 'your city'
+  assign heading = m.cta_heading.value | default: section.settings.heading | replace: '[city]', city
+  assign text = m.cta_text.value | default: section.settings.text | replace: '[city]', city
+-%}
+
+<div class="ss ss--ink cs-cta" id="{{ section.settings.anchor_id | default: 'get-started' | handle }}">
+  <div class="ss__inner">
+    <div class="cs-head cs-head--center">
+      <h2 class="ss-h2">{{ heading | escape }}</h2>
+      <span class="ss-bar" aria-hidden="true"></span>
+      {%- if text != blank -%}<p class="ss-lead">{{ text | escape }}</p>{%- endif -%}
+    </div>
+    <div class="cs-cta__tiles">
+      {%- for block in section.blocks -%}
+        <div class="cs-cta__tile" {{ block.shopify_attributes }}>
+          <span class="cs-cta__icon">{% render 'city-seo-icon', name: block.settings.icon %}</span>
+          <strong>{{ block.settings.title | replace: '[city]', city | escape }}</strong>
+          <p>{{ block.settings.text | replace: '[city]', city | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="ss-btns cs-cta__btns">
+      {%- render 'state-seo-button', label: section.settings.primary_label, link: section.settings.primary_link -%}
+      {%- render 'state-seo-button', label: section.settings.secondary_label, link: section.settings.secondary_link, style: 'white' -%}
+    </div>
+    {%- if section.settings.phone_text != blank -%}<p class="cs-cta__phone">{{ section.settings.phone_text }}</p>{%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "City SEO · Closing CTA",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "get-started" },
+    { "type": "text", "id": "heading", "label": "Heading fallback", "default": "Ready to Build Your Own Deck in [city]?" },
+    { "type": "textarea", "id": "text", "label": "Text fallback" },
+    { "type": "text", "id": "primary_label", "label": "Primary label", "default": "Explore Deck Kits" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary label", "default": "Chat With a Design Consultant" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" },
+    { "type": "html", "id": "phone_text", "label": "Phone line", "default": "Prefer to talk? Call our deck specialists at <a href=\"tel:+17863582872\">1 (786) 358-2872</a>" }
+  ],
+  "blocks": [
+    { "type": "tile", "name": "Tile", "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "default": "cube", "options": [ { "value": "cube", "label": "Kit" }, { "value": "truck", "label": "Delivery" }, { "value": "chat", "label": "Support" }, { "value": "check", "label": "Check" } ] },
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "text", "label": "Text" }
+    ] }
+  ],
+  "presets": [{ "name": "City SEO · Closing CTA" }]
+}
+{% endschema %}
