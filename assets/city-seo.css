@@ -26,15 +26,15 @@
 
 /* ---------- Hero ---------- */
 .cs-hero { padding: 24px 40px 0; background: #fff; }
-.cs-hero__box { position: relative; overflow: hidden; display: flex; align-items: flex-end; min-height: clamp(560px, 46vw, 880px); border-radius: 32px; background: var(--ss-green-dark); }
+.cs-hero__box { position: relative; overflow: hidden; display: flex; align-items: center; min-height: clamp(500px, calc(100vh - 210px), 820px); min-height: clamp(500px, calc(100svh - 210px), 820px); border-radius: 32px; background: var(--ss-green-dark); }
 .cs-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .cs-hero__box::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 31, 23, .9) 0%, rgba(13, 31, 23, .62) 50%, rgba(13, 31, 23, .05) 100%); }
-.cs-hero__copy { position: relative; z-index: 1; display: grid; gap: 26px; justify-items: start; max-width: 840px; padding: clamp(48px, 5vw, 88px) clamp(28px, 5vw, 96px); }
+.cs-hero__copy { position: relative; z-index: 1; display: grid; gap: 20px; justify-items: start; max-width: 1040px; padding: clamp(32px, 3.5vw, 64px) clamp(28px, 5vw, 96px); }
 .cs-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
 .cs-eyebrow svg { width: 17px; height: 17px; color: var(--ss-tan); }
 .cs-eyebrow--glass, .cs-chip-glass { background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .28); color: #fff; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
-.ss .cs-hero__title { color: #fff; font-size: calc(var(--font-heading-scale, 1) * 5.6rem); font-weight: 500; line-height: 1.12; letter-spacing: -.02em; }
-.cs-hero__lede { color: rgba(255, 255, 255, .86); font-size: 2rem; line-height: 1.55; }
+.ss .cs-hero__title { color: #fff; font-size: clamp(3.6rem, 2.7vw, 5.2rem); font-weight: 500; line-height: 1.1; letter-spacing: -.02em; }
+.cs-hero__lede { max-width: 720px; color: rgba(255, 255, 255, .86); font-size: 1.8rem; line-height: 1.55; }
 .cs-hero__btns .ss-btn--white { box-shadow: none; }
 
 /* ---------- Deck builders ---------- */
@@ -205,7 +205,7 @@
 @media screen and (max-width: 749px) {
   .cs-hero { padding: 0; }
   .cs-hero__box { flex-direction: column; align-items: stretch; min-height: 0; border-radius: 0; background: var(--ss-green); }
-  .cs-hero__img { position: relative; inset: auto; height: 320px; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  .cs-hero__img { position: relative; inset: auto; height: 240px; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
   .cs-hero__box::after { display: none; }
   .cs-hero__copy { gap: 18px; padding: 4px 20px 36px; }
   .ss .cs-hero__title { font-size: calc(var(--font-heading-scale, 1) * 3.4rem); }
