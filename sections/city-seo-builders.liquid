@@ -1,0 +1,149 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'city-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  City SEO landing page · "Contractor, Traditional DIY or Deck Kit" + contractor questions panel.
+  Content from page metafields city_seo.* (fallback: settings). [city] → city_seo.city_name.
+{%- endcomment -%}
+
+{%- liquid
+  assign m = page.metafields.city_seo
+  assign city = m.city_name.value | default: 'your city'
+  assign heading = m.builders_heading.value | default: section.settings.heading | replace: '[city]', city
+  assign intro = m.builders_intro.value | default: section.settings.intro | replace: '[city]', city
+  assign q_heading = m.questions_heading.value | default: section.settings.questions_heading | replace: '[city]', city
+  assign q_items = m.questions_items.value | default: section.settings.questions_items | replace: '[city]', city | newline_to_br | split: '<br />'
+  assign review = m.review_text.value | default: section.settings.review_text
+  assign review_by = m.review_author.value | default: section.settings.review_author
+  assign panel_image = m.panel_image.value | default: section.settings.panel_image
+-%}
+
+<div class="ss ss--white cs-builders" id="{{ section.settings.anchor_id | default: 'deck-builders' | handle }}">
+  <div class="ss__inner">
+    <div class="cs-head">
+      <h2 class="ss-h2">{{ heading | escape }}</h2>
+      {%- if intro != blank -%}<p class="ss-lead">{{ intro | escape }}</p>{%- endif -%}
+    </div>
+
+    <div class="cs-options">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          case i
+            when 1
+              assign t = m.option_1_title.value | default: section.settings.o1_title
+              assign x = m.option_1_text.value | default: section.settings.o1_text
+              assign img = m.option_1_image.value | default: section.settings.o1_image
+              assign meters = section.settings.o1_meters
+            when 2
+              assign t = m.option_2_title.value | default: section.settings.o2_title
+              assign x = m.option_2_text.value | default: section.settings.o2_text
+              assign img = m.option_2_image.value | default: section.settings.o2_image
+              assign meters = section.settings.o2_meters
+            when 3
+              assign t = m.option_3_title.value | default: section.settings.o3_title
+              assign x = m.option_3_text.value | default: section.settings.o3_text
+              assign img = m.option_3_image.value | default: section.settings.o3_image
+              assign meters = section.settings.o3_meters
+          endcase
+          assign t = t | replace: '[city]', city
+          assign x = x | replace: '[city]', city
+          assign mv = meters | split: ','
+        -%}
+        <article class="cs-option{% if i == 3 %} cs-option--featured{% endif %}">
+          <div class="cs-option__media">
+            {%- if img != blank -%}
+              {{ img | image_url: width: 1000 | image_tag: widths: '400, 600, 800, 1000', sizes: '(min-width: 990px) 460px, 100vw', loading: 'lazy', alt: t }}
+            {%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag }}{%- endif -%}
+            {%- if i == 3 and section.settings.o3_badge != blank -%}<span class="cs-badge">{{ section.settings.o3_badge | escape }}</span>{%- endif -%}
+          </div>
+          <div class="cs-option__body">
+            <span class="cs-kicker">Option 0{{ i }}</span>
+            <h3 class="cs-option__title">{{ t | escape }}</h3>
+            <p class="cs-option__text">{{ x | escape }}</p>
+            <dl class="cs-meters">
+              {%- assign labels = 'Upfront cost,Your time & effort,Planning guesswork' | split: ',' -%}
+              {%- for label in labels -%}
+                {%- assign v = mv[forloop.index0] | plus: 0 -%}
+                <div class="cs-meter"><dt>{{ label }}</dt><dd aria-label="{{ v }} of 3">{%- for n in (1..3) -%}<span{% if n <= v %} class="is-on"{% endif %}></span>{%- endfor -%}</dd></div>
+              {%- endfor -%}
+            </dl>
+            {%- if i == 3 -%}{%- render 'state-seo-button', label: section.settings.o3_button_label, link: section.settings.o3_button_link, style: 'white', class: 'cs-option__btn' -%}{%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    <div class="cs-panel">
+      <div class="cs-panel__media">
+        {%- if panel_image != blank -%}
+          {{ panel_image | image_url: width: 1200 | image_tag: widths: '500, 800, 1200', sizes: '(min-width: 990px) 600px, 100vw', loading: 'lazy', alt: section.settings.panel_image_alt }}
+        {%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}
+        {%- if review != blank -%}
+          <figure class="cs-review">
+            {% render 'city-seo-icon', name: 'quote', class: 'cs-review__mark' %}
+            <blockquote>{{ review | escape }}</blockquote>
+            {%- if review_by != blank -%}<figcaption>{{ review_by | escape }}</figcaption>{%- endif -%}
+          </figure>
+        {%- endif -%}
+      </div>
+      <div class="cs-panel__body">
+        <h3 class="ss-h3">{{ q_heading | escape }}</h3>
+        <ol class="cs-numbered">
+          {%- for q in q_items -%}
+            {%- assign qs = q | strip -%}
+            {%- if qs != blank -%}<li><span class="cs-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ qs | escape }}</li>{%- endif -%}
+          {%- endfor -%}
+        </ol>
+        <div class="ss-btns">
+          {%- render 'state-seo-button', label: section.settings.panel_primary_label, link: section.settings.panel_primary_link -%}
+          {%- render 'state-seo-button', label: section.settings.panel_secondary_label, link: section.settings.panel_secondary_link, class: 'cs-btn-outline' -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "City SEO · Deck builders",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "paragraph", "content": "Text and images come from the page metafields City SEO · Builders. These settings are fallbacks; [city] is replaced with the city name." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "deck-builders" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contractor, Traditional DIY or Deck Kit: 3 Ways to Get a Deck in [city]" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "header", "content": "Option 1" },
+    { "type": "text", "id": "o1_title", "label": "Title", "default": "Hire a [city] Deck Builder" },
+    { "type": "textarea", "id": "o1_text", "label": "Text" },
+    { "type": "image_picker", "id": "o1_image", "label": "Image" },
+    { "type": "text", "id": "o1_meters", "label": "Meters (cost, effort, guesswork; 0–3)", "default": "3,1,1" },
+    { "type": "header", "content": "Option 2" },
+    { "type": "text", "id": "o2_title", "label": "Title", "default": "Traditional DIY" },
+    { "type": "textarea", "id": "o2_text", "label": "Text" },
+    { "type": "image_picker", "id": "o2_image", "label": "Image" },
+    { "type": "text", "id": "o2_meters", "label": "Meters (cost, effort, guesswork; 0–3)", "default": "2,3,3" },
+    { "type": "header", "content": "Option 3 (A-DIY)" },
+    { "type": "text", "id": "o3_title", "label": "Title", "default": "Use an A-DIY Deck Kit" },
+    { "type": "textarea", "id": "o3_text", "label": "Text" },
+    { "type": "image_picker", "id": "o3_image", "label": "Image" },
+    { "type": "text", "id": "o3_meters", "label": "Meters (cost, effort, guesswork; 0–3)", "default": "2,2,1" },
+    { "type": "text", "id": "o3_badge", "label": "Badge", "default": "Smart Choice" },
+    { "type": "text", "id": "o3_button_label", "label": "Button label", "default": "See Deck Kit Options" },
+    { "type": "url", "id": "o3_button_link", "label": "Button link" },
+    { "type": "header", "content": "Contractor questions panel" },
+    { "type": "image_picker", "id": "panel_image", "label": "Image" },
+    { "type": "text", "id": "panel_image_alt", "label": "Image alt text", "default": "Finished A-DIY wood deck" },
+    { "type": "textarea", "id": "review_text", "label": "Review (verbatim, from the reviews page)" },
+    { "type": "text", "id": "review_author", "label": "Review author" },
+    { "type": "text", "id": "questions_heading", "label": "Questions heading", "default": "Hiring a Deck Contractor in [city]? Ask These Questions" },
+    { "type": "textarea", "id": "questions_items", "label": "Questions (one per line)" },
+    { "type": "text", "id": "panel_primary_label", "label": "Primary button", "default": "Chat with a Deck Specialist" },
+    { "type": "url", "id": "panel_primary_link", "label": "Primary link", "info": "#chat opens live chat" },
+    { "type": "text", "id": "panel_secondary_label", "label": "Secondary button", "default": "Shop Deck Kits" },
+    { "type": "url", "id": "panel_secondary_link", "label": "Secondary link" }
+  ],
+  "presets": [{ "name": "City SEO · Deck builders" }]
+}
+{% endschema %}
