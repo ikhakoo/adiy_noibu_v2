@@ -1,0 +1,89 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'city-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  City SEO landing page · Hero (the page's only H1). Figma "SEO — Buffalo, NY City Page".
+  Content comes from the page metafields city_seo.* so one template serves every city;
+  section settings are the fallbacks. "[city]" in any setting is replaced with city_seo.city_name.
+{%- endcomment -%}
+
+{%- liquid
+  assign m = page.metafields.city_seo
+  assign city = m.city_name.value | default: section.settings.city_fallback
+  assign eyebrow = m.hero_eyebrow.value | default: section.settings.eyebrow | replace: '[city]', city
+  assign heading = m.hero_heading.value | default: section.settings.heading | default: page.title | replace: '[city]', city
+  assign intro = m.hero_intro.value | default: section.settings.intro | replace: '[city]', city
+  assign image = m.hero_image.value | default: section.settings.image
+  assign image_alt = m.hero_image_alt.value | default: section.settings.image_alt | replace: '[city]', city
+  assign region = m.region_name.value | default: section.settings.region_name
+-%}
+
+<div class="ss cs-hero" id="{{ section.settings.anchor_id | default: 'top' | handle }}">
+  <div class="cs-hero__box">
+    {%- if image != blank -%}
+      {{ image | image_url: width: 2400 | image_tag: widths: '600, 900, 1200, 1600, 2000, 2400', sizes: '(min-width: 1440px) 1840px, 100vw', loading: 'eager', fetchpriority: 'high', alt: image_alt, class: 'cs-hero__img' }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'cs-hero__img' }}
+    {%- endif -%}
+    <div class="cs-hero__copy">
+      {%- if eyebrow != blank -%}
+        <span class="cs-eyebrow cs-eyebrow--glass">{% render 'city-seo-icon', name: 'map-pin' %}{{ eyebrow | escape }}</span>
+      {%- endif -%}
+      <h1 class="cs-hero__title">{{ heading | escape }}</h1>
+      {%- if intro != blank -%}<p class="cs-hero__lede">{{ intro | escape | newline_to_br }}</p>{%- endif -%}
+      <div class="ss-btns cs-hero__btns">
+        {%- render 'state-seo-button', label: section.settings.primary_label, link: section.settings.primary_link -%}
+        {%- render 'state-seo-button', label: section.settings.secondary_label, link: section.settings.secondary_link, style: 'white' -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.article_schema -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": {{ heading | json }},
+      "description": {{ page.metafields.global.description_tag | default: intro | strip_html | truncate: 300 | json }},
+      "mainEntityOfPage": { "@type": "WebPage", "@id": {{ shop.url | append: page.url | json }} },
+      {%- if image != blank -%}"image": {{ image | image_url: width: 1200 | prepend: 'https:' | json }},{%- endif -%}
+      "author": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ shop.url | json }} },
+      "publisher": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ shop.url | json }} },
+      "datePublished": {{ page.published_at | default: page.created_at | date: '%Y-%m-%d' | json }},
+      "dateModified": {{ page.updated_at | date: '%Y-%m-%d' | json }}
+      {%- if region != blank -%},
+      "about": { "@type": "Place", "name": {{ region | json }} },
+      "spatialCoverage": { "@type": "Place", "name": {{ region | json }} }
+      {%- endif -%}
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "City SEO · Hero",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "paragraph", "content": "Text and image come from the page metafields City SEO · Hero. These settings are fallbacks; [city] is replaced with the city name." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "top" },
+    { "type": "text", "id": "city_fallback", "label": "City name fallback", "default": "your city" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "[city]" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "Deck Builders Near Me in [city]? Build Your Own Deck With an A-DIY Kit" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "A-DIY deck kit in a [city] backyard" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "primary_label", "label": "Primary label", "default": "Shop Deck Kits" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary label", "default": "Free Design Consultation" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" },
+    { "type": "header", "content": "SEO" },
+    { "type": "checkbox", "id": "article_schema", "label": "Output Article schema", "default": true },
+    { "type": "text", "id": "region_name", "label": "Region name fallback" }
+  ],
+  "presets": [{ "name": "City SEO · Hero" }]
+}
+{% endschema %}
