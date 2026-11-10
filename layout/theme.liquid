@@ -439,6 +439,12 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    {%- comment -%}
+      Ahrefs Web Analytics (project: A-DIY, a-diy.com). Async, so it does not
+      block rendering. The data-key identifies the Ahrefs project.
+    {%- endcomment -%}
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="FzcT246Tz+uAN8SEhnAcCQ" async></script>
   </head>
 
   <body class="template-{{ template | replace: '.', ' ' | replace: ' ', '-' }} gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
