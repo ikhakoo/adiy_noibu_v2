@@ -75,8 +75,12 @@
   color: #bdb9b2;
 }
 
-/* ---------- Free gifts card ---------- */
+/* ---------- Free gifts card ----------
+   Sizes are in --u: 1px at the Figma width (556px inside the border), scaled
+   down with the buy box so the note and gift names stay on one line. */
 .bfcm-gifts {
+  container-type: inline-size;
+  --u: min(1px, calc(100cqi / 556));
   margin: 16px 0;
   background: #fff;
   border: 2px solid #194636;
@@ -88,46 +92,50 @@
 .bfcm-gifts p { margin: 0; }
 
 .bfcm-gifts__header {
-  padding: 11px 18px;
+  padding: calc(var(--u) * 11) calc(var(--u) * 18);
   background: #194636;
 }
 .bfcm-gifts__heading {
-  font-size: 13px;
+  font-size: calc(var(--u) * 13);
   font-weight: 600;
-  letter-spacing: 0.78px;
+  letter-spacing: calc(var(--u) * 0.78);
   color: #fff;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .bfcm-gifts__body {
-  padding: 16px 18px 18px;
+  padding: calc(var(--u) * 16) calc(var(--u) * 18) calc(var(--u) * 18);
 }
 .bfcm-gifts__intro {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: calc(var(--u) * 10);
 }
 .bfcm-gifts__note {
-  font-size: 12px;
+  min-width: 0;
+  /* Outfit renders wider on the web than in Figma; these keep the Figma line length. */
+  font-size: min(12px, calc(var(--u) * 14));
   font-weight: 700;
-  letter-spacing: 0.96px;
+  letter-spacing: min(0.96px, calc(var(--u) * 1.1));
   color: #5b5853;
+  white-space: nowrap;
 }
 .bfcm-gifts__tag {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: calc(var(--u) * 4);
   flex-shrink: 0;
-  padding: 4px 10px;
+  padding: calc(var(--u) * 4) calc(var(--u) * 10);
   background: #e3ede8;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: calc(var(--u) * 12);
   font-weight: 600;
   color: #194636;
   white-space: nowrap;
 }
-.bfcm-gifts__tag-icon { display: block; width: 14px; height: 14px; }
+.bfcm-gifts__tag-icon { display: block; width: calc(var(--u) * 14); height: calc(var(--u) * 14); }
 .bfcm-gifts__tag-text--in { display: none; }
 .bfcm-gifts.is-in-cart .bfcm-gifts__tag-text--in { display: inline; }
 .bfcm-gifts.is-in-cart .bfcm-gifts__tag-text--out { display: none; }
@@ -140,8 +148,8 @@
 .bfcm-gifts__item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 0;
+  gap: calc(var(--u) * 14);
+  padding: calc(var(--u) * 12) 0;
   border-bottom: 1px solid #ece9e4;
 }
 
@@ -150,18 +158,18 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: calc(var(--u) * 24);
+  height: calc(var(--u) * 24);
   background: #194636;
-  border-radius: 6px;
+  border-radius: calc(var(--u) * 6);
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
 }
-.bfcm-gifts__check img { display: block; width: 12.3px; height: 9.07px; }
+.bfcm-gifts__check img { display: block; width: calc(var(--u) * 12.3); height: calc(var(--u) * 9.07); }
 
 .bfcm-gifts__photo {
   flex-shrink: 0;
-  width: 72px;
-  height: 72px;
+  width: calc(var(--u) * 72);
+  height: calc(var(--u) * 72);
   background: #fff;
   border: 1px solid #ece9e4;
   border-radius: 10px;
@@ -179,9 +187,10 @@
 .bfcm-gifts__name {
   flex: 1 1 0;
   min-width: 0;
-  font-size: 15px;
+  font-size: min(15px, calc(var(--u) * 17.4));
   font-weight: 600;
   color: #1a1a1a;
+  white-space: nowrap;
 }
 
 .bfcm-gifts__value {
@@ -192,12 +201,12 @@
   white-space: nowrap;
 }
 .bfcm-gifts__was {
-  font-size: 13px;
+  font-size: calc(var(--u) * 13);
   font-weight: 400;
   color: #6e6a64;
 }
 .bfcm-gifts__free {
-  font-size: 16px;
+  font-size: calc(var(--u) * 16);
   font-weight: 700;
   color: #194636;
   text-transform: uppercase;
@@ -214,16 +223,19 @@
   .bfcm-bar__subheading { font-size: 15px; }
   .bfcm-bar__chip { width: 50px; }
 
+  /* Phones: fixed readable sizes; long lines may wrap. */
+  .bfcm-gifts { --u: 1px; }
   .bfcm-gifts__header { padding: 11px 14px; }
+  .bfcm-gifts__heading { white-space: normal; }
   .bfcm-gifts__body { padding: 14px 14px 16px; }
   .bfcm-gifts__intro {
     flex-wrap: wrap;
     gap: 8px;
   }
-  .bfcm-gifts__note { font-size: 11px; letter-spacing: 0.6px; }
+  .bfcm-gifts__note { font-size: 11px; letter-spacing: 0.6px; white-space: normal; }
   .bfcm-gifts__item { gap: 10px; }
   .bfcm-gifts__photo { width: 60px; height: 60px; }
-  .bfcm-gifts__name { font-size: 14px; }
+  .bfcm-gifts__name { font-size: 14px; white-space: normal; }
 }
 
 /* ---------- Add to cart + 2 free gifts button (Figma 7221:239) ---------- */
