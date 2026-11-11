@@ -541,6 +541,7 @@ cart-drawer .truck-icon-text .content .heading {
 
 /* BFCM free gift lines: always below the deck, loud badge, FREE in green,
    no quantity / remove controls (the gifts are fixed at 1 per order). */
+cart-drawer .cart-drawer .cart-items,
 cart-drawer .cart-items {
   display: flex;
   flex-direction: column;
