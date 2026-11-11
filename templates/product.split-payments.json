@@ -54,7 +54,7 @@
           "settings": {
             "prefix_text": "or",
             "middle_text": "with code",
-            "promo_code": "LABOR"
+            "promo_code": "BFCM"
           }
         },
         "financing_widget_jbeqY8": {
@@ -146,7 +146,7 @@
           "type": "countdown_timer",
           "disabled": true,
           "settings": {
-            "heading": "Labor Day Sale Ends in:",
+            "heading": "Black Friday Sale Ends in:",
             "end_date": "2026-11-06",
             "end_time": "23:59:59",
             "bg_color": "#a33429",

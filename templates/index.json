@@ -18,7 +18,7 @@
           "settings": {
             "class_text": "above-heading-subtitle",
             "text_html": "",
-            "text": "Labor Day Sale",
+            "text": "Black Friday Sale",
             "text_style": "body"
           }
         },
@@ -93,7 +93,7 @@
         "text_item_AxQBxq": {
           "type": "text_item",
           "settings": {
-            "text": "🇺🇸 Labor Day Sale",
+            "text": "🇺🇸 Black Friday Sale",
             "link": ""
           }
         },
@@ -101,7 +101,7 @@
           "type": "text_item",
           "disabled": true,
           "settings": {
-            "text": "Use Code: LABOR",
+            "text": "Use Code: BFCM",
             "link": ""
           }
         },
