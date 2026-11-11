@@ -1,0 +1,61 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "partners": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      },
+      "blocks": {
+        "adiy_partner_hero": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/partner-hero/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "settings": {}
+        },
+        "adiy_partner_tracks": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/partner-tracks/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "settings": {}
+        },
+        "adiy_partner_how_it_works": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/partner-how-it-works/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "settings": {}
+        },
+        "adiy_partner_trade_tiers": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/partner-trade-tiers/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "settings": {}
+        },
+        "adiy_partner_promises": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/partner-promises/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "settings": {}
+        },
+        "adiy_partner_faq": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/partner-faq/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "settings": {}
+        },
+        "adiy_partner_cta": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/partner-cta/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "adiy_partner_hero",
+        "adiy_partner_tracks",
+        "adiy_partner_how_it_works",
+        "adiy_partner_trade_tiers",
+        "adiy_partner_promises",
+        "adiy_partner_faq",
+        "adiy_partner_cta"
+      ]
+    }
+  },
+  "order": [
+    "partners"
+  ]
+}

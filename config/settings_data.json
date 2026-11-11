@@ -222,6 +222,24 @@
         "type": "shopify://apps/noibupixel/blocks/noibu-core/01a0abe7-a6bf-7b1c-ac89-69dee68e16b6",
         "disabled": false,
         "settings": {}
+      },
+      "2556285104914985848": {
+        "type": "shopify://apps/adiy-payment-plans/blocks/partner-attribution/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+        "disabled": false,
+        "settings": {}
+      },
+      "10951743308475582648": {
+        "type": "shopify://apps/adiy-payment-plans/blocks/referred-banner/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+        "disabled": false,
+        "settings": {
+          "enabled": true,
+          "position": "bottom",
+          "referred_text": "You were referred by {name}",
+          "show_incentive": true,
+          "incentive_text": "{incentive} applied at checkout",
+          "background": "#1B4D3E",
+          "text_color": "#FFFFFF"
+        }
       }
     },
     "color_schemes": {

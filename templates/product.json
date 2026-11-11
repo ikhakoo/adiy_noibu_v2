@@ -46,7 +46,27 @@
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "price_style": "style_1"
+          }
+        },
+        "adiy_trade_price_note": {
+          "type": "shopify://apps/adiy-payment-plans/blocks/trade-price-note/01a1b76c-4982-7f5f-ba76-926037ab0c2e",
+          "disabled": true,
+          "settings": {
+            "product": "",
+            "trade_label": "Your Trade price",
+            "show_price": false,
+            "tax_text": "Tax-exempt: sales tax is removed at checkout with your resale certificate on file.",
+            "hub_link_text": "Open your A-DIY Trade account",
+            "metafield_namespace": "adiy",
+            "tier_key": "trade_tier",
+            "tax_key": "tax_exempt",
+            "show_guest_cta": true,
+            "guest_cta_text": "Contractor? Get Trade pricing",
+            "partners_page": "",
+            "accent": "#1b4d3e"
+          }
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",
@@ -134,7 +154,7 @@
           "type": "countdown_timer",
           "settings": {
             "heading": "Fall Sale Ends in:",
-            "end_date": "2026-11-06",
+            "end_date": "2026-11-10",
             "end_time": "23:59:59",
             "bg_color": "#a33429",
             "text_color": "#ffffff"
@@ -231,6 +251,7 @@
         "title",
         "text_ifcgmB",
         "price",
+        "adiy_trade_price_note",
         "discount_promo_YW9Hge",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",

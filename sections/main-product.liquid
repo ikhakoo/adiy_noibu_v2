@@ -4327,8 +4327,10 @@
   </product-component>
 </product-info>
 
+{% comment %}
 {%- render 'mobile-sticky-atc', product: product, section: section -%} 
 {% render 'custom-sticky-atc-bar', product: product %}
+{% endcomment %}
 
 <script>
   document.addEventListener('click', function (e) {
