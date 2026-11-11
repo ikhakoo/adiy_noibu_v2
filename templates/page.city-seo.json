@@ -31,7 +31,7 @@
         "panel_secondary_link": "shopify://collections/deck-kits",
         "o1_meters": "3,1,1",
         "o2_meters": "2,3,3",
-        "o3_meters": "2,2,1"
+        "o3_meters": "2,1,1"
       }
     },
     "which_deck_intro": {
@@ -170,7 +170,7 @@
             "button_label": "SHOP NOW",
             "button_link": "shopify://products/pressure-treated-kiln-dried-wood-deck-kit",
             "show_financing": true,
-            "financing_text_before": "Starting at $184/mo or 0% APR with",
+            "financing_text_before": "Starting at $184/mo or 0% APR with",
             "financing_logo": "shopify://shop_images/Untitled_design_32_png_f393bc2c-1b8e-45f6-9e17-3bc9f47c23e7.png",
             "financing_link_text": "See if you qualify",
             "financing_link_url": "#affirm",
@@ -214,7 +214,7 @@
             "button_label": "SHOP NOW",
             "button_link": "shopify://products/a-diy-composite-deck-kit",
             "show_financing": true,
-            "financing_text_before": "Starting at $184/mo or 0% APR with",
+            "financing_text_before": "Starting at $184/mo or 0% APR with",
             "financing_logo": "shopify://shop_images/Untitled_design_32_png_f393bc2c-1b8e-45f6-9e17-3bc9f47c23e7.png",
             "financing_link_text": "See if you qualify",
             "financing_link_url": "#affirm",
