@@ -227,8 +227,11 @@
 }
 
 /* ---------- Add to cart + 2 free gifts button (Figma 7221:239) ---------- */
+.product__info-wrapper .product-form__buttons .product-form__submit.product-form__submit--bfcm,
 .product-form__submit.product-form__submit--bfcm {
   min-height: 56px;
+  height: 56px;
+  padding: 0 16px;
   gap: 10px;
   border-radius: 12px;
   font-family: var(--font-body-family, 'Outfit'), sans-serif;
@@ -246,5 +249,6 @@
 }
 .product-form__submit--bfcm.loading .product-form__submit-icon { visibility: hidden; }
 @media screen and (max-width: 749px) {
+  .product__info-wrapper .product-form__buttons .product-form__submit.product-form__submit--bfcm,
   .product-form__submit.product-form__submit--bfcm { font-size: 16px; }
 }
