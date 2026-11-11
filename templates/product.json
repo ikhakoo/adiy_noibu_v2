@@ -68,20 +68,6 @@
             "promo_code": "BFCM"
           }
         },
-        "financing_widget_jbeqY8": {
-          "type": "financing_widget",
-          "settings": {
-            "logo_1": "shopify://shop_images/Untitled_design_32.png-2.png",
-            "text_1": "Pay Month With Affirm",
-            "link_1": "#klarna",
-            "logo_2": "shopify://shop_images/Untitled_design_32.png-1.png",
-            "text_2": "Shop Now. Pay With Klarna.",
-            "link_2": "#klarna",
-            "logo_3": "shopify://shop_images/Untitled_design_32_png_1624df21-e928-4e67-9587-aa3c52112551.png",
-            "text_3": "Buy Now, Pay Later With Shop Pay",
-            "link_3": "#klarna"
-          }
-        },
         "free_gifts_Bf26Gf": {
           "type": "free_gifts",
           "settings": {
@@ -99,6 +85,20 @@
             "gift_2_product": "",
             "gift_2_title": "BougeRV 12V Portable Heated Blanket",
             "gift_2_value": "$99.99"
+          }
+        },
+        "financing_widget_jbeqY8": {
+          "type": "financing_widget",
+          "settings": {
+            "logo_1": "shopify://shop_images/Untitled_design_32.png-2.png",
+            "text_1": "Pay Month With Affirm",
+            "link_1": "#klarna",
+            "logo_2": "shopify://shop_images/Untitled_design_32.png-1.png",
+            "text_2": "Shop Now. Pay With Klarna.",
+            "link_2": "#klarna",
+            "logo_3": "shopify://shop_images/Untitled_design_32_png_1624df21-e928-4e67-9587-aa3c52112551.png",
+            "text_3": "Buy Now, Pay Later With Shop Pay",
+            "link_3": "#klarna"
           }
         },
         "custom_liquid_7nXE8n": {
@@ -163,16 +163,6 @@
             "show_gift_card_recipient": false
           }
         },
-        "countdown_timer_NM9Fxn": {
-          "type": "countdown_timer",
-          "settings": {
-            "heading": "Black Friday Sale Ends in:",
-            "end_date": "2026-11-30",
-            "end_time": "23:59:59-05:00",
-            "bg_color": "#a33429",
-            "text_color": "#ffffff"
-          }
-        },
         "affirm_pay_over_time_messaging_product_block_nTFQar": {
           "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
           "settings": {
@@ -182,6 +172,16 @@
             "logo_type": "logo",
             "public_api_key": "",
             "price_selector": ""
+          }
+        },
+        "countdown_timer_NM9Fxn": {
+          "type": "countdown_timer",
+          "settings": {
+            "heading": "Black Friday Sale Ends in:",
+            "end_date": "2026-11-30",
+            "end_time": "23:59:59-05:00",
+            "bg_color": "#a33429",
+            "text_color": "#ffffff"
           }
         },
         "need_assistance_block_rdEmyW": {
@@ -266,8 +266,8 @@
         "text_ifcgmB",
         "price",
         "discount_promo_YW9Hge",
-        "financing_widget_jbeqY8",
         "free_gifts_Bf26Gf",
+        "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
         "material_switcher_EDGrz6",
         "custom_liquid_HmnBKa",
@@ -275,8 +275,8 @@
         "custom_liquid_FnEVbe",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
-        "countdown_timer_NM9Fxn",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
+        "countdown_timer_NM9Fxn",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
         "accessories_block_TPUpnp",
