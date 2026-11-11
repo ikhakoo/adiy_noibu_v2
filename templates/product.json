@@ -12,6 +12,15 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "bfcm_countdown_Bf26Nv": {
+          "type": "bfcm_countdown",
+          "settings": {
+            "heading": "BLACK FRIDAY",
+            "subheading": "$800 OFF + Free Shipping + 2 Free Gifts",
+            "end_datetime": "2026-11-30T23:59:59-05:00",
+            "hide_when_expired": true
+          }
+        },
         "review_rating_bar_CcqBf9": {
           "type": "review_rating_bar",
           "settings": {
@@ -47,6 +56,7 @@
         "price": {
           "type": "price",
           "settings": {
+            "price_style": "style_1",
             "badge_text": "2 free gifts included + Free Shipping"
           }
         },
@@ -70,6 +80,25 @@
             "logo_3": "shopify://shop_images/Untitled_design_32_png_1624df21-e928-4e67-9587-aa3c52112551.png",
             "text_3": "Buy Now, Pay Later With Shop Pay",
             "link_3": "#klarna"
+          }
+        },
+        "free_gifts_Bf26Gf": {
+          "type": "free_gifts",
+          "settings": {
+            "property_name": "Free gifts",
+            "property_value": "BougeRV Portable Fridge + 12V Heated Blanket",
+            "offer_end": "2026-11-30T23:59:59-05:00",
+            "heading": "GET YOUR FREE GIFTS BEFORE THEY'RE GONE!",
+            "note": "Limited quantities available. First come, first served.",
+            "tag_default": "Included free",
+            "tag_in_cart": "In your cart",
+            "free_label": "FREE",
+            "gift_1_product": "",
+            "gift_1_title": "BougeRV Portable Fridge with Battery",
+            "gift_1_value": "$349",
+            "gift_2_product": "",
+            "gift_2_title": "BougeRV 12V Portable Heated Blanket",
+            "gift_2_value": "$99.99"
           }
         },
         "custom_liquid_7nXE8n": {
@@ -128,10 +157,10 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": false,
-            "show_gift_card_recipient": false,
             "custom_label": "Add to cart + 2 free gifts",
-            "use_gift_icon": true
+            "use_gift_icon": true,
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false
           }
         },
         "countdown_timer_NM9Fxn": {
@@ -227,29 +256,6 @@
             "content": "",
             "page": ""
           }
-        },
-        "bfcm_countdown_Bf26Nv": {
-          "type": "bfcm_countdown",
-          "settings": {
-            "heading": "BLACK FRIDAY",
-            "subheading": "$800 OFF + Free Shipping + 2 Free Gifts",
-            "end_datetime": "2026-11-30T23:59:59-05:00",
-            "hide_when_expired": true
-          }
-        },
-        "free_gifts_Bf26Gf": {
-          "type": "free_gifts",
-          "settings": {
-            "heading": "GET YOUR FREE GIFTS BEFORE THEY'RE GONE!",
-            "note": "Limited quantities available. First come, first served.",
-            "tag_default": "Included free",
-            "tag_in_cart": "In your cart",
-            "free_label": "FREE",
-            "gift_1_title": "BougeRV Portable Fridge with Battery",
-            "gift_1_value": "$349",
-            "gift_2_title": "BougeRV 12V Portable Heated Blanket",
-            "gift_2_value": "$99.99"
-          }
         }
       },
       "block_order": [
@@ -260,8 +266,8 @@
         "text_ifcgmB",
         "price",
         "discount_promo_YW9Hge",
-        "free_gifts_Bf26Gf",
         "financing_widget_jbeqY8",
+        "free_gifts_Bf26Gf",
         "custom_liquid_7nXE8n",
         "material_switcher_EDGrz6",
         "custom_liquid_HmnBKa",
@@ -269,8 +275,8 @@
         "custom_liquid_FnEVbe",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
-        "affirm_pay_over_time_messaging_product_block_nTFQar",
         "countdown_timer_NM9Fxn",
+        "affirm_pay_over_time_messaging_product_block_nTFQar",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
         "accessories_block_TPUpnp",
@@ -280,6 +286,7 @@
         "collapsible_tab_etLcFt"
       ],
       "settings": {
+        "hide_sticky_atc": true,
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
         "media_size": "medium",
@@ -292,8 +299,7 @@
         "hide_variants": false,
         "enable_video_looping": false,
         "padding_top": 36,
-        "padding_bottom": 52,
-        "hide_sticky_atc": true
+        "padding_bottom": 52
       }
     },
     "outdoor_moments_cbeyy9": {
