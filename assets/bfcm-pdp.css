@@ -223,19 +223,28 @@
   .bfcm-bar__subheading { font-size: 15px; }
   .bfcm-bar__chip { width: 50px; }
 
-  /* Phones: fixed readable sizes; long lines may wrap. */
+  /* Phones: note + "In your cart" tag stay on one row; note scales with card width. */
   .bfcm-gifts { --u: 1px; }
   .bfcm-gifts__header { padding: 11px 14px; }
   .bfcm-gifts__heading { white-space: normal; }
   .bfcm-gifts__body { padding: 14px 14px 16px; }
-  .bfcm-gifts__intro {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .bfcm-gifts__note { font-size: 11px; letter-spacing: 0.6px; white-space: normal; }
+  .bfcm-gifts__intro { gap: 6px; }
+  .bfcm-gifts__note { font-size: min(11px, 2.55cqi); letter-spacing: 0.2px; }
+  .bfcm-gifts__tag { font-size: 10.5px; padding: 3px 8px; gap: 3px; }
+  .bfcm-gifts__tag-icon { width: 12px; height: 12px; }
   .bfcm-gifts__item { gap: 10px; }
   .bfcm-gifts__photo { width: 60px; height: 60px; }
   .bfcm-gifts__name { font-size: 14px; white-space: normal; }
+
+  /* Price badge stays beside the price. */
+  .bfcm-price-row { flex-wrap: nowrap; gap: 8px; container-type: inline-size; }
+  .bfcm-price-badge { font-size: min(12px, 2.7cqi); padding: 3px 8px; gap: 3px; }
+  .bfcm-price-badge img { width: 12px; height: 12px; }
+
+  /* Red "Black Friday Sale Ends in" bar: heading and timer on one line. */
+  .custom-countdown-banner { gap: 10px; padding: 10px 12px; }
+  .custom-countdown-banner .count-down-title { white-space: nowrap; font-size: 13px !important; }
+  .custom-countdown-banner .timer-display { font-size: 14px !important; }
 }
 
 /* ---------- Add to cart + 2 free gifts button (Figma 7221:239) ---------- */
