@@ -1,0 +1,109 @@
+{%- comment -%}
+  Free gifts card — PDP buy box, under the price.
+  Rendered by the `free_gifts` block in sections/main-product.liquid.
+  Figma: A-DIY DESIGN BOARD › node 7188:2974 ("Savings card").
+
+  Display only. Adding/removing the gift line items is handled site-wide by
+  snippets/bfcm-gifts-sync.liquid + assets/bfcm-gifts.js, which also toggles
+  the "In your cart" tag here via the `bfcm:gifts-synced` event.
+
+  Each gift uses its linked product (title / image / compare-at price) when one
+  is picked in the block settings, otherwise the text + image fallbacks.
+
+  Accepts:
+  - block: the section block
+  - section_id: section.id
+{%- endcomment -%}
+
+{%- liquid
+  assign gifts_in_cart = 0
+  for item in cart.items
+    if item.product.tags contains 'bfcm-gift'
+      assign gifts_in_cart = gifts_in_cart | plus: 1
+    endif
+  endfor
+-%}
+
+{{ 'bfcm-pdp.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="BfcmGifts-{{ section_id }}-{{ block.id }}"
+  class="bfcm-gifts{% if gifts_in_cart > 0 %} is-in-cart{% endif %}"
+  data-bfcm-gifts-card
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.heading != blank -%}
+    <div class="bfcm-gifts__header">
+      <p class="bfcm-gifts__heading">{{ block.settings.heading }}</p>
+    </div>
+  {%- endif -%}
+
+  <div class="bfcm-gifts__body">
+    <div class="bfcm-gifts__intro">
+      {%- if block.settings.note != blank -%}
+        <p class="bfcm-gifts__note">{{ block.settings.note }}</p>
+      {%- endif -%}
+      <span class="bfcm-gifts__tag">
+        <img src="{{ 'bfcm-icon-check.svg' | asset_url }}" width="14" height="14" alt="" class="bfcm-gifts__tag-icon">
+        <span class="bfcm-gifts__tag-text bfcm-gifts__tag-text--in">{{ block.settings.tag_in_cart }}</span>
+        <span class="bfcm-gifts__tag-text bfcm-gifts__tag-text--out">{{ block.settings.tag_default }}</span>
+      </span>
+    </div>
+
+    <ul class="bfcm-gifts__list" role="list">
+      {%- for i in (1..2) -%}
+        {%- liquid
+          assign key_product = 'gift_' | append: i | append: '_product'
+          assign key_title = 'gift_' | append: i | append: '_title'
+          assign key_value = 'gift_' | append: i | append: '_value'
+          assign key_image = 'gift_' | append: i | append: '_image'
+          assign gift_product = block.settings[key_product]
+          assign gift_title = block.settings[key_title]
+          assign gift_value = block.settings[key_value]
+          assign gift_image = block.settings[key_image]
+
+          if gift_product != blank
+            if gift_title == blank
+              assign gift_title = gift_product.title | remove_first: 'FREE GIFT: '
+            endif
+            if gift_value == blank and gift_product.compare_at_price > 0
+              assign gift_value = gift_product.compare_at_price | money_without_trailing_zeros
+            endif
+            if gift_image == blank
+              assign gift_image = gift_product.featured_image
+            endif
+          endif
+
+          if i == 1
+            assign fallback_asset = 'bfcm-gift-fridge.png'
+            assign photo_fit = 'contain'
+          else
+            assign fallback_asset = 'bfcm-gift-blanket.png'
+            assign photo_fit = 'cover'
+          endif
+        -%}
+        {%- if gift_title != blank -%}
+          <li class="bfcm-gifts__item">
+            <span class="bfcm-gifts__check" aria-hidden="true">
+              <img src="{{ 'bfcm-icon-checkbox.svg' | asset_url }}" width="12" height="9" alt="">
+            </span>
+            <span class="bfcm-gifts__photo bfcm-gifts__photo--{{ photo_fit }}">
+              {%- if gift_image != blank -%}
+                {{ gift_image | image_url: width: 160 | image_tag: width: 72, height: 72, alt: gift_title, loading: 'lazy' }}
+              {%- else -%}
+                <img src="{{ fallback_asset | asset_img_url: '160x' }}" width="72" height="72" alt="{{ gift_title | escape }}" loading="lazy">
+              {%- endif -%}
+            </span>
+            <span class="bfcm-gifts__name">{{ gift_title }}</span>
+            <span class="bfcm-gifts__value">
+              {%- if gift_value != blank -%}
+                <s class="bfcm-gifts__was"><span class="visually-hidden">Value </span>{{ gift_value }}</s>
+              {%- endif -%}
+              <span class="bfcm-gifts__free">{{ block.settings.free_label }}</span>
+            </span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>

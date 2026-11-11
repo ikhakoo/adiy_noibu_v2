@@ -223,15 +223,40 @@
             "content": "",
             "page": ""
           }
+        },
+        "bfcm_countdown_Bf26Nv": {
+          "type": "bfcm_countdown",
+          "settings": {
+            "heading": "BLACK FRIDAY",
+            "subheading": "$800 OFF + Free Shipping + 2 Free Gifts",
+            "end_datetime": "2026-11-30T23:59:59-05:00",
+            "hide_when_expired": true
+          }
+        },
+        "free_gifts_Bf26Gf": {
+          "type": "free_gifts",
+          "settings": {
+            "heading": "GET YOUR FREE GIFTS BEFORE THEY'RE GONE!",
+            "note": "Limited quantities available. First come, first served.",
+            "tag_default": "Included free",
+            "tag_in_cart": "In your cart",
+            "free_label": "FREE",
+            "gift_1_title": "BougeRV Portable Fridge with Battery",
+            "gift_1_value": "$349",
+            "gift_2_title": "BougeRV 12V Portable Heated Blanket",
+            "gift_2_value": "$99.99"
+          }
         }
       },
       "block_order": [
+        "bfcm_countdown_Bf26Nv",
         "review_rating_bar_CcqBf9",
         "text_aygjFj",
         "title",
         "text_ifcgmB",
         "price",
         "discount_promo_YW9Hge",
+        "free_gifts_Bf26Gf",
         "financing_widget_jbeqY8",
         "custom_liquid_7nXE8n",
         "material_switcher_EDGrz6",
