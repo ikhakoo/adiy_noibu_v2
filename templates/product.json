@@ -127,15 +127,17 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": false,
-            "show_gift_card_recipient": false
+            "show_gift_card_recipient": false,
+            "custom_label": "Add to cart + 2 free gifts",
+            "use_gift_icon": true
           }
         },
         "countdown_timer_NM9Fxn": {
           "type": "countdown_timer",
           "settings": {
-            "heading": "Fall Sale Ends in:",
-            "end_date": "2026-11-06",
-            "end_time": "23:59:59",
+            "heading": "Black Friday Sale Ends in:",
+            "end_date": "2026-11-30",
+            "end_time": "23:59:59-05:00",
             "bg_color": "#a33429",
             "text_color": "#ffffff"
           }
@@ -265,8 +267,8 @@
         "custom_liquid_FnEVbe",
         "estimated_delivery_HC9tbH",
         "buy_buttons",
-        "countdown_timer_NM9Fxn",
         "affirm_pay_over_time_messaging_product_block_nTFQar",
+        "countdown_timer_NM9Fxn",
         "need_assistance_block_rdEmyW",
         "custom_liquid_hbTRG9",
         "accessories_block_TPUpnp",

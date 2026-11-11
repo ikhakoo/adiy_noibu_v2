@@ -1946,7 +1946,7 @@
                           if (daysEl) daysEl.textContent = '0d';
                           if (hoursEl) hoursEl.textContent = '00h';
                           if (minsEl) minsEl.textContent = '00m';
-                          if (secsEl) secsEl.textContent = '0s';
+                          if (secsEl) secsEl.textContent = '00s';
                           clearInterval(timerInterval);
                           return;
                         }
@@ -5051,6 +5051,8 @@
       "name": "t:sections.main-product.blocks.buy_buttons.name",
       "limit": 1,
       "settings": [
+        { "type": "text", "id": "custom_label", "label": "Button label", "info": "Optional, e.g. \"Add to cart + 2 free gifts\". Leave empty for the default \"Add to cart\"." },
+        { "type": "checkbox", "id": "use_gift_icon", "label": "Use gift icon on the button", "default": false },
         {
           "type": "checkbox",
           "id": "show_dynamic_checkout",
