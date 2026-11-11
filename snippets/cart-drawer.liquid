@@ -873,7 +873,7 @@
                                   {%- if item.product.type == 'Free Gift' -%}
                                     {%- if item.variant.compare_at_price > 0 -%}
                                       <s class="cart-item__old-price price price--end compare-price">
-                                        {{ item.variant.compare_at_price | money }}
+                                        {{ item.variant.compare_at_price | money_without_trailing_zeros }}
                                       </s>
                                     {%- endif -%}
                                     <span class="price price--end final-price free-gift-price">FREE</span>

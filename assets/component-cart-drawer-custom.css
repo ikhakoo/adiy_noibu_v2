@@ -579,8 +579,10 @@ cart-drawer .is-free-gift .cart-item__title {
   flex-direction: column;
   align-items: flex-start;
 }
+cart-drawer .is-free-gift .custom-price-layout .final-price.free-gift-price,
 cart-drawer .is-free-gift .free-gift-price {
-  color: #194636;
-  font-weight: 700;
+  color: #194636 !important;
+  font-size: 18px;
+  font-weight: 800;
   letter-spacing: 0.5px;
 }
