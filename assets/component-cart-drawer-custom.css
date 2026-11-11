@@ -538,3 +538,48 @@ cart-drawer .truck-icon-text .content .heading {
     font-size: 14px;
   }
 }
+
+/* BFCM free gift lines: always below the deck, loud badge, FREE in green,
+   no quantity / remove controls (the gifts are fixed at 1 per order). */
+cart-drawer .cart-items {
+  display: flex;
+  flex-direction: column;
+}
+cart-drawer .cart-items > .cart-item { order: 1; }
+cart-drawer .cart-items > .cart-item.is-free-gift { order: 2; }
+cart-drawer .is-free-gift quantity-input,
+cart-drawer .is-free-gift cart-remove-button {
+  visibility: hidden;
+  pointer-events: none;
+}
+cart-drawer .free-gift-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+  padding: 4px 10px;
+  background: #a33429;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(163, 52, 41, 0.3);
+}
+cart-drawer .free-gift-badge img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+cart-drawer .is-free-gift .cart-item__title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+cart-drawer .is-free-gift .free-gift-price {
+  color: #194636;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
