@@ -29,7 +29,7 @@
 
   assign gifts_in_cart = 0
   for item in cart.items
-    if item.properties[gift_prop_name] != blank
+    if item.product.type == 'Free Gift' or item.properties[gift_prop_name] != blank
       assign gifts_in_cart = 1
     endif
   endfor
@@ -149,7 +149,7 @@
       fetch((window.Shopify && Shopify.routes && Shopify.routes.root || '/') + 'cart.js', { headers: { Accept: 'application/json' } })
         .then(function (r) { return r.json(); })
         .then(function (cart) {
-          var has = cart.items.some(function (i) { return i.properties && i.properties[propName]; });
+          var has = cart.items.some(function (i) { return i.product_type === 'Free Gift' || (i.properties && i.properties[propName]); });
           card.classList.toggle('is-in-cart', has);
         })
         .catch(function () {});
