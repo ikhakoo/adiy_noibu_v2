@@ -201,7 +201,7 @@
     font-size: calc(var(--u) * 14.2);
     line-height: 1.2;
     text-transform: uppercase;
-    max-width: calc(var(--u) * 245);
+    max-width: calc(var(--u) * 265);
   }
   .bfcm-hero__tag img { width: calc(var(--u) * 18.4); height: calc(var(--u) * 18.4); flex-shrink: 0; }
   .bfcm-hero__tag strong, .bfcm-hero__tag b { font-weight: 600; }
@@ -446,7 +446,7 @@
       padding: calc(var(--u) * 4) calc(var(--u) * 7.9);
       border-radius: calc(var(--u) * 7);
       font-size: calc(var(--u) * 9.6);
-      max-width: calc(var(--u) * 170);
+      max-width: calc(var(--u) * 178);
     }
     .bfcm-hero__tag img { width: calc(var(--u) * 12.8); height: calc(var(--u) * 12.8); }
     .bfcm-hero__tag--1 { left: calc(var(--u) * 6); }
@@ -460,8 +460,8 @@
       border-radius: 8px;
     }
     .bfcm-urgency__icon { width: 12.8px; height: 12.8px; margin-top: 1px; }
-    .bfcm-urgency__heading { font-size: 14px; line-height: 16px; }
-    .bfcm-urgency__sub { font-size: 12px; line-height: 16px; }
+    .bfcm-urgency__heading { font-size: min(14px, 3.45vw); line-height: 16px; white-space: nowrap; }
+    .bfcm-urgency__sub { font-size: min(12px, 3vw); line-height: 16px; }
   }
 {% endstylesheet %}
 
