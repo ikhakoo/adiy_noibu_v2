@@ -283,7 +283,11 @@
     "bfcm_hero_Bf26Ch": {
       "type": "bfcm-collection-hero",
       "settings": {
-        "collection_handles": "deck-kits"
+        "collection_handles": "deck-kits",
+        "gift_1": "<strong>FREE</strong> BougeRV Portable",
+        "gift_1_line2": "Fridge with Battery",
+        "gift_2": "<strong>FREE</strong> BougeRV 12V Portable",
+        "gift_2_line2": "Heated Blanket"
       }
     }
   },
