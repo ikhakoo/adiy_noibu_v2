@@ -46,7 +46,9 @@
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "badge_text": "2 free gifts included + Free Shipping"
+          }
         },
         "discount_promo_YW9Hge": {
           "type": "discount_promo",

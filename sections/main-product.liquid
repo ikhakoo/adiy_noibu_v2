@@ -1559,12 +1559,27 @@
         {%- endif -%}
       </div>
     {%- else -%}
-      {%- render 'price',
-        product: product,
-        use_variant: true,
-        show_badges: true,
-        price_class: 'price--large'
-      -%}
+      {%- if block.settings.badge_text != blank -%}
+        <div class="bfcm-price-row">
+          {%- render 'price',
+            product: product,
+            use_variant: true,
+            show_badges: true,
+            price_class: 'price--large'
+          -%}
+          <span class="bfcm-price-badge">
+            <img src="{{ 'bfcm-icon-check.svg' | asset_url }}" width="14" height="14" alt="">
+            {{ block.settings.badge_text }}
+          </span>
+        </div>
+      {%- else -%}
+        {%- render 'price',
+          product: product,
+          use_variant: true,
+          show_badges: true,
+          price_class: 'price--large'
+        -%}
+      {%- endif -%}
     {%- endif -%}
   </div>
 
@@ -4496,6 +4511,12 @@
         }
       ],
       "default": "style_1"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge next to price",
+      "info": "Style 1 only, e.g. \"2 free gifts included + Free Shipping\". Leave empty to hide."
     }
   ]
 },

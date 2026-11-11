@@ -252,3 +252,27 @@
   .product__info-wrapper .product-form__buttons .product-form__submit.product-form__submit--bfcm,
   .product-form__submit.product-form__submit--bfcm { font-size: 16px; }
 }
+
+/* ---------- Badge next to the price (Figma 7188:2964) ---------- */
+.bfcm-price-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.bfcm-price-row .price { margin: 0; }
+.bfcm-price-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #e3ede8;
+  border-radius: 999px;
+  font-family: var(--font-body-family, 'Outfit'), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  color: #194636;
+  white-space: nowrap;
+}
+.bfcm-price-badge img { display: block; width: 14px; height: 14px; flex-shrink: 0; }
