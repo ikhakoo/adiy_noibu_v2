@@ -1,13 +1,17 @@
 /* Black Friday PDP blocks — countdown bar + free gifts card.
    Figma: A-DIY DESIGN BOARD, nodes 7188:2941 and 7188:2974. */
 
-/* ---------- Countdown bar ---------- */
+/* ---------- Countdown bar ----------
+   Sizes are in --u: 1px at the Figma width (560px bar), scaled down
+   proportionally when the buy box is narrower so the offer stays on one line. */
 .bfcm-bar {
+  container-type: inline-size;
+  --u: min(1px, calc(100cqi / 532));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 10px;
+  padding: 12px 14px;
   margin: 0 0 16px;
   background: #111;
   border-radius: 12px;
@@ -16,20 +20,21 @@
   overflow: hidden;
 }
 .bfcm-bar[hidden] { display: none; }
-.bfcm-bar p { margin: 0; }
+.bfcm-bar p { margin: 0; font-weight: 600; white-space: nowrap; }
 
 .bfcm-bar__label {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  flex: 1 1 auto;
   text-align: center;
   font-weight: 600;
   min-width: 0;
 }
 .bfcm-bar__heading {
-  font-size: 18px;
-  letter-spacing: 1.8px;
+  font-size: calc(var(--u) * 18);
+  letter-spacing: calc(var(--u) * 1.8);
   color: #d4af37;
   background: linear-gradient(90deg, #d4af37 0%, #fff8d6 50%, #d4af37 100%);
   -webkit-background-clip: text;
@@ -37,35 +42,36 @@
   -webkit-text-fill-color: transparent;
 }
 .bfcm-bar__subheading {
-  font-size: 16px;
+  /* Outfit renders wider on the web than in Figma; 15.6 matches the Figma line width. */
+  font-size: calc(var(--u) * 15.6);
   color: #fff;
 }
 
 .bfcm-bar__countdown {
   display: flex;
   align-items: flex-start;
-  gap: 6px;
+  gap: calc(var(--u) * 6);
   flex-shrink: 0;
 }
 .bfcm-bar__chip {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50px;
-  padding: 5px 0;
+  width: calc(var(--u) * 46);
+  padding: calc(var(--u) * 5) 0;
   background: #2a2a2a;
   border-radius: 6px;
 }
 .bfcm-bar__num {
-  font-size: 16px;
+  font-size: calc(var(--u) * 16);
   font-weight: 700;
   color: #fff;
   font-variant-numeric: tabular-nums;
 }
 .bfcm-bar__unit {
-  font-size: 10px;
+  font-size: calc(var(--u) * 10);
   font-weight: 400;
-  letter-spacing: 0.6px;
+  letter-spacing: calc(var(--u) * 0.6);
   color: #bdb9b2;
 }
 
@@ -200,11 +206,13 @@
 /* ---------- Mobile ---------- */
 @media screen and (max-width: 749px) {
   .bfcm-bar {
+    --u: 1px;
     flex-direction: column;
     gap: 10px;
     padding: 12px;
   }
   .bfcm-bar__subheading { font-size: 15px; }
+  .bfcm-bar__chip { width: 50px; }
 
   .bfcm-gifts__header { padding: 11px 14px; }
   .bfcm-gifts__body { padding: 14px 14px 16px; }
