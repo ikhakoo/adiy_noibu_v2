@@ -3,9 +3,10 @@
   Rendered by the `free_gifts` block in sections/main-product.liquid.
   Figma: A-DIY DESIGN BOARD › node 7188:2974 ("Savings card").
 
-  Display only. Adding/removing the gift line items is handled site-wide by
-  snippets/bfcm-gifts-sync.liquid + assets/bfcm-gifts.js, which also toggles
-  the "In your cart" tag here via the `bfcm:gifts-synced` event.
+  While the offer is running it also adds a line item property to the deck
+  when it's added to the cart (hidden input tied to the product form), e.g.
+  "Free gifts: BougeRV Portable Fridge + 12V Heated Blanket". The note shows on
+  the deck line in the cart, checkout and the order. No gift products needed.
 
   Each gift uses its linked product (title / image / compare-at price) when one
   is picked in the block settings, otherwise the text + image fallbacks.
@@ -16,12 +17,24 @@
 {%- endcomment -%}
 
 {%- liquid
+  assign gift_prop_name = block.settings.property_name | default: 'Free gifts'
+  assign gift_prop_value = block.settings.property_value
+
+  assign now_s = 'now' | date: '%s' | plus: 0
+  assign offer_end_s = block.settings.offer_end | date: '%s' | plus: 0
+  assign offer_live = true
+  if offer_end_s > 0 and now_s >= offer_end_s
+    assign offer_live = false
+  endif
+
   assign gifts_in_cart = 0
   for item in cart.items
-    if item.product.tags contains 'bfcm-gift'
-      assign gifts_in_cart = gifts_in_cart | plus: 1
+    if item.properties[gift_prop_name] != blank
+      assign gifts_in_cart = 1
     endif
   endfor
+
+  assign gift_form_id = 'product-form-' | append: section_id
 -%}
 
 {{ 'bfcm-pdp.css' | asset_url | stylesheet_tag }}
@@ -30,8 +43,20 @@
   id="BfcmGifts-{{ section_id }}-{{ block.id }}"
   class="bfcm-gifts{% if gifts_in_cart > 0 %} is-in-cart{% endif %}"
   data-bfcm-gifts-card
+  data-offer-end="{{ block.settings.offer_end | escape }}"
+  data-prop-name="{{ gift_prop_name | escape }}"
   {{ block.shopify_attributes }}
 >
+  {%- if offer_live and gift_prop_value != blank -%}
+    <input
+      type="hidden"
+      class="bfcm-gifts__prop"
+      form="{{ gift_form_id }}"
+      name="properties[{{ gift_prop_name | escape }}]"
+      value="{{ gift_prop_value | escape }}"
+    >
+  {%- endif -%}
+
   {%- if block.settings.heading != blank -%}
     <div class="bfcm-gifts__header">
       <p class="bfcm-gifts__heading">{{ block.settings.heading }}</p>
@@ -107,3 +132,32 @@
     </ul>
   </div>
 </div>
+
+<script>
+  (function () {
+    var card = document.getElementById('BfcmGifts-{{ section_id }}-{{ block.id }}');
+    if (!card) return;
+    var prop = card.querySelector('.bfcm-gifts__prop');
+
+    // Offer over (page served from cache before the end time): stop adding the note.
+    var end = Date.parse(card.dataset.offerEnd);
+    if (prop && !isNaN(end) && Date.now() >= end) prop.remove();
+
+    // Flip the tag to "In your cart" once a deck carrying the note is in the cart.
+    var propName = card.dataset.propName;
+    function refresh() {
+      fetch((window.Shopify && Shopify.routes && Shopify.routes.root || '/') + 'cart.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          var has = cart.items.some(function (i) { return i.properties && i.properties[propName]; });
+          card.classList.toggle('is-in-cart', has);
+        })
+        .catch(function () {});
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+        subscribe(PUB_SUB_EVENTS.cartUpdate, refresh);
+      }
+    });
+  })();
+</script>

@@ -4565,7 +4565,10 @@
       "name": "BFCM Free Gifts",
       "limit": 1,
       "settings": [
-        { "type": "paragraph", "content": "Display only. The gift line items are added to / removed from the cart automatically (snippets/bfcm-gifts-sync.liquid)." },
+        { "type": "paragraph", "content": "While the offer runs, the deck added to cart from this page carries a note (line item property) naming the free gifts. It shows in the cart, checkout and order." },
+        { "type": "text", "id": "property_name", "label": "Cart / order note label", "default": "Free gifts" },
+        { "type": "text", "id": "property_value", "label": "Cart / order note text", "info": "Leave empty to stop adding the note.", "default": "BougeRV Portable Fridge + 12V Heated Blanket" },
+        { "type": "text", "id": "offer_end", "label": "Stop adding the note after", "info": "Format: YYYY-MM-DDTHH:MM:SS-05:00 (-05:00 = Eastern Standard Time)", "default": "2026-11-30T23:59:59-05:00" },
         { "type": "text", "id": "heading", "label": "Header", "default": "GET YOUR FREE GIFTS BEFORE THEY'RE GONE!" },
         { "type": "text", "id": "note", "label": "Note", "default": "Limited quantities available. First come, first served." },
         { "type": "text", "id": "tag_default", "label": "Tag (before a deck is added)", "default": "Included free" },
