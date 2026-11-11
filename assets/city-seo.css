@@ -48,8 +48,8 @@
 .cs-option__text { font-size: 1.7rem; line-height: 1.6; }
 .cs-meters { display: grid; gap: 10px; margin: auto 0 0; padding-top: 18px; border-top: 1px solid rgba(210, 196, 188, .5); }
 .cs-meter { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 1.5rem; }
-.cs-meter dd { display: flex; gap: 5px; margin: 0; }
-.cs-meter dd span { width: 28px; height: 6px; border-radius: 3px; background: rgba(210, 196, 188, .5); }
+.cs-meter dd { display: flex; flex: none; gap: 0; margin: 0; overflow: hidden; border-radius: 3px; }
+.cs-meter dd span { width: 30px; height: 6px; border-radius: 0; background: rgba(210, 196, 188, .5); }
 .cs-meter dd span.is-on { background: var(--ss-tan); }
 .cs-option--featured { border-color: var(--ss-green); background: var(--ss-green); }
 .cs-option--featured :is(.cs-option__title, .cs-option__text, .cs-meter) { color: #fff; }
