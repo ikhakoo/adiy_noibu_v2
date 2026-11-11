@@ -292,7 +292,8 @@
         "hide_variants": false,
         "enable_video_looping": false,
         "padding_top": 36,
-        "padding_bottom": 52
+        "padding_bottom": 52,
+        "hide_sticky_atc": true
       }
     },
     "outdoor_moments_cbeyy9": {

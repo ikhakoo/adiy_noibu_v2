@@ -4348,8 +4348,10 @@
   </product-component>
 </product-info>
 
+{%- unless section.settings.hide_sticky_atc -%}
 {%- render 'mobile-sticky-atc', product: product, section: section -%} 
 {% render 'custom-sticky-atc-bar', product: product %}
+{%- endunless -%}
 
 <script>
   document.addEventListener('click', function (e) {
@@ -6523,6 +6525,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_sticky_atc",
+      "default": false,
+      "label": "Hide sticky add-to-cart bar (desktop + mobile)"
+    },
     {
       "type": "checkbox",
       "id": "enable_sticky_info",
