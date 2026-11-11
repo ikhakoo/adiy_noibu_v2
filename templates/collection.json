@@ -279,9 +279,16 @@
         "padding_top": 36,
         "padding_bottom": 52
       }
+    },
+    "bfcm_hero_Bf26Ch": {
+      "type": "bfcm-collection-hero",
+      "settings": {
+        "collection_handles": "deck-kits"
+      }
     }
   },
   "order": [
+    "bfcm_hero_Bf26Ch",
     "banner",
     "product-grid",
     "rich_text_PhdpyR",

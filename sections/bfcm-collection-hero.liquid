@@ -1,0 +1,500 @@
+{%- comment -%}
+  Black Friday collection hero + "free gifts" urgency banner.
+  Figma: A-DIY DESIGN BOARD › node 7427:1135
+    desktop  7248:1695 (hero) + 7323:1306 (banner)
+    mobile   7330:258  (hero) + 7330:309  (banner)
+
+  Desktop sizes are written in --u (1px at the 1847px Figma hero width) so the
+  whole composition scales with the screen; mobile uses --m (1px at 366px).
+{%- endcomment -%}
+
+{%- liquid
+  assign show_hero = true
+  if section.settings.collection_handles != blank and collection
+    assign allowed = section.settings.collection_handles | remove: ' ' | split: ','
+    unless allowed contains collection.handle
+      assign show_hero = false
+    endunless
+  endif
+  if section.settings.hide_after != blank
+    assign now_s = 'now' | date: '%s' | plus: 0
+    assign end_s = section.settings.hide_after | date: '%s' | plus: 0
+    if end_s > 0 and now_s >= end_s
+      assign show_hero = false
+    endif
+  endif
+-%}
+
+{%- if show_hero or request.design_mode -%}
+  <style>
+    #BfcmHero-{{ section.id }} {
+      padding: 0 var(--bfcm-hero-gutter, 30px);
+      margin: {{ section.settings.margin_top }}px 0 {{ section.settings.margin_bottom }}px;
+    }
+  </style>
+
+  <div id="BfcmHero-{{ section.id }}" class="bfcm-hero-wrap" data-end="{{ section.settings.hide_after | escape }}">
+    {%- comment -%} ---------- Hero ---------- {%- endcomment -%}
+    <div class="bfcm-hero">
+      <div class="bfcm-hero__media">
+        {%- if section.settings.image != blank -%}
+          {%- assign hero_alt = section.settings.image.alt | default: 'BougeRV portable fridge and heated blanket on a backyard deck' -%}
+          {{ section.settings.image | image_url: width: 2000 | image_tag:
+            widths: '600, 900, 1200, 1600, 2000',
+            sizes: '(min-width: 750px) 60vw, 100vw',
+            class: 'bfcm-hero__img',
+            alt: hero_alt,
+            loading: 'eager',
+            fetchpriority: 'high'
+          }}
+        {%- else -%}
+          <img
+            class="bfcm-hero__img"
+            src="{{ 'bfcm-hero-gifts.png' | asset_img_url: '1600x' }}"
+            srcset="{{ 'bfcm-hero-gifts.png' | asset_img_url: '800x' }} 800w, {{ 'bfcm-hero-gifts.png' | asset_img_url: '1200x' }} 1200w, {{ 'bfcm-hero-gifts.png' | asset_img_url: '1600x' }} 1600w, {{ 'bfcm-hero-gifts.png' | asset_img_url: '2000x' }} 2000w"
+            sizes="(min-width: 750px) 60vw, 100vw"
+            width="1600"
+            height="1600"
+            alt="BougeRV portable fridge and heated blanket on a backyard deck"
+            fetchpriority="high"
+          >
+        {%- endif -%}
+
+        {%- if section.settings.gift_1 != blank -%}
+          <span class="bfcm-hero__tag bfcm-hero__tag--1">
+            <img src="{{ 'bfcm-hero-tag-gift.svg' | asset_url }}" width="18" height="18" alt="">
+            <span>{{ section.settings.gift_1 }}</span>
+          </span>
+          <img class="bfcm-hero__arrow bfcm-hero__arrow--1" src="{{ 'bfcm-hero-arrow-1.svg' | asset_url }}" width="61" height="102" alt="">
+        {%- endif -%}
+        {%- if section.settings.gift_2 != blank -%}
+          <span class="bfcm-hero__tag bfcm-hero__tag--2">
+            <img src="{{ 'bfcm-hero-tag-gift.svg' | asset_url }}" width="18" height="18" alt="">
+            <span>{{ section.settings.gift_2 }}</span>
+          </span>
+          <img class="bfcm-hero__arrow bfcm-hero__arrow--2" src="{{ 'bfcm-hero-arrow-2.svg' | asset_url }}" width="121" height="61" alt="">
+        {%- endif -%}
+      </div>
+
+      <div class="bfcm-hero__content">
+        <div class="bfcm-hero__headline">
+          <span class="bfcm-hero__eyebrow">
+            <img src="{{ 'bfcm-hero-star.svg' | asset_url }}" width="22" height="21" alt="">
+            {{ section.settings.eyebrow }}
+          </span>
+          <h1 class="bfcm-hero__title">
+            <span class="bfcm-hero__amount">
+              {{- section.settings.amount -}}
+              <img class="bfcm-hero__swoosh" src="{{ 'bfcm-hero-swoosh.svg' | asset_url }}" width="228" height="15" alt="">
+            </span>
+            {{ section.settings.amount_suffix }}
+          </h1>
+        </div>
+
+        <ul class="bfcm-hero__stack" role="list">
+          {%- for i in (1..2) -%}
+            {%- liquid
+              assign k_main = 'item_' | append: i
+              assign k_note = 'item_' | append: i | append: '_note'
+            -%}
+            {%- if section.settings[k_main] != blank -%}
+              <li class="bfcm-hero__item">
+                <span class="bfcm-hero__plus"><img src="{{ 'bfcm-hero-plus.svg' | asset_url }}" width="20" height="21" alt=""></span>
+                <span class="bfcm-hero__item-main">{{ section.settings[k_main] }}</span>
+                {%- if section.settings[k_note] != blank -%}
+                  <span class="bfcm-hero__item-note">{{ section.settings[k_note] }}</span>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.button_label != blank -%}
+          <a class="bfcm-hero__cta" href="{{ section.settings.button_link | default: '#ProductGridContainer' }}">
+            {{- section.settings.button_label -}}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.total_value != blank -%}
+          <p class="bfcm-hero__total">
+            <span class="bfcm-hero__rule" aria-hidden="true"></span>
+            <span>{{ section.settings.total_value }}</span>
+            <span class="bfcm-hero__rule" aria-hidden="true"></span>
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ---------- Urgency banner ---------- {%- endcomment -%}
+    {%- if section.settings.banner_heading != blank -%}
+      <div class="bfcm-urgency">
+        <img class="bfcm-urgency__icon" src="{{ 'bfcm-hero-banner-gift.svg' | asset_url }}" width="36" height="36" alt="">
+        <div class="bfcm-urgency__text">
+          <p class="bfcm-urgency__heading">{{ section.settings.banner_heading }}</p>
+          {%- if section.settings.banner_text != blank -%}
+            <p class="bfcm-urgency__sub">{{ section.settings.banner_text }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <script>
+    (function () {
+      var el = document.getElementById('BfcmHero-{{ section.id }}');
+      if (!el || window.Shopify?.designMode) return;
+      var end = Date.parse(el.dataset.end);
+      if (!isNaN(end) && Date.now() >= end) el.hidden = true;
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .bfcm-hero-wrap[hidden] { display: none; }
+  .bfcm-hero-wrap { font-family: var(--font-body-family, 'Outfit'), sans-serif; }
+  .bfcm-hero-wrap p, .bfcm-hero-wrap h1, .bfcm-hero-wrap ul { margin: 0; padding: 0; }
+
+  /* ---------- Desktop hero ---------- */
+  .bfcm-hero {
+    container-type: inline-size;
+    --u: calc(100cqi / 1847);
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #194636;
+    aspect-ratio: 1847 / 640;
+    color: #fff;
+    line-height: normal;
+  }
+  .bfcm-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+  .bfcm-hero__img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 56.9%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 96%;
+  }
+  .bfcm-hero__media::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 65.8%;
+    z-index: 1;
+    background: linear-gradient(90deg, #194636 34%, rgba(25, 70, 54, 0) 100%);
+    pointer-events: none;
+  }
+  .bfcm-hero__tag {
+    position: absolute;
+    z-index: 3;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: calc(var(--u) * 8.5);
+    padding: calc(var(--u) * 5.7) calc(var(--u) * 11.3);
+    background: #fbc104;
+    border-radius: calc(var(--u) * 10);
+    color: #000;
+    font-size: calc(var(--u) * 14.2);
+    line-height: 1.2;
+    text-transform: uppercase;
+    max-width: calc(var(--u) * 190);
+  }
+  .bfcm-hero__tag img { width: calc(var(--u) * 18.4); height: calc(var(--u) * 18.4); flex-shrink: 0; }
+  .bfcm-hero__tag strong, .bfcm-hero__tag b { font-weight: 600; }
+  .bfcm-hero__tag--1 { left: calc(var(--u) * 889); top: calc(var(--u) * 227); }
+  .bfcm-hero__tag--2 { left: calc(var(--u) * 1028); top: calc(var(--u) * 506); }
+  .bfcm-hero__arrow { position: absolute; z-index: 2; }
+  .bfcm-hero__arrow--1 {
+    /* Figma: 61x102 vector, rotated 90deg and flipped, sitting in a 102x61 box at (992, 274). */
+    left: calc(var(--u) * (992 + 20.5));
+    top: calc(var(--u) * (274 - 20.5));
+    width: calc(var(--u) * 61.15);
+    height: calc(var(--u) * 102);
+    transform: rotate(90deg) scaleY(-1);
+  }
+  .bfcm-hero__arrow--2 {
+    left: calc(var(--u) * 1283);
+    top: calc(var(--u) * 530);
+    width: calc(var(--u) * 121);
+    height: calc(var(--u) * 61);
+  }
+
+  .bfcm-hero__content {
+    position: absolute;
+    z-index: 2;
+    left: calc(var(--u) * 167);
+    top: calc(var(--u) * 58);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--u) * 26.3);
+  }
+  .bfcm-hero__headline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--u) * 7.9);
+  }
+  .bfcm-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--u) * 10.5);
+    padding: calc(var(--u) * 7.9) calc(var(--u) * 13.1);
+    background: #000;
+    border-radius: calc(var(--u) * 10);
+    transform: rotate(-1deg);
+    font-size: calc(var(--u) * 24);
+    font-weight: 600;
+    letter-spacing: calc(var(--u) * 0.79);
+    line-height: calc(var(--u) * 21);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .bfcm-hero__eyebrow img { width: calc(var(--u) * 21.8); height: calc(var(--u) * 20.7); }
+  .bfcm-hero__title {
+    font-family: inherit;
+    font-size: calc(var(--u) * 90);
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .bfcm-hero__amount {
+    position: relative;
+    color: #fbc104;
+  }
+  .bfcm-hero__swoosh {
+    position: absolute;
+    left: calc(var(--u) * 13);
+    bottom: calc(var(--u) * -8);
+    width: calc(var(--u) * 228);
+    height: calc(var(--u) * 15);
+    transform: rotate(-2.39deg);
+  }
+
+  .bfcm-hero__stack {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 26.3);
+    padding: calc(var(--u) * 10) 0 calc(var(--u) * 50);
+  }
+  .bfcm-hero__item {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 13.1);
+    white-space: nowrap;
+  }
+  .bfcm-hero__plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: calc(var(--u) * 38.6);
+    height: calc(var(--u) * 38.6);
+    background: rgba(251, 193, 4, 0.2);
+    border-radius: calc(var(--u) * 3.2);
+  }
+  .bfcm-hero__plus img { width: calc(var(--u) * 20.35); height: calc(var(--u) * 21.36); }
+  .bfcm-hero__item-main {
+    font-size: calc(var(--u) * 36);
+    font-weight: 700;
+    letter-spacing: calc(var(--u) * -0.97);
+    line-height: calc(var(--u) * 43.3);
+  }
+  .bfcm-hero__item-note {
+    margin-left: calc(var(--u) * 0);
+    font-size: calc(var(--u) * 22.5);
+    color: rgba(226, 226, 226, 0.9);
+    line-height: calc(var(--u) * 32.2);
+  }
+
+  .bfcm-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: calc(var(--u) * 12.3) calc(var(--u) * 29.6);
+    background: #fbc104;
+    border-radius: calc(var(--u) * 12.3);
+    color: #050505;
+    font-size: calc(var(--u) * 37);
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .bfcm-hero__cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); }
+
+  .bfcm-hero__total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--u) * 15.8);
+    width: calc(var(--u) * 534);
+    margin-top: calc(var(--u) * -10) !important;
+    font-size: calc(var(--u) * 26.3);
+    font-weight: 300;
+    line-height: calc(var(--u) * 31.5);
+    white-space: nowrap;
+  }
+  .bfcm-hero__total strong, .bfcm-hero__total b { font-weight: 600; color: #fbc104; }
+  .bfcm-hero__rule { display: block; width: calc(var(--u) * 42); height: 1.3px; background: #fbc104; flex-shrink: 0; }
+
+  /* ---------- Urgency banner ---------- */
+  .bfcm-urgency {
+    container-type: inline-size;
+    --u: min(1px, calc(100cqi / 1847));
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: calc(var(--u) * 10);
+    margin-top: 20px;
+    padding: calc(var(--u) * 20);
+    background: #fbc104;
+    border-radius: 10px;
+    color: #000;
+    text-align: center;
+  }
+  .bfcm-urgency__icon { width: calc(var(--u) * 35.6); height: calc(var(--u) * 35.6); flex-shrink: 0; }
+  .bfcm-urgency__text { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 4); }
+  .bfcm-urgency__heading { font-size: calc(var(--u) * 36); font-weight: 500; line-height: 1; }
+  .bfcm-urgency__sub { font-size: calc(var(--u) * 24); font-weight: 400; line-height: calc(var(--u) * 34); }
+
+  /* ---------- Mobile ---------- */
+  @media screen and (max-width: 749px) {
+    .bfcm-hero-wrap { --bfcm-hero-gutter: 12px; }
+
+    .bfcm-hero {
+      --u: calc(100cqi / 366);
+      aspect-ratio: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .bfcm-hero__content {
+      position: static;
+      order: 1;
+      align-items: center;
+      gap: calc(var(--u) * 16);
+      padding: calc(var(--u) * 28) calc(var(--u) * 20) calc(var(--u) * 8);
+    }
+    .bfcm-hero__headline { align-items: center; gap: calc(var(--u) * 4.8); }
+    .bfcm-hero__eyebrow {
+      gap: calc(var(--u) * 6.4);
+      padding: calc(var(--u) * 4.8) calc(var(--u) * 8);
+      border-radius: calc(var(--u) * 6.1);
+      font-size: calc(var(--u) * 15);
+      letter-spacing: calc(var(--u) * 0.48);
+      line-height: calc(var(--u) * 12.8);
+    }
+    .bfcm-hero__eyebrow img { width: calc(var(--u) * 13.3); height: calc(var(--u) * 12.6); }
+    .bfcm-hero__title { font-size: calc(var(--u) * 55); }
+    .bfcm-hero__swoosh {
+      left: calc(var(--u) * 8);
+      bottom: calc(var(--u) * -5);
+      width: calc(var(--u) * 139);
+      height: calc(var(--u) * 9.2);
+    }
+    .bfcm-hero__stack { gap: calc(var(--u) * 10); padding: calc(var(--u) * 6) 0 calc(var(--u) * 20); }
+    .bfcm-hero__item { gap: calc(var(--u) * 8); }
+    .bfcm-hero__plus { width: calc(var(--u) * 23.6); height: calc(var(--u) * 23.6); border-radius: calc(var(--u) * 2); }
+    .bfcm-hero__plus img { width: calc(var(--u) * 12.4); height: calc(var(--u) * 13); }
+    .bfcm-hero__item-main { font-size: calc(var(--u) * 22.5); letter-spacing: calc(var(--u) * -0.59); line-height: calc(var(--u) * 26.5); }
+    .bfcm-hero__item-note { font-size: calc(var(--u) * 13); line-height: calc(var(--u) * 19.6); }
+    .bfcm-hero__cta {
+      padding: calc(var(--u) * 7.5) calc(var(--u) * 18);
+      border-radius: calc(var(--u) * 7.5);
+      font-size: calc(var(--u) * 22.5);
+    }
+    .bfcm-hero__total {
+      gap: calc(var(--u) * 9.6);
+      width: 100%;
+      margin-top: 0 !important;
+      font-size: calc(var(--u) * 15);
+      line-height: calc(var(--u) * 19.2);
+    }
+    .bfcm-hero__rule { width: calc(var(--u) * 25.7); height: 0.8px; }
+
+    .bfcm-hero__media {
+      position: relative;
+      order: 2;
+      inset: auto;
+      height: calc(var(--u) * 322);
+      overflow: hidden;
+    }
+    .bfcm-hero__img {
+      width: 100%;
+      height: 100%;
+      object-position: 50% 92%;
+    }
+    .bfcm-hero__media::before {
+      inset: 0 0 auto 0;
+      width: 100%;
+      height: calc(var(--u) * 110);
+      background: linear-gradient(180deg, #194636 0%, rgba(25, 70, 54, 0) 100%);
+    }
+    .bfcm-hero__arrow { display: none; }
+    .bfcm-hero__tag {
+      top: auto;
+      bottom: calc(var(--u) * 8);
+      gap: calc(var(--u) * 5.9);
+      padding: calc(var(--u) * 4) calc(var(--u) * 7.9);
+      border-radius: calc(var(--u) * 7);
+      font-size: calc(var(--u) * 9.6);
+      max-width: calc(var(--u) * 170);
+    }
+    .bfcm-hero__tag img { width: calc(var(--u) * 12.8); height: calc(var(--u) * 12.8); }
+    .bfcm-hero__tag--1 { left: calc(var(--u) * 6); }
+    .bfcm-hero__tag--2 { left: calc(var(--u) * 181); }
+
+    .bfcm-urgency {
+      --u: 1px;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 14px 10px;
+      border-radius: 8px;
+    }
+    .bfcm-urgency__icon { width: 12.8px; height: 12.8px; margin-top: 1px; }
+    .bfcm-urgency__heading { font-size: 14px; line-height: 16px; }
+    .bfcm-urgency__sub { font-size: 12px; line-height: 16px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BFCM Collection Hero",
+  "tag": "section",
+  "class": "section-bfcm-collection-hero",
+  "settings": [
+    { "type": "text", "id": "collection_handles", "label": "Show on collections (handles, comma separated)", "info": "Leave empty to show on every collection using this template.", "default": "deck-kits" },
+    { "type": "text", "id": "hide_after", "label": "Hide after (date, time, UTC offset)", "info": "Format: YYYY-MM-DDTHH:MM:SS-05:00", "default": "2026-11-30T23:59:59-05:00" },
+    { "type": "header", "content": "Offer" },
+    { "type": "text", "id": "eyebrow", "label": "Ribbon", "default": "Black Friday Sale" },
+    { "type": "text", "id": "amount", "label": "Amount (yellow)", "default": "$800" },
+    { "type": "text", "id": "amount_suffix", "label": "After amount", "default": "off +" },
+    { "type": "text", "id": "item_1", "label": "Item 1", "default": "FREE SHIPPING" },
+    { "type": "text", "id": "item_1_note", "label": "Item 1 note", "default": "($199 value)" },
+    { "type": "text", "id": "item_2", "label": "Item 2", "default": "2 FREE GIFTS" },
+    { "type": "text", "id": "item_2_note", "label": "Item 2 note", "default": "(Worth $500)" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the Black Friday sale" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Leave empty to scroll to the products." },
+    { "type": "inline_richtext", "id": "total_value", "label": "Total value line", "default": "Up to <strong>$1,499</strong> in total value" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Hero image", "info": "Leave empty to use the BougeRV fridge + blanket image." },
+    { "type": "inline_richtext", "id": "gift_1", "label": "Gift tag 1", "default": "<strong>FREE</strong> BougeRV Portable Fridge with Battery" },
+    { "type": "inline_richtext", "id": "gift_2", "label": "Gift tag 2", "default": "<strong>FREE</strong> BougeRV 12V Portable Heated Blanket" },
+    { "type": "header", "content": "Banner below hero" },
+    { "type": "text", "id": "banner_heading", "label": "Heading", "default": "GET YOUR FREE GIFTS BEFORE THEY'RE GONE!" },
+    { "type": "text", "id": "banner_text", "label": "Text", "default": "Limited quantities available. First come, first served." },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "margin_top", "label": "Top margin", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "margin_bottom", "label": "Bottom margin", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 }
+  ],
+  "presets": [{ "name": "BFCM Collection Hero" }]
+}
+{% endschema %}
