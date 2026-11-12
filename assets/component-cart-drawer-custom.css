@@ -519,3 +519,70 @@
 .cart-drawer__footer .affirm-as-low-as{
   display:none;
 }
+
+/* BFCM offer line in the delivery box: one line, sized to the box width. */
+cart-drawer .truck-icon-text .content {
+  max-width: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  container-type: inline-size;
+}
+cart-drawer .truck-icon-text .content .heading {
+  white-space: nowrap;
+  font-size: clamp(12px, 3.6cqi, 16px);
+}
+@media screen and (max-width: 480px) {
+  /* Too narrow for one readable line on phones: allow it to wrap. */
+  cart-drawer .truck-icon-text .content .heading {
+    white-space: normal;
+    font-size: 14px;
+  }
+}
+
+/* BFCM free gift lines: always below the deck, loud badge, FREE in green,
+   no quantity / remove controls (the gifts are fixed at 1 per order). */
+cart-drawer .cart-drawer .cart-items,
+cart-drawer .cart-items {
+  display: flex;
+  flex-direction: column;
+}
+cart-drawer .cart-items > .cart-item { order: 1; }
+cart-drawer .cart-items > .cart-item.is-free-gift { order: 2; }
+cart-drawer .is-free-gift quantity-input,
+cart-drawer .is-free-gift cart-remove-button {
+  visibility: hidden;
+  pointer-events: none;
+}
+cart-drawer .free-gift-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+  padding: 4px 10px;
+  background: #a33429;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(163, 52, 41, 0.3);
+}
+cart-drawer .free-gift-badge img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+cart-drawer .is-free-gift .cart-item__title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+cart-drawer .is-free-gift .custom-price-layout .final-price.free-gift-price,
+cart-drawer .is-free-gift .free-gift-price {
+  color: #194636 !important;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}

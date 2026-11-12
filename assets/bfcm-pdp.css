@@ -1,0 +1,299 @@
+/* Black Friday PDP blocks — countdown bar + free gifts card.
+   Figma: A-DIY DESIGN BOARD, nodes 7188:2941 and 7188:2974. */
+
+/* ---------- Countdown bar ----------
+   Sizes are in --u: 1px at the Figma width (560px bar), scaled down
+   proportionally when the buy box is narrower so the offer stays on one line. */
+.bfcm-bar {
+  container-type: inline-size;
+  --u: min(1px, calc(100cqi / 532));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  margin: 0 0 16px;
+  background: #111;
+  border-radius: 12px;
+  font-family: var(--font-body-family, 'Outfit'), sans-serif;
+  line-height: normal;
+  overflow: hidden;
+}
+.bfcm-bar[hidden] { display: none; }
+.bfcm-bar p { margin: 0; font-weight: 600; white-space: nowrap; }
+
+.bfcm-bar__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1 1 auto;
+  text-align: center;
+  font-weight: 600;
+  min-width: 0;
+}
+.bfcm-bar__heading {
+  font-size: calc(var(--u) * 18);
+  letter-spacing: calc(var(--u) * 1.8);
+  color: #d4af37;
+  background: linear-gradient(90deg, #d4af37 0%, #fff8d6 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.bfcm-bar__subheading {
+  /* Outfit renders wider on the web than in Figma; 15.6 matches the Figma line width. */
+  font-size: calc(var(--u) * 15.6);
+  color: #fff;
+}
+
+.bfcm-bar__countdown {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--u) * 6);
+  flex-shrink: 0;
+}
+.bfcm-bar__chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(var(--u) * 46);
+  padding: calc(var(--u) * 5) 0;
+  background: #2a2a2a;
+  border-radius: 6px;
+}
+.bfcm-bar__num {
+  font-size: calc(var(--u) * 16);
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.bfcm-bar__unit {
+  font-size: calc(var(--u) * 10);
+  font-weight: 400;
+  letter-spacing: calc(var(--u) * 0.6);
+  color: #bdb9b2;
+}
+
+/* ---------- Free gifts card ----------
+   Sizes are in --u: 1px at the Figma width (556px inside the border), scaled
+   down with the buy box so the note and gift names stay on one line. */
+.bfcm-gifts {
+  container-type: inline-size;
+  --u: min(1px, calc(100cqi / 556));
+  margin: 16px 0;
+  background: #fff;
+  border: 2px solid #194636;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: var(--font-body-family, 'Outfit'), sans-serif;
+  line-height: normal;
+}
+.bfcm-gifts p { margin: 0; }
+
+.bfcm-gifts__header {
+  padding: calc(var(--u) * 11) calc(var(--u) * 18);
+  background: #194636;
+}
+.bfcm-gifts__heading {
+  font-size: calc(var(--u) * 13);
+  font-weight: 600;
+  letter-spacing: calc(var(--u) * 0.78);
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bfcm-gifts__body {
+  padding: calc(var(--u) * 16) calc(var(--u) * 18) calc(var(--u) * 18);
+}
+.bfcm-gifts__intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 10);
+}
+.bfcm-gifts__note {
+  min-width: 0;
+  /* Outfit renders wider on the web than in Figma; these keep the Figma line length. */
+  font-size: min(12px, calc(var(--u) * 14));
+  font-weight: 700;
+  letter-spacing: min(0.96px, calc(var(--u) * 1.1));
+  color: #5b5853;
+  white-space: nowrap;
+}
+.bfcm-gifts__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 4);
+  flex-shrink: 0;
+  padding: calc(var(--u) * 4) calc(var(--u) * 10);
+  background: #e3ede8;
+  border-radius: 999px;
+  font-size: calc(var(--u) * 12);
+  font-weight: 600;
+  color: #194636;
+  white-space: nowrap;
+}
+.bfcm-gifts__tag-icon { display: block; width: calc(var(--u) * 14); height: calc(var(--u) * 14); }
+.bfcm-gifts__tag-text--in { display: none; }
+.bfcm-gifts.is-in-cart .bfcm-gifts__tag-text--in { display: inline; }
+.bfcm-gifts.is-in-cart .bfcm-gifts__tag-text--out { display: none; }
+
+.bfcm-gifts__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bfcm-gifts__item {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 14);
+  padding: calc(var(--u) * 12) 0;
+  border-bottom: 1px solid #ece9e4;
+}
+
+.bfcm-gifts__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: calc(var(--u) * 24);
+  height: calc(var(--u) * 24);
+  background: #194636;
+  border-radius: calc(var(--u) * 6);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
+}
+.bfcm-gifts__check img { display: block; width: calc(var(--u) * 12.3); height: calc(var(--u) * 9.07); }
+
+.bfcm-gifts__photo {
+  flex-shrink: 0;
+  width: calc(var(--u) * 72);
+  height: calc(var(--u) * 72);
+  background: #fff;
+  border: 1px solid #ece9e4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.bfcm-gifts__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.bfcm-gifts__photo--contain img { object-fit: contain; }
+.bfcm-gifts__photo--cover img { object-fit: cover; }
+
+.bfcm-gifts__name {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: min(15px, calc(var(--u) * 17.4));
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+.bfcm-gifts__value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.bfcm-gifts__was {
+  font-size: calc(var(--u) * 13);
+  font-weight: 400;
+  color: #6e6a64;
+}
+.bfcm-gifts__free {
+  font-size: calc(var(--u) * 16);
+  font-weight: 700;
+  color: #194636;
+  text-transform: uppercase;
+}
+
+/* ---------- Add to cart + 2 free gifts button (Figma 7221:239) ---------- */
+.product__info-wrapper .product-form__buttons .product-form__submit.product-form__submit--bfcm,
+.product-form__submit.product-form__submit--bfcm {
+  min-height: 56px;
+  height: 56px;
+  padding: 0 16px;
+  gap: 10px;
+  border-radius: 12px;
+  font-family: var(--font-body-family, 'Outfit'), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+.product-form__submit--bfcm::after { border-radius: 12px; }
+.product-form__submit--bfcm .product-form__submit-icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.product-form__submit--bfcm.loading .product-form__submit-icon { visibility: hidden; }
+@media screen and (max-width: 749px) {
+  .product__info-wrapper .product-form__buttons .product-form__submit.product-form__submit--bfcm,
+  .product-form__submit.product-form__submit--bfcm { font-size: 16px; }
+}
+
+/* ---------- Badge next to the price (Figma 7188:2964) ---------- */
+.bfcm-price-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.bfcm-price-row .price { margin: 0; }
+.bfcm-price-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #e3ede8;
+  border-radius: 999px;
+  font-family: var(--font-body-family, 'Outfit'), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  color: #194636;
+  white-space: nowrap;
+}
+.bfcm-price-badge img { display: block; width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ---------- Mobile ---------- */
+@media screen and (max-width: 749px) {
+  .bfcm-bar {
+    --u: 1px;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+  }
+  .bfcm-bar__subheading { font-size: 15px; }
+  .bfcm-bar__chip { width: 50px; }
+
+  /* Phones: note + "In your cart" tag stay on one row; note scales with card width. */
+  .bfcm-gifts { --u: 1px; }
+  .bfcm-gifts__header { padding: 11px 14px; }
+  .bfcm-gifts__heading { white-space: normal; }
+  .bfcm-gifts__body { padding: 14px 14px 16px; }
+  .bfcm-gifts__intro { gap: 6px; }
+  .bfcm-gifts__note { font-size: min(11px, 2.4cqi); letter-spacing: 0.2px; }
+  .bfcm-gifts__tag { font-size: 10.5px; padding: 3px 8px; gap: 3px; }
+  .bfcm-gifts__tag-icon { width: 12px; height: 12px; }
+  .bfcm-gifts__item { gap: 10px; }
+  .bfcm-gifts__photo { width: 60px; height: 60px; }
+  .bfcm-gifts__name { font-size: 14px; white-space: normal; }
+
+  /* Price badge stays beside the price. */
+  .bfcm-price-row { flex-wrap: nowrap; gap: 8px; container-type: inline-size; }
+  .bfcm-price-badge { font-size: min(12px, 2.7cqi); padding: 3px 8px; gap: 3px; }
+  .bfcm-price-badge img { width: 12px; height: 12px; }
+
+  /* Red "Black Friday Sale Ends in" bar: heading and timer on one line. */
+  .custom-countdown-banner { gap: 10px; padding: 10px 12px; }
+  .custom-countdown-banner .count-down-title { white-space: nowrap; font-size: 13px !important; }
+  .custom-countdown-banner .timer-display { font-size: 14px !important; }
+}

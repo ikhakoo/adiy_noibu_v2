@@ -103,7 +103,7 @@
         "image_focal": "50% 60%",
         "image_alt": "[hero_image_alt]",
         "price_label": "Regular price",
-        "promo_code": "FALL500",
+        "promo_code": "BFCM",
         "discount_amount": 0,
         "promo_prefix": "or",
         "promo_suffix": "with code",
@@ -2238,7 +2238,7 @@
       "settings": {
         "anchor_id": "faq",
         "size_option": "",
-        "promo_code": "FALL500",
+        "promo_code": "BFCM",
         "discount_amount": 0,
         "twin_product": "",
         "eyebrow": "[size_x] [material_short] deck FAQ",

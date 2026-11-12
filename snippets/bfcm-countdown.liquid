@@ -1,0 +1,74 @@
+{%- comment -%}
+  Black Friday countdown bar — top of the PDP buy box.
+  Rendered by the `bfcm_countdown` block in sections/main-product.liquid.
+  Figma: A-DIY DESIGN BOARD › node 7188:2941 ("Black Friday bar").
+
+  Accepts:
+  - block: the section block (settings: heading, subheading, end_datetime, hide_when_expired)
+  - section_id: section.id
+{%- endcomment -%}
+
+{%- liquid
+  assign bfcm_uid = 'BfcmCountdown-' | append: section_id | append: '-' | append: block.id
+-%}
+
+{{ 'bfcm-pdp.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="{{ bfcm_uid }}"
+  class="bfcm-bar"
+  data-end="{{ block.settings.end_datetime | escape }}"
+  data-hide-expired="{{ block.settings.hide_when_expired }}"
+  role="timer"
+  aria-label="{{ block.settings.heading | escape }} {{ block.settings.subheading | escape }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="bfcm-bar__label">
+    {%- if block.settings.heading != blank -%}
+      <p class="bfcm-bar__heading">{{ block.settings.heading }}</p>
+    {%- endif -%}
+    {%- if block.settings.subheading != blank -%}
+      <p class="bfcm-bar__subheading">{{ block.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="bfcm-bar__countdown" aria-hidden="true">
+    <div class="bfcm-bar__chip"><span class="bfcm-bar__num" data-unit="d">00</span><span class="bfcm-bar__unit">DAYS</span></div>
+    <div class="bfcm-bar__chip"><span class="bfcm-bar__num" data-unit="h">00</span><span class="bfcm-bar__unit">HRS</span></div>
+    <div class="bfcm-bar__chip"><span class="bfcm-bar__num" data-unit="m">00</span><span class="bfcm-bar__unit">MIN</span></div>
+    <div class="bfcm-bar__chip"><span class="bfcm-bar__num" data-unit="s">00</span><span class="bfcm-bar__unit">SEC</span></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var el = document.getElementById('{{ bfcm_uid }}');
+    if (!el) return;
+    var end = Date.parse(el.dataset.end);
+    if (isNaN(end)) {
+      console.warn('[bfcm-countdown] Invalid end date/time:', el.dataset.end);
+      return;
+    }
+    var nums = {};
+    el.querySelectorAll('[data-unit]').forEach(function (n) { nums[n.dataset.unit] = n; });
+    var pad = function (v) { return (v < 10 ? '0' : '') + v; };
+    var timer;
+
+    function tick() {
+      var diff = end - Date.now();
+      if (diff <= 0) {
+        diff = 0;
+        clearInterval(timer);
+        if (el.dataset.hideExpired === 'true' && !window.Shopify?.designMode) el.hidden = true;
+      }
+      var s = Math.floor(diff / 1000);
+      nums.d.textContent = pad(Math.floor(s / 86400));
+      nums.h.textContent = pad(Math.floor((s % 86400) / 3600));
+      nums.m.textContent = pad(Math.floor((s % 3600) / 60));
+      nums.s.textContent = pad(s % 60);
+    }
+
+    tick();
+    timer = setInterval(tick, 1000);
+  })();
+</script>

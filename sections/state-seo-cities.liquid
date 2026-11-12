@@ -7,6 +7,11 @@
   state_seo.cities so one template serves every state); `city` blocks are the fallback.
   The first "Cities shown before Load more" cards are visible; the rest reveal on click.
 
+  City page links: the state's city SEO pages (city_seo_state metaobject whose handle matches
+  the page handle without "deck-builders-", e.g. deck-builders-colorado → colorado) are shown
+  first, each linking to its /pages/<page_handle> city page. State city cards with the same
+  name are skipped so a city never appears twice; the remaining state cards follow.
+
   Shopify allows 50 blocks per section. For more cities, add a second instance of this
   section right after this one and tick "Continuation": it hides its heading and stays
   hidden until "Load more cities" is pressed.
@@ -16,6 +21,17 @@
   assign visible = section.settings.initial_count
   assign continued = section.settings.continuation
   assign hidden_count = 0
+  assign card_index = 0
+
+  assign cs_cities = nil
+  if continued == false and section.settings.link_city_pages
+    assign cs_handle = page.handle | remove_first: 'deck-builders-'
+    assign cs_state = metaobjects.city_seo_state[cs_handle]
+    if cs_state != blank
+      assign cs_cities = cs_state.cities.value
+    endif
+  endif
+  assign linked_names = '|'
 -%}
 
 <div class="ss ss--cream ss-cities{% if continued %} ss-cities--continued is-hidden{% endif %}"{% if section.settings.anchor_id != blank and continued == false %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
@@ -32,16 +48,47 @@
     {%- endunless -%}
 
     <ul class="ss-cities__grid">
+      {%- comment -%} City SEO pages for this state, linked. {%- endcomment -%}
+      {%- if cs_cities != blank and cs_cities.size > 0 -%}
+        {%- for c in cs_cities -%}
+          {%- liquid
+            assign card_index = card_index | plus: 1
+            assign hide = false
+            if card_index > visible
+              assign hide = true
+              assign hidden_count = hidden_count | plus: 1
+            endif
+            assign city_name = c.name.value
+            assign city_alt = c.image_alt.value | default: city_name
+            assign city_image = c.image.value
+            assign city_link = '/pages/' | append: c.page_handle.value
+            assign key = city_name | downcase | strip
+            assign linked_names = linked_names | append: key | append: '|'
+          -%}
+          <li{% if hide %} class="is-hidden"{% endif %}>
+            <a class="ss-city" href="{{ city_link }}">
+              {%- render 'state-seo-image', image: city_image, alt: city_alt, class: 'ss-city__media', sizes: '(min-width: 1920px) 303px, (min-width: 990px) 20vw, 45vw', placeholder: 'image' -%}
+              <span class="ss-city__name">{{ city_name | escape }}{%- render 'state-seo-icon', name: 'arrow' -%}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+
       {%- if section.settings.cities != blank and section.settings.cities.size > 0 -%}
         {%- comment -%} Cities from the page's metaobject list (state_seo.cities). {%- endcomment -%}
         {%- for city in section.settings.cities -%}
           {%- liquid
+            assign city_name = city.name.value
+            assign key = '|' | append: city_name | downcase | strip | append: '|'
+            if linked_names contains key
+              continue
+            endif
+            assign card_index = card_index | plus: 1
             assign hide = false
-            if continued == false and forloop.index > visible
+            if continued == false and card_index > visible
               assign hide = true
               assign hidden_count = hidden_count | plus: 1
             endif
-            assign city_name = city.name.value
             assign city_alt = city.image_alt.value | default: city_name
             assign city_link = city.link.value
             assign city_image = city.image.value
@@ -57,7 +104,7 @@
             {%- if city_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
           </li>
         {%- endfor -%}
-      {%- else -%}
+      {%- elsif cs_cities == blank -%}
       {%- for block in section.blocks -%}
         {%- liquid
           assign hide = false
@@ -106,6 +153,7 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Building a Deck Across New York" },
     { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>From the tight permit requirements of the Five Boroughs to the heavy snow loads of Buffalo, our kits are engineered for the specific demands of New York State geography.</p>" },
     { "type": "metaobject_list", "id": "cities", "label": "City cards", "metaobject_type": "state_seo_city", "info": "Connect to the page metafield State SEO · City cards. Blocks below are used only when this is empty." },
+    { "type": "checkbox", "id": "link_city_pages", "label": "Show linked city pages first", "default": true, "info": "Adds the state's city SEO pages (City SEO · State entry matching this page) as linked cards before the city cards." },
     { "type": "range", "id": "initial_count", "label": "Cities shown before Load more", "min": 5, "max": 50, "step": 5, "default": 10 },
     { "type": "text", "id": "more_label", "label": "Load more label", "default": "Load more cities" },
     { "type": "text", "id": "footnote", "label": "Footnote", "default": "Don’t see your community? A-DIY can still deliver to your area." },

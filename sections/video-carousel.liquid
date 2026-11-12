@@ -470,34 +470,45 @@
 {%- comment -%}
   VideoObject for each captioned card. Without this, 15 videos on this page carry
   no machine-readable text at all - no transcript, no caption track, no name.
+
+  Google treats name, thumbnailUrl and uploadDate as required: a VideoObject missing
+  any of them is reported as an invalid item in Search Console. So a card is only
+  emitted when it has a title, a thumbnail and a playable source, and uploadDate
+  comes from the card's own setting or else the section's default, always written
+  as a full ISO 8601 datetime with a timezone offset. Protocol-relative video URLs
+  (//a-diy.com/...) are made absolute.
 {%- endcomment -%}
 {%- capture video_objects -%}
   {%- assign vo_separator = '' -%}
   {%- for block in section.blocks -%}
-    {%- if block.settings.video_title != blank -%}
-      {%- liquid
-        assign vo_video = block.settings.video
-        assign vo_thumb = block.settings.poster_image | default: vo_video.preview_image
-        assign vo_source = vo_video.sources | where: 'format', 'mp4' | first
-      -%}
+    {%- liquid
+      assign vo_video = block.settings.video
+      assign vo_thumb = block.settings.poster_image | default: vo_video.preview_image
+      assign vo_source = vo_video.sources | where: 'format', 'mp4' | first
+      assign vo_content = vo_source.url | default: block.settings.external_video_url
+      if vo_content != blank
+        assign vo_prefix = vo_content | slice: 0, 2
+        if vo_prefix == '//'
+          assign vo_content = vo_content | prepend: 'https:'
+        endif
+      endif
+      assign vo_date = block.settings.video_upload_date | default: section.settings.default_upload_date | strip
+      assign vo_date_iso = ''
+      if vo_date != blank
+        assign vo_date_iso = vo_date | date: '%Y-%m-%dT%H:%M:%S%:z'
+      endif
+    -%}
+    {%- if block.settings.video_title != blank and vo_thumb != blank and vo_content != blank and vo_date_iso != blank -%}
       {{ vo_separator }}
       {
         "@type": "VideoObject",
         "name": {{ block.settings.video_title | strip_html | json }},
-        "description": {{ block.settings.video_description | default: block.settings.video_title | strip_html | json }}
-        {%- if vo_thumb != blank -%},
-        "thumbnailUrl": {{ vo_thumb | image_url: width: 1200 | prepend: 'https:' | json }}
-        {%- endif -%}
-        {%- if vo_source.url != blank -%},
-        "contentUrl": {{ vo_source.url | json }}
-        {%- elsif block.settings.external_video_url != blank -%},
-        "contentUrl": {{ block.settings.external_video_url | json }}
-        {%- endif -%}
+        "description": {{ block.settings.video_description | default: block.settings.video_title | strip_html | json }},
+        "thumbnailUrl": {{ vo_thumb | image_url: width: 1200 | prepend: 'https:' | json }},
+        "contentUrl": {{ vo_content | json }},
+        "uploadDate": {{ vo_date_iso | json }}
         {%- if vo_video.duration > 0 -%},
         "duration": {{ vo_video.duration | divided_by: 1000 | prepend: 'PT' | append: 'S' | json }}
-        {%- endif -%}
-        {%- if block.settings.video_upload_date != blank -%},
-        "uploadDate": {{ block.settings.video_upload_date | json }}
         {%- endif -%},
         "publisher": { "@id": {{ request.origin | append: '/#organization' | json }} }
       }
@@ -537,6 +548,13 @@
       "id": "description",
       "label": "Description",
       "default": "From the first piece coming together to your new favorite place, see the experience through the people who've built it."
+    },
+    {
+      "type": "text",
+      "id": "default_upload_date",
+      "label": "Default video upload date (YYYY-MM-DD)",
+      "default": "2026-08-13",
+      "info": "Used in Google video structured data for any card without its own upload date. Google requires an upload date on every video."
     },
     {
       "type": "color",
@@ -608,7 +626,7 @@
           "type": "text",
           "id": "video_upload_date",
           "label": "Upload date (YYYY-MM-DD)",
-          "info": "Optional. Required by Google before a video can appear in video results; it cannot be read from the file."
+          "info": "Optional. Overrides the section's default upload date for this video in Google structured data."
         }
       ]
     }

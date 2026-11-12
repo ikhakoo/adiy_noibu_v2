@@ -1559,12 +1559,27 @@
         {%- endif -%}
       </div>
     {%- else -%}
-      {%- render 'price',
-        product: product,
-        use_variant: true,
-        show_badges: true,
-        price_class: 'price--large'
-      -%}
+      {%- if block.settings.badge_text != blank -%}
+        <div class="bfcm-price-row">
+          {%- render 'price',
+            product: product,
+            use_variant: true,
+            show_badges: true,
+            price_class: 'price--large'
+          -%}
+          <span class="bfcm-price-badge">
+            <img src="{{ 'bfcm-icon-check.svg' | asset_url }}" width="14" height="14" alt="">
+            {{ block.settings.badge_text }}
+          </span>
+        </div>
+      {%- else -%}
+        {%- render 'price',
+          product: product,
+          use_variant: true,
+          show_badges: true,
+          price_class: 'price--large'
+        -%}
+      {%- endif -%}
     {%- endif -%}
   </div>
 
@@ -1890,6 +1905,12 @@
                   </script>
 
 
+                {%- when 'bfcm_countdown' -%}
+                  {%- render 'bfcm-countdown', block: block, section_id: section.id -%}
+
+                {%- when 'free_gifts' -%}
+                  {%- render 'bfcm-free-gifts', block: block, section_id: section.id -%}
+
                 {%- when 'countdown_timer' -%}
                   <div 
                     id="countdown-block-{{ section.id }}-{{ block.id }}" 
@@ -1940,7 +1961,7 @@
                           if (daysEl) daysEl.textContent = '0d';
                           if (hoursEl) hoursEl.textContent = '00h';
                           if (minsEl) minsEl.textContent = '00m';
-                          if (secsEl) secsEl.textContent = '0s';
+                          if (secsEl) secsEl.textContent = '00s';
                           clearInterval(timerInterval);
                           return;
                         }
@@ -4327,10 +4348,10 @@
   </product-component>
 </product-info>
 
-{% comment %}
+{%- unless section.settings.hide_sticky_atc -%}
 {%- render 'mobile-sticky-atc', product: product, section: section -%} 
 {% render 'custom-sticky-atc-bar', product: product %}
-{% endcomment %}
+{%- endunless -%}
 
 <script>
   document.addEventListener('click', function (e) {
@@ -4492,6 +4513,12 @@
         }
       ],
       "default": "style_1"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge next to price",
+      "info": "Style 1 only, e.g. \"2 free gifts included + Free Shipping\". Leave empty to hide."
     }
   ]
 },
@@ -4535,8 +4562,51 @@
           "type": "text",
           "id": "promo_code",
           "label": "Default Coupon Code",
-          "default": "LABOR"
+          "default": "BFCM"
         }
+      ]
+    },
+    {
+      "type": "bfcm_countdown",
+      "name": "BFCM Countdown Bar",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "BLACK FRIDAY" },
+        { "type": "text", "id": "subheading", "label": "Offer line", "default": "$800 OFF + Free Shipping + 2 Free Gifts" },
+        {
+          "type": "text",
+          "id": "end_datetime",
+          "label": "Sale ends (date, time and UTC offset)",
+          "info": "Format: YYYY-MM-DDTHH:MM:SS-05:00 (-05:00 = Eastern Standard Time)",
+          "default": "2026-11-30T23:59:59-05:00"
+        },
+        { "type": "checkbox", "id": "hide_when_expired", "label": "Hide the bar once the sale has ended", "default": true }
+      ]
+    },
+    {
+      "type": "free_gifts",
+      "name": "BFCM Free Gifts",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "While the offer runs, the deck added to cart from this page carries a note (line item property) naming the free gifts. It shows in the cart, checkout and order." },
+        { "type": "text", "id": "property_name", "label": "Cart / order note label", "default": "Free gifts" },
+        { "type": "text", "id": "property_value", "label": "Cart / order note text", "info": "Leave empty to stop adding the note.", "default": "BougeRV Portable Fridge + 12V Heated Blanket" },
+        { "type": "text", "id": "offer_end", "label": "Stop adding the note after", "info": "Format: YYYY-MM-DDTHH:MM:SS-05:00 (-05:00 = Eastern Standard Time)", "default": "2026-11-30T23:59:59-05:00" },
+        { "type": "text", "id": "heading", "label": "Header", "default": "GET YOUR FREE GIFTS BEFORE THEY'RE GONE!" },
+        { "type": "text", "id": "note", "label": "Note", "default": "Limited quantities available. First come, first served." },
+        { "type": "text", "id": "tag_default", "label": "Tag (before a deck is added)", "default": "Included free" },
+        { "type": "text", "id": "tag_in_cart", "label": "Tag (gifts in the cart)", "default": "In your cart" },
+        { "type": "text", "id": "free_label", "label": "Free label", "default": "FREE" },
+        { "type": "header", "content": "Gift 1" },
+        { "type": "product", "id": "gift_1_product", "label": "Gift product", "info": "Optional. Uses its title, image and compare-at price unless overridden below." },
+        { "type": "text", "id": "gift_1_title", "label": "Title", "default": "BougeRV Portable Fridge with Battery" },
+        { "type": "text", "id": "gift_1_value", "label": "Value (crossed out)", "default": "$349" },
+        { "type": "image_picker", "id": "gift_1_image", "label": "Image" },
+        { "type": "header", "content": "Gift 2" },
+        { "type": "product", "id": "gift_2_product", "label": "Gift product", "info": "Optional. Uses its title, image and compare-at price unless overridden below." },
+        { "type": "text", "id": "gift_2_title", "label": "Title", "default": "BougeRV 12V Portable Heated Blanket" },
+        { "type": "text", "id": "gift_2_value", "label": "Value (crossed out)", "default": "$99.99" },
+        { "type": "image_picker", "id": "gift_2_image", "label": "Image" }
       ]
     },
     {
@@ -4547,7 +4617,7 @@
           "type": "text",
           "id": "heading",
           "label": "Banner Heading",
-          "default": "Labor Day Early Access Starts"
+          "default": "Black Friday Sale Ends in:"
         },
         {
           "type": "text",
@@ -5004,6 +5074,8 @@
       "name": "t:sections.main-product.blocks.buy_buttons.name",
       "limit": 1,
       "settings": [
+        { "type": "text", "id": "custom_label", "label": "Button label", "info": "Optional, e.g. \"Add to cart + 2 free gifts\". Leave empty for the default \"Add to cart\"." },
+        { "type": "checkbox", "id": "use_gift_icon", "label": "Use gift icon on the button", "default": false },
         {
           "type": "checkbox",
           "id": "show_dynamic_checkout",
@@ -6453,6 +6525,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_sticky_atc",
+      "default": false,
+      "label": "Hide sticky add-to-cart bar (desktop + mobile)"
+    },
     {
       "type": "checkbox",
       "id": "enable_sticky_info",

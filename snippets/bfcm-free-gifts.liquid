@@ -1,0 +1,163 @@
+{%- comment -%}
+  Free gifts card — PDP buy box, under the price.
+  Rendered by the `free_gifts` block in sections/main-product.liquid.
+  Figma: A-DIY DESIGN BOARD › node 7188:2974 ("Savings card").
+
+  While the offer is running it also adds a line item property to the deck
+  when it's added to the cart (hidden input tied to the product form), e.g.
+  "Free gifts: BougeRV Portable Fridge + 12V Heated Blanket". The note shows on
+  the deck line in the cart, checkout and the order. No gift products needed.
+
+  Each gift uses its linked product (title / image / compare-at price) when one
+  is picked in the block settings, otherwise the text + image fallbacks.
+
+  Accepts:
+  - block: the section block
+  - section_id: section.id
+{%- endcomment -%}
+
+{%- liquid
+  assign gift_prop_name = block.settings.property_name | default: 'Free gifts'
+  assign gift_prop_value = block.settings.property_value
+
+  assign now_s = 'now' | date: '%s' | plus: 0
+  assign offer_end_s = block.settings.offer_end | date: '%s' | plus: 0
+  assign offer_live = true
+  if offer_end_s > 0 and now_s >= offer_end_s
+    assign offer_live = false
+  endif
+
+  assign gifts_in_cart = 0
+  for item in cart.items
+    if item.product.type == 'Free Gift' or item.properties[gift_prop_name] != blank
+      assign gifts_in_cart = 1
+    endif
+  endfor
+
+  assign gift_form_id = 'product-form-' | append: section_id
+-%}
+
+{{ 'bfcm-pdp.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="BfcmGifts-{{ section_id }}-{{ block.id }}"
+  class="bfcm-gifts{% if gifts_in_cart > 0 %} is-in-cart{% endif %}"
+  data-bfcm-gifts-card
+  data-offer-end="{{ block.settings.offer_end | escape }}"
+  data-prop-name="{{ gift_prop_name | escape }}"
+  {{ block.shopify_attributes }}
+>
+  {%- if offer_live and gift_prop_value != blank -%}
+    <input
+      type="hidden"
+      class="bfcm-gifts__prop"
+      form="{{ gift_form_id }}"
+      name="properties[{{ gift_prop_name | escape }}]"
+      value="{{ gift_prop_value | escape }}"
+    >
+  {%- endif -%}
+
+  {%- if block.settings.heading != blank -%}
+    <div class="bfcm-gifts__header">
+      <p class="bfcm-gifts__heading">{{ block.settings.heading }}</p>
+    </div>
+  {%- endif -%}
+
+  <div class="bfcm-gifts__body">
+    <div class="bfcm-gifts__intro">
+      {%- if block.settings.note != blank -%}
+        <p class="bfcm-gifts__note">{{ block.settings.note }}</p>
+      {%- endif -%}
+      <span class="bfcm-gifts__tag">
+        <img src="{{ 'bfcm-icon-check.svg' | asset_url }}" width="14" height="14" alt="" class="bfcm-gifts__tag-icon">
+        <span class="bfcm-gifts__tag-text bfcm-gifts__tag-text--in">{{ block.settings.tag_in_cart }}</span>
+        <span class="bfcm-gifts__tag-text bfcm-gifts__tag-text--out">{{ block.settings.tag_default }}</span>
+      </span>
+    </div>
+
+    <ul class="bfcm-gifts__list" role="list">
+      {%- for i in (1..2) -%}
+        {%- liquid
+          assign key_product = 'gift_' | append: i | append: '_product'
+          assign key_title = 'gift_' | append: i | append: '_title'
+          assign key_value = 'gift_' | append: i | append: '_value'
+          assign key_image = 'gift_' | append: i | append: '_image'
+          assign gift_product = block.settings[key_product]
+          assign gift_title = block.settings[key_title]
+          assign gift_value = block.settings[key_value]
+          assign gift_image = block.settings[key_image]
+
+          if gift_product != blank
+            if gift_title == blank
+              assign gift_title = gift_product.title | remove_first: 'FREE GIFT: '
+            endif
+            if gift_value == blank and gift_product.compare_at_price > 0
+              assign gift_value = gift_product.compare_at_price | money_without_trailing_zeros
+            endif
+            if gift_image == blank
+              assign gift_image = gift_product.featured_image
+            endif
+          endif
+
+          if i == 1
+            assign fallback_asset = 'bfcm-gift-fridge.png'
+            assign photo_fit = 'contain'
+          else
+            assign fallback_asset = 'bfcm-gift-blanket.png'
+            assign photo_fit = 'cover'
+          endif
+        -%}
+        {%- if gift_title != blank -%}
+          <li class="bfcm-gifts__item">
+            <span class="bfcm-gifts__check" aria-hidden="true">
+              <img src="{{ 'bfcm-icon-checkbox.svg' | asset_url }}" width="12" height="9" alt="">
+            </span>
+            <span class="bfcm-gifts__photo bfcm-gifts__photo--{{ photo_fit }}">
+              {%- if gift_image != blank -%}
+                {{ gift_image | image_url: width: 160 | image_tag: width: 72, height: 72, alt: gift_title, loading: 'lazy' }}
+              {%- else -%}
+                <img src="{{ fallback_asset | asset_img_url: '160x' }}" width="72" height="72" alt="{{ gift_title | escape }}" loading="lazy">
+              {%- endif -%}
+            </span>
+            <span class="bfcm-gifts__name">{{ gift_title }}</span>
+            <span class="bfcm-gifts__value">
+              {%- if gift_value != blank -%}
+                <s class="bfcm-gifts__was"><span class="visually-hidden">Value </span>{{ gift_value }}</s>
+              {%- endif -%}
+              <span class="bfcm-gifts__free">{{ block.settings.free_label }}</span>
+            </span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var card = document.getElementById('BfcmGifts-{{ section_id }}-{{ block.id }}');
+    if (!card) return;
+    var prop = card.querySelector('.bfcm-gifts__prop');
+
+    // Offer over (page served from cache before the end time): stop adding the note.
+    var end = Date.parse(card.dataset.offerEnd);
+    if (prop && !isNaN(end) && Date.now() >= end) prop.remove();
+
+    // Flip the tag to "In your cart" once a deck carrying the note is in the cart.
+    var propName = card.dataset.propName;
+    function refresh() {
+      fetch((window.Shopify && Shopify.routes && Shopify.routes.root || '/') + 'cart.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          var has = cart.items.some(function (i) { return i.product_type === 'Free Gift' || (i.properties && i.properties[propName]); });
+          card.classList.toggle('is-in-cart', has);
+        })
+        .catch(function () {});
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+        subscribe(PUB_SUB_EVENTS.cartUpdate, refresh);
+      }
+    });
+  })();
+</script>

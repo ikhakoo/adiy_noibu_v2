@@ -72,11 +72,16 @@
           -%}
           
 
+          {%- liquid
+            assign custom_atc_label = block.settings.custom_label | strip
+            assign atc_gift_icon = block.settings.use_gift_icon
+          -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}{% if atc_gift_icon or custom_atc_label != blank %} product-form__submit--bfcm{% endif %}"
+            {% if custom_atc_label != blank %}data-add-to-cart-text="{{ custom_atc_label | escape }}"{% endif %}
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -84,6 +89,9 @@
               disabled
             {% endif %}
           >
+            {%- if atc_gift_icon -%}
+              <img src="{{ 'bfcm-icon-gift.svg' | asset_url }}" width="22" height="22" alt="" class="product-form__submit-icon">
+            {%- else -%}
             <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5.87329 1.33337L3.45996 3.75337" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M10.1265 1.33337L12.5398 3.75337" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -92,11 +100,14 @@
               <path d="M9.57324 9.33337V11.7001" stroke="white" stroke-linecap="round"/>
               <path d="M2.3335 6.66663L3.2735 12.4267C3.48682 13.7199 4.00016 14.6667 5.90682 14.6667H9.92682C12.0002 14.6667 12.3068 13.7599 12.5468 12.5067L13.6668 6.66663" stroke="white" stroke-linecap="round"/>
             </svg>
+            {%- endif -%}
             <span>
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
+              {%- elsif custom_atc_label != blank -%}
+                {{ custom_atc_label }}
               {%- else -%}
                 {{ 'products.product.add_to_cart' | t }}
               {%- endif -%}

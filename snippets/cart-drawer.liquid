@@ -584,7 +584,7 @@
                   {%- for item in cart.items -%}
                     <div
                       id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                      class="custom-cart-drawer-item cart-item product-{{ item.product.handle }}{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
+                      class="custom-cart-drawer-item cart-item product-{{ item.product.handle }}{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}{% if item.product.type == 'Free Gift' %} is-free-gift{% endif %}"
                       role="row"
                       {% if item.parent_relationship.parent != null %}
                         aria-label="{{- 'products.product.nested_label' | t: title: item.product.title, parent_title: item.parent_relationship.parent.title | escape -}}"
@@ -619,9 +619,19 @@
                             {%- endif -%}
 
                             <div class="cart-item__title">
+                              {%- if item.product.type == 'Free Gift' -%}
+                                <span class="free-gift-badge">
+                                  <img src="{{ 'bfcm-icon-gift.svg' | asset_url }}" width="14" height="14" alt="">
+                                  Free gift
+                                </span>
+                                <span class="cart-item__name h4 break">
+                                  {{- item.product.title | remove_first: 'FREE GIFT: ' | escape -}}
+                                </span>
+                              {%- else -%}
                               <a href="{{ item.url }}" class="cart-item__name h4 break">
                                 {{- item.product.title | escape -}}
                               </a>
+                              {%- endif -%}
                               {%- assign cart_disclosure_modal_id = 'CartDisclosureModal-drawer-' | append: item.key | replace: ':', '-' -%}
                               {%- render 'cart-disclosure-indicator',
                                 product: item.product,
@@ -860,7 +870,14 @@
                               <div class="cart-item__totals right" role="cell">
                                 {%- render 'loading-spinner' -%}
                                 <div class="cart-item__price-wrapper custom-price-layout">
-                                  {%- if item.original_line_price != item.final_line_price -%}
+                                  {%- if item.product.type == 'Free Gift' -%}
+                                    {%- if item.variant.compare_at_price > 0 -%}
+                                      <s class="cart-item__old-price price price--end compare-price">
+                                        {{ item.variant.compare_at_price | money_without_trailing_zeros }}
+                                      </s>
+                                    {%- endif -%}
+                                    <span class="price price--end final-price free-gift-price">FREE</span>
+                                  {%- elsif item.original_line_price != item.final_line_price -%}
                                     {%- assign discount_amount = item.original_line_price | minus: item.final_line_price -%}
                                     
                                     {%- comment -%} Save Badge (Without .00) {%- endcomment -%}
@@ -1098,7 +1115,7 @@
       <div class="content">
         {%- if current_delivery_text == blank -%}
           <p class="heading">
-            Use code <strong>FALL500</strong> to get $500 off
+            <strong>$800 OFF</strong> with code <strong>BFCM</strong> + Free Shipping + 2 Free Gifts
           </p>
         {%- endif -%}
 

@@ -266,7 +266,7 @@
                 type="text"
                 id="ContactForm-name"
                 name="contact[Full Name]"
-                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                value="{% if form.name %}{{ form.name }}{% endif %}"
                 placeholder="John Doe"
               >
             </div>
@@ -281,7 +281,7 @@
                 name="contact[email]"
                 spellcheck="false"
                 autocapitalize="off"
-                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                value="{% if form.email %}{{ form.email }}{% endif %}"
                 aria-required="true"
                 placeholder="john@example.com"
               >
@@ -297,7 +297,7 @@
               autocomplete="tel"
               name="contact[Phone Number]"
               pattern="[0-9\-]*"
-              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              value="{% if form.phone %}{{ form.phone }}{% endif %}"
               placeholder="1(000) 000-0000"
             >
           </div>
