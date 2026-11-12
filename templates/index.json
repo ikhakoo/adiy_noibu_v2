@@ -14,6 +14,7 @@
       "blocks": {
         "text_wgaDyW": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "class_text": "above-heading-subtitle",
             "text_html": "",
@@ -26,14 +27,14 @@
           "settings": {
             "class_heading": "",
             "heading_html": "",
-            "heading": "$800 OFF + Free Shipping + 2 Free Gifts"
+            "heading": "Meet Your New Favorite Place"
           }
         },
         "text_DgbitQ": {
           "type": "text",
           "settings": {
             "class_text": "for-desktop",
-            "text_html": "Use code BFCM at checkout.<br>Every deck comes with a free BougeRV portable fridge and heated blanket.",
+            "text_html": "We rethought every step of the experience, so your deck is easier to create,<br>simpler to own, and yours to enjoy however you imagine.",
             "text": "",
             "text_style": "body"
           }
@@ -43,14 +44,14 @@
           "settings": {
             "class_text": "for-mob",
             "text_html": "",
-            "text": "Use code BFCM at checkout. Every deck comes with a free BougeRV portable fridge and heated blanket.",
+            "text": "We rethought every step of the experience, so your deck is easier to create, simpler to own, and yours to enjoy however you imagine.",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop Black Friday",
+            "button_label_1": "Build Yours",
             "button_link_1": "shopify://collections/all",
             "button_style_secondary_1": true,
             "button_label_2": "",
