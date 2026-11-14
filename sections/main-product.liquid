@@ -1559,7 +1559,21 @@
         {%- endif -%}
       </div>
     {%- else -%}
-      {%- if block.settings.badge_text != blank -%}
+      {%- liquid
+        comment
+          Free shipping only applies at or above the threshold (default $4,000).
+          Below it, the badge drops "Free Shipping" and shows the below-threshold
+          text instead. The price block re-renders on variant change, so the badge
+          follows the selected size.
+        endcomment
+        assign price_badge_text = block.settings.badge_text
+        assign fs_threshold_cents = block.settings.free_shipping_threshold | default: 4000 | times: 100
+        assign badge_variant = product.selected_or_first_available_variant
+        if badge_variant.price < fs_threshold_cents
+          assign price_badge_text = block.settings.badge_text_below_threshold
+        endif
+      -%}
+      {%- if price_badge_text != blank -%}
         <div class="bfcm-price-row">
           {%- render 'price',
             product: product,
@@ -1569,7 +1583,7 @@
           -%}
           <span class="bfcm-price-badge">
             <img src="{{ 'bfcm-icon-check.svg' | asset_url }}" width="14" height="14" alt="">
-            {{ block.settings.badge_text }}
+            {{ price_badge_text }}
           </span>
         </div>
       {%- else -%}
@@ -4518,7 +4532,21 @@
       "type": "text",
       "id": "badge_text",
       "label": "Badge next to price",
-      "info": "Style 1 only, e.g. \"2 free gifts included + Free Shipping\". Leave empty to hide."
+      "info": "Style 1 only. Shown when the selected size is priced at or above the free shipping threshold, e.g. \"2 free gifts included + Free Shipping\". Leave empty to hide."
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free shipping threshold ($)",
+      "default": 4000,
+      "info": "Sizes priced below this amount show the badge below instead."
+    },
+    {
+      "type": "text",
+      "id": "badge_text_below_threshold",
+      "label": "Badge for sizes below the free shipping threshold",
+      "default": "2 free gifts included",
+      "info": "Leave empty to hide the badge on those sizes."
     }
   ]
 },

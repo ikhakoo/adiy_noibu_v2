@@ -1115,7 +1115,8 @@
       <div class="content">
         {%- if current_delivery_text == blank -%}
           <p class="heading">
-            <strong>$800 OFF</strong> with code <strong>BFCM</strong> + Free Shipping + 2 Free Gifts
+            <strong>$800 OFF</strong> with code <strong>BFCM</strong>
+            {%- if cart.total_price >= 400000 %} + Free Shipping{% endif %} + 2 Free Gifts
           </p>
         {%- endif -%}
 
