@@ -7,6 +7,7 @@
 {%- endcomment -%}
 
 {%- assign states = page.metafields.state_seo.hub_states.value -%}
+{%- assign city_states = shop.metaobjects.city_seo_state.values -%}
 
 <div class="ss ss--white ss-hub" id="{{ section.settings.anchor_id | default: 'states' | handle }}">
   <div class="ss__inner ss__inner--wide">
@@ -21,7 +22,12 @@
           {%- liquid
             assign p_name = p.metafields.state_seo.region_name.value | split: ',' | first | strip | default: p.title
             assign st_key = p.handle | remove_first: 'deck-builders-'
-            assign st_cities = shop.metaobjects.city_seo_state[st_key].cities.value
+            assign st_cities = blank
+            for st_entry in city_states
+              if st_entry.system.handle == st_key
+                assign st_cities = st_entry.cities.value
+              endif
+            endfor
           -%}
           <li class="ss-hub__state">
             <a class="ss-hub__state-link" href="{{ p.url }}">Deck builders in {{ p_name | escape }}</a>
