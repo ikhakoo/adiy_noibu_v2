@@ -76,6 +76,13 @@
         {%- endfor -%}
       </ul>
     {%- endif -%}
+    {%- if state != blank -%}
+      {%- assign st_page_handle = 'deck-builders-' | append: state.system.handle -%}
+      {%- assign st_page = pages[st_page_handle] -%}
+      {%- if st_page.url != blank -%}
+        <p class="ss-cityback"><a href="{{ st_page.url }}">See the full {{ state.name.value | escape }} deck builder guide: costs, permits and options →</a></p>
+      {%- endif -%}
+    {%- endif -%}
   </div>
 </div>
 {%- endif -%}

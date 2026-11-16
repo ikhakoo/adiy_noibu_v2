@@ -157,6 +157,7 @@
         <p class="sdp-eyebrow">{{ t_eyebrow | escape }}</p>
       {%- endif -%}
 
+      {%- render 'seo-breadcrumb' -%}
       <h1 class="sdp-hero__title">{{ heading | escape }}</h1>
 
       {%- if t_lede != blank -%}

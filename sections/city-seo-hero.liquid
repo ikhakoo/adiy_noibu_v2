@@ -29,6 +29,7 @@
       {%- if eyebrow != blank -%}
         <span class="cs-eyebrow cs-eyebrow--glass">{% render 'city-seo-icon', name: 'map-pin' %}{{ eyebrow | escape }}</span>
       {%- endif -%}
+      {%- render 'seo-breadcrumb', class: 'seo-crumbs--light' -%}
       <h1 class="cs-hero__title">{{ heading | escape }}</h1>
       {%- if intro != blank -%}<p class="cs-hero__lede">{{ intro | escape | newline_to_br }}</p>{%- endif -%}
       <div class="ss-btns cs-hero__btns">

@@ -56,6 +56,18 @@
       assign crumbs = home_crumb | append: '~~' | append: page.url | append: '|' | append: page.title
   endcase
 
+  comment
+    SEO landing pages (state, city, Deck Builders hub, size collections) use the shared trail
+    from seo-crumbs so the markup matches the visible breadcrumb.
+  endcomment
+  capture seo_trail
+    render 'seo-crumbs'
+  endcapture
+  assign seo_trail = seo_trail | strip
+  if seo_trail != blank
+    assign crumbs = seo_trail
+  endif
+
   assign crumb_list = crumbs | split: '~~'
 -%}
 

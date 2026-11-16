@@ -1,0 +1,70 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck Builders hub (/pages/deck-builders). Lists every state page from the page metafield
+  state_seo.hub_states (list of pages) with links to that state's city pages, read from the
+  "City SEO · State" entry whose handle matches the state page handle without "deck-builders-".
+{%- endcomment -%}
+
+{%- assign states = page.metafields.state_seo.hub_states.value -%}
+
+<div class="ss ss--white ss-hub" id="{{ section.settings.anchor_id | default: 'states' | handle }}">
+  <div class="ss__inner ss__inner--wide">
+    <div class="ss-center ss-hub__head">
+      <h1 class="ss-h2 ss-h2--xl">{{ section.settings.heading | default: page.title | escape }}</h1>
+      {%- if section.settings.intro != blank -%}<div class="ss-lead ss-prose">{{ section.settings.intro }}</div>{%- endif -%}
+    </div>
+
+    {%- if states != blank -%}
+      <ul class="ss-hub__grid">
+        {%- for p in states -%}
+          {%- liquid
+            assign p_name = p.metafields.state_seo.region_name.value | split: ',' | first | strip | default: p.title
+            assign st_key = p.handle | remove_first: 'deck-builders-'
+            assign st_cities = shop.metaobjects.city_seo_state[st_key].cities.value
+          -%}
+          <li class="ss-hub__state">
+            <a class="ss-hub__state-link" href="{{ p.url }}">Deck builders in {{ p_name | escape }}</a>
+            {%- if st_cities.size > 0 -%}
+              <ul class="ss-hub__cities">
+                {%- for c in st_cities -%}
+                  {%- if c.page_handle.value != blank -%}
+                    <li><a href="/pages/{{ c.page_handle.value }}">{{ c.name.value | escape }}</a></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- liquid
+      assign size_hub = collections['deck-kits-by-size']
+      assign material_hub = collections['deck-kits-by-material']
+    -%}
+    {%- if size_hub.url != blank or material_hub.url != blank -%}
+      <p class="ss-hub__shop">
+        {{ section.settings.shop_text | escape }}
+        {%- if size_hub.url != blank %} <a href="{{ size_hub.url }}">{{ size_hub.title | escape }}</a>{% endif -%}
+        {%- if size_hub.url != blank and material_hub.url != blank %} or{% endif -%}
+        {%- if material_hub.url != blank %} <a href="{{ material_hub.url }}">{{ material_hub.title | escape }}</a>{% endif -%}.
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · States hub",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "states" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "info": "Defaults to the page title." },
+    { "type": "richtext", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "shop_text", "label": "Shop line", "default": "Ready to choose a deck? Shop" }
+  ],
+  "presets": [{ "name": "State SEO · States hub" }]
+}
+{% endschema %}

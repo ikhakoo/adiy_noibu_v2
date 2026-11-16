@@ -1,0 +1,87 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  State SEO landing page · Explore. Internal links: nearby state pages (page metafield
+  state_seo.nearby_states, a list of pages), the deck kit hubs and material collections, and the
+  all-states Deck Builders hub.
+{%- endcomment -%}
+
+{%- liquid
+  assign region = page.metafields.state_seo.region_name.value | split: ',' | first | strip
+  assign nearby = page.metafields.state_seo.nearby_states.value
+  assign heading = section.settings.heading | replace: '[region]', region
+  assign hub = pages['deck-builders']
+-%}
+
+<div class="ss ss--cream ss-explore" id="{{ section.settings.anchor_id | default: 'explore' | handle }}">
+  <div class="ss__inner ss__inner--wide">
+    <div class="ss-center ss-explore__head">
+      {%- if heading != blank -%}<h2 class="ss-h2">{{ heading | escape }}</h2>{%- endif -%}
+      {%- if section.settings.intro != blank -%}<p class="ss-lead">{{ section.settings.intro | replace: '[region]', region | escape }}</p>{%- endif -%}
+    </div>
+
+    {%- if nearby != blank -%}
+      <div class="ss-explore__block">
+        <h3 class="ss-explore__label">{{ section.settings.nearby_label | escape }}</h3>
+        <ul class="ss-explore__states">
+          {%- for p in nearby -%}
+            {%- assign p_name = p.metafields.state_seo.region_name.value | split: ',' | first | strip | default: p.title -%}
+            <li><a href="{{ p.url }}">Deck builders in {{ p_name | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    <div class="ss-explore__block">
+      <h3 class="ss-explore__label">{{ section.settings.shop_label | escape }}</h3>
+      <ul class="ss-explore__cards">
+        {%- for i in (1..4) -%}
+          {%- liquid
+            assign k_col = 'collection_' | append: i
+            assign k_text = 'text_' | append: i
+            assign col = section.settings[k_col]
+          -%}
+          {%- if col != blank -%}
+            <li class="ss-explore__card">
+              <a href="{{ col.url }}">
+                <span class="ss-explore__card-title">{{ col.title | escape }}</span>
+                {%- if section.settings[k_text] != blank -%}<span class="ss-explore__card-text">{{ section.settings[k_text] | escape }}</span>{%- endif -%}
+                <span class="ss-explore__card-cta" aria-hidden="true">Shop now →</span>
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    {%- if hub.url != blank and hub.id != page.id and section.settings.all_label != blank -%}
+      <p class="ss-explore__all"><a href="{{ hub.url }}">{{ section.settings.all_label | escape }} →</a></p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "State SEO · Explore links",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "explore" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Keep planning your [region] deck", "info": "[region] is replaced with the state name." },
+    { "type": "text", "id": "intro", "label": "Intro", "default": "Compare deck guides for nearby states, or shop deck kits by size and material." },
+    { "type": "text", "id": "nearby_label", "label": "Nearby states label", "default": "Nearby states" },
+    { "type": "paragraph", "content": "Nearby states come from the page metafield State SEO · Nearby states (list of pages)." },
+    { "type": "text", "id": "shop_label", "label": "Deck kits label", "default": "Shop deck kits" },
+    { "type": "collection", "id": "collection_1", "label": "Collection 1" },
+    { "type": "text", "id": "text_1", "label": "Collection 1 text" },
+    { "type": "collection", "id": "collection_2", "label": "Collection 2" },
+    { "type": "text", "id": "text_2", "label": "Collection 2 text" },
+    { "type": "collection", "id": "collection_3", "label": "Collection 3" },
+    { "type": "text", "id": "text_3", "label": "Collection 3 text" },
+    { "type": "collection", "id": "collection_4", "label": "Collection 4" },
+    { "type": "text", "id": "text_4", "label": "Collection 4 text" },
+    { "type": "text", "id": "all_label", "label": "All states link label", "default": "See deck builder guides for all 48 states" }
+  ],
+  "presets": [{ "name": "State SEO · Explore links" }]
+}
+{% endschema %}

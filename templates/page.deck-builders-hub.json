@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hub": {
+      "type": "state-seo-hub",
+      "settings": {
+        "anchor_id": "states",
+        "heading": "Deck Builders by State: Costs, Permits and a Faster Way to Build",
+        "intro": "<p>Pick your state for local deck costs, permit rules and what to ask a contractor, plus how an engineered A-DIY deck kit compares with hiring a builder. States with city guides list them underneath.</p>",
+        "shop_text": "Ready to choose a deck? Shop"
+      }
+    }
+  },
+  "order": [
+    "hub"
+  ]
+}

@@ -879,6 +879,25 @@
         "secondary_label": "Chat With a Design Consultant",
         "secondary_link": "#chat"
       }
+    },
+    "explore": {
+      "type": "state-seo-explore",
+      "settings": {
+        "anchor_id": "explore",
+        "heading": "Keep planning your [region] deck",
+        "intro": "Compare deck guides for nearby states, or shop deck kits by size and material.",
+        "nearby_label": "Nearby states",
+        "shop_label": "Shop deck kits",
+        "collection_1": "deck-kits-by-size",
+        "text_1": "Compare every A-DIY deck size, from compact 6x12 to 16x28, in wood and composite.",
+        "collection_2": "deck-kits-by-material",
+        "text_2": "Pressure-treated wood or composite: compare looks, upkeep and warranty side by side.",
+        "collection_3": "pressure-treated-wood-deck-kits",
+        "text_3": "Grade 1 Southern Yellow Pine, kiln-dried and pressure-treated, with a 5-year structural warranty.",
+        "collection_4": "composite-deck-kits",
+        "text_4": "Stain and fade resistant composite boards with a 25-year warranty.",
+        "all_label": "See deck builder guides for all 48 states"
+      }
     }
   },
   "order": [
@@ -898,6 +917,7 @@
     "how_it_works",
     "engineering",
     "cities",
+    "explore",
     "faq",
     "cta"
   ]

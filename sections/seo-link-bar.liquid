@@ -1,0 +1,29 @@
+{%- comment -%}Small centered line with one internal link, e.g. to cross-link the deck kit hubs.{%- endcomment -%}
+{%- if section.settings.link != blank and section.settings.link_label != blank -%}
+<div class="seo-link-bar" style="--seo-bar-bg: {{ section.settings.background }};">
+  <p class="seo-link-bar__inner">
+    {%- if section.settings.text != blank -%}<span>{{ section.settings.text | escape }}</span> {% endif -%}
+    <a href="{{ section.settings.link }}">{{ section.settings.link_label | escape }} →</a>
+  </p>
+</div>
+<style>
+  .seo-link-bar { background: var(--seo-bar-bg, #f6f4f2); padding: 28px 20px; text-align: center; }
+  .seo-link-bar__inner { max-width: 900px; margin: 0 auto; font-size: 1.7rem; line-height: 1.5; color: rgba(18, 18, 18, 0.78); }
+  .seo-link-bar__inner a { color: #194636; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SEO · Link bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Text" },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#f6f4f2" }
+  ],
+  "presets": [{ "name": "SEO · Link bar" }]
+}
+{% endschema %}
