@@ -112,7 +112,7 @@
         </div>
         {%- if x_label != blank -%}
           {%- if xlink == blank and section.settings.twin_product != blank -%}{%- assign xlink = section.settings.twin_product.url -%}{%- endif -%}
-          {%- if xlink != blank and link_filter != 'none' and link_filter != blank and xlink contains '/collections/' -%}
+          {%- if xlink != blank and link_filter != 'none' and link_filter != blank and xlink contains '/collections/deck-kits-by-size' -%}
             {%- assign xlink = xlink | append: '?material=' | append: link_filter -%}
           {%- endif -%}
           <a class="sdp-btn sdp-btn--sm" href="{{ xlink | default: '#' }}">
