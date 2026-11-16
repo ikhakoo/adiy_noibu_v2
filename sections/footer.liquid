@@ -477,7 +477,7 @@
                     {%- if icon_img != blank -%}
                       <img 
                         src="{{ icon_img | image_url: width: 100 }}" 
-                        alt="" 
+                        alt="{{ social_label | remove: ' (opens in a new window)' | escape }}" 
                         class="footer-centered__social-custom-img"
                         width="{{ icon_img.width }}" 
                         height="{{ icon_img.height }}" 

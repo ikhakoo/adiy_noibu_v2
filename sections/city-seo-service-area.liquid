@@ -54,7 +54,7 @@
           <li class="cs-area__item">
             <a href="/pages/{{ c.page_handle.value }}" title="Deck builders near me in {{ label | escape }}">
               <div class="cs-area__img">
-                {%- if c.image.value != blank -%}{{ c.image.value | image_url: width: 600 | image_tag: widths: '300, 450, 600', sizes: '(min-width: 990px) 270px, 45vw', loading: 'lazy', alt: c.image_alt.value | default: label }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+                {%- assign city_img_alt = c.image_alt.value | default: label -%}{%- if c.image.value != blank -%}{{ c.image.value | image_url: width: 600 | image_tag: widths: '300, 450, 600', sizes: '(min-width: 990px) 270px, 45vw', loading: 'lazy', alt: city_img_alt }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
               </div>
               <span class="cs-area__name">{{ label | escape }}{% render 'city-seo-icon', name: 'arrow' %}</span>
             </a>
@@ -68,7 +68,7 @@
           <li class="cs-area__item">
             {%- if c.link.value != blank -%}<a href="{{ c.link.value }}">{%- endif -%}
             <div class="cs-area__img">
-              {%- if c.image.value != blank -%}{{ c.image.value | image_url: width: 600 | image_tag: widths: '300, 450, 600', sizes: '(min-width: 990px) 224px, 45vw', loading: 'lazy', alt: c.image_alt.value | default: label }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+              {%- assign city_img_alt = c.image_alt.value | default: label -%}{%- if c.image.value != blank -%}{{ c.image.value | image_url: width: 600 | image_tag: widths: '300, 450, 600', sizes: '(min-width: 990px) 224px, 45vw', loading: 'lazy', alt: city_img_alt }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
             </div>
             <span class="cs-area__name">{{ label | escape }}{% render 'city-seo-icon', name: 'arrow' %}</span>
             {%- if c.link.value != blank -%}</a>{%- endif -%}

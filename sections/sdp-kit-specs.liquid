@@ -86,7 +86,8 @@
             <li class="sdp-feature" {{ block.shopify_attributes }}>
               <span class="sdp-feature__icon">
                 {%- if block.settings.icon != blank -%}
-                  {{ block.settings.icon | image_url: width: 140 | image_tag: loading: 'lazy', alt: block.settings.icon_alt | default: block.settings.title, widths: '70, 140' }}
+                  {%- assign kit_icon_alt = block.settings.icon_alt | default: block.settings.title -%}
+                  {{ block.settings.icon | image_url: width: 140 | image_tag: loading: 'lazy', alt: kit_icon_alt, widths: '70, 140' }}
                 {%- endif -%}
               </span>
               <span class="sdp-feature__body">

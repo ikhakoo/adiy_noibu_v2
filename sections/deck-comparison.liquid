@@ -527,7 +527,7 @@
                   {%- if feature_title != blank -%}
                     <div class="deck-card__feature-block">
                       {%- if feature_icon != blank -%}
-                        <img src="{{ feature_icon | image_url: width: 60 }}" alt="" class="deck-card__feature-icon" loading="lazy">
+                        <img src="{{ feature_icon | image_url: width: 60 }}" alt="{{ feature_title | strip_html | escape }}" class="deck-card__feature-icon" loading="lazy">
                       {%- endif -%}
                       <{{ deck_feature_tag }} class="deck-card__feature-title h4">{{ feature_title }}</{{ deck_feature_tag }}>
                       {%- if feature_desc != blank -%}

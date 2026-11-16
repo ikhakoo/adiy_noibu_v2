@@ -780,18 +780,21 @@
           <div class="{{ class_list }}" {{ block.shopify_attributes }}>
             {%- case block.type -%}
               {%- when 'video_review' -%}
+                {%- assign rw_alt = 'Video review of an A-DIY deck' -%}
+                {%- if block.settings.author_name != blank -%}{%- assign rw_alt = rw_alt | append: ' by ' | append: block.settings.author_name -%}{%- endif -%}
+                {%- capture rw_unused_img -%}<img alt="{{ rw_alt | escape }}" data-unused-src="{%- endcapture -%}
                 <div class="media-wrapper aspect-{{ block.settings.aspect_ratio }}">
                   {%- capture rw_video_markup -%}
                     {{ block.settings.video | video_tag: image_size: '600x', loop: true, muted: true, playsinline: true, preload: 'none' }}
                   {%- endcapture -%}
-                  {{ rw_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img alt="" data-unused-src="' }}
+                  {{ rw_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', rw_unused_img }}
                   {%- if block.settings.video.preview_image != blank -%}
                     <img
                       class="review-poster"
                       src="{{ block.settings.video.preview_image | image_url: width: 600 }}"
                       width="{{ block.settings.video.preview_image.width }}"
                       height="{{ block.settings.video.preview_image.height }}"
-                      alt=""
+                      alt="{{ rw_alt | escape }}"
                       loading="lazy">
                   {%- endif -%}
                   <div class="review-play-button"></div>
@@ -815,7 +818,7 @@
                     <div class="user-header">
                       <div class="user-info">
                         {%- if block.settings.author_image != blank -%}
-                          <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="" width="40" height="40" loading="lazy">
+                          <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="{{ block.settings.author_name | escape }}" width="40" height="40" loading="lazy">
                         {%- endif -%}
                         <div class="user-meta">
                           <span class="user-name">{{ block.settings.author_name }}</span>
@@ -873,7 +876,7 @@
                   <div class="user-header">
                     <div class="user-info">
                       {%- if block.settings.author_image != blank -%}
-                        <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="" width="40" height="40" loading="lazy">
+                        <img src="{{ block.settings.author_image | image_url: width: 80 }}" class="avatar" alt="{{ block.settings.author_name | escape }}" width="40" height="40" loading="lazy">
                       {%- endif -%}
                       <div class="user-meta">
                         <span class="user-name">{{ block.settings.author_name }}</span>

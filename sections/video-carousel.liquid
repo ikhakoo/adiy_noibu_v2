@@ -73,6 +73,8 @@
             
             {%- assign custom_poster = '' -%}
             {%- assign poster_source = nil -%}
+            {%- assign vc_alt = block.settings.video_title | default: 'Customer video of a finished A-DIY deck' | strip_html | strip -%}
+            {%- capture vc_unused_img -%}<img alt="{{ vc_alt | escape }}" data-unused-src="{%- endcapture -%}
             {%- if block.settings.poster_image != blank -%}
               {%- assign poster_source = block.settings.poster_image -%}
             {%- elsif block.settings.video.preview_image != blank -%}
@@ -107,7 +109,7 @@
                 by any browser that supports <video>. The visible poster is the
                 lazy <img> below instead.
               {%- endcomment -%}
-              {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', '<img alt="" data-unused-src="' }}
+              {{ vc_video_markup | replace: ' poster="', ' data-unused-poster="' | replace: '<img src="', vc_unused_img }}
               {%- if poster_source -%}
                 {%- comment -%}
                   Card geometry is fixed in section-video-carousel.css:
@@ -130,7 +132,7 @@
                     class: 'pb-video-card__poster',
                     widths: '270, 310, 540, 620, 810, 930',
                     sizes: '(min-width: 750px) 310px, 270px',
-                    alt: '',
+                    alt: vc_alt,
                     loading: 'lazy'
                 }}
               {%- endif -%}
@@ -165,7 +167,7 @@
                       class: 'pb-video-card__poster',
                       widths: '270, 310, 540, 620, 810, 930',
                       sizes: '(min-width: 750px) 310px, 270px',
-                      alt: '',
+                      alt: vc_alt,
                       loading: 'lazy'
                   }}
                 {%- endif -%}
