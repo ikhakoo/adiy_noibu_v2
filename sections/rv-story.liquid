@@ -116,6 +116,19 @@
 
 {%- if section.settings.video_url != blank or section.settings.video != blank -%}
   {%- assign ld_thumb = poster | image_url: width: 1280 -%}
+  {%- comment -%}
+    Google needs uploadDate as a full ISO 8601 datetime with a timezone offset. The
+    setting is typed as a bare date (2025-10-01), which Search Console flags as
+    "missing a timezone" / "invalid datetime value", so it is normalised here - the
+    same way sections/video-carousel.liquid writes its dates.
+  {%- endcomment -%}
+  {%- liquid
+    assign ld_date = section.settings.upload_date | strip
+    assign ld_date_iso = ''
+    if ld_date != blank
+      assign ld_date_iso = ld_date | date: '%Y-%m-%dT%H:%M:%S%:z'
+    endif
+  -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -123,7 +136,7 @@
       "name": {{ section.settings.video_title | default: section.settings.card_heading | json }},
       "description": {{ section.settings.intro | default: section.settings.card_heading | json }},
       {%- if poster != blank %}"thumbnailUrl": {{ ld_thumb | prepend: 'https:' | json }},{% endif %}
-      {%- if section.settings.upload_date != blank %}"uploadDate": {{ section.settings.upload_date | json }},{% endif %}
+      {%- if ld_date_iso != blank %}"uploadDate": {{ ld_date_iso | json }},{% endif %}
       {%- if embed != blank %}"embedUrl": {{ embed | split: '?' | first | json }}{% else %}"contentUrl": {{ section.settings.video.sources.last.url | json }}{% endif %}
     }
   </script>
