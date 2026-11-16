@@ -58,6 +58,16 @@
         <h3 class="ss-tile__title">{{ section.settings.city_heading | escape }}</h3>
         <span class="ss-tile__divider" aria-hidden="true"></span>
         <div class="ss-tile__text">{{ section.settings.city_text }}</div>
+        {%- assign ss_off_url = page.metafields.state_seo.permits_official_url.value -%}
+        {%- assign ss_off_label = page.metafields.state_seo.permits_official_label.value -%}
+        {%- if ss_off_url != blank -%}
+          <p class="ss-tile__source">Official source: <a href="{{ ss_off_url | escape }}" target="_blank" rel="noopener">{{ ss_off_label | default: 'Local building department' | escape }}</a></p>
+        {%- endif -%}
+        {%- assign ss_reviewed = page.metafields.state_seo.permits_reviewed_date.value -%}
+        {%- if ss_reviewed != blank -%}
+          {%- assign ss_reviewer = page.metafields.state_seo.permits_reviewer.value | default: 'A-DIY Team' -%}
+          <p class="ss-tile__reviewed">Last reviewed <time datetime="{{ ss_reviewed | date: '%Y-%m-%d' }}">{{ ss_reviewed | date: '%B %-d, %Y' }}</time> by the {{ ss_reviewer | escape }}</p>
+        {%- endif -%}
       </div>
     </div>
   </div>

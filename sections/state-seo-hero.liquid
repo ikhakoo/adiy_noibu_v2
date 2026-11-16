@@ -10,8 +10,20 @@
   <div class="ss__inner ss__inner--wide ss-hero__row">
     <div class="ss-hero__copy">
       <h1 class="ss-hero__title">{{ section.settings.heading | default: page.title | escape }}</h1>
+      {%- assign ss_answer = page.metafields.state_seo.answer_summary.value -%}
+      {%- if ss_answer != blank -%}
+        <p class="ss-hero__answer">{{ ss_answer | escape }}</p>
+      {%- endif -%}
       {%- if section.settings.intro != blank -%}
         <div class="ss-hero__lede">{{ section.settings.intro }}</div>
+      {%- endif -%}
+      {%- assign ss_region = page.metafields.state_seo.region_name.value | default: section.settings.region_name | split: "," | first | strip -%}
+      {%- assign ss_delivery = page.metafields.state_seo.delivery_line.value -%}
+      {%- if ss_delivery == blank and ss_region != blank -%}
+        {%- capture ss_delivery -%}Delivery to {{ ss_region }}: typically 10–14 business days by curbside freight (longer in peak season), with flat $199 shipping.{%- endcapture -%}
+      {%- endif -%}
+      {%- if ss_delivery != blank -%}
+        <p class="ss-hero__delivery"><span class="ss-hero__delivery-label">Shipping</span> {{ ss_delivery | escape }}</p>
       {%- endif -%}
       <div class="ss-btns">
         {%- render 'state-seo-button', label: section.settings.primary_label, link: section.settings.primary_link -%}
