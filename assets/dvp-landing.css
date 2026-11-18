@@ -896,3 +896,6 @@
 /* Figma: 20px of white between the header bar and the hero (header frame 0–150, hero starts at 170). */
 .dvp-hero { margin-top: 20px; }
 @media screen and (max-width: 749px) { .dvp-hero { margin-top: 12px; } }
+
+/* base.css hides div:empty; the story image's offset accent box is an empty div by design. */
+.dvp .dvp-story__accent { display: block; }
