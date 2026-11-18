@@ -1,0 +1,47 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · Foundation infographic. Figma › Section - Why a Patio Starts With Digging (7236:146).
+  The patio-vs-deck build diagram is a single image; its text is repeated in the alt for SEO/AT.
+  The optional link makes the whole graphic clickable (the graphic shows an "Explore" button).
+{%- endcomment -%}
+
+<div class="dvp dvp--sand dvp-foundation"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="dvp__inner dvp-foundation__inner">
+    <div class="dvp-head dvp-head--wide">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dvp-eyebrow dvp-eyebrow--center"><span class="dvp-eyebrow__rule" aria-hidden="true"></span>{{ section.settings.eyebrow | escape }}<span class="dvp-eyebrow__rule" aria-hidden="true"></span></p>
+      {%- endif -%}
+      <h2 class="dvp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="dvp-lede">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.image != blank -%}
+      <figure class="dvp-foundation__figure">
+        {%- if section.settings.link != blank -%}<a href="{{ section.settings.link }}">{%- endif -%}
+        {{ section.settings.image | image_url: width: 3072 | image_tag: widths: '480, 720, 960, 1200, 1536, 2048, 3072', sizes: '(min-width: 1640px) 1536px, calc(100vw - 40px)', loading: 'lazy', alt: section.settings.image_alt }}
+        {%- if section.settings.link != blank -%}</a>{%- endif -%}
+      </figure>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Deck vs Patio · Foundation",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The foundation makes the difference" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Why a patio starts with digging, and a deck doesn’t" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "image_picker", "id": "image", "label": "Infographic" },
+    { "type": "textarea", "id": "image_alt", "label": "Infographic alt text" },
+    { "type": "url", "id": "link", "label": "Infographic link" }
+  ],
+  "presets": [{ "name": "Deck vs Patio · Foundation" }]
+}
+{% endschema %}

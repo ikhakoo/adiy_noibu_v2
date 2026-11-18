@@ -1,0 +1,128 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · Side-by-side comparison. Figma › Section - Deck vs Patio Side by Side (7272:146).
+  One `row` block per comparison line. Icons are SVGs in Content › Files, referenced by name.
+  Below 990px each row's label spans the table and the deck/patio answers sit side by side.
+{%- endcomment -%}
+
+{%- liquid
+  assign check_icon = section.settings.check_icon | default: 'dvp-cmp-check.svg'
+  assign dot_icon = section.settings.dot_icon | default: 'dvp-cmp-dot.svg'
+-%}
+
+<div class="dvp dvp--sand dvp-compare"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="dvp__inner dvp-compare__inner">
+    <div class="dvp-head">
+      <h2 class="dvp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="dvp-lede">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="dvp-table">
+      <div class="dvp-table__grid" role="table" aria-label="{{ section.settings.heading | escape }}">
+        <div class="dvp-table__head" role="row">
+          <div class="dvp-table__label-head" role="columnheader">{{ section.settings.label_header | escape }}</div>
+          <div class="dvp-table__panel dvp-table__panel--deck" role="columnheader">
+            {%- render 'dvp-image', image: section.settings.deck_image, alt: section.settings.deck_image_alt, sizes: '(min-width: 990px) 29vw, 50vw' -%}
+            {%- if section.settings.deck_tag != blank -%}<span class="dvp-table__tag">{{ section.settings.deck_tag | escape }}</span>{%- endif -%}
+            <span class="dvp-table__name">{{ section.settings.deck_name | escape }}</span>
+            <span class="dvp-table__desc">{{ section.settings.deck_desc | escape }}</span>
+          </div>
+          <div class="dvp-table__panel dvp-table__panel--patio" role="columnheader">
+            {%- render 'dvp-image', image: section.settings.patio_image, alt: section.settings.patio_image_alt, sizes: '(min-width: 990px) 29vw, 50vw' -%}
+            {%- if section.settings.patio_tag != blank -%}<span class="dvp-table__tag">{{ section.settings.patio_tag | escape }}</span>{%- endif -%}
+            <span class="dvp-table__name">{{ section.settings.patio_name | escape }}</span>
+            <span class="dvp-table__desc">{{ section.settings.patio_desc | escape }}</span>
+          </div>
+        </div>
+
+        {%- for block in section.blocks -%}
+          <div class="dvp-row{% if forloop.first %} dvp-row--first{% endif %}" role="row" {{ block.shopify_attributes }}>
+            <div class="dvp-row__label" role="rowheader">
+              <span class="dvp-row__label-icon" aria-hidden="true">
+                {%- if block.settings.icon_file != blank -%}
+                  <img src="{{ block.settings.icon_file | file_url }}" alt="" width="20" height="20" loading="lazy">
+                {%- endif -%}
+              </span>
+              <span class="dvp-row__label-text">{{ block.settings.label | escape }}</span>
+            </div>
+            <div class="dvp-row__deck" role="cell">
+              <img src="{{ check_icon | file_url }}" alt="" width="22" height="22" loading="lazy">
+              <p>{{ block.settings.deck | escape }}</p>
+            </div>
+            <div class="dvp-row__patio" role="cell">
+              <img src="{{ dot_icon | file_url }}" alt="" width="20" height="20" loading="lazy">
+              <p>{{ block.settings.patio | escape }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <span class="dvp-table__vs" aria-hidden="true">VS</span>
+    </div>
+
+    {%- if section.settings.takeaway != blank -%}
+      <div class="dvp-takeaway">
+        <div class="dvp-takeaway__copy">
+          <p class="dvp-takeaway__label">{{ section.settings.takeaway_label | escape }}</p>
+          <p class="dvp-takeaway__text">{{ section.settings.takeaway | escape }}</p>
+        </div>
+        <div class="dvp-btns">
+          {%- render 'dvp-button', label: section.settings.primary_label, link: section.settings.primary_link, style: 'white' -%}
+          {%- render 'dvp-button', label: section.settings.secondary_label, link: section.settings.secondary_link, style: 'outline-white' -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Deck vs Patio · Compare",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 20,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Deck vs. Patio: What Works Best for Your Backyard?" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "label_header", "label": "Label column header", "default": "What matters" },
+    { "type": "text", "id": "check_icon", "label": "Deck check icon file", "default": "dvp-cmp-check.svg" },
+    { "type": "text", "id": "dot_icon", "label": "Patio dot icon file", "default": "dvp-cmp-dot.svg" },
+    { "type": "header", "content": "Deck panel" },
+    { "type": "image_picker", "id": "deck_image", "label": "Image" },
+    { "type": "text", "id": "deck_image_alt", "label": "Image alt text" },
+    { "type": "text", "id": "deck_tag", "label": "Tag", "default": "Built up" },
+    { "type": "text", "id": "deck_name", "label": "Name", "default": "Deck" },
+    { "type": "text", "id": "deck_desc", "label": "Description", "default": "Wood or composite boards on a frame and footings" },
+    { "type": "header", "content": "Patio panel" },
+    { "type": "image_picker", "id": "patio_image", "label": "Image" },
+    { "type": "text", "id": "patio_image_alt", "label": "Image alt text" },
+    { "type": "text", "id": "patio_tag", "label": "Tag", "default": "Laid down" },
+    { "type": "text", "id": "patio_name", "label": "Name", "default": "Patio" },
+    { "type": "text", "id": "patio_desc", "label": "Description", "default": "Pavers, concrete or stone laid on the ground" },
+    { "type": "header", "content": "Takeaway" },
+    { "type": "text", "id": "takeaway_label", "label": "Label", "default": "The takeaway" },
+    { "type": "textarea", "id": "takeaway", "label": "Text" },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Explore A-DIY Deck Kits" },
+    { "type": "url", "id": "primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Ask a Deck Specialist" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary button link", "info": "Use #chat to open live chat." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "icon_file", "label": "Icon file name", "info": "SVG in Content › Files" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Best yard" },
+        { "type": "textarea", "id": "deck", "label": "Deck" },
+        { "type": "textarea", "id": "patio", "label": "Patio" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Deck vs Patio · Compare", "blocks": [{ "type": "row" }] }]
+}
+{% endschema %}
