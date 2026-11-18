@@ -892,3 +892,7 @@
 }
 .dvp-foundation__figure a { display: block; position: absolute; inset: 0; }
 .dvp-foundation__figure img { position: absolute; left: 0; top: -23.52%; width: 100%; height: 123.52%; max-width: none; }
+
+/* Figma: 20px of white between the header bar and the hero (header frame 0–150, hero starts at 170). */
+.dvp-hero { margin-top: 20px; }
+@media screen and (max-width: 749px) { .dvp-hero { margin-top: 12px; } }
