@@ -475,108 +475,927 @@
       ]
     },
     "gallery": {
-      "type": "dvp-gallery",
-      "settings": {
-        "eyebrow": "Built by homeowners",
-        "heading": "Real A-DIY decks in real backyards",
-        "rating_text": "4.8 customer rating",
-        "button_label": "Read Customer Reviews",
-        "button_link": "shopify://pages/reviews"
-      },
+      "type": "real-life-gallery",
       "blocks": {
-        "photo_1": {
-          "type": "photo",
+        "gallery_image_eCxEwQ": {
+          "type": "gallery_image",
+          "name": "Gallery Image (main)",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-467.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/Photo_Jul_26_2026_3_05_43_PM.jpg"
           }
         },
-        "photo_2": {
-          "type": "photo",
+        "gallery_image_kUYTEt": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-470.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/image_8345.png"
           }
         },
-        "photo_3": {
-          "type": "photo",
+        "gallery_image_3pxTAq": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-468.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-12_at_1.15.59_PM_1_1.jpg"
           }
         },
-        "photo_4": {
-          "type": "photo",
+        "gallery_image_wPzTgQ": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-464.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/a-diy_deck_2.png"
           }
         },
-        "photo_5": {
-          "type": "photo",
+        "gallery_image_dYxyKN": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-463.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": true
+            "image": "shopify://shop_images/a-diy_deck_1.png"
           }
         },
-        "photo_6": {
-          "type": "photo",
+        "gallery_image_wPqGC6": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-470.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/image_shopify.jpg"
           }
         },
-        "photo_7": {
-          "type": "photo",
+        "gallery_image_fXgLX6": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-462.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/a-diy_deck_1_3.png"
           }
         },
-        "photo_8": {
-          "type": "photo",
+        "gallery_image_bxyzVQ": {
+          "type": "gallery_image",
+          "name": "Gallery Image (main 2)",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-magnific.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/magnific_remove-the-deck-underneat_rgwzURBxtc_1.jpg"
           }
         },
-        "photo_9": {
-          "type": "photo",
+        "gallery_image_zP8jCK": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-465.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": true
+            "image": "shopify://shop_images/IMG_3027_1.png"
           }
         },
-        "photo_10": {
-          "type": "photo",
+        "gallery_image_MJByjn": {
+          "type": "gallery_image",
           "settings": {
-            "image": "shopify://shop_images/dvp-gal-471.png",
-            "image_alt": "A-DIY deck kit in a customer's backyard",
-            "wide": false
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.31.40_453d557c_1.jpg"
+          }
+        },
+        "gallery_image_WMnpcK": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image000000_3_1.jpg"
+          }
+        },
+        "gallery_image_KDMPFM": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/magnific_remove-the-front-tree-and_dtvjtN9XSL_1.jpg"
+          }
+        },
+        "gallery_image_93ckh7": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3267_2_83a58767-04d4-4b45-8646-333e951f5e81.jpg"
+          }
+        },
+        "gallery_image_bYWUQK": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.34_b93bb47f_1.jpg"
+          }
+        },
+        "gallery_image_wpHxTy": {
+          "type": "gallery_image",
+          "name": "Gallery Image ( Main 3) ",
+          "settings": {
+            "image": "shopify://shop_images/IMG_1336_1.jpg"
+          }
+        },
+        "gallery_image_7pRxV3": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8348.png"
+          }
+        },
+        "gallery_image_cga7hP": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/Marie_Stewart_-_8x14_Composite_Forest_Wood_1.jpg"
+          }
+        },
+        "gallery_image_MzekhM": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-13_at_21.31.41_2d8be7b1_1.jpg"
+          }
+        },
+        "gallery_image_7biBNL": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.54.34_a40cea1c_1_af7c3167-5667-437b-8efc-3d943279b627.jpg"
+          }
+        },
+        "gallery_image_arehkE": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8347_406c9c71-9e44-4eff-b04f-029963259104.png"
+          }
+        },
+        "gallery_image_MKBKcz": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/unnamed_4_1.jpg"
+          }
+        },
+        "gallery_image_zbr4Ck": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 4",
+          "settings": {
+            "image": "shopify://shop_images/Terry_D_Chase_-_12x20_PT_Photo_1.jpg"
+          }
+        },
+        "gallery_image_FLLLmF": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.42.29_122ab7f1_1.jpg"
+          }
+        },
+        "gallery_image_JgyPFe": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8989_2_1.jpg"
+          }
+        },
+        "gallery_image_MPEBFH": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-04-28_at_10.43.49_AM_1.jpg"
+          }
+        },
+        "gallery_image_gTYQ6F": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_ckx0prckx0prckx0_2.png"
+          }
+        },
+        "gallery_image_MVMNHB": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image0-be7fe40c-fab5-471c-b2f4-ebf8f722baca_1.jpg"
+          }
+        },
+        "gallery_image_3rVL3t": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/16492_1.jpg"
+          }
+        },
+        "gallery_image_gKzxxq": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 5",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-12_at_1.15.59_PM_2_1.jpg"
+          }
+        },
+        "gallery_image_4QmeDJ": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8349.png"
+          }
+        },
+        "gallery_image_RF6y8W": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.41.33_6fbddd66_1.jpg"
+          }
+        },
+        "gallery_image_8r3hQj": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.43.14_ac2c41f1_1.jpg"
+          }
+        },
+        "gallery_image_NnrWjM": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.49.19_4962fb08_1.jpg"
+          }
+        },
+        "gallery_image_pkgNk3": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.31.34_62c3b956_1.jpg"
+          }
+        },
+        "gallery_image_n9nniR": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.13_a64c0ae7_1.jpg"
+          }
+        },
+        "gallery_image_epAWYa": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 6",
+          "settings": {
+            "image": "shopify://shop_images/8078_1_1.png"
+          }
+        },
+        "gallery_image_T6WQzi": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-05_at_2.56.19_PM_1_86230904-58f5-472f-b421-d25e72008819.jpg"
+          }
+        },
+        "gallery_image_HpVjrH": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/John_Moreau_2_1.jpg"
+          }
+        },
+        "gallery_image_LLNeen": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.28.55_ad220fcd_1.jpg"
+          }
+        },
+        "gallery_image_Kg9MAC": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/5be24146-6f54-4f5e-a314-86769385f140_1.jpg"
+          }
+        },
+        "gallery_image_pcwLYN": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8353.png"
+          }
+        },
+        "gallery_image_DNMiwg": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/088618d8-5693-41b6-b0a7-61a08a1ec4ba_1.jpg"
+          }
+        },
+        "gallery_image_aLYJ3m": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 7 ",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.47.33_09302b67_1.jpg"
+          }
+        },
+        "gallery_image_xJ4eiP": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.44.46_7c7bdfbd_1.jpg"
+          }
+        },
+        "gallery_image_atr9Nf": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8350.png"
+          }
+        },
+        "gallery_image_FhgC3R": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/abd99964-0b92-43ca-a98c-0350992416b5_1.jpg"
+          }
+        },
+        "gallery_image_6GUPdi": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image1_1.jpg"
+          }
+        },
+        "gallery_image_afFVnr": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/Scott_Mixer_1.jpg"
+          }
+        },
+        "gallery_image_Lx7eYJ": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/1000003958_1.jpg"
+          }
+        },
+        "gallery_image_EcHQER": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 8",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-04-24_at_10.03.59_AM_1.jpg"
+          }
+        },
+        "gallery_image_Ygjzma": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_1340_1.jpg"
+          }
+        },
+        "gallery_image_PxUWHB": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.48.43_e626ece0_1.jpg"
+          }
+        },
+        "gallery_image_NeM3eW": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.28.38_983dca66_1.jpg"
+          }
+        },
+        "gallery_image_iJhqwj": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/Karen_3_1.jpg"
+          }
+        },
+        "gallery_image_KAE3Ji": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/1000003960_1.jpg"
+          }
+        },
+        "gallery_image_M4UJLQ": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.59.31_a64f151b_1.jpg"
+          }
+        },
+        "gallery_image_mxQ6Tz": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 9 ",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.37.46_02cdba17_2.jpg"
+          }
+        },
+        "gallery_image_AU36xF": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8359.png"
+          }
+        },
+        "gallery_image_3fTFkF": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8354.png"
+          }
+        },
+        "gallery_image_9a9AFH": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/16492_2.png"
+          }
+        },
+        "gallery_image_43NYcL": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/52b72dce-c49b-4710-a90a-6d8a2ef6361f_1.jpg"
+          }
+        },
+        "gallery_image_iERtXj": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/1000092460_1.jpg"
+          }
+        },
+        "gallery_image_PmXB6z": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image2_1.jpg"
+          }
+        },
+        "gallery_image_33Wbcn": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 10",
+          "settings": {
+            "image": "shopify://shop_images/image2.jpg"
+          }
+        },
+        "gallery_image_8biXf4": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_2886_1.png"
+          }
+        },
+        "gallery_image_fty6Qp": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/377_1.jpg"
+          }
+        },
+        "gallery_image_gbHzKe": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/8079_1_1.png"
+          }
+        },
+        "gallery_image_hr8mc8": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/d7061b6c-e412-48de-b36c-ad3195591348_1.jpg"
+          }
+        },
+        "gallery_image_UX6Wtc": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-04-24_at_10.04.23_AM_1.jpg"
+          }
+        },
+        "gallery_image_hETKrC": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/966a6e20-5f90-4848-8d62-4966b7a2c1bb_1.jpg"
+          }
+        },
+        "gallery_image_XtAcaM": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 11",
+          "settings": {
+            "image": "shopify://shop_images/image3.jpg"
+          }
+        },
+        "gallery_image_ykzrR3": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-08-17_at_3.16.08_PM_1.png"
+          }
+        },
+        "gallery_image_czwtay": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/45b53c91-9f9c-4c33-a1a7-e5263970dbba_1_3.png"
+          }
+        },
+        "gallery_image_dh6yMf": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3026_1_1.png"
+          }
+        },
+        "gallery_image_YBdiMd": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-12_at_1.15.59_PM_1.jpg"
+          }
+        },
+        "gallery_image_Hfr6wh": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-08-25_at_12.18.22_PM.jpg"
+          }
+        },
+        "gallery_image_6RtVMm": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/Kirk_1.png"
+          }
+        },
+        "gallery_image_YdGy4b": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 12",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.45.30_3fba2d48_1.jpg"
+          }
+        },
+        "gallery_image_tPCVwL": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-08-14_at_9.01.41_PM_1.png"
+          }
+        },
+        "gallery_image_7N84TE": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.31.52_41faabf8_1.jpg"
+          }
+        },
+        "gallery_image_xxJVcV": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.30.14_20425344_1.jpg"
+          }
+        },
+        "gallery_image_9hYxVn": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.59.55_53dbfe95_1.jpg"
+          }
+        },
+        "gallery_image_ND8wBg": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.40.23_2b73aadf_1.jpg"
+          }
+        },
+        "gallery_image_YND4XY": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0566_1.jpg"
+          }
+        },
+        "gallery_image_niePiw": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 13",
+          "settings": {
+            "image": "shopify://shop_images/image4.jpg"
+          }
+        },
+        "gallery_image_yPVnen": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3265_1.jpg"
+          }
+        },
+        "gallery_image_9T7wiD": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3081_1.jpg"
+          }
+        },
+        "gallery_image_F88fQE": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-22_at_10.42.45_20628928_1.jpg"
+          }
+        },
+        "gallery_image_bMFBPf": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-04-24_at_10.03.39_AM_1.jpg"
+          }
+        },
+        "gallery_image_BDPdYk": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8991_1.jpg"
+          }
+        },
+        "gallery_image_HA8xLw": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8358.png"
+          }
+        },
+        "gallery_image_YUzHEL": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 14",
+          "settings": {
+            "image": "shopify://shop_images/image5_1_1.jpg"
+          }
+        },
+        "gallery_image_69J4iP": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image1.jpg"
+          }
+        },
+        "gallery_image_PWnyrH": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/540b3d21-9157-4fbc-9441-e8bfc2d56128_1.jpg"
+          }
+        },
+        "gallery_image_JybWeA": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/1000093011_1.jpg"
+          }
+        },
+        "gallery_image_tgrM6b": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/aef557d7-fd15-490b-a222-6219308b2d50_1.jpg"
+          }
+        },
+        "gallery_image_KP77my": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.53.45_2cbb686d_1.jpg"
+          }
+        },
+        "gallery_image_9atNyC": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8990_1.jpg"
+          }
+        },
+        "gallery_image_NJ3tTX": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 15",
+          "settings": {
+            "image": "shopify://shop_images/image_8346_00e671d3-2ed9-43cf-9c6a-56e969812dd2.png"
+          }
+        },
+        "gallery_image_RMBNqB": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_20_1_984627d8-4591-437a-80f3-d519c356d004.jpg"
+          }
+        },
+        "gallery_image_e9NVj6": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-13_at_21.31.41_39fc1858_1.jpg"
+          }
+        },
+        "gallery_image_QkxFc8": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/Karen_2_1.jpg"
+          }
+        },
+        "gallery_image_nPUF4h": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8356.png"
+          }
+        },
+        "gallery_image_Wgfzxm": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8355.png"
+          }
+        },
+        "gallery_image_aG9YjY": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_11.02.57_ed9fd823_1.jpg"
+          }
+        },
+        "gallery_image_98mCYy": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 16 ",
+          "settings": {
+            "image": "shopify://shop_images/image_8351.png"
+          }
+        },
+        "gallery_image_6DUwPA": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.54.06_b7a6a21a_1.jpg"
+          }
+        },
+        "gallery_image_aqebRK": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0565_1.jpg"
+          }
+        },
+        "gallery_image_z4hNYc": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/fa2ae933-60da-417e-88b2-c995e649dc8e_1.jpg"
+          }
+        },
+        "gallery_image_ykFYEt": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/3dedc752-5363-44a4-a06a-7ca20d0ad61f_1_64b93fb8-87e1-4afe-acb9-5ffae4a5003f.jpg"
+          }
+        },
+        "gallery_image_fzHH3T": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/AACAA88B-CD07-4AD9-8424-66A737BB085D_1_102_o_1.jpg"
+          }
+        },
+        "gallery_image_tb6jQy": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0567_1.jpg"
+          }
+        },
+        "gallery_image_UrQb9F": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 17 ",
+          "settings": {
+            "image": "shopify://shop_images/unnamed_6_1.jpg"
+          }
+        },
+        "gallery_image_Ya8XxY": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/d67e4dc5-4ec6-47fa-9c39-f88e64180872_1.jpg"
+          }
+        },
+        "gallery_image_cJQTFf": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/3de92eef-fc42-4375-8d48-c84ba160cbdf_1.jpg"
+          }
+        },
+        "gallery_image_PAFkTF": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/unnamed_7_1.jpg"
+          }
+        },
+        "gallery_image_gX3G8R": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8352.png"
+          }
+        },
+        "gallery_image_w6KJmw": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/8078_1_2.png"
+          }
+        },
+        "gallery_image_49FJtr": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-12_at_8.34.55_AM_1.jpg"
+          }
+        },
+        "gallery_image_bPyEB4": {
+          "type": "gallery_image",
+          "name": "Gallery Image main 18 ",
+          "settings": {
+            "image": "shopify://shop_images/image7.jpg"
+          }
+        },
+        "gallery_image_wmqmDC": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.47.45_941596e6_1.jpg"
+          }
+        },
+        "gallery_image_nHgmHK": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_54_1.png"
+          }
+        },
+        "gallery_image_zitwhb": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/John_Moreau_1_1.jpg"
+          }
+        },
+        "gallery_image_6EHidE": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2025-09-11_at_10.30.21_28e82c9b_1_a47350b0-469b-4107-9083-991df10b9dde.jpg"
+          }
+        },
+        "gallery_image_FWQ9nw": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8341.png"
+          }
+        },
+        "gallery_image_fV4Awp": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/image_8340.png"
+          }
+        },
+        "gallery_image_xiJTcG": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-01_at_11.38.58_AM_1.webp"
           }
         }
       },
       "block_order": [
-        "photo_1",
-        "photo_2",
-        "photo_3",
-        "photo_4",
-        "photo_5",
-        "photo_6",
-        "photo_7",
-        "photo_8",
-        "photo_9",
-        "photo_10"
-      ]
+        "gallery_image_eCxEwQ",
+        "gallery_image_kUYTEt",
+        "gallery_image_3pxTAq",
+        "gallery_image_wPzTgQ",
+        "gallery_image_dYxyKN",
+        "gallery_image_wPqGC6",
+        "gallery_image_fXgLX6",
+        "gallery_image_bxyzVQ",
+        "gallery_image_zP8jCK",
+        "gallery_image_MJByjn",
+        "gallery_image_WMnpcK",
+        "gallery_image_KDMPFM",
+        "gallery_image_93ckh7",
+        "gallery_image_bYWUQK",
+        "gallery_image_wpHxTy",
+        "gallery_image_7pRxV3",
+        "gallery_image_cga7hP",
+        "gallery_image_MzekhM",
+        "gallery_image_7biBNL",
+        "gallery_image_arehkE",
+        "gallery_image_MKBKcz",
+        "gallery_image_zbr4Ck",
+        "gallery_image_FLLLmF",
+        "gallery_image_JgyPFe",
+        "gallery_image_MPEBFH",
+        "gallery_image_gTYQ6F",
+        "gallery_image_MVMNHB",
+        "gallery_image_3rVL3t",
+        "gallery_image_gKzxxq",
+        "gallery_image_4QmeDJ",
+        "gallery_image_RF6y8W",
+        "gallery_image_8r3hQj",
+        "gallery_image_NnrWjM",
+        "gallery_image_pkgNk3",
+        "gallery_image_n9nniR",
+        "gallery_image_epAWYa",
+        "gallery_image_T6WQzi",
+        "gallery_image_HpVjrH",
+        "gallery_image_LLNeen",
+        "gallery_image_Kg9MAC",
+        "gallery_image_pcwLYN",
+        "gallery_image_DNMiwg",
+        "gallery_image_aLYJ3m",
+        "gallery_image_xJ4eiP",
+        "gallery_image_atr9Nf",
+        "gallery_image_FhgC3R",
+        "gallery_image_6GUPdi",
+        "gallery_image_afFVnr",
+        "gallery_image_Lx7eYJ",
+        "gallery_image_EcHQER",
+        "gallery_image_Ygjzma",
+        "gallery_image_PxUWHB",
+        "gallery_image_NeM3eW",
+        "gallery_image_iJhqwj",
+        "gallery_image_KAE3Ji",
+        "gallery_image_M4UJLQ",
+        "gallery_image_mxQ6Tz",
+        "gallery_image_AU36xF",
+        "gallery_image_3fTFkF",
+        "gallery_image_9a9AFH",
+        "gallery_image_43NYcL",
+        "gallery_image_iERtXj",
+        "gallery_image_PmXB6z",
+        "gallery_image_33Wbcn",
+        "gallery_image_8biXf4",
+        "gallery_image_fty6Qp",
+        "gallery_image_gbHzKe",
+        "gallery_image_hr8mc8",
+        "gallery_image_UX6Wtc",
+        "gallery_image_hETKrC",
+        "gallery_image_XtAcaM",
+        "gallery_image_ykzrR3",
+        "gallery_image_czwtay",
+        "gallery_image_dh6yMf",
+        "gallery_image_YBdiMd",
+        "gallery_image_Hfr6wh",
+        "gallery_image_6RtVMm",
+        "gallery_image_YdGy4b",
+        "gallery_image_tPCVwL",
+        "gallery_image_7N84TE",
+        "gallery_image_xxJVcV",
+        "gallery_image_9hYxVn",
+        "gallery_image_ND8wBg",
+        "gallery_image_YND4XY",
+        "gallery_image_niePiw",
+        "gallery_image_yPVnen",
+        "gallery_image_9T7wiD",
+        "gallery_image_F88fQE",
+        "gallery_image_bMFBPf",
+        "gallery_image_BDPdYk",
+        "gallery_image_HA8xLw",
+        "gallery_image_YUzHEL",
+        "gallery_image_69J4iP",
+        "gallery_image_PWnyrH",
+        "gallery_image_JybWeA",
+        "gallery_image_tgrM6b",
+        "gallery_image_KP77my",
+        "gallery_image_9atNyC",
+        "gallery_image_NJ3tTX",
+        "gallery_image_RMBNqB",
+        "gallery_image_e9NVj6",
+        "gallery_image_QkxFc8",
+        "gallery_image_nPUF4h",
+        "gallery_image_Wgfzxm",
+        "gallery_image_aG9YjY",
+        "gallery_image_98mCYy",
+        "gallery_image_6DUwPA",
+        "gallery_image_aqebRK",
+        "gallery_image_z4hNYc",
+        "gallery_image_ykFYEt",
+        "gallery_image_fzHH3T",
+        "gallery_image_tb6jQy",
+        "gallery_image_UrQb9F",
+        "gallery_image_Ya8XxY",
+        "gallery_image_cJQTFf",
+        "gallery_image_PAFkTF",
+        "gallery_image_gX3G8R",
+        "gallery_image_w6KJmw",
+        "gallery_image_49FJtr",
+        "gallery_image_bPyEB4",
+        "gallery_image_wmqmDC",
+        "gallery_image_nHgmHK",
+        "gallery_image_zitwhb",
+        "gallery_image_6EHidE",
+        "gallery_image_FWQ9nw",
+        "gallery_image_fV4Awp",
+        "gallery_image_xiJTcG"
+      ],
+      "name": "A-DIY Real Life Gallery 2",
+      "settings": {
+        "title": "A-DIY, in real life",
+        "subtitle": "TAG US @decks",
+        "mobile_layout": "featured",
+        "bg_color": "#f4f4f4",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     },
     "faq": {
       "type": "dvp-faq",
