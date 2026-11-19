@@ -1,0 +1,71 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · Short answer (AEO). Figma › Section - Short Answer (AEO) (7264:146).
+  The H2 + answer paragraph are written as the direct answer for answer engines.
+  Verdict icons are SVGs in Files (Content › Files), referenced by file name.
+{%- endcomment -%}
+
+<div class="dvp dvp--white dvp-answer"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="dvp__inner">
+    <div class="dvp-answer__card">
+      <div class="dvp-answer__copy">
+        <h2 class="dvp-answer__title">{{ section.settings.heading | escape }}</h2>
+        <p class="dvp-answer__text">
+          {%- if section.settings.lead != blank -%}<strong>{{ section.settings.lead | escape }}</strong> {% endif -%}
+          {{- section.settings.body | escape -}}
+        </p>
+      </div>
+      {%- if section.blocks.size > 0 -%}
+        <ul class="dvp-answer__verdicts">
+          {%- for block in section.blocks -%}
+            <li class="dvp-verdict dvp-verdict--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+              <span class="dvp-verdict__icon" aria-hidden="true">
+                {%- if block.settings.icon_file != blank -%}
+                  <img src="{{ block.settings.icon_file | file_url }}" alt="" width="24" height="24" loading="lazy">
+                {%- endif -%}
+              </span>
+              <span class="dvp-verdict__text">
+                <span class="dvp-verdict__label">{{ block.settings.label | escape }}</span>
+                <span class="dvp-verdict__value">{{ block.settings.value | escape }}</span>
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Deck vs Patio · Answer",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Deck or patio: which is better for your backyard?" },
+    { "type": "text", "id": "lead", "label": "Bold lead sentence" },
+    { "type": "textarea", "id": "body", "label": "Answer" }
+  ],
+  "blocks": [
+    {
+      "type": "verdict",
+      "name": "Verdict",
+      "settings": [
+        { "type": "select", "id": "style", "label": "Style", "default": "white", "options": [
+          { "value": "white", "label": "White" },
+          { "value": "tan", "label": "Tan" },
+          { "value": "ghost", "label": "Outline" }
+        ] },
+        { "type": "text", "id": "icon_file", "label": "Icon file name", "info": "SVG uploaded to Content › Files, e.g. dvp-icon-deck.svg" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Deck" },
+        { "type": "text", "id": "value", "label": "Text", "default": "Slopes, raised doors, damp soil" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Deck vs Patio · Answer", "blocks": [{ "type": "verdict" }] }]
+}
+{% endschema %}

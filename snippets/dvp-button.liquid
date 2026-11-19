@@ -1,0 +1,19 @@
+{%- comment -%}
+  Deck vs Patio landing page · pill button.
+  A link containing "#chat" opens the chat widget (delegated handler in theme.liquid), so it
+  renders as a <button data-chat-trigger> rather than a same-page link.
+
+  Accepts:
+  - label: {String}
+  - link: {String} url setting value
+  - style: {String} 'green' (default) | 'white' | 'outline-green' | 'outline-white' | 'outline-dark'
+{%- endcomment -%}
+{%- if label != blank -%}
+  {%- assign dvp_btn_class = 'dvp-btn dvp-btn--green' -%}
+  {%- if style != blank -%}{%- assign dvp_btn_class = 'dvp-btn dvp-btn--' | append: style -%}{%- endif -%}
+  {%- if link contains '#chat' -%}
+    <button type="button" class="{{ dvp_btn_class }}" data-chat-trigger>{{ label | escape }}</button>
+  {%- elsif link != blank -%}
+    <a class="{{ dvp_btn_class }}" href="{{ link }}">{{ label | escape }}</a>
+  {%- endif -%}
+{%- endif -%}

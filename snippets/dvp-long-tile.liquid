@@ -1,0 +1,11 @@
+{%- comment -%}
+  Deck vs Patio · one tile in the "10 years later" columns.
+  Accepts: block (tile block)
+{%- endcomment -%}
+<li class="dvp-tile" {{ block.shopify_attributes }}>
+  {%- render 'dvp-image', image: block.settings.image, alt: block.settings.image_alt, class: 'dvp-tile__media', sizes: '(min-width: 1920px) 306px, (min-width: 990px) 20vw, (min-width: 750px) 44vw, calc(100vw - 80px)' -%}
+  <div class="dvp-tile__text">
+    <h4 class="dvp-tile__title">{{ block.settings.title | escape }}</h4>
+    <p class="dvp-tile__desc">{{ block.settings.text | escape }}</p>
+  </div>
+</li>

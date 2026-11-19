@@ -1,0 +1,40 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · Hero. Figma "SEO — Deck vs Patio v2" › Section - Hero (H1) (6977:1416).
+  Full-bleed photo with a left-to-right green gradient. Holds the page's only H1.
+{%- endcomment -%}
+
+<div class="dvp dvp-hero"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  {%- render 'dvp-image', image: section.settings.image, alt: section.settings.image_alt, class: 'dvp-hero__bg', sizes: '100vw', eager: true -%}
+  <div class="dvp__inner">
+    <div class="dvp-hero__copy">
+      <h1 class="dvp-hero__title">{{ section.settings.heading | default: page.title | escape }}</h1>
+      {%- if section.settings.lede != blank -%}
+        <p class="dvp-hero__lede">{{ section.settings.lede | escape }}</p>
+      {%- endif -%}
+      <div class="dvp-btns">
+        {%- render 'dvp-button', label: section.settings.button_label, link: section.settings.button_link, style: 'white' -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Deck vs Patio · Hero",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "textarea", "id": "heading", "label": "Heading (H1)", "default": "Patio vs Deck: The Difference Between a Deck and a Patio & How to Decide" },
+    { "type": "textarea", "id": "lede", "label": "Intro", "default": "A patio covers the ground. A deck gives you a level, dry outdoor living space that starts at your back door, and its upkeep stays on the surface where you can see it. Here’s how a deck and a patio compare on build, maintenance, durability and resale value." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore A-DIY Deck Kits" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "A-DIY composite deck beside a stone patio with lounge seating" }
+  ],
+  "presets": [{ "name": "Deck vs Patio · Hero" }]
+}
+{% endschema %}
