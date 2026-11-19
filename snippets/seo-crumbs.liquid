@@ -1,0 +1,71 @@
+{%- comment -%}
+  Outputs the breadcrumb trail for SEO landing pages as "url|name~~url|name".
+  Used by structured-data-breadcrumbs (JSON-LD) and seo-breadcrumb (visible trail), so both match.
+  Outputs nothing for pages it does not handle; the caller falls back to its own logic.
+    State pages:      Home > Deck Builders Near Me > Deck Builders in <State>
+    City pages:       Home > Deck Builders Near Me > Deck Builders in <State> > City
+    Deck Builders hub: Home > Deck Builders Near Me
+  The hub is the page with handle deck-builders-near-me (deck-builders is the older fallback).
+    Size collections: Home > Deck Kits by Size > size
+{%- endcomment -%}
+{%- liquid
+  assign out = ''
+  assign home = routes.root_url | append: '|Home'
+  assign hub_label = 'Deck Builders Near Me'
+  assign hub = pages['deck-builders-near-me']
+  if hub.url == blank
+    assign hub = pages['deck-builders']
+  endif
+  assign hub_crumb = ''
+  if hub.url != blank
+    assign hub_crumb = hub.url | append: '|' | append: hub_label
+  endif
+  case request.page_type
+    when 'page'
+      if page.template_suffix == 'state-seo'
+        assign st_name = page.metafields.state_seo.region_name.value | split: ',' | first | strip
+        if st_name == blank
+          assign st_name = page.title
+        else
+          assign st_name = st_name | prepend: 'Deck Builders in '
+        endif
+        assign out = home
+        if hub_crumb != ''
+          assign out = out | append: '~~' | append: hub_crumb
+        endif
+        assign out = out | append: '~~' | append: page.url | append: '|' | append: st_name
+      elsif page.template_suffix == 'city-seo'
+        assign st = page.metafields.city_seo.state.value
+        assign out = home
+        if hub_crumb != ''
+          assign out = out | append: '~~' | append: hub_crumb
+        endif
+        if st != blank
+          assign st_page_handle = 'deck-builders-' | append: st.system.handle
+          assign st_page = pages[st_page_handle]
+          if st_page.url != blank
+            assign out = out | append: '~~' | append: st_page.url | append: '|Deck Builders in ' | append: st.name.value
+          endif
+        endif
+        assign city_name = ''
+        for c in st.cities.value
+          if c.page_handle.value == page.handle
+            assign city_name = c.name.value
+          endif
+        endfor
+        if city_name == blank
+          assign city_name = page.title
+        endif
+        assign out = out | append: '~~' | append: page.url | append: '|' | append: city_name
+      elsif page.handle == 'deck-builders-near-me' or page.handle == 'deck-builders'
+        assign out = home | append: '~~' | append: page.url | append: '|' | append: hub_label
+      endif
+    when 'collection'
+      assign sdp = collection.metafields.custom.deck_size.value
+      assign size_hub = collections['deck-kits-by-size']
+      if sdp != blank and sdp.width.value != blank and size_hub.url != blank
+        assign out = home | append: '~~' | append: size_hub.url | append: '|' | append: size_hub.title | append: '~~' | append: collection.url | append: '|' | append: collection.title
+      endif
+  endcase
+-%}
+{{- out -}}

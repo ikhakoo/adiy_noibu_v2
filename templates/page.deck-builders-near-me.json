@@ -70,7 +70,7 @@
         "trust_3": "Free design consultation",
         "image_alt": "A-DIY pressure-treated wood deck with lounge seating in a backyard",
         "image_position": "50% 50%",
-        "breadcrumb_schema": true,
+        "breadcrumb_schema": false,
         "image": "shopify://shop_images/deck-builders-near-me-hero.png"
       }
     },
