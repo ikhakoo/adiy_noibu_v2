@@ -1,0 +1,327 @@
+{
+  "sections": {
+    "hero": {
+      "type": "deck-directory-hero",
+      "blocks": {
+        "chip_new_york": {
+          "type": "chip",
+          "settings": {
+            "label": "New York",
+            "link": "shopify://pages/deck-builders-new-york"
+          }
+        },
+        "chip_california": {
+          "type": "chip",
+          "settings": {
+            "label": "California",
+            "link": "shopify://pages/deck-builders-california"
+          }
+        },
+        "chip_pennsylvania": {
+          "type": "chip",
+          "settings": {
+            "label": "Pennsylvania",
+            "link": "shopify://pages/deck-builders-pennsylvania"
+          }
+        },
+        "chip_new_jersey": {
+          "type": "chip",
+          "settings": {
+            "label": "New Jersey",
+            "link": "shopify://pages/deck-builders-new-jersey"
+          }
+        },
+        "chip_florida": {
+          "type": "chip",
+          "settings": {
+            "label": "Florida",
+            "link": "shopify://pages/deck-builders-florida"
+          }
+        },
+        "chip_ohio": {
+          "type": "chip",
+          "settings": {
+            "label": "Ohio",
+            "link": "shopify://pages/deck-builders-ohio"
+          }
+        }
+      },
+      "block_order": [
+        "chip_new_york",
+        "chip_california",
+        "chip_pennsylvania",
+        "chip_new_jersey",
+        "chip_florida",
+        "chip_ohio"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_label": "Deck Builders Near Me",
+        "eyebrow": "Deck guides for 48 states · 100 city guides",
+        "heading": "Deck Builders Near Me",
+        "intro": "<p>Find your state, then your city: local deck costs, permit rules and what to ask a builder, plus a faster way to build it yourself with an engineered A-DIY kit.</p>",
+        "show_search": true,
+        "search_placeholder": "Search a state or city — e.g. Ohio or Buffalo",
+        "search_button": "Find my guide",
+        "directory_anchor": "states",
+        "popular_label": "Popular:",
+        "rating_text": "4.8 / 5 from 1,137 reviews",
+        "trust_2": "Kit delivery in 10–14 business days",
+        "trust_3": "Free design consultation",
+        "image_alt": "A-DIY pressure-treated wood deck with lounge seating in a backyard",
+        "image_position": "50% 50%",
+        "breadcrumb_schema": true
+      }
+    },
+    "facts": {
+      "type": "deck-directory-facts",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "value": "48",
+            "label": "State deck guides"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "value": "100",
+            "label": "City guides across 10 states"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "value": "4.8 / 5",
+            "label": "From 1,137 customer reviews"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "value": "10–14 days",
+            "label": "Kit delivery (business days)"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4"
+      ],
+      "settings": {}
+    },
+    "states": {
+      "type": "deck-directory-states",
+      "settings": {
+        "anchor_id": "states",
+        "open_state": "new-york",
+        "unavailable": "alaska, hawaii",
+        "show_cities": true,
+        "list_schema": true
+      }
+    },
+    "faq": {
+      "type": "deck-directory-faq",
+      "blocks": {
+        "group_1": {
+          "type": "group",
+          "settings": {
+            "title": "Delivery & shipping"
+          }
+        },
+        "q_1_1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take for an A-DIY deck kit?",
+            "answer": "<p>Most A-DIY deck kits arrive within 10–14 business days of your order. After you order, your kit moves through manufacturing, assembly and inspection, and packing, and you can follow each stage in your <a href=\"/pages/tracking\">My A-DIY Hub</a>. If you'd rather have your deck arrive on a specific date, A-DIY Reserve lets you choose a future delivery date instead.</p>"
+          }
+        },
+        "q_1_2": {
+          "type": "question",
+          "settings": {
+            "question": "Which states does A-DIY ship to?",
+            "answer": "<p>A-DIY delivers deck kits to homes anywhere in the continental United States, the lower 48 states. Delivery to Alaska and Hawaii isn't available yet. For deck costs, permit rules and local advice where you live, open your state guide in the <a href=\"#states\">directory above</a>.</p>"
+          }
+        },
+        "q_1_3": {
+          "type": "question",
+          "settings": {
+            "question": "How much does shipping cost?",
+            "answer": "<p>Shipping is $199 per order to any address in the continental US. Orders of $4,000 or more can ship free when a free-shipping offer is running; orders under $4,000 don't qualify. The kit price and shipping are both shown at checkout, so you know your full cost before you buy.</p>"
+          }
+        },
+        "q_1_4": {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my deck kit order?",
+            "answer": "<p>Track your order anytime in the My A-DIY Hub at <a href=\"/pages/tracking\">a-diy.com/pages/tracking</a>. It shows exactly where your kit is: order confirmed, manufacturing, assembly and inspection, packing, and shipped. If you have a question about your delivery, our team can help by live chat or phone.</p>"
+          }
+        },
+        "group_2": {
+          "type": "group",
+          "settings": {
+            "title": "Ordering & payment"
+          }
+        },
+        "q_2_1": {
+          "type": "question",
+          "settings": {
+            "question": "What payment options does A-DIY offer?",
+            "answer": "<p>You can pay in four ways. Pay in full at checkout. Split the cost into 0% interest monthly payments for up to eight months, and your deck ships once it's paid off. Build now, pay later with financing if you're approved, and your deck is delivered right away. Or hold your deck with a $250 A-DIY Reserve deposit.</p>"
+          }
+        },
+        "q_2_2": {
+          "type": "question",
+          "settings": {
+            "question": "Can I reserve a deck now and have it delivered later?",
+            "answer": "<p>Yes. With A-DIY Reserve, you pay a $250 non-refundable deposit to lock in today's price, then choose the future date you want your deck delivered. It works well if you're planning a deck for next season or still waiting on a permit, because your price is held in the meantime.</p>"
+          }
+        },
+        "q_2_3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I order a custom deck size?",
+            "answer": "<p>Yes. If you need a size that isn't listed, such as 20x20, our team can prepare a custom order with your dimensions, which you then purchase like any other kit. The easiest way to start is a <a href=\"/pages/free-design-consultation\">free design consultation</a>, where a deck specialist reviews your space and the size you have in mind.</p>"
+          }
+        },
+        "group_3": {
+          "type": "group",
+          "settings": {
+            "title": "Building & installation"
+          }
+        },
+        "q_3_1": {
+          "type": "question",
+          "settings": {
+            "question": "What tools do I need to build an A-DIY deck?",
+            "answer": "<p>Just a drill. Everything else you need to assemble your A-DIY deck comes in the kit, including all the hardware and the Tuff Block footings, so there's no concrete to mix or pour.</p>"
+          }
+        },
+        "q_3_2": {
+          "type": "question",
+          "settings": {
+            "question": "What foundation does an A-DIY deck sit on?",
+            "answer": "<p>Every A-DIY kit includes Tuff Block footings, so your deck sits on footing blocks rather than poured concrete footings. If your yard slopes or the ground is uneven, talk to a deck specialist before you order so we can plan the right setup for your site.</p>"
+          }
+        },
+        "q_3_3": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need a contractor to install the deck, or can I build it myself?",
+            "answer": "<p>You can build it yourself. A-DIY decks are professionally engineered kits that assemble in modular sections, and a drill is the only tool you need. A-DIY doesn't install decks, so if you'd rather not build it, hire a local handyman, carpenter or licensed contractor to assemble the kit. That's a middle path between a full-service deck builder and building from scratch: the kit supplies the engineered materials, and a local pro supplies the labor.</p>"
+          }
+        },
+        "q_3_4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I get help while I build?",
+            "answer": "<p>Yes. A-DIY deck specialists are available by phone and live chat before you order, while you build and after your deck is finished. Before you buy, you can also book a <a href=\"/pages/free-design-consultation\">free design consultation</a> to talk through your space, deck size and materials with a specialist.</p>"
+          }
+        },
+        "group_4": {
+          "type": "group",
+          "settings": {
+            "title": "Materials & specs"
+          }
+        },
+        "q_4_1": {
+          "type": "question",
+          "settings": {
+            "question": "What materials are A-DIY deck kits made from?",
+            "answer": "<p>A-DIY deck kits come in two materials: pressure-treated, kiln-dried wood and composite decking. Both are framed with 2x8 joists and made in the USA. To compare the two on look, upkeep and cost, see our <a href=\"/pages/composite-vs-wood\">composite vs wood guide</a>.</p>"
+          }
+        },
+        "q_4_2": {
+          "type": "question",
+          "settings": {
+            "question": "What deck sizes are available?",
+            "answer": "<p>Pressure-treated wood kits come in 15 sizes, from 6x12 to 16x28. Composite kits come in 9 sizes, from 12x12 to 16x28, including 12x12, 12x20 and 16x20. See every size on the <a href=\"/collections/deck-kits-by-size\">Deck Kits by Size</a> page, and if you need something different, ask our team about a custom size.</p>"
+          }
+        },
+        "q_4_3": {
+          "type": "question",
+          "settings": {
+            "question": "Are steps and railings included?",
+            "answer": "<p>Steps and railings are available as add-ons rather than included by default. Chat with our team to add them to your order, and a deck specialist can help you work out how many steps and how much railing your deck needs based on its height and layout.</p>"
+          }
+        },
+        "group_5": {
+          "type": "group",
+          "settings": {
+            "title": "Local builders & permits"
+          }
+        },
+        "q_5_1": {
+          "type": "question",
+          "settings": {
+            "question": "How do I find a good deck builder near me?",
+            "answer": "<p>Start with your state in the <a href=\"#states\">directory above</a>. Each state guide covers typical deck costs, the permits a builder should pull and the questions to ask before you hire. Then get at least three written, itemized quotes and check each contractor's license and insurance. Ask for photos of recent decks and references, and make sure the contract spells out materials, timeline, permits and the payment schedule.</p>"
+          }
+        },
+        "q_5_2": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need a permit to build a deck?",
+            "answer": "<p>Usually, yes. Most US cities and counties require a permit for a deck that's attached to your house or sits more than about 30 inches above the ground, and some require one for any deck. Rules vary by location, so open your city guide to find the office that issues deck permits where you live. A-DIY engineering diagrams show your deck's framing and footing layout, which you can take to your building department.</p>"
+          }
+        },
+        "q_5_3": {
+          "type": "question",
+          "settings": {
+            "question": "Is a deck kit a good alternative to hiring a deck builder?",
+            "answer": "<p>For many ground-level and freestanding decks, yes. A local deck builder designs the deck, sources the materials and builds it, and their labor is part of your price. With an A-DIY kit, the engineered components, hardware and footings are delivered to your door, and you supply the labor yourself or hire a handyman to assemble it. For attached, raised or multi-level decks, a licensed deck builder is usually the better choice.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "group_1",
+        "q_1_1",
+        "q_1_2",
+        "q_1_3",
+        "q_1_4",
+        "group_2",
+        "q_2_1",
+        "q_2_2",
+        "q_2_3",
+        "group_3",
+        "q_3_1",
+        "q_3_2",
+        "q_3_3",
+        "q_3_4",
+        "group_4",
+        "q_4_1",
+        "q_4_2",
+        "q_4_3",
+        "group_5",
+        "q_5_1",
+        "q_5_2",
+        "q_5_3"
+      ],
+      "settings": {
+        "anchor_id": "faq",
+        "open_all": true,
+        "show_search": true,
+        "help_link": "#chat",
+        "faq_schema": true
+      }
+    },
+    "cta": {
+      "type": "deck-directory-cta",
+      "settings": {
+        "primary_link": "shopify://pages/free-design-consultation",
+        "phone_label": "Call",
+        "phone": "+1 (786) 358-2872"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "facts",
+    "states",
+    "faq",
+    "cta"
+  ]
+}
