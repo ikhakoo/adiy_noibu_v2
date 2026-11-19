@@ -1,0 +1,141 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'deck-directory.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'deck-directory.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  Deck Builders Near Me directory · Hero. Figma › Section - Hero (7664:1775).
+  Holds the page's only H1 and the breadcrumb. The search hands its text to the State
+  directory section (deck-directory.js): an exact city opens that city guide, an exact state
+  opens its city panel or state guide, anything else filters the directory. Without JS the
+  form just jumps to the directory. `chip` blocks are the "Popular" state links.
+{%- endcomment -%}
+
+{%- assign dd_title = section.settings.heading | default: page.title -%}
+
+<div class="ss dd ss--white dd-hero">
+  <div class="dd__inner dd-hero__row">
+    <div class="dd-hero__copy">
+      {%- if section.settings.show_breadcrumb -%}
+        <nav class="dd-crumbs" aria-label="Breadcrumb">
+          <a href="{{ routes.root_url }}">Home</a>
+          <span class="dd-crumbs__sep" aria-hidden="true">/</span>
+          <span aria-current="page">{{ section.settings.breadcrumb_label | default: dd_title | escape }}</span>
+        </nav>
+      {%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dd-eyebrow dd-eyebrow--dot">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 class="dd-hero__title">{{ dd_title | escape }}</h1>
+      {%- if section.settings.intro != blank -%}
+        <div class="dd-hero__lede">{{ section.settings.intro }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.show_search -%}
+        <form class="dd-search" action="#{{ section.settings.directory_anchor | handle }}" role="search" data-dd-hero-search>
+          {%- render 'deck-directory-icon', name: 'search' -%}
+          <label class="dd-visually-hidden" for="dd-hero-search-{{ section.id }}">{{ section.settings.search_placeholder | escape }}</label>
+          <input class="dd-search__input" id="dd-hero-search-{{ section.id }}" type="search" autocomplete="off" placeholder="{{ section.settings.search_placeholder | escape }}">
+          <button class="dd-search__btn" type="submit">{{ section.settings.search_button | escape }}</button>
+        </form>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="dd-popular">
+          {%- if section.settings.popular_label != blank -%}
+            <span class="dd-popular__label">{{ section.settings.popular_label | escape }}</span>
+          {%- endif -%}
+          {%- for block in section.blocks -%}
+            {%- if block.settings.label != blank and block.settings.link != blank -%}
+              <a class="dd-chip" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="dd-trust">
+        {%- if section.settings.rating_text != blank -%}
+          <span class="dd-trust__stars" aria-hidden="true">★★★★★</span>
+          <span class="dd-trust__rating">{{ section.settings.rating_text | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.trust_2 != blank -%}
+          <span class="dd-trust__item">{{ section.settings.trust_2 | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.trust_3 != blank -%}
+          <span class="dd-trust__item">{{ section.settings.trust_3 | escape }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- render 'state-seo-image',
+      image: section.settings.image,
+      alt: section.settings.image_alt,
+      class: 'dd-hero__media',
+      sizes: '(min-width: 1920px) 740px, (min-width: 990px) 43vw, calc(100vw - 40px)',
+      position: section.settings.image_position,
+      eager: true
+    -%}
+  </div>
+</div>
+
+{%- if section.settings.breadcrumb_schema and section.settings.show_breadcrumb -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ section.settings.breadcrumb_label | default: dd_title | json }}, "item": {{ shop.url | append: page.url | json }} }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Directory · Hero",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 8,
+  "settings": [
+    { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
+    { "type": "text", "id": "breadcrumb_label", "label": "Breadcrumb label", "default": "Deck Builders Near Me" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Deck guides for 48 states · 100 city guides" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "Deck Builders Near Me", "info": "Falls back to the page title." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Find your state, then your city: local deck costs, permit rules and what to ask a builder, plus a faster way to build it yourself with an engineered A-DIY kit.</p>" },
+    { "type": "header", "content": "Search" },
+    { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
+    { "type": "text", "id": "search_placeholder", "label": "Placeholder", "default": "Search a state or city — e.g. Ohio or Buffalo" },
+    { "type": "text", "id": "search_button", "label": "Button label", "default": "Find my guide" },
+    { "type": "text", "id": "directory_anchor", "label": "State directory anchor ID", "default": "states", "info": "Must match the Anchor ID of the Directory · States section." },
+    { "type": "text", "id": "popular_label", "label": "Popular label", "default": "Popular:" },
+    { "type": "header", "content": "Trust row" },
+    { "type": "text", "id": "rating_text", "label": "Rating", "default": "4.8 / 5 from 1,137 reviews" },
+    { "type": "text", "id": "trust_2", "label": "Trust point 2", "default": "Kit delivery in 10–14 business days" },
+    { "type": "text", "id": "trust_3", "label": "Trust point 3", "default": "Free design consultation" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)", "default": "A-DIY pressure-treated wood deck with lounge seating in a backyard" },
+    { "type": "select", "id": "image_position", "label": "Image crop focus", "default": "50% 50%", "options": [
+      { "value": "50% 20%", "label": "Top" },
+      { "value": "50% 35%", "label": "Upper middle" },
+      { "value": "50% 50%", "label": "Center" },
+      { "value": "50% 65%", "label": "Lower middle" },
+      { "value": "50% 80%", "label": "Bottom" }
+    ] },
+    { "type": "header", "content": "SEO" },
+    { "type": "checkbox", "id": "breadcrumb_schema", "label": "Output BreadcrumbList schema", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Popular state",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "New York" },
+        { "type": "url", "id": "link", "label": "Link (state guide)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Directory · Hero" }]
+}
+{% endschema %}

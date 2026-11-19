@@ -1,0 +1,51 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'deck-directory.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck Builders Near Me directory · Closing CTA. Figma › Section - Closing CTA (7664:1998).
+  A button link containing "#chat" opens the chat widget (delegated handler in theme.liquid).
+{%- endcomment -%}
+
+<div class="ss dd dd-cta">
+  <div class="dd__inner dd-cta__row">
+    <div class="dd-cta__copy">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="dd-cta__title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="dd-cta__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+    <div class="dd-cta__btns">
+      {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
+        {%- if section.settings.primary_link contains '#chat' -%}
+          <button type="button" class="dd-cta__btn" data-chat-trigger>{{ section.settings.primary_label | escape }}</button>
+        {%- else -%}
+          <a class="dd-cta__btn" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label | escape }}</a>
+        {%- endif -%}
+      {%- endif -%}
+      {%- if section.settings.phone != blank -%}
+        {%- assign dd_tel = section.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | remove: '.' -%}
+        <a class="dd-cta__btn dd-cta__btn--outline" href="tel:{{ dd_tel }}">{{ section.settings.phone_label | escape }} {{ section.settings.phone | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Directory · Closing CTA",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Not sure which route is right for you?" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Talk to a deck specialist about your state, your yard and your budget. We will tell you plainly whether a builder, a DIY build or an engineered A-DIY kit makes the most sense — no pressure.</p>" },
+    { "type": "text", "id": "primary_label", "label": "Primary label", "default": "Book a free design consultation" },
+    { "type": "url", "id": "primary_link", "label": "Primary link", "info": "Use #chat to open live chat." },
+    { "type": "text", "id": "phone_label", "label": "Phone button prefix", "default": "Call" },
+    { "type": "text", "id": "phone", "label": "Phone number", "default": "+1 (786) 358-2872" }
+  ],
+  "presets": [{ "name": "Directory · Closing CTA" }]
+}
+{% endschema %}
