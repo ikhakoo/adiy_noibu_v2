@@ -1,0 +1,45 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · Story. Figma › Section - Story: It Starts at the Back Door (7262:146).
+{%- endcomment -%}
+
+<div class="dvp dvp--sand dvp-story"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="dvp__inner dvp-story__row">
+    <div class="dvp-story__visual">
+      <div class="dvp-story__accent" aria-hidden="true"></div>
+      {%- render 'dvp-image', image: section.settings.image, alt: section.settings.image_alt, class: 'dvp-story__media', sizes: '(min-width: 1920px) 640px, (min-width: 990px) 34vw, calc(100vw - 58px)' -%}
+    </div>
+    <div class="dvp-story__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dvp-eyebrow"><span class="dvp-eyebrow__rule" aria-hidden="true"></span>{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="dvp-story__title">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.body != blank -%}
+        <p class="dvp-story__body">{{ section.settings.body | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.payoff != blank -%}
+        <div class="dvp-story__payoff"><p>{{ section.settings.payoff | escape }}</p></div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Deck vs Patio · Story",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "It starts at the back door" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "It starts with one small moment: coffee in hand, back door open, stepping out into your own backyard." },
+    { "type": "textarea", "id": "body", "label": "Body" },
+    { "type": "textarea", "id": "payoff", "label": "Highlighted paragraph" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text (SEO)" }
+  ],
+  "presets": [{ "name": "Deck vs Patio · Story" }]
+}
+{% endschema %}

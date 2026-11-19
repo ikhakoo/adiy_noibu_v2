@@ -1,0 +1,82 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · FAQ. Figma › Section - FAQ (FAQPage) (6980:1471): sticky intro + CTA on the
+  left, one `question` block per item on the right (native <details>, works without JS).
+  Emits FAQPage JSON-LD — keep one FAQ section with schema on per page.
+{%- endcomment -%}
+
+<div class="dvp dvp--sand dvp-faq"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="dvp__inner dvp-faq__row">
+    <div class="dvp-faq__aside">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dvp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="dvp-h2">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="dvp-lede">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+      {%- render 'dvp-button', label: section.settings.button_label, link: section.settings.button_link, style: 'outline-green' -%}
+    </div>
+    <div class="dvp-faq__list">
+      {%- for block in section.blocks -%}
+        <details class="dvp-faq__item" {{ block.shopify_attributes }}{% if section.settings.open_first and forloop.first %} open{% endif %}>
+          <summary class="dvp-faq__q">
+            <h3>{{ block.settings.question | escape }}</h3>
+            <span class="dvp-faq__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="dvp-faq__a">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.faq_schema and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | strip | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Deck vs Patio · FAQ",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 30,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Questions homeowners ask" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Deck vs patio, Faqs" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Talk to a Deck Specialist" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Use #chat to open live chat." },
+    { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": true },
+    { "type": "checkbox", "id": "faq_schema", "label": "Output FAQPage schema", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What is the difference between a deck and a patio?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Deck vs Patio · FAQ", "blocks": [{ "type": "question" }] }]
+}
+{% endschema %}

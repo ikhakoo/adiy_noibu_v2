@@ -1,0 +1,94 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · Meet the A-DIY deck kit. Figma › Section - Meet the A-DIY Deck Kit (6980:1369).
+  `step` blocks fill the numbered list; `material` blocks are the two product cards below.
+{%- endcomment -%}
+
+<div class="dvp dvp--white dvp-kit"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="dvp__inner dvp-kit__inner">
+    <div class="dvp-kit__row">
+      <div class="dvp-kit__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="dvp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 class="dvp-h2">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.intro != blank -%}
+          <p class="dvp-lede">{{ section.settings.intro | escape }}</p>
+        {%- endif -%}
+        {%- assign step_n = 0 -%}
+        <ol class="dvp-kit__steps">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'step' -%}
+              {%- assign step_n = step_n | plus: 1 -%}
+              <li class="dvp-step" {{ block.shopify_attributes }}>
+                <span class="dvp-step__num" aria-hidden="true">{{ step_n }}</span>
+                <div class="dvp-step__text">
+                  <h3 class="dvp-step__title">{{ block.settings.title | escape }}</h3>
+                  <p class="dvp-step__desc">{{ block.settings.text | escape }}</p>
+                </div>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ol>
+      </div>
+      {%- render 'dvp-image', image: section.settings.image, alt: section.settings.image_alt, class: 'dvp-kit__media', sizes: '(min-width: 1920px) 672px, (min-width: 990px) 45vw, calc(100vw - 40px)' -%}
+    </div>
+
+    <div class="dvp-kit__cards">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'material' -%}
+          <div class="dvp-material" {{ block.shopify_attributes }}>
+            {%- render 'dvp-image', image: block.settings.image, alt: block.settings.image_alt, class: 'dvp-material__media', sizes: '(min-width: 1920px) 708px, (min-width: 750px) 48vw, calc(100vw - 40px)' -%}
+            <div class="dvp-material__body">
+              <h3 class="dvp-material__title">{{ block.settings.title | escape }}</h3>
+              <p class="dvp-material__text">{{ block.settings.text | escape }}</p>
+              {%- render 'dvp-button', label: block.settings.button_label, link: block.settings.button_link -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Deck vs Patio · Kit",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Meet the A-DIY deck kit" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A deck, without waiting on a contractor" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Choose your deck" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "material",
+      "name": "Material card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pressure Treated Wood Deck Kit" },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore Wood Deck Kits" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Deck vs Patio · Kit", "blocks": [{ "type": "step" }, { "type": "material" }] }]
+}
+{% endschema %}

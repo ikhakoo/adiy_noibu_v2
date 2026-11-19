@@ -1,0 +1,52 @@
+{{ 'dvp-landing.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck vs Patio · Ground-level deck split. Figma › Section - Ground-Level Deck vs Patio (6979:1424).
+  Half-bleed photo left, copy on green right.
+{%- endcomment -%}
+
+<div class="dvp dvp--green dvp-split"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handle }}"{% endif %}>
+  <div class="dvp-split__row">
+    {%- render 'dvp-image', image: section.settings.image, alt: section.settings.image_alt, class: 'dvp-split__media', sizes: '(min-width: 990px) 50vw, 100vw' -%}
+    <div class="dvp-split__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dvp-eyebrow dvp-eyebrow--tan">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="dvp-split__title">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.body != blank -%}
+        <p class="dvp-split__text">{{ section.settings.body | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.note_title != blank -%}
+        <div class="dvp-split__note">
+          <h3 class="dvp-split__note-title">{{ section.settings.note_title | escape }}</h3>
+          <p class="dvp-split__note-text">{{ section.settings.note_text | escape }}</p>
+        </div>
+      {%- endif -%}
+      <div class="dvp-btns">
+        {%- render 'dvp-button', label: section.settings.button_label, link: section.settings.button_link, style: 'white' -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Deck vs Patio · Split",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ground-level (floating) deck vs patio" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Love the low look of a patio? Meet the ground-level deck." },
+    { "type": "textarea", "id": "body", "label": "Body" },
+    { "type": "text", "id": "note_title", "label": "Note title" },
+    { "type": "textarea", "id": "note_text", "label": "Note text" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore Floating Deck Kits" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text" }
+  ],
+  "presets": [{ "name": "Deck vs Patio · Split" }]
+}
+{% endschema %}
