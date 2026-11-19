@@ -1,0 +1,334 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'deck-directory.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'deck-directory.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  Deck Builders Near Me directory · States. Figma › Section - State directory (7664:1831).
+  Navigation: Directory → State guide → City guide.
+
+  Every state links to its state SEO page at /pages/deck-builders-<state-handle>. A state that
+  has a "City SEO · State" metaobject entry (handle = state handle, e.g. new-york) becomes a
+  "city guides" tile: it opens a panel of that state's city cards, each linking to
+  /pages/<page_handle>. So adding cities for a new state in the metaobjects updates this page
+  with no theme change. States listed under "States without delivery" render as plain,
+  unlinked tiles.
+
+  Works without JS: city tiles are anchors to their panel and every panel is visible.
+  deck-directory.js adds the text filter, region tabs, the toggle and one-panel-at-a-time.
+  Layout: with the steps and the search box both switched off, the region tabs (and toggle)
+  sit beside the heading and the toolbar row is dropped.
+{%- endcomment -%}
+
+{%- capture dd_data -%}
+Northeast=Connecticut:CT,Maine:ME,Massachusetts:MA,New Hampshire:NH,New Jersey:NJ,New York:NY,Pennsylvania:PA,Rhode Island:RI,Vermont:VT
+;Midwest=Illinois:IL,Indiana:IN,Iowa:IA,Kansas:KS,Michigan:MI,Minnesota:MN,Missouri:MO,Nebraska:NE,North Dakota:ND,Ohio:OH,South Dakota:SD,Wisconsin:WI
+;South=Alabama:AL,Arkansas:AR,Delaware:DE,Florida:FL,Georgia:GA,Kentucky:KY,Louisiana:LA,Maryland:MD,Mississippi:MS,North Carolina:NC,Oklahoma:OK,South Carolina:SC,Tennessee:TN,Texas:TX,Virginia:VA,West Virginia:WV
+;West=Alaska:AK,Arizona:AZ,California:CA,Colorado:CO,Hawaii:HI,Idaho:ID,Montana:MT,Nevada:NV,New Mexico:NM,Oregon:OR,Utah:UT,Washington:WA,Wyoming:WY
+{%- endcapture -%}
+
+{%- liquid
+  assign dd_regions = dd_data | strip_newlines | split: ';'
+  assign dd_off = section.settings.unavailable | downcase | replace: ', ', ',' | prepend: ',' | append: ','
+  assign dd_anchor = section.settings.anchor_id | handle | default: 'states'
+
+  # Handles of the states that have city guides, e.g. |new-york|california|
+  assign dd_city_states = '|'
+  if section.settings.show_cities
+    for entry in metaobjects.city_seo_state.values
+      assign dd_city_states = dd_city_states | append: entry.system.handle | append: '|'
+    endfor
+  endif
+
+  assign dd_total = 0
+  assign dd_panels = ''
+  assign dd_schema_position = 0
+-%}
+
+{%- capture dd_tabs -%}{%- endcapture -%}
+{%- capture dd_schema_items -%}{%- endcapture -%}
+
+{%- capture dd_body -%}
+  {%- for dd_region in dd_regions -%}
+    {%- liquid
+      assign dd_parts = dd_region | split: '='
+      assign dd_region_name = dd_parts[0]
+      assign dd_region_key = dd_region_name | handle
+      assign dd_states = dd_parts[1] | split: ','
+      assign dd_region_cities = 0
+      assign dd_total = dd_total | plus: dd_states.size
+    -%}
+
+    {%- capture dd_tiles -%}
+      {%- for dd_state in dd_states -%}
+        {%- liquid
+          assign dd_bits = dd_state | split: ':'
+          assign dd_name = dd_bits[0]
+          assign dd_abbr = dd_bits[1]
+          assign dd_handle = dd_name | handle
+          assign dd_url = '/pages/deck-builders-' | append: dd_handle
+          assign dd_key = '|' | append: dd_handle | append: '|'
+          assign dd_off_key = ',' | append: dd_handle | append: ','
+          assign dd_cities = nil
+          if dd_off contains dd_off_key
+            assign dd_kind = 'off'
+          elsif dd_city_states contains dd_key
+            assign dd_cities = metaobjects.city_seo_state[dd_handle].cities.value
+            assign dd_kind = 'guide'
+            if dd_cities != blank and dd_cities.size > 0
+              assign dd_kind = 'cities'
+              assign dd_region_cities = dd_region_cities | plus: 1
+            endif
+          else
+            assign dd_kind = 'guide'
+          endif
+
+          assign dd_search = dd_name | append: ' ' | append: dd_abbr
+          assign dd_sub = ''
+          if dd_kind == 'cities'
+            for c in dd_cities
+              assign dd_search = dd_search | append: ' ' | append: c.name.value
+              if forloop.index == 1
+                assign dd_sub = c.name.value
+              elsif forloop.index == 2
+                assign dd_sub = dd_sub | append: ' · ' | append: c.name.value
+              endif
+            endfor
+            if dd_cities.size > 2
+              assign dd_more = dd_cities.size | minus: 2
+              assign dd_sub = dd_sub | append: ' + ' | append: dd_more | append: ' more'
+            endif
+          endif
+          assign dd_search = dd_search | downcase | replace: '-', ' ' | replace: '.', ''
+        -%}
+        <li data-dd-state data-region="{{ dd_region_key }}" data-name="{{ dd_name | escape }}" data-abbr="{{ dd_abbr }}" data-search="{{ dd_search | escape }}"{% if dd_kind == 'cities' %} data-has-cities{% endif %}>
+          {%- case dd_kind -%}
+            {%- when 'cities' -%}
+              <a class="dd-tile dd-tile--cities" href="#dd-panel-{{ dd_handle }}" data-dd-open="{{ dd_handle }}" aria-controls="dd-panel-{{ dd_handle }}">
+                <span class="dd-tile__top">
+                  <span class="dd-tile__badge" aria-hidden="true">{{ dd_abbr }}</span>
+                  <span class="dd-tile__pill">
+                    <span class="dd-tile__pill-closed">{{ dd_cities.size }} {{ section.settings.pill_label | escape }}</span>
+                    <span class="dd-tile__pill-open">{{ section.settings.pill_open_label | replace: '[count]', dd_cities.size | escape }} ▾</span>
+                  </span>
+                </span>
+                <h4 class="dd-tile__name">{{ dd_name | escape }}</h4>
+                <span class="dd-tile__sub">{{ dd_sub | escape }}</span>
+              </a>
+            {%- when 'off' -%}
+              <div class="dd-tile dd-tile--off">
+                <span class="dd-tile__top">
+                  <span class="dd-tile__badge" aria-hidden="true">{{ dd_abbr }}</span>
+                </span>
+                <h4 class="dd-tile__name">{{ dd_name | escape }}</h4>
+                <span class="dd-tile__sub">{{ section.settings.unavailable_label | escape }}</span>
+              </div>
+            {%- else -%}
+              <a class="dd-tile dd-tile--guide" href="{{ dd_url }}">
+                <span class="dd-tile__top">
+                  <span class="dd-tile__badge" aria-hidden="true">{{ dd_abbr }}</span>
+                  <span class="dd-tile__arrow">{%- render 'deck-directory-icon', name: 'arrow' -%}</span>
+                </span>
+                <h4 class="dd-tile__name">{{ dd_name | escape }}</h4>
+                <span class="dd-tile__sub">{{ section.settings.guide_label | escape }}</span>
+              </a>
+          {%- endcase -%}
+        </li>
+
+        {%- unless dd_kind == 'off' -%}
+          {%- assign dd_schema_position = dd_schema_position | plus: 1 -%}
+          {%- capture dd_schema_items -%}
+            {{- dd_schema_items -}}
+            {%- if dd_schema_position > 1 -%},{%- endif -%}
+            { "@type": "ListItem", "position": {{ dd_schema_position }}, "name": {{ dd_name | prepend: 'Deck builders in ' | json }}, "url": {{ shop.url | append: dd_url | json }} }
+          {%- endcapture -%}
+        {%- endunless -%}
+
+        {%- if dd_kind == 'cities' -%}
+          {%- capture dd_panels -%}
+            {{- dd_panels -}}
+            <div class="dd-panel" id="dd-panel-{{ dd_handle }}" data-dd-panel="{{ dd_handle }}">
+              <div class="dd-panel__head">
+                <div>
+                  <p class="dd-panel__path">
+                    <span>{{ section.settings.path_root | escape }}</span><span aria-hidden="true">›</span>
+                    <b>{{ dd_name | escape }}</b><span aria-hidden="true">›</span>
+                    <span>{{ section.settings.path_leaf | escape }}</span>
+                  </p>
+                  <h4 class="dd-panel__title">{{ section.settings.panel_title | replace: '[count]', dd_cities.size | replace: '[state]', dd_name | escape }}</h4>
+                  {%- if section.settings.panel_text != blank -%}
+                    <p class="dd-panel__text">{{ section.settings.panel_text | escape }}</p>
+                  {%- endif -%}
+                </div>
+                <div class="dd-panel__actions">
+                  <a class="dd-panel__guide" href="{{ dd_url }}">{{ section.settings.panel_button | replace: '[state]', dd_name | escape }}{%- render 'deck-directory-icon', name: 'arrow' -%}</a>
+                  <button type="button" class="dd-panel__close" data-dd-close aria-label="Close {{ dd_name | escape }} cities">✕</button>
+                </div>
+              </div>
+              <ul class="dd-cities">
+                {%- for c in dd_cities -%}
+                  {%- liquid
+                    assign dd_city_name = c.name.value
+                    assign dd_city_alt = c.image_alt.value | default: dd_city_name
+                    assign dd_city_meta = c.meta.value | default: section.settings.city_meta
+                  -%}
+                  <li>
+                    <a class="dd-city" href="/pages/{{ c.page_handle.value }}" data-dd-city="{{ dd_city_name | escape }}">
+                      {%- render 'state-seo-image', image: c.image.value, alt: dd_city_alt, class: 'dd-city__media', sizes: '(min-width: 1400px) 320px, (min-width: 1100px) 23vw, (min-width: 750px) 30vw, 45vw', placeholder: 'image' -%}
+                      <span class="dd-city__body">
+                        <span class="dd-city__name">{{ dd_city_name | escape }}</span>
+                        {%- if dd_city_meta != blank -%}
+                          <span class="dd-city__meta">{{ dd_city_meta | escape }}</span>
+                        {%- endif -%}
+                        <span class="dd-city__link">{{ section.settings.city_link_label | escape }}{%- render 'deck-directory-icon', name: 'arrow' -%}</span>
+                      </span>
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endcapture -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- capture dd_tabs -%}
+      {{- dd_tabs -}}
+      <button type="button" class="dd-tab" data-dd-region-tab="{{ dd_region_key }}" aria-pressed="false">{{ dd_region_name }} · {{ dd_states.size }}</button>
+    {%- endcapture -%}
+
+    <div class="dd-region" data-dd-region="{{ dd_region_key }}">
+      <div class="dd-region__label">
+        <h3 class="dd-region__name">{{ dd_region_name }}</h3>
+        <span class="dd-region__count">{{ dd_states.size }} states{% if dd_region_cities > 0 %} · {{ dd_region_cities }} with city guides{% endif %}</span>
+      </div>
+      <ul class="dd-grid">{{ dd_tiles }}</ul>
+      {{ dd_panels }}
+    </div>
+    {%- assign dd_panels = '' -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<div class="ss dd ss--cream dd-states" id="{{ dd_anchor }}" data-dd-states data-dd-open-state="{{ section.settings.open_state | handle }}">
+  <div class="dd__inner">
+    <div class="dd-states__head">
+      <div class="dd-states__heading">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="dd-h2">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="dd-states__intro">{{ section.settings.intro }}</div>
+        {%- endif -%}
+      </div>
+      {%- capture dd_controls -%}
+        <div class="dd-tabs" role="group" aria-label="Filter states by region">
+          <button type="button" class="dd-tab" data-dd-region-tab="all" aria-pressed="true">All {{ dd_total }}</button>
+          {{ dd_tabs }}
+        </div>
+        {%- if dd_city_states != '|' and section.settings.show_toggle -%}
+          <label class="dd-toggle">
+            <input type="checkbox" data-dd-only-cities>
+            <span class="dd-toggle__switch" aria-hidden="true"></span>
+            {{ section.settings.toggle_label | escape }}
+          </label>
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- if section.settings.show_path -%}
+        <ol class="dd-path" aria-label="How the directory works">
+          <li class="dd-path__step dd-path__step--current">
+            <span class="dd-path__num" aria-hidden="true">1</span>
+            <span class="dd-path__label"><strong>{{ section.settings.step_1_title | escape }}</strong>{{ section.settings.step_1_text | escape }}</span>
+          </li>
+          <li aria-hidden="true">{%- render 'deck-directory-icon', name: 'arrow' -%}</li>
+          <li class="dd-path__step">
+            <span class="dd-path__num" aria-hidden="true">2</span>
+            <span class="dd-path__label"><strong>{{ section.settings.step_2_title | escape }}</strong>{{ section.settings.step_2_text | escape }}</span>
+          </li>
+          <li aria-hidden="true">{%- render 'deck-directory-icon', name: 'arrow' -%}</li>
+          <li class="dd-path__step">
+            <span class="dd-path__num" aria-hidden="true">3</span>
+            <span class="dd-path__label"><strong>{{ section.settings.step_3_title | escape }}</strong>{{ section.settings.step_3_text | escape }}</span>
+          </li>
+        </ol>
+      {%- elsif section.settings.show_filter == false -%}
+        <div class="dd-states__controls">{{ dd_controls }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_filter or section.settings.show_path -%}
+      <div class="dd-toolbar">
+        {%- if section.settings.show_filter -%}
+          <label class="dd-filter">
+            {%- render 'deck-directory-icon', name: 'search' -%}
+            <span class="dd-visually-hidden">{{ section.settings.filter_placeholder | escape }}</span>
+            <input class="dd-filter__input" type="search" autocomplete="off" placeholder="{{ section.settings.filter_placeholder | escape }}" data-dd-filter>
+          </label>
+        {%- endif -%}
+        {{ dd_controls }}
+      </div>
+    {%- endif -%}
+
+    {{ dd_body }}
+
+    <p class="dd-states__empty" data-dd-empty hidden>{{ section.settings.empty_text | escape }}</p>
+  </div>
+</div>
+
+{%- if section.settings.list_schema -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": {{ section.settings.heading | default: page.title | json }},
+      "numberOfItems": {{ dd_schema_position }},
+      "itemListElement": [{{ dd_schema_items }}]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Directory · States",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "states" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Browse deck guides by state" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Pick your state for statewide costs and permit rules. States with a city count also have local guides for their busiest deck markets — open one to see its cities.</p>" },
+    { "type": "header", "content": "Directory → State → City steps" },
+    { "type": "checkbox", "id": "show_path", "label": "Show steps", "default": true },
+    { "type": "text", "id": "step_1_title", "label": "Step 1 title", "default": "Directory" },
+    { "type": "text", "id": "step_1_text", "label": "Step 1 text", "default": "Find your state" },
+    { "type": "text", "id": "step_2_title", "label": "Step 2 title", "default": "State guide" },
+    { "type": "text", "id": "step_2_text", "label": "Step 2 text", "default": "Costs & permits statewide" },
+    { "type": "text", "id": "step_3_title", "label": "Step 3 title", "default": "City guide" },
+    { "type": "text", "id": "step_3_text", "label": "Step 3 text", "default": "Local permit office & builders" },
+    { "type": "header", "content": "Toolbar" },
+    { "type": "checkbox", "id": "show_filter", "label": "Show state/city search box", "default": true, "info": "With the steps and the search box both off, the region tabs sit beside the heading." },
+    { "type": "text", "id": "filter_placeholder", "label": "Filter placeholder", "default": "Type a state or city…" },
+    { "type": "checkbox", "id": "show_toggle", "label": "Show city guides toggle", "default": true },
+    { "type": "text", "id": "toggle_label", "label": "Toggle label", "default": "Only states with city guides" },
+    { "type": "text", "id": "empty_text", "label": "No results text", "default": "No state or city matches that search. Try a state name, or clear the filters to see every state." },
+    { "type": "header", "content": "State tiles" },
+    { "type": "text", "id": "guide_label", "label": "State guide label", "default": "Open state guide" },
+    { "type": "text", "id": "unavailable", "label": "States without delivery", "default": "alaska, hawaii", "info": "Comma-separated state names in lowercase with dashes (e.g. alaska, hawaii). These tiles are not links." },
+    { "type": "text", "id": "unavailable_label", "label": "No delivery label", "default": "Kit delivery not available" },
+    { "type": "header", "content": "City guides" },
+    { "type": "checkbox", "id": "show_cities", "label": "Show city guides", "default": true, "info": "Uses the City SEO · State metaobject entries (one per state, each listing its city cards)." },
+    { "type": "text", "id": "pill_label", "label": "City count label", "default": "city guides" },
+    { "type": "text", "id": "pill_open_label", "label": "City count label when open", "default": "Showing [count] cities" },
+    { "type": "text", "id": "open_state", "label": "State open on load", "info": "State handle (e.g. new-york). Leave blank to start with every panel closed." },
+    { "type": "text", "id": "path_root", "label": "Panel path · root", "default": "Directory" },
+    { "type": "text", "id": "path_leaf", "label": "Panel path · last step", "default": "Choose a city" },
+    { "type": "text", "id": "panel_title", "label": "Panel title", "default": "Deck guides for [count] [state] cities", "info": "[count] and [state] are replaced per state." },
+    { "type": "text", "id": "panel_text", "label": "Panel text", "default": "Each city guide covers who issues deck permits there, typical costs and what to ask a local builder." },
+    { "type": "text", "id": "panel_button", "label": "Panel button", "default": "Open [state] state guide" },
+    { "type": "text", "id": "city_meta", "label": "City card line", "default": "Permits, costs & builders", "info": "Shown under the city name. A city card's own \"meta\" field, when it has one, is used instead." },
+    { "type": "text", "id": "city_link_label", "label": "City card link label", "default": "View city guide" },
+    { "type": "header", "content": "SEO" },
+    { "type": "checkbox", "id": "list_schema", "label": "Output ItemList schema (state guides)", "default": true }
+  ],
+  "presets": [{ "name": "Directory · States" }]
+}
+{% endschema %}

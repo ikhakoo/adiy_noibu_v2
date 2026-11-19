@@ -1,0 +1,197 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'deck-directory.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'deck-directory.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  Deck Builders Near Me directory · FAQ. Figma › Section - FAQ (answer-first) (7664:1980).
+  Blocks are read in order: a `group` block starts a category, the `question` blocks after it
+  belong to that category. The left column (intro, category nav, help card) stays sticky on
+  desktop. Native <details>; answers are open by default so the page reads answer-first.
+  Emits FAQPage JSON-LD for answer engines. deck-directory.js adds question search and the
+  active category highlight.
+{%- endcomment -%}
+
+{%- liquid
+  # Question count per group, in group order, e.g. "4,3,4,3,3".
+  assign dd_counts = ''
+  assign dd_count = 0
+  assign dd_groups = 0
+  assign dd_questions = 0
+  for block in section.blocks
+    if block.type == 'group'
+      if dd_groups > 0
+        assign dd_counts = dd_counts | append: dd_count | append: ','
+      endif
+      assign dd_groups = dd_groups | plus: 1
+      assign dd_count = 0
+    elsif block.type == 'question'
+      assign dd_count = dd_count | plus: 1
+      assign dd_questions = dd_questions | plus: 1
+    endif
+  endfor
+  assign dd_counts = dd_counts | append: dd_count | split: ','
+  assign dd_anchor = section.settings.anchor_id | handle | default: 'faq'
+-%}
+
+<div class="ss dd ss--white dd-faq" id="{{ dd_anchor }}" data-dd-faq>
+  <div class="dd__inner dd-faq__row">
+    <div class="dd-faq__side">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dd-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="dd-faq__title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="dd-faq__intro">{{ section.settings.intro }}</div>
+      {%- endif -%}
+
+      {%- if dd_groups > 1 -%}
+        <nav class="dd-faq-nav" aria-label="FAQ categories">
+          {%- assign dd_i = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'group' -%}
+              {%- assign dd_n = dd_i | plus: 1 -%}
+              <a class="dd-faq-nav__link{% if dd_i == 0 %} is-active{% endif %}" href="#{{ dd_anchor }}-{{ block.settings.title | handle }}" data-dd-faq-link>
+                <span class="dd-faq-nav__name"><span class="dd-faq-nav__num">{% if dd_n < 10 %}0{% endif %}{{ dd_n }}</span>{{ block.settings.title | escape }}</span>
+                <span class="dd-faq-nav__count">{{ dd_counts[dd_i] }}</span>
+              </a>
+              {%- assign dd_i = dd_i | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      {%- if section.settings.help_title != blank -%}
+        <div class="dd-help">
+          <h3 class="dd-help__title">{{ section.settings.help_title | escape }}</h3>
+          {%- if section.settings.help_text != blank -%}
+            <p class="dd-help__text">{{ section.settings.help_text | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.help_label != blank and section.settings.help_link != blank -%}
+            {%- if section.settings.help_link contains '#chat' -%}
+              <button type="button" class="dd-help__btn" data-chat-trigger>{{ section.settings.help_label | escape }}</button>
+            {%- else -%}
+              <a class="dd-help__btn" href="{{ section.settings.help_link }}">{{ section.settings.help_label | escape }}</a>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="dd-faq__main">
+      {%- if section.settings.show_search -%}
+        <label class="dd-faq-search">
+          {%- render 'deck-directory-icon', name: 'search' -%}
+          <span class="dd-visually-hidden">{{ section.settings.search_placeholder | escape }}</span>
+          <input class="dd-faq-search__input" type="search" autocomplete="off" placeholder="{{ section.settings.search_placeholder | escape }}" data-dd-faq-search>
+        </label>
+      {%- endif -%}
+
+      {%- liquid
+        assign dd_i = 0
+        assign dd_open = false
+      -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'group' -%}
+          {%- if dd_open -%}</section>{%- endif -%}
+          {%- liquid
+            assign dd_n = dd_i | plus: 1
+            assign dd_open = true
+          -%}
+          <section class="dd-faq-group" id="{{ dd_anchor }}-{{ block.settings.title | handle }}" data-dd-faq-group>
+            <div class="dd-faq-group__head" {{ block.shopify_attributes }}>
+              <span class="dd-faq-group__badge" aria-hidden="true">{% if dd_n < 10 %}0{% endif %}{{ dd_n }}</span>
+              <h3 class="dd-faq-group__title">{{ block.settings.title | escape }}</h3>
+              <span class="dd-faq-group__count">{{ dd_counts[dd_i] }} question{% if dd_counts[dd_i] != '1' %}s{% endif %}</span>
+            </div>
+          {%- assign dd_i = dd_i | plus: 1 -%}
+        {%- elsif block.type == 'question' -%}
+          {%- unless dd_open -%}
+            {%- assign dd_open = true -%}
+            <section class="dd-faq-group" data-dd-faq-group>
+          {%- endunless -%}
+          <details class="dd-faq-item" data-dd-faq-item {{ block.shopify_attributes }}{% if section.settings.open_all %} open{% endif %}>
+            <summary class="dd-faq-item__q">
+              <h4>{{ block.settings.question | escape }}</h4>
+              <span class="dd-faq-item__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="dd-faq-item__a">{{ block.settings.answer }}</div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if dd_open -%}</section>{%- endif -%}
+
+      <p class="dd-faq__empty" data-dd-faq-empty hidden>{{ section.settings.empty_text | escape }}</p>
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.faq_schema and dd_questions > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign dd_first = true -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'question' and block.settings.question != blank -%}
+            {%- unless dd_first -%},{%- endunless -%}
+            {%- assign dd_first = false -%}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | json }},
+              "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | strip | json }} }
+            }
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Directory · FAQ",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 50,
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Frequently asked questions" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Deck Builder FAQs" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Straight answers on delivery, ordering, building and permits. For local prices and permit offices, open your state or city guide.</p>" },
+    { "type": "checkbox", "id": "open_all", "label": "Show answers open", "default": true },
+    { "type": "header", "content": "Search" },
+    { "type": "checkbox", "id": "show_search", "label": "Show question search", "default": true },
+    { "type": "text", "id": "search_placeholder", "label": "Placeholder", "default": "Search questions — e.g. delivery, sizes, permits" },
+    { "type": "text", "id": "empty_text", "label": "No results text", "default": "No questions match that search. Try another word, or chat with a deck specialist." },
+    { "type": "header", "content": "Help card" },
+    { "type": "text", "id": "help_title", "label": "Title", "default": "Still have a question?" },
+    { "type": "text", "id": "help_text", "label": "Text", "default": "A-DIY deck specialists answer by live chat and phone, before and after you order." },
+    { "type": "text", "id": "help_label", "label": "Button label", "default": "Chat with a deck specialist" },
+    { "type": "url", "id": "help_link", "label": "Button link", "info": "Use #chat to open live chat." },
+    { "type": "header", "content": "SEO" },
+    { "type": "checkbox", "id": "faq_schema", "label": "Output FAQPage schema", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Delivery & shipping" }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How long does delivery take for an A-DIY deck kit?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Most A-DIY deck kits arrive within 10–14 business days of your order.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Directory · FAQ", "blocks": [{ "type": "group" }, { "type": "question" }] }]
+}
+{% endschema %}

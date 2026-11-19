@@ -1,0 +1,41 @@
+{{ 'state-seo.css' | asset_url | stylesheet_tag }}
+{{ 'deck-directory.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Deck Builders Near Me directory · Facts strip. Figma › Section - Facts strip (7664:1815).
+  Up to four `fact` blocks (value + label) on the dark green band.
+{%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="ss dd dd-facts">
+    <ul class="dd__inner dd-facts__list">
+      {%- for block in section.blocks -%}
+        <li class="dd-fact" {{ block.shopify_attributes }}>
+          <span class="dd-fact__value">{{ block.settings.value | escape }}</span>
+          <span class="dd-fact__label">{{ block.settings.label | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Directory · Facts strip",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["page"] },
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "fact",
+      "name": "Fact",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "48" },
+        { "type": "text", "id": "label", "label": "Label", "default": "State deck guides" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Directory · Facts strip", "blocks": [{ "type": "fact" }, { "type": "fact" }, { "type": "fact" }, { "type": "fact" }] }]
+}
+{% endschema %}
