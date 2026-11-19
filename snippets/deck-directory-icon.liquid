@@ -1,0 +1,14 @@
+{%- comment -%}
+  Deck Builders Near Me directory · inline SVG icons (currentColor), matching the line icons
+  in Figma "SEO — Deck Builders Near Me Directory v2".
+
+  Accepts:
+  - name: {String} search | arrow
+  - class: {String} extra classes
+{%- endcomment -%}
+{%- case name -%}
+  {%- when 'search' -%}
+    <svg class="dd-icon {{ class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+  {%- when 'arrow' -%}
+    <svg class="dd-icon {{ class }}" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+{%- endcase -%}
