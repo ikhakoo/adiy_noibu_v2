@@ -1,0 +1,24 @@
+{%- comment -%}Visible breadcrumb trail for SEO landing pages (state, city, size collections). Pass class: for extra styling.{%- endcomment -%}
+{%- capture seo_crumbs -%}{%- render 'seo-crumbs' -%}{%- endcapture -%}
+{%- assign seo_crumbs = seo_crumbs | strip -%}
+{%- if seo_crumbs != blank -%}
+  {%- assign crumb_list = seo_crumbs | split: '~~' -%}
+  {%- if crumb_list.size > 2 -%}
+    {{ 'seo-breadcrumb.css' | asset_url | stylesheet_tag }}
+    <nav class="seo-crumbs{% if class != blank %} {{ class }}{% endif %}" aria-label="Breadcrumb">
+      <ol>
+        {%- for crumb in crumb_list -%}
+          {%- assign crumb_url = crumb | split: '|' | first -%}
+          {%- assign crumb_name = crumb | remove_first: crumb_url | remove_first: '|' -%}
+          <li>
+            {%- if forloop.last -%}
+              <span aria-current="page">{{ crumb_name | escape }}</span>
+            {%- else -%}
+              <a href="{{ crumb_url }}">{{ crumb_name | escape }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    </nav>
+  {%- endif -%}
+{%- endif -%}

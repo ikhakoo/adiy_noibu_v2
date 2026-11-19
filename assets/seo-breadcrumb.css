@@ -1,0 +1,10 @@
+.seo-crumbs { margin: 0 0 16px; font-size: 1.3rem; line-height: 1.4; }
+.seo-crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; margin: 0; padding: 0; list-style: none; }
+.seo-crumbs li { display: inline-flex; align-items: center; color: rgba(18, 18, 18, 0.6); }
+.seo-crumbs li + li::before { content: '/'; margin: 0 8px; color: rgba(18, 18, 18, 0.35); }
+.seo-crumbs a { color: #194636; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(25, 70, 54, 0.35); }
+.seo-crumbs a:hover { text-decoration-color: currentColor; }
+.seo-crumbs [aria-current] { color: rgba(18, 18, 18, 0.72); font-weight: 600; }
+.seo-crumbs--light li, .seo-crumbs--light [aria-current] { color: rgba(255, 255, 255, 0.82); }
+.seo-crumbs--light li + li::before { color: rgba(255, 255, 255, 0.5); }
+.seo-crumbs--light a { color: #fff; text-decoration-color: rgba(255, 255, 255, 0.5); }
