@@ -15,6 +15,8 @@
 
   Works without JS: city tiles are anchors to their panel and every panel is visible.
   deck-directory.js adds the text filter, region tabs, the toggle and one-panel-at-a-time.
+  Layout: with the steps and the search box both switched off, the region tabs (and toggle)
+  sit beside the heading and the toolbar row is dropped.
 {%- endcomment -%}
 
 {%- capture dd_data -%}
@@ -217,6 +219,20 @@ Northeast=Connecticut:CT,Maine:ME,Massachusetts:MA,New Hampshire:NH,New Jersey:N
           <div class="dd-states__intro">{{ section.settings.intro }}</div>
         {%- endif -%}
       </div>
+      {%- capture dd_controls -%}
+        <div class="dd-tabs" role="group" aria-label="Filter states by region">
+          <button type="button" class="dd-tab" data-dd-region-tab="all" aria-pressed="true">All {{ dd_total }}</button>
+          {{ dd_tabs }}
+        </div>
+        {%- if dd_city_states != '|' and section.settings.show_toggle -%}
+          <label class="dd-toggle">
+            <input type="checkbox" data-dd-only-cities>
+            <span class="dd-toggle__switch" aria-hidden="true"></span>
+            {{ section.settings.toggle_label | escape }}
+          </label>
+        {%- endif -%}
+      {%- endcapture -%}
+
       {%- if section.settings.show_path -%}
         <ol class="dd-path" aria-label="How the directory works">
           <li class="dd-path__step dd-path__step--current">
@@ -234,27 +250,23 @@ Northeast=Connecticut:CT,Maine:ME,Massachusetts:MA,New Hampshire:NH,New Jersey:N
             <span class="dd-path__label"><strong>{{ section.settings.step_3_title | escape }}</strong>{{ section.settings.step_3_text | escape }}</span>
           </li>
         </ol>
+      {%- elsif section.settings.show_filter == false -%}
+        <div class="dd-states__controls">{{ dd_controls }}</div>
       {%- endif -%}
     </div>
 
-    <div class="dd-toolbar">
-      <label class="dd-filter">
-        {%- render 'deck-directory-icon', name: 'search' -%}
-        <span class="dd-visually-hidden">{{ section.settings.filter_placeholder | escape }}</span>
-        <input class="dd-filter__input" type="search" autocomplete="off" placeholder="{{ section.settings.filter_placeholder | escape }}" data-dd-filter>
-      </label>
-      <div class="dd-tabs" role="group" aria-label="Filter states by region">
-        <button type="button" class="dd-tab" data-dd-region-tab="all" aria-pressed="true">All {{ dd_total }}</button>
-        {{ dd_tabs }}
+    {%- if section.settings.show_filter or section.settings.show_path -%}
+      <div class="dd-toolbar">
+        {%- if section.settings.show_filter -%}
+          <label class="dd-filter">
+            {%- render 'deck-directory-icon', name: 'search' -%}
+            <span class="dd-visually-hidden">{{ section.settings.filter_placeholder | escape }}</span>
+            <input class="dd-filter__input" type="search" autocomplete="off" placeholder="{{ section.settings.filter_placeholder | escape }}" data-dd-filter>
+          </label>
+        {%- endif -%}
+        {{ dd_controls }}
       </div>
-      {%- if dd_city_states != '|' -%}
-        <label class="dd-toggle">
-          <input type="checkbox" data-dd-only-cities>
-          <span class="dd-toggle__switch" aria-hidden="true"></span>
-          {{ section.settings.toggle_label | escape }}
-        </label>
-      {%- endif -%}
-    </div>
+    {%- endif -%}
 
     {{ dd_body }}
 
@@ -293,7 +305,9 @@ Northeast=Connecticut:CT,Maine:ME,Massachusetts:MA,New Hampshire:NH,New Jersey:N
     { "type": "text", "id": "step_3_title", "label": "Step 3 title", "default": "City guide" },
     { "type": "text", "id": "step_3_text", "label": "Step 3 text", "default": "Local permit office & builders" },
     { "type": "header", "content": "Toolbar" },
+    { "type": "checkbox", "id": "show_filter", "label": "Show state/city search box", "default": true, "info": "With the steps and the search box both off, the region tabs sit beside the heading." },
     { "type": "text", "id": "filter_placeholder", "label": "Filter placeholder", "default": "Type a state or city…" },
+    { "type": "checkbox", "id": "show_toggle", "label": "Show city guides toggle", "default": true },
     { "type": "text", "id": "toggle_label", "label": "Toggle label", "default": "Only states with city guides" },
     { "type": "text", "id": "empty_text", "label": "No results text", "default": "No state or city matches that search. Try a state name, or clear the filters to see every state." },
     { "type": "header", "content": "State tiles" },

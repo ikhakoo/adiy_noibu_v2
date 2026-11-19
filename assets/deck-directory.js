@@ -133,8 +133,27 @@
           }
           if (guide) { window.location.href = guide.getAttribute('href'); return; }
         }
-        if (input) input.value = text;
-        apply();
+        if (input) {
+          input.value = text;
+          apply();
+          scrollTo(section);
+          return;
+        }
+        // No filter box on the page: jump to the closest partial match instead.
+        var partial = null;
+        tiles.forEach(function (tile) {
+          if (!partial && (' ' + tile.getAttribute('data-search') + ' ').indexOf(q) !== -1) partial = tile;
+        });
+        if (partial) {
+          region = 'all';
+          tabs.forEach(function (t) { t.setAttribute('aria-pressed', t.getAttribute('data-dd-region-tab') === 'all' ? 'true' : 'false'); });
+          if (onlyCities) onlyCities.checked = false;
+          apply();
+          var partialOpener = partial.querySelector('[data-dd-open]');
+          if (partialOpener) { openPanel(partialOpener.getAttribute('data-dd-open'), true); return; }
+          scrollTo(partial);
+          return;
+        }
         scrollTo(section);
       };
 

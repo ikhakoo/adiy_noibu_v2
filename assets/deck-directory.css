@@ -887,6 +887,32 @@ a.dd-tile:hover {
   text-decoration: underline;
 }
 
+.dd-states__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  max-width: 100%;
+}
+
+.dd-states__controls .dd-tabs {
+  border: 1px solid var(--dd-line);
+  background: #fff;
+}
+
+.dd-states__controls .dd-tab:hover {
+  background: var(--ss-cream);
+}
+
+.dd-states__controls .dd-tab[aria-pressed='true'] {
+  background: var(--ss-green);
+}
+
+.dd-states__controls .dd-toggle {
+  margin-left: 0;
+  padding-right: 0;
+}
+
 /* ---------- FAQ ---------- */
 
 .dd-faq {

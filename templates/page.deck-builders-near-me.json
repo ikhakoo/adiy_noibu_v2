@@ -121,7 +121,9 @@
         "open_state": "",
         "unavailable": "alaska, hawaii",
         "show_cities": true,
-        "list_schema": true
+        "list_schema": true,
+        "show_path": false,
+        "show_filter": false
       }
     },
     "faq": {
