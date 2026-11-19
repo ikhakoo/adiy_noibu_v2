@@ -70,7 +70,8 @@
         "trust_3": "Free design consultation",
         "image_alt": "A-DIY pressure-treated wood deck with lounge seating in a backyard",
         "image_position": "50% 50%",
-        "breadcrumb_schema": true
+        "breadcrumb_schema": true,
+        "image": "shopify://shop_images/deck-builders-near-me-hero.png"
       }
     },
     "facts": {
@@ -117,7 +118,7 @@
       "type": "deck-directory-states",
       "settings": {
         "anchor_id": "states",
-        "open_state": "new-york",
+        "open_state": "",
         "unavailable": "alaska, hawaii",
         "show_cities": true,
         "list_schema": true
