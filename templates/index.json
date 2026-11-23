@@ -449,7 +449,7 @@
       "settings": {
         "heading": "A real deck, engineered to come together.",
         "top_link_text": "In-Depth Deck Comparison",
-        "top_link_url": "shopify://collections/all",
+        "top_link_url": "shopify://collections/deck-kits",
         "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
@@ -690,6 +690,7 @@
         "subheading": "",
         "heading": "Every Deck Has a Story",
         "description": "From the first piece coming together to your new favorite place, see the A-DIY experience through the people who’ve built it.",
+        "default_upload_date": "2026-08-13",
         "bg_color": "#ffffff",
         "color_scheme": "",
         "padding_top": 56,
